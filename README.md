@@ -69,6 +69,10 @@ As mentioned in parametrization some values can be driven by expression evaluati
 
 Variables are special properties of node graph that can be referenced using parametrization inside node models. At the same time variables can be bound to external Unity properties. Through this combination it gives user the ability to drive node functionality based on external properties.
 
+## Licensing
+
+For license information read here [LICENSE](LICENSE.md)
+
 ## 3rd Party Libraries
 
 List of 3rd Party libraries used in the project
