@@ -58,3 +58,13 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/.idea
+/Assets/CleanFlatIcon
+/Assets/GUI Kit The Stone
+/Assets/ParadoxNotion
+/Assets/ParadoxNotion.meta
+/Assets/GUI Kit The Stone.meta
+/Assets/CleanFlatIcon.meta
+/Assets/_EXTERNAL*
+/PSD*
+/Assets/Plugins/IngameDebugConsole*

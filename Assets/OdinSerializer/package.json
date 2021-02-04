@@ -1,0 +1,20 @@
+{
+  "name": "com.teamsirenix.odinserializer",
+  "displayName": "Odin Serializer",
+  "version": "2020.10.10",
+  "unity": "2020.1",
+  "description": "Open source Odin Serializer.",
+  "author": {
+	"name": "sHTiF",
+	"email": "pshtif@gmail.com"
+  },
+  "keywords": [ 
+	"package",
+	"unity",
+	"pixel",
+	"attributes"
+  ],
+  "dependencies": {
+	"com.unity.nuget.newtonsoft-json": "2.0.0"
+  }
+}

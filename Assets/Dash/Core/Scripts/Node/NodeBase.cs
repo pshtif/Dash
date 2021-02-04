@@ -1,0 +1,633 @@
+﻿/*
+ *	Created by:  Peter @sHTiF Stefcek
+ */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Dash.Attributes;
+using UnityEngine;
+using Object = System.Object;
+#if UNITY_EDITOR
+using UnityEditor;
+
+#endif
+
+namespace Dash
+{
+    [Serializable]
+    [Size(150,85)]
+    [Category(NodeCategoryType.OTHER)]
+    public abstract class NodeBase : INodeAccess
+    {
+        static public NodeBase Create(Type p_nodeType, DashGraph p_graph)
+        {
+            NodeBase node = (NodeBase)Activator.CreateInstance(p_nodeType);
+            node._graph = p_graph;
+            node.CreateModel();
+
+            return node;
+        }
+
+        [SerializeField]
+        protected NodeModelBase _model;
+
+        public bool HasModel()
+        {
+            return _model != null;
+        }
+        
+        [NonSerialized] 
+        public bool hasErrorsInExecution = false;
+        
+        public string Id => _model.id;
+
+        [SerializeField] 
+        protected DashGraph _graph;
+
+        public DashGraph Graph => _graph;
+
+        public DashController Controller => Graph.Controller;
+
+        [NonSerialized]
+        protected GraphParameterResolver _parameterResolver;
+
+        public GraphParameterResolver ParameterResolver
+        {
+            get
+            {
+                if (_parameterResolver == null) _parameterResolver = new GraphParameterResolver(Graph);
+
+                return _parameterResolver;
+            }
+        }
+
+        [NonSerialized] 
+        protected int _executionCounter = 0;
+
+        public bool IsExecuting => _executionCounter > 0;
+
+        [NonSerialized]
+        private bool _attributesInitialized = false;
+        
+        [NonSerialized] 
+        private int _inputCount;
+        public int InputCount
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _inputCount;
+            }
+        }
+        
+        [NonSerialized] 
+        private int _outputCount;
+        public int OutputCount
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _outputCount;
+            }
+        }
+
+        [NonSerialized] 
+        private string[] _outputLabels;
+        public string[] OutputLabels
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+        
+                return _outputLabels;
+            }
+        }
+
+        protected virtual void Initialize() { }
+        
+        void INodeAccess.Initialize() => Initialize();
+
+        protected virtual void Remove() { }
+        
+        void INodeAccess.Remove() => Remove();
+
+        public void Execute(NodeFlowData p_flowData)
+        {
+            ((IGraphEditorAccess)Graph).IncreaseExecutionCount();
+            _executionCounter++;
+            
+#if UNITY_EDITOR
+            executeTime = 1;
+#endif
+
+            OnExecuteStart(p_flowData == null ? new NodeFlowData() : p_flowData.Clone());
+        }
+
+        protected abstract void OnExecuteStart(NodeFlowData p_flowData);
+
+        protected void OnExecuteOutput(int p_index, NodeFlowData p_flowData)
+        {
+            Graph.ExecuteOutputs(this, p_index, p_flowData);
+            //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
+        }
+        
+        protected void OnExecuteEnd()
+        {
+            ((IGraphEditorAccess)Graph).DecreaseExecutionCount();
+            _executionCounter--;
+        }
+
+        public abstract void CreateModel();
+        
+        protected bool CheckException(NodeFlowData p_flowData, string p_variableName, Action p_nullCallback)
+        {
+            if (!p_flowData.HasAttribute(p_variableName))
+            {
+                if (_model.executeOnNull)
+                {
+                    p_nullCallback?.Invoke();
+                }
+
+                Debug.LogWarning("Variable "+p_variableName+" not found during execution of "+this);
+                hasErrorsInExecution = true;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        protected bool CheckException(Object p_object, Action p_nullCallback)
+        {
+            if (p_object == null)
+            {
+                if (_model.executeOnNull)
+                {
+                    p_nullCallback?.Invoke();   
+                }
+                
+                Debug.LogWarning("Object is null during execution of "+this);
+
+                hasErrorsInExecution = true;
+                
+                return true;
+            }
+
+            return false;
+        }
+        
+        protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)
+        {
+            T value = p_parameter.GetValue(ParameterResolver, p_flowData);
+            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasError;
+            return value;
+        }
+        
+        private void InitializeAttributes()
+        {
+            InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
+            _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
+            
+            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputCountAttribute));
+            _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
+            
+            OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputLabelsAttribute));
+            _outputLabels = outputAttribute == null ? new string[0] : outputAttribute.labels;
+            
+            #if UNITY_EDITOR
+            
+            SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SkinAttribute));
+            _backgroundSkinId = skinAttribute != null ? skinAttribute.backgroundSkinId : "NodeBodyBg";
+            _titleSkinId = skinAttribute != null ? skinAttribute.titleSkinId : "NodeTitleBg";
+            
+            SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SizeAttribute));
+            _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
+            
+            SettingsAttribute settingsAttribute = (SettingsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SettingsAttribute));
+            _baseGUIEnabled = settingsAttribute != null ? settingsAttribute.enableBaseGUI : true;
+            
+            CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
+            
+            IconAttribute iconAttribute = (IconAttribute) Attribute.GetCustomAttribute(GetType(), typeof(IconAttribute));
+            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.GetNodeIconByCategory(categoryAttribute.type);
+            
+            _nodeBackgroundColor = DashEditorCore.GetNodeBackgroundColorByCategory(categoryAttribute.type);
+            
+            _titleBackgroundColor = DashEditorCore.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
+            
+            _titleTextColor = DashEditorCore.GetNodeTitleTextColorByCategory(categoryAttribute.type);
+
+            #endif
+
+            _attributesInitialized = true;
+        }
+
+        #region EDITOR_CODE
+#if UNITY_EDITOR
+
+        [NonSerialized]
+        public float executeTime = 0;
+
+        [NonSerialized]
+        private string _titleSkinId;
+        
+        public string TitleSkinId
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _titleSkinId;
+            }
+        }
+
+        [NonSerialized] 
+        private string _backgroundSkinId;
+        
+        public string BackgroundSkinId
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _backgroundSkinId;
+            }
+        }
+
+        [NonSerialized]
+        private Vector2 _size;
+        
+        public virtual Vector2 Size
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _size;
+            }
+        }
+
+        [NonSerialized]
+        private bool _baseGUIEnabled;
+        
+        protected bool BaseGUIEnabled
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _baseGUIEnabled;
+            }
+        }
+
+        [NonSerialized] 
+        private Texture _iconTexture;
+        
+        protected Texture IconTexture
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _iconTexture;
+            }
+        }
+
+        [NonSerialized] 
+        private Color _nodeBackgroundColor;
+        
+        // Using virtual getters so you can override it and avoid serialization at the same time and it is not
+        // possible to use Attributes for this due to non constant initializer
+        protected virtual Color NodeBackgroundColor
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _nodeBackgroundColor;
+            }
+        }
+
+        [NonSerialized]
+        private Color _titleBackgroundColor;
+
+        protected virtual Color TitleBackgroundColor
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _titleBackgroundColor;
+            }
+        }
+
+        [NonSerialized] 
+        private Color _titleTextColor;
+
+        protected virtual Color TitleTextColor
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+                
+                return _titleTextColor;
+            }
+        }
+        
+        public bool IsSelected => Graph.IsSelected(this);
+        
+        public Rect rect;
+
+        public virtual string CustomName => String.Empty;
+
+        public string Name => String.IsNullOrEmpty(CustomName)
+            ? GetNodeNameFromType(this.GetType())
+            : CustomName;
+        
+        public static string GetNodeNameFromType(Type p_nodeType)
+        {
+            string typeString = p_nodeType.ToString();
+            return typeString.ToString().Substring(5, typeString.ToString().Length - 9);
+        }
+
+        public virtual bool Invalidate()
+        {
+            return true;
+        }
+
+        public void ValidateSerialization()
+        {
+            _model.ValidateSerialization();
+        }
+
+        public virtual void DrawGUI(Rect p_rect)
+        {
+            GUISkin skin = DashEditorCore.Skin;
+            rect = new Rect(rect.x, rect.y, Size.x, Size.y);
+
+            Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x, Size.y);
+            
+            if (!p_rect.Contains(new Vector2(offsetRect.x, offsetRect.y)) &&
+                !p_rect.Contains(new Vector2(offsetRect.x + offsetRect.width, offsetRect.y)) &&
+                !p_rect.Contains(new Vector2(offsetRect.x, offsetRect.y + offsetRect.height)) &&
+                !p_rect.Contains(new Vector2(offsetRect.x + offsetRect.width, offsetRect.y + offsetRect.height)))
+                return;
+
+            if (BaseGUIEnabled)
+            {
+                GUI.color = NodeBackgroundColor;
+                GUI.Box(offsetRect, "", skin.GetStyle(BackgroundSkinId));
+
+                DrawTitle(offsetRect);
+
+                DrawId(offsetRect);
+            }
+
+            DrawOutline(offsetRect);
+
+            DrawCustomGUI(offsetRect);
+            
+            DrawConnectors(p_rect);
+
+            DrawComment(offsetRect);
+        }
+        
+        void DrawTitle(Rect p_rect)
+        {
+            GUISkin skin = DashEditorCore.Skin;
+            
+            GUI.color = TitleTextColor;
+            
+            GUI.Label(
+                new Rect(new Vector2(p_rect.x + (IconTexture != null ? 26 : 6), p_rect.y),
+                    new Vector2(100, 20)), Name, skin.GetStyle("NodeTitle"));
+                
+            if (IconTexture != null)
+            {
+                GUI.color = TitleTextColor;
+                GUI.DrawTexture(new Rect(p_rect.x + 6, p_rect.y + 4, 16, 16),
+                    IconTexture);
+            }
+
+            GUI.color = Color.white;
+        }
+
+        void DrawId(Rect p_rect)
+        {
+            GUI.color = Color.gray;
+            if (!String.IsNullOrEmpty(_model.id))
+            {
+                if (DashEditorCore.Config.showIds)
+                {
+                    GUI.Label(
+                        new Rect(new Vector2(p_rect.x, p_rect.y - 20), new Vector2(rect.width - 5, 20)), _model.id);
+                }
+            }
+            else
+            {
+                _model.id = ((IGraphEditorAccess)Graph).GenerateId(this, "");
+            }
+            GUI.color = Color.white;
+        }
+
+        void DrawOutline(Rect p_rect)
+        {
+            if (IsSelected)
+            {
+                GUI.color = Color.green;
+                GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
+                    "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
+            }
+                
+            if (IsExecuting || executeTime > 0)
+            {
+                if (!IsExecuting)
+                {
+                    executeTime -= .2f;
+                }
+                GUI.color = Color.cyan;
+                GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
+                    "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
+            }
+                
+            if (hasErrorsInExecution)
+            {
+                GUI.color = Color.red;
+                GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
+                    "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
+                GUI.DrawTexture(new Rect(p_rect.x + 2, p_rect.y - 22, 16, 16),
+                    IconManager.GetIcon("Error_Icon"));
+            }
+            
+            GUI.color = Color.white;
+        }
+
+        void DrawComment(Rect p_rect)
+        {
+            if (String.IsNullOrEmpty(_model.comment))
+                return;
+            
+            GUIStyle commentStyle = new GUIStyle();
+            commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
+            commentStyle.fontSize = 14;
+            commentStyle.normal.textColor = Color.black;
+
+            string commentText = _model.comment;
+            Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
+            
+            GUI.color = new Color(1,1,1,.75f);
+            GUI.Box(new Rect(p_rect.x - 10, p_rect.y - 40, size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
+            GUI.color = Color.white;
+            GUI.Label(new Rect(p_rect.x - 2, p_rect.y - 35, size.x, size.y), commentText, commentStyle);
+        }
+        
+        public Rect GetConnectorRect(bool p_input, int p_index)
+        {
+            Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,
+                Size.y);
+
+            Rect connectorRect;
+            if (p_input)
+            {
+                connectorRect = new Rect(offsetRect.x,
+                    offsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT +
+                    p_index * (DashEditorCore.CONNECTOR_HEIGHT + DashEditorCore.CONNECTOR_PADDING), 24,
+                    DashEditorCore.CONNECTOR_HEIGHT);
+            }
+            else
+            {
+                connectorRect = new Rect(offsetRect.x + offsetRect.width - 24,
+                    offsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT +
+                    p_index * (DashEditorCore.CONNECTOR_HEIGHT + DashEditorCore.CONNECTOR_PADDING), 24,
+                    DashEditorCore.CONNECTOR_HEIGHT);
+            }
+
+            return connectorRect;
+        }
+        
+        private void DrawConnectors(Rect p_rect)
+        {
+            GUISkin skin = DashEditorCore.Skin;
+
+            // Inputs
+            for (int i = 0; i < InputCount; i++)
+            {
+                bool isConnected = Graph.HasInputConnected(this, i);
+                GUI.color = isConnected ? DashEditorCore.CONNECTOR_INPUT_CONNECTED_COLOR
+                    : DashEditorCore.CONNECTOR_INPUT_DISCONNECTED_COLOR;
+
+                if (IsExecuting)
+                    GUI.color = Color.cyan;
+
+                var connectorRect = GetConnectorRect(true, i);
+                
+                if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
+                {
+                    if (Event.current.button == 0)
+                    {
+                        if (Graph.connectingNode != null && Graph.connectingNode != this)
+                        {
+                            Undo.RecordObject(_graph, "Connect node");
+                            Graph.Connect(this, i, Graph.connectingNode, Graph.connectingOutputIndex);
+                            Graph.connectingNode = null;
+                        }
+                    }
+                }
+            }
+            
+            // Outputs
+            for (int i = 0; i < OutputCount; i++)
+            {
+                bool isConnected = Graph.HasOutputConnected(this, i); 
+                GUI.color = isConnected ? DashEditorCore.CONNECTOR_OUTPUT_CONNECTED_COLOR
+                    : DashEditorCore.CONNECTOR_OUTPUT_DISCONNECTED_COLOR;
+
+                if (Graph.connectingNode == this && Graph.connectingOutputIndex == i)
+                    GUI.color = Color.green;
+
+                var connectorRect = GetConnectorRect(false, i);
+                
+                if (connectorRect.Contains(Event.current.mousePosition * DashEditorCore.Config.zoom - new Vector2(p_rect.x, p_rect.y)))
+                    GUI.color = Color.green;
+
+                if (OutputLabels != null && OutputLabels.Length > i)
+                {
+                    GUIStyle style = new GUIStyle();
+                    style.normal.textColor = Color.white;
+                    style.alignment = TextAnchor.MiddleRight;
+                    GUI.Label(new Rect(connectorRect.x - 100, connectorRect.y, 100, 20), OutputLabels[i], style);
+                }
+
+                if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
+                {
+                    Graph.connectingOutputIndex = i;
+                    Graph.connectingNode = this;
+                }
+            }
+
+            GUI.color = Color.white;
+        }
+        
+        protected virtual void DrawCustomGUI(Rect p_rect) { }
+
+        public void DrawInspector()
+        {
+            Undo.RecordObject(Graph, "Inspector");
+
+            bool invalidate = _model.DrawInspector();
+            
+            if (invalidate)
+            {
+                Invalidate();
+                EditorUtility.SetDirty(Graph);
+            }
+        }
+
+        public List<string> GetModelExposedGUIDs()
+        {
+            return _model.GetExposedGUIDs();
+        }
+#endif
+
+        #endregion
+    }
+    
+    [Serializable]
+    public abstract class NodeBase<T> : NodeBase where T : NodeModelBase, new()
+    {
+        public T Model
+        {
+            get
+            {
+                if (_model == null || !typeof(T).IsAssignableFrom(_model.GetType()))
+                {
+                    Debug.LogWarning("Model recreated on node "+this+" possibly due to serialization error.");
+                    CreateModel();
+                }
+
+                return (T) _model;
+            }
+        }
+
+        public override void CreateModel()
+        {
+            _model = new T(); 
+            _model.id = ((IGraphEditorAccess) Graph).GenerateId(this);
+        }
+    }
+}
