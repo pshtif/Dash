@@ -33,7 +33,7 @@ DashController is a monobehaviour that connects the system with your project. It
 
 DashGraph is the center of the animation system it is a single graph containing any number of nodes and connections between them that executes based on events sent to the graph.
 
-There can be **asset** or **bound** graph. The asset graphs are saved as unity asset files that can be later used by any DashOwner instance as well as shared between projects while bound graphs are bound to a single DashOwner instance and are serialized within it.
+There can be **asset** or **bound** graph. The asset graphs are saved as unity asset files that can be later used by any DashController instance as well as shared between projects while bound graphs are bound to a single DashController instance and are serialized within it.
 
 ### DashEditor
 
@@ -73,6 +73,6 @@ Variables are special properties of node graph that can be referenced using para
 
 List of 3rd Party libraries used in the project
 
-* DOTween dependency (http://dotween.demigiant.com)
-* Odin Serializer dependency (https://github.com/TeamSirenix/odin-serializer)
+* DOTween (http://dotween.demigiant.com)
+* Odin Serializer (https://github.com/TeamSirenix/odin-serializer)
 * NCalc (https://github.com/ncalc/ncalc) 
