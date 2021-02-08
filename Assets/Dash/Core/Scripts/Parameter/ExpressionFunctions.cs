@@ -10,7 +10,7 @@ namespace Dash
 {
     public class ExpressionFunctions
     {
-        static private bool Create<T>(FunctionArgs p_args)
+        private static bool Create<T>(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
 
@@ -45,7 +45,7 @@ namespace Dash
             return false;
         }
         
-        static private bool GetChildIndex(FunctionArgs p_args)
+        private static bool GetChildIndex(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
             
@@ -67,7 +67,7 @@ namespace Dash
             return false;
         }
 
-        static private bool Vector2(FunctionArgs p_args)
+        private static bool Vector2(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
             if (evalParams.Length != 2)
@@ -81,7 +81,7 @@ namespace Dash
             return true;
         }
 
-        static private bool Add<T>(FunctionArgs p_args)
+        private static bool Add<T>(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
             if (evalParams.Length != 2)
@@ -108,7 +108,7 @@ namespace Dash
             return false;
         }
 
-        static private bool Random<T>(FunctionArgs p_args)
+        private static bool Random<T>(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
             
@@ -160,7 +160,33 @@ namespace Dash
             return false;
         }
 
-        static private bool Scale<T>(FunctionArgs p_args)
+        private static bool Ceil<T>(FunctionArgs p_args)
+        {
+            object[] evalParams = p_args.EvaluateParameters();
+            if (evalParams.Length != 1)
+            {
+                Debug.Log("Invalid parameters for Ceil function.");
+                return false;
+            }
+            
+            if (typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(double))
+            {
+                if (p_args.Parameters.Length != 1)
+                {
+                    Debug.Log("Invalid parameters for Ceil function of type "+typeof(T));
+                    return false;
+                }
+                
+                p_args.HasResult = true;
+                p_args.Result = Mathf.CeilToInt(Convert.ToSingle(evalParams[0]));
+                return true;
+            }
+            
+            Debug.Log("Ceil function for type " + typeof(T)+" is not implemented.");
+            return false;
+        }
+
+        private static bool Scale<T>(FunctionArgs p_args)
         {
             object[] evalParams = p_args.EvaluateParameters();
 
