@@ -47,7 +47,7 @@ namespace Dash
         }
 
         [NonSerialized]
-        private DashGraph _instancedGraph;
+        public DashGraph _instancedGraph;
         
         public DashGraph Graph => GetGraphInstance();
 
@@ -87,7 +87,7 @@ namespace Dash
             }
 
             _instancedGraph.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
-            _instancedGraph.name = "Bound";
+            _instancedGraph.name = gameObject.name+"[Bound]";
         }
 
         void InstanceAssetGraph()
@@ -96,6 +96,7 @@ namespace Dash
                 return;
             
             _instancedGraph = _assetGraph.Clone();
+            ((IGraphEditorAccess) _instancedGraph).SetParentGraph(_assetGraph);
         }
 
         public bool autoStart = true;

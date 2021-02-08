@@ -122,14 +122,6 @@ namespace Dash
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
         }
-        
-        public void RemoveNode(int p_nodeIndex)
-        {
-            if (p_nodeIndex < 0 || p_nodeIndex >= Nodes.Count)
-                return;
-            
-            RemoveNode(Nodes[p_nodeIndex]);
-        }
 
         public NodeBase DuplicateNode(NodeBase p_node)
         {
@@ -263,7 +255,6 @@ namespace Dash
             
             graph.DeserializeFromBytes(bytes, DataFormat.Binary, ref references);
             graph.name = name + "(Clone)";
-            graph.parentGraph = this;
             return graph;
         }
 
@@ -352,6 +343,11 @@ namespace Dash
         void IGraphEditorAccess.DecreaseExecutionCount()
         {
             _executionCount--;
+        }
+
+        void IGraphEditorAccess.SetParentGraph(DashGraph p_graph)
+        {
+            parentGraph = p_graph;
         }
 
         void IGraphEditorAccess.Exit(NodeFlowData p_flowData)

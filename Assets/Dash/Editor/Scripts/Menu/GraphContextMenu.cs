@@ -169,7 +169,7 @@ namespace Dash
                 while (DashEditorCore.selectedNodes.Count > 0)
                 {
                     int index = DashEditorCore.selectedNodes[0];
-                    Graph.RemoveNode(DashEditorCore.selectedNodes[0]);
+                    Graph.RemoveNode(Graph.Nodes[DashEditorCore.selectedNodes[0]]);
                     DashEditorCore.selectedNodes.Remove(index);
                     DashEditorCore.ReindexSelected(index);
                 }
@@ -183,6 +183,8 @@ namespace Dash
                 DashEditorCore.selectedNodes.Remove(index);
                 DashEditorCore.ReindexSelected(index);
             }
+            
+            DashEditorCore.SetDirty();
         }
         
         static void DuplicateNode(object p_node)
@@ -202,6 +204,8 @@ namespace Dash
                 NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
                 DashEditorCore.selectedNodes = new List<int> { node.Index };
             }
+
+            DashEditorCore.SetDirty();
         }
 
         static void DeleteConnection(object p_connection)

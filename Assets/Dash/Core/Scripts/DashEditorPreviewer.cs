@@ -43,7 +43,7 @@ namespace Dash
             EditorApplication.update += OnUpdate;
 
             // Cloning graph for preview
-            _previewGraph = Controller.Graph;
+            _previewGraph = Controller.Graph.Clone();
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
 
@@ -57,7 +57,7 @@ namespace Dash
             }
             else
             {
-                p_previewNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
+                _previewGraph.Nodes[p_graph.Nodes.IndexOf(p_previewNode)].Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
 
@@ -80,8 +80,11 @@ namespace Dash
                 return;
             
             _isPreviewing = false;
-            
-            DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
+
+            if (DashEditorCore.Config.editingGraph.parentGraph != null)
+            {
+                DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
+            }
 
             DOPreview.StopPreview();
 
