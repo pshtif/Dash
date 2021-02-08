@@ -139,16 +139,32 @@ namespace Dash
             return clone;
         }
         
-        public NodeBase DuplicateNode(int p_nodeIndex)
+        public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
         {
-            if (p_nodeIndex < 0 || p_nodeIndex >= Nodes.Count)
+            if (p_nodes == null || p_nodes.Count == 0)
                 return null;
             
-            NodeBase node = Nodes[p_nodeIndex];
-            NodeBase clone = node.Clone();
-            clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
-            Nodes.Add(clone);
-            return clone;
+            List<NodeBase> newNodes = new List<NodeBase>();
+            foreach (NodeBase node in p_nodes)
+            {
+                NodeBase clone = node.Clone();
+                clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
+                Nodes.Add(clone);
+                newNodes.Add(clone);
+            }
+
+            // Recreate connections within duplicated part
+            foreach (NodeBase node in p_nodes)
+            {
+                List<NodeConnection> connections =
+                    _connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
+                foreach (NodeConnection connection in connections)
+                {
+                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex, newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);   
+                }
+            }
+
+            return newNodes;
         }
 
         public T GetNodeByType<T>() where T:NodeBase

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dash.Attributes;
 using OdinSerializer.Utilities;
 using UnityEditor;
@@ -189,14 +190,10 @@ namespace Dash
             if (p_node == null)
             {
                 Undo.RecordObject(Graph, "DuplicateNodes");
-                
-                List<int> newSelected = new List<int>();
-                foreach (int index in DashEditorCore.selectedNodes)
-                {
-                    NodeBase node = Graph.DuplicateNode(index);
-                    newSelected.Add(node.Index);
-                }
-                DashEditorCore.selectedNodes = newSelected;
+
+                List<NodeBase> nodes = DashEditorCore.selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+                List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
+                DashEditorCore.selectedNodes = newNodes.Select(n => n.Index).ToList();
             }
             else
             {

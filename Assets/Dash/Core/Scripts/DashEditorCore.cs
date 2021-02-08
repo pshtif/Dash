@@ -14,7 +14,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.1b";
+        public const string VERSION = "0.2.2b";
 
         static public DashEditorConfig Config { get; private set; }
 
