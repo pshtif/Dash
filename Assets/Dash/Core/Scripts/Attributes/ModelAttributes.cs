@@ -73,15 +73,4 @@ namespace Dash.Attributes
             ClassType = p_classType;
         }
     }
-
-    [AttributeUsage(AttributeTargets.Field)]
-    public class InspectorAttribute : Attribute
-    {
-        public bool isGameObject { get; }
-
-        public InspectorAttribute(bool p_isGameObject)
-        {
-            isGameObject = p_isGameObject;
-        }
-    }
 }

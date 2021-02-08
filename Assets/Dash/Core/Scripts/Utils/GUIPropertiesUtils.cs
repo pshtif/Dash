@@ -139,7 +139,7 @@ namespace Dash
         {
             if (!IsUnityObjectProperty(p_fieldInfo))
                 return false;
-                    
+            
             EditorGUI.BeginChangeCheck();
             
             GUILayout.BeginHorizontal();
@@ -295,8 +295,6 @@ namespace Dash
 
         static bool ValueProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
         {
-            InspectorAttribute inspectorAttribute = p_fieldInfo.GetCustomAttribute<InspectorAttribute>();
-            
             string type = p_fieldInfo.FieldType.ToString();
             switch (type)
             {
