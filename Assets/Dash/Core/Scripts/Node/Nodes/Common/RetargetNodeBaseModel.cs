@@ -35,7 +35,6 @@ namespace Dash
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
-        [Inspector(true)]
         public string targetPath;
 
         [TitledGroup("Retargeting")]

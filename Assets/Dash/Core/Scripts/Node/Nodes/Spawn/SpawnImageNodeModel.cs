@@ -10,9 +10,9 @@ namespace Dash
     {
         public Sprite sprite;
 
-        public Parameter<Vector3> position = new Parameter<Vector3>(Vector3.zero);
+        public Parameter<Vector2> position = new Parameter<Vector2>(Vector3.zero);
 
         public bool setTargetAsParent = true;
-        public bool setSpawnedAsTarget = true;
+        public bool retargetToSpawned = true;
     }
 }
