@@ -33,7 +33,7 @@ namespace Dash
         public static DashGraph CreateGraphAsAssetFromPath(string p_path, DashGraph p_graph = null)
         {
             if (p_graph == null)
-                p_graph = ScriptableObject.CreateInstance<DashGraph>();
+                p_graph = CreateEmptyGraph();
 
             AssetDatabase.CreateAsset(p_graph, p_path);
             AssetDatabase.SaveAssets();

@@ -60,7 +60,6 @@ namespace Dash
                     return default(T);
                 }
                 
-                Debug.Log(EvaluateExpression(p_resolver, p_collection));
                 return EvaluateExpression(p_resolver, p_collection);
             }
             
