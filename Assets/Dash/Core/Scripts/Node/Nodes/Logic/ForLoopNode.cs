@@ -15,11 +15,13 @@ namespace Dash
     {
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            int length = Model.lastIndex - Model.firstIndex;
+            int firstIndex = Model.firstIndex.GetValue(ParameterResolver, p_flowData);
+            int lastIndex = Model.lastIndex.GetValue(ParameterResolver, p_flowData);
+            int length = lastIndex - firstIndex;
             if (length == 0)
                 EndLoop(p_flowData);
 
-            for (int i = Model.firstIndex; i != Model.lastIndex; i += Math.Abs(length) / length)
+            for (int i = firstIndex; i != lastIndex; i += Math.Abs(length) / length)
             {
                 p_flowData.SetAttribute(Model.indexVariable, i);
                 OnExecuteOutput(0, p_flowData);

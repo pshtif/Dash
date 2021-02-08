@@ -8,10 +8,11 @@ namespace Dash
 {
     public class ForLoopNodeModel : NodeModelBase
     {
-        public int firstIndex = 0;
-        public int lastIndex = 0;
+        public Parameter<int> firstIndex = new Parameter<int>(0);
+        public Parameter<int> lastIndex = new Parameter<int>(0);
 
         public bool addIndexVariable = false;
+        
         [Dependency("addIndexVariable", true)]
         public string indexVariable = "index";
     }
