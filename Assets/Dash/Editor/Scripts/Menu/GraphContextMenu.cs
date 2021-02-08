@@ -30,6 +30,8 @@ namespace Dash
     
     public class GraphContextMenu
     {
+        static private DashGraph Graph => DashEditorCore.Config.editingGraph;
+        
         static private Vector2 _lastMousePosition;
         static public void Show(GraphContextMenuType p_type, Event p_event, object p_object)
         {
@@ -70,7 +72,17 @@ namespace Dash
 
             if (p_type == GraphContextMenuType.NODE)
             {
-                menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, (NodeBase)p_object);
+                if (DashEditorCore.selectedNodes.Count > 1)
+                {
+                    menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
+                    menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
+                }
+                else
+                {
+                    menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, (NodeBase) p_object);   
+                    menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, (NodeBase) p_object);
+                    menu.AddItem(new GUIContent("Preview Node"), false, PreviewNode, (NodeBase) p_object);
+                }
             }
 
             if (p_type == GraphContextMenuType.CONNECTION)
@@ -117,7 +129,7 @@ namespace Dash
         static bool CheckMultiple(Type p_type)
         {
             SettingsAttribute sa = (SettingsAttribute) p_type.GetCustomAttribute<SettingsAttribute>();
-            if (sa != null && !sa.canHaveMultiple && DashEditorCore.Config.editingGraph.HasNodeOfType(p_type))
+            if (sa != null && !sa.canHaveMultiple && Graph.HasNodeOfType(p_type))
                 return true;
 
             return false;
@@ -139,18 +151,66 @@ namespace Dash
 
         static void CreateNode(object p_nodeType)
         {
-            DashEditorCore.Config.editingGraph.CreateNodeInEditor((Type)p_nodeType, _lastMousePosition);
+            Graph.CreateNodeInEditor((Type)p_nodeType, _lastMousePosition);
         }
 
+        static void PreviewNode(object p_node)
+        {
+            DashEditorCore.Previewer.StartPreview(Graph, (NodeBase)p_node);
+        }
+        
         static void DeleteNode(object p_node)
         {
-            DashEditorCore.Config.editingGraph.RemoveNode((NodeBase)p_node);
+            if (p_node == null)
+            {
+                Undo.RecordObject(Graph, "DeleteNodes");
+
+                while (DashEditorCore.selectedNodes.Count > 0)
+                {
+                    int index = DashEditorCore.selectedNodes[0];
+                    Graph.RemoveNode(DashEditorCore.selectedNodes[0]);
+                    DashEditorCore.selectedNodes.Remove(index);
+                    DashEditorCore.ReindexSelected(index);
+                }
+            }
+            else
+            {
+                Undo.RecordObject(Graph, "DeleteNode");
+
+                int index = ((NodeBase) p_node).Index;
+                Graph.RemoveNode((NodeBase) p_node);
+                DashEditorCore.selectedNodes.Remove(index);
+                DashEditorCore.ReindexSelected(index);
+            }
+        }
+        
+        static void DuplicateNode(object p_node)
+        {
+            if (p_node == null)
+            {
+                Undo.RecordObject(Graph, "DuplicateNodes");
+                
+                List<int> newSelected = new List<int>();
+                foreach (int index in DashEditorCore.selectedNodes)
+                {
+                    NodeBase node = Graph.DuplicateNode(index);
+                    newSelected.Add(node.Index);
+                }
+                DashEditorCore.selectedNodes = newSelected;
+            }
+            else
+            {
+                Undo.RecordObject(Graph, "DuplicateNode");
+                
+                NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
+                DashEditorCore.selectedNodes = new List<int> { node.Index };
+            }
         }
 
         static void DeleteConnection(object p_connection)
         {
-            Undo.RecordObject(DashEditorCore.Config.editingGraph, "Delete connection.");
-            DashEditorCore.Config.editingGraph.Disconnect((NodeConnection)p_connection);
+            Undo.RecordObject(Graph, "Delete connection.");
+            Graph.Disconnect((NodeConnection)p_connection);
         }
         
         static void DeactivateConnection(object p_connection)

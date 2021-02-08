@@ -9,9 +9,9 @@ using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
 using Object = UnityEngine.Object;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace Dash
@@ -118,17 +118,39 @@ namespace Dash
 
         public void RemoveNode(NodeBase p_node)
         {
-#if UNITY_EDITOR
-            Undo.RecordObject(this, "DeleteNode");
-
-            if (p_node.IsSelected)
-                DeselectNode(p_node);
-#endif
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
         }
         
+        public void RemoveNode(int p_nodeIndex)
+        {
+            if (p_nodeIndex < 0 || p_nodeIndex >= Nodes.Count)
+                return;
+            
+            RemoveNode(Nodes[p_nodeIndex]);
+        }
+
+        public NodeBase DuplicateNode(NodeBase p_node)
+        {
+            NodeBase clone = p_node.Clone();
+            clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
+            Nodes.Add(clone);
+            return clone;
+        }
+        
+        public NodeBase DuplicateNode(int p_nodeIndex)
+        {
+            if (p_nodeIndex < 0 || p_nodeIndex >= Nodes.Count)
+                return null;
+            
+            NodeBase node = Nodes[p_nodeIndex];
+            NodeBase clone = node.Clone();
+            clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
+            Nodes.Add(clone);
+            return clone;
+        }
+
         public T GetNodeByType<T>() where T:NodeBase
         {
             return (T)Nodes.Find(n => n is T);
@@ -215,7 +237,7 @@ namespace Dash
             List<Object> references = new List<Object>();
             byte[] bytes = this.SerializeToBytes(DataFormat.Binary, ref references);
             
-            DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
+            DashGraph graph = CreateInstance<DashGraph>();
 
             for (int i = 0; i < references.Count; i++)
             {
@@ -378,7 +400,7 @@ namespace Dash
 
         public NodeBase HitsNode(Vector2 p_position)
         {
-            return _nodes.Find(n => n.rect.Contains(p_position - viewOffset));
+            return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
         }
 
         public NodeConnection HitsConnection(Vector2 p_position, float p_distance)
@@ -412,7 +434,7 @@ namespace Dash
         }
         
         
-        public void CreateNodeInEditor(Type p_nodeType, Vector2 mousePosition, bool p_saveAssets = true)
+        public void CreateNodeInEditor(Type p_nodeType, Vector2 mousePosition)
         {
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
                 return;
@@ -435,18 +457,7 @@ namespace Dash
             Connections.RemoveAll(c => c == null);
             Connections.RemoveAll(c => c.inputNode == null || c.outputNode == null);
         }
-        
-        public void DeselectNode(NodeBase p_node)
-        {
-            int index = Nodes.IndexOf(p_node);
-            DashEditorCore.selectedNodes.Remove(index);
-            for (int i = 0; i < DashEditorCore.selectedNodes.Count; i++)
-            {
-                if (DashEditorCore.selectedNodes[i] > index)
-                    DashEditorCore.selectedNodes[i]--;
-            }
-        }
-        
+
         public void RecacheAnimations()
         {
             GetAllNodesByType<AnimateWithClipNode>().ForEach(n => n.Invalidate());

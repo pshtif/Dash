@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using Object = System.Object;
 #if UNITY_EDITOR
@@ -29,7 +31,7 @@ namespace Dash
 
             return node;
         }
-
+        
         [SerializeField]
         protected NodeModelBase _model;
 
@@ -49,6 +51,8 @@ namespace Dash
         public DashGraph Graph => _graph;
 
         public DashController Controller => Graph.Controller;
+
+        public int Index => Graph != null ? Graph.Nodes.IndexOf(this) : -1;
 
         [NonSerialized]
         protected GraphParameterResolver _parameterResolver;
@@ -227,6 +231,24 @@ namespace Dash
             #endif
 
             _attributesInitialized = true;
+        }
+
+        public NodeBase Clone()
+        {
+            List<UnityEngine.Object> references;
+            NodeBase clone;
+            
+            // var cachedContext = Cache<SerializationContext>.Claim();
+            // cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+            // byte[] bytes = SerializationUtility.SerializeValue(this, DataFormat.Binary, out references, cachedContext);
+            
+            //var cachedDeserializationContext = Cache<DeserializationContext>.Claim();
+            //clone = SerializationUtilityDeserializeValue<NodeBase>(bytes, DataFormat.Binary, references, cachedDeserializationContext);
+            clone = (NodeBase)SerializationUtility.CreateCopy(this);
+            
+            clone._graph = _graph;
+            
+            return clone;
         }
 
         #region EDITOR_CODE

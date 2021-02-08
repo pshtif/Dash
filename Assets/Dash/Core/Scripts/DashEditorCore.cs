@@ -50,6 +50,15 @@ namespace Dash
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
         }
 
+        public static void ReindexSelected(int p_index)
+        {
+            for (int i = 0; i < selectedNodes.Count; i++)
+            {
+                if (selectedNodes[i] > p_index)
+                    selectedNodes[i]--;
+            }
+        }
+        
         public static void EditController(DashController p_controller)
         {
             DeselectAllNodes();
