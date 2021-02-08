@@ -32,7 +32,7 @@ namespace Dash
         [SerializeField]
         private List<Object> _boundGraphReferences;
 
-        DashGraph IControllerAccess.assetGraph
+        DashGraph IControllerAccess.graphAsset
         {
             get { return _assetGraph; }
             set
