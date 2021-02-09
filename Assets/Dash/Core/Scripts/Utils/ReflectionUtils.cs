@@ -44,7 +44,7 @@ namespace Dash
 
             var assemblyName = p_typeName.Substring(0, p_typeName.LastIndexOf('.'));
             
-            var assembly = Assembly.LoadWithPartialName(assemblyName);
+            var assembly = Assembly.Load(assemblyName);
             if( assembly == null )
                 return null;
             
