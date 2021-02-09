@@ -25,7 +25,7 @@ namespace Dash
 
         private string _previousTag;
 
-        public void StartPreview(DashGraph p_graph, NodeBase p_previewNode = null)
+        public void StartPreview(DashGraph p_graph)
         {
             // Debug.Log("EditorCore.StartPreview");
             
@@ -47,7 +47,7 @@ namespace Dash
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
 
-            if (p_previewNode == null)
+            if (_previewGraph.previewNode == null)
             {
                 EnterNode enterNode = _previewGraph.GetNodeByType<EnterNode>();
                 if (enterNode != null)
@@ -57,7 +57,7 @@ namespace Dash
             }
             else
             {
-                _previewGraph.Nodes[p_graph.Nodes.IndexOf(p_previewNode)].Execute(NodeFlowDataFactory.Create(Controller.transform));
+                _previewGraph.previewNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
 

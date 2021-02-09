@@ -119,12 +119,7 @@ namespace Dash
         
         static bool IsExperimental(Type p_type)
         {
-            CategoryAttribute attribute = p_type.GetCustomAttribute<CategoryAttribute>();
-
-            if (attribute != null && attribute.type == NodeCategoryType.EXPERIMENTAL)
-                return true;
-
-            return false;
+            return p_type.GetCustomAttribute<ExperimentalAttribute>() != null;
         }
         
         static bool CheckMultiple(Type p_type)
@@ -157,7 +152,8 @@ namespace Dash
 
         static void PreviewNode(object p_node)
         {
-            DashEditorCore.Previewer.StartPreview(Graph, (NodeBase)p_node);
+            Graph.previewNode = (NodeBase)p_node;
+            //DashEditorCore.Previewer.StartPreview(Graph, (NodeBase)p_node);
         }
         
         static void DeleteNode(object p_node)

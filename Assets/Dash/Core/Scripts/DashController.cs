@@ -134,7 +134,7 @@ namespace Dash
             
             p_flowData = p_flowData.Clone();
 
-            p_flowData.SetAttribute("controller", this);
+            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, this);
             
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {

@@ -377,12 +377,31 @@ namespace Dash
 
             return p_id;
         }
-        #endregion
+#endregion
         
         public bool previewControlsViewMinimized = true;
         public bool variablesViewMinimized = false;
         public Vector2 viewOffset = Vector2.zero;
         public bool showVariables = false;
+
+        private NodeBase _previewNode;
+
+        public NodeBase previewNode
+        {
+            get
+            {
+                if (_previewNode != null)
+                {
+                    return _previewNode;
+                }
+                
+                return GetNodeByType<EnterNode>();
+            }
+            set
+            {
+                _previewNode = value;
+            }
+        }
 
         public bool IsSelected(NodeBase p_node) => DashEditorCore.selectedNodes.Exists(i => i == Nodes.IndexOf(p_node));
 

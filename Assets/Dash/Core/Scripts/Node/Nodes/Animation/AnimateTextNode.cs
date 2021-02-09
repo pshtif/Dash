@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.EXPERIMENTAL)]
+    [Experimental]
+    [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]
     public class AnimateTextNode : AnimationNodeBase<AnimateTextNodeModel>

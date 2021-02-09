@@ -71,9 +71,24 @@ namespace Dash
         protected int _executionCounter = 0;
 
         public bool IsExecuting => _executionCounter > 0;
+        
+        
 
         [NonSerialized]
         private bool _attributesInitialized = false;
+        
+        [NonSerialized] 
+        private bool _isExperimental;
+        public bool IsExperimental
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _isExperimental;
+            }
+        }
         
         [NonSerialized] 
         private int _inputCount;
@@ -196,6 +211,8 @@ namespace Dash
         
         private void InitializeAttributes()
         {
+            _isExperimental = Attribute.GetCustomAttribute(GetType(), typeof(ExperimentalAttribute)) != null;
+            
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
             
@@ -431,19 +448,25 @@ namespace Dash
         
         void DrawTitle(Rect p_rect)
         {
-            GUISkin skin = DashEditorCore.Skin;
-            
             GUI.color = TitleTextColor;
             
             GUI.Label(
                 new Rect(new Vector2(p_rect.x + (IconTexture != null ? 26 : 6), p_rect.y),
-                    new Vector2(100, 20)), Name, skin.GetStyle("NodeTitle"));
+                    new Vector2(100, 20)), Name, DashEditorCore.Skin.GetStyle("NodeTitle"));
                 
             if (IconTexture != null)
             {
                 GUI.color = TitleTextColor;
                 GUI.DrawTexture(new Rect(p_rect.x + 6, p_rect.y + 4, 16, 16),
                     IconTexture);
+            }
+
+            if (IsExperimental)
+            {
+                GUI.color = Color.yellow;
+                GUI.DrawTexture(new Rect(p_rect.x + rect.width - 21, p_rect.y + 4, 16, 16),
+                    IconManager.GetIcon("Experimental_Icon"));
+                GUI.color = Color.white;
             }
 
             GUI.color = Color.white;
@@ -494,6 +517,17 @@ namespace Dash
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
                 GUI.DrawTexture(new Rect(p_rect.x + 2, p_rect.y - 22, 16, 16),
                     IconManager.GetIcon("Error_Icon"));
+            }
+
+            if (Graph.previewNode == this)
+            {
+                GUI.color = Color.white;
+                GUIStyle style = new GUIStyle();
+                style.normal.textColor = Color.magenta;
+                style.fontStyle = FontStyle.Bold;
+                style.fontSize = 20;
+                style.alignment = TextAnchor.UpperCenter;
+                GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height, rect.width, 20), "[PREVIEW]", style);
             }
             
             GUI.color = Color.white;
