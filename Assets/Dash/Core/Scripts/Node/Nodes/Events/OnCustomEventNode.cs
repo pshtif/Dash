@@ -15,7 +15,7 @@ namespace Dash
     public class OnCustomEventNode : NodeBase<OnCustomEventNodeModel>
     {
         #if UNITY_EDITOR
-        public override Vector2 Size => new Vector2(10+CustomName.Length * 10, 85);
+        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
         #endif
         
         protected override void Initialize()
