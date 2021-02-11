@@ -48,14 +48,13 @@ namespace Dash
         public abstract void PropertyField(Rect p_position);
         
         static public Type[] SupportedTypes =
-            new Type[]
-            {
+        {
                 typeof(int),
                 typeof(float),
                 typeof(Vector3),
                 typeof(Vector2),
                 typeof(Quaternion)
-            };
+        };
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -90,7 +89,7 @@ namespace Dash
         private string _boundProperty;
         private string _boundComponentName;
 
-        new public T value
+        public new T value
         {
             get
             {

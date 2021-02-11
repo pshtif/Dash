@@ -45,6 +45,11 @@ namespace Dash
 
             if (IsPopupProperty(p_fieldInfo))
                 return PopupProperty(p_fieldInfo, p_object, name);
+
+            if (p_fieldInfo.FieldType == typeof(Type))
+            {
+                return SupportedTypeProperty(p_fieldInfo, p_object, name);
+            }
             
             if (IsEnumProperty(p_fieldInfo))
                 return EnumProperty(p_fieldInfo, p_object, name);
@@ -96,6 +101,29 @@ namespace Dash
                 {
                     p_fieldInfo.SetValue(p_object,
                         index == 0 ? null : Activator.CreateInstance(cachedTypes[popupAttribute.ClassType][index - 1]));
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        static bool SupportedTypeProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
+        {
+            Type[] options = Variable.SupportedTypes;
+            Type value = (Type)p_fieldInfo.GetValue(p_object);
+            int index = value == null ? 0 : Array.IndexOf(options, value);
+
+            EditorGUI.BeginChangeCheck();
+            
+            int newIndex = EditorGUILayout.Popup(p_name, index, options.Select(t => Variable.ConvertToTypeName(t)).ToArray());
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (newIndex != index)
+                {
+                    p_fieldInfo.SetValue(p_object, options[newIndex]);
                 }
 
                 return true;

@@ -10,6 +10,7 @@ namespace Dash
     public class GraphParameterResolver : IParameterResolver
     {
         protected DashGraph _graph;
+        public bool hasErrorInExecution { get; private set; } = false;
         
         public GraphParameterResolver(DashGraph p_graph)
         {
@@ -38,7 +39,7 @@ namespace Dash
             }
 
             Debug.LogWarning("Variable "+ p_name +" not found.");
-            
+            hasErrorInExecution = true;
             return null;
         }
 
@@ -64,7 +65,7 @@ namespace Dash
             }
 
             Debug.LogWarning("Variable "+ p_name +" not found.");
-            
+            hasErrorInExecution = true;
             return default(T);
         }
     }
