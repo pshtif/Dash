@@ -117,7 +117,7 @@ namespace Dash
 
         static void OnAssemblyReload()
         {
-            if (Config.editingGraph.Controller != null)
+            if (Config.editingGraph != null && Config.editingGraph.Controller != null)
             {
                 EditController(Config.editingGraph.Controller);
             }
