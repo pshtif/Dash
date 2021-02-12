@@ -55,6 +55,9 @@ namespace Dash
                 }
             }
 
+            if (CheckException(target, () => ExecuteOnTarget(target, p_flowData), "Invalid target in node "+_model.id))
+                return;
+            
             ExecuteOnTarget(target, p_flowData);
         }
 

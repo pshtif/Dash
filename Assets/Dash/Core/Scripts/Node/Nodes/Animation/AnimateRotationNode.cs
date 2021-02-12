@@ -18,12 +18,9 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
-            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData)))
+            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData), "No RectTransform component found on target in node "+_model.id))
                 return;
 
             Quaternion startRotation = Model.useFrom

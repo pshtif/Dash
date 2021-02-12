@@ -183,7 +183,7 @@ namespace Dash
             return false;
         }
 
-        protected bool CheckException(Object p_object, Action p_nullCallback)
+        protected bool CheckException(Object p_object, Action p_nullCallback, string p_warning)
         {
             if (p_object == null)
             {
@@ -191,8 +191,11 @@ namespace Dash
                 {
                     p_nullCallback?.Invoke();   
                 }
-                
-                Debug.LogWarning("Object is null during execution of "+this);
+
+                if (!string.IsNullOrEmpty(p_warning))
+                {
+                    Debug.LogWarning(p_warning);
+                }
 
                 hasErrorsInExecution = true;
                 

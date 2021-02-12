@@ -22,17 +22,17 @@ namespace Dash
         {
             RectTransform rectTransform = (RectTransform)p_target;
 
-            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData)))
+            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData), "No RectTransform component found on target in node "+_model.id))
                 return;
 
             Transform towards = Model.toTarget.Resolve(Controller);
 
-            if (CheckException(towards, () => ExecuteEnd(p_flowData)))
+            if (CheckException(towards, () => ExecuteEnd(p_flowData), "Towards not defined in node "+_model.id))
                 return;
 
             RectTransform rectTowards = towards.GetComponent<RectTransform>();
 
-            if (CheckException(rectTowards, () => ExecuteEnd(p_flowData)))
+            if (CheckException(rectTowards, () => ExecuteEnd(p_flowData), "No RectTransform component found on towards in node "+_model.id))
                 return;
 
             Vector2 startPosition = rectTransform.anchoredPosition; 

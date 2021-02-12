@@ -23,7 +23,7 @@ namespace Dash
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Tooltip("Use scene reference as retarget.")]
-        public bool useReference = true;
+        public bool useReference = false;
 
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]

@@ -17,12 +17,9 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             TMP_Text text = p_target.GetComponent<TMP_Text>();
 
-            if (CheckException(text, () => ExecuteEnd(p_flowData)))
+            if (CheckException(text, () => ExecuteEnd(p_flowData), "No TMP_Text component found on target in node "+_model.id))
                 return;
             
             text.ForceMeshUpdate();
