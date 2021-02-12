@@ -3,6 +3,7 @@
  */
 
 using Dash.Attributes;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Dash
@@ -13,10 +14,35 @@ namespace Dash
     {
         protected override void Initialize()
         {
-            Button button = Model.buttonReference.Resolve(Controller);
+            Button button;
+            if (Model.useReference)
+            {
+                button = Model.buttonReference.Resolve(Controller);
+            }
+            else
+            {
+                if (Model.isChild)
+                {
+                    var t = Controller.transform.Find(Model.buttonPath);
+                    button = t == null ? null : t.GetComponent<Button>();
+                }
+                else
+                {
+                    GameObject go = GameObject.Find(Model.buttonPath);
+                    button = go == null ? null : go.GetComponent<Button>();
+                }
+            }
+
             if (button != null)
             {
-                button.onClick.AddListener(() => Execute(NodeFlowDataFactory.Create(button.transform)));
+                if (Model.retargetToButton)
+                {
+                    button.onClick.AddListener(() => Execute(NodeFlowDataFactory.Create(button.transform)));
+                }
+                else
+                {
+                    button.onClick.AddListener(() => Execute(NodeFlowDataFactory.Create(Controller.transform)));
+                }
             }
         }
 
