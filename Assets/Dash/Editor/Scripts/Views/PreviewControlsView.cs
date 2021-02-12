@@ -64,7 +64,7 @@ namespace Dash
                 GUI.enabled = !_previewRunning;
                 if (GUI.Button(new Rect(rect.x + 4, rect.y + 32, 100, 30), "RUN"))
                 {
-                    DashEditorCore.Previewer.StartPreview(Graph);
+                    DashEditorCore.Previewer.StartPreview(Graph.previewNode);
                 }
                 
                 GUI.enabled = _previewRunning;

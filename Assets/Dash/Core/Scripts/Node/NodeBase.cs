@@ -445,8 +445,6 @@ namespace Dash
             DrawCustomGUI(offsetRect);
             
             DrawConnectors(p_rect);
-
-            DrawComment(offsetRect);
         }
         
         void DrawTitle(Rect p_rect)
@@ -536,25 +534,6 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        void DrawComment(Rect p_rect)
-        {
-            if (String.IsNullOrEmpty(_model.comment))
-                return;
-            
-            GUIStyle commentStyle = new GUIStyle();
-            commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
-            commentStyle.fontSize = 14;
-            commentStyle.normal.textColor = Color.black;
-
-            string commentText = _model.comment;
-            Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
-            
-            GUI.color = new Color(1,1,1,.75f);
-            GUI.Box(new Rect(p_rect.x - 10, p_rect.y - 40, size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
-            GUI.color = Color.white;
-            GUI.Label(new Rect(p_rect.x - 2, p_rect.y - 35, size.x, size.y), commentText, commentStyle);
-        }
-        
         public Rect GetConnectorRect(bool p_input, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,

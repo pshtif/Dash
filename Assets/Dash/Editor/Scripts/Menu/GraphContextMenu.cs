@@ -82,7 +82,8 @@ namespace Dash
                 {
                     menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, (NodeBase) p_object);   
                     menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, (NodeBase) p_object);
-                    menu.AddItem(new GUIContent("Preview Node"), false, PreviewNode, (NodeBase) p_object);
+                    menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, (NodeBase) p_object);
+                    menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, (NodeBase) p_object);
                 }
             }
 
@@ -150,10 +151,14 @@ namespace Dash
             Graph.CreateNodeInEditor((Type)p_nodeType, _lastMousePosition);
         }
 
-        static void PreviewNode(object p_node)
+        static void SetAsPreview(object p_node)
         {
             Graph.previewNode = (NodeBase)p_node;
-            //DashEditorCore.Previewer.StartPreview(Graph, (NodeBase)p_node);
+        }
+        
+        static void InstantPreview(object p_node)
+        {
+            DashEditorCore.Previewer.StartPreview((NodeBase)p_node);
         }
         
         static void DeleteNode(object p_node)
