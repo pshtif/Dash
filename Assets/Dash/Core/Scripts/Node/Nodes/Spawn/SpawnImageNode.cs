@@ -24,7 +24,7 @@ namespace Dash
             }
             
             Image image = spawned.AddComponent<Image>();
-            image.sprite = Model.sprite;
+            image.sprite = Model.sprite.GetValue(ParameterResolver, p_flowData);
             RectTransform rectTransform = image.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = Model.position.GetValue(ParameterResolver, p_flowData);
 
@@ -40,10 +40,14 @@ namespace Dash
         #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)
         {
-            if (Model.sprite == null)
+            if (Model.sprite == null || Model.sprite.isExpression || Model.sprite.GetValue(ParameterResolver) == null)
                 return;
-            
-            GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32), Model.sprite.texture);
+
+            if (!Model.sprite.isExpression)
+            {
+                GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32),
+                    Model.sprite.GetValue(ParameterResolver).texture);
+            }
         }
         #endif
     }

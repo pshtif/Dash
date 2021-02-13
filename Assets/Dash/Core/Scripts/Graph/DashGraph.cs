@@ -380,7 +380,6 @@ namespace Dash
 #endregion
         
         public bool previewControlsViewMinimized = true;
-        public bool variablesViewMinimized = false;
         public Vector2 viewOffset = Vector2.zero;
         public bool showVariables = false;
 

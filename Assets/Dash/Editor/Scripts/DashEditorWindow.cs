@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -37,6 +38,9 @@ namespace Dash
             return instance;
         }
 
+        [NonSerialized]
+        private bool _previousLayoutDone = false;
+
         private void OnGUI()
         {
             // Skin/Resources are null during project building and can crash build process if editor is open
@@ -54,6 +58,10 @@ namespace Dash
             }
             
             var editorRect = new Rect(0, 0, position.width, position.height);
+            
+            // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
+            if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
+            if (Event.current.type == EventType.Repaint && !_previousLayoutDone) return;
             
             _views.ForEach(v => v.UpdateGUI(Event.current, editorRect));
             

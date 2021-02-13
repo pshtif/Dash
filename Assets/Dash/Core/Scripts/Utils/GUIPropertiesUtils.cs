@@ -42,7 +42,10 @@ namespace Dash
 
             TooltipAttribute tooltipAttribute = p_fieldInfo.GetCustomAttribute<TooltipAttribute>();
             var name = tooltipAttribute == null ? new GUIContent(nameString) : new GUIContent(nameString, tooltipAttribute.tooltip);
-
+            
+            if (IsParameterProperty(p_fieldInfo))
+                return ParameterProperty(p_fieldInfo, p_object, name);
+            
             if (IsPopupProperty(p_fieldInfo))
                 return PopupProperty(p_fieldInfo, p_object, name);
 
@@ -59,9 +62,6 @@ namespace Dash
 
             if (IsExposedReferenceProperty(p_fieldInfo))
                 return ExposedReferenceProperty(p_fieldInfo, p_object, name, p_drawLabel);
-
-            if (IsParameterProperty(p_fieldInfo))
-                return ParameterProperty(p_fieldInfo, p_object, name);
 
             return ValueProperty(p_fieldInfo, p_object, name);
         }
@@ -111,23 +111,26 @@ namespace Dash
 
         static bool SupportedTypeProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
         {
-            Type[] options = Variable.SupportedTypes;
             Type value = (Type)p_fieldInfo.GetValue(p_object);
-            int index = value == null ? 0 : Array.IndexOf(options, value);
 
-            EditorGUI.BeginChangeCheck();
+            GUILayout.BeginHorizontal();
             
-            int newIndex = EditorGUILayout.Popup(p_name, index, options.Select(t => Variable.ConvertToTypeName(t)).ToArray());
-
-            if (EditorGUI.EndChangeCheck())
+            GUILayout.Label(p_name, GUILayout.Width(120));
+            
+            if (GUILayout.Button(value.Name))
             {
-                if (newIndex != index)
+                TypesMenu.Show((type) =>
                 {
-                    p_fieldInfo.SetValue(p_object, options[newIndex]);
-                }
-
+                    if (type != value)
+                    {
+                        p_fieldInfo.SetValue(p_object, type);
+                    }    
+                });
+                
                 return true;
             }
+
+            GUILayout.EndHorizontal();
 
             return false;
         }
@@ -172,9 +175,9 @@ namespace Dash
             
             GUILayout.BeginHorizontal();
             GUILayout.Label(p_name, GUILayout.Width(120));
-
+            
             var newValue = EditorGUILayout.ObjectField((UnityEngine.Object) p_fieldInfo.GetValue(p_object),
-                p_fieldInfo.FieldType, false, GUILayout.Width(198));
+                p_fieldInfo.FieldType, false);
             
             GUILayout.EndHorizontal();
 
@@ -293,7 +296,6 @@ namespace Dash
 
                 
                 GUI.color = param.isExpression ? Color.yellow : Color.gray;
-                
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
                     param.isExpression = !param.isExpression;
