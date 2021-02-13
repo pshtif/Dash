@@ -20,7 +20,7 @@ namespace Dash
         {
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
-            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData), "Target doesn't contain RectTransform at node "+_model.id))
+            if (CheckException(rectTransform, "Target doesn't contain RectTransform at node "+_model.id))
                 return;
 
             Vector2 startSizeDelta = Model.useFrom 

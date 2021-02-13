@@ -19,13 +19,9 @@ namespace Dash
         {
             Transform target = null;
 
-            if (!p_flowData.HasAttribute("target"))
+            if (!p_flowData.HasAttribute("target") && Model.isChild)
             {
-                if (Model.executeOnNull)
-                {
-                    ExecuteOnTarget(null, p_flowData);
-                }
-                
+                Debug.LogWarning("Cannot retarget to a child of null in node "+_model.id);
                 hasErrorsInExecution = true;
 
                 return;
@@ -45,17 +41,17 @@ namespace Dash
                 {
                     if (Model.isChild)
                     {
-                        target = target.Find(Model.targetPath);
+                        target = target.Find(Model.target);
                     }
                     else
                     {
-                        GameObject go = GameObject.Find(Model.targetPath);
+                        GameObject go = GameObject.Find(Model.target);
                         target = go == null ? null : go.transform;
                     }
                 }
             }
 
-            if (CheckException(target, () => ExecuteOnTarget(target, p_flowData), "Invalid target in node "+_model.id))
+            if (CheckException(target, "No valid target found in node "+_model.id))
                 return;
             
             ExecuteOnTarget(target, p_flowData);
@@ -96,7 +92,7 @@ namespace Dash
                 {
                     style.normal.textColor = Color.white;
 
-                    GUI.Label(labelRect, ShortenPath(Model.targetPath), style);
+                    GUI.Label(labelRect, ShortenPath(Model.target), style);
                     // Model.targetPath = GUI.TextField(new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20),
                     //     Model.targetPath);
                 }

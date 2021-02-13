@@ -37,14 +37,13 @@ namespace Dash
             cachedExpression.EvaluateFunction += evalFunction; 
             EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection);
             cachedExpression.EvaluateParameter += evalParam;
-
-            bool error = false;
+            
             object obj = null;
             try
             {
                 obj = cachedExpression.Evaluate();
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
                 //Debug.Log(e);
                 hasErrorInExecution = true;

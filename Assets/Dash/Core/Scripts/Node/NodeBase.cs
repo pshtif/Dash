@@ -165,15 +165,10 @@ namespace Dash
 
         public abstract void CreateModel();
         
-        protected bool CheckException(NodeFlowData p_flowData, string p_variableName, Action p_nullCallback)
+        protected bool CheckException(NodeFlowData p_flowData, string p_variableName, string p_warning)
         {
             if (!p_flowData.HasAttribute(p_variableName))
             {
-                if (_model.executeOnNull)
-                {
-                    p_nullCallback?.Invoke();
-                }
-
                 Debug.LogWarning("Variable "+p_variableName+" not found during execution of "+this);
                 hasErrorsInExecution = true;
 
@@ -183,15 +178,10 @@ namespace Dash
             return false;
         }
 
-        protected bool CheckException(Object p_object, Action p_nullCallback, string p_warning)
+        protected bool CheckException(Object p_object, string p_warning)
         {
             if (p_object == null)
             {
-                if (_model.executeOnNull)
-                {
-                    p_nullCallback?.Invoke();   
-                }
-
                 if (!string.IsNullOrEmpty(p_warning))
                 {
                     Debug.LogWarning(p_warning);
@@ -255,17 +245,8 @@ namespace Dash
 
         public NodeBase Clone()
         {
-            List<UnityEngine.Object> references;
-            NodeBase clone;
-            
-            // var cachedContext = Cache<SerializationContext>.Claim();
-            // cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-            // byte[] bytes = SerializationUtility.SerializeValue(this, DataFormat.Binary, out references, cachedContext);
-            
-            //var cachedDeserializationContext = Cache<DeserializationContext>.Claim();
-            //clone = SerializationUtilityDeserializeValue<NodeBase>(bytes, DataFormat.Binary, references, cachedDeserializationContext);
-            clone = (NodeBase)SerializationUtility.CreateCopy(this);
-            
+            NodeBase clone = (NodeBase)SerializationUtility.CreateCopy(this);
+            Debug.Log("HERE "+(clone._graph == _graph));
             clone._graph = _graph;
             
             return clone;

@@ -18,10 +18,19 @@ namespace Dash
         [Tooltip("Retarget to child of controller.")]
         public bool isChild;
         
+        [Dependency("useReference", false)]
+        [Tooltip("Lookup for name match instead of path.")]
+        public bool useFind;
+        
+        [Dependency("useReference", false)]
+        [Dependency("useFind", true)]
+        [Tooltip("Look up for all instances.")]
+        public bool findAll;
+        
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Name of a button or child if relative, use / for hierachy.")]
-        public string buttonPath;
+        public string button;
         
         [Dependency("retarget", true)]
         [Dependency("useReference", true)]

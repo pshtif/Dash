@@ -28,14 +28,14 @@ namespace Dash
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
-        [Tooltip("Retarget to child.")]
+        [Tooltip("Retarget to child of current.")]
         public bool isChild;
         
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
-        public string targetPath;
+        public string target;
 
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
