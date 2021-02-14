@@ -8,6 +8,8 @@ namespace Dash
 {
     public class SpawnImageNodeModel : NodeModelBase
     {
+        public string spawnedName = "Image";
+        
         public Parameter<Sprite> sprite = new Parameter<Sprite>(null);
 
         public Parameter<Vector2> position = new Parameter<Vector2>(Vector3.zero);

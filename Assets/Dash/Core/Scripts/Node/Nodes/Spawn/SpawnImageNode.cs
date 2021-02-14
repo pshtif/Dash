@@ -18,9 +18,10 @@ namespace Dash
             Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
             
             GameObject spawned = new GameObject();
+            spawned.name = Model.spawnedName;
             if (Model.setTargetAsParent)
             {
-                spawned.transform.parent = target;
+                spawned.transform.SetParent(target, false);
             }
             
             Image image = spawned.AddComponent<Image>();
