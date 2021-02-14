@@ -19,6 +19,12 @@ namespace Dash
 
         public object Resolve(string p_name, IAttributeDataCollection p_collection)
         {
+            object result;
+            if (ResolveReservedVariable(p_name, out result))
+            {
+                return result;
+            }
+
             if (p_name.StartsWith("g_"))
             {
                 string name = p_name.Substring(2);
@@ -41,6 +47,18 @@ namespace Dash
             Debug.LogWarning("Variable "+ p_name +" not found.");
             hasErrorInExecution = true;
             return null;
+        }
+
+        protected bool ResolveReservedVariable(string p_name, out object p_result)
+        {
+            if (p_name == "mousePosition")
+            {
+                p_result = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                return true;
+            }
+            
+            p_result = null;
+            return false;
         }
 
         public T Resolve<T>(string p_name, IAttributeDataCollection p_collection)
