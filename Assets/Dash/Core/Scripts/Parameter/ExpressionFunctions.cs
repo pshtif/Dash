@@ -268,6 +268,33 @@ namespace Dash
         }
 
         /**
+         * ScreenToLocal function to conver screen space to local space
+         */
+        private static bool ScreenToLocal(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            {
+                Debug.Log("Invalid parameters for ScreenToLocal function.");
+                return false;
+            }
+
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (evalParams[0].GetType() == typeof(RectTransform) && evalParams[1].GetType() == typeof(Vector2))
+            {
+                Vector2 local;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform) evalParams[0],
+                    (Vector2) evalParams[1], Camera.main, out local);
+                p_args.HasResult = true;
+                p_args.Result = local;
+                return true;
+            }
+            
+            Debug.Log("ScreenToLocal function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.");
+            return false;
+        }
+
+        /**
          * Scaling function for vector types, standard by components or by a scalar value
          */
         private static bool Scale(FunctionArgs p_args)
