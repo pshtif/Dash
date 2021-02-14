@@ -35,17 +35,35 @@ namespace Dash
             {
                 if (Model.useReference)
                 {
-                    target = Model.targetReference.Resolve(Controller);
+                    if (Model.useExpression)
+                    {
+                        var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
+                            ParameterResolver, p_flowData);
+
+                        if (ExpressionEvaluator.hasErrorInExecution)
+                        {
+                            hasErrorsInExecution = true;
+                            return;
+                        }
+
+                        target = (Transform) value;
+                    }
+                    else
+                    {
+                        target = Model.targetReference.Resolve(Controller);
+                    }
                 }
                 else
                 {
                     if (Model.isChild)
                     {
-                        target = target.Find(Model.target);
+                        string find = GetParameterValue(Model.target, p_flowData);
+                        target = target.Find(find);
                     }
                     else
                     {
-                        GameObject go = GameObject.Find(Model.target);
+                        string find = GetParameterValue(Model.target, p_flowData);
+                        GameObject go = GameObject.Find(find);
                         target = go == null ? null : go.transform;
                     }
                 }
@@ -72,27 +90,43 @@ namespace Dash
             {
                 if (Model.useReference)
                 {
-                    FieldInfo fi = Model.GetType().GetField("targetReference");
-                    var exposedReference = fi.GetValue(Model);
-                    Object exposedValue = (Object)exposedReference.GetType().GetMethod("Resolve")
-                        .Invoke(exposedReference, new object[] {Controller});
+                    if (Model.useExpression)
+                    {
+                        style.normal.textColor = Color.cyan;
+                        GUI.Label(labelRect, "Expression", style);
+                    }
+                    else
+                    {
+                        FieldInfo fi = Model.GetType().GetField("targetReference");
+                        var exposedReference = fi.GetValue(Model);
+                        Object exposedValue = (Object) exposedReference.GetType().GetMethod("Resolve")
+                            .Invoke(exposedReference, new object[] {Controller});
 
-                    style.fontStyle = FontStyle.Bold;
-                    style.normal.textColor = new Color(0.4f, .7f, 1);
-                    string exposedLabel = exposedValue != null ? exposedValue.name : "None"; 
-                    GUI.Label(labelRect, "["+exposedLabel+"]", style);
+                        style.fontStyle = FontStyle.Bold;
+                        style.normal.textColor = new Color(0.4f, .7f, 1);
+                        string exposedLabel = exposedValue != null ? exposedValue.name : "None";
+                        GUI.Label(labelRect, "[" + exposedLabel + "]", style);
 
-                    // PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
-                    // bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+                        // PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
+                        // bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
 
-                    // GUIPropertiesUtils.ExposedReferenceField(
-                    //      new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20), fi, Model);
+                        // GUIPropertiesUtils.ExposedReferenceField(
+                        //      new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20), fi, Model);
+                    }
                 }
                 else
                 {
-                    style.normal.textColor = Color.white;
+                    if (Model.target.isExpression)
+                    {
+                        style.normal.textColor = Color.cyan;
+                        GUI.Label(labelRect, "Expression", style);
+                    }
+                    else
+                    {
+                        style.normal.textColor = Color.white;
+                        GUI.Label(labelRect, ShortenPath(Model.target.GetValue(ParameterResolver)), style);
+                    }
 
-                    GUI.Label(labelRect, ShortenPath(Model.target), style);
                     // Model.targetPath = GUI.TextField(new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20),
                     //     Model.targetPath);
                 }

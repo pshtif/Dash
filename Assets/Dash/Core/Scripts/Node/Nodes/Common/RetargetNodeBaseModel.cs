@@ -5,6 +5,7 @@
 using System;
 using Dash.Attributes;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -19,12 +20,12 @@ namespace Dash
         [TitledGroup("Retargeting")]
         [Tooltip("Change current target.")]
         public bool retarget = false;
-        
+
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Tooltip("Use scene reference as retarget.")]
         public bool useReference = false;
-
+        
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
@@ -35,12 +36,20 @@ namespace Dash
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
-        public string target;
+        [CanBeNull]
+        public Parameter<string> target = new Parameter<string>("");
 
+        [Expression("useExpression", "targetExpression")]
         [TitledGroup("Retargeting")]
         [Dependency("retarget", true)]
         [Dependency("useReference", true)]
         [Tooltip("Reference of transform to retarget to.")]
         public ExposedReference<Transform> targetReference;
+
+        [HideInInspector]
+        public bool useExpression = false;
+        
+        [HideInInspector]
+        public string targetExpression = "";
     }
 }

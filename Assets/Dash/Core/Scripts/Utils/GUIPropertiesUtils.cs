@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
@@ -28,7 +29,8 @@ namespace Dash
             EditorGUI.DrawRect(rect, p_color);
         }
 
-        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null, bool p_drawLabel = true)
+        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null,
+            bool p_drawLabel = true, bool p_notExpression = false)
         {
             HideInInspector hideInInspectorAttribute = p_fieldInfo.GetCustomAttribute<HideInInspector>();
             if (hideInInspectorAttribute != null)
@@ -45,7 +47,10 @@ namespace Dash
             
             if (IsParameterProperty(p_fieldInfo))
                 return ParameterProperty(p_fieldInfo, p_object, name);
-            
+
+            if (!p_notExpression && IsExpressionProperty(p_fieldInfo))
+                return ExpressionProperty(p_fieldInfo, p_object, name);
+
             if (IsPopupProperty(p_fieldInfo))
                 return PopupProperty(p_fieldInfo, p_object, name);
 
@@ -318,6 +323,57 @@ namespace Dash
                 GUILayout.Label("Serialization error on " + p_fieldInfo.Name+"\nYou can use SerializationInvalidation in menu to try fix this.");
                 EditorGUILayout.Space(2);
                 GUI.color = Color.white;
+            }
+
+            return false;
+        }
+        
+        public static bool IsExpressionProperty(FieldInfo p_fieldInfo)
+        {
+            return p_fieldInfo.GetAttribute<ExpressionAttribute>() != null;
+        }
+        
+        static bool ExpressionProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
+        {
+            ExpressionAttribute expressionAttribute = p_fieldInfo.GetAttribute<ExpressionAttribute>();
+            
+            if (expressionAttribute == null)
+                return false;
+
+            FieldInfo expressionField = p_object.GetType().GetField(expressionAttribute.expression);
+            FieldInfo useExpressionField = p_object.GetType().GetField(expressionAttribute.useExpression);
+            
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.BeginHorizontal();
+            
+            if ((bool)useExpressionField.GetValue(p_object))
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(p_name, GUILayout.Width(120));
+                string expression = GUILayout.TextArea((string)expressionField.GetValue(p_object), GUILayout.Width(170));
+                expressionField.SetValue(p_object, expression);
+                GUILayout.EndHorizontal();
+            }
+            else
+            {
+                PropertyField(p_fieldInfo, p_object, p_name.text, true, true);
+            }
+
+            bool useExpression = (bool)useExpressionField.GetValue(p_object);
+            GUI.color = useExpression ? Color.yellow : Color.gray;
+            if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
+            {
+                useExpressionField.SetValue(p_object, !useExpression);
+            }
+            GUI.color = Color.white;
+            
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.Space(4);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                return true;
             }
 
             return false;
