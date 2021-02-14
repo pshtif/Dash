@@ -25,7 +25,6 @@ namespace Dash
                     MethodInfo generic = method.MakeGenericMethod(Model.attributeType);
                     var value = generic.Invoke(null, new object[] { Model.expression, ParameterResolver, p_flowData });
                     
-                    Debug.Log(ExpressionEvaluator.hasErrorInExecution);
                     if (ExpressionEvaluator.hasErrorInExecution)
                     {
                         hasErrorsInExecution = true;
