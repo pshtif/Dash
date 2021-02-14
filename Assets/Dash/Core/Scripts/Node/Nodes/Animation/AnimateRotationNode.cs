@@ -29,16 +29,18 @@ namespace Dash
                     : Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData)) 
                 : rectTransform.rotation;
 
+            Vector3 toRotation = Model.toRotation.GetValue(ParameterResolver, p_flowData);
+
             if (Model.time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startRotation);
+                UpdateTween(rectTransform, 1, p_flowData, startRotation, toRotation);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startRotation), 0,
+                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startRotation, toRotation), 0,
                         1, Model.time)
                     .SetDelay(Model.delay)
                     .SetEase(Ease.Linear)
@@ -54,12 +56,12 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation, Vector3 p_toRotation)
         {
             if (p_target == null)
                 return;
 
-            Quaternion rotation = Quaternion.Euler(Model.toRotation.GetValue(ParameterResolver, p_flowData));
+            Quaternion rotation = Quaternion.Euler(p_toRotation);
             if (Model.isToRelative) rotation = rotation * Quaternion.Inverse(p_startRotation);
             Vector3 finalRotation = rotation.eulerAngles;
             Vector3 easedRotation = new Vector3(DOVirtual.EasedValue(0, finalRotation.x, p_delta, Model.easing),
