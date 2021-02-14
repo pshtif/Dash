@@ -23,13 +23,15 @@ namespace Dash
             if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
                 return;
 
+            Vector3 fromRotation = GetParameterValue(Model.fromRotation, p_flowData);
+            
             Quaternion startRotation = Model.useFrom
                 ? Model.isFromRelative
                     ? rectTransform.rotation * Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData))
-                    : Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData)) 
+                    : Quaternion.Euler(fromRotation) 
                 : rectTransform.rotation;
 
-            Vector3 toRotation = Model.toRotation.GetValue(ParameterResolver, p_flowData);
+            Vector3 toRotation = GetParameterValue<Vector3>(Model.toRotation, p_flowData);
 
             if (Model.time == 0)
             {

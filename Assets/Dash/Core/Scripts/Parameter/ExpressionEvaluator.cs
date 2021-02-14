@@ -17,6 +17,13 @@ namespace Dash
         protected static Dictionary<string,Expression> _cachedExpressions;
         static public bool hasErrorInExecution { get; protected set; } = false;
 
+        public static object EvaluateTypedExpression(string p_expression, Type p_returnType, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
+        {
+            MethodInfo method = typeof(ExpressionEvaluator).GetMethod("EvaluateExpression", BindingFlags.Public | BindingFlags.Static);
+            MethodInfo generic = method.MakeGenericMethod(p_returnType);
+            return generic.Invoke(null, new object[] { p_expression, p_resolver, p_collection });
+        }
+        
         public static T EvaluateExpression<T>(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
         {
             hasErrorInExecution = false;
@@ -52,9 +59,19 @@ namespace Dash
             cachedExpression.EvaluateFunction -= evalFunction;
             cachedExpression.EvaluateParameter -= evalParam;
             
-            if (obj != null && (typeof(T).IsAssignableFrom(obj.GetType()) || typeof(T).IsImplicitlyAssignableFrom(obj.GetType())))
+            if (obj != null)
             {
-                return (T) Convert.ChangeType(obj, typeof(T));
+                if (typeof(T).IsAssignableFrom(obj.GetType()))
+                {
+                    return (T) obj;    
+                }
+                
+                if (typeof(T).IsImplicitlyAssignableFrom(obj.GetType()))
+                {
+                    return (T)Convert.ChangeType(obj, typeof(T));
+                }
+                
+                Debug.LogWarning("Invalid expression casting.");
             }
 
             return default(T);

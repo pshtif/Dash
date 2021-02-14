@@ -23,13 +23,15 @@ namespace Dash
             if (CheckException(rectTransform, "Target doesn't contain RectTransform at node "+_model.id))
                 return;
 
+            Vector2 fromSizeDelta = GetParameterValue(Model.fromSizeDelta, p_flowData);
+            
             Vector2 startSizeDelta = Model.useFrom 
                 ? Model.isFromRelative 
-                    ? rectTransform.sizeDelta + Model.fromSizeDelta.GetValue(ParameterResolver, p_flowData) 
-                    : Model.fromSizeDelta.GetValue(ParameterResolver, p_flowData) 
+                    ? rectTransform.sizeDelta + fromSizeDelta
+                    : fromSizeDelta 
                 : rectTransform.sizeDelta;
             
-            Vector2 toSizeDelta = Model.toSizeDelta.GetValue(ParameterResolver, p_flowData);
+            Vector2 toSizeDelta = GetParameterValue(Model.toSizeDelta, p_flowData);
 
             if (Model.time == 0)
             {

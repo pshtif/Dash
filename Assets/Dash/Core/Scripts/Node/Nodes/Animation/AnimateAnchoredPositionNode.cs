@@ -23,13 +23,15 @@ namespace Dash
             if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
                 return;
 
+            Vector2 fromPosition = GetParameterValue<Vector2>(Model.fromPosition, p_flowData);
+
             Vector2 startPosition = Model.useFrom 
                 ? Model.isFromRelative 
-                    ? rectTransform.anchoredPosition + Model.fromPosition.GetValue(ParameterResolver, p_flowData) 
-                    : Model.fromPosition.GetValue(ParameterResolver, p_flowData) 
+                    ? rectTransform.anchoredPosition + fromPosition 
+                    : fromPosition 
                 : rectTransform.anchoredPosition;
-            
-            Vector2 finalPosition = Model.toPosition.GetValue(ParameterResolver, p_flowData);
+
+            Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
 
             if (Model.time == 0)
             {

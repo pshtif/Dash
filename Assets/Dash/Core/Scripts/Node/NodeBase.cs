@@ -153,7 +153,11 @@ namespace Dash
 
         protected void OnExecuteOutput(int p_index, NodeFlowData p_flowData)
         {
-            Graph.ExecuteOutputs(this, p_index, p_flowData);
+            if (!hasErrorsInExecution)
+            {
+                Graph.ExecuteOutputs(this, p_index, p_flowData);
+            }
+
             //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
         }
         
@@ -165,12 +169,11 @@ namespace Dash
 
         public abstract void CreateModel();
         
-        protected bool CheckException(NodeFlowData p_flowData, string p_variableName, string p_warning)
+        protected bool CheckException(NodeFlowData p_flowData, string p_variableName)
         {
             if (!p_flowData.HasAttribute(p_variableName))
             {
-                Debug.LogWarning("Variable "+p_variableName+" not found during execution of "+this);
-                hasErrorsInExecution = true;
+                SetError("Variable "+p_variableName+" not found during execution of "+this);
 
                 return true;
             }
@@ -178,21 +181,26 @@ namespace Dash
             return false;
         }
 
-        protected bool CheckException(Object p_object, string p_warning)
+        protected bool CheckException(Object p_object, string p_warning = null)
         {
             if (p_object == null)
             {
-                if (!string.IsNullOrEmpty(p_warning))
-                {
-                    Debug.LogWarning(p_warning);
-                }
-
-                hasErrorsInExecution = true;
+                SetError(p_warning);
                 
                 return true;
             }
 
             return false;
+        }
+
+        protected void SetError(string p_warning = null)
+        {
+            if (!string.IsNullOrEmpty(p_warning))
+            {
+                Debug.LogWarning(p_warning);
+            }
+            
+            hasErrorsInExecution = true;
         }
         
         protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)

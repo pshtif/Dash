@@ -22,13 +22,15 @@ namespace Dash
             if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
                 return;
 
+            Vector3 fromScale = GetParameterValue(Model.fromScale, p_flowData);
+            
             Vector3 startScale = Model.useFrom 
                 ? Model.isFromRelative
                     ? rectTransform.localScale + Model.fromScale.GetValue(ParameterResolver, p_flowData)  
-                    : Model.fromScale.GetValue(ParameterResolver, p_flowData) 
+                    : fromScale 
                 : rectTransform.localScale;
             
-            Vector3 toScale = Model.toScale.GetValue(ParameterResolver, p_flowData);
+            Vector3 toScale = GetParameterValue(Model.toScale, p_flowData);
             
             if (Model.time == 0)
             {

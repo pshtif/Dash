@@ -25,9 +25,9 @@ namespace Dash
             }
             
             Image image = spawned.AddComponent<Image>();
-            image.sprite = Model.sprite.GetValue(ParameterResolver, p_flowData);
+            image.sprite = GetParameterValue(Model.sprite, p_flowData);
             RectTransform rectTransform = image.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = Model.position.GetValue(ParameterResolver, p_flowData);
+            rectTransform.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
             if (Model.retargetToSpawned)
             {

@@ -21,9 +21,8 @@ namespace Dash
                 if (!p_flowData.HasAttribute(Model.attributeName) ||
                     p_flowData.GetAttributeType(Model.attributeName) == Model.attributeType)
                 {
-                    MethodInfo method = typeof(ExpressionEvaluator).GetMethod("EvaluateExpression", BindingFlags.Public | BindingFlags.Static);
-                    MethodInfo generic = method.MakeGenericMethod(Model.attributeType);
-                    var value = generic.Invoke(null, new object[] { Model.expression, ParameterResolver, p_flowData });
+                    var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.attributeType,
+                        ParameterResolver, p_flowData);
                     
                     if (ExpressionEvaluator.hasErrorInExecution)
                     {

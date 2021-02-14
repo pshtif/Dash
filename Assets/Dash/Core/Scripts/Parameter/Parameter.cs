@@ -31,9 +31,6 @@ namespace Dash
     public class Parameter<T> : Parameter
     {
         protected T _value;
-
-        [NonSerialized] 
-        private string _previousExpression;
         
         public Parameter(T p_value)
         {
@@ -57,7 +54,10 @@ namespace Dash
                     return default(T);
                 }
                 
-                return ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection);
+                T value = ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection);
+                hasError = ExpressionEvaluator.hasErrorInExecution;
+
+                return value;
             }
             
             return _value;

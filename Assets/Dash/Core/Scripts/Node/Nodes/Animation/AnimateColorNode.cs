@@ -56,7 +56,7 @@ namespace Dash
         void ExecuteAs(Image p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
-            Color toColor = Model.toColor.GetValue(ParameterResolver, p_flowData);
+            Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             if (Model.time == 0)
             {
@@ -77,7 +77,7 @@ namespace Dash
         void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
-            Color toColor = Model.toColor.GetValue(ParameterResolver, p_flowData);
+            Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             if (Model.time == 0)
             {
