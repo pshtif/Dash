@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -121,6 +121,3558 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &68948194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 68948195}
+  - component: {fileID: 68948197}
+  - component: {fileID: 68948196}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &68948195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68948194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 315273059}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 213, y: 24.4}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &68948196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68948194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 5.789
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: aa2f3c655b3634b2b852b64fd197fd58, type: 2}
+  m_sharedMaterial: {fileID: 6447333859754382329, guid: aa2f3c655b3634b2b852b64fd197fd58,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294962082
+  m_fontColor: {r: 0.63529414, g: 0.9215687, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 48
+  m_fontSizeBase: 48
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 9.964355, z: 0, w: -48.850708}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &68948197
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68948194}
+  m_CullTransparentMesh: 0
+--- !u!1 &315273058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 315273059}
+  m_Layer: 5
+  m_Name: Item2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &315273059
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315273058}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 881674412}
+  - {fileID: 68948195}
+  m_Father: {fileID: 2089327274}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -111.80078, y: 891}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &373258997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373258998}
+  m_Layer: 5
+  m_Name: Item1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &373258998
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373258997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2117891561}
+  - {fileID: 1718750479}
+  m_Father: {fileID: 2089327274}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -458, y: 891}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &762337078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f992b7b42e86e4193a2e97d9286a3d, type: 3}
+  m_Name: Screen1[Bound]
+  m_EditorClassIdentifier: 
+  _connections:
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 0
+  - active: 1
+  - active: 1
+  - active: 1
+  _serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 762337078}
+    - {fileID: 1896829599}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: OnExit
+      Entry: 6
+      Data: 
+    - Name: variables
+      Entry: 7
+      Data: 0|Dash.GraphVariables, Assembly-CSharp
+    - Name: _variables
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Dash.Variable, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 2|Dash.Variable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: _name
+      Entry: 1
+      Data: screen
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _boundProperty
+      Entry: 1
+      Data: 
+    - Name: _boundComponentName
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _extractedClipCache
+      Entry: 7
+      Data: 3|Dash.ExtractedClipCache, Assembly-CSharp
+    - Name: _clips
+      Entry: 7
+      Data: 4|System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule],[Dash.ExtractedClip, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 5|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _nodes
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Dash.NodeBase, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 18
+    - Name: 
+      Entry: 7
+      Data: 7|Dash.EnterNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 8|Dash.EnterNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Enter1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 9|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 10|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -292.5
+    - Name: 
+      Entry: 4
+      Data: 453
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 12|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 13|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 10
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 14|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 1825010584
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.4
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: true
+    - Name: fromPosition
+      Entry: 7
+      Data: 15|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: true
+    - Name: toPosition
+      Entry: 7
+      Data: 16|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: true
+    - Name: expression
+      Entry: 1
+      Data: g_screen
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 356
+    - Name: 
+      Entry: 4
+      Data: 377
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 18|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition2
+    - Name: groupsMinized
+      Entry: 7
+      Data: 19|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 20|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1634517061
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.3
+    - Name: delay
+      Entry: 4
+      Data: 0.2
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 21|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 22|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 652
+    - Name: 
+      Entry: 4
+      Data: 733
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 23|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 24|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition3
+    - Name: groupsMinized
+      Entry: 7
+      Data: 25|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 26|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1122522395
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 27|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 28|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 310.5
+    - Name: 
+      Entry: 4
+      Data: 820.5
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 29|Dash.RetargetToChildrenNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 30|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: RetargetToChildren1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 31|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 32|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 33|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: onChildDelay
+      Entry: 7
+      Data: 34|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onFinishDelay
+      Entry: 4
+      Data: 0
+    - Name: inReverse
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 354
+    - Name: 
+      Entry: 4
+      Data: 568
+    - Name: 
+      Entry: 4
+      Data: 200
+    - Name: 
+      Entry: 4
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 35|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 36|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition4
+    - Name: groupsMinized
+      Entry: 7
+      Data: 37|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 32
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: false
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 38|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 39|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 626
+    - Name: 
+      Entry: 4
+      Data: 580
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 40|Dash.RetargetToChildrenNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 41|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: RetargetToChildren2
+    - Name: groupsMinized
+      Entry: 7
+      Data: 42|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 43|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 44|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: onChildDelay
+      Entry: 7
+      Data: 45|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onFinishDelay
+      Entry: 4
+      Data: 1
+    - Name: inReverse
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 649
+    - Name: 
+      Entry: 4
+      Data: 376
+    - Name: 
+      Entry: 4
+      Data: 200
+    - Name: 
+      Entry: 4
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 46|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 47|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition5
+    - Name: groupsMinized
+      Entry: 7
+      Data: 48|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 43
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: false
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.2
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 49|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 50|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 970.75
+    - Name: 
+      Entry: 4
+      Data: 279.75
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 51|Dash.AnimateScaleNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 52|Dash.AnimateScaleNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateScale1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 53|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 54|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Scale
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 55|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.3
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: true
+    - Name: fromScale
+      Entry: 7
+      Data: 56|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toScale
+      Entry: 7
+      Data: 57|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1002.75
+    - Name: 
+      Entry: 4
+      Data: 449.75
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 58|Dash.AnimateTextNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 59|Dash.AnimateTextNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateText1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Text
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1493098900
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.5
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: characterDelay
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 665
+    - Name: 
+      Entry: 4
+      Data: 896.5
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 62|Dash.OnCustomEventNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 63|Dash.OnCustomEventNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnCustomEvent1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 65|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: eventName
+      Entry: 1
+      Data: Hide
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -292.5
+    - Name: 
+      Entry: 4
+      Data: 1310.5
+    - Name: 
+      Entry: 4
+      Data: 108.5
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 66|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 67|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition3
+    - Name: groupsMinized
+      Entry: 7
+      Data: 68|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 69|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 6
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1122522395
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.3
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 26
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 70|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 71|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 150.25
+    - Name: 
+      Entry: 4
+      Data: 1268.5
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 72|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 73|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 74|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 75|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Animation
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Properties
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Retargeting
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 76|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 1825010584
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 4
+      Data: 0.4
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 26
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 77|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: true
+    - Name: toPosition
+      Entry: 7
+      Data: 78|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 1
+      Data: g_screen
+    - Name: hasError
+      Entry: 5
+      Data: false
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 152
+    - Name: 
+      Entry: 4
+      Data: 1378.25
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 79|Dash.NullNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 80|Dash.NullNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Null1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 81|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 82|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 613.5
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 83|Dash.OnCustomEventNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 84|Dash.OnCustomEventNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnCustomEvent2
+    - Name: groupsMinized
+      Entry: 7
+      Data: 85|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 86|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: eventName
+      Entry: 1
+      Data: Show
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -288.5
+    - Name: 
+      Entry: 4
+      Data: 657
+    - Name: 
+      Entry: 4
+      Data: 114.5
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 87|Dash.OnMouseClickNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 88|Dash.OnMouseClickNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnMouseClick1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 89|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 90|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: useFind
+      Entry: 5
+      Data: true
+    - Name: findAll
+      Entry: 5
+      Data: true
+    - Name: button
+      Entry: 1
+      Data: Button
+    - Name: buttonReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.UI.Button, UnityEngine.UI]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retargetToButton
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -344.75
+    - Name: 
+      Entry: 4
+      Data: 1014.25
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 91|Dash.DebugNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 92|Dash.DebugNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Debug1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 93|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 94|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: text
+      Entry: 1
+      Data: test
+    - Name: variable
+      Entry: 1
+      Data: target
+    - Name: debugFlowData
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -80.75
+    - Name: 
+      Entry: 4
+      Data: 1051.75
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 95|Dash.SendEventNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 96|Dash.SendEventNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: SendEvent1
+    - Name: groupsMinized
+      Entry: 7
+      Data: 97|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 98|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Other
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Advanced
+    - Name: $v
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: eventName
+      Entry: 1
+      Data: Hide
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 156.75
+    - Name: 
+      Entry: 4
+      Data: 1060.75
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _connections
+      Entry: 7
+      Data: 99|System.Collections.Generic.List`1[[Dash.NodeConnection, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 15
+    - Name: 
+      Entry: 7
+      Data: 100|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 17
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 23
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 101|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 35
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 29
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 102|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 40
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 103|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 46
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 104|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 51
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 105|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 58
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 23
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 106|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 66
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 107|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 72
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 108|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 11
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 79
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 109|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 29
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 79
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 110|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 23
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 79
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 111|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: false
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 79
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 112|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 79
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 83
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 113|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 91
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 87
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 114|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 95
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 91
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <parentGraph>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Controller>k__BackingField
+      Entry: 10
+      Data: 1
+    - Name: previewControlsViewMinimized
+      Entry: 5
+      Data: false
+    - Name: viewOffset
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 368
+    - Name: 
+      Entry: 4
+      Data: -191.75
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: showVariables
+      Entry: 5
+      Data: true
+    - Name: _previewNode
+      Entry: 9
+      Data: 83
+  previewControlsViewMinimized: 0
+  viewOffset: {x: 368, y: -191.75}
+  showVariables: 1
 --- !u!1 &865774654
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +3806,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865774654}
   m_CullTransparentMesh: 0
+--- !u!1 &881674411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 881674412}
+  - component: {fileID: 881674414}
+  - component: {fileID: 881674413}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &881674412
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881674411}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 315273059}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &881674413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881674411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d42314973ef6546d5b39f5016ccf7084, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &881674414
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881674411}
+  m_CullTransparentMesh: 0
 --- !u!1 &1028556153
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +3998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 725}
+  m_AnchoredPosition: {x: 0, y: 715}
   m_SizeDelta: {x: 877.8567, y: 221.05713}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1042422753
@@ -581,8 +4207,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -223.39844}
-  m_SizeDelta: {x: -40, y: 1676.714}
+  m_AnchoredPosition: {x: 0, y: -225}
+  m_SizeDelta: {x: -40, y: 1680}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1105419348
 MonoBehaviour:
@@ -621,6 +4247,117 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105419346}
   m_CullTransparentMesh: 0
+--- !u!1 &1132051525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132051526}
+  - component: {fileID: 1132051528}
+  - component: {fileID: 1132051527}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1132051526
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132051525}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1269931030}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1132051527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132051525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2ee3c92b927df4a9fa81a69a3417ecbf, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1132051528
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132051525}
+  m_CullTransparentMesh: 0
+--- !u!1 &1269931029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1269931030}
+  m_Layer: 5
+  m_Name: Item3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1269931030
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269931029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1132051526}
+  - {fileID: 1832135936}
+  m_Father: {fileID: 2089327274}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 236.5, y: 891}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1366160686
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +4516,274 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1718750478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718750479}
+  - component: {fileID: 1718750481}
+  - component: {fileID: 1718750480}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1718750479
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718750478}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 373258998}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 213, y: 24.4}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1718750480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718750478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 5.790
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: aa2f3c655b3634b2b852b64fd197fd58, type: 2}
+  m_sharedMaterial: {fileID: 6447333859754382329, guid: aa2f3c655b3634b2b852b64fd197fd58,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4283623935
+  m_fontColor: {r: 1, g: 0.91372555, b: 0.32156864, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 48
+  m_fontSizeBase: 48
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 9.964355, z: 0, w: -48.850708}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1718750481
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718750478}
+  m_CullTransparentMesh: 0
+--- !u!1 &1832135935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1832135936}
+  - component: {fileID: 1832135938}
+  - component: {fileID: 1832135937}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1832135936
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832135935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1269931030}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 213, y: 24.4}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1832135937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832135935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 5.789
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: aa2f3c655b3634b2b852b64fd197fd58, type: 2}
+  m_sharedMaterial: {fileID: 6447333859754382329, guid: aa2f3c655b3634b2b852b64fd197fd58,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4282568852
+  m_fontColor: {r: 0.5803922, g: 0.81568635, b: 0.25882354, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 48
+  m_fontSizeBase: 48
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 9.964355, z: 0, w: -48.850708}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1832135938
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832135935}
+  m_CullTransparentMesh: 0
 --- !u!1 &1896829598
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,12 +4798,12 @@ GameObject:
   - component: {fileID: 1896829601}
   - component: {fileID: 1896829599}
   m_Layer: 5
-  m_Name: Screen
-  m_TagString: DashPreview
+  m_Name: Screen1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1896829599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,13 +4816,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c945ee359c1744141bd21d632fad9fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assetGraph: {fileID: 11400000, guid: 608c2b0880982df46936deda1f0aaff9, type: 2}
-  _boundGraphData: 
+  _assetGraph: {fileID: 0}
+  _boundGraphData: 2d01060000004f006e0045007800690074000101090000007600610072006900610062006c00650073002f00000000012400000044006100730068002e00470072006100700068005600610072006900610062006c00650073002c00200041007300730065006d0062006c0079002d004300530068006100720070000000000001010a0000005f007600610072006900610062006c00650073002f01000000014d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e005600610072006900610062006c0065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c006900620001000000060100000000000000022f02000000014f00000044006100730068002e005600610072006900610062006c006500600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c00200041007300730065006d0062006c0079002d00430053006800610072007000020000002701050000005f006e0061006d0065000106000000730063007200650065006e000301060000005f00760061006c00750065002f03000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200000874420000000000527010e0000005f0062006f0075006e006400500072006f007000650072007400790001000000002701130000005f0062006f0075006e00640043006f006d0070006f006e0065006e0074004e0061006d0065000100000000050705050101130000005f0065007800740072006100630074006500640043006c0069007000430061006300680065002f04000000012800000044006100730068002e0045007800740072006100630074006500640043006c0069007000430061006300680065002c00200041007300730065006d0062006c0079002d00430053006800610072007000030000000101060000005f0063006c006900700073002f050000000191000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b0055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e0043006c00690070002c00200055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e004d006f00640075006c0065005d002c005b0044006100730068002e0045007800740072006100630074006500640043006c00690070002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c00690062000400000001010800000063006f006d00700061007200650072002f060000000177000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004f0062006a0065006300740045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e0043006c00690070002c00200055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620005000000050600000000000000000705050101060000005f006e006f006400650073002f07000000014d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e004e006f006400650042006100730065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c006900620006000000061200000000000000022f08000000011f00000044006100730068002e0045006e007400650072004e006f00640065002c00200041007300730065006d0062006c0079002d00430053006800610072007000070000000101060000005f006d006f00640065006c002f09000000012400000044006100730068002e0045006e007400650072004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070000800000027010200000069006400010600000045006e00740065007200310001010d000000670072006f007500700073004d0069006e0069007a00650064002f0a0000000167000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d002c005b00530079007300740065006d002e0042006f006f006c00650061006e002c0020006d00730063006f0072006c00690062005d005d002c0020006d00730063006f0072006c00690062000900000001010800000063006f006d00700061007200650072002f0b0000000159000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00470065006e00650072006900630045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d005d002c0020006d00730063006f0072006c00690062000a00000005060100000000000000042e27010200000024006b00010800000041006400760061006e006300650064002b01020000002400760001050705050b01060000005f00670072006100700068000000000003010400000072006500630074002f0c000000012800000055006e0069007400790045006e00670069006e0065002e0052006500630074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650020004092c3200080e243200000aa42200000aa420505022f0d000000013100000044006100730068002e0041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070000b0000000101060000005f006d006f00640065006c002f0e000000013600000044006100730068002e0041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070000c00000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000000d00000009010800000063006f006d00700061007200650072000a000000060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c006400010101060000007400610072006700650074002f0f000000013c00000044006100730068002e0050006100720061006d006500740065007200600031005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d005d002c00200041007300730065006d0062006c0079002d004300530068006100720070000e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e00630065002f10000000016700000055006e0069007400790045006e00670069006e0065002e004500780070006f007300650064005200650066006500720065006e0063006500600031005b005b0055006e0069007400790045006e00670069006e0065002e005400720061006e00730066006f0072006d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650003010b0000006500780070006f007300650064004e0061006d0065002f11000000013000000055006e0069007400790045006e00670069006e0065002e00500072006f00700065007200740079004e0061006d0065002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500170102000000690064009873c76c17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d006500cdcccc3e1f0105000000640065006c0061007900000000001d010600000065006100730069006e0067001b000000000000002b0107000000750073006500460072006f006d000101010c000000660072006f006d0050006f0073006900740069006f006e002f12000000015000000044006100730068002e0050006100720061006d006500740065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c00200041007300730065006d0062006c0079002d004300530068006100720070000f0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c0075006500300300000020000087c4200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000101010a00000074006f0050006f0073006900740069006f006e003012000000100000002b010c00000069007300450078007000720065007300730069006f006e000127010a000000650078007000720065007300730069006f006e00010800000067005f00730063007200650065006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200000b243200080bc432000005c43200000aa42050502300d000000110000000101060000005f006d006f00640065006c00300e0000001200000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00320001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000001300000001010800000063006f006d0070006100720065007200300b0000001400000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d006500301100000017010200000069006400bb3f939e17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d0065009a99993e1f0105000000640065006c0061007900cdcc4c3e1d010600000065006100730069006e0067001b000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003012000000150000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000c84305052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003012000000160000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000c8c305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200000234420004037442000005c43200000aa42050502300d000000170000000101060000005f006d006f00640065006c00300e0000001800000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00330001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000001900000001010800000063006f006d0070006100720065007200300b0000001a00000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d006500301100000017010200000069006400e5aa17bd17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d006500000000001f0105000000640065006c0061007900000000001d010600000065006100730069006e00670001000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e0030120000001b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e0030120000001c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000c84305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000409b432000204d442000005c43200000aa420505022f13000000012c00000044006100730068002e005200650074006100720067006500740054006f004300680069006c006400720065006e004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070001d0000000101060000005f006d006f00640065006c002f14000000013100000044006100730068002e005200650074006100720067006500740054006f004300680069006c006400720065006e004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070001e0000002701020000006900640001130000005200650074006100720067006500740054006f004300680069006c006400720065006e00310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000001f00000001010800000063006f006d0070006100720065007200300b0000002000000005060300000000000000042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300f000000210000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e0001010c0000006f006e004300680069006c006400440065006c00610079002f15000000013c00000044006100730068002e0050006100720061006d006500740065007200600031005b005b00530079007300740065006d002e00530069006e0067006c0065002c0020006d00730063006f0072006c00690062005d005d002c00200041007300730065006d0062006c0079002d00430053006800610072007000220000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200001f01060000005f00760061006c007500650000000000051f010d0000006f006e00460069006e00690073006800440065006c0061007900000000002b010900000069006e00520065007600650072007300650000050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200000b1432000000e442000004843200000dc42050502300d000000230000000101060000005f006d006f00640065006c00300e0000002400000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00340001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000002500000009010800000063006f006d007000610072006500720020000000060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400002b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d006500000000001f0105000000640065006c0061007900000000001d010600000065006100730069006e00670001000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003012000000260000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003012000000270000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c0075006500300300000020000087c4200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000801c4420000011442000005c43200000aa420505023013000000280000000101060000005f006d006f00640065006c003014000000290000002701020000006900640001130000005200650074006100720067006500740054006f004300680069006c006400720065006e00320001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000002a00000001010800000063006f006d0070006100720065007200300b0000002b00000005060300000000000000042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300f0000002c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e0001010c0000006f006e004300680069006c006400440065006c006100790030150000002d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200001f01060000005f00760061006c0075006500cdcccc3d051f010d0000006f006e00460069006e00690073006800440065006c00610079000000803f2b010900000069006e00520065007600650072007300650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000402244200000bc432000004843200000dc42050502300d0000002e0000000101060000005f006d006f00640065006c00300e0000002f00000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00350001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000003000000009010800000063006f006d00700061007200650072002b000000060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400002b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d006500cdcc4c3e1f0105000000640065006c0061007900000000001d010600000065006100730069006e0067001b000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003012000000310000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003012000000320000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000b072442000e08b432000005c43200000aa420505022f16000000012600000044006100730068002e0041006e0069006d006100740065005300630061006c0065004e006f00640065002c00200041007300730065006d0062006c0079002d00430053006800610072007000330000000101060000005f006d006f00640065006c002f17000000012b00000044006100730068002e0041006e0069006d006100740065005300630061006c0065004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070003400000027010200000069006400010d00000041006e0069006d006100740065005300630061006c006500310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000003500000001010800000063006f006d0070006100720065007200300b0000003600000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b0001050000005300630061006c0065002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300f000000370000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d0065009a99993e1f0105000000640065006c0061007900000000001d010600000065006100730069006e00670001000000000000002b0107000000750073006500460072006f006d0001010109000000660072006f006d005300630061006c0065002f18000000015000000044006100730068002e0050006100720061006d006500740065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c00200041007300730065006d0062006c0079002d00430053006800610072007000380000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c00750065002f19000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650020000000402000000040200000004005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010700000074006f005300630061006c0065003018000000390000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c00750065003019000000200000803f200000803f200000803f05052b010c0000006900730054006f00520065006c006100740069007600650000050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000b07a442000e0e0432000002043200000aa420505022f1a000000012500000044006100730068002e0041006e0069006d0061007400650054006500780074004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070003a0000000101060000005f006d006f00640065006c002f1b000000012a00000044006100730068002e0041006e0069006d0061007400650054006500780074004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070003b00000027010200000069006400010c00000041006e0069006d006100740065005400650078007400310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000003c00000001010800000063006f006d0070006100720065007200300b0000003d00000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010400000054006500780074002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064006c1e01a717010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d0065000000003f1f0105000000640065006c0061007900000000001d010600000065006100730069006e00670001000000000000001f010e000000630068006100720061006300740065007200440065006c0061007900cdcccc3d050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200040264420002060442000002043200000aa420505022f1c000000012700000044006100730068002e004f006e0043007500730074006f006d004500760065006e0074004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070003e0000000101060000005f006d006f00640065006c002f1d000000012c00000044006100730068002e004f006e0043007500730074006f006d004500760065006e0074004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070003f00000027010200000069006400010e0000004f006e0043007500730074006f006d004500760065006e007400310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000004000000001010800000063006f006d0070006100720065007200300b0000004100000005060200000000000000042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052701090000006500760065006e0074004e0061006d00650001040000004800690064006500050b01060000005f0067007200610070006800000000000301040000007200650063007400300c00000020004092c32000d0a344200000d942200000aa42050502300d000000420000000101060000005f006d006f00640065006c00300e0000004300000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00330001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000004400000001010800000063006f006d0070006100720065007200300b0000004500000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c006400002d010600000074006100720067006500740003010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d006500301100000017010200000069006400e5aa17bd17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d0065009a99993e1f0105000000640065006c0061007900000000001d010600000065006100730069006e0067001a000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003012000000460000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003012000000470000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000000000200000c84305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c00000020004016432000909e442000005c43200000aa42050502300d000000480000000101060000005f006d006f00640065006c00300e0000004900000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e00310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000004a00000001010800000063006f006d0070006100720065007200300b0000004b00000005060400000000000000042e27010200000024006b00010900000041006e0069006d006100740069006f006e002b0102000000240076000005042e27010200000024006b00010a000000500072006f0070006500720074006900650073002b0102000000240076000005042e27010200000024006b00010b0000005200650074006100720067006500740069006e0067002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300f0000004c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500301000000003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064009873c76c17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e001f0104000000740069006d006500cdcccc3e1f0105000000640065006c0061007900000000001d010600000065006100730069006e0067001a000000000000002b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e0030120000004d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000008744200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000101010a00000074006f0050006f0073006900740069006f006e0030120000004e0000002b010c00000069007300450078007000720065007300730069006f006e000027010a000000650078007000720065007300730069006f006e00010800000067005f00730063007200650065006e002b01080000006800610073004500720072006f007200000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000001843200048ac442000005c43200000aa420505022f1e000000011e00000044006100730068002e004e0075006c006c004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070004f0000000101060000005f006d006f00640065006c002f1f000000012300000044006100730068002e004e0075006c006c004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d00430053006800610072007000500000002701020000006900640001050000004e0075006c006c00310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000005100000001010800000063006f006d0070006100720065007200300b0000005200000005060100000000000000042e27010200000024006b00010800000041006400760061006e006300650064002b01020000002400760001050705050b01060000005f0067007200610070006800000000000301040000007200650063007400300c00000020000000402000601944200000aa42200000aa42050502301c000000530000000101060000005f006d006f00640065006c00301d0000005400000027010200000069006400010e0000004f006e0043007500730074006f006d004500760065006e007400320001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000005500000001010800000063006f006d0070006100720065007200300b0000005600000005060200000000000000042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052701090000006500760065006e0074004e0061006d0065000104000000530068006f007700050b01060000005f0067007200610070006800000000000301040000007200650063007400300c00000020004090c32000402444200000e542200000aa420505022f20000000012600000044006100730068002e004f006e004d006f0075007300650043006c00690063006b004e006f00640065002c00200041007300730065006d0062006c0079002d00430053006800610072007000570000000101060000005f006d006f00640065006c002f21000000012b00000044006100730068002e004f006e004d006f0075007300650043006c00690063006b004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070005800000027010200000069006400010d0000004f006e004d006f0075007300650043006c00690063006b00310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000005900000001010800000063006f006d0070006100720065007200300b0000005a00000005060200000000000000042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c006400012b0107000000750073006500460069006e006400012b0107000000660069006e00640041006c006c000127010600000062007500740074006f006e00010600000042007500740074006f006e0003010f00000062007500740074006f006e005200650066006500720065006e00630065002f22000000015f00000055006e0069007400790045006e00670069006e0065002e004500780070006f007300650064005200650066006500720065006e0063006500600031005b005b0055006e0069007400790045006e00670069006e0065002e00550049002e0042007500740074006f006e002c00200055006e0069007400790045006e00670069006e0065002e00550049005d005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650003010b0000006500780070006f007300650064004e0061006d0065003011000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b01100000007200650074006100720067006500740054006f0042007500740074006f006e0000050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200060acc32000907d442000001643200000aa420505022f23000000011f00000044006100730068002e00440065006200750067004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070005b0000000101060000005f006d006f00640065006c002f24000000012400000044006100730068002e00440065006200750067004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070005c00000027010200000069006400010600000044006500620075006700310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000005d00000001010800000063006f006d0070006100720065007200300b0000005e00000005060200000000000000042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052701040000007400650078007400010400000074006500730074002701080000007600610072006900610062006c00650001060000007400610072006700650074002b010d0000006400650062007500670046006c006f007700440061007400610000050b01060000005f0067007200610070006800000000000301040000007200650063007400300c000000200080a1c220007883442000001643200000aa420505022f25000000012300000044006100730068002e00530065006e0064004500760065006e0074004e006f00640065002c00200041007300730065006d0062006c0079002d004300530068006100720070005f0000000101060000005f006d006f00640065006c002f26000000012800000044006100730068002e00530065006e0064004500760065006e0074004e006f00640065004d006f00640065006c002c00200041007300730065006d0062006c0079002d004300530068006100720070006000000027010200000069006400010a000000530065006e0064004500760065006e007400310001010d000000670072006f007500700073004d0069006e0069007a0065006400300a0000006100000001010800000063006f006d0070006100720065007200300b0000006200000005060200000000000000042e27010200000024006b0001050000004f0074006800650072002b0102000000240076000005042e27010200000024006b00010800000041006400760061006e006300650064002b010200000024007600010507052701090000006500760065006e0074004e0061006d00650001040000004800690064006500050b01060000005f0067007200610070006800000000000301040000007200650063007400300c0000002000c01c4320009884442000001643200000aa420505070501010c0000005f0063006f006e006e0065006300740069006f006e0073002f270000000153000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e004e006f006400650043006f006e006e0065006300740069006f006e002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c006900620063000000060f00000000000000022f28000000012400000044006100730068002e004e006f006400650043006f006e006e0065006300740069006f006e002c00200041007300730065006d0062006c0079002d00430053006800610072007000640000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001100000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001700000005023028000000650000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002300000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001d00000005023028000000660000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002800000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064000b00000005023028000000670000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002e00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002800000005023028000000680000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003300000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002800000005023028000000690000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003a00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c00640017000000050230280000006a0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004200000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003e000000050230280000006b0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004800000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003e000000050230280000006c0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064000b00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f000000050230280000006d0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001d00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f000000050230280000006e0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001700000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f000000050230280000006f0000002b01060000006100630074006900760065000017011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064000700000005023028000000700000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005300000005023028000000710000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005b00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005700000005023028000000720000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005f00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005b0000000507052d011c0000003c0070006100720065006e007400470072006100700068003e006b005f005f004200610063006b0069006e0067004600690065006c0064000b011b0000003c0043006f006e00740072006f006c006c00650072003e006b005f005f004200610063006b0069006e0067004600690065006c006400010000002b011c000000700072006500760069006500770043006f006e00740072006f006c00730056006900650077004d0069006e0069006d0069007a00650064000003010a00000076006900650077004f00660066007300650074003003000000200000b8432000c03fc3052b010d000000730068006f0077005600610072006900610062006c00650073000109010c0000005f0070007200650076006900650077004e006f006400650053000000
   _selfReferenceIndex: 0
-  _boundGraphReferences: []
+  _boundGraphReferences:
+  - {fileID: 762337078}
+  - {fileID: 1896829599}
   autoStart: 1
-  _propertyNames: []
-  _references: []
+  _propertyNames:
+  - d45f9ecd78c56d24f9ddbbf75dbf6c0f
+  - 7bcf6608df933cc43b2efae1c289dc3b
+  - 82ebd2708f72af64792e533496251728
+  - 4bee40ee7d6066a41adad2b0fe44136d
+  - 722d2535c9c8f0f458a049935d10dedb
+  _references:
+  - {fileID: 1105419347}
+  - {fileID: 1042422752}
+  - {fileID: 1042422752}
+  - {fileID: 865774655}
+  - {fileID: 3936068963946783429, guid: 6bf195359545f314bb8ffbe74dc1f092, type: 3}
 --- !u!114 &1896829601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,6 +4955,225 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2089327269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089327274}
+  - component: {fileID: 2089327273}
+  - component: {fileID: 2089327272}
+  - component: {fileID: 2089327271}
+  - component: {fileID: 2089327270}
+  - component: {fileID: 2089327275}
+  m_Layer: 5
+  m_Name: Screen2
+  m_TagString: DashPreview
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2089327270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c945ee359c1744141bd21d632fad9fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _assetGraph: {fileID: 11400000, guid: f143fa7a517cf8f4bacd168d21792709, type: 2}
+  _boundGraphData: 
+  _selfReferenceIndex: 0
+  _boundGraphReferences: []
+  autoStart: 1
+  _propertyNames:
+  - dee2102ebab9bff4fbd2b708bc5313f9
+  - 7e01cfbc99e487b4994ecc5e0032652a
+  - 0b1dbdecae0de3741b0732b873359f07
+  _references:
+  - {fileID: 2117891561}
+  - {fileID: 2117891561}
+  - {fileID: 1718750479}
+--- !u!114 &2089327271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2089327272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 1
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!223 &2089327273
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 1028556155}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &2089327274
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 373258998}
+  - {fileID: 315273059}
+  - {fileID: 1269931030}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &2089327275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089327269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5fa9df9d2d0b94096b97e29dc9309c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: e06d304c8fb06400295af1ab780186e2, type: 3}
+  - {fileID: 21300000, guid: 6f5cffbe47afe4410b59bb49479f2cad, type: 3}
+  - {fileID: 21300000, guid: 2ee3c92b927df4a9fa81a69a3417ecbf, type: 3}
+  type: 0
+--- !u!1 &2117891560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2117891561}
+  - component: {fileID: 2117891563}
+  - component: {fileID: 2117891562}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2117891561
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117891560}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 373258998}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2117891562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117891560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: dee87349b2c7f426aa3b4557d16a52bc, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2117891563
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117891560}
+  m_CullTransparentMesh: 0
 --- !u!222 &783835908319861342
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1086,7 +5322,7 @@ GameObject:
   - component: {fileID: 1277495393090248044}
   - component: {fileID: 3349367109543428659}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1105,7 +5341,7 @@ GameObject:
   - component: {fileID: 1277495392811220852}
   - component: {fileID: 3349367108748501035}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1124,7 +5360,7 @@ GameObject:
   - component: {fileID: 1277495394482875301}
   - component: {fileID: 3349367108285265146}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
