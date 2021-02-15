@@ -21,7 +21,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters for Create function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Create function of type "+typeof(T));
                     return false;
                 }
 
@@ -34,7 +34,7 @@ namespace Dash
             {
                 if (evalParams.Length != 3)
                 {
-                    Debug.Log("Invalid parameters for Create function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Create function of type "+typeof(T));
                     return false;
                 }
 
@@ -55,7 +55,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 1)
             { 
-                Debug.Log("Invalid parameters for GetChildIndex function.");
+                Debug.Log("Invalid parameters in GetChildIndex function.");
                 return false;
             }
             
@@ -69,7 +69,89 @@ namespace Dash
             }
                 
             Debug.Log(evalParams[0].GetType());
-            Debug.Log("Invalid parameters for GetChildIndex function.");
+            Debug.Log("Invalid parameters in GetChildIndex function.");
+            return false;
+        }
+
+        /**
+         *  Find child of transform
+         */
+        private static bool GetChild(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            { 
+                Debug.Log("Invalid parameters in GetChild function.");
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()) && evalParams[1].GetType() == typeof(string))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Transform) evalParams[0]).Find(evalParams[1].ToString());
+                return true;
+            }
+            
+            Debug.Log("Invalid parameters in GetChild function.");
+            return false;
+        }
+        
+        /**
+         *  Get parent of a transform
+         */
+        private static bool GetParent(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            { 
+                Debug.Log("Invalid parameters in GetParent function.");
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Transform) evalParams[0]).parent;
+                return true;
+            }
+            
+            Debug.Log("Invalid parameters in GetParent function.");
+            return false;
+        }
+        
+        /**
+         *  Get child of transform at index
+         */
+        private static bool GetChildAt(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            { 
+                Debug.Log("Invalid parameters in GetChild function.");
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()) && evalParams[1].GetType() == typeof(int))
+            {
+                Transform transform = (Transform) evalParams[0];
+                int childIndex = (int) evalParams[1];
+                if (transform != null && transform.childCount > childIndex)
+                {
+                    p_args.HasResult = true;
+                    p_args.Result = transform.GetChild(childIndex);
+                    return true;
+                }
+                else
+                {
+                    Debug.Log("Invalid transform or child index in GetChildAt function.");
+                    return false;
+                }
+            }
+            
+            Debug.Log("Invalid parameters in GetChildAt function.");
             return false;
         }
 
@@ -80,7 +162,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters for Vector2 function.");
+                Debug.Log("Invalid parameters in Vector2 function.");
                 return false;
             }
             
@@ -98,7 +180,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 3)
             {
-                Debug.Log("Invalid parameters for Vector3 function.");
+                Debug.Log("Invalid parameters in Vector3 function.");
                 return false;
             }
             
@@ -116,7 +198,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters for Add function.");
+                Debug.Log("Invalid parameters in Add function.");
                 return false;
             }
             
@@ -151,7 +233,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters for Random function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
                     return false;
                 }
                 
@@ -166,7 +248,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters for Random function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
                     return false;
                 }
                 
@@ -183,7 +265,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters for Random function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
                     return false;
                 }
                 
@@ -197,7 +279,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters for Random function of type "+typeof(T));
+                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
                     return false;
                 }
                 
@@ -218,7 +300,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 1)
             {
-                Debug.Log("Invalid parameters for Magnitude function.");
+                Debug.Log("Invalid parameters in Magnitude function.");
                 return false;
             }
             
@@ -251,7 +333,7 @@ namespace Dash
             object[] evalParams = p_args.EvaluateParameters();
             if (evalParams.Length != 1)
             {
-                Debug.Log("Invalid parameters for Ceil function.");
+                Debug.Log("Invalid parameters in Ceil function.");
                 return false;
             }
 
@@ -274,7 +356,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters for ScreenToLocal function.");
+                Debug.Log("Invalid parameters in ScreenToLocal function.");
                 return false;
             }
 
@@ -301,7 +383,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters for Scale function.");
+                Debug.Log("Invalid parameters in Scale function.");
                 return false;
             }
             
@@ -327,7 +409,7 @@ namespace Dash
                     return true;
                 }
                 
-                Debug.Log("Invalid second parameter for Scale function.");
+                Debug.Log("Invalid second parameter in Scale function.");
                 return true;
             } 
             
