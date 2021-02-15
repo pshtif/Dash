@@ -25,12 +25,14 @@ namespace Dash
 
         private string _previousTag;
 
-        public void StartPreview(DashGraph p_graph)
+        public void StartPreview(NodeBase p_node)
         {
             // Debug.Log("EditorCore.StartPreview");
             
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
+            
+            int nodeIndex = Controller.Graph.Nodes.IndexOf(p_node);
             
             TagUtils.AddTag("DashPreview");
             _previousTag = Controller.tag;
@@ -41,16 +43,23 @@ namespace Dash
 
             _isPreviewing = true;
             EditorApplication.update += OnUpdate;
-
+            
             // Cloning graph for preview
-            _previewGraph = Controller.Graph;
+            _previewGraph = Controller.Graph.Clone();
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
             
-            EnterNode enterNode = _previewGraph.GetNodeByType<EnterNode>();
-            if (enterNode != null)
+            if (p_node == null)
             {
-                enterNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
+                EnterNode enterNode = _previewGraph.GetNodeByType<EnterNode>();
+                if (enterNode != null)
+                {
+                    enterNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
+                }
+            }
+            else
+            {
+                _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
 
@@ -73,8 +82,11 @@ namespace Dash
                 return;
             
             _isPreviewing = false;
-            
-            DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
+
+            if (DashEditorCore.Config.editingGraph.parentGraph != null)
+            {
+                DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
+            }
 
             DOPreview.StopPreview();
 

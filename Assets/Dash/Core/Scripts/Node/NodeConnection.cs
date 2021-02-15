@@ -61,6 +61,12 @@ namespace Dash
             Color connectionColor = active
                 ? DashEditorCore.CONNECTION_ACTIVE_COLOR
                 : DashEditorCore.CONNECTION_INACTIVE_COLOR;
+
+            if (executeTime > 0)
+            {
+                executeTime -= .2f;
+                connectionColor = Color.cyan;
+            }
             
             DrawBezier(startPos, endPos, connectionColor, true);
 

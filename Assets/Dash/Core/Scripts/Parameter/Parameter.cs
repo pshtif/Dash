@@ -31,12 +31,6 @@ namespace Dash
     public class Parameter<T> : Parameter
     {
         protected T _value;
-
-        [NonSerialized] 
-        private string _previousExpression;
-
-        [NonSerialized] 
-        private Expression _cachedExpression;
         
         public Parameter(T p_value)
         {
@@ -60,71 +54,13 @@ namespace Dash
                     return default(T);
                 }
                 
-                Debug.Log(EvaluateExpression(p_resolver, p_collection));
-                return EvaluateExpression(p_resolver, p_collection);
+                T value = ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection);
+                hasError = ExpressionEvaluator.hasErrorInExecution;
+
+                return value;
             }
             
             return _value;
-        }
-
-        private T EvaluateExpression(IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
-        {
-            // Debug.Log("Parameter<"+typeof(T)+">.EvaluateExpression");
-            // Debug.Log(expression);
-
-            if (_previousExpression != expression)
-            {
-                _cachedExpression = new Expression(expression);
-                _previousExpression = expression;
-            }
-            
-            _cachedExpression.EvaluateFunction += EvaluateFunction;
-            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection);
-            _cachedExpression.EvaluateParameter += evalParam;
-
-            object obj = null;
-            try
-            {
-                obj = _cachedExpression.Evaluate();
-            }
-            catch (Exception e)
-            {
-                //Debug.Log(e);
-                hasError = true;
-            }
-            
-            _cachedExpression.EvaluateFunction -= EvaluateFunction;
-            _cachedExpression.EvaluateParameter -= evalParam;
-            
-            if (obj != null && (typeof(T).IsAssignableFrom(obj.GetType()) || typeof(T).IsImplicitlyAssignableFrom(obj.GetType())))
-            {
-                return (T) Convert.ChangeType(obj, typeof(T));
-            }
-
-            return default(T);
-        }
-
-        void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection)
-        {
-            p_args.Result = p_resolver.Resolve(p_name, p_collection);
-        }
-
-        void EvaluateFunction(string p_name, FunctionArgs p_args)
-        {
-            MethodInfo methodInfo = typeof(ExpressionFunctions).GetMethod(p_name, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
-
-            if (methodInfo != null)
-            {
-                // Can be generic using parameter type
-                if (methodInfo.IsGenericMethod)
-                {
-                    methodInfo = methodInfo.MakeGenericMethod(typeof(T));
-                }
-                
-                // TODO maybe typize the args but it would probably just slow things down
-                bool success = (bool)methodInfo.Invoke(null, new object[] {p_args});
-                hasError = !success;
-            }
         }
 
         public void SetValue(T p_value)

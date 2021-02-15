@@ -12,7 +12,6 @@ namespace Dash
         RETARGET,
         LOGIC,
         OTHER,
-        EXPERIMENTAL,
         HIDDEN,
         OBSOLETE
     }

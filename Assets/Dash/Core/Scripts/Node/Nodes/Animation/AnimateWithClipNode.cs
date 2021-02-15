@@ -22,9 +22,6 @@ namespace Dash
 
         override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             CacheStarts(p_target);
             
             // Change time if we are using custom one

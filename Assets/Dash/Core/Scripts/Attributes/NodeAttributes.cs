@@ -112,6 +112,11 @@ namespace Dash.Attributes
             type = p_type;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ExperimentalAttribute : Attribute
+    {
+    }
     
     [AttributeUsage(AttributeTargets.Class)]
     public class InspectorHeightAttribute : Attribute

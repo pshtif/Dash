@@ -18,30 +18,31 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
-            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData)))
+            if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
                 return;
 
+            Vector3 fromRotation = GetParameterValue(Model.fromRotation, p_flowData);
+            
             Quaternion startRotation = Model.useFrom
                 ? Model.isFromRelative
                     ? rectTransform.rotation * Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData))
-                    : Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData)) 
+                    : Quaternion.Euler(fromRotation) 
                 : rectTransform.rotation;
+
+            Vector3 toRotation = GetParameterValue<Vector3>(Model.toRotation, p_flowData);
 
             if (Model.time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startRotation);
+                UpdateTween(rectTransform, 1, p_flowData, startRotation, toRotation);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startRotation), 0,
+                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startRotation, toRotation), 0,
                         1, Model.time)
                     .SetDelay(Model.delay)
                     .SetEase(Ease.Linear)
@@ -57,12 +58,12 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation, Vector3 p_toRotation)
         {
             if (p_target == null)
                 return;
 
-            Quaternion rotation = Quaternion.Euler(Model.toRotation.GetValue(ParameterResolver, p_flowData));
+            Quaternion rotation = Quaternion.Euler(p_toRotation);
             if (Model.isToRelative) rotation = rotation * Quaternion.Inverse(p_startRotation);
             Vector3 finalRotation = rotation.eulerAngles;
             Vector3 easedRotation = new Vector3(DOVirtual.EasedValue(0, finalRotation.x, p_delta, Model.easing),

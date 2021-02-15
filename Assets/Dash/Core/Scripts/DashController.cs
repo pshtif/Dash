@@ -32,7 +32,7 @@ namespace Dash
         [SerializeField]
         private List<Object> _boundGraphReferences;
 
-        DashGraph IControllerAccess.assetGraph
+        DashGraph IControllerAccess.graphAsset
         {
             get { return _assetGraph; }
             set
@@ -47,7 +47,7 @@ namespace Dash
         }
 
         [NonSerialized]
-        private DashGraph _instancedGraph;
+        public DashGraph _instancedGraph;
         
         public DashGraph Graph => GetGraphInstance();
 
@@ -87,7 +87,7 @@ namespace Dash
             }
 
             _instancedGraph.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
-            _instancedGraph.name = "Bound";
+            _instancedGraph.name = gameObject.name+"[Bound]";
         }
 
         void InstanceAssetGraph()
@@ -96,6 +96,7 @@ namespace Dash
                 return;
             
             _instancedGraph = _assetGraph.Clone();
+            ((IGraphEditorAccess) _instancedGraph).SetParentGraph(_assetGraph);
         }
 
         public bool autoStart = true;
@@ -114,7 +115,10 @@ namespace Dash
             
             if (autoStart)
             {
-                Graph.Enter(NodeFlowDataFactory.Create(transform));
+                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                data.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
+                
+                Graph.Enter(data);
             }
         }
 
@@ -133,7 +137,7 @@ namespace Dash
             
             p_flowData = p_flowData.Clone();
 
-            p_flowData.SetAttribute("controller", this);
+            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
             
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {

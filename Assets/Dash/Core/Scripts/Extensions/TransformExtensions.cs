@@ -55,5 +55,58 @@ namespace Dash
             
             return p_to.anchoredPosition + localPosition - toPivotOffset;
         }
+        
+        public static Transform DeepFind(this Transform p_parent, string p_name, bool p_partialMatch = false)
+        {
+            Queue<Transform> queue = new Queue<Transform>();
+            queue.Enqueue(p_parent);
+            while (queue.Count > 0)
+            {
+                var c = queue.Dequeue();
+                if (c.name == p_name || (p_partialMatch && c.name.IndexOf(p_name)!=-1))
+                    return c;
+                foreach(Transform t in c)
+                    queue.Enqueue(t);
+            }
+            return null;
+        }    
+        
+        public static List<Transform> DeepFindAll(this Transform p_parent, string p_name, bool p_partialMatch = false)
+        {
+            List<Transform> found = new List<Transform>();
+            Queue<Transform> queue = new Queue<Transform>();
+            queue.Enqueue(p_parent);
+            while (queue.Count > 0)
+            {
+                var c = queue.Dequeue();
+                if (c.name == p_name || (p_partialMatch && c.name.IndexOf(p_name)!=-1))
+                    found.Add(c);
+                foreach(Transform t in c)
+                    queue.Enqueue(t);
+            }
+            return found;
+        }
+    
+        public static Transform DeepFindAlt(this Transform p_parent, string p_name)
+        {
+            foreach(Transform child in p_parent)
+            {
+                if(child.name == p_name )
+                    return child;
+                var result = child.DeepFindAlt(p_name);
+                if (result != null)
+                    return result;
+            }
+            return null;
+        }
+    
+        public static void DestroyChildren(this Transform parent)
+        {
+            foreach (Transform child in parent)
+            {
+                Object.Destroy(child.gameObject);
+            }
+        }
+
     }
 }

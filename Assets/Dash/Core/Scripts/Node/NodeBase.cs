@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using Object = System.Object;
 #if UNITY_EDITOR
@@ -29,7 +31,7 @@ namespace Dash
 
             return node;
         }
-
+        
         [SerializeField]
         protected NodeModelBase _model;
 
@@ -50,6 +52,8 @@ namespace Dash
 
         public DashController Controller => Graph.Controller;
 
+        public int Index => Graph != null ? Graph.Nodes.IndexOf(this) : -1;
+
         [NonSerialized]
         protected GraphParameterResolver _parameterResolver;
 
@@ -67,9 +71,24 @@ namespace Dash
         protected int _executionCounter = 0;
 
         public bool IsExecuting => _executionCounter > 0;
+        
+        
 
         [NonSerialized]
         private bool _attributesInitialized = false;
+        
+        [NonSerialized] 
+        private bool _isExperimental;
+        public bool IsExperimental
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _isExperimental;
+            }
+        }
         
         [NonSerialized] 
         private int _inputCount;
@@ -134,7 +153,11 @@ namespace Dash
 
         protected void OnExecuteOutput(int p_index, NodeFlowData p_flowData)
         {
-            Graph.ExecuteOutputs(this, p_index, p_flowData);
+            if (!hasErrorsInExecution)
+            {
+                Graph.ExecuteOutputs(this, p_index, p_flowData);
+            }
+
             //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
         }
         
@@ -146,17 +169,11 @@ namespace Dash
 
         public abstract void CreateModel();
         
-        protected bool CheckException(NodeFlowData p_flowData, string p_variableName, Action p_nullCallback)
+        protected bool CheckException(NodeFlowData p_flowData, string p_variableName)
         {
             if (!p_flowData.HasAttribute(p_variableName))
             {
-                if (_model.executeOnNull)
-                {
-                    p_nullCallback?.Invoke();
-                }
-
-                Debug.LogWarning("Variable "+p_variableName+" not found during execution of "+this);
-                hasErrorsInExecution = true;
+                SetError("Variable "+p_variableName+" not found during execution of "+this);
 
                 return true;
             }
@@ -164,23 +181,26 @@ namespace Dash
             return false;
         }
 
-        protected bool CheckException(Object p_object, Action p_nullCallback)
+        protected bool CheckException(Object p_object, string p_warning = null)
         {
             if (p_object == null)
             {
-                if (_model.executeOnNull)
-                {
-                    p_nullCallback?.Invoke();   
-                }
-                
-                Debug.LogWarning("Object is null during execution of "+this);
-
-                hasErrorsInExecution = true;
+                SetError(p_warning);
                 
                 return true;
             }
 
             return false;
+        }
+
+        protected void SetError(string p_warning = null)
+        {
+            if (!string.IsNullOrEmpty(p_warning))
+            {
+                Debug.LogWarning(p_warning);
+            }
+            
+            hasErrorsInExecution = true;
         }
         
         protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)
@@ -192,6 +212,8 @@ namespace Dash
         
         private void InitializeAttributes()
         {
+            _isExperimental = Attribute.GetCustomAttribute(GetType(), typeof(ExperimentalAttribute)) != null;
+            
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
             
@@ -227,6 +249,15 @@ namespace Dash
             #endif
 
             _attributesInitialized = true;
+        }
+
+        public NodeBase Clone()
+        {
+            NodeBase clone = (NodeBase)SerializationUtility.CreateCopy(this);
+            Debug.Log("HERE "+(clone._graph == _graph));
+            clone._graph = _graph;
+            
+            return clone;
         }
 
         #region EDITOR_CODE
@@ -403,25 +434,29 @@ namespace Dash
             DrawCustomGUI(offsetRect);
             
             DrawConnectors(p_rect);
-
-            DrawComment(offsetRect);
         }
         
         void DrawTitle(Rect p_rect)
         {
-            GUISkin skin = DashEditorCore.Skin;
-            
             GUI.color = TitleTextColor;
             
             GUI.Label(
                 new Rect(new Vector2(p_rect.x + (IconTexture != null ? 26 : 6), p_rect.y),
-                    new Vector2(100, 20)), Name, skin.GetStyle("NodeTitle"));
+                    new Vector2(100, 20)), Name, DashEditorCore.Skin.GetStyle("NodeTitle"));
                 
             if (IconTexture != null)
             {
                 GUI.color = TitleTextColor;
                 GUI.DrawTexture(new Rect(p_rect.x + 6, p_rect.y + 4, 16, 16),
                     IconTexture);
+            }
+
+            if (IsExperimental)
+            {
+                GUI.color = Color.yellow;
+                GUI.DrawTexture(new Rect(p_rect.x + rect.width - 21, p_rect.y + 4, 16, 16),
+                    IconManager.GetIcon("Experimental_Icon"));
+                GUI.color = Color.white;
             }
 
             GUI.color = Color.white;
@@ -473,29 +508,21 @@ namespace Dash
                 GUI.DrawTexture(new Rect(p_rect.x + 2, p_rect.y - 22, 16, 16),
                     IconManager.GetIcon("Error_Icon"));
             }
+
+            if (Graph.previewNode == this)
+            {
+                GUI.color = Color.white;
+                GUIStyle style = new GUIStyle();
+                style.normal.textColor = Color.magenta;
+                style.fontStyle = FontStyle.Bold;
+                style.fontSize = 20;
+                style.alignment = TextAnchor.UpperCenter;
+                GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height, rect.width, 20), "[PREVIEW]", style);
+            }
             
             GUI.color = Color.white;
         }
 
-        void DrawComment(Rect p_rect)
-        {
-            if (String.IsNullOrEmpty(_model.comment))
-                return;
-            
-            GUIStyle commentStyle = new GUIStyle();
-            commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
-            commentStyle.fontSize = 14;
-            commentStyle.normal.textColor = Color.black;
-
-            string commentText = _model.comment;
-            Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
-            
-            GUI.color = new Color(1,1,1,.75f);
-            GUI.Box(new Rect(p_rect.x - 10, p_rect.y - 40, size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
-            GUI.color = Color.white;
-            GUI.Label(new Rect(p_rect.x - 2, p_rect.y - 35, size.x, size.y), commentText, commentStyle);
-        }
-        
         public Rect GetConnectorRect(bool p_input, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,

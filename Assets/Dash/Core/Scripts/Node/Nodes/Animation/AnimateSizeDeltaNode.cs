@@ -18,30 +18,31 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
-            if (CheckException(rectTransform, () => ExecuteEnd(p_flowData)))
+            if (CheckException(rectTransform, "Target doesn't contain RectTransform at node "+_model.id))
                 return;
 
+            Vector2 fromSizeDelta = GetParameterValue(Model.fromSizeDelta, p_flowData);
+            
             Vector2 startSizeDelta = Model.useFrom 
                 ? Model.isFromRelative 
-                    ? rectTransform.sizeDelta + Model.fromSizeDelta.GetValue(ParameterResolver, p_flowData) 
-                    : Model.fromSizeDelta.GetValue(ParameterResolver, p_flowData) 
+                    ? rectTransform.sizeDelta + fromSizeDelta
+                    : fromSizeDelta 
                 : rectTransform.sizeDelta;
+            
+            Vector2 toSizeDelta = GetParameterValue(Model.toSizeDelta, p_flowData);
 
             if (Model.time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startSizeDelta);
+                UpdateTween(rectTransform, 1, p_flowData, startSizeDelta, toSizeDelta);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startSizeDelta), 0,
+                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startSizeDelta, toSizeDelta), 0,
                         1, Model.time)
                     .SetDelay(Model.delay)
                     .SetEase(Ease.Linear)
@@ -57,23 +58,21 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startSizeDelta)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startSizeDelta, Vector2 p_toSizeDelta)
         {
             if (p_target == null)
                 return;
-            
-            Vector2 finalSizeDelta = Model.toSizeDelta.GetValue(ParameterResolver, p_flowData);
-            
+
             if (Model.isToRelative)
             {
                 p_target.sizeDelta =
-                    p_startSizeDelta + new Vector2(DOVirtual.EasedValue(0, finalSizeDelta.x, p_delta, Model.easing),
-                        DOVirtual.EasedValue(0, finalSizeDelta.y, p_delta, Model.easing));
+                    p_startSizeDelta + new Vector2(DOVirtual.EasedValue(0, p_toSizeDelta.x, p_delta, Model.easing),
+                        DOVirtual.EasedValue(0, p_toSizeDelta.y, p_delta, Model.easing));
             }
             else
             {
-                p_target.sizeDelta = new Vector2(DOVirtual.EasedValue(p_startSizeDelta.x, finalSizeDelta.x, p_delta, Model.easing),
-                    DOVirtual.EasedValue(p_startSizeDelta.y, finalSizeDelta.y, p_delta, Model.easing));
+                p_target.sizeDelta = new Vector2(DOVirtual.EasedValue(p_startSizeDelta.x, p_toSizeDelta.x, p_delta, Model.easing),
+                    DOVirtual.EasedValue(p_startSizeDelta.y, p_toSizeDelta.y, p_delta, Model.easing));
             }
         }
     }

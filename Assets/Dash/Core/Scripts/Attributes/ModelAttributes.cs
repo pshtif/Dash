@@ -61,6 +61,19 @@ namespace Dash.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Field)]
+    public class ExpressionAttribute : Attribute
+    {
+        public string useExpression { get; }
+        public string expression { get; }
+
+        public ExpressionAttribute(string p_useExpression, string p_expression)
+        {
+            useExpression = p_useExpression;
+            expression = p_expression;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field)]
     public class PopupAttribute : Attribute
     {
         public PopupType Type { get; }
@@ -71,17 +84,6 @@ namespace Dash.Attributes
         {
             Type = p_type;
             ClassType = p_classType;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Field)]
-    public class InspectorAttribute : Attribute
-    {
-        public bool isGameObject { get; }
-
-        public InspectorAttribute(bool p_isGameObject)
-        {
-            isGameObject = p_isGameObject;
         }
     }
 }

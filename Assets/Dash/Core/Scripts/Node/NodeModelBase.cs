@@ -16,14 +16,11 @@ namespace Dash
         [TitledGroup("Advanced", true)]
         public string id;
 
-        [TitledGroup("Advanced", true)] 
-        [Tooltip("Execute node even if target is not valid.")]
-        public bool executeOnNull;
-        
-        [TitledGroup("Advanced", true)]
-        public string comment;
-        
-        #if UNITY_EDITOR
+        // [TitledGroup("Advanced", true)] 
+        // [Tooltip("Execute node even if target is not valid.")]
+        // public bool executeOnNull;
+
+#if UNITY_EDITOR
         private Dictionary<string, bool> groupsMinized;
         
         public virtual bool DrawInspector()
@@ -166,6 +163,6 @@ namespace Dash
 
             return p_fieldInfo.GetValue(this) != null;
         }
-        #endif
+#endif
     }
 }

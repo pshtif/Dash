@@ -23,7 +23,7 @@ namespace Dash
             GUILayout.Box(Resources.Load<Texture>("Textures/das"), GUILayout.ExpandWidth(true));
             GUILayout.EndHorizontal();
 
-            if (((IControllerAccess)Controller).assetGraph == null && !Controller.IsGraphBound)
+            if (((IControllerAccess)Controller).graphAsset == null && !Controller.IsGraphBound)
             {
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
@@ -33,12 +33,12 @@ namespace Dash
                         
                         BindGraph(GraphUtils.CreateEmptyGraph());
                     } else {
-                        ((IControllerAccess)Controller).assetGraph = GraphUtils.CreateGraphAsAssetFile();
+                        ((IControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
                 }
                 GUI.color = Color.white;
                 
-                ((IControllerAccess)Controller).assetGraph = (DashGraph)EditorGUILayout.ObjectField(((IControllerAccess)Controller).assetGraph, typeof(DashGraph), true);
+                ((IControllerAccess)Controller).graphAsset = (DashGraph)EditorGUILayout.ObjectField(((IControllerAccess)Controller).graphAsset, typeof(DashGraph), true);
             }
             else
             {
@@ -54,8 +54,8 @@ namespace Dash
                 {
                     EditorGUI.BeginChangeCheck();
                     
-                    ((IControllerAccess) Controller).assetGraph =
-                        (DashGraph) EditorGUILayout.ObjectField(((IControllerAccess) Controller).assetGraph,
+                    ((IControllerAccess) Controller).graphAsset =
+                        (DashGraph) EditorGUILayout.ObjectField(((IControllerAccess) Controller).graphAsset,
                             typeof(DashGraph), true);
 
                     if (EditorGUI.EndChangeCheck())
@@ -76,7 +76,7 @@ namespace Dash
                         if (graph != null)
                         {
                             Controller.BindGraph(null);
-                            ((IControllerAccess) Controller).assetGraph = graph;
+                            ((IControllerAccess) Controller).graphAsset = graph;
                         }
                     }
                     

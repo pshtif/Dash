@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
@@ -28,7 +29,8 @@ namespace Dash
             EditorGUI.DrawRect(rect, p_color);
         }
 
-        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null, bool p_drawLabel = true)
+        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null,
+            bool p_drawLabel = true, bool p_notExpression = false)
         {
             HideInInspector hideInInspectorAttribute = p_fieldInfo.GetCustomAttribute<HideInInspector>();
             if (hideInInspectorAttribute != null)
@@ -42,9 +44,20 @@ namespace Dash
 
             TooltipAttribute tooltipAttribute = p_fieldInfo.GetCustomAttribute<TooltipAttribute>();
             var name = tooltipAttribute == null ? new GUIContent(nameString) : new GUIContent(nameString, tooltipAttribute.tooltip);
+            
+            if (IsParameterProperty(p_fieldInfo))
+                return ParameterProperty(p_fieldInfo, p_object, name);
+
+            if (!p_notExpression && IsExpressionProperty(p_fieldInfo))
+                return ExpressionProperty(p_fieldInfo, p_object, name);
 
             if (IsPopupProperty(p_fieldInfo))
                 return PopupProperty(p_fieldInfo, p_object, name);
+
+            if (p_fieldInfo.FieldType == typeof(Type))
+            {
+                return SupportedTypeProperty(p_fieldInfo, p_object, name);
+            }
             
             if (IsEnumProperty(p_fieldInfo))
                 return EnumProperty(p_fieldInfo, p_object, name);
@@ -54,9 +67,6 @@ namespace Dash
 
             if (IsExposedReferenceProperty(p_fieldInfo))
                 return ExposedReferenceProperty(p_fieldInfo, p_object, name, p_drawLabel);
-
-            if (IsParameterProperty(p_fieldInfo))
-                return ParameterProperty(p_fieldInfo, p_object, name);
 
             return ValueProperty(p_fieldInfo, p_object, name);
         }
@@ -104,6 +114,32 @@ namespace Dash
             return false;
         }
 
+        static bool SupportedTypeProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
+        {
+            Type value = (Type)p_fieldInfo.GetValue(p_object);
+
+            GUILayout.BeginHorizontal();
+            
+            GUILayout.Label(p_name, GUILayout.Width(120));
+            
+            if (GUILayout.Button(value.Name))
+            {
+                TypesMenu.Show((type) =>
+                {
+                    if (type != value)
+                    {
+                        p_fieldInfo.SetValue(p_object, type);
+                    }    
+                });
+                
+                return true;
+            }
+
+            GUILayout.EndHorizontal();
+
+            return false;
+        }
+
         static bool IsEnumProperty(FieldInfo p_fieldInfo)
         {
             return p_fieldInfo.FieldType.IsEnum;
@@ -139,14 +175,14 @@ namespace Dash
         {
             if (!IsUnityObjectProperty(p_fieldInfo))
                 return false;
-                    
+            
             EditorGUI.BeginChangeCheck();
             
             GUILayout.BeginHorizontal();
             GUILayout.Label(p_name, GUILayout.Width(120));
-
+            
             var newValue = EditorGUILayout.ObjectField((UnityEngine.Object) p_fieldInfo.GetValue(p_object),
-                p_fieldInfo.FieldType, false, GUILayout.Width(198));
+                p_fieldInfo.FieldType, false);
             
             GUILayout.EndHorizontal();
 
@@ -265,7 +301,6 @@ namespace Dash
 
                 
                 GUI.color = param.isExpression ? Color.yellow : Color.gray;
-                
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
                     param.isExpression = !param.isExpression;
@@ -292,11 +327,60 @@ namespace Dash
 
             return false;
         }
+        
+        public static bool IsExpressionProperty(FieldInfo p_fieldInfo)
+        {
+            return p_fieldInfo.GetAttribute<ExpressionAttribute>() != null;
+        }
+        
+        static bool ExpressionProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
+        {
+            ExpressionAttribute expressionAttribute = p_fieldInfo.GetAttribute<ExpressionAttribute>();
+            
+            if (expressionAttribute == null)
+                return false;
+
+            FieldInfo expressionField = p_object.GetType().GetField(expressionAttribute.expression);
+            FieldInfo useExpressionField = p_object.GetType().GetField(expressionAttribute.useExpression);
+            
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.BeginHorizontal();
+            
+            if ((bool)useExpressionField.GetValue(p_object))
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(p_name, GUILayout.Width(120));
+                string expression = GUILayout.TextArea((string)expressionField.GetValue(p_object), GUILayout.Width(170));
+                expressionField.SetValue(p_object, expression);
+                GUILayout.EndHorizontal();
+            }
+            else
+            {
+                PropertyField(p_fieldInfo, p_object, p_name.text, true, true);
+            }
+
+            bool useExpression = (bool)useExpressionField.GetValue(p_object);
+            GUI.color = useExpression ? Color.yellow : Color.gray;
+            if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
+            {
+                useExpressionField.SetValue(p_object, !useExpression);
+            }
+            GUI.color = Color.white;
+            
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.Space(4);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         static bool ValueProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name)
         {
-            InspectorAttribute inspectorAttribute = p_fieldInfo.GetCustomAttribute<InspectorAttribute>();
-            
             string type = p_fieldInfo.FieldType.ToString();
             switch (type)
             {

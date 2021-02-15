@@ -15,7 +15,7 @@ namespace Dash
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            float time = Model.time.GetValue(ParameterResolver, p_flowData);
+            float time = GetParameterValue(Model.time, p_flowData);
 
             if (time == 0)
             {

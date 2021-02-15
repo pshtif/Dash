@@ -19,13 +19,9 @@ namespace Dash
         {
             Transform target = null;
 
-            if (!p_flowData.HasAttribute("target"))
+            if (!p_flowData.HasAttribute("target") && Model.isChild)
             {
-                if (Model.executeOnNull)
-                {
-                    ExecuteOnTarget(null, p_flowData);
-                }
-                
+                Debug.LogWarning("Cannot retarget to a child of null in node "+_model.id);
                 hasErrorsInExecution = true;
 
                 return;
@@ -39,22 +35,43 @@ namespace Dash
             {
                 if (Model.useReference)
                 {
-                    target = Model.targetReference.Resolve(Controller);
+                    if (Model.useExpression)
+                    {
+                        var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
+                            ParameterResolver, p_flowData);
+
+                        if (ExpressionEvaluator.hasErrorInExecution)
+                        {
+                            hasErrorsInExecution = true;
+                            return;
+                        }
+
+                        target = (Transform) value;
+                    }
+                    else
+                    {
+                        target = Model.targetReference.Resolve(Controller);
+                    }
                 }
                 else
                 {
                     if (Model.isChild)
                     {
-                        target = target.Find(Model.targetPath);
+                        string find = GetParameterValue(Model.target, p_flowData);
+                        target = target.Find(find);
                     }
                     else
                     {
-                        GameObject go = GameObject.Find(Model.targetPath);
+                        string find = GetParameterValue(Model.target, p_flowData);
+                        GameObject go = GameObject.Find(find);
                         target = go == null ? null : go.transform;
                     }
                 }
             }
 
+            if (CheckException(target, "No valid target found in node "+_model.id))
+                return;
+            
             ExecuteOnTarget(target, p_flowData);
         }
 
@@ -73,29 +90,49 @@ namespace Dash
             {
                 if (Model.useReference)
                 {
-                    FieldInfo fi = Model.GetType().GetField("targetReference");
-                    var exposedReference = fi.GetValue(Model);
-                    Object exposedValue = (Object)exposedReference.GetType().GetMethod("Resolve")
-                        .Invoke(exposedReference, new object[] {Controller});
+                    if (Model.useExpression)
+                    {
+                        style.normal.textColor = Color.cyan;
+                        GUI.Label(labelRect, "Expression", style);
+                    }
+                    else
+                    {
+                        FieldInfo fi = Model.GetType().GetField("targetReference");
+                        var exposedReference = fi.GetValue(Model);
+                        Object exposedValue = (Object) exposedReference.GetType().GetMethod("Resolve")
+                            .Invoke(exposedReference, new object[] {Controller});
 
-                    style.fontStyle = FontStyle.Bold;
-                    style.normal.textColor = new Color(0.4f, .7f, 1);
-                    string exposedLabel = exposedValue != null ? exposedValue.name : "None"; 
-                    GUI.Label(labelRect, "["+exposedLabel+"]", style);
+                        style.fontStyle = FontStyle.Bold;
+                        style.normal.textColor = new Color(0.4f, .7f, 1);
+                        string exposedLabel = exposedValue != null ? exposedValue.name : "None";
+                        GUI.Label(labelRect, "[" + exposedLabel + "]", style);
 
-                    // PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
-                    // bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+                        // PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
+                        // bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
 
-                    // GUIPropertiesUtils.ExposedReferenceField(
-                    //      new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20), fi, Model);
+                        // GUIPropertiesUtils.ExposedReferenceField(
+                        //      new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20), fi, Model);
+                    }
                 }
                 else
                 {
-                    style.normal.textColor = Color.white;
-
-                    GUI.Label(labelRect, ShortenPath(Model.targetPath), style);
-                    // Model.targetPath = GUI.TextField(new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20),
-                    //     Model.targetPath);
+                    if (Model.target != null)
+                    {
+                        if (Model.target.isExpression)
+                        {
+                            style.normal.textColor = Color.cyan;
+                            GUI.Label(labelRect, "Expression", style);
+                        }
+                        else
+                        {
+                            style.normal.textColor = Color.white;
+                            GUI.Label(labelRect, ShortenPath(Model.target.GetValue(ParameterResolver)), style);
+                        }
+                    }
+                    else
+                    {
+                        Model.target = new Parameter<string>("");
+                    }
                 }
             }
         }

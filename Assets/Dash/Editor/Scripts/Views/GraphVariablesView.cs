@@ -15,8 +15,6 @@ namespace Dash
 {
     public class GraphVariablesView : ViewBase
     {
-        public int height => Graph.variablesViewMinimized ? 40 : 200;
-
         private Vector2 scrollPosition;
 
         public GraphVariablesView()
@@ -29,58 +27,39 @@ namespace Dash
             if (Graph == null || !Graph.showVariables)
                 return;
 
-            Rect rect = new Rect(20, 30, 340, height);
+            Rect rect = new Rect(20, 30, 340, 200);
             
             DrawBoxGUI(rect, "Graph Variables", TextAnchor.UpperCenter);
+
+            GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
+            // scrollPosition = GUI.BeginScrollView(new Rect(rect.x, rect.y + 32, rect.width, rect.height - 42), scrollPosition,
+            //     new Rect(0, 30, rect.width, Graph.variables.Count), false, false);
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
             
-            if (Graph.variablesViewMinimized)
+            EditorGUI.BeginChangeCheck();
+
+            EditorGUIUtility.labelWidth = 100;
+
+            int index = 0;
+            foreach (var variable in Graph.variables)
             {
-                if (GUI.Button(new Rect(rect.x + rect.width - 28, rect.y + 4, 24, 24),
-                    IconManager.GetIcon("RollOut_Icon"),
-                    GUIStyle.none))
-                {
-                    Graph.variablesViewMinimized = false;
-                }
+                //var r = new Rect(0, 25 + 24 * index, rect.width, 30);
+                VariableField(variable);
+                EditorGUILayout.Space(4);
+                index++;
             }
-            else
+
+            if (EditorGUI.EndChangeCheck())
             {
-                if (GUI.Button(new Rect(rect.x + rect.width - 28, rect.y + 4, 24, 24),
-                    IconManager.GetIcon("RollIn_Icon"),
-                    GUIStyle.none))
-                {
-                    Graph.variablesViewMinimized = true;
-                }
+                EditorUtility.SetDirty(Graph);
+            }
+            
+            GUILayout.EndScrollView();
+            GUILayout.EndArea();
 
-                // Should never happen now, can remove later
-                if (Graph.variables != null)
-                {
-                    scrollPosition = GUI.BeginScrollView(new Rect(rect.x, rect.y + 32, rect.width, rect.height - 42), scrollPosition,
-                        new Rect(0, 30, rect.width, Graph.variables.Count), false, false);
-                    
-                    EditorGUI.BeginChangeCheck();
-
-                    EditorGUIUtility.labelWidth = 100;
-
-                    int index = 0;
-                    foreach (var variable in Graph.variables)
-                    {
-                        var r = new Rect(0, 25 + 24 * index, rect.width, 30);
-                        VariableField(r, variable);
-                        index++;
-                    }
-
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        EditorUtility.SetDirty(Graph);
-                    }
-                    
-                    GUI.EndScrollView();
-                }
-
-                if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width - 8, 20), "Add Variable"))
-                {
-                    VariablesMenu();
-                }
+            if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width - 8, 20), "Add Variable"))
+            {
+                TypesMenu.Show(OnAddVariable);
             }
 
             if (new Rect(0, 0, rect.width, rect.height).Contains(p_event.mousePosition) &&
@@ -90,33 +69,29 @@ namespace Dash
             }
         }
         
-        public void VariableField(Rect p_position, Variable p_variable)
+        public void VariableField(Variable p_variable)
         {
-            string newName = EditorGUI.TextField(new Rect(p_position.x+5, p_position.y+5, 100, p_position.height-10), p_variable.Name);
+            EditorGUILayout.BeginHorizontal();
+            string newName = EditorGUILayout.TextField(p_variable.Name, GUILayout.Width(120));
+            EditorGUILayout.Space(8);
             if (newName != p_variable.Name) 
             {
                 Graph.variables.RenameVariable(p_variable.Name, newName);
             }
-
-            var rect = new Rect(p_position.x + 110, p_position.y + 5, p_position.width - 135, p_position.height - 10);
-
+            
             EditorGUI.BeginChangeCheck();
-            p_variable.PropertyField(rect);
+            p_variable.PropertyField();
 
             GUI.color = p_variable.IsBound ? Color.yellow : Color.gray;
             
-            if (GUI.Button(new Rect(p_position.x + p_position.width - 20, p_position.y + 6, 16, 16),
-                IconManager.GetIcon("Bind_Icon"), GUIStyle.none))
+            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
                 GetVariableMenu(p_variable).ShowAsContext();
             }
             
             GUI.color = Color.white;
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                
-            }
+            EditorGUILayout.EndHorizontal();
         }
 
         GenericMenu GetVariableMenu(Variable p_variable)
@@ -176,7 +151,7 @@ namespace Dash
         
         bool IsPropertyBindable(Variable p_variable, PropertyInfo p_propertyInfo)
         {
-            if (p_variable.value.GetType().IsAssignableFrom(p_propertyInfo.PropertyType))
+            if (p_variable.GetVariableType().IsAssignableFrom(p_propertyInfo.PropertyType))
                 return true;
 
             return false;
@@ -192,19 +167,7 @@ namespace Dash
             Graph.variables.RemoveVariable(p_variable.Name);
         }
 
-        void VariablesMenu()
-        {
-            GenericMenu menu = new GenericMenu();
-            
-            foreach (Type type in Variable.SupportedTypes)
-            {
-                menu.AddItem(new GUIContent(Variable.ConvertToTypeName(type)), false, OnAddVariable, type);
-            }
-
-            menu.ShowAsContext();            
-        }
-
-        void OnAddVariable(object p_type)
+        void OnAddVariable(Type p_type)
         {
             string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
 

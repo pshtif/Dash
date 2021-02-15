@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Compilation;
 using UnityEngine;
 
 namespace Dash
@@ -14,7 +15,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.1b";
+        public const string VERSION = "0.2.2b";
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -48,8 +49,33 @@ namespace Dash
 
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
+            AssemblyReloadEvents.afterAssemblyReload += OnAssemblyReload;
         }
 
+        public static void SetDirty()
+        {
+            if (Config.editingGraph == null)
+                return;
+
+            if (Config.editingGraph.IsBound)
+            {
+                EditorUtility.SetDirty(Config.editingGraph.Controller);
+            }
+            else
+            {
+                EditorUtility.SetDirty(Config.editingGraph);
+            }
+        }
+
+        public static void ReindexSelected(int p_index)
+        {
+            for (int i = 0; i < selectedNodes.Count; i++)
+            {
+                if (selectedNodes[i] > p_index)
+                    selectedNodes[i]--;
+            }
+        }
+        
         public static void EditController(DashController p_controller)
         {
             DeselectAllNodes();
@@ -89,6 +115,14 @@ namespace Dash
             // Debug.Log("OnHierarchyChanged");
         }
 
+        static void OnAssemblyReload()
+        {
+            if (Config.editingGraph != null && Config.editingGraph.Controller != null)
+            {
+                EditController(Config.editingGraph.Controller);
+            }
+        }
+        
         static void OnPlayModeChanged(PlayModeStateChange p_change)
         {
             // Debug.Log("[PLAYMODECHANGE] "+p_change);

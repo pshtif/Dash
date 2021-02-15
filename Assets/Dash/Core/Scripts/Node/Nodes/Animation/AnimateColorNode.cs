@@ -23,14 +23,11 @@ namespace Dash
     {
         override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             switch (Model.sourceType)
             {
                 case AlphaSourceType.IMAGE:
                     Image image = p_target.GetComponent<Image>();
-                    if (!CheckException(image, () => ExecuteEnd(p_flowData))) 
+                    if (!CheckException(image, "No Image component found on target in node "+_model.id)) 
                     {
                         ExecuteAs(image, p_flowData);
                     }
@@ -38,7 +35,7 @@ namespace Dash
                     break;
                 case AlphaSourceType.TEXTMESHPRO:
                     TMP_Text text = p_target.GetComponent<TMP_Text>();
-                    if (!CheckException(text, () => ExecuteEnd(p_flowData)))
+                    if (!CheckException(text, "No TMP_Text component found on target in node "+_model.id))
                     {
                         ExecuteAs(text, p_flowData);
                     }
@@ -59,15 +56,16 @@ namespace Dash
         void ExecuteAs(Image p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
+            Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             if (Model.time == 0)
             {
-                UpdateTween(p_target, 1, p_flowData, startColor);
+                UpdateTween(p_target, 1, p_flowData, startColor, toColor);
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor), 0, 1, Model.time)
+                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, Model.time)
                     .SetDelay(Model.delay)
                     .SetEase(Model.easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
@@ -79,15 +77,16 @@ namespace Dash
         void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
+            Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             if (Model.time == 0)
             {
-                UpdateTween(p_target, 1, p_flowData, startColor);
+                UpdateTween(p_target, 1, p_flowData, startColor, toColor);
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor), 0, 1, Model.time)
+                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, Model.time)
                     .SetDelay(Model.delay)
                     .SetEase(Model.easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
@@ -98,8 +97,9 @@ namespace Dash
 
         // void ExecuteAsCanvasGroup(CanvasGroup p_target, NodeFlowData p_flowData)
         // {
+        //     float toAlpha = Model.toAlpha.GetValue(ParameterResolver, p_flowData);
         //     // Virtual tween to update from directly
-        //     Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startAlpha), 0, 1, Model.time)
+        //     Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startAlpha, toAlpha), 0, 1, Model.time)
         //         .SetDelay(Model.delay)
         //         .SetEase(Model.easing)
         //         .OnComplete(() => {
@@ -108,26 +108,26 @@ namespace Dash
         //         });
         // }
         
-        protected void UpdateTween(CanvasGroup p_target, float p_delta, NodeFlowData p_flowData, float p_startAlpha)
+        protected void UpdateTween(CanvasGroup p_target, float p_delta, NodeFlowData p_flowData, float p_startAlpha, float p_toAlpha)
         {
             if (Model.isToRelative)
             {
-                p_target.alpha = p_startAlpha + Model.toAlpha.GetValue(ParameterResolver, p_flowData) * p_delta;
+                p_target.alpha = p_startAlpha + p_toAlpha * p_delta;
             }
             else
             {
-                p_target.alpha = Mathf.Lerp(p_startAlpha, Model.toAlpha.GetValue(ParameterResolver, p_flowData), p_delta);
+                p_target.alpha = Mathf.Lerp(p_startAlpha, p_toAlpha, p_delta);
             }
         }
         
-        protected void UpdateTween(Image p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor)
+        protected void UpdateTween(Image p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor, Color p_toColor)
         {
-            p_target.color = Color.Lerp(p_startColor, Model.toColor.GetValue(ParameterResolver, p_flowData), p_delta);
+            p_target.color = Color.Lerp(p_startColor, p_toColor, p_delta);
         }
         
-        protected void UpdateTween(TMP_Text p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor)
+        protected void UpdateTween(TMP_Text p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor, Color p_toColor)
         {
-            p_target.color = Color.Lerp(p_startColor, Model.toColor.GetValue(ParameterResolver, p_flowData), p_delta);
+            p_target.color = Color.Lerp(p_startColor, p_toColor, p_delta);
         }
     }
 }

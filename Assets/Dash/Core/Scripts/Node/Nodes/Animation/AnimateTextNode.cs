@@ -9,19 +9,17 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.EXPERIMENTAL)]
+    [Experimental]
+    [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]
     public class AnimateTextNode : AnimationNodeBase<AnimateTextNodeModel>
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (CheckException(p_target, () => ExecuteEnd(p_flowData)))
-                return;
-            
             TMP_Text text = p_target.GetComponent<TMP_Text>();
 
-            if (CheckException(text, () => ExecuteEnd(p_flowData)))
+            if (CheckException(text, "No TMP_Text component found on target in node "+_model.id))
                 return;
             
             text.ForceMeshUpdate();

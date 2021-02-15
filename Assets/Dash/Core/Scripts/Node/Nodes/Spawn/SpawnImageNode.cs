@@ -18,18 +18,29 @@ namespace Dash
             Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
             
             GameObject spawned = new GameObject();
+            spawned.name = Model.spawnedName;
             if (Model.setTargetAsParent)
             {
-                spawned.transform.parent = target;
+                spawned.transform.SetParent(target, false);
             }
             
             Image image = spawned.AddComponent<Image>();
-            image.sprite = Model.sprite;
-            spawned.transform.localPosition = Model.position.GetValue(ParameterResolver, p_flowData);
+            image.sprite = GetParameterValue(Model.sprite, p_flowData);
+            RectTransform rectTransform = image.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
-            if (Model.setSpawnedAsTarget)
+            if (Model.retargetToSpawned)
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
+            }
+            else if (Model.createSpawnedAttribute)
+            {
+                if (string.IsNullOrEmpty(Model.spawnedAttributeName))
+                {
+                    SetError("Attribute name cannot be empty.");
+                }
+                
+                p_flowData.SetAttribute<Transform>(Model.spawnedAttributeName, rectTransform);
             }
             
             OnExecuteEnd();
@@ -39,10 +50,14 @@ namespace Dash
         #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)
         {
-            if (Model.sprite == null)
+            if (Model.sprite == null || Model.sprite.isExpression || Model.sprite.GetValue(ParameterResolver) == null)
                 return;
-            
-            GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32), Model.sprite.texture);
+
+            if (!Model.sprite.isExpression)
+            {
+                GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32),
+                    Model.sprite.GetValue(ParameterResolver).texture);
+            }
         }
         #endif
     }

@@ -8,7 +8,6 @@ using UnityEngine;
 namespace Dash
 {
     [Category(NodeCategoryType.EVENTS)]
-    [OutputCount(1)]
     [InputCount(1)]
     public class SendEventNode : NodeBase<SendEventNodeModel>
     {
@@ -17,7 +16,6 @@ namespace Dash
             _graph.SendEvent(Model.eventName, p_flowData);
             
             OnExecuteEnd();
-            OnExecuteOutput(0, p_flowData);
         }
 
         #region EDITOR_CODE

@@ -48,8 +48,20 @@ namespace Dash
         {
             return _attributes[p_name];
         }
-
+        
         public void SetAttribute(string p_name, object p_value)
+        {
+            if (_attributes.ContainsKey(p_name))
+            {
+                _attributes[p_name] = p_value;
+            }
+            else
+            {
+                _attributes.Add(p_name, p_value);
+            }
+        }
+
+        public void SetAttribute<T>(string p_name, T p_value)
         {
             if (_attributes.ContainsKey(p_name))
             {

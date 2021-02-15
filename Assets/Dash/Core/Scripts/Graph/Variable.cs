@@ -26,6 +26,8 @@ namespace Dash
             set { objectValue = value; }
         }
 
+        public abstract Type GetVariableType();
+
         [SerializeField, HideInInspector]
         protected string _name;
 
@@ -45,17 +47,7 @@ namespace Dash
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void PropertyField(Rect p_position);
-        
-        static public Type[] SupportedTypes =
-            new Type[]
-            {
-                typeof(int),
-                typeof(float),
-                typeof(Vector3),
-                typeof(Vector2),
-                typeof(Quaternion)
-            };
+        public abstract void PropertyField();
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -90,7 +82,7 @@ namespace Dash
         private string _boundProperty;
         private string _boundComponentName;
 
-        new public T value
+        public new T value
         {
             get
             {
@@ -100,6 +92,11 @@ namespace Dash
                 if (_setter != null) _setter(value);
                 else _value = value;
             }
+        }
+
+        public override Type GetVariableType()
+        {
+            return typeof(T);
         }
         
         protected override object objectValue
@@ -170,49 +167,57 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void PropertyField(Rect p_rect)
+        public override void PropertyField()
         {
             if (IsBound)
             {
-                EditorGUI.LabelField(p_rect, ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
+                EditorGUILayout.LabelField(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
             }
             else
             {
-                string type = typeof(T).ToString();
-                switch (type)
+                if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
-                    case "System.Int32":
-                        value = (T) Convert.ChangeType(EditorGUI.IntField(p_rect, Convert.ToInt32(value)),
-                            typeof(T));
-                        break;
-                    case "System.Single":
-                        value = (T) Convert.ChangeType(EditorGUI.FloatField(p_rect, Convert.ToSingle(value)),
-                            typeof(T));
-                        break;
-                    case "UnityEngine.Vector2":
-                        value = (T) Convert.ChangeType(
-                            EditorGUI.Vector2Field(p_rect, "", (Vector2) Convert.ChangeType(value, typeof(Vector2))),
-                            typeof(T));
-                        break;
-                    case "UnityEngine.Vector3":
-                        value = (T) Convert.ChangeType(
-                            EditorGUI.Vector3Field(p_rect, "", (Vector3) Convert.ChangeType(value, typeof(Vector3))),
-                            typeof(T));
-                        break;
-                    case "UnityEngine.Quaternion":
-                        Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
-                        Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
-                        v4 = EditorGUI.Vector4Field(p_rect, "", v4);
-                        value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
-                        break;
-                    case "UnityEngine.Transform":
-                        value = (T) Convert.ChangeType(
-                            EditorGUILayout.ObjectField((Transform) Convert.ChangeType(value, typeof(Transform)),
-                                typeof(Transform), false), typeof(T));
-                        break;
-                    default:
-                        Debug.Log(type);
-                        break;
+                    // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
+                } else {
+                    string type = typeof(T).ToString();
+                    switch (type)
+                    {
+                        case "System.Int32":
+                            value = (T) Convert.ChangeType(EditorGUILayout.IntField(Convert.ToInt32(value)),
+                                typeof(T));
+                            break;
+                        case "System.Single":
+                            value = (T) Convert.ChangeType(EditorGUILayout.FloatField(Convert.ToSingle(value)),
+                                typeof(T));
+                            break;
+                        case "UnityEngine.Vector2":
+                            value = (T) Convert.ChangeType(
+                                EditorGUILayout.Vector2Field("",
+                                    (Vector2) Convert.ChangeType(value, typeof(Vector2))),
+                                typeof(T));
+                            break;
+                        case "UnityEngine.Vector3":
+                            value = (T) Convert.ChangeType(
+                                EditorGUILayout.Vector3Field("",
+                                    (Vector3) Convert.ChangeType(value, typeof(Vector3))),
+                                typeof(T));
+                            break;
+                        case "UnityEngine.Quaternion":
+                            Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
+                            Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
+                            v4 = EditorGUILayout.Vector4Field("", v4);
+                            value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
+                            break;
+                        case "UnityEngine.Transform":
+                            value = (T) Convert.ChangeType(
+                                EditorGUILayout.ObjectField((Transform) Convert.ChangeType(value, typeof(Transform)),
+                                    typeof(Transform), false), typeof(T));
+                            break;
+                        default:
+                            Debug.LogWarning("Variable of type " + type + " is not supported.");
+                            break;
+                    }
                 }
             }
         }
