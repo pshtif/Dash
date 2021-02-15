@@ -32,6 +32,8 @@ namespace Dash
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
             
+            int nodeIndex = Controller.Graph.Nodes.IndexOf(p_node);
+            
             TagUtils.AddTag("DashPreview");
             _previousTag = Controller.tag;
             Controller.tag = "DashPreview";
@@ -41,8 +43,7 @@ namespace Dash
 
             _isPreviewing = true;
             EditorApplication.update += OnUpdate;
-
-            int nodeIndex = Controller.Graph.Nodes.IndexOf(p_node);
+            
             // Cloning graph for preview
             _previewGraph = Controller.Graph.Clone();
             _previewGraph.Initialize(Controller);
@@ -58,6 +59,7 @@ namespace Dash
             }
             else
             {
+                Debug.Log(_previewGraph.Nodes.Count+" : "+nodeIndex);
                 _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
