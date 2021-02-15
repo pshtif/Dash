@@ -115,7 +115,10 @@ namespace Dash
             
             if (autoStart)
             {
-                Graph.Enter(NodeFlowDataFactory.Create(transform));
+                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                data.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
+                
+                Graph.Enter(data);
             }
         }
 
@@ -134,7 +137,7 @@ namespace Dash
             
             p_flowData = p_flowData.Clone();
 
-            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, this);
+            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
             
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
