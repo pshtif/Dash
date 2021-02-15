@@ -59,7 +59,6 @@ namespace Dash
             }
             else
             {
-                Debug.Log(_previewGraph.Nodes.Count+" : "+nodeIndex);
                 _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
