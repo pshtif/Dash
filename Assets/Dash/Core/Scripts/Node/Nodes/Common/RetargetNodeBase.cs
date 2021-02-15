@@ -116,19 +116,23 @@ namespace Dash
                 }
                 else
                 {
-                    if (Model.target.isExpression)
+                    if (Model.target != null)
                     {
-                        style.normal.textColor = Color.cyan;
-                        GUI.Label(labelRect, "Expression", style);
+                        if (Model.target.isExpression)
+                        {
+                            style.normal.textColor = Color.cyan;
+                            GUI.Label(labelRect, "Expression", style);
+                        }
+                        else
+                        {
+                            style.normal.textColor = Color.white;
+                            GUI.Label(labelRect, ShortenPath(Model.target.GetValue(ParameterResolver)), style);
+                        }
                     }
                     else
                     {
-                        style.normal.textColor = Color.white;
-                        GUI.Label(labelRect, ShortenPath(Model.target.GetValue(ParameterResolver)), style);
+                        Model.target = new Parameter<string>("");
                     }
-
-                    // Model.targetPath = GUI.TextField(new Rect(offsetRect.x + 24, offsetRect.y + 80, Size.x - 48, 20),
-                    //     Model.targetPath);
                 }
             }
         }

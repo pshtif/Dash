@@ -46,9 +46,11 @@ namespace Dash
         [Tooltip("Reference of transform to retarget to.")]
         public ExposedReference<Transform> targetReference;
 
+        [TitledGroup("Retargeting")]
         [HideInInspector]
         public bool useExpression = false;
         
+        [TitledGroup("Retargeting")]
         [HideInInspector]
         public string targetExpression = "";
     }
