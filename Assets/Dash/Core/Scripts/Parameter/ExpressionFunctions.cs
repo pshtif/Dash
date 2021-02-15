@@ -47,6 +47,32 @@ namespace Dash
             Debug.Log("Create function for type " + typeof(T)+" is not implemented.");
             return false;
         }
+
+        /**
+         *  Calculate Vector2 from one rect to another
+         */
+        private static bool FromToRect(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            { 
+                Debug.Log("Invalid parameters in FromToRect function.");
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()) && typeof(Transform).IsAssignableFrom(evalParams[1].GetType()) )
+            {
+                p_args.HasResult = true;
+                RectTransform r1 = (RectTransform)evalParams[0];
+                RectTransform r2 = (RectTransform)evalParams[1];
+                p_args.Result = (Vector2)TransformUtils.FromToRectTransform(r1, r2);
+                return true;
+            }
+            
+            Debug.Log("Invalid parameters in FromToRect function.");
+            return false;
+        }
         
         /**
          * Get index of transform child
@@ -67,8 +93,7 @@ namespace Dash
                 p_args.Result = ((Transform) evalParams[0]).GetSiblingIndex();
                 return true;
             }
-                
-            Debug.Log(evalParams[0].GetType());
+            
             Debug.Log("Invalid parameters in GetChildIndex function.");
             return false;
         }
