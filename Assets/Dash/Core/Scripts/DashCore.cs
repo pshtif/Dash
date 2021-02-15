@@ -3,6 +3,9 @@
  */
 
 using System.Collections.Generic;
+using UnityEngine.Scripting;
+
+[assembly: Preserve]
 
 namespace Dash
 {
