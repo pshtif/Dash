@@ -435,10 +435,25 @@ namespace Dash
             
             DrawConnectors(p_rect);
         }
+
+        public bool HasComment()
+        {
+            return _model.comment != null;
+        }
+
+        public void CreateComment()
+        {
+            _model.comment = "Comment";
+        }
+
+        public void RemoveComment()
+        {
+            _model.comment = null;
+        }
         
         public void DrawComment(Rect p_rect, bool p_zoomed = true)
         {
-            if (String.IsNullOrEmpty(_model.comment))
+            if (_model.comment == null)
                 return;
 
             Rect offsetRect = p_zoomed
@@ -453,7 +468,7 @@ namespace Dash
             string commentText = _model.comment;
             Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
             
-            GUI.color = new Color(1,1,1,.75f);
+            GUI.color = new Color(1,1,1,.6f);
             Debug.Log(p_rect);
             GUI.Box(new Rect(offsetRect.x - 10, offsetRect.y - size.y - 26, size.x < 34 ? 50 : size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
             GUI.color = Color.white;

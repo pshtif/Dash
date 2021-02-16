@@ -24,6 +24,17 @@ namespace Dash
             {
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
+                menu.AddSeparator("");
+                if (p_node.HasComment())
+                {
+                    menu.AddItem(new GUIContent("Remove Comment"), false, p_node.RemoveComment);
+                }
+                else
+                {
+                    menu.AddItem(new GUIContent("Create Comment"), false, p_node.CreateComment);
+                }
+
+                menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, p_node);
                 menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, p_node);
             }

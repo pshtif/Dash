@@ -20,8 +20,10 @@ namespace Dash
         // [Tooltip("Execute node even if target is not valid.")]
         // public bool executeOnNull;
 
-        [TitledGroup("Advanced", true)] 
-        public string comment = "";
+        [TitledGroup("Advanced", true)]
+        [HideInInspector] 
+        public string comment;
+
 
 #if UNITY_EDITOR
         private Dictionary<string, bool> groupsMinized;

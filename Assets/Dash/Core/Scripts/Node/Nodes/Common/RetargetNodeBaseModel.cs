@@ -39,8 +39,8 @@ namespace Dash
         [CanBeNull]
         public Parameter<string> target = new Parameter<string>("");
 
-        [Expression("useExpression", "targetExpression")]
         [TitledGroup("Retargeting")]
+        [Expression("useExpression", "targetExpression")]
         [Dependency("retarget", true)]
         [Dependency("useReference", true)]
         [Tooltip("Reference of transform to retarget to.")]
