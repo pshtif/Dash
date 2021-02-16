@@ -469,7 +469,6 @@ namespace Dash
             Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
             
             GUI.color = new Color(1,1,1,.6f);
-            Debug.Log(p_rect);
             GUI.Box(new Rect(offsetRect.x - 10, offsetRect.y - size.y - 26, size.x < 34 ? 50 : size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
             GUI.color = Color.white;
             string text = GUI.TextArea(new Rect(offsetRect.x - 2, offsetRect.y - size.y - 21, size.x, size.y), commentText, commentStyle);

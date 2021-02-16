@@ -4,6 +4,7 @@
 
 using UnityEditor;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Dash
 {
@@ -19,6 +20,7 @@ namespace Dash
             {
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
                 menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
+                menu.AddItem(new GUIContent("Create Region"), false, CreateRegion);
             }
             else
             {
@@ -83,6 +85,13 @@ namespace Dash
 
                 DashEditorCore.DuplicateNode((NodeBase)p_node);
             }
+        }
+
+        static void CreateRegion()
+        {
+            Undo.RecordObject(Graph, "Create Region");
+            
+            DashEditorCore.CreateRegionFromSelectedNodes();
         }
         
         static void SetAsPreview(object p_node)

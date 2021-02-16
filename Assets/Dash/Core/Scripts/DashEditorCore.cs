@@ -23,6 +23,8 @@ namespace Dash
         static public DashEditorPreviewer Previewer { get; private set; }
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
+        
+        static public DashGraph Graph => Config.editingGraph;
 
         static public int TITLE_TAB_HEIGHT = 26;
 
@@ -55,26 +57,26 @@ namespace Dash
 
         public static void SetDirty()
         {
-            if (Config.editingGraph == null)
+            if (Graph == null)
                 return;
 
-            if (Config.editingGraph.IsBound)
+            if (Graph.IsBound)
             {
-                EditorUtility.SetDirty(Config.editingGraph.Controller);
+                EditorUtility.SetDirty(Graph.Controller);
             }
             else
             {
-                EditorUtility.SetDirty(Config.editingGraph);
+                EditorUtility.SetDirty(Graph);
             }
         }
 
         public static void DuplicateSelectedNodes()
         {
-            if (Config.editingGraph == null || selectedNodes.Count == 0)
+            if (Graph == null || selectedNodes.Count == 0)
                 return;
             
-            List<NodeBase> nodes = selectedNodes.Select(i => Config.editingGraph.Nodes[i]).ToList();
-            List<NodeBase> newNodes = Config.editingGraph.DuplicateNodes(nodes);
+            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+            List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
             selectedNodes = newNodes.Select(n => n.Index).ToList();
             
             SetDirty();
@@ -82,13 +84,31 @@ namespace Dash
 
         public static void DuplicateNode(NodeBase p_node)
         {
-            if (Config.editingGraph == null)
+            if (Graph == null)
                 return;
             
-            NodeBase node = Config.editingGraph.DuplicateNode((NodeBase) p_node);
+            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
             selectedNodes = new List<int> { node.Index };
             
             SetDirty();
+        }
+
+        public static void CreateRegionFromSelectedNodes()
+        {
+            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+            Rect region = nodes[0].rect;
+            
+            nodes.ForEach(n =>
+            {
+                Debug.Log("Pre: "+n.rect+" : "+region);
+                if (n.rect.xMin < region.xMin) region.xMin = n.rect.xMin;
+                if (n.rect.yMin < region.yMin) region.yMin = n.rect.yMin;
+                if (n.rect.xMax > region.xMax) region.xMax = n.rect.xMax;
+                if (n.rect.yMax > region.yMax) region.yMax = n.rect.yMax;
+                Debug.Log("Post: "+n.rect+" : "+region);
+            });
+
+            Graph.CreateRegion(region);
         }
 
         public static void ReindexSelected(int p_index)
@@ -141,9 +161,9 @@ namespace Dash
 
         static void OnAssemblyReload()
         {
-            if (Config.editingGraph != null && Config.editingGraph.Controller != null)
+            if (Graph != null && Graph.Controller != null)
             {
-                EditController(Config.editingGraph.Controller);
+                EditController(Graph.Controller);
             }
         }
         
@@ -153,7 +173,7 @@ namespace Dash
             
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {
-                Config.enteringPlayModeController = Config.editingGraph != null ? Config.editingGraph.Controller : null;
+                Config.enteringPlayModeController = Graph != null ? Graph.Controller : null;
             }
             
             if (p_change == PlayModeStateChange.EnteredPlayMode)

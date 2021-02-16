@@ -21,7 +21,8 @@ namespace Dash
         
         private Rect zoomedRect;
         
-        private bool dragging = false;
+        private bool draggingNodes = false;
+        private GraphRegion draggingRegion;
         
         private bool selectingRegion = false;
         private Rect selectedRegion = Rect.zero;
@@ -183,35 +184,64 @@ namespace Dash
                 DashEditorWindow.SetDirty(true);
         }
         
+        void ProcessZoom(Event p_event, Rect p_rect)
+        {
+            if (!p_event.isScrollWheel)
+                return;
+            
+            float zoom = DashEditorCore.Config.zoom;
+            
+            float previousZoom = zoom;
+            zoom += p_event.delta.y / 12;
+            if (zoom < 1) zoom = 1;
+            if (zoom > 4) zoom = 4;
+            if (previousZoom != zoom && Graph != null)
+            {
+                Graph.viewOffset.x += (zoom - previousZoom) * p_rect.width / 2;
+                Graph.viewOffset.y += (zoom - previousZoom) * p_rect.height / 2;
+            }
+
+            DashEditorCore.Config.zoom = zoom;
+            DashEditorWindow.SetDirty(true);
+        }
+        
         void ProcessLeftClick(Event p_event, Rect p_rect)
         {
             if (p_event.button != 0)
                 return;
             
             // Select
-            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null)
+            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
             {
                 DashEditorWindow.SetDirty(true);
                 
-                if (p_event.type == EventType.MouseDown)
+                NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
+
+                if (!SelectedNodes.Contains(hitNodeIndex))
                 {
-                    NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
-                    int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
+                    DashEditorCore.DeselectAllNodes();
+                }
 
-                    if (!p_event.control && !SelectedNodes.Contains(hitNodeIndex))
+                if (hitNodeIndex >= 0)
+                {
+                    AddSelectedNode(hitNodeIndex);
+
+                    draggingNodes = true;
+                }
+                else
+                {
+                    GraphRegion region = Graph.HitsRegion(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+
+                    if (region != null)
                     {
-                        DashEditorCore.DeselectAllNodes();
-                    }
-
-                    if (hitNodeIndex >= 0)
-                    {
-                        AddSelectedNode(hitNodeIndex);
-
-                        dragging = true;
+                        draggingRegion = region;
+                        draggingRegion.StartDrag();
                     }
                     else
                     {
-                        dragging = false;
+                        draggingRegion = null;
+                        draggingNodes = false;
                         Graph.connectingNode = null;
                         selectingRegion = true;
                         selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
@@ -229,7 +259,7 @@ namespace Dash
                         Graph.viewOffset += p_event.delta * Zoom;
                     }
                 }
-                else if (dragging)
+                else if (draggingNodes)
                 {
                     foreach (int index in SelectedNodes)
                     {
@@ -237,7 +267,13 @@ namespace Dash
                         node.rect.x += p_event.delta.x * Zoom;
                         node.rect.y += p_event.delta.y * Zoom;
                     }
-                } else if (selectingRegion)
+                } 
+                else if (draggingRegion != null)
+                {
+                    Vector2 dragOffset = new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom);
+                    draggingRegion.Drag(dragOffset);
+                } 
+                else if (selectingRegion)
                 {
                     selectedRegion.width += p_event.delta.x;
                     selectedRegion.height += p_event.delta.y;
@@ -275,32 +311,11 @@ namespace Dash
                 }
 
                 selectingRegion = false;
-                dragging = false;
+                draggingNodes = false;
                 DashEditorWindow.SetDirty(true);
             }
         }
 
-        void ProcessZoom(Event p_event, Rect p_rect)
-        {
-            if (!p_event.isScrollWheel)
-                return;
-            
-            float zoom = DashEditorCore.Config.zoom;
-            
-            float previousZoom = zoom;
-            zoom += p_event.delta.y / 12;
-            if (zoom < 1) zoom = 1;
-            if (zoom > 4) zoom = 4;
-            if (previousZoom != zoom && Graph != null)
-            {
-                Graph.viewOffset.x += (zoom - previousZoom) * p_rect.width / 2;
-                Graph.viewOffset.y += (zoom - previousZoom) * p_rect.height / 2;
-            }
-
-            DashEditorCore.Config.zoom = zoom;
-            DashEditorWindow.SetDirty(true);
-        }
-        
         void ProcessRightClick(Event p_event, Rect p_rect)
         {
             if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1)
@@ -323,14 +338,27 @@ namespace Dash
 
                         if (hitConnection != null)
                         {
-                            ConnectionContextMenu.Show(hitConnection);
+                            if (hitConnection != null)
+                            {
+                                ConnectionContextMenu.Show(hitConnection);
+                            }
                         }
                         else
                         {
-                            GraphContextMenu.Show();
+                            GraphRegion hitRegion =
+                                Graph.HitsRegion(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                            
+                            if (hitRegion != null)
+                            {
+                                RegionContextMenu.Show(hitRegion);
+                            }
+                            else
+                            {
+                                GraphContextMenu.Show();
+                            }
                         }
                     }
-                    
+
                     p_event.Use();
                 }
             }
