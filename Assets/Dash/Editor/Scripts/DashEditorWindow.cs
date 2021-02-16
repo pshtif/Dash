@@ -47,7 +47,7 @@ namespace Dash
                 HandleShortcuts();
 
             if (Event.current.type == EventType.MouseDown)
-                DashEditorCore.editingRegionTitle = false;
+                DashEditorCore.editingBoxComment = null;
 
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
@@ -104,7 +104,7 @@ namespace Dash
             {
                 _views = new List<ViewBase>();
                 CreateView<GraphView>();
-                CreateView<NodeInspectorView>();
+                CreateView<InspectorView>();
                 CreateView<GraphVariablesView>();
                 CreateView<PreviewControlsView>();
             }

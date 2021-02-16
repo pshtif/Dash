@@ -91,7 +91,7 @@ namespace Dash
         {
             Undo.RecordObject(Graph, "Create Region");
             
-            DashEditorCore.CreateRegionFromSelectedNodes();
+            DashEditorCore.CreateBoxAroundSelectedNodes();
         }
         
         static void SetAsPreview(object p_node)

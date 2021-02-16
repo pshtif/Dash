@@ -11,7 +11,7 @@ namespace Dash
     {
         static private DashGraph Graph => DashEditorCore.Config.editingGraph;
         
-        static public void Show(GraphRegion p_region)
+        static public void Show(GraphBox p_region)
         {
             GenericMenu menu = new GenericMenu();
 
@@ -23,7 +23,7 @@ namespace Dash
         static void DeleteRegion(object p_region)
         {
             Undo.RecordObject(Graph, "Delete region.");
-            Graph.DeleteRegion((GraphRegion)p_region);
+            Graph.DeleteBox((GraphBox)p_region);
         }
     }
 }

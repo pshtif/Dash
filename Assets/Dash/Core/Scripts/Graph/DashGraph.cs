@@ -380,8 +380,8 @@ namespace Dash
 #endregion
 
         [SerializeField]
-        private List<GraphRegion> _regions = new List<GraphRegion>();
-        public List<GraphRegion> Regions => _regions;
+        private List<GraphBox> _boxes = new List<GraphBox>();
+        public List<GraphBox> Boxes => _boxes;
 
         public bool previewControlsViewMinimized = true;
         public Vector2 viewOffset = Vector2.zero;
@@ -420,7 +420,7 @@ namespace Dash
                 RemoveNullReferences();
 
             // Draw regions
-            _regions.Where(r => r != null).ForEach(r => r.DrawGUI());
+            _boxes.Where(r => r != null).ForEach(r => r.DrawGUI());
             
             // Draw connections
             _connections.Where(c => c != null).ForEach(c=> c.DrawGUI());
@@ -445,14 +445,14 @@ namespace Dash
             return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
         }
 
-        public GraphRegion HitsRegion(Vector2 p_position)
+        public GraphBox HitsBox(Vector2 p_position)
         {
-            return _regions.AsEnumerable().Reverse().ToList().Find(r => r.titleRect.Contains(p_position - viewOffset));
+            return _boxes.AsEnumerable().Reverse().ToList().Find(r => r.titleRect.Contains(p_position - viewOffset));
         }
 
-        public void DeleteRegion(GraphRegion p_region)
+        public void DeleteBox(GraphBox p_box)
         {
-            _regions.Remove(p_region);
+            _boxes.Remove(p_box);
         }
 
         public NodeConnection HitsConnection(Vector2 p_position, float p_distance)
@@ -485,13 +485,13 @@ namespace Dash
             return null;
         }
 
-        public void CreateRegion(Rect p_region)
+        public void CreateBox(Rect p_region)
         {
             // Increase size of region to have padding
-            Rect regionRect = new Rect(p_region.xMin - 20, p_region.yMin - 60, p_region.width + 40, p_region.height + 80);
+            Rect boxRect = new Rect(p_region.xMin - 20, p_region.yMin - 60, p_region.width + 40, p_region.height + 80);
             
-            GraphRegion graphRegion = new GraphRegion("Region", regionRect);
-            _regions.Add(graphRegion);
+            GraphBox box = new GraphBox("Region", boxRect);
+            _boxes.Add(box);
         }
         
         public void CreateNodeInEditor(Type p_nodeType, Vector2 mousePosition)

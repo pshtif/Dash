@@ -4,30 +4,88 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Dash
 {
-    public class NodeModelBase
+    [Serializable]
+    public class GraphBox
     {
-        [TitledGroup("Advanced", true)]
-        public string id;
-
-        // [TitledGroup("Advanced", true)] 
-        // [Tooltip("Execute node even if target is not valid.")]
-        // public bool executeOnNull;
-
-        [TitledGroup("Advanced", true)]
-        [HideInInspector] 
+        public DashGraph Graph => DashEditorCore.Config.editingGraph;
+        
         public string comment;
 
-
-#if UNITY_EDITOR
-        private Dictionary<string, bool> groupsMinized;
+        public Color color = Color.white;
         
+        [HideInInspector]
+        public Rect rect;
+
+        public Rect titleRect => new Rect(rect.x, rect.y, rect.width, 45);
+
+        private List<NodeBase> _draggedNodes = new List<NodeBase>();
+        private double _lastClickTime = 0;
+
+        private Dictionary<string, bool> groupsMinized;
+
+        public GraphBox(string p_comment, Rect p_rect)
+        {
+            comment = p_comment;
+            rect = p_rect;
+        }
+
+        public void DrawGUI()
+        {
+            Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, rect.width, rect.height);
+
+            GUI.color = color;
+            
+            GUI.Box(offsetRect, "", DashEditorCore.Skin.GetStyle("GraphRegion"));
+
+            Rect titleRect = new Rect(offsetRect.x + 12, offsetRect.y, offsetRect.width, 40);
+            if (Event.current.type == EventType.MouseDown && titleRect.Contains(Event.current.mousePosition))
+            {
+                if (EditorApplication.timeSinceStartup - _lastClickTime < 0.3)
+                {
+                    DashEditorCore.editingBoxComment = this;
+                }
+                _lastClickTime = EditorApplication.timeSinceStartup;
+            }
+
+            GUI.color = Color.white;
+            GUIStyle style = new GUIStyle();
+            style.fontStyle = FontStyle.Bold;
+            style.fontSize = 24;
+            style.normal.textColor = Color.white;
+            style.alignment = TextAnchor.LowerLeft;
+            if (DashEditorCore.editingBoxComment == this)
+            {
+                comment = GUI.TextField(titleRect, comment, style);
+            }
+            else
+            {
+                GUI.Label(titleRect, comment, style);
+            }
+            
+        }
+
+        public void StartDrag()
+        {
+            _draggedNodes = Graph.Nodes.FindAll(n =>
+                rect.Contains(new Vector2(n.rect.x, n.rect.y)) &&
+                rect.Contains(new Vector2(n.rect.x + n.rect.width, n.rect.y + n.rect.height)));
+        }
+
+        public void Drag(Vector2 p_offset)
+        {
+            _draggedNodes.ForEach(n => n.rect.position += p_offset);
+
+            rect.position += p_offset;
+        }
+
         public virtual bool DrawInspector()
         {
             bool initializeMinimization = false;
@@ -85,47 +143,5 @@ namespace Dash
 
             return invalidate;
         }
-
-        public List<string> GetExposedGUIDs()
-        {
-            return GetType().GetFields().ToList().FindAll(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>)).Select(
-                    (f, i) => f.GetValue(this).GetType().GetField("exposedName").GetValue(f.GetValue(this)).ToString())
-                .ToList();
-        }
-        
-        public void ValidateSerialization()
-        {
-            var fields = this.GetType().GetFields();
-            foreach (var field in fields)
-            {
-                if (!GUIPropertiesUtils.IsParameterProperty(field))
-                    continue;
-                
-                if ((Parameter)field.GetValue(this) == null)
-                {
-                    if (!RecreateParameter(field))
-                    {
-                        Debug.LogWarning("Recreation of parameter property failed.");
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Recreation of parameter property succeeded.");
-                    }
-                }
-            }
-        }
-        
-        bool RecreateParameter(FieldInfo p_fieldInfo)
-        {
-            Debug.LogWarning("Serialization error on parametrized property "+p_fieldInfo.Name+" encountered on model "+this+", recreating parameter to default values.");
-            var genericType = p_fieldInfo.FieldType.GenericTypeArguments[0];
-            var parameterType = typeof(Parameter<>).MakeGenericType(genericType);
-            var parameter = Activator.CreateInstance(parameterType, genericType.GetDefaultValue());
-
-            p_fieldInfo.SetValue(this, parameter);
-
-            return p_fieldInfo.GetValue(this) != null;
-        }
-#endif
     }
 }

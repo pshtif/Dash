@@ -43,10 +43,12 @@ namespace Dash
         
         static public bool draggingNodes = false;
 
-        static public bool editingRegionTitle = false;
+        static public GraphBox editingBoxComment;
         
         static public List<int> selectedNodes = new List<int>();
-        
+
+        static public GraphBox selectedBox;
+
         static DashEditorCore()
         {
             CreateConfig();
@@ -95,22 +97,20 @@ namespace Dash
             SetDirty();
         }
 
-        public static void CreateRegionFromSelectedNodes()
+        public static void CreateBoxAroundSelectedNodes()
         {
             List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
             Rect region = nodes[0].rect;
             
             nodes.ForEach(n =>
             {
-                Debug.Log("Pre: "+n.rect+" : "+region);
                 if (n.rect.xMin < region.xMin) region.xMin = n.rect.xMin;
                 if (n.rect.yMin < region.yMin) region.yMin = n.rect.yMin;
                 if (n.rect.xMax > region.xMax) region.xMax = n.rect.xMax;
                 if (n.rect.yMax > region.yMax) region.yMax = n.rect.yMax;
-                Debug.Log("Post: "+n.rect+" : "+region);
             });
 
-            Graph.CreateRegion(region);
+            Graph.CreateBox(region);
         }
 
         public static void ReindexSelected(int p_index)

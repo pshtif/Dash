@@ -653,8 +653,6 @@ namespace Dash
 
         public void DrawInspector()
         {
-            Undo.RecordObject(Graph, "Inspector");
-
             bool invalidate = _model.DrawInspector();
             
             if (invalidate)

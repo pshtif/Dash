@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -17,14 +18,10 @@ namespace Dash
 
         private float Zoom => DashEditorCore.Config.zoom;
 
-        private List<int> SelectedNodes => DashEditorCore.selectedNodes;
-        
         private Rect zoomedRect;
+
+        private DraggingType dragging = DraggingType.NONE;
         
-        private bool draggingNodes = false;
-        private GraphRegion draggingRegion;
-        
-        private bool selectingRegion = false;
         private Rect selectedRegion = Rect.zero;
 
         private Texture backgroundTexture;
@@ -77,7 +74,7 @@ namespace Dash
 
         void DrawSelectingRegion(Rect p_rect)
         {
-            if (selectingRegion)
+            if (dragging == DraggingType.SELECTION)
             {
                 GUI.color = new Color(1, 1, 1, 0.1f);
                 GUI.DrawTextureWithTexCoords(selectedRegion, whiteRectTexture, new Rect(0,0,64,64), true);
@@ -218,7 +215,7 @@ namespace Dash
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
 
-                if (!SelectedNodes.Contains(hitNodeIndex))
+                if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex))
                 {
                     DashEditorCore.DeselectAllNodes();
                 }
@@ -227,23 +224,23 @@ namespace Dash
                 {
                     AddSelectedNode(hitNodeIndex);
 
-                    draggingNodes = true;
+                    dragging = DraggingType.NODE;
                 }
                 else
                 {
-                    GraphRegion region = Graph.HitsRegion(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                    GraphBox region = Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
 
                     if (region != null)
                     {
-                        draggingRegion = region;
-                        draggingRegion.StartDrag();
+                        DashEditorCore.selectedBox = region;
+                        DashEditorCore.selectedBox.StartDrag();
+                        dragging = DraggingType.BOX;
                     }
                     else
                     {
-                        draggingRegion = null;
-                        draggingNodes = false;
+                        dragging = DraggingType.SELECTION;
+                        DashEditorCore.selectedBox = null;
                         Graph.connectingNode = null;
-                        selectingRegion = true;
                         selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
                     }
                 }
@@ -259,32 +256,27 @@ namespace Dash
                         Graph.viewOffset += p_event.delta * Zoom;
                     }
                 }
-                else if (draggingNodes)
+
+                switch (dragging)
                 {
-                    foreach (int index in SelectedNodes)
-                    {
-                        NodeBase node = Graph.Nodes[index];
-                        node.rect.x += p_event.delta.x * Zoom;
-                        node.rect.y += p_event.delta.y * Zoom;
-                    }
-                } 
-                else if (draggingRegion != null)
-                {
-                    Vector2 dragOffset = new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom);
-                    draggingRegion.Drag(dragOffset);
-                } 
-                else if (selectingRegion)
-                {
-                    selectedRegion.width += p_event.delta.x;
-                    selectedRegion.height += p_event.delta.y;
+                    case DraggingType.NODE:
+                        DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += p_event.delta*Zoom);
+                        break;
+                    case DraggingType.BOX:
+                        DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
+                        break;
+                    case DraggingType.SELECTION:
+                        selectedRegion.width += p_event.delta.x;
+                        selectedRegion.height += p_event.delta.y;
+                        break;
                 }
-                
+
                 DashEditorWindow.SetDirty(true);
             }
 
             if (p_event.type == EventType.MouseUp)
             {
-                if (SelectedNodes.Count == 0)
+                if (DashEditorCore.selectedNodes.Count == 0)
                 {
                     if (selectedRegion.width < 0)
                     {
@@ -310,11 +302,7 @@ namespace Dash
                     }
                 }
 
-                if (draggingRegion != null)
-                    draggingRegion.EndDrag();
-                draggingRegion = null;
-                selectingRegion = false;
-                draggingNodes = false;
+                dragging = DraggingType.NONE;
                 DashEditorWindow.SetDirty(true);
             }
         }
@@ -348,8 +336,8 @@ namespace Dash
                         }
                         else
                         {
-                            GraphRegion hitRegion =
-                                Graph.HitsRegion(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                            GraphBox hitRegion =
+                                Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                             
                             if (hitRegion != null)
                             {
@@ -371,9 +359,9 @@ namespace Dash
 
         void AddSelectedNode(int p_nodeIndex)
         {
-            if (!SelectedNodes.Contains(p_nodeIndex))
+            if (!DashEditorCore.selectedNodes.Contains(p_nodeIndex))
             {
-                SelectedNodes.Add(p_nodeIndex);
+                DashEditorCore.selectedNodes.Add(p_nodeIndex);
                 
                 // If the controller is not null autoselect it in hierarchy TODO: maybe put this as setting
                 if (Graph.Controller != null)
