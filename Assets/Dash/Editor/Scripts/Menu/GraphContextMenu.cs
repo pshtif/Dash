@@ -194,19 +194,14 @@ namespace Dash
             {
                 Undo.RecordObject(Graph, "DuplicateNodes");
 
-                List<NodeBase> nodes = DashEditorCore.selectedNodes.Select(i => Graph.Nodes[i]).ToList();
-                List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
-                DashEditorCore.selectedNodes = newNodes.Select(n => n.Index).ToList();
+                DashEditorCore.DuplicateSelectedNodes();
             }
             else
             {
                 Undo.RecordObject(Graph, "DuplicateNode");
-                
-                NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
-                DashEditorCore.selectedNodes = new List<int> { node.Index };
-            }
 
-            DashEditorCore.SetDirty();
+                DashEditorCore.DuplicateNode((NodeBase)p_node);
+            }
         }
 
         static void DeleteConnection(object p_connection)

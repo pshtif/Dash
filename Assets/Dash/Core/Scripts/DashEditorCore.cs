@@ -5,6 +5,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
@@ -65,6 +66,29 @@ namespace Dash
             {
                 EditorUtility.SetDirty(Config.editingGraph);
             }
+        }
+
+        public static void DuplicateSelectedNodes()
+        {
+            if (Config.editingGraph == null || selectedNodes.Count == 0)
+                return;
+            
+            List<NodeBase> nodes = selectedNodes.Select(i => Config.editingGraph.Nodes[i]).ToList();
+            List<NodeBase> newNodes = Config.editingGraph.DuplicateNodes(nodes);
+            selectedNodes = newNodes.Select(n => n.Index).ToList();
+            
+            SetDirty();
+        }
+
+        public static void DuplicateNode(NodeBase p_node)
+        {
+            if (Config.editingGraph == null)
+                return;
+            
+            NodeBase node = Config.editingGraph.DuplicateNode((NodeBase) p_node);
+            selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
         }
 
         public static void ReindexSelected(int p_index)
