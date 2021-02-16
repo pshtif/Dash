@@ -42,6 +42,8 @@ namespace Dash
         static public Color CONNECTOR_OUTPUT_DISCONNECTED_COLOR = new Color(1, 1, 1);
         
         static public bool draggingNodes = false;
+
+        static public bool editingRegionTitle = false;
         
         static public List<int> selectedNodes = new List<int>();
         

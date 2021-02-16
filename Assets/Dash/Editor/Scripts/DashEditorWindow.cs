@@ -45,7 +45,10 @@ namespace Dash
         {
             if (Event.current.isKey) 
                 HandleShortcuts();
-            
+
+            if (Event.current.type == EventType.MouseDown)
+                DashEditorCore.editingRegionTitle = false;
+
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
                 return;

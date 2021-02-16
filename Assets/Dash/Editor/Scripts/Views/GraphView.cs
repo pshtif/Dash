@@ -209,7 +209,7 @@ namespace Dash
         {
             if (p_event.button != 0)
                 return;
-            
+
             // Select
             if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
             {
@@ -310,6 +310,9 @@ namespace Dash
                     }
                 }
 
+                if (draggingRegion != null)
+                    draggingRegion.EndDrag();
+                draggingRegion = null;
                 selectingRegion = false;
                 draggingNodes = false;
                 DashEditorWindow.SetDirty(true);
