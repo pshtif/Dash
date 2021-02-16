@@ -20,6 +20,8 @@ namespace Dash
         public string comment;
 
         public Color color = Color.white;
+
+        public bool moveNodes = true;
         
         [HideInInspector]
         public Rect rect;
@@ -74,14 +76,18 @@ namespace Dash
 
         public void StartDrag()
         {
-            _draggedNodes = Graph.Nodes.FindAll(n =>
-                rect.Contains(new Vector2(n.rect.x, n.rect.y)) &&
-                rect.Contains(new Vector2(n.rect.x + n.rect.width, n.rect.y + n.rect.height)));
+            if (moveNodes)
+            {
+                _draggedNodes = Graph.Nodes.FindAll(n =>
+                    rect.Contains(new Vector2(n.rect.x, n.rect.y)) &&
+                    rect.Contains(new Vector2(n.rect.x + n.rect.width, n.rect.y + n.rect.height)));
+            }
         }
 
         public void Drag(Vector2 p_offset)
         {
-            _draggedNodes.ForEach(n => n.rect.position += p_offset);
+            if (moveNodes)
+                _draggedNodes.ForEach(n => n.rect.position += p_offset);
 
             rect.position += p_offset;
         }

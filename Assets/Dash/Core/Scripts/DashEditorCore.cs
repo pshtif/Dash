@@ -40,8 +40,6 @@ namespace Dash
         static public Color CONNECTOR_INPUT_DISCONNECTED_COLOR = new Color(0.4f, 0.3f, 0f);
         static public Color CONNECTOR_OUTPUT_CONNECTED_COLOR = new Color(1f, 0.7f, 0f);
         static public Color CONNECTOR_OUTPUT_DISCONNECTED_COLOR = new Color(1, 1, 1);
-        
-        static public bool draggingNodes = false;
 
         static public GraphBox editingBoxComment;
         
@@ -124,7 +122,7 @@ namespace Dash
         
         public static void EditController(DashController p_controller)
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             if (p_controller != null)
             {
@@ -142,7 +140,7 @@ namespace Dash
 
         public static void EditGraph(DashGraph p_graph)
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             Config.editingGraph = p_graph;
             if (p_graph != null)
@@ -151,7 +149,7 @@ namespace Dash
         
         public static void UnloadGraph()
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             Config.editingGraph = null;
         }
@@ -318,12 +316,6 @@ namespace Dash
             }
 
             return new Color(.9f, .9f, 1f);
-        }
-        
-        public static void DeselectAllNodes()
-        {
-            draggingNodes = false;
-            selectedNodes.Clear();
         }
 
     }

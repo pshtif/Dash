@@ -217,7 +217,7 @@ namespace Dash
 
                 if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex))
                 {
-                    DashEditorCore.DeselectAllNodes();
+                    DashEditorCore.selectedNodes.Clear();
                 }
 
                 if (hitNodeIndex >= 0)
@@ -276,7 +276,7 @@ namespace Dash
 
             if (p_event.type == EventType.MouseUp)
             {
-                if (DashEditorCore.selectedNodes.Count == 0)
+                if (dragging == DraggingType.SELECTION && DashEditorCore.selectedNodes.Count == 0)
                 {
                     if (selectedRegion.width < 0)
                     {
@@ -303,6 +303,7 @@ namespace Dash
                 }
 
                 dragging = DraggingType.NONE;
+                selectedRegion = Rect.zero;
                 DashEditorWindow.SetDirty(true);
             }
         }
