@@ -313,7 +313,7 @@ namespace Dash
                     NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                     if (hitNode != null)
                     {
-                        GraphContextMenu.Show(GraphContextMenuType.NODE, p_event, hitNode);
+                        NodeContextMenu.Show(hitNode);
                     }
                     else
                     {
@@ -323,17 +323,15 @@ namespace Dash
 
                         if (hitConnection != null)
                         {
-                            GraphContextMenu.Show(GraphContextMenuType.CONNECTION, p_event, hitConnection);
+                            ConnectionContextMenu.Show(hitConnection);
                         }
                         else
                         {
-                            GraphContextMenu.Show(GraphContextMenuType.GRAPH, p_event, null);
+                            GraphContextMenu.Show();
                         }
                     }
-                }
-                else
-                {
-                    GraphContextMenu.Show(GraphContextMenuType.GRAPH, p_event, null);
+                    
+                    p_event.Use();
                 }
             }
             
