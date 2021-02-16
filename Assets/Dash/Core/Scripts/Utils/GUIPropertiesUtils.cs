@@ -39,7 +39,7 @@ namespace Dash
             if (!MeetsDependencies(p_fieldInfo, p_object))
                 return false;
             
-            string nameString = String.IsNullOrEmpty(p_name) ? p_fieldInfo.Name : p_name;
+            string nameString = String.IsNullOrEmpty(p_name) ? ObjectNames.NicifyVariableName(p_fieldInfo.Name) : p_name;
             nameString = nameString.Substring(0, 1).ToUpper() + nameString.Substring(1);
 
             TooltipAttribute tooltipAttribute = p_fieldInfo.GetCustomAttribute<TooltipAttribute>();
