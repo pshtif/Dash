@@ -43,6 +43,9 @@ namespace Dash
 
         private void OnGUI()
         {
+            if (Event.current.isKey) 
+                HandleShortcuts();
+            
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
                 return;
@@ -73,6 +76,17 @@ namespace Dash
             {
                 SetDirty(false);
                 Repaint();
+            }
+        }
+
+        private void HandleShortcuts()
+        {
+            if (!Event.current.control || Event.current.type != EventType.KeyDown)
+                return;
+            
+            if (Event.current.keyCode == KeyCode.D)
+            {
+                DashEditorCore.DuplicateSelectedNodes();
             }
         }
 
