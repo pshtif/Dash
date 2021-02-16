@@ -428,6 +428,11 @@ namespace Dash
             EditorUtility.SetDirty(this);
         }
 
+        public void DrawComments(Rect p_rect, bool p_zoomed)
+        {
+            _nodes.Where(n => n != null).ForEach(n => n.DrawComment(p_rect, p_zoomed));
+        }
+
         public NodeBase HitsNode(Vector2 p_position)
         {
             return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));

@@ -59,8 +59,11 @@ namespace Dash
                 // Draw graph
                 GUIScaleUtils.BeginScale(ref zoomedRect, new Vector2(p_rect.width/2, p_rect.height/2), Zoom, false, false);
                 Graph.DrawGUI(zoomedRect);
+                //Graph.DrawComments(zoomedRect);
                 GUIScaleUtils.EndScale();
             }
+            
+            Graph.DrawComments(p_rect, false);
 
             DrawControllerInfo(p_rect);
 
