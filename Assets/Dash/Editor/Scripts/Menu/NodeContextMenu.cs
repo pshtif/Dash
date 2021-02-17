@@ -20,7 +20,7 @@ namespace Dash
             {
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
                 menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
-                menu.AddItem(new GUIContent("Create Region"), false, CreateRegion);
+                menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
             }
             else
             {
@@ -87,9 +87,9 @@ namespace Dash
             }
         }
 
-        static void CreateRegion()
+        static void CreateBox()
         {
-            Undo.RecordObject(Graph, "Create Region");
+            Undo.RecordObject(Graph, "Create Box");
             
             DashEditorCore.CreateBoxAroundSelectedNodes();
         }
