@@ -42,10 +42,10 @@ namespace Dash
         static public Color CONNECTOR_OUTPUT_DISCONNECTED_COLOR = new Color(1, 1, 1);
 
         static public GraphBox editingBoxComment;
+        static public GraphBox selectedBox;
         
         static public List<int> selectedNodes = new List<int>();
-
-        static public GraphBox selectedBox;
+        static public List<int> selectingNodes { get; private set; } = new List<int>();
 
         static DashEditorCore()
         {

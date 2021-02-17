@@ -52,7 +52,7 @@ namespace Dash
 
         public DashController Controller => Graph.Controller;
 
-        public int Index => Graph != null ? Graph.Nodes.IndexOf(this) : -1;
+        public int Index => Graph.Nodes.IndexOf(this);
 
         [NonSerialized]
         protected GraphParameterResolver _parameterResolver;
@@ -382,6 +382,8 @@ namespace Dash
         
         public bool IsSelected => Graph.IsSelected(this);
         
+        public bool IsSelecting => Graph.IsSelecting(this);
+        
         public Rect rect;
 
         public virtual string CustomName => String.Empty;
@@ -535,6 +537,13 @@ namespace Dash
                     executeTime -= .2f;
                 }
                 GUI.color = Color.cyan;
+                GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
+                    "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
+            }
+            
+            if (IsSelecting)
+            {
+                GUI.color = Color.yellow;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
             }

@@ -268,6 +268,14 @@ namespace Dash
                     case DraggingType.SELECTION:
                         selectedRegion.width += p_event.delta.x;
                         selectedRegion.height += p_event.delta.y;
+                        DashEditorCore.selectingNodes.Clear();
+                        for (int i = 0; i < Graph.Nodes.Count; i++)
+                        {
+                            if (SelectedRegionContains(Graph.Nodes[i]))
+                            {
+                                DashEditorCore.selectingNodes.Add(i);
+                            }
+                        }
                         break;
                 }
 
@@ -278,28 +286,9 @@ namespace Dash
             {
                 if (dragging == DraggingType.SELECTION && DashEditorCore.selectedNodes.Count == 0)
                 {
-                    if (selectedRegion.width < 0)
-                    {
-                        selectedRegion.x += selectedRegion.width;
-                        selectedRegion.width = -selectedRegion.width;
-                    }
-                    if (selectedRegion.height < 0)
-                    {
-                        selectedRegion.y += selectedRegion.height;
-                        selectedRegion.height = -selectedRegion.height;
-                    }
-
-                    for (int i = 0; i < Graph.Nodes.Count; i++)
-                    {
-                        NodeBase node = Graph.Nodes[i];
-                        if (selectedRegion.Contains(new Vector2((node.rect.x + Graph.viewOffset.x)/Zoom,
-                                (node.rect.y + Graph.viewOffset.y)/Zoom)) ||
-                            selectedRegion.Contains(new Vector2((node.rect.x + node.rect.width + Graph.viewOffset.x)/Zoom,
-                                (node.rect.y + node.rect.height + Graph.viewOffset.y)/Zoom)))
-                        {
-                            AddSelectedNode(i);
-                        }
-                    }
+                    DashEditorCore.selectedNodes.Clear();
+                    DashEditorCore.selectedNodes.AddRange(DashEditorCore.selectingNodes);
+                    DashEditorCore.selectingNodes.Clear();
                 }
 
                 dragging = DraggingType.NONE;
@@ -330,10 +319,7 @@ namespace Dash
 
                         if (hitConnection != null)
                         {
-                            if (hitConnection != null)
-                            {
-                                ConnectionContextMenu.Show(hitConnection);
-                            }
+                            ConnectionContextMenu.Show(hitConnection);
                         }
                         else
                         {
@@ -342,7 +328,7 @@ namespace Dash
                             
                             if (hitRegion != null)
                             {
-                                RegionContextMenu.Show(hitRegion);
+                                BoxContextMenu.Show(hitRegion);
                             }
                             else
                             {
@@ -370,6 +356,32 @@ namespace Dash
                     Selection.activeGameObject = Graph.Controller.gameObject;
                 }
             }
+        }
+        
+        bool SelectedRegionContains(NodeBase p_node)
+        {
+            Rect correctRegion = selectedRegion;
+            if (correctRegion.width < 0)
+            {
+                correctRegion.x += correctRegion.width;
+                correctRegion.width = -correctRegion.width;
+            }
+            if (correctRegion.height < 0)
+            {
+                correctRegion.y += correctRegion.height;
+                correctRegion.height = -correctRegion.height;
+            }
+            
+            if (correctRegion.Contains(new Vector2((p_node.rect.x + Graph.viewOffset.x)/Zoom,
+                    (p_node.rect.y + Graph.viewOffset.y)/Zoom)) ||
+                correctRegion.Contains(new Vector2((p_node.rect.x + p_node.rect.width + Graph.viewOffset.x)/Zoom,
+                    (p_node.rect.y + p_node.rect.height + Graph.viewOffset.y)/Zoom)))
+            {
+                Debug.Log("here");
+                return true;
+            }
+            
+            return false;
         }
     }
 }

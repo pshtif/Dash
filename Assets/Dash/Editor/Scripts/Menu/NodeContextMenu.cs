@@ -48,7 +48,7 @@ namespace Dash
         {
             if (p_node == null)
             {
-                Undo.RecordObject(Graph, "DeleteNodes");
+                Undo.RecordObject(Graph, "Delete Nodes");
 
                 while (DashEditorCore.selectedNodes.Count > 0)
                 {
@@ -60,7 +60,7 @@ namespace Dash
             }
             else
             {
-                Undo.RecordObject(Graph, "DeleteNode");
+                Undo.RecordObject(Graph, "Delete Node");
 
                 int index = ((NodeBase) p_node).Index;
                 Graph.RemoveNode((NodeBase) p_node);

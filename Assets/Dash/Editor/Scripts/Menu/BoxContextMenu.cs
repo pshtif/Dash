@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class RegionContextMenu
+    public class BoxContextMenu
     {
         static private DashGraph Graph => DashEditorCore.Config.editingGraph;
         
@@ -15,14 +15,15 @@ namespace Dash
         {
             GenericMenu menu = new GenericMenu();
 
-            menu.AddItem(new GUIContent("Delete Region"), false, DeleteRegion, p_region);
+            menu.AddItem(new GUIContent("Delete Box"), false, DeleteBox, p_region);
             
             menu.ShowAsContext();
         }
         
-        static void DeleteRegion(object p_region)
+        static void DeleteBox(object p_region)
         {
-            Undo.RecordObject(Graph, "Delete region.");
+            Undo.RecordObject(Graph, "Delete Box");
+            
             Graph.DeleteBox((GraphBox)p_region);
         }
     }
