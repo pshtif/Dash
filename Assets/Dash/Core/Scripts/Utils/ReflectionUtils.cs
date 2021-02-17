@@ -35,7 +35,7 @@ namespace Dash
                 .Where(x => p_type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
         }
         
-        public static Type GetType(string p_typeName)
+        public static Type GetTypeByName(string p_typeName)
         {
             var type = Type.GetType(p_typeName);
             

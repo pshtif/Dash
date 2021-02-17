@@ -553,27 +553,24 @@ namespace Dash
         
         static public int GroupSort(FieldInfo p_field1, FieldInfo p_field2)
         {
-            TitledGroupAttribute ga1 = p_field1.GetCustomAttribute<TitledGroupAttribute>();
-            TitledGroupAttribute ga2 = p_field2.GetCustomAttribute<TitledGroupAttribute>();
-            if (ga1 == null && ga2 == null)
+            TitledGroupAttribute attribute1 = p_field1.GetCustomAttribute<TitledGroupAttribute>();
+            TitledGroupAttribute attribute2 = p_field2.GetCustomAttribute<TitledGroupAttribute>();
+            if (attribute1 == null && attribute2 == null)
                 return OrderSort(p_field1, p_field2);
 
-            if (ga1 != null && ga2 == null)
-                return ga1.Group == "Advanced" ? 1 : -1;
-
-            if (ga1 == null && ga2 != null)
-                return ga2.Group == "Advanced" ? -1 : 1;
-
-            if (ga1.Group == "Advanced")
+            if (attribute1 != null && attribute2 == null)
                 return 1;
 
-            if (ga2.Group == "Advanced")
+            if (attribute1 == null && attribute2 != null)
                 return -1;
 
-            if (ga1.Group == ga2.Group)
+            if (attribute1.Group == attribute2.Group)
                 return OrderSort(p_field1, p_field2);
             
-            return ga1.Group.CompareTo(ga2.Group);
+            if (attribute1.Order != attribute2.Order) 
+                return attribute1.Order.CompareTo(attribute2.Order);
+            
+            return attribute1.Group.CompareTo(attribute2.Group);
         }
         
         static public int OrderSort(FieldInfo p_field1, FieldInfo p_field2)

@@ -117,7 +117,7 @@ namespace Dash
                 if (field.IsConstant()) continue;
 
                 TitledGroupAttribute ga = field.GetCustomAttribute<TitledGroupAttribute>();
-                string currentGroup = ga != null ? ga.Group : "Other";
+                string currentGroup = ga != null ? ga.Group : "Properties";
                 if (currentGroup != lastGroup)
                 {
                     if (initializeMinimization || !groupsMinized.ContainsKey(currentGroup))
