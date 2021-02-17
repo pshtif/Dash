@@ -637,7 +637,7 @@ namespace Dash
 
                 var connectorRect = GetConnectorRect(false, i);
                 
-                if (connectorRect.Contains(Event.current.mousePosition * DashEditorCore.Config.zoom - new Vector2(p_rect.x, p_rect.y)))
+                if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
 
                 if (OutputLabels != null && OutputLabels.Length > i)
