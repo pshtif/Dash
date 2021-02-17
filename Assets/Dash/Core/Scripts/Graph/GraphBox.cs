@@ -28,10 +28,12 @@ namespace Dash
 
         public Rect titleRect => new Rect(rect.x, rect.y, rect.width, 45);
 
+        [NonSerialized]
         private List<NodeBase> _draggedNodes = new List<NodeBase>();
+        [NonSerialized]
         private double _lastClickTime = 0;
 
-        private Dictionary<string, bool> groupsMinized;
+        private int groupsMinized = -1;
 
         public GraphBox(string p_comment, Rect p_rect)
         {
@@ -45,7 +47,7 @@ namespace Dash
 
             GUI.color = color;
             
-            GUI.Box(offsetRect, "", DashEditorCore.Skin.GetStyle("GraphRegion"));
+            GUI.Box(offsetRect, "", DashEditorCore.Skin.GetStyle("GraphBox"));
 
             Rect titleRect = new Rect(offsetRect.x + 12, offsetRect.y, offsetRect.width, 40);
             if (Event.current.type == EventType.MouseDown && titleRect.Contains(Event.current.mousePosition))
@@ -95,10 +97,10 @@ namespace Dash
         public virtual bool DrawInspector()
         {
             bool initializeMinimization = false;
-            if (groupsMinized == null)
+            if (groupsMinized == -1)
             {
                 initializeMinimization = true;
-                groupsMinized = new Dictionary<string, bool>();
+                groupsMinized = 0;
             }
             
             GUILayout.Space(5);
@@ -112,6 +114,7 @@ namespace Dash
             string lastGroup = "";
             bool lastGroupMinimized = false;
             bool invalidate = false;
+            int groupIndex = 0;
             foreach (var field in fields)
             {
                 if (field.IsConstant()) continue;
@@ -120,9 +123,11 @@ namespace Dash
                 string currentGroup = ga != null ? ga.Group : "Properties";
                 if (currentGroup != lastGroup)
                 {
-                    if (initializeMinimization || !groupsMinized.ContainsKey(currentGroup))
+                    int groupMask = (int)Math.Pow(2, groupIndex);
+                    groupIndex++;
+                    if (initializeMinimization && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
                     {
-                        groupsMinized[currentGroup] = ga != null ? ga.Minimized : false;
+                        groupsMinized += groupMask;
                     }
 
                     GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
@@ -131,14 +136,16 @@ namespace Dash
                     Rect lastRect = GUILayoutUtility.GetLastRect();
 
 
-                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), groupsMinized[currentGroup] ? "+" : "-",
+                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
                         minStyle))
                     {
-                        groupsMinized[currentGroup] = !groupsMinized[currentGroup];
+                        groupsMinized = (groupsMinized & groupMask) == 0
+                            ? groupsMinized + groupMask
+                            : groupsMinized - groupMask;
                     }
 
                     lastGroup = currentGroup;
-                    lastGroupMinimized = groupsMinized[currentGroup];
+                    lastGroupMinimized = (groupsMinized & groupMask) != 0;
                 }
 
                 if (lastGroupMinimized)

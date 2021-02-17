@@ -26,15 +26,15 @@ namespace Dash
 
 
 #if UNITY_EDITOR
-        private Dictionary<string, bool> groupsMinized;
+        private int groupsMinized = -1;
         
         public virtual bool DrawInspector()
         {
             bool initializeMinimization = false;
-            if (groupsMinized == null)
+            if (groupsMinized == -1)
             {
                 initializeMinimization = true;
-                groupsMinized = new Dictionary<string, bool>();
+                groupsMinized = 0;
             }
             
             GUILayout.Space(5);
@@ -48,6 +48,7 @@ namespace Dash
             string lastGroup = "";
             bool lastGroupMinimized = false;
             bool invalidate = false;
+            int groupIndex = 0;
             foreach (var field in fields)
             {
                 if (field.IsConstant()) continue;
@@ -56,9 +57,11 @@ namespace Dash
                 string currentGroup = ga != null ? ga.Group : "Properties";
                 if (currentGroup != lastGroup)
                 {
-                    if (initializeMinimization || !groupsMinized.ContainsKey(currentGroup))
+                    int groupMask = (int)Math.Pow(2, groupIndex);
+                    groupIndex++;
+                    if (initializeMinimization && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
                     {
-                        groupsMinized[currentGroup] = ga != null ? ga.Minimized : false;
+                        groupsMinized += groupMask;
                     }
 
                     GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
@@ -67,14 +70,16 @@ namespace Dash
                     Rect lastRect = GUILayoutUtility.GetLastRect();
 
 
-                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), groupsMinized[currentGroup] ? "+" : "-",
+                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
                         minStyle))
                     {
-                        groupsMinized[currentGroup] = !groupsMinized[currentGroup];
+                        groupsMinized = (groupsMinized & groupMask) == 0
+                            ? groupsMinized + groupMask
+                            : groupsMinized - groupMask;
                     }
 
                     lastGroup = currentGroup;
-                    lastGroupMinimized = groupsMinized[currentGroup];
+                    lastGroupMinimized = (groupsMinized & groupMask) != 0;
                 }
 
                 if (lastGroupMinimized)

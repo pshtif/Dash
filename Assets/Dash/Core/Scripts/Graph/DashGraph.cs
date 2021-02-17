@@ -420,7 +420,7 @@ namespace Dash
             if (DashEditorCore.Config.deleteNull)
                 RemoveNullReferences();
 
-            // Draw regions
+            // Draw boxes
             _boxes.Where(r => r != null).ForEach(r => r.DrawGUI());
             
             // Draw connections
@@ -491,7 +491,7 @@ namespace Dash
             // Increase size of region to have padding
             Rect boxRect = new Rect(p_region.xMin - 20, p_region.yMin - 60, p_region.width + 40, p_region.height + 80);
             
-            GraphBox box = new GraphBox("Region", boxRect);
+            GraphBox box = new GraphBox("Comment", boxRect);
             _boxes.Add(box);
         }
         
