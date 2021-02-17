@@ -16,6 +16,7 @@ using UnityEditor;
 
 namespace Dash
 {
+    [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IGraphEditorAccess
     {

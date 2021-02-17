@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [CustomEditor(typeof(DashController))]
-    public class ControllerInspector : Editor
+    public class DashControllerInspector : Editor
     {
         public DashController Controller => (DashController) target;
 

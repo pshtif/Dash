@@ -27,15 +27,15 @@ namespace Dash
         private Texture backgroundTexture;
         private Texture whiteRectTexture;
 
-        private GraphViewMenu _graphViewMenu;
+        private GraphMenuView _graphMenuView;
 
-        public override void UpdateGUI(Event p_event, Rect p_rect)
+        public override void DrawGUI(Event p_event, Rect p_rect)
         {
             if (!_initialized)
             {
                 backgroundTexture = Resources.Load<Texture>("Textures/graph_background");
                 whiteRectTexture = Resources.Load<Texture>("Textures/white_rect_64");
-                _graphViewMenu = new GraphViewMenu();
+                _graphMenuView = new GraphMenuView();
                 GUIScaleUtils.CheckInit();
                 _initialized = true;
             }
@@ -59,9 +59,9 @@ namespace Dash
                 Graph.DrawGUI(zoomedRect);
                 //Graph.DrawComments(zoomedRect);
                 GUIScaleUtils.EndScale();
+                
+                Graph.DrawComments(p_rect, false);
             }
-            
-            Graph.DrawComments(p_rect, false);
 
             DrawControllerInfo(p_rect);
 
@@ -163,7 +163,7 @@ namespace Dash
             GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashEditorCore.VERSION,
                 style);
 
-            _graphViewMenu.Draw(Graph);
+            _graphMenuView.Draw(Graph);
         }
 
         public override void ProcessEvent(Event p_event, Rect p_rect)
@@ -268,14 +268,8 @@ namespace Dash
                     case DraggingType.SELECTION:
                         selectedRegion.width += p_event.delta.x;
                         selectedRegion.height += p_event.delta.y;
-                        DashEditorCore.selectingNodes.Clear();
-                        for (int i = 0; i < Graph.Nodes.Count; i++)
-                        {
-                            if (SelectedRegionContains(Graph.Nodes[i]))
-                            {
-                                DashEditorCore.selectingNodes.Add(i);
-                            }
-                        }
+                        Rect fixedRect = FixRect(selectedRegion);
+                        DashEditorCore.selectingNodes = Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).Select(n => n.Index).ToList();
                         break;
                 }
 
@@ -357,31 +351,35 @@ namespace Dash
                 }
             }
         }
-        
-        bool SelectedRegionContains(NodeBase p_node)
+
+        Rect FixRect(Rect p_rect)
         {
-            Rect correctRegion = selectedRegion;
-            if (correctRegion.width < 0)
+            Rect fixedRect = selectedRegion;
+            if (fixedRect.width < 0)
             {
-                correctRegion.x += correctRegion.width;
-                correctRegion.width = -correctRegion.width;
+                fixedRect.x += fixedRect.width;
+                fixedRect.width = -fixedRect.width;
             }
-            if (correctRegion.height < 0)
+            if (fixedRect.height < 0)
             {
-                correctRegion.y += correctRegion.height;
-                correctRegion.height = -correctRegion.height;
+                fixedRect.y += fixedRect.height;
+                fixedRect.height = -fixedRect.height;
             }
-            
-            if (correctRegion.Contains(new Vector2((p_node.rect.x + Graph.viewOffset.x)/Zoom,
-                    (p_node.rect.y + Graph.viewOffset.y)/Zoom)) ||
-                correctRegion.Contains(new Vector2((p_node.rect.x + p_node.rect.width + Graph.viewOffset.x)/Zoom,
-                    (p_node.rect.y + p_node.rect.height + Graph.viewOffset.y)/Zoom)))
-            {
-                Debug.Log("here");
-                return true;
-            }
-            
-            return false;
+
+            return fixedRect;
         }
+        
+        // bool SelectedRegionContains(Rect p_rect, NodeBase p_node)
+        // {
+        //     if (p_rect.Contains(new Vector2((p_node.rect.x + Graph.viewOffset.x)/Zoom,
+        //             (p_node.rect.y + Graph.viewOffset.y)/Zoom)) ||
+        //         p_rect.Contains(new Vector2((p_node.rect.x + p_node.rect.width + Graph.viewOffset.x)/Zoom,
+        //             (p_node.rect.y + p_node.rect.height + Graph.viewOffset.y)/Zoom)))
+        //     {
+        //         return true;
+        //     }
+        //     
+        //     return false;
+        // }
     }
 }

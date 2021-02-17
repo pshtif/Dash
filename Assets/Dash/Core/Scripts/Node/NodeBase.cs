@@ -675,6 +675,23 @@ namespace Dash
         {
             return _model.GetExposedGUIDs();
         }
+
+        public bool IsInsideRect(Rect p_rect)
+        {
+            if (p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)))
+            {
+                return true;
+            }
+
+            return false;
+        }
 #endif
 
         #endregion

@@ -25,7 +25,7 @@ namespace Dash
         public Ease easing = Ease.Linear;
         
         [TitledGroup("Animation")]
-        public AnimationClip sourceClip;
+        public DashAnimation source;
 
         [TitledGroup("Animation")]
         public bool isRelative = true;

@@ -9,16 +9,16 @@ namespace Dash
 {
     public class AnimationSampler
     {
-        static public AnimationStartsCache CacheStarts(Transform p_target, ExtractedClip p_clip, bool p_isReverse, float p_duration) 
+        static public AnimationStartsCache CacheStarts(Transform p_target, DashAnimation p_animation, bool p_isReverse, float p_duration) 
         {
             AnimationStartsCache cache = new AnimationStartsCache();
             
             // A lot of sampler mapping targets rect so we prestore it
             RectTransform rect = p_target.GetComponent<RectTransform>();
             
-            foreach (string property in p_clip.AnimationCurves.Keys)
+            foreach (string property in p_animation.AnimationCurves.Keys)
             {
-                AnimationCurve curve = p_clip.AnimationCurves[property];
+                AnimationCurve curve = p_animation.AnimationCurves[property];
                 cache.SetCurveStartCache(property, p_isReverse ? curve.Evaluate(p_duration) : curve.Evaluate(0));
                 
                 if (property.StartsWith("m_AnchoredPosition"))
@@ -34,13 +34,13 @@ namespace Dash
         }
 
         static public void ApplyFromCurves(Transform p_target, AnimationStartsCache p_cache,
-            ExtractedClip p_clip, float p_time, bool p_isRelative = false)
+            DashAnimation p_animation, float p_time, bool p_isRelative = false)
         {
             RectTransform rect = p_target.GetComponent<RectTransform>();
 
-            foreach (string property in p_clip.AnimationCurves.Keys)
+            foreach (string property in p_animation.AnimationCurves.Keys)
             {
-                AnimationCurve curve = p_clip.AnimationCurves[property];
+                AnimationCurve curve = p_animation.AnimationCurves[property];
                 float val = curve.Evaluate(p_time);
                 
                 if (p_isRelative && p_cache.HasTargetStartCache(property))

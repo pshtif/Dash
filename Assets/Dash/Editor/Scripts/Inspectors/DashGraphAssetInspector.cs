@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [CustomEditor(typeof(DashGraph))]
-    public class GraphAssetInspector : Editor
+    public class DashGraphAssetInspector : Editor
     {
         public override void OnInspectorGUI()
         {

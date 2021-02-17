@@ -45,7 +45,7 @@ namespace Dash
         static public GraphBox selectedBox;
         
         static public List<int> selectedNodes = new List<int>();
-        static public List<int> selectingNodes { get; private set; } = new List<int>();
+        static public List<int> selectingNodes = new List<int>();
 
         static DashEditorCore()
         {
@@ -237,9 +237,24 @@ namespace Dash
             return graphs;
         }
         
-        public static void RecacheAnimations()
+        static List<DashAnimation> GetAllAnimations()
         {
-            GetAllGraphs().ForEach(g => g.RecacheAnimations());
+            List<DashAnimation> animations = new List<DashAnimation>();
+            string[] graphGuids = AssetDatabase.FindAssets("t:DashAnimation");
+            foreach (string graphGuid in graphGuids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(graphGuid);
+                DashAnimation animation = AssetDatabase.LoadAssetAtPath<DashAnimation>(path);
+                animations.Add(animation);
+            }
+
+            return animations;
+        }
+        
+        public static void RecacheAnimation()
+        {
+            // Extract all, think about extracting changed only later (could be problematic to match)
+            GetAllAnimations().ForEach(a => a.Reextract());
         }
         
         public static Texture GetNodeIconByCategory(NodeCategoryType p_category)

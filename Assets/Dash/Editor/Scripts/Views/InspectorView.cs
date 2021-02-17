@@ -28,7 +28,7 @@ namespace Dash
 
         }
 
-        public override void UpdateGUI(Event p_event, Rect p_rect)
+        public override void DrawGUI(Event p_event, Rect p_rect)
         {
             if (SelectedNode != null)
             {
