@@ -69,7 +69,7 @@ namespace Dash
                 }
             }
 
-            if (CheckException(target, "No valid target found in node "+_model.id))
+            if (CheckException(target, "No valid target found"))
                 return;
             
             ExecuteOnTarget(target, p_flowData);

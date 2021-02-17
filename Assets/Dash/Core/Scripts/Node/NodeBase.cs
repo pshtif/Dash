@@ -197,7 +197,7 @@ namespace Dash
         {
             if (!string.IsNullOrEmpty(p_warning))
             {
-                Debug.LogWarning(p_warning);
+                Debug.LogWarning(p_warning+" on node " + _model.id);
             }
             
             hasErrorsInExecution = true;

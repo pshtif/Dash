@@ -37,7 +37,7 @@ namespace Dash
             {
                 if (string.IsNullOrEmpty(Model.spawnedAttributeName))
                 {
-                    SetError("Attribute name cannot be empty.");
+                    SetError("Attribute name cannot be empty");
                 }
                 
                 p_flowData.SetAttribute<Transform>(Model.spawnedAttributeName, rectTransform);

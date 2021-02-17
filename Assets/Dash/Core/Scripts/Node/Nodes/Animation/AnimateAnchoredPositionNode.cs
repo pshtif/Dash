@@ -20,7 +20,7 @@ namespace Dash
         {
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
-            if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
+            if (CheckException(rectTransform, "No RectTransform component found on target"))
                 return;
 
             Vector2 fromPosition = GetParameterValue<Vector2>(Model.fromPosition, p_flowData);

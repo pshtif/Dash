@@ -20,23 +20,44 @@ namespace Dash
 
         override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (Model.source == null)
+            Tween tween;
+            if (Model.useDashAnimation)
             {
-                SetError("No animation source defined on node "+_model.id);
-                return;
-            }
-            
-            CacheStarts(p_target);
-            
-            // Change time if we are using custom one
-            float time = Model.useAnimationTime ? Model.source.Duration : Model.time;
+                if (Model.source == null)
+                {
+                    SetError("Animation source cannot be null");
+                    return;
+                }
 
-            // Virtual tween to update from sampler
-            Tween tween = DOTween.To((f) => UpdateFromClip(p_target, f), 0, Model.source.Duration, time)
-                .SetDelay(Model.delay)
-                .SetEase(Model.easing)
-                .OnComplete(() => ExecuteEnd(p_flowData));
-            
+                CacheStarts(p_target);
+
+                // Change time if we are using custom one
+                float time = Model.useAnimationTime ? Model.source.Duration : Model.time;
+
+                // Virtual tween to update from sampler
+                tween = DOTween.To((f) => UpdateFromAnimation(p_target, f), 0, Model.source.Duration, time)
+                    .SetDelay(Model.delay)
+                    .SetEase(Model.easing)
+                    .OnComplete(() => ExecuteEnd(p_flowData));
+            }
+            else
+            {
+                if (Model.clip == null)
+                {
+                    SetError("Animation clip cannot be null");
+                    return;
+                }
+                
+                // Change time if we are using custom one
+                float time = Model.useAnimationTime ? Model.clip.length : Model.time;
+
+                // Virtual tween to update from sampler
+                tween = DOTween.To((f) => UpdateFromClip(p_target, f), 0, Model.clip.length, time)
+                    .SetDelay(Model.delay)
+                    .SetEase(Model.easing)
+                    .OnComplete(() => ExecuteEnd(p_flowData));
+            }
+
             DOPreview.StartPreview(tween);
         }
 
@@ -60,7 +81,7 @@ namespace Dash
             _startsCaches[p_target] = cache;
         }
 
-        private void UpdateFromClip(Transform p_target, float p_time)
+        private void UpdateFromAnimation(Transform p_target, float p_time)
         {
             // If we are in reverse we need to go back in time
             if (Model.isReverse)
@@ -69,6 +90,15 @@ namespace Dash
             // Apply from cache and prestored animation curves
             AnimationSampler.ApplyFromCurves(p_target, _startsCaches[p_target], Model.source, p_time,
                 Model.isRelative);
+        }
+        
+        private void UpdateFromClip(Transform p_target, float p_time)
+        {
+            // If we are in reverse we need to go back in time
+            if (Model.isReverse)
+                p_time = Model.source.Duration - p_time;
+
+            Model.source.clip.SampleAnimation(p_target.gameObject, p_time);
         }
         
 #if UNITY_EDITOR

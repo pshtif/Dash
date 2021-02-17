@@ -40,7 +40,7 @@ namespace Dash
                 return;
             
             clip = p_clip;
-            
+
             _animationCurves = new Dictionary<string, AnimationCurve>();
 
             if (clip == null)

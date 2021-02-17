@@ -26,7 +26,7 @@ namespace Dash
 
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (CheckException(_subGraph, "There is no graph defined on node "+_model.id))
+            if (CheckException(_subGraph, "There is no graph defined"))
                 return;
             
             _subGraph.Enter(p_flowData);
