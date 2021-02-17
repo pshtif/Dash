@@ -617,7 +617,7 @@ namespace Dash
                     {
                         if (Graph.connectingNode != null && Graph.connectingNode != this)
                         {
-                            Undo.RecordObject(_graph, "Connect node");
+                            Undo.RegisterCompleteObjectUndo(_graph, "Connect node");
                             Graph.Connect(this, i, Graph.connectingNode, Graph.connectingOutputIndex);
                             Graph.connectingNode = null;
                         }

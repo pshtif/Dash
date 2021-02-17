@@ -32,7 +32,7 @@ namespace Dash
         
         static void DeleteConnection(object p_connection)
         {
-            Undo.RecordObject(Graph, "Delete connection.");
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete connection.");
             Graph.Disconnect((NodeConnection)p_connection);
         }
         

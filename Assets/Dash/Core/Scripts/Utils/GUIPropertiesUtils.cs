@@ -233,7 +233,7 @@ namespace Dash
             {
                 if (propertyTable != null)
                 {
-                    Undo.RecordObject(propertyTable as UnityEngine.Object, "Set Exposed Property");
+                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
                 }
 
                 if (!isDefault)

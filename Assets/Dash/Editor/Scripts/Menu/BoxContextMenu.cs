@@ -22,7 +22,7 @@ namespace Dash
         
         static void DeleteBox(object p_region)
         {
-            Undo.RecordObject(Graph, "Delete Box");
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Box");
             
             Graph.DeleteBox((GraphBox)p_region);
         }

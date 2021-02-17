@@ -48,7 +48,7 @@ namespace Dash
         {
             if (p_node == null)
             {
-                Undo.RecordObject(Graph, "Delete Nodes");
+                Undo.RegisterCompleteObjectUndo(Graph, "Delete Nodes");
 
                 while (DashEditorCore.selectedNodes.Count > 0)
                 {
@@ -60,7 +60,7 @@ namespace Dash
             }
             else
             {
-                Undo.RecordObject(Graph, "Delete Node");
+                Undo.RegisterCompleteObjectUndo(Graph, "Delete Node");
 
                 int index = ((NodeBase) p_node).Index;
                 Graph.RemoveNode((NodeBase) p_node);
@@ -75,13 +75,13 @@ namespace Dash
         {
             if (p_node == null)
             {
-                Undo.RecordObject(Graph, "DuplicateNodes");
+                Undo.RegisterCompleteObjectUndo(Graph, "DuplicateNodes");
 
                 DashEditorCore.DuplicateSelectedNodes();
             }
             else
             {
-                Undo.RecordObject(Graph, "DuplicateNode");
+                Undo.RegisterCompleteObjectUndo(Graph, "DuplicateNode");
 
                 DashEditorCore.DuplicateNode((NodeBase)p_node);
             }
@@ -89,7 +89,7 @@ namespace Dash
 
         static void CreateBox()
         {
-            Undo.RecordObject(Graph, "Create Box");
+            Undo.RegisterCompleteObjectUndo(Graph, "Create Box");
             
             DashEditorCore.CreateBoxAroundSelectedNodes();
         }

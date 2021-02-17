@@ -500,7 +500,7 @@ namespace Dash
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
                 return;
             
-            Undo.RecordObject(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
+            Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
             NodeBase node = NodeBase.Create(p_nodeType, this);
 
             if (node != null)
