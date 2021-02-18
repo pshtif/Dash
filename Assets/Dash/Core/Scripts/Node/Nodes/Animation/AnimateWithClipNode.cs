@@ -96,9 +96,9 @@ namespace Dash
         {
             // If we are in reverse we need to go back in time
             if (Model.isReverse)
-                p_time = Model.source.Duration - p_time;
+                p_time = Model.clip.length - p_time;
 
-            Model.source.clip.SampleAnimation(p_target.gameObject, p_time);
+            Model.clip.SampleAnimation(p_target.gameObject, p_time);
         }
         
 #if UNITY_EDITOR
