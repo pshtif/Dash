@@ -21,8 +21,10 @@ namespace Dash
         private Rect zoomedRect;
 
         private DraggingType dragging = DraggingType.NONE;
-        
         private Rect selectedRegion = Rect.zero;
+        
+        private bool _rightDrag = false;
+        private Vector2 _rightDragStart;
 
         private Texture backgroundTexture;
         private Texture whiteRectTexture;
@@ -293,12 +295,29 @@ namespace Dash
 
         void ProcessRightClick(Event p_event, Rect p_rect)
         {
-            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1)
+            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1 || Graph == null)
                 return;
-
+            
             if (p_event.type == EventType.MouseDown)
             {
-                if (Graph != null)
+                _rightDragStart = p_event.mousePosition;
+            }
+
+            if (p_event.type == EventType.MouseDrag)
+            {
+                if (_rightDrag)
+                {
+                    Graph.viewOffset += p_event.delta * Zoom;
+                } else if ((p_event.mousePosition - _rightDragStart).magnitude > 5)
+                {
+                    _rightDrag = true;
+                    Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
+                }
+            }
+
+            if (p_event.type == EventType.MouseUp)
+            {
+                if (!_rightDrag)
                 {
                     NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                     if (hitNode != null)
@@ -319,7 +338,7 @@ namespace Dash
                         {
                             GraphBox hitRegion =
                                 Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
-                            
+
                             if (hitRegion != null)
                             {
                                 BoxContextMenu.Show(hitRegion);
@@ -330,9 +349,13 @@ namespace Dash
                             }
                         }
                     }
-
-                    p_event.Use();
                 }
+                else
+                {
+                    _rightDrag = false;
+                }
+
+                p_event.Use();
             }
             
             DashEditorWindow.SetDirty(true);
