@@ -139,7 +139,7 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            ((IGraphEditorAccess)Graph).IncreaseExecutionCount();
+            ((IEditorGraphAccess)Graph).IncreaseExecutionCount();
             _executionCounter++;
             
 #if UNITY_EDITOR
@@ -165,7 +165,7 @@ namespace Dash
         {
             if (!hasErrorsInExecution)
             {
-                ((IGraphEditorAccess) Graph).DecreaseExecutionCount();
+                ((IEditorGraphAccess) Graph).DecreaseExecutionCount();
                 _executionCounter--;
             }
         }
@@ -521,7 +521,7 @@ namespace Dash
             }
             else
             {
-                _model.id = ((IGraphEditorAccess)Graph).GenerateId(this, "");
+                _model.id = ((IEditorGraphAccess)Graph).GenerateId(this, "");
             }
             GUI.color = Color.white;
         }
@@ -665,7 +665,7 @@ namespace Dash
         
         protected virtual void DrawCustomGUI(Rect p_rect) { }
 
-        public void DrawInspector()
+        public virtual void DrawInspector()
         {
             bool invalidate = _model.DrawInspector();
             
@@ -722,7 +722,7 @@ namespace Dash
         public override void CreateModel()
         {
             _model = new T(); 
-            _model.id = ((IGraphEditorAccess) Graph).GenerateId(this);
+            _model.id = ((IEditorGraphAccess) Graph).GenerateId(this);
         }
     }
 }

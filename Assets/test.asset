@@ -27,7 +27,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -124,44 +123,12 @@ MonoBehaviour:
     - Name: id
       Entry: 1
       Data: Enter1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 9|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 10|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -191,83 +158,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+      Data: 9|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 12|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+      Data: 10|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 13|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 10
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Properties
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -277,9 +180,27 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: true
-    - Name: targetPath
+    - Name: target
+      Entry: 7
+      Data: 11|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
       Entry: 1
-      Data: Content
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: targetReference
       Entry: 7
       Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
@@ -302,6 +223,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0.4
@@ -316,16 +243,19 @@ MonoBehaviour:
       Data: true
     - Name: fromPosition
       Entry: 7
-      Data: 14|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 12|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -346,16 +276,19 @@ MonoBehaviour:
       Data: true
     - Name: toPosition
       Entry: 7
-      Data: 15|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 13|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: true
     - Name: expression
       Entry: 1
       Data: g_screen
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -403,87 +336,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 16|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+      Data: 14|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 17|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+      Data: 15|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition2
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 18|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 19|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Properties
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -493,7 +358,7 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: false
-    - Name: targetPath
+    - Name: target
       Entry: 6
       Data: 
     - Name: targetReference
@@ -518,6 +383,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0.3
@@ -532,16 +403,19 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 20|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 16|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -562,16 +436,19 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 21|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 17|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -619,87 +496,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 22|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+      Data: 18|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 23|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+      Data: 19|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition3
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 24|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 25|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Properties
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -709,7 +518,7 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: false
-    - Name: targetPath
+    - Name: target
       Entry: 6
       Data: 
     - Name: targetReference
@@ -734,6 +543,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0
@@ -748,16 +563,19 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 26|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 20|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -778,16 +596,19 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 27|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 21|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -835,75 +656,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 28|Dash.RetargetToChildrenNode, Assembly-CSharp
+      Data: 22|Dash.RetargetToChildrenNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 29|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+      Data: 23|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: RetargetToChildren1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 30|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 31|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Other
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -913,9 +678,27 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: true
-    - Name: targetPath
+    - Name: target
+      Entry: 7
+      Data: 24|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
       Entry: 1
-      Data: Content/Buttons
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: targetReference
       Entry: 7
       Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
@@ -938,18 +721,27 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: onChildDelay
       Entry: 7
-      Data: 32|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+      Data: 25|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 4
       Data: 0
@@ -991,83 +783,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 33|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+      Data: 26|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 34|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+      Data: 27|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition4
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 35|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 31
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Properties
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: false
@@ -1077,7 +805,7 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: false
-    - Name: targetPath
+    - Name: target
       Entry: 6
       Data: 
     - Name: targetReference
@@ -1102,6 +830,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0
@@ -1116,16 +850,19 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 36|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 28|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -1146,16 +883,19 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 37|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 29|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -1203,75 +943,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 38|Dash.RetargetToChildrenNode, Assembly-CSharp
+      Data: 30|Dash.RetargetToChildrenNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 39|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+      Data: 31|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: RetargetToChildren2
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 40|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 41|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Other
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -1281,9 +965,27 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: true
-    - Name: targetPath
+    - Name: target
+      Entry: 7
+      Data: 32|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
       Entry: 1
-      Data: Content/Buttons
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: targetReference
       Entry: 7
       Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
@@ -1306,18 +1008,27 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: onChildDelay
       Entry: 7
-      Data: 42|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+      Data: 33|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 4
       Data: 0.1
@@ -1359,83 +1070,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 43|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+      Data: 34|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 44|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+      Data: 35|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition5
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 45|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 41
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Properties
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: false
@@ -1445,7 +1092,7 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: false
-    - Name: targetPath
+    - Name: target
       Entry: 6
       Data: 
     - Name: targetReference
@@ -1470,6 +1117,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0.2
@@ -1484,16 +1137,19 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 46|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 36|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -1514,16 +1170,19 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 47|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 37|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -1571,87 +1230,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 48|Dash.AnimateScaleNode, Assembly-CSharp
+      Data: 38|Dash.AnimateScaleNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 49|Dash.AnimateScaleNodeModel, Assembly-CSharp
+      Data: 39|Dash.AnimateScaleNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateScale1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 50|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 51|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Scale
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -1661,9 +1252,27 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: true
-    - Name: targetPath
+    - Name: target
+      Entry: 7
+      Data: 40|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
       Entry: 1
-      Data: Label
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: targetReference
       Entry: 7
       Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
@@ -1686,6 +1295,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
     - Name: time
       Entry: 4
       Data: 0.3
@@ -1700,16 +1315,19 @@ MonoBehaviour:
       Data: true
     - Name: fromScale
       Entry: 7
-      Data: 52|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 41|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -1733,16 +1351,19 @@ MonoBehaviour:
       Data: false
     - Name: toScale
       Entry: 7
-      Data: 53|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 42|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -1793,87 +1414,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 54|Dash.AnimateTextNode, Assembly-CSharp
+      Data: 43|Dash.AnimateTextNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 55|Dash.AnimateTextNodeModel, Assembly-CSharp
+      Data: 44|Dash.AnimateTextNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: AnimateText1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 56|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 57|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Animation
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Retargeting
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Text
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: retarget
       Entry: 5
       Data: true
@@ -1883,7 +1436,7 @@ MonoBehaviour:
     - Name: isChild
       Entry: 5
       Data: false
-    - Name: targetPath
+    - Name: target
       Entry: 6
       Data: 
     - Name: targetReference
@@ -1907,6 +1460,12 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
       Data: 
     - Name: time
       Entry: 4
@@ -1949,63 +1508,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 58|Dash.OnCustomEventNode, Assembly-CSharp
+      Data: 45|Dash.OnCustomEventNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 59|Dash.OnCustomEventNodeModel, Assembly-CSharp
+      Data: 46|Dash.OnCustomEventNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: OnCustomEvent1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Other
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: eventName
       Entry: 1
       Data: CustomEvent
@@ -2026,7 +1541,7 @@ MonoBehaviour:
       Data: 1089
     - Name: 
       Entry: 4
-      Data: 180
+      Data: 170
     - Name: 
       Entry: 4
       Data: 85
@@ -2038,78 +1553,40 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 62|Dash.SpawnImageNode, Assembly-CSharp
+      Data: 47|Dash.SpawnImageNode, Assembly-CSharp
     - Name: _model
       Entry: 7
-      Data: 63|Dash.SpawnImageNodeModel, Assembly-CSharp
+      Data: 48|Dash.SpawnImageNodeModel, Assembly-CSharp
     - Name: id
       Entry: 1
       Data: SpawnImage1
-    - Name: executeOnNull
-      Entry: 5
-      Data: false
     - Name: comment
       Entry: 6
       Data: 
     - Name: groupsMinized
-      Entry: 7
-      Data: 64|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 65|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Other
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: Advanced
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
+      Entry: 3
+      Data: 0
+    - Name: spawnedName
+      Entry: 6
       Data: 
     - Name: sprite
       Entry: 6
       Data: 
     - Name: position
       Entry: 7
-      Data: 66|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+      Data: 49|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
     - Name: isExpression
       Entry: 5
       Data: false
     - Name: expression
       Entry: 6
       Data: 
-    - Name: hasError
+    - Name: hasErrorInEvaluation
       Entry: 5
       Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -2131,6 +1608,12 @@ MonoBehaviour:
     - Name: retargetToSpawned
       Entry: 5
       Data: false
+    - Name: createSpawnedAttribute
+      Entry: 5
+      Data: false
+    - Name: spawnedAttributeName
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2166,14 +1649,14 @@ MonoBehaviour:
       Data: 
     - Name: _connections
       Entry: 7
-      Data: 67|System.Collections.Generic.List`1[[Dash.NodeConnection, Assembly-CSharp]],
+      Data: 50|System.Collections.Generic.List`1[[Dash.NodeConnection, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 9
     - Name: 
       Entry: 7
-      Data: 68|Dash.NodeConnection, Assembly-CSharp
+      Data: 51|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2185,7 +1668,7 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 11
+      Data: 9
     - Name: <outputNode>k__BackingField
       Entry: 9
       Data: 7
@@ -2194,7 +1677,49 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 69|Dash.NodeConnection, Assembly-CSharp
+      Data: 52|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 18
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 53|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 14
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 54|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2215,7 +1740,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 70|Dash.NodeConnection, Assembly-CSharp
+      Data: 55|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2227,7 +1752,7 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 16
+      Data: 26
     - Name: <outputNode>k__BackingField
       Entry: 9
       Data: 22
@@ -2236,7 +1761,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 71|Dash.NodeConnection, Assembly-CSharp
+      Data: 56|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2248,16 +1773,16 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 28
+      Data: 30
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 7
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 72|Dash.NodeConnection, Assembly-CSharp
+      Data: 57|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2269,16 +1794,16 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 33
+      Data: 34
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 28
+      Data: 30
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 73|Dash.NodeConnection, Assembly-CSharp
+      Data: 58|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2293,13 +1818,13 @@ MonoBehaviour:
       Data: 38
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 11
+      Data: 30
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 74|Dash.NodeConnection, Assembly-CSharp
+      Data: 59|Dash.NodeConnection, Assembly-CSharp
     - Name: active
       Entry: 5
       Data: true
@@ -2314,49 +1839,7 @@ MonoBehaviour:
       Data: 43
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 38
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 75|Dash.NodeConnection, Assembly-CSharp
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: <inputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 48
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 38
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 76|Dash.NodeConnection, Assembly-CSharp
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: <inputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 54
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 22
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
@@ -2370,12 +1853,22 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: <Controller>k__BackingField
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
+    - Name: _boxes
+      Entry: 7
+      Data: 60|System.Collections.Generic.List`1[[Dash.GraphBox, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: previewControlsViewMinimized
-      Entry: 5
-      Data: false
-    - Name: variablesViewMinimized
       Entry: 5
       Data: false
     - Name: viewOffset
@@ -2383,17 +1876,20 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 77
+      Data: 170.875
     - Name: 
       Entry: 4
-      Data: 3.5
+      Data: -357.25
     - Name: 
       Entry: 8
       Data: 
     - Name: showVariables
       Entry: 5
       Data: true
+    - Name: _previewNode
+      Entry: 6
+      Data: 
+  _boxes: []
   previewControlsViewMinimized: 0
-  variablesViewMinimized: 0
-  viewOffset: {x: 77, y: 3.5}
+  viewOffset: {x: 170.875, y: -357.25}
   showVariables: 1

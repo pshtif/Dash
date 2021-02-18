@@ -75,20 +75,6 @@ namespace Dash
 
             return false;
         }
-        
-        static void CreateGraph()
-        {
-            DashEditorCore.EditGraph(GraphUtils.CreateGraphAsAssetFile());
-        }
-
-        static void LoadGraph()
-        {
-            DashGraph graph = GraphUtils.LoadGraph();
-            if (graph != null)
-            {
-                DashEditorCore.EditGraph(graph);
-            }
-        }
 
         static void CreateNode(object p_nodeType)
         {

@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public interface IControllerAccess
+    public interface IEditorControllerAccess
     {
         DashGraph graphAsset { get; set; }
     }

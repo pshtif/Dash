@@ -23,7 +23,7 @@ namespace Dash
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             OnExecuteEnd();
-            ((IGraphEditorAccess) Graph).Exit(p_flowData);
+            ((IEditorGraphAccess) Graph).Exit(p_flowData);
         }
 
         // protected override void UpdateCustomGUI(Event p_event, Rect p_rect)

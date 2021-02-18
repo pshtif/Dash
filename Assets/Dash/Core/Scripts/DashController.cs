@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/DashController")]
-    public class DashController : MonoBehaviour, IControllerAccess, IExposedPropertyTable {
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable {
         
         public DashCore DashCore => DashCore.Instance;
 
@@ -26,13 +26,13 @@ namespace Dash
 
         [HideInInspector]
         [SerializeField]
-        private int _selfReferenceIndex;
+        private int _selfReferenceIndex = -1;
 
         [HideInInspector]
         [SerializeField]
         private List<Object> _boundGraphReferences;
 
-        DashGraph IControllerAccess.graphAsset
+        DashGraph IEditorControllerAccess.graphAsset
         {
             get { return _assetGraph; }
             set
@@ -96,7 +96,6 @@ namespace Dash
                 return;
             
             _instancedGraph = _assetGraph.Clone();
-            ((IGraphEditorAccess) _instancedGraph).SetParentGraph(_assetGraph);
         }
 
         public bool autoStart = true;

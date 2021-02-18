@@ -16,12 +16,7 @@ namespace Dash
         [TitledGroup("Advanced", 1000, true)]
         public string id;
 
-        // [TitledGroup("Advanced", true)] 
-        // [Tooltip("Execute node even if target is not valid.")]
-        // public bool executeOnNull;
-
         [TitledGroup("Advanced", 1000, true)]
-        [HideInInspector] 
         public string comment;
 
 

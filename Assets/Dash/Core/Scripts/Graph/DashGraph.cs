@@ -18,7 +18,7 @@ namespace Dash
 {
     [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IGraphEditorAccess
+    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
     {
         public event Action<NodeFlowData> OnExit;
         
@@ -53,7 +53,7 @@ namespace Dash
         public Dictionary<string, List<NodeBase>> _listeners;
         
         public DashGraph parentGraph { get; private set; }
-        
+
         [NonSerialized]
         protected bool _initialized = false;
 
@@ -327,6 +327,18 @@ namespace Dash
         }
 #endregion
 
+#region INTERNAL_ACCESS
+
+        DashGraph IInternalGraphAccess.parentGraph
+        {
+            set
+            {
+                parentGraph = value;
+            }
+        }
+
+#endregion
+
 #region EDITOR_CODE
 #if UNITY_EDITOR
         
@@ -336,33 +348,28 @@ namespace Dash
 
         public int CurrentExecutionCount => _executionCount;
 
-        void IGraphEditorAccess.IncreaseExecutionCount()
+        void IEditorGraphAccess.IncreaseExecutionCount()
         {
             _executionCount++;
         }
         
-        void IGraphEditorAccess.DecreaseExecutionCount()
+        void IEditorGraphAccess.DecreaseExecutionCount()
         {
             _executionCount--;
         }
 
-        void IGraphEditorAccess.SetParentGraph(DashGraph p_graph)
-        {
-            parentGraph = p_graph;
-        }
-
-        void IGraphEditorAccess.Exit(NodeFlowData p_flowData)
+        void IEditorGraphAccess.Exit(NodeFlowData p_flowData)
         {
             OnExit?.Invoke(p_flowData);
         }
 
-        void IGraphEditorAccess.SetController(DashController p_controller)
+        void IEditorGraphAccess.SetController(DashController p_controller)
         {
             Controller = p_controller;
         }
         
         // TODO move generation to node? still need graph lookup for others
-        string IGraphEditorAccess.GenerateId(NodeBase p_node, string p_id)
+        string IEditorGraphAccess.GenerateId(NodeBase p_node, string p_id)
         {
             if (string.IsNullOrEmpty(p_id))
             {
@@ -510,6 +517,8 @@ namespace Dash
                     mousePosition.y * zoom - viewOffset.y, 0, 0);
                 Nodes.Add(node);
             }
+            
+            EditorUtility.SetDirty(this);
         }
 
         public void RemoveNullReferences()

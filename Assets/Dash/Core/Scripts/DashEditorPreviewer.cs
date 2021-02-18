@@ -80,11 +80,6 @@ namespace Dash
             
             _isPreviewing = false;
 
-            if (DashEditorCore.Config.editingGraph.parentGraph != null)
-            {
-                DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
-            }
-
             DOPreview.StopPreview();
 
             // Since we can do almost anything in preview we need to reload the scene before it

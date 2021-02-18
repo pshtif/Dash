@@ -120,16 +120,17 @@ namespace Dash
             }
         }
         
-        public static void EditController(DashController p_controller)
+        public static void EditController(DashController p_controller, DashGraph p_graph = null)
         {
             selectedNodes.Clear();
             
             if (p_controller != null)
             {
-                Config.editingGraph = p_controller.Graph;
-                if (p_controller.Graph != null)
+                Config.editingGraph = p_graph != null ? p_graph : p_controller.Graph;
+
+                if (Graph != null)
                 {
-                    ((IGraphEditorAccess) p_controller.Graph).SetController(p_controller);
+                    ((IEditorGraphAccess) Graph).SetController(p_controller);
                 }
             }
             else
@@ -144,7 +145,7 @@ namespace Dash
             
             Config.editingGraph = p_graph;
             if (p_graph != null)
-                ((IGraphEditorAccess)p_graph).SetController(null);
+                ((IEditorGraphAccess)p_graph).SetController(null);
         }
         
         public static void UnloadGraph()
