@@ -1486,7 +1486,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 1
-  - m_Name: GraphRegion
+  - m_Name: GraphBox
     m_Normal:
       m_Background: {fileID: 2800000, guid: b30cd72eb61968a49b70dabcca953fb0, type: 3}
       m_ScaledBackgrounds: []
