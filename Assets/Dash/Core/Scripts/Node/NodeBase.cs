@@ -260,7 +260,6 @@ namespace Dash
         public NodeBase Clone()
         {
             NodeBase clone = (NodeBase)SerializationUtility.CreateCopy(this);
-            Debug.Log("HERE "+(clone._graph == _graph));
             clone._graph = _graph;
             
             return clone;

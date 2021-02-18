@@ -12,7 +12,8 @@ namespace Dash
     {
         public override void OnInspectorGUI()
         {
-            if (GUILayout.Button("Open Editor"))
+            GUI.color = new Color(1, 0.75f, 0.5f);
+            if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
                 DashEditorWindow.InitEditorWindow(null);
                 DashEditorCore.EditGraph((DashGraph)target);

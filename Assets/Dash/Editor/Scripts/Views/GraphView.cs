@@ -65,6 +65,8 @@ namespace Dash
                 Graph.DrawComments(p_rect, false);
             }
 
+            DrawHelp(p_rect);
+
             DrawControllerInfo(p_rect);
 
             DrawPreviewInfo(p_rect);
@@ -72,6 +74,22 @@ namespace Dash
             DrawTitle(p_rect);
 
             DrawSelectingRegion(p_rect);
+        }
+        
+        void DrawHelp(Rect p_rect)
+        {
+            if (Graph == null || Graph.Nodes.Count > 0)
+                return;
+
+            string helpString = "RIGHT CLICK to create nodes.\n" +
+                         "Hold RIGHT mouse button to DRAG around.";
+            
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 18;
+            style.normal.textColor = Color.gray;
+            style.fontStyle = FontStyle.Bold;
+            style.alignment = TextAnchor.UpperCenter;
+            GUI.Label(new Rect(p_rect.x, p_rect.y + 30, p_rect.width, p_rect.height), helpString, style);
         }
 
         void DrawSelectingRegion(Rect p_rect)
@@ -87,20 +105,17 @@ namespace Dash
         void DrawControllerInfo(Rect p_rect)
         {
             GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
             style.fontSize = 24;
+            style.fontStyle = FontStyle.Bold;
+            GUI.color = new Color(1, 1, 1, 0.25f);
             if (Graph != null && Graph.Controller != null)
             {
-                style.normal.textColor = Color.white;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Controller: ", style);
-                style.normal.textColor = Color.yellow;
-                style.fontStyle = FontStyle.Bold;
-                GUI.Label(new Rect(p_rect.x + 140, p_rect.height - 40, 200, 40), Graph.Controller.name, style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
             }
             else if (Graph != null)
             {
-                style.normal.textColor = Color.white;
-                style.fontStyle = FontStyle.Bold;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "ASSET", style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
             }
         }
 
