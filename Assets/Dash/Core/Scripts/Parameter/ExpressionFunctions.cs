@@ -10,44 +10,8 @@ namespace Dash
 {
     public class ExpressionFunctions
     {
-        /**
-         * Create a value for type T
-         */
-        private static bool Create<T>(FunctionArgs p_args)
-        {
-            object[] evalParams = p_args.EvaluateParameters();
-
-            if (typeof(T) == typeof(Vector2))
-            {
-                if (evalParams.Length != 2)
-                {
-                    Debug.Log("Invalid parameters in Create function of type "+typeof(T));
-                    return false;
-                }
-
-                p_args.HasResult = true;
-                p_args.Result = new Vector2(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
-                return true;
-            }
-            
-            if (typeof(T) == typeof(Vector3))
-            {
-                if (evalParams.Length != 3)
-                {
-                    Debug.Log("Invalid parameters in Create function of type "+typeof(T));
-                    return false;
-                }
-
-                p_args.HasResult = true;
-                p_args.Result = new Vector3(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]),
-                    Convert.ToSingle(evalParams[2]));
-                return true;
-            }
-            
-            Debug.Log("Create function for type " + typeof(T)+" is not implemented.");
-            return false;
-        }
-
+        static public string errorMessage;
+        
         /**
          *  Calculate Vector2 from one rect to another
          */
@@ -55,7 +19,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             { 
-                Debug.Log("Invalid parameters in FromToRect function.");
+                errorMessage = "Invalid parameters in FromToRect function.";
                 return false;
             }
             
@@ -70,7 +34,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Invalid parameters in FromToRect function.");
+            errorMessage = "Invalid parameters in FromToRect function.";
             return false;
         }
         
@@ -81,7 +45,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 1)
             { 
-                Debug.Log("Invalid parameters in GetChildIndex function.");
+                errorMessage = "Invalid parameters in GetChildIndex function.";
                 return false;
             }
             
@@ -94,7 +58,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Invalid parameters in GetChildIndex function.");
+            errorMessage = "Invalid parameters in GetChildIndex function.";
             return false;
         }
 
@@ -105,7 +69,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             { 
-                Debug.Log("Invalid parameters in GetChild function.");
+                errorMessage = "Invalid parameters in GetChild function.";
                 return false;
             }
             
@@ -118,7 +82,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Invalid parameters in GetChild function.");
+            errorMessage = "Invalid parameters in GetChild function.";
             return false;
         }
         
@@ -129,7 +93,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 1)
             { 
-                Debug.Log("Invalid parameters in GetParent function.");
+                errorMessage = "Invalid parameters in GetParent function.";
                 return false;
             }
             
@@ -142,7 +106,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Invalid parameters in GetParent function.");
+            errorMessage = "Invalid parameters in GetParent function.";
             return false;
         }
         
@@ -153,7 +117,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             { 
-                Debug.Log("Invalid parameters in GetChild function.");
+                errorMessage = "Invalid parameters in GetChild function.";
                 return false;
             }
             
@@ -171,12 +135,12 @@ namespace Dash
                 }
                 else
                 {
-                    Debug.Log("Invalid transform or child index in GetChildAt function.");
+                    errorMessage = "Invalid transform or child index in GetChildAt function.";
                     return false;
                 }
             }
             
-            Debug.Log("Invalid parameters in GetChildAt function.");
+            errorMessage = "Invalid parameters in GetChildAt function.";
             return false;
         }
 
@@ -187,7 +151,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters in Vector2 function.");
+                errorMessage = "Invalid parameters in Vector2 function.";
                 return false;
             }
             
@@ -205,7 +169,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 3)
             {
-                Debug.Log("Invalid parameters in Vector3 function.");
+                errorMessage = "Invalid parameters in Vector3 function.";
                 return false;
             }
             
@@ -223,7 +187,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters in Add function.");
+                errorMessage = "Invalid parameters in Add function.";
                 return false;
             }
             
@@ -243,7 +207,7 @@ namespace Dash
                 return true;
             }
                 
-            Debug.Log("Add function for type "+typeof(T)+" is not implemented.");
+            errorMessage = "Add function for type "+typeof(T)+" is not implemented.";
             return false;
         }
 
@@ -258,7 +222,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
+                    errorMessage = "Invalid parameters in Random function of type " + typeof(T);
                     return false;
                 }
                 
@@ -273,7 +237,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
+                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
                     return false;
                 }
                 
@@ -290,7 +254,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
+                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
                     return false;
                 }
                 
@@ -304,7 +268,7 @@ namespace Dash
             {
                 if (evalParams.Length != 2)
                 {
-                    Debug.Log("Invalid parameters in Random function of type "+typeof(T));
+                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
                     return false;
                 }
                 
@@ -314,9 +278,101 @@ namespace Dash
             }
 
             
-            Debug.Log("Random function for type " + typeof(T) + " is not implemented.");
+            errorMessage = "Random function for type " + typeof(T) + " is not implemented.";
             return false;
         }
+
+        private static bool RandomF(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            {
+                errorMessage = "Invalid parameters in RandomF function";
+                return false;
+            }
+                
+            object[] evalParams = p_args.EvaluateParameters();
+
+            p_args.HasResult = true;
+            p_args.Result = UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
+            return true;
+        }
+        
+        private static bool RandomV2(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 2 || p_args.Parameters.Length != 4)
+            {
+                errorMessage = "Invalid parameters in RandomV2 function";
+                return false;
+            }
+                
+            object[] evalParams = p_args.EvaluateParameters();
+
+            switch (evalParams.Length)
+            {
+                case 0:
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector2(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1));
+                    return true;
+
+                case 2:
+                    // TODO type checking?
+
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector2(
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+                    return true;
+                case 4:
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector2(
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[2]), Convert.ToSingle(evalParams[3])));
+                    return true;
+            }
+
+            errorMessage = "Unknown error in function RandomV2";
+            return false;
+        }
+        
+        private static bool RandomV3(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 2 || p_args.Parameters.Length != 6)
+            {
+                errorMessage = "Invalid parameters in RandomV3 function";
+                return false;
+            }
+                
+            object[] evalParams = p_args.EvaluateParameters();
+
+            switch (evalParams.Length)
+            {
+                case 0:
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector3(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1));
+                    return true;
+
+                case 2:
+                    // TODO type checking?
+
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector3(
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+                    return true;
+                case 6:
+                    p_args.HasResult = true;
+                    p_args.Result = new Vector3(
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[2]), Convert.ToSingle(evalParams[3])),
+                        UnityEngine.Random.Range(Convert.ToSingle(evalParams[4]), Convert.ToSingle(evalParams[5])));
+                    return true;
+            }
+
+            errorMessage = "Unknown error in function RandomV3";
+            return false;
+        }
+
 
         /**
          * Calculate magnitude of Vector type
@@ -325,7 +381,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 1)
             {
-                Debug.Log("Invalid parameters in Magnitude function.");
+                errorMessage = "Invalid parameters in Magnitude function.";
                 return false;
             }
             
@@ -346,7 +402,39 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Magnitude function for type " + paramType + " is not implemented.");
+            errorMessage = "Magnitude function for type " + paramType + " is not implemented.";
+            return false;
+        }
+        
+        /**
+         * Normalize Vector type
+         */
+        private static bool Normalize(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            {
+                errorMessage = "Invalid parameters in Normalize function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+            
+            Type paramType = evalParams[0].GetType();
+            if (paramType == typeof(Vector2))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Vector2) evalParams[0]).normalized;
+                return true;
+            }
+            
+            if (paramType == typeof(Vector3))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Vector3) evalParams[0]).normalized;
+                return true;
+            }
+            
+            errorMessage = "Normalize function for type " + paramType + " is not implemented";
             return false;
         }
         
@@ -358,7 +446,7 @@ namespace Dash
             object[] evalParams = p_args.EvaluateParameters();
             if (evalParams.Length != 1)
             {
-                Debug.Log("Invalid parameters in Ceil function.");
+                errorMessage = "Invalid parameters in Ceil function.";
                 return false;
             }
 
@@ -370,7 +458,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("Ceil function for type " + paramType + " is not implemented.");
+            errorMessage = "Ceil function for type " + paramType + " is not implemented.";
             return false;
         }
 
@@ -381,7 +469,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters in ScreenToLocal function.");
+                errorMessage = "Invalid parameters in ScreenToLocal function.";
                 return false;
             }
 
@@ -397,7 +485,7 @@ namespace Dash
                 return true;
             }
             
-            Debug.Log("ScreenToLocal function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.");
+            errorMessage = "ScreenToLocal function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.";
             return false;
         }
 
@@ -408,7 +496,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             {
-                Debug.Log("Invalid parameters in Scale function.");
+                errorMessage = "Invalid parameters in Scale function.";
                 return false;
             }
             
@@ -434,7 +522,7 @@ namespace Dash
                     return true;
                 }
                 
-                Debug.Log("Invalid second parameter in Scale function.");
+                errorMessage = "Invalid second parameter in Scale function.";
                 return true;
             } 
             
@@ -457,11 +545,11 @@ namespace Dash
                     return true;
                 }
 
-                Debug.Log("Invalid second parameter of type " + evalParams[1].GetType() + " for Scale function.");
+                errorMessage = "Invalid second parameter of type " + evalParams[1].GetType() + " for Scale function.";
                 return false;
             }
 
-            Debug.Log("Scale function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.");
+            errorMessage = "Scale function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.";
             return false;
         }
     }

@@ -103,6 +103,10 @@ namespace Dash
                 
                 // TODO maybe typize the args but it would probably just slow things down
                 bool success = (bool)methodInfo.Invoke(null, new object[] {p_args});
+                if (!hasErrorInEvaluation && !success)
+                {
+                    errorMessage = ExpressionFunctions.errorMessage;
+                }
                 hasErrorInEvaluation = hasErrorInEvaluation || !success;
             }
         }
