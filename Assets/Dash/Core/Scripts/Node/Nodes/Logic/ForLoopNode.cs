@@ -15,8 +15,8 @@ namespace Dash
     {
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            int firstIndex = Model.firstIndex.GetValue(ParameterResolver, p_flowData);
-            int lastIndex = Model.lastIndex.GetValue(ParameterResolver, p_flowData);
+            int firstIndex = GetParameterValue(Model.firstIndex, p_flowData);
+            int lastIndex = GetParameterValue(Model.lastIndex, p_flowData);
             int length = lastIndex - firstIndex;
             
             if (length == 0)
@@ -26,26 +26,26 @@ namespace Dash
             {
                 NodeFlowData data = p_flowData.Clone();
                 data.SetAttribute(Model.indexVariable, i);
-                if (Model.OnIterationDelay.GetValue(ParameterResolver) == 0)
+                if (GetParameterValue(Model.OnIterationDelay, p_flowData) == 0)
                 {
                     OnExecuteOutput(0, data);
                 }
                 else
                 {
-                    DOPreview.DelayedCall(Model.OnIterationDelay.GetValue(ParameterResolver) * i, () =>
+                    DOPreview.DelayedCall(GetParameterValue(Model.OnIterationDelay, p_flowData) * i, () =>
                     {
                         OnExecuteOutput(0, data);
                     });
                 }
             }
             
-            if (Model.OnFinishedDelay == 0 && Model.OnIterationDelay.GetValue(ParameterResolver) == 0)
+            if (Model.OnFinishedDelay == 0 && GetParameterValue(Model.OnIterationDelay, p_flowData) == 0)
             {
                 EndLoop(p_flowData);
             }
             else
             {
-                DOPreview.DelayedCall(Model.OnFinishedDelay + Model.OnIterationDelay.GetValue(ParameterResolver) * length, () =>
+                DOPreview.DelayedCall(Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length, () =>
                 {
                     EndLoop(p_flowData);
                 });

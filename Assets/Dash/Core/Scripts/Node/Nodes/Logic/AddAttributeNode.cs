@@ -24,9 +24,10 @@ namespace Dash
                     var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.attributeType,
                         ParameterResolver, p_flowData);
                     
-                    if (ExpressionEvaluator.hasErrorInExecution)
+                    if (ExpressionEvaluator.hasErrorInEvaluation)
                     {
-                        hasErrorsInExecution = true;
+                        SetError(ExpressionEvaluator.errorMessage);
+                        return;
                     }
                     
                     p_flowData.SetAttribute(Model.attributeName, value);

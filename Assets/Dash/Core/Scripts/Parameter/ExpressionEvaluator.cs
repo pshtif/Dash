@@ -15,7 +15,8 @@ namespace Dash
     public class ExpressionEvaluator
     {
         protected static Dictionary<string,Expression> _cachedExpressions;
-        static public bool hasErrorInExecution { get; protected set; } = false;
+        static public bool hasErrorInEvaluation { get; protected set; } = false;
+        static public string errorMessage;
 
         public static object EvaluateTypedExpression(string p_expression, Type p_returnType, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
         {
@@ -26,7 +27,7 @@ namespace Dash
         
         public static T EvaluateExpression<T>(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
         {
-            hasErrorInExecution = false;
+            hasErrorInEvaluation = false;
             if (_cachedExpressions == null) _cachedExpressions = new Dictionary<string, Expression>();
 
             Expression cachedExpression;
@@ -53,7 +54,7 @@ namespace Dash
             catch //(Exception e)
             {
                 //Debug.Log(e);
-                hasErrorInExecution = true;
+                hasErrorInEvaluation = true;
             }
 
             cachedExpression.EvaluateFunction -= evalFunction;
@@ -80,7 +81,12 @@ namespace Dash
         static void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection)
         {
             p_args.Result = p_resolver.Resolve(p_name, p_collection);
-            hasErrorInExecution = hasErrorInExecution || p_resolver.hasErrorInExecution;
+            // Only log first error
+            if (!hasErrorInEvaluation && p_resolver.hasErrorInResolving)
+            {
+                errorMessage = p_resolver.errorMessage;
+            }
+            hasErrorInEvaluation = hasErrorInEvaluation || p_resolver.hasErrorInResolving;
         }
 
         static void EvaluateFunction<T>(string p_name, FunctionArgs p_args)
@@ -97,7 +103,7 @@ namespace Dash
                 
                 // TODO maybe typize the args but it would probably just slow things down
                 bool success = (bool)methodInfo.Invoke(null, new object[] {p_args});
-                hasErrorInExecution = hasErrorInExecution || !success;
+                hasErrorInEvaluation = hasErrorInEvaluation || !success;
             }
         }
     }

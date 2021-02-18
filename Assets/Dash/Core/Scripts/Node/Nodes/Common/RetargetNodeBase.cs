@@ -40,9 +40,9 @@ namespace Dash
                         var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
                             ParameterResolver, p_flowData);
 
-                        if (ExpressionEvaluator.hasErrorInExecution)
+                        if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
-                            hasErrorsInExecution = true;
+                            SetError(ExpressionEvaluator.errorMessage);
                             return;
                         }
 

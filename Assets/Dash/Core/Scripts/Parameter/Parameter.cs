@@ -22,7 +22,8 @@ namespace Dash
         public string expression;
 
         // True if last evaluation was erroneous
-        public bool hasError = false;
+        public bool hasErrorInEvaluation = false;
+        public string errorMessage;
 
         public abstract FieldInfo GetValueFieldInfo();
     }
@@ -55,7 +56,15 @@ namespace Dash
                 }
                 
                 T value = ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection);
-                hasError = ExpressionEvaluator.hasErrorInExecution;
+                if (ExpressionEvaluator.hasErrorInEvaluation)
+                {
+                    errorMessage = ExpressionEvaluator.errorMessage;
+                    hasErrorInEvaluation = true;
+                }
+                else
+                {
+                    hasErrorInEvaluation = false;
+                }
 
                 return value;
             }

@@ -163,8 +163,11 @@ namespace Dash
         
         protected void OnExecuteEnd()
         {
-            ((IGraphEditorAccess)Graph).DecreaseExecutionCount();
-            _executionCounter--;
+            if (!hasErrorsInExecution)
+            {
+                ((IGraphEditorAccess) Graph).DecreaseExecutionCount();
+                _executionCounter--;
+            }
         }
 
         public abstract void CreateModel();
@@ -199,14 +202,17 @@ namespace Dash
             {
                 Debug.LogWarning(p_warning+" on node " + _model.id);
             }
-            
             hasErrorsInExecution = true;
         }
         
         protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)
         {
             T value = p_parameter.GetValue(ParameterResolver, p_flowData);
-            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasError;
+            if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
+            {
+                SetError(p_parameter.errorMessage);
+            }
+            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
             return value;
         }
         

@@ -10,7 +10,8 @@ namespace Dash
     public class GraphParameterResolver : IParameterResolver
     {
         protected DashGraph _graph;
-        public bool hasErrorInExecution { get; private set; } = false;
+        public bool hasErrorInResolving { get; private set; } = false;
+        public string errorMessage { get; private set; }
         
         public GraphParameterResolver(DashGraph p_graph)
         {
@@ -43,9 +44,9 @@ namespace Dash
                     return p_collection.GetAttribute(p_name);
                 }
             }
-
-            Debug.LogWarning("Variable "+ p_name +" not found.");
-            hasErrorInExecution = true;
+            
+            hasErrorInResolving = true;
+            errorMessage = "Variable "+ p_name +" not found.";
             return null;
         }
 
@@ -81,9 +82,9 @@ namespace Dash
                     return p_collection.GetAttribute<T>(p_name);
                 }
             }
-
-            Debug.LogWarning("Variable "+ p_name +" not found.");
-            hasErrorInExecution = true;
+            
+            hasErrorInResolving = true;
+            errorMessage = "Variable "+ p_name +" not found.";
             return default(T);
         }
     }
