@@ -147,6 +147,11 @@ namespace Dash
             Graph.SendEvent(p_name, p_flowData);
         }
         
+        #if UNITY_EDITOR
+        [HideInInspector]
+        public bool previewing = false;
+        #endif
+        
         // Handle Unity property exposing - may be removed later to avoid external references
         #region EXPOSE_TABLE
 
