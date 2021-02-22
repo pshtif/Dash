@@ -311,7 +311,7 @@ namespace Dash
             {
                 case 0:
                     p_args.HasResult = true;
-                    p_args.Result = new Vector2(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1));
+                    p_args.Result = new Vector2(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1)).normalized;
                     return true;
 
                 case 2:

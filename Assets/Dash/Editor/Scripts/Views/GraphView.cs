@@ -104,6 +104,7 @@ namespace Dash
         
         void DrawControllerInfo(Rect p_rect)
         {
+            GUI.color = Color.white;
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.white;
             style.fontSize = 24;
