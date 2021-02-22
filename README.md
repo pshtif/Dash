@@ -65,6 +65,8 @@ Various properties in many node models are parameters rather than direct values.
 
 As mentioned in parametrization some values can be driven by expression evaluation and since this is quite a big topic we will discuss it separately. It is also something that will get added on as additional expression functions are implemented.
 
+[Function Documentation Here](./Documentation/ExpressionFunctions.md)
+
 ### Variables
 
 Variables are special properties of node graph that can be referenced using parametrization inside node models. At the same time variables can be bound to external Unity properties. Through this combination it gives user the ability to drive node functionality based on external properties.
@@ -79,4 +81,4 @@ List of 3rd Party libraries used in the project
 
 * DOTween (http://dotween.demigiant.com)
 * Odin Serializer (https://github.com/TeamSirenix/odin-serializer)
-* NCalc (https://github.com/ncalc/ncalc) 
+* NCalc (https://github.com/sklose/NCalc2) 
