@@ -29,10 +29,8 @@ namespace Dash
                 }
                 else
                 {
-                    DOPreview.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () =>
-                    {
-                        OnExecuteOutput(0, childData);
-                    });
+                    Tween call = DOVirtual.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () => OnExecuteOutput(0, childData));
+                    DOPreview.StartPreview(call);
                 }
             }
 
@@ -42,10 +40,8 @@ namespace Dash
             }
             else
             {
-                DOPreview.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () =>
-                {
-                    ExecuteEnd(p_flowData);
-                });
+                Tween call = DOVirtual.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () => ExecuteEnd(p_flowData));
+                DOPreview.StartPreview(call);
             }
         }
             

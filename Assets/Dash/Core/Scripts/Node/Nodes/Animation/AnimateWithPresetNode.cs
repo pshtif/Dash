@@ -14,7 +14,7 @@ using UnityEditor;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.HIDDEN)]
+    [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]
     [Size(200,85)]
@@ -23,7 +23,11 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-       
+            Model.preset.Execute(p_target, Model.time, Model.delay, Model.easing, () =>
+            {
+                OnExecuteEnd();
+                OnExecuteOutput(0, p_flowData);
+            });
         }
     }
 }

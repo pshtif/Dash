@@ -34,7 +34,8 @@ namespace Dash
                  DOPreview.StartPreview(tween);
             }
 
-            DOPreview.DelayedCall(text.text.Length * .1f, () => ExecuteEnd(p_flowData));
+            Tween call = DOVirtual.DelayedCall(text.text.Length * .1f, () => ExecuteEnd(p_flowData));
+            DOPreview.StartPreview(call);
         }
         
         void ExecuteEnd(NodeFlowData p_flowData)

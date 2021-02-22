@@ -4,6 +4,7 @@
 
 using System;
 using Dash.Attributes;
+using DG.Tweening;
 
 namespace Dash
 {
@@ -32,10 +33,11 @@ namespace Dash
                 }
                 else
                 {
-                    DOPreview.DelayedCall(GetParameterValue(Model.OnIterationDelay, p_flowData) * i, () =>
+                    Tween call = DOVirtual.DelayedCall(GetParameterValue(Model.OnIterationDelay, p_flowData) * i, () =>
                     {
                         OnExecuteOutput(0, data);
                     });
+                    DOPreview.StartPreview(call);
                 }
             }
             
@@ -45,10 +47,11 @@ namespace Dash
             }
             else
             {
-                DOPreview.DelayedCall(Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length, () =>
+                Tween call = DOVirtual.DelayedCall(Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length, () =>
                 {
                     EndLoop(p_flowData);
                 });
+                DOPreview.StartPreview(call);
             }
         }
 
