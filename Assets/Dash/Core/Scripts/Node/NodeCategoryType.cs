@@ -6,12 +6,13 @@ namespace Dash
 {
     public enum NodeCategoryType
     {
-        SPAWN,
+        CREATION,
         EVENTS,
         ANIMATION,
-        RETARGET,
+        MODIFIERS,
         LOGIC,
         OTHER,
+        GRAPH,
         HIDDEN,
         OBSOLETE
     }

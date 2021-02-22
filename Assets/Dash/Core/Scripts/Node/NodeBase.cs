@@ -155,7 +155,7 @@ namespace Dash
         {
             if (!hasErrorsInExecution)
             {
-                Graph.ExecuteOutputs(this, p_index, p_flowData);
+                Graph.ExecuteNodeOutputs(this, p_index, p_flowData);
             }
 
             //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
@@ -238,8 +238,8 @@ namespace Dash
             SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SizeAttribute));
             _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
             
-            SettingsAttribute settingsAttribute = (SettingsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SettingsAttribute));
-            _baseGUIEnabled = settingsAttribute != null ? settingsAttribute.enableBaseGUI : true;
+            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(GetType(), typeof(DisableBaseGUIAttribute));
+            _baseGUIEnabled = disableBaseGuiAttribute == null;
             
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             

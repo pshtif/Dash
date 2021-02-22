@@ -7,16 +7,18 @@ using System;
 namespace Dash.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SettingsAttribute : Attribute
+    public class SingleInstanceAttribute : Attribute
     {
-        public bool canHaveMultiple { get; }
-        
-        public bool enableBaseGUI { get; }
-        
-        public SettingsAttribute(bool p_canHaveMultiple, bool p_enableBaseGUI)
+        public SingleInstanceAttribute()
         {
-            canHaveMultiple = p_canHaveMultiple;
-            enableBaseGUI = p_enableBaseGUI;
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DisableBaseGUIAttribute : Attribute
+    { 
+        public DisableBaseGUIAttribute()
+        {
         }
     }
     

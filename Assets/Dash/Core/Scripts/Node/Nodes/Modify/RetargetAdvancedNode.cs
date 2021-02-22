@@ -8,9 +8,10 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.RETARGET)]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]
+    [Size(160,85)]
     public class RetargetAdvancedNode : NodeBase<RetargetAdvancedNodeModel>
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)

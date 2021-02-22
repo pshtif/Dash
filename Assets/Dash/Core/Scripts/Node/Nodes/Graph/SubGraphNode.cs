@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Experimental]
-    [Category(NodeCategoryType.LOGIC)]
+    [Category(NodeCategoryType.GRAPH)]
     [OutputCount(1)]
     [InputCount(1)]
     public class SubGraphNode : NodeBase<SubGraphNodeModel>
@@ -36,7 +36,7 @@ namespace Dash
             if (CheckException(_instancedGraph, "There is no graph defined"))
                 return;
             
-            _instancedGraph.Enter(p_flowData);
+            //_instancedGraph.Enter(p_flowData);
         }
 
         protected void ExecuteEnd(NodeFlowData p_flowData)

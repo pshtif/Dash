@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.RETARGET)]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(2)]
     [InputCount(1)]
     [Size(200,110)]

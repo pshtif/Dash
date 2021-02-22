@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.SPAWN)]
+    [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]
     public class DestroyNode : RetargetNodeBase<DestroyNodeModel>

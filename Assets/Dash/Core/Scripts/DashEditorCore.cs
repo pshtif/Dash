@@ -16,7 +16,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.3b";
+        public const string VERSION = "0.2.4b";
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -266,9 +266,9 @@ namespace Dash
                     return IconManager.GetIcon("Event_Icon");
                 case NodeCategoryType.ANIMATION:
                     return IconManager.GetIcon("Animation_Icon");
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return IconManager.GetIcon("Retargeting_Icon");
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return IconManager.GetIcon("Spawn_Icon");
                 case NodeCategoryType.LOGIC:
                     return IconManager.GetIcon("Settings_Icon");
@@ -285,10 +285,12 @@ namespace Dash
                     return new Color(1f, 0.7f, 0.7f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.7f, 0.7f, 1f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.7f, 1f, 1f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(1f, 0.7f, 1f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(0.8f, 0.6f, 0f);
                 case NodeCategoryType.LOGIC:
                     return Color.white;
             }
@@ -304,10 +306,12 @@ namespace Dash
                     return new Color(0.8f, 0.5f, 0.5f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.5f, 0.5f, 0.8f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.5f, 0.7f, 0.7f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(0.7f, 0.5f, 0.7f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(0.8f, 0.5f, 0f);
                 case NodeCategoryType.LOGIC:
                     return new Color(.6f, .6f, 0.7f);
             }
@@ -323,10 +327,12 @@ namespace Dash
                     return new Color(1, 0.8f, 0.8f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.8f, 0.8f, 1f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.8f, 1f, 1f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(1f, 0.8f, 1f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(1f, 0.8f, 0.5f);
                 case NodeCategoryType.LOGIC:
                     return new Color(.9f, .9f, 1f);
             }

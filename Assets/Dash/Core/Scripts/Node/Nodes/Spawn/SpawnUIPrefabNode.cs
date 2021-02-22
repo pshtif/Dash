@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.SPAWN)]
+    [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]
     public class SpawnUIPrefabNode : NodeBase<SpawnUIPrefabNodeModel>

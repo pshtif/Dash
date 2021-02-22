@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.LOGIC)]
+    [Category(NodeCategoryType.MODIFIERS)]
     [InputCount(1)]
     [OutputCount(1)]
     public class IncrementTextNode : RetargetNodeBase<IncrementTextNodeModel>

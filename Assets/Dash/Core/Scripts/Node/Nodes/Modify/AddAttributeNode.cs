@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.LOGIC)]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]
     public class AddAttributeNode : NodeBase<AddAttributeNodeModel>

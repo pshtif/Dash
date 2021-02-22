@@ -48,11 +48,7 @@ namespace Dash
             
             if (p_node == null)
             {
-                EnterNode enterNode = _previewGraph.GetNodeByType<EnterNode>();
-                if (enterNode != null)
-                {
-                    enterNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
-                }
+                _previewGraph.previewNode?.Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
             else
             {
