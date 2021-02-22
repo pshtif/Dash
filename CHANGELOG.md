@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - ability to drag view with Right button as well, Alt+Drag is still functional for now as well
 - propagation of Expression/Resolve errors to node level for better debugging.
 - added GUI for help information when graph has no nodes 
+- first documentation draft for expression functions
 
 
 ### Release 0.2.2b - 15.02.2021
