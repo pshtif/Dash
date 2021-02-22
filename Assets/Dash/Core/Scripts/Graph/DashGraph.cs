@@ -210,7 +210,7 @@ namespace Dash
             _connections.Remove(p_connection);
         }
 
-        public void ExecuteOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
+        public void ExecuteNodeOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
         {
             _connections.FindAll(c => c.active && c.outputNode == p_node && c.outputIndex == p_index) 
                 .ForEach(c => c.Execute(p_flowData));
@@ -260,15 +260,28 @@ namespace Dash
         }
 
 
-        public bool Enter(NodeFlowData p_flowData)
+        public bool ExecuteGraphInput(int p_inputIndex, NodeFlowData p_flowData)
         {
-            EnterNode enterNode = GetNodeByType<EnterNode>();
-            if (enterNode != null)
+            InputNode inputNode = GetNodeByType<InputNode>();
+            if (inputNode != null)
             {
-                enterNode.Execute(p_flowData);
+                inputNode.Execute(p_flowData);
                 return true;
             }
 
+            return false;
+        }
+        
+        public bool ExecuteGraphInput(string p_inputName, NodeFlowData p_flowData)
+        {
+            InputNode inputNode = GetAllNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
+            if (inputNode != null)
+            {
+                inputNode.Execute(p_flowData);
+                return true;
+            }
+
+            Debug.LogWarning("There is no input with name "+p_inputName);
             return false;
         }
 
@@ -405,7 +418,7 @@ namespace Dash
                     return _previewNode;
                 }
                 
-                return GetNodeByType<EnterNode>();
+                return GetNodeByType<InputNode>();
             }
             set
             {

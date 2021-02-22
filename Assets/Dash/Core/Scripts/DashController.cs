@@ -117,7 +117,7 @@ namespace Dash
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
                 data.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
                 
-                Graph.Enter(data);
+                Graph.ExecuteGraphInput("test", data);
             }
         }
 
