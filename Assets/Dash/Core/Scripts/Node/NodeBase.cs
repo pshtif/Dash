@@ -438,7 +438,8 @@ namespace Dash
 
             DrawOutline(offsetRect);
 
-            DrawCustomGUI(offsetRect);
+            if (DashEditorCore.DetailsVisible) 
+                DrawCustomGUI(offsetRect);
             
             DrawConnectors(p_rect);
         }
@@ -645,7 +646,7 @@ namespace Dash
                 if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
 
-                if (OutputLabels != null && OutputLabels.Length > i)
+                if (OutputLabels != null && OutputLabels.Length > i && DashEditorCore.DetailsVisible)
                 {
                     GUIStyle style = new GUIStyle();
                     style.normal.textColor = Color.white;
