@@ -8,6 +8,6 @@ namespace Dash
 {
     public class OutputNodeModel : NodeModelBase
     {
-        public string name = "Output";
+        public string outputName = "Output";
     }
 }

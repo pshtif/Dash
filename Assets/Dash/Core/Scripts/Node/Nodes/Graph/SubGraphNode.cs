@@ -15,38 +15,37 @@ namespace Dash
     [InputCount(1)]
     public class SubGraphNode : NodeBase<SubGraphNodeModel>
     {
-        private DashGraph _instancedGraph;
+        private DashGraph _instancedSubGraph;
         
         private int _selfReferenceIndex = -1;
-        private byte[] _boundGraphData;
-        private List<Object> _boundGraphReferences;
+        private byte[] _boundSubGraphData;
+        private List<Object> _boundSubGraphReferences;
 
         protected override void Initialize()
         {
-            GetGraphInstance();
-            if (_instancedGraph != null)
+            GetSubGraphInstance();
+            if (_instancedSubGraph != null)
             {
-                _instancedGraph.Initialize(Graph.Controller);
-                _instancedGraph.OnExit += ExecuteEnd;
+                _instancedSubGraph.Initialize(Graph.Controller);
+                _instancedSubGraph.OnOutput += (node, data) => ExecuteEnd(Graph.GetOutputIndex(node), data);
             }
         }
 
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (CheckException(_instancedGraph, "There is no graph defined"))
+            if (CheckException(_instancedSubGraph, "There is no graph defined"))
                 return;
             
-            //_instancedGraph.Enter(p_flowData);
+            _instancedSubGraph.GetNodeByType<InputNode>()?.Execute(p_flowData);
         }
 
-        protected void ExecuteEnd(NodeFlowData p_flowData)
+        protected void ExecuteEnd(int p_outputIndex, NodeFlowData p_flowData)
         {
-            Debug.Log("EndSubgraph: "+_graph);
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);
         }
         
-        private DashGraph GetGraphInstance()
+        public DashGraph GetSubGraphInstance()
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying && !DashEditorCore.Previewer.IsPreviewing && Model.graphAsset != null)
@@ -54,7 +53,7 @@ namespace Dash
                 return Model.graphAsset;
             }
 #endif
-            if (_instancedGraph == null)
+            if (_instancedSubGraph == null)
             {
                 if (Model.useAsset && Model.graphAsset != null)
                 {
@@ -66,7 +65,7 @@ namespace Dash
                 }
             }
             
-            return _instancedGraph;
+            return _instancedSubGraph;
         }
         
         void InstanceAssetGraph()
@@ -74,22 +73,22 @@ namespace Dash
             if (Model.graphAsset == null)
                 return;
             
-            _instancedGraph = Model.graphAsset.Clone();
+            _instancedSubGraph = Model.graphAsset.Clone();
         }
         
         void InstanceBoundGraph()
         {
-            _instancedGraph = ScriptableObject.CreateInstance<DashGraph>();
+            _instancedSubGraph = ScriptableObject.CreateInstance<DashGraph>();
             
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
             {
-                _boundGraphReferences[_selfReferenceIndex] = _instancedGraph;
-                _instancedGraph.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
+                _boundSubGraphReferences[_selfReferenceIndex] = _instancedSubGraph;
+                _instancedSubGraph.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            ((IInternalGraphAccess)_instancedGraph).parentGraph = Graph;
-            _instancedGraph.name = Controller.gameObject.name+"[Bound]";
+            ((IInternalGraphAccess)_instancedSubGraph).parentGraph = Graph;
+            _instancedSubGraph.name = Graph.name+"/"+Model.id+"[Bound]";
         }
         
 #if UNITY_EDITOR
@@ -98,8 +97,7 @@ namespace Dash
             GUI.color = new Color(1, 0.75f, 0.5f);
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                Debug.Log("here"+_instancedGraph);
-                DashEditorCore.EditController(DashEditorCore.Config.editingGraph.Controller, GetGraphInstance());
+                DashEditorCore.EditController(DashEditorCore.Config.editingGraph.Controller, GraphUtils.AddChildPath(DashEditorCore.Config.editingGraphPath, Model.id));
             }
 
             GUI.color = Color.white;

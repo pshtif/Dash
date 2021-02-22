@@ -20,7 +20,7 @@ namespace Dash
     [Serializable]
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
     {
-        public event Action<NodeFlowData> OnExit;
+        public event Action<OutputNode, NodeFlowData> OnOutput;
         
         public GraphVariables variables = new GraphVariables();
 
@@ -183,6 +183,11 @@ namespace Dash
         public List<T> GetAllNodesByType<T>() where T : NodeBase
         {
             return Nodes.FindAll(n => n is T).ConvertAll(n => (T)n);
+        }
+
+        public int GetOutputIndex(OutputNode p_node)
+        {
+            return Nodes.FindAll(n => n is OutputNode).IndexOf(p_node);
         }
 
         public void ValidateSerialization()
@@ -349,6 +354,11 @@ namespace Dash
                 parentGraph = value;
             }
         }
+        
+        void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
+        {
+            OnOutput?.Invoke(p_node, p_flowData);
+        }
 
 #endregion
 
@@ -369,11 +379,6 @@ namespace Dash
         void IEditorGraphAccess.DecreaseExecutionCount()
         {
             _executionCount--;
-        }
-
-        void IEditorGraphAccess.Exit(NodeFlowData p_flowData)
-        {
-            OnExit?.Invoke(p_flowData);
         }
 
         void IEditorGraphAccess.SetController(DashController p_controller)

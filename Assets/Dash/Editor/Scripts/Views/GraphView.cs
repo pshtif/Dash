@@ -118,6 +118,14 @@ namespace Dash
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
             }
+
+            if (Graph.parentGraph != null)
+            {
+                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 80, 100, 32), "GO TO PARENT"))
+                {
+                    DashEditorCore.EditController(Graph.Controller);
+                }
+            }
         }
 
         void DrawPreviewInfo(Rect p_rect)

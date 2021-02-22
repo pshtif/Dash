@@ -32,6 +32,8 @@ namespace Dash
         }
         
         public DashGraph editingGraph;
+
+        public string editingGraphPath = "";
         
         public bool deleteNull;
 

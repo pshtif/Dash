@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 namespace Dash
@@ -47,6 +46,8 @@ namespace Dash
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 
+        static public bool DetailsVisible => Config.zoom < 2.5;
+        
         static DashEditorCore()
         {
             CreateConfig();
@@ -120,14 +121,15 @@ namespace Dash
             }
         }
         
-        public static void EditController(DashController p_controller, DashGraph p_graph = null)
+        public static void EditController(DashController p_controller, string p_graphPath = "")
         {
             selectedNodes.Clear();
             
             if (p_controller != null)
             {
-                Config.editingGraph = p_graph != null ? p_graph : p_controller.Graph;
-
+                Config.editingGraphPath = p_graphPath;
+                Config.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
+                
                 if (Graph != null)
                 {
                     ((IEditorGraphAccess) Graph).SetController(p_controller);
@@ -164,7 +166,7 @@ namespace Dash
         {
             if (Graph != null && Graph.Controller != null)
             {
-                EditController(Graph.Controller);
+                EditController(Graph.Controller, Config.editingGraphPath);
             }
         }
         

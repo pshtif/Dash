@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,19 @@ namespace Dash
     public static class GraphUtils
     {
         #if UNITY_EDITOR
+        public static string AddChildPath(string p_path, string p_subPath)
+        {
+            return p_path + (p_path.Length>0 ?  "/" : "") + p_subPath;
+        }
+
+        public static string GetParentPath(string p_path)
+        {
+            if (string.IsNullOrWhiteSpace(p_path) || p_path.IndexOf("/") == -1)
+                return p_path;
+
+            return p_path.Substring(0, p_path.LastIndexOf("/"));
+        }
+        
         public static DashGraph CreateGraphAsAssetFile(DashGraph p_graph = null)
         {
             var path = EditorUtility.SaveFilePanelInProject(
