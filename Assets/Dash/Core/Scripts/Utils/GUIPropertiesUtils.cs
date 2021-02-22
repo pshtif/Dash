@@ -105,7 +105,7 @@ namespace Dash
                 if (newIndex != index)
                 {
                     p_fieldInfo.SetValue(p_object,
-                        index == 0 ? null : Activator.CreateInstance(cachedTypes[popupAttribute.ClassType][index - 1]));
+                        newIndex == 0 ? null : Activator.CreateInstance(cachedTypes[popupAttribute.ClassType][newIndex - 1]));
                 }
 
                 return true;
