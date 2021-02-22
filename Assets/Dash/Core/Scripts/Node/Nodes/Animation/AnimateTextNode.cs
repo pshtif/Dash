@@ -19,7 +19,7 @@ namespace Dash
         {
             TMP_Text text = p_target.GetComponent<TMP_Text>();
 
-            if (CheckException(text, "No TMP_Text component found on target in node "+_model.id))
+            if (CheckException(text, "No TMP_Text component found on target"))
                 return;
             
             text.ForceMeshUpdate();

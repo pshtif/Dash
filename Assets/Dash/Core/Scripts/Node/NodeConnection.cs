@@ -47,7 +47,7 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
-        public void Draw()
+        public void DrawGUI()
         {
             if (inputNode == null || outputNode == null)
                 return;

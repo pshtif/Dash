@@ -5,6 +5,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
@@ -15,13 +16,15 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.2b";
+        public const string VERSION = "0.2.3b";
 
         static public DashEditorConfig Config { get; private set; }
 
         static public DashEditorPreviewer Previewer { get; private set; }
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
+        
+        static public DashGraph Graph => Config.editingGraph;
 
         static public int TITLE_TAB_HEIGHT = 26;
 
@@ -37,11 +40,13 @@ namespace Dash
         static public Color CONNECTOR_INPUT_DISCONNECTED_COLOR = new Color(0.4f, 0.3f, 0f);
         static public Color CONNECTOR_OUTPUT_CONNECTED_COLOR = new Color(1f, 0.7f, 0f);
         static public Color CONNECTOR_OUTPUT_DISCONNECTED_COLOR = new Color(1, 1, 1);
-        
-        static public bool draggingNodes = false;
+
+        static public GraphBox editingBoxComment;
+        static public GraphBox selectedBox;
         
         static public List<int> selectedNodes = new List<int>();
-        
+        static public List<int> selectingNodes = new List<int>();
+
         static DashEditorCore()
         {
             CreateConfig();
@@ -54,17 +59,56 @@ namespace Dash
 
         public static void SetDirty()
         {
-            if (Config.editingGraph == null)
+            if (Graph == null)
                 return;
 
-            if (Config.editingGraph.IsBound)
+            if (Graph.IsBound)
             {
-                EditorUtility.SetDirty(Config.editingGraph.Controller);
+                EditorUtility.SetDirty(Graph.Controller);
             }
             else
             {
-                EditorUtility.SetDirty(Config.editingGraph);
+                EditorUtility.SetDirty(Graph);
             }
+        }
+
+        public static void DuplicateSelectedNodes()
+        {
+            if (Graph == null || selectedNodes.Count == 0)
+                return;
+            
+            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+            List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
+            selectedNodes = newNodes.Select(n => n.Index).ToList();
+            
+            SetDirty();
+        }
+
+        public static void DuplicateNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+            
+            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
+            selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
+        }
+
+        public static void CreateBoxAroundSelectedNodes()
+        {
+            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+            Rect region = nodes[0].rect;
+            
+            nodes.ForEach(n =>
+            {
+                if (n.rect.xMin < region.xMin) region.xMin = n.rect.xMin;
+                if (n.rect.yMin < region.yMin) region.yMin = n.rect.yMin;
+                if (n.rect.xMax > region.xMax) region.xMax = n.rect.xMax;
+                if (n.rect.yMax > region.yMax) region.yMax = n.rect.yMax;
+            });
+
+            Graph.CreateBox(region);
         }
 
         public static void ReindexSelected(int p_index)
@@ -76,16 +120,17 @@ namespace Dash
             }
         }
         
-        public static void EditController(DashController p_controller)
+        public static void EditController(DashController p_controller, DashGraph p_graph = null)
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             if (p_controller != null)
             {
-                Config.editingGraph = p_controller.Graph;
-                if (p_controller.Graph != null)
+                Config.editingGraph = p_graph != null ? p_graph : p_controller.Graph;
+
+                if (Graph != null)
                 {
-                    ((IGraphEditorAccess) p_controller.Graph).SetController(p_controller);
+                    ((IEditorGraphAccess) Graph).SetController(p_controller);
                 }
             }
             else
@@ -96,16 +141,16 @@ namespace Dash
 
         public static void EditGraph(DashGraph p_graph)
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             Config.editingGraph = p_graph;
             if (p_graph != null)
-                ((IGraphEditorAccess)p_graph).SetController(null);
+                ((IEditorGraphAccess)p_graph).SetController(null);
         }
         
         public static void UnloadGraph()
         {
-            DeselectAllNodes();
+            selectedNodes.Clear();
             
             Config.editingGraph = null;
         }
@@ -117,9 +162,9 @@ namespace Dash
 
         static void OnAssemblyReload()
         {
-            if (Config.editingGraph != null && Config.editingGraph.Controller != null)
+            if (Graph != null && Graph.Controller != null)
             {
-                EditController(Config.editingGraph.Controller);
+                EditController(Graph.Controller);
             }
         }
         
@@ -129,7 +174,7 @@ namespace Dash
             
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {
-                Config.enteringPlayModeController = Config.editingGraph != null ? Config.editingGraph.Controller : null;
+                Config.enteringPlayModeController = Graph != null ? Graph.Controller : null;
             }
             
             if (p_change == PlayModeStateChange.EnteredPlayMode)
@@ -193,9 +238,24 @@ namespace Dash
             return graphs;
         }
         
-        public static void RecacheAnimations()
+        static List<DashAnimation> GetAllAnimations()
         {
-            GetAllGraphs().ForEach(g => g.RecacheAnimations());
+            List<DashAnimation> animations = new List<DashAnimation>();
+            string[] graphGuids = AssetDatabase.FindAssets("t:DashAnimation");
+            foreach (string graphGuid in graphGuids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(graphGuid);
+                DashAnimation animation = AssetDatabase.LoadAssetAtPath<DashAnimation>(path);
+                animations.Add(animation);
+            }
+
+            return animations;
+        }
+        
+        public static void RecacheAnimation()
+        {
+            // Extract all, think about extracting changed only later (could be problematic to match)
+            GetAllAnimations().ForEach(a => a.Reextract());
         }
         
         public static Texture GetNodeIconByCategory(NodeCategoryType p_category)
@@ -272,12 +332,6 @@ namespace Dash
             }
 
             return new Color(.9f, .9f, 1f);
-        }
-        
-        public static void DeselectAllNodes()
-        {
-            draggingNodes = false;
-            selectedNodes.Clear();
         }
 
     }

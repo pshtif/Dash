@@ -23,26 +23,26 @@ namespace Dash
                 NodeFlowData childData = p_flowData.Clone();
                 childData.SetAttribute("target", p_target.GetChild(Model.inReverse ? p_target.childCount - 1 - i : i));
 
-                if (Model.onChildDelay.GetValue(ParameterResolver) == 0)
+                if (GetParameterValue(Model.onChildDelay,p_flowData) == 0)
                 {
                     OnExecuteOutput(0, childData);
                 }
                 else
                 {
-                    DOPreview.DelayedCall(Model.onChildDelay.GetValue(ParameterResolver) * i, () =>
+                    DOPreview.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () =>
                     {
                         OnExecuteOutput(0, childData);
                     });
                 }
             }
 
-            if (Model.onFinishDelay == 0 && Model.onChildDelay.GetValue(ParameterResolver) == 0)
+            if (Model.onFinishDelay == 0 && GetParameterValue(Model.onChildDelay,p_flowData) == 0)
             {
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                DOPreview.DelayedCall(Model.onFinishDelay + Model.onChildDelay.GetValue(ParameterResolver) * p_target.childCount, () =>
+                DOPreview.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () =>
                 {
                     ExecuteEnd(p_flowData);
                 });

@@ -3,18 +3,18 @@
  */
 
 using UnityEditor;
-using UnityEngine;
 
 namespace Dash
 {
-    public class UnityAssetChangesDetector : AssetPostprocessor
+    public class AnimationClipChangesHandler : AssetPostprocessor
     {
         static void OnPostprocessAllAssets (
             string[] importedAssets,
             string[] deletedAssets,
             string[] movedAssets,
-            string[] movedFromAssetPaths) 
-        {            
+            string[] movedFromAssetPaths)
+        {
+            bool animChanged = false;
             foreach (string str in importedAssets)
             {
                 string[] splitStr = str.Split('.');
@@ -25,8 +25,14 @@ namespace Dash
                 string extension = splitStr[splitStr.Length-1];
                 if (extension == "anim")
                 {
-                    DashEditorCore.RecacheAnimations();
+                    animChanged = true;
+                    break;
                 }
+            }
+
+            if (animChanged)
+            {
+                DashEditorCore.RecacheAnimation();
             }
         }
     }

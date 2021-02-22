@@ -3,6 +3,7 @@
  */
 
 #if UNITY_EDITOR
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -11,8 +12,6 @@ namespace Dash
 {
     public class DashEditorPreviewer
     {
-        private const string PREVIEW_TAG = "DashPreview";
-        
         private bool _isPreviewing = false;
 
         public bool IsPreviewing => _isPreviewing;
@@ -33,10 +32,8 @@ namespace Dash
                 return;
             
             int nodeIndex = Controller.Graph.Nodes.IndexOf(p_node);
-            
-            TagUtils.AddTag("DashPreview");
-            _previousTag = Controller.tag;
-            Controller.tag = "DashPreview";
+
+            Controller.previewing = true;
             EditorUtility.SetDirty(Controller);
             
             EditorSceneManager.SaveOpenScenes();
@@ -83,23 +80,19 @@ namespace Dash
             
             _isPreviewing = false;
 
-            if (DashEditorCore.Config.editingGraph.parentGraph != null)
-            {
-                DashEditorCore.Config.editingGraph = DashEditorCore.Config.editingGraph.parentGraph;
-            }
-
             DOPreview.StopPreview();
 
             // Since we can do almost anything in preview we need to reload the scene before it
             EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path);
 
-            GameObject tagged = GameObject.FindGameObjectWithTag("DashPreview");
-            DashEditorCore.EditController(tagged.GetComponent<DashController>());
-            tagged.tag = _previousTag;
+            DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
+            DashController controller = controllers.ToList().Find(c => c.previewing);
+            DashEditorCore.EditController(controller);
+            controller.previewing = false;
             EditorUtility.SetDirty(Controller);
             EditorSceneManager.SaveOpenScenes();
 
-            Selection.activeGameObject = tagged;
+            Selection.activeGameObject = controller.gameObject;
         }
     }
 }

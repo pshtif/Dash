@@ -1,0 +1,334 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f992b7b42e86e4193a2e97d9286a3d, type: 3}
+  m_Name: DashGraph
+  m_EditorClassIdentifier: 
+  _connections: []
+  _serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 7400000, guid: c86511aa6b0f8564f9caa75235228ac8, type: 2}
+    - {fileID: 11400000}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: OnExit
+      Entry: 6
+      Data: 
+    - Name: variables
+      Entry: 7
+      Data: 0|Dash.GraphVariables, Assembly-CSharp
+    - Name: _variables
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Dash.Variable, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _extractedClipCache
+      Entry: 7
+      Data: 2|Dash.ExtractedClipCache, Assembly-CSharp
+    - Name: _clips
+      Entry: 7
+      Data: 3|System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule],[Dash.ExtractedClip, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 4|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _nodes
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Dash.NodeBase, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 6|Dash.AnimateWithClipNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 7|Dash.AnimateWithClipNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateWithClip1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 8
+    - Name: retarget
+      Entry: 5
+      Data: false
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 8|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 1
+      Data: 
+    - Name: useAnimationTime
+      Entry: 5
+      Data: true
+    - Name: time
+      Entry: 4
+      Data: 1
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: isReverse
+      Entry: 5
+      Data: false
+    - Name: isRelative
+      Entry: 5
+      Data: true
+    - Name: useDashAnimation
+      Entry: 5
+      Data: false
+    - Name: source
+      Entry: 6
+      Data: 
+    - Name: clip
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 1
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1625.25
+    - Name: 
+      Entry: 4
+      Data: 415.5
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _startsCaches
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Dash.SubGraphNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 10|Dash.SubGraphNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: SubGraph1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 2
+    - Name: useAsset
+      Entry: 5
+      Data: false
+    - Name: graphAsset
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 1
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1557
+    - Name: 
+      Entry: 4
+      Data: 738
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _instancedGraph
+      Entry: 6
+      Data: 
+    - Name: _selfReferenceIndex
+      Entry: 3
+      Data: 0
+    - Name: _boundGraphData
+      Entry: 6
+      Data: 
+    - Name: _boundGraphReferences
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _connections
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[Dash.NodeConnection, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <parentGraph>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Controller>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: _boxes
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[Dash.GraphBox, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: previewControlsViewMinimized
+      Entry: 5
+      Data: true
+    - Name: viewOffset
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -1209.75
+    - Name: 
+      Entry: 4
+      Data: -242.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: showVariables
+      Entry: 5
+      Data: false
+    - Name: _previewNode
+      Entry: 6
+      Data: 
+  _boxes: []
+  previewControlsViewMinimized: 1
+  viewOffset: {x: -1209.75, y: -242.5}
+  showVariables: 0

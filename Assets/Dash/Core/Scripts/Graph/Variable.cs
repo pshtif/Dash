@@ -139,7 +139,7 @@ namespace Dash
             if (!IsBound)
                 return;
 
-            Type componentType = ReflectionUtils.GetType(_boundComponentName);
+            Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
             Component component = p_target.GetComponent(componentType);
             if (component == null)
                 Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);

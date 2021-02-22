@@ -9,7 +9,7 @@ namespace Dash
     public class PreviewControlsView : ViewBase
     {
 
-        public override void UpdateGUI(Event p_event, Rect p_rect)
+        public override void DrawGUI(Event p_event, Rect p_rect)
         {
             if (Application.isPlaying || Graph == null || Graph.Controller == null || !Graph.Controller.gameObject.activeInHierarchy)
                 return;

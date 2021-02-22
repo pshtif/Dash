@@ -10,6 +10,7 @@ namespace Dash
     {
         [Dependency("debugFlowData", false)]
         public string text;
+        
         [Dependency("debugFlowData", false)]
         public string variable;
 

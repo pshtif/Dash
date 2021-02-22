@@ -27,7 +27,7 @@ namespace Dash
             {
                 case AlphaSourceType.IMAGE:
                     Image image = p_target.GetComponent<Image>();
-                    if (!CheckException(image, "No Image component found on target in node "+_model.id)) 
+                    if (!CheckException(image, "No Image component found on target")) 
                     {
                         ExecuteAs(image, p_flowData);
                     }
@@ -35,7 +35,7 @@ namespace Dash
                     break;
                 case AlphaSourceType.TEXTMESHPRO:
                     TMP_Text text = p_target.GetComponent<TMP_Text>();
-                    if (!CheckException(text, "No TMP_Text component found on target in node "+_model.id))
+                    if (!CheckException(text, "No TMP_Text component found on target"))
                     {
                         ExecuteAs(text, p_flowData);
                     }

@@ -11,7 +11,7 @@ namespace Dash
     {
         public DashGraph Graph =>  DashEditorCore.Config.editingGraph;
 
-        public abstract void UpdateGUI(Event p_event, Rect p_rect);
+        public abstract void DrawGUI(Event p_event, Rect p_rect);
         
         public void DrawBoxGUI(Rect p_rect, string p_title, TextAnchor p_titleAlignment)
         {

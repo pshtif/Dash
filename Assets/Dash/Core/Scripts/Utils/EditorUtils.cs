@@ -29,12 +29,5 @@ namespace Dash
                 .FirstOrDefault(m => m != null && m.GetClass() == p_type);
         }
 #endif
-
-        public static void Undo(UnityEngine.Object p_object, string p_text)
-        {
-#if UNITY_EDITOR
-            UnityEditor.Undo.RecordObject(p_object, p_text);
-#endif
-        }
     }
 }

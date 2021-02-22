@@ -22,7 +22,7 @@ namespace Dash
         {
             RectTransform rectTransform = (RectTransform)p_target;
 
-            if (CheckException(rectTransform, "No RectTransform component found on target in node "+_model.id))
+            if (CheckException(rectTransform, "No RectTransform component found on target"))
                 return;
 
             Transform towards = Model.toTarget.Resolve(Controller);
@@ -32,7 +32,7 @@ namespace Dash
 
             RectTransform rectTowards = towards.GetComponent<RectTransform>();
 
-            if (CheckException(rectTowards, "No RectTransform component found on towards in node "+_model.id))
+            if (CheckException(rectTowards, "No RectTransform component found on towards"))
                 return;
 
             Vector2 startPosition = rectTransform.anchoredPosition; 

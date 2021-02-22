@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -17,27 +18,26 @@ namespace Dash
 
         private float Zoom => DashEditorCore.Config.zoom;
 
-        private List<int> SelectedNodes => DashEditorCore.selectedNodes;
-        
         private Rect zoomedRect;
-        
-        private bool dragging = false;
-        
-        private bool selectingRegion = false;
+
+        private DraggingType dragging = DraggingType.NONE;
         private Rect selectedRegion = Rect.zero;
+        
+        private bool _rightDrag = false;
+        private Vector2 _rightDragStart;
 
         private Texture backgroundTexture;
         private Texture whiteRectTexture;
 
-        private GraphViewMenu _graphViewMenu;
+        private GraphMenuView _graphMenuView;
 
-        public override void UpdateGUI(Event p_event, Rect p_rect)
+        public override void DrawGUI(Event p_event, Rect p_rect)
         {
             if (!_initialized)
             {
                 backgroundTexture = Resources.Load<Texture>("Textures/graph_background");
                 whiteRectTexture = Resources.Load<Texture>("Textures/white_rect_64");
-                _graphViewMenu = new GraphViewMenu();
+                _graphMenuView = new GraphMenuView();
                 GUIScaleUtils.CheckInit();
                 _initialized = true;
             }
@@ -59,8 +59,13 @@ namespace Dash
                 // Draw graph
                 GUIScaleUtils.BeginScale(ref zoomedRect, new Vector2(p_rect.width/2, p_rect.height/2), Zoom, false, false);
                 Graph.DrawGUI(zoomedRect);
+                //Graph.DrawComments(zoomedRect);
                 GUIScaleUtils.EndScale();
+                
+                Graph.DrawComments(p_rect, false);
             }
+
+            DrawHelp(p_rect);
 
             DrawControllerInfo(p_rect);
 
@@ -70,10 +75,26 @@ namespace Dash
 
             DrawSelectingRegion(p_rect);
         }
+        
+        void DrawHelp(Rect p_rect)
+        {
+            if (Graph == null || Graph.Nodes.Count > 0)
+                return;
+
+            string helpString = "RIGHT CLICK to create nodes.\n" +
+                         "Hold RIGHT mouse button to DRAG around.";
+            
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 18;
+            style.normal.textColor = Color.gray;
+            style.fontStyle = FontStyle.Bold;
+            style.alignment = TextAnchor.UpperCenter;
+            GUI.Label(new Rect(p_rect.x, p_rect.y + 30, p_rect.width, p_rect.height), helpString, style);
+        }
 
         void DrawSelectingRegion(Rect p_rect)
         {
-            if (selectingRegion)
+            if (dragging == DraggingType.SELECTION)
             {
                 GUI.color = new Color(1, 1, 1, 0.1f);
                 GUI.DrawTextureWithTexCoords(selectedRegion, whiteRectTexture, new Rect(0,0,64,64), true);
@@ -83,21 +104,19 @@ namespace Dash
         
         void DrawControllerInfo(Rect p_rect)
         {
+            GUI.color = Color.white;
             GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
             style.fontSize = 24;
+            style.fontStyle = FontStyle.Bold;
+            GUI.color = new Color(1, 1, 1, 0.25f);
             if (Graph != null && Graph.Controller != null)
             {
-                style.normal.textColor = Color.white;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Controller: ", style);
-                style.normal.textColor = Color.yellow;
-                style.fontStyle = FontStyle.Bold;
-                GUI.Label(new Rect(p_rect.x + 140, p_rect.height - 40, 200, 40), Graph.Controller.name, style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
             }
             else if (Graph != null)
             {
-                style.normal.textColor = Color.white;
-                style.fontStyle = FontStyle.Bold;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "ASSET", style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
             }
         }
 
@@ -162,7 +181,7 @@ namespace Dash
             GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashEditorCore.VERSION,
                 style);
 
-            _graphViewMenu.Draw(Graph);
+            _graphMenuView.Draw(Graph);
         }
 
         public override void ProcessEvent(Event p_event, Rect p_rect)
@@ -180,103 +199,6 @@ namespace Dash
                 DashEditorWindow.SetDirty(true);
         }
         
-        void ProcessLeftClick(Event p_event, Rect p_rect)
-        {
-            if (p_event.button != 0)
-                return;
-            
-            // Select
-            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null)
-            {
-                DashEditorWindow.SetDirty(true);
-                
-                if (p_event.type == EventType.MouseDown)
-                {
-                    NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
-                    int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
-
-                    if (!p_event.control && !SelectedNodes.Contains(hitNodeIndex))
-                    {
-                        DashEditorCore.DeselectAllNodes();
-                    }
-
-                    if (hitNodeIndex >= 0)
-                    {
-                        AddSelectedNode(hitNodeIndex);
-
-                        dragging = true;
-                    }
-                    else
-                    {
-                        dragging = false;
-                        Graph.connectingNode = null;
-                        selectingRegion = true;
-                        selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
-                    }
-                }
-            }
-
-            // Dragging
-            if (p_event.type == EventType.MouseDrag)
-            {
-                if (p_event.alt)
-                {
-                    if (Graph != null)
-                    {
-                        Graph.viewOffset += p_event.delta * Zoom;
-                    }
-                }
-                else if (dragging)
-                {
-                    foreach (int index in SelectedNodes)
-                    {
-                        NodeBase node = Graph.Nodes[index];
-                        node.rect.x += p_event.delta.x * Zoom;
-                        node.rect.y += p_event.delta.y * Zoom;
-                    }
-                } else if (selectingRegion)
-                {
-                    selectedRegion.width += p_event.delta.x;
-                    selectedRegion.height += p_event.delta.y;
-                }
-                
-                DashEditorWindow.SetDirty(true);
-            }
-
-            if (p_event.type == EventType.MouseUp)
-            {
-                if (SelectedNodes.Count == 0)
-                {
-                    if (selectedRegion.width < 0)
-                    {
-                        selectedRegion.x += selectedRegion.width;
-                        selectedRegion.width = -selectedRegion.width;
-                    }
-                    if (selectedRegion.height < 0)
-                    {
-                        selectedRegion.y += selectedRegion.height;
-                        selectedRegion.height = -selectedRegion.height;
-                    }
-
-                    for (int i = 0; i < Graph.Nodes.Count; i++)
-                    {
-                        NodeBase node = Graph.Nodes[i];
-                        if (selectedRegion.Contains(new Vector2((node.rect.x + Graph.viewOffset.x)/Zoom,
-                                (node.rect.y + Graph.viewOffset.y)/Zoom)) ||
-                            selectedRegion.Contains(new Vector2((node.rect.x + node.rect.width + Graph.viewOffset.x)/Zoom,
-                                (node.rect.y + node.rect.height + Graph.viewOffset.y)/Zoom)))
-                        {
-                            AddSelectedNode(i);
-                        }
-                    }
-                }
-
-                selectingRegion = false;
-                dragging = false;
-                DashEditorWindow.SetDirty(true);
-            }
-        }
-
         void ProcessZoom(Event p_event, Rect p_rect)
         {
             if (!p_event.isScrollWheel)
@@ -298,19 +220,125 @@ namespace Dash
             DashEditorWindow.SetDirty(true);
         }
         
-        void ProcessRightClick(Event p_event, Rect p_rect)
+        void ProcessLeftClick(Event p_event, Rect p_rect)
         {
-            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1)
+            if (p_event.button != 0)
                 return;
 
+            // Select
+            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
+            {
+                DashEditorWindow.SetDirty(true);
+                
+                NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
+
+                if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex))
+                {
+                    DashEditorCore.selectedNodes.Clear();
+                }
+
+                if (hitNodeIndex >= 0)
+                {
+                    AddSelectedNode(hitNodeIndex);
+
+                    dragging = DraggingType.NODE;
+                }
+                else
+                {
+                    GraphBox region = Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+
+                    if (region != null)
+                    {
+                        DashEditorCore.selectedBox = region;
+                        DashEditorCore.selectedBox.StartDrag();
+                        dragging = DraggingType.BOX;
+                    }
+                    else
+                    {
+                        dragging = DraggingType.SELECTION;
+                        DashEditorCore.selectedBox = null;
+                        Graph.connectingNode = null;
+                        selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
+                    }
+                }
+            }
+
+            // Dragging
+            if (p_event.type == EventType.MouseDrag)
+            {
+                if (p_event.alt)
+                {
+                    if (Graph != null)
+                    {
+                        Graph.viewOffset += p_event.delta * Zoom;
+                    }
+                }
+
+                switch (dragging)
+                {
+                    case DraggingType.NODE:
+                        DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += p_event.delta*Zoom);
+                        break;
+                    case DraggingType.BOX:
+                        DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
+                        break;
+                    case DraggingType.SELECTION:
+                        selectedRegion.width += p_event.delta.x;
+                        selectedRegion.height += p_event.delta.y;
+                        Rect fixedRect = FixRect(selectedRegion);
+                        DashEditorCore.selectingNodes = Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).Select(n => n.Index).ToList();
+                        break;
+                }
+
+                DashEditorWindow.SetDirty(true);
+            }
+
+            if (p_event.type == EventType.MouseUp)
+            {
+                if (dragging == DraggingType.SELECTION && DashEditorCore.selectedNodes.Count == 0)
+                {
+                    DashEditorCore.selectedNodes.Clear();
+                    DashEditorCore.selectedNodes.AddRange(DashEditorCore.selectingNodes);
+                    DashEditorCore.selectingNodes.Clear();
+                }
+
+                dragging = DraggingType.NONE;
+                selectedRegion = Rect.zero;
+                DashEditorWindow.SetDirty(true);
+            }
+        }
+
+        void ProcessRightClick(Event p_event, Rect p_rect)
+        {
+            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1 || Graph == null)
+                return;
+            
             if (p_event.type == EventType.MouseDown)
             {
-                if (Graph != null)
+                _rightDragStart = p_event.mousePosition;
+            }
+
+            if (p_event.type == EventType.MouseDrag)
+            {
+                if (_rightDrag)
+                {
+                    Graph.viewOffset += p_event.delta * Zoom;
+                } else if ((p_event.mousePosition - _rightDragStart).magnitude > 5)
+                {
+                    _rightDrag = true;
+                    Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
+                }
+            }
+
+            if (p_event.type == EventType.MouseUp)
+            {
+                if (!_rightDrag)
                 {
                     NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                     if (hitNode != null)
                     {
-                        GraphContextMenu.Show(GraphContextMenuType.NODE, p_event, hitNode);
+                        NodeContextMenu.Show(hitNode);
                     }
                     else
                     {
@@ -320,18 +348,30 @@ namespace Dash
 
                         if (hitConnection != null)
                         {
-                            GraphContextMenu.Show(GraphContextMenuType.CONNECTION, p_event, hitConnection);
+                            ConnectionContextMenu.Show(hitConnection);
                         }
                         else
                         {
-                            GraphContextMenu.Show(GraphContextMenuType.GRAPH, p_event, null);
+                            GraphBox hitRegion =
+                                Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+
+                            if (hitRegion != null)
+                            {
+                                BoxContextMenu.Show(hitRegion);
+                            }
+                            else
+                            {
+                                GraphContextMenu.Show();
+                            }
                         }
                     }
                 }
                 else
                 {
-                    GraphContextMenu.Show(GraphContextMenuType.GRAPH, p_event, null);
+                    _rightDrag = false;
                 }
+
+                p_event.Use();
             }
             
             DashEditorWindow.SetDirty(true);
@@ -339,9 +379,9 @@ namespace Dash
 
         void AddSelectedNode(int p_nodeIndex)
         {
-            if (!SelectedNodes.Contains(p_nodeIndex))
+            if (!DashEditorCore.selectedNodes.Contains(p_nodeIndex))
             {
-                SelectedNodes.Add(p_nodeIndex);
+                DashEditorCore.selectedNodes.Add(p_nodeIndex);
                 
                 // If the controller is not null autoselect it in hierarchy TODO: maybe put this as setting
                 if (Graph.Controller != null)
@@ -350,5 +390,35 @@ namespace Dash
                 }
             }
         }
+
+        Rect FixRect(Rect p_rect)
+        {
+            Rect fixedRect = selectedRegion;
+            if (fixedRect.width < 0)
+            {
+                fixedRect.x += fixedRect.width;
+                fixedRect.width = -fixedRect.width;
+            }
+            if (fixedRect.height < 0)
+            {
+                fixedRect.y += fixedRect.height;
+                fixedRect.height = -fixedRect.height;
+            }
+
+            return fixedRect;
+        }
+        
+        // bool SelectedRegionContains(Rect p_rect, NodeBase p_node)
+        // {
+        //     if (p_rect.Contains(new Vector2((p_node.rect.x + Graph.viewOffset.x)/Zoom,
+        //             (p_node.rect.y + Graph.viewOffset.y)/Zoom)) ||
+        //         p_rect.Contains(new Vector2((p_node.rect.x + p_node.rect.width + Graph.viewOffset.x)/Zoom,
+        //             (p_node.rect.y + p_node.rect.height + Graph.viewOffset.y)/Zoom)))
+        //     {
+        //         return true;
+        //     }
+        //     
+        //     return false;
+        // }
     }
 }

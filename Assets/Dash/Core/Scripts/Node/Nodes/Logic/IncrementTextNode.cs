@@ -19,7 +19,7 @@ namespace Dash
         {
             TMP_Text tmp = p_target.GetComponent<TMP_Text>();
 
-            if (CheckException(tmp, "Target doesn't contain TMP_Text component."))
+            if (CheckException(tmp, "Target doesn't contain TMP_Text component"))
                 return;
 
             string text = tmp.text;
@@ -31,7 +31,7 @@ namespace Dash
             int value;
             if (!Int32.TryParse(text, out value))
             {
-                Debug.LogWarning("Not a valid Int value in target text in node "+Model.id);
+                Debug.LogWarning("Not a valid Int value in target text");
                 return;
             }
 

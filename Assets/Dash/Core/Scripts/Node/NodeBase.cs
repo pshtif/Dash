@@ -52,7 +52,7 @@ namespace Dash
 
         public DashController Controller => Graph.Controller;
 
-        public int Index => Graph != null ? Graph.Nodes.IndexOf(this) : -1;
+        public int Index => Graph.Nodes.IndexOf(this);
 
         [NonSerialized]
         protected GraphParameterResolver _parameterResolver;
@@ -139,7 +139,7 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            ((IGraphEditorAccess)Graph).IncreaseExecutionCount();
+            ((IEditorGraphAccess)Graph).IncreaseExecutionCount();
             _executionCounter++;
             
 #if UNITY_EDITOR
@@ -163,8 +163,11 @@ namespace Dash
         
         protected void OnExecuteEnd()
         {
-            ((IGraphEditorAccess)Graph).DecreaseExecutionCount();
-            _executionCounter--;
+            if (!hasErrorsInExecution)
+            {
+                ((IEditorGraphAccess) Graph).DecreaseExecutionCount();
+                _executionCounter--;
+            }
         }
 
         public abstract void CreateModel();
@@ -197,16 +200,19 @@ namespace Dash
         {
             if (!string.IsNullOrEmpty(p_warning))
             {
-                Debug.LogWarning(p_warning);
+                Debug.LogWarning(p_warning+" on node " + _model.id);
             }
-            
             hasErrorsInExecution = true;
         }
         
         protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)
         {
             T value = p_parameter.GetValue(ParameterResolver, p_flowData);
-            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasError;
+            if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
+            {
+                SetError(p_parameter.errorMessage);
+            }
+            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
             return value;
         }
         
@@ -254,7 +260,6 @@ namespace Dash
         public NodeBase Clone()
         {
             NodeBase clone = (NodeBase)SerializationUtility.CreateCopy(this);
-            Debug.Log("HERE "+(clone._graph == _graph));
             clone._graph = _graph;
             
             return clone;
@@ -382,6 +387,8 @@ namespace Dash
         
         public bool IsSelected => Graph.IsSelected(this);
         
+        public bool IsSelecting => Graph.IsSelecting(this);
+        
         public Rect rect;
 
         public virtual string CustomName => String.Empty;
@@ -435,6 +442,45 @@ namespace Dash
             
             DrawConnectors(p_rect);
         }
+
+        public bool HasComment()
+        {
+            return _model.comment != null;
+        }
+
+        public void CreateComment()
+        {
+            _model.comment = "Comment";
+        }
+
+        public void RemoveComment()
+        {
+            _model.comment = null;
+        }
+        
+        public void DrawComment(Rect p_rect, bool p_zoomed = true)
+        {
+            if (_model.comment == null)
+                return;
+
+            Rect offsetRect = p_zoomed
+                ? new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x, Size.y)
+                : new Rect((rect.x + Graph.viewOffset.x) / DashEditorCore.Config.zoom, (rect.y + Graph.viewOffset.y) / DashEditorCore.Config.zoom, Size.x, Size.y);
+            
+            GUIStyle commentStyle = new GUIStyle();
+            commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
+            commentStyle.fontSize = 14;
+            commentStyle.normal.textColor = Color.black;
+
+            string commentText = _model.comment;
+            Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
+            
+            GUI.color = new Color(1,1,1,.6f);
+            GUI.Box(new Rect(offsetRect.x - 10, offsetRect.y - size.y - 26, size.x < 34 ? 50 : size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
+            GUI.color = Color.white;
+            string text = GUI.TextArea(new Rect(offsetRect.x - 2, offsetRect.y - size.y - 21, size.x, size.y), commentText, commentStyle);
+            _model.comment = text;
+        }
         
         void DrawTitle(Rect p_rect)
         {
@@ -475,7 +521,7 @@ namespace Dash
             }
             else
             {
-                _model.id = ((IGraphEditorAccess)Graph).GenerateId(this, "");
+                _model.id = ((IEditorGraphAccess)Graph).GenerateId(this, "");
             }
             GUI.color = Color.white;
         }
@@ -496,6 +542,13 @@ namespace Dash
                     executeTime -= .2f;
                 }
                 GUI.color = Color.cyan;
+                GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
+                    "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
+            }
+            
+            if (IsSelecting)
+            {
+                GUI.color = Color.yellow;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
             }
@@ -569,7 +622,7 @@ namespace Dash
                     {
                         if (Graph.connectingNode != null && Graph.connectingNode != this)
                         {
-                            Undo.RecordObject(_graph, "Connect node");
+                            Undo.RegisterCompleteObjectUndo(_graph, "Connect node");
                             Graph.Connect(this, i, Graph.connectingNode, Graph.connectingOutputIndex);
                             Graph.connectingNode = null;
                         }
@@ -589,7 +642,7 @@ namespace Dash
 
                 var connectorRect = GetConnectorRect(false, i);
                 
-                if (connectorRect.Contains(Event.current.mousePosition * DashEditorCore.Config.zoom - new Vector2(p_rect.x, p_rect.y)))
+                if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
 
                 if (OutputLabels != null && OutputLabels.Length > i)
@@ -612,10 +665,8 @@ namespace Dash
         
         protected virtual void DrawCustomGUI(Rect p_rect) { }
 
-        public void DrawInspector()
+        public virtual void DrawInspector()
         {
-            Undo.RecordObject(Graph, "Inspector");
-
             bool invalidate = _model.DrawInspector();
             
             if (invalidate)
@@ -628,6 +679,23 @@ namespace Dash
         public List<string> GetModelExposedGUIDs()
         {
             return _model.GetExposedGUIDs();
+        }
+
+        public bool IsInsideRect(Rect p_rect)
+        {
+            if (p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)))
+            {
+                return true;
+            }
+
+            return false;
         }
 #endif
 
@@ -654,7 +722,7 @@ namespace Dash
         public override void CreateModel()
         {
             _model = new T(); 
-            _model.id = ((IGraphEditorAccess) Graph).GenerateId(this);
+            _model.id = ((IEditorGraphAccess) Graph).GenerateId(this);
         }
     }
 }

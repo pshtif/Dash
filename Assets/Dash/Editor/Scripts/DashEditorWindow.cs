@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class DashEditorWindow : UnityEditor.EditorWindow
+    public class DashEditorWindow : EditorWindow
     {
         public static DashEditorWindow instance;
 
@@ -19,15 +19,16 @@ namespace Dash
         {
             _isDirty = p_dirty;
         }
+        
         public static bool IsDirty => _isDirty;
 
         protected List<ViewBase> _views;
 
-        public static DashEditorWindow InitEditorWindow(ControllerInspector p_controllerInspector)
+        public static DashEditorWindow InitEditorWindow(DashControllerInspector pDashControllerInspector)
         {
-            if (p_controllerInspector != null)
+            if (pDashControllerInspector != null)
             {
-                DashEditorCore.EditController(p_controllerInspector.Controller);
+                DashEditorCore.EditController(pDashControllerInspector.Controller);
             }
 
             AssetDatabase.SaveAssets();
@@ -43,6 +44,9 @@ namespace Dash
 
         private void OnGUI()
         {
+            if (Event.current.type == EventType.MouseDown)
+                DashEditorCore.editingBoxComment = null;
+
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
                 return;
@@ -56,14 +60,17 @@ namespace Dash
                 CreateViews();
                 return;
             }
-            
+
             var editorRect = new Rect(0, 0, position.width, position.height);
             
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
             if (Event.current.type == EventType.Repaint && !_previousLayoutDone) return;
             
-            _views.ForEach(v => v.UpdateGUI(Event.current, editorRect));
+            ShortcutsHandler.Handle();
+            
+            // Draw view GUIs
+            _views.ForEach(v => v.DrawGUI(Event.current, editorRect));
             
             // Process events after views update so overlaying views had chance to block mouse
             _views.ForEach(v => v.ProcessEvent(Event.current, editorRect));
@@ -87,7 +94,7 @@ namespace Dash
             {
                 _views = new List<ViewBase>();
                 CreateView<GraphView>();
-                CreateView<NodeInspectorView>();
+                CreateView<InspectorView>();
                 CreateView<GraphVariablesView>();
                 CreateView<PreviewControlsView>();
             }

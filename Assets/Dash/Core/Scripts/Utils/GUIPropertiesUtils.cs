@@ -39,7 +39,7 @@ namespace Dash
             if (!MeetsDependencies(p_fieldInfo, p_object))
                 return false;
             
-            string nameString = String.IsNullOrEmpty(p_name) ? p_fieldInfo.Name : p_name;
+            string nameString = String.IsNullOrEmpty(p_name) ? ObjectNames.NicifyVariableName(p_fieldInfo.Name) : p_name;
             nameString = nameString.Substring(0, 1).ToUpper() + nameString.Substring(1);
 
             TooltipAttribute tooltipAttribute = p_fieldInfo.GetCustomAttribute<TooltipAttribute>();
@@ -233,7 +233,7 @@ namespace Dash
             {
                 if (propertyTable != null)
                 {
-                    Undo.RecordObject(propertyTable as UnityEngine.Object, "Set Exposed Property");
+                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
                 }
 
                 if (!isDefault)
@@ -549,6 +549,45 @@ namespace Dash
                 return false;
 
             return true;
+        }
+        
+        static public int GroupSort(FieldInfo p_field1, FieldInfo p_field2)
+        {
+            TitledGroupAttribute attribute1 = p_field1.GetCustomAttribute<TitledGroupAttribute>();
+            TitledGroupAttribute attribute2 = p_field2.GetCustomAttribute<TitledGroupAttribute>();
+            if (attribute1 == null && attribute2 == null)
+                return OrderSort(p_field1, p_field2);
+
+            if (attribute1 != null && attribute2 == null)
+                return 1;
+
+            if (attribute1 == null && attribute2 != null)
+                return -1;
+
+            if (attribute1.Group == attribute2.Group)
+                return OrderSort(p_field1, p_field2);
+            
+            if (attribute1.Order != attribute2.Order) 
+                return attribute1.Order.CompareTo(attribute2.Order);
+            
+            return attribute1.Group.CompareTo(attribute2.Group);
+        }
+        
+        static public int OrderSort(FieldInfo p_field1, FieldInfo p_field2)
+        {
+            OrderAttribute attribute1 = p_field1.GetCustomAttribute<OrderAttribute>();
+            OrderAttribute attribute2 = p_field2.GetCustomAttribute<OrderAttribute>();
+            
+            if (attribute1 == null && attribute2 == null)
+                return 0;
+
+            if (attribute1 != null && attribute2 == null)
+                return -1;
+            
+            if (attribute1 == null && attribute2 != null)
+                return 1;
+
+            return attribute1.Order.CompareTo(attribute2.Order);
         }
     }
 }

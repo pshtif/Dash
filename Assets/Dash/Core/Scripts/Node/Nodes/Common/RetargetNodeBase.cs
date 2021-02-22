@@ -40,9 +40,9 @@ namespace Dash
                         var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
                             ParameterResolver, p_flowData);
 
-                        if (ExpressionEvaluator.hasErrorInExecution)
+                        if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
-                            hasErrorsInExecution = true;
+                            SetError(ExpressionEvaluator.errorMessage);
                             return;
                         }
 
@@ -69,7 +69,7 @@ namespace Dash
                 }
             }
 
-            if (CheckException(target, "No valid target found in node "+_model.id))
+            if (CheckException(target, "No valid target found"))
                 return;
             
             ExecuteOnTarget(target, p_flowData);

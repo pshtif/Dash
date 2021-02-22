@@ -16,8 +16,9 @@ using UnityEditor;
 
 namespace Dash
 {
+    [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IGraphEditorAccess
+    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
     {
         public event Action<NodeFlowData> OnExit;
         
@@ -40,7 +41,7 @@ namespace Dash
         
         [SerializeField]
         private List<NodeBase> _nodes = new List<NodeBase>();
-        
+
         public List<NodeBase> Nodes => _nodes;
 
         [SerializeField]
@@ -52,7 +53,7 @@ namespace Dash
         public Dictionary<string, List<NodeBase>> _listeners;
         
         public DashGraph parentGraph { get; private set; }
-        
+
         [NonSerialized]
         protected bool _initialized = false;
 
@@ -326,6 +327,18 @@ namespace Dash
         }
 #endregion
 
+#region INTERNAL_ACCESS
+
+        DashGraph IInternalGraphAccess.parentGraph
+        {
+            set
+            {
+                parentGraph = value;
+            }
+        }
+
+#endregion
+
 #region EDITOR_CODE
 #if UNITY_EDITOR
         
@@ -335,33 +348,28 @@ namespace Dash
 
         public int CurrentExecutionCount => _executionCount;
 
-        void IGraphEditorAccess.IncreaseExecutionCount()
+        void IEditorGraphAccess.IncreaseExecutionCount()
         {
             _executionCount++;
         }
         
-        void IGraphEditorAccess.DecreaseExecutionCount()
+        void IEditorGraphAccess.DecreaseExecutionCount()
         {
             _executionCount--;
         }
 
-        void IGraphEditorAccess.SetParentGraph(DashGraph p_graph)
-        {
-            parentGraph = p_graph;
-        }
-
-        void IGraphEditorAccess.Exit(NodeFlowData p_flowData)
+        void IEditorGraphAccess.Exit(NodeFlowData p_flowData)
         {
             OnExit?.Invoke(p_flowData);
         }
 
-        void IGraphEditorAccess.SetController(DashController p_controller)
+        void IEditorGraphAccess.SetController(DashController p_controller)
         {
             Controller = p_controller;
         }
         
         // TODO move generation to node? still need graph lookup for others
-        string IGraphEditorAccess.GenerateId(NodeBase p_node, string p_id)
+        string IEditorGraphAccess.GenerateId(NodeBase p_node, string p_id)
         {
             if (string.IsNullOrEmpty(p_id))
             {
@@ -378,7 +386,10 @@ namespace Dash
             return p_id;
         }
 #endregion
-        
+
+        [SerializeField]
+        private List<GraphBox> _boxes = new List<GraphBox>();
+
         public bool previewControlsViewMinimized = true;
         public Vector2 viewOffset = Vector2.zero;
         public bool showVariables = false;
@@ -403,6 +414,7 @@ namespace Dash
         }
 
         public bool IsSelected(NodeBase p_node) => DashEditorCore.selectedNodes.Exists(i => i == Nodes.IndexOf(p_node));
+        public bool IsSelecting(NodeBase p_node) => DashEditorCore.selectingNodes.Exists(n => n == Nodes.IndexOf(p_node));
 
         [NonSerialized]
         public NodeBase connectingNode;
@@ -415,8 +427,11 @@ namespace Dash
             if (DashEditorCore.Config.deleteNull)
                 RemoveNullReferences();
 
+            // Draw boxes
+            _boxes.Where(r => r != null).ForEach(r => r.DrawGUI());
+            
             // Draw connections
-            _connections.Where(c => c != null).ForEach(c=> c.Draw());
+            _connections.Where(c => c != null).ForEach(c=> c.DrawGUI());
             
             // Draw Nodes
             // Preselect non null to avoid null states from serialization issues
@@ -428,9 +443,24 @@ namespace Dash
             EditorUtility.SetDirty(this);
         }
 
+        public void DrawComments(Rect p_rect, bool p_zoomed)
+        {
+            _nodes.Where(n => n != null).ForEach(n => n.DrawComment(p_rect, p_zoomed));
+        }
+
         public NodeBase HitsNode(Vector2 p_position)
         {
             return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
+        }
+
+        public GraphBox HitsBox(Vector2 p_position)
+        {
+            return _boxes.AsEnumerable().Reverse().ToList().Find(r => r.titleRect.Contains(p_position - viewOffset));
+        }
+
+        public void DeleteBox(GraphBox p_box)
+        {
+            _boxes.Remove(p_box);
         }
 
         public NodeConnection HitsConnection(Vector2 p_position, float p_distance)
@@ -462,14 +492,22 @@ namespace Dash
 
             return null;
         }
-        
+
+        public void CreateBox(Rect p_region)
+        {
+            // Increase size of region to have padding
+            Rect boxRect = new Rect(p_region.xMin - 20, p_region.yMin - 60, p_region.width + 40, p_region.height + 80);
+            
+            GraphBox box = new GraphBox("Comment", boxRect);
+            _boxes.Add(box);
+        }
         
         public void CreateNodeInEditor(Type p_nodeType, Vector2 mousePosition)
         {
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
                 return;
             
-            Undo.RecordObject(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
+            Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
             NodeBase node = NodeBase.Create(p_nodeType, this);
 
             if (node != null)
@@ -479,6 +517,8 @@ namespace Dash
                     mousePosition.y * zoom - viewOffset.y, 0, 0);
                 Nodes.Add(node);
             }
+            
+            EditorUtility.SetDirty(this);
         }
 
         public void RemoveNullReferences()

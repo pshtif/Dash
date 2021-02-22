@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [CustomEditor(typeof(DashController))]
-    public class ControllerInspector : Editor
+    public class DashControllerInspector : Editor
     {
         public DashController Controller => (DashController) target;
 
@@ -23,7 +23,7 @@ namespace Dash
             GUILayout.Box(Resources.Load<Texture>("Textures/das"), GUILayout.ExpandWidth(true));
             GUILayout.EndHorizontal();
 
-            if (((IControllerAccess)Controller).graphAsset == null && !Controller.IsGraphBound)
+            if (((IEditorControllerAccess)Controller).graphAsset == null && !Controller.IsGraphBound)
             {
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
@@ -33,12 +33,12 @@ namespace Dash
                         
                         BindGraph(GraphUtils.CreateEmptyGraph());
                     } else {
-                        ((IControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
+                        ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
                 }
                 GUI.color = Color.white;
                 
-                ((IControllerAccess)Controller).graphAsset = (DashGraph)EditorGUILayout.ObjectField(((IControllerAccess)Controller).graphAsset, typeof(DashGraph), true);
+                ((IEditorControllerAccess)Controller).graphAsset = (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset, typeof(DashGraph), true);
             }
             else
             {
@@ -54,8 +54,8 @@ namespace Dash
                 {
                     EditorGUI.BeginChangeCheck();
                     
-                    ((IControllerAccess) Controller).graphAsset =
-                        (DashGraph) EditorGUILayout.ObjectField(((IControllerAccess) Controller).graphAsset,
+                    ((IEditorControllerAccess) Controller).graphAsset =
+                        (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
                             typeof(DashGraph), true);
 
                     if (EditorGUI.EndChangeCheck())
@@ -76,7 +76,7 @@ namespace Dash
                         if (graph != null)
                         {
                             Controller.BindGraph(null);
-                            ((IControllerAccess) Controller).graphAsset = graph;
+                            ((IEditorControllerAccess) Controller).graphAsset = graph;
                         }
                     }
                     

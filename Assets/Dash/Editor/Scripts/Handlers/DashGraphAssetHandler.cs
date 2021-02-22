@@ -8,7 +8,7 @@ using UnityEditor.Callbacks;
 
 namespace Dash
 {
-    public class GraphAssetHandler
+    public class DashGraphAssetHandler
     {
         [OnOpenAssetAttribute(1)]
         public static bool OpenDashGraphEditor(int p_instanceID, int p_line)
