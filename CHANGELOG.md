@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.3b - 22.02.2021
+
+#### Fixed
+- fixed correct output mouse over highlighting when zoomed
+- fixed issue with multiple controllers tagged as preview during scene reload
+- fixed issues with new nodes disappearing on assembly reload
+
+#### Changed
+- property naming in model inspector is now Nicified same as Unity aka toPosition is To Position
+- changed implementation for Extracted/DashAnimations to Asset workflow
+- cleaned up serialization data to avoid serialization of unnecessary data also reimplemented things like groupMinimized from Dictionary to integer bitmask
+- Undo reimplemented as RecordObject got slow on larger graphs
+- ExecutionEnd will now not be fired when there is errorInExecution this helps in resolving errors
+- small GUI, color and name changes
+- refactored and split access Interfaces
+
+#### Added
+- shortcuts in editor window (Duplicate)
+- Node comments
+- GraphBoxes similar to UE4 where you can group nodes into boxes for better visualisation and workflow
+- added visualisation which nodes are going to be selected through region selection
+- added option for property group ordering
+- added option to use AnimationClip as well as DashAnimation inside AnimateWithClipNode
+- ability to drag view with Right button as well, Alt+Drag is still functional for now as well
+- propagation of Expression/Resolve errors to node level for better debugging.
+- added GUI for help information when graph has no nodes 
+
+
 ### Release 0.2.2b - 15.02.2021
 
 #### Fixed
