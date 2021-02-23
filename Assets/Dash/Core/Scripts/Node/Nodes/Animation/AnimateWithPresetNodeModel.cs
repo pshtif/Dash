@@ -16,7 +16,7 @@ namespace Dash
     [Serializable]
     public class AnimateWithPresetNodeModel : AnimationNodeBaseModel
     {
-        [Popup(PopupType.CLASS, typeof(IAnimationPreset))]
+        [ClassPopup(typeof(IAnimationPreset), true)]
         public IAnimationPreset preset;
         
         #if UNITY_EDITOR
