@@ -86,7 +86,7 @@ namespace Dash
 
         static void CreateNode(object p_nodeType)
         {
-            Graph.CreateNodeInEditor((Type)p_nodeType, _lastMousePosition);
+            Graph.CreateNode((Type)p_nodeType, _lastMousePosition);
         }
         static public int CategorySort(Type p_type1, Type p_type2)
         {
