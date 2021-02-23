@@ -119,6 +119,12 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
+
+        public override Vector2 Size => new Vector2(150,
+            85 + (InputCount > OutputCount
+                ? (InputCount > 2 ? (InputCount - 2) * 25 : 0)
+                : (OutputCount > 2 ? (OutputCount - 2) * 25 : 0)));
+        
         public override void DrawInspector()
         {
             GUI.color = new Color(1, 0.75f, 0.5f);
