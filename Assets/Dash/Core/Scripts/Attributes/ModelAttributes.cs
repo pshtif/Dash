@@ -77,16 +77,16 @@ namespace Dash.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Field)]
-    public class PopupAttribute : Attribute
+    public class ClassPopupAttribute : Attribute
     {
-        public PopupType Type { get; }
-
         public Type ClassType { get; }
+        
+        public bool LinkCode { get; }
 
-        public PopupAttribute(PopupType p_type, Type p_classType)
+        public ClassPopupAttribute(Type p_classType, bool p_linkCode)
         {
-            Type = p_type;
             ClassType = p_classType;
+            LinkCode = p_linkCode;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Dash
 
         static bool IsPopupProperty(FieldInfo p_fieldInfo)
         {
-            PopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<PopupAttribute>();
+            ClassPopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<ClassPopupAttribute>();
             return popupAttribute != null;
         }
         
@@ -82,7 +82,7 @@ namespace Dash
             if (!IsPopupProperty(p_fieldInfo))
                 return false;
             
-            PopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<PopupAttribute>();
+            ClassPopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<ClassPopupAttribute>();
 
             // We are caching assembly domain lookups as it is heavy operation
             // TODO need to enable option to recache later since users can implement new types
@@ -96,9 +96,19 @@ namespace Dash
             object value = p_fieldInfo.GetValue(p_object);
             int index = value == null ? 0 : options.IndexOf(value.ToString());
 
+            EditorGUILayout.BeginHorizontal();
+
             EditorGUI.BeginChangeCheck();
-            
             int newIndex = EditorGUILayout.Popup(p_name, index, options.ToArray());
+            
+            if (index != 0)
+            {
+                if (GUILayout.Button(IconManager.GetIcon("Script_Icon"), GUIStyle.none, GUILayout.MaxWidth(20), GUILayout.MaxHeight(20)))
+                {
+                    AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(cachedTypes[popupAttribute.ClassType][index-1]), 1);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
 
             if (EditorGUI.EndChangeCheck())
             {
