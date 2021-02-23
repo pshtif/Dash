@@ -26,7 +26,8 @@ namespace Dash
 
         public bool IsValid()
         {
-            return inputNode != null && outputNode != null;
+            return inputNode != null && outputNode != null && inputIndex < inputNode.InputCount &&
+                   outputIndex < outputNode.OutputCount;
         }
 
         public NodeConnection(int p_inputIndex, NodeBase p_inputNode, int p_outputIndex, NodeBase p_outputNode)
@@ -49,7 +50,7 @@ namespace Dash
         #if UNITY_EDITOR
         public void DrawGUI()
         {
-            if (inputNode == null || outputNode == null)
+            if (!IsValid())
                 return;
 
             Rect outputRect = outputNode.GetConnectorRect(false, outputIndex);
