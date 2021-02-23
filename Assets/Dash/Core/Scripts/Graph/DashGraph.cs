@@ -123,7 +123,7 @@ namespace Dash
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
         }
-
+        
         public NodeBase DuplicateNode(NodeBase p_node)
         {
             NodeBase clone = p_node.Clone();
@@ -306,7 +306,9 @@ namespace Dash
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
-        { 
+        {
+            GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+            
             //Debug.Log("OnBeforeSerialize");
             using (var cachedContext = Cache<SerializationContext>.Claim())
             {
@@ -385,25 +387,7 @@ namespace Dash
         {
             Controller = p_controller;
         }
-        
-        // TODO move generation to node? still need graph lookup for others
-        string IEditorGraphAccess.GenerateId(NodeBase p_node, string p_id)
-        {
-            if (string.IsNullOrEmpty(p_id))
-            {
-                string type = p_node.GetType().ToString();
-                p_id = type.Substring(5, type.Length-9) + "1";
-            }
-
-            while (Nodes.Exists(n => n.Id == p_id))
-            {
-                string number = string.Concat(p_id.Reverse().TakeWhile(char.IsNumber).Reverse());
-                p_id = p_id.Substring(0,p_id.Length-number.Length) + (Int32.Parse(number)+1);
-            }
-
-            return p_id;
-        }
-#endregion
+        #endregion
 
         [SerializeField]
         private List<GraphBox> _boxes = new List<GraphBox>();
@@ -447,6 +431,8 @@ namespace Dash
 
             // Draw boxes
             _boxes.Where(r => r != null).ForEach(r => r.DrawGUI());
+
+            _connections.RemoveAll(c => !c.IsValid());
             
             // Draw connections
             _connections.Where(c => c != null).ForEach(c=> c.DrawGUI());
@@ -520,7 +506,7 @@ namespace Dash
             _boxes.Add(box);
         }
         
-        public void CreateNodeInEditor(Type p_nodeType, Vector2 mousePosition)
+        public void CreateNode(Type p_nodeType, Vector2 mousePosition)
         {
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
                 return;
@@ -546,10 +532,6 @@ namespace Dash
             Connections.RemoveAll(c => c.inputNode == null || c.outputNode == null);
         }
 
-        public void RecacheAnimations()
-        {
-            GetAllNodesByType<AnimateWithClipNode>().ForEach(n => n.Invalidate());
-        }
         public void CleanupExposedReferenceTable()
         {
             List<string> exposedGUIDs = new List<string>();
