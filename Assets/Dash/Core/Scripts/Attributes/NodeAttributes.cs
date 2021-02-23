@@ -83,6 +83,17 @@ namespace Dash.Attributes
     }
     
     [AttributeUsage(AttributeTargets.Class)]
+    public class InputLabelsAttribute : Attribute
+    {
+        public string[] labels { get; }
+
+        public InputLabelsAttribute(params string[] p_labels)
+        {
+            labels = p_labels;
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
     public class OutputCountAttribute : Attribute
     {
         public int count = 0;
