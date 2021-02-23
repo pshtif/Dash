@@ -10,7 +10,6 @@ namespace Dash
         void IncreaseExecutionCount();
         void DecreaseExecutionCount();
         void SetController(DashController p_controller);
-        string GenerateId(NodeBase p_node, string p_id = null);
-        #endif
+#endif
     }
 }
