@@ -4,7 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Dash.Attributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
@@ -27,6 +29,12 @@ namespace Dash
             OnExecuteOutput(0, p_flowData);
         }
 
+        protected override void Invalidate()
+        {
+            base.Invalidate();
+            ValidateUniqueInputName();
+        }
+
 #if UNITY_EDITOR
         // protected override Color NodeBackgroundColor => new Color(0.8f, 0.6f, 0f);
         // protected override Color TitleBackgroundColor => new Color(0.8f, 0.5f, 0f);
@@ -39,6 +47,23 @@ namespace Dash
             Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
             
             GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.inputName , DashEditorCore.Skin.GetStyle("NodeText"));
+        }
+        
+        protected void ValidateUniqueInputName()
+        {
+            string name = Model.inputName;
+            if (string.IsNullOrEmpty(name))
+            {
+                name = "Input1";
+            }
+
+            while (Graph.Nodes.FindAll(n => n.GetType() == typeof(InputNode)).Select(n => (InputNode)n).ToList().Exists(n => n != this && n.Model.inputName == name))
+            {
+                string number = string.Concat(name.Reverse().TakeWhile(char.IsNumber).Reverse());
+                name = name.Substring(0,name.Length-number.Length) + (string.IsNullOrEmpty(number) ? 1 : (Int32.Parse(number)+1));
+            }
+
+            Model.inputName = name;
         }
 #endif
     }

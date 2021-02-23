@@ -92,7 +92,7 @@ namespace Dash
         
         [NonSerialized] 
         private int _inputCount;
-        public int InputCount
+        public virtual int InputCount
         {
             get
             {
@@ -104,8 +104,21 @@ namespace Dash
         }
         
         [NonSerialized] 
+        private string[] _inputLabels;
+        public virtual string[] InputLabels
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+        
+                return _inputLabels;
+            }
+        }
+        
+        [NonSerialized] 
         private int _outputCount;
-        public int OutputCount
+        public virtual int OutputCount
         {
             get
             {
@@ -118,7 +131,7 @@ namespace Dash
 
         [NonSerialized] 
         private string[] _outputLabels;
-        public string[] OutputLabels
+        public virtual string[] OutputLabels
         {
             get
             {
@@ -170,7 +183,7 @@ namespace Dash
             }
         }
 
-        public abstract void CreateModel();
+        protected abstract void CreateModel();
         
         protected bool CheckException(NodeFlowData p_flowData, string p_variableName)
         {
@@ -222,6 +235,9 @@ namespace Dash
             
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
+            
+            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputLabelsAttribute));
+            _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
             
             OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputCountAttribute));
             _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
@@ -403,10 +419,7 @@ namespace Dash
             return typeString.ToString().Substring(5, typeString.ToString().Length - 9);
         }
 
-        public virtual bool Invalidate()
-        {
-            return true;
-        }
+        protected virtual void Invalidate() { }
 
         public void ValidateSerialization()
         {
@@ -522,7 +535,7 @@ namespace Dash
             }
             else
             {
-                _model.id = ((IEditorGraphAccess)Graph).GenerateId(this, "");
+                ValidateUniqueId();
             }
             GUI.color = Color.white;
         }
@@ -672,6 +685,7 @@ namespace Dash
             
             if (invalidate)
             {
+                ValidateUniqueId();
                 Invalidate();
                 EditorUtility.SetDirty(Graph);
             }
@@ -698,6 +712,25 @@ namespace Dash
 
             return false;
         }
+        
+        protected void ValidateUniqueId()
+        {
+            Debug.Log("ValidateUniqueId");
+            string id = _model.id;
+            if (string.IsNullOrEmpty(id))
+            {
+                string type = GetType().ToString();
+                id = type.Substring(5, type.Length-9) + "1";
+            }
+
+            while (Graph.Nodes.Exists(n => n != this && n.Id == id))
+            {
+                string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
+                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
+            }
+
+            _model.id = id;
+        }
 #endif
 
         #endregion
@@ -720,10 +753,10 @@ namespace Dash
             }
         }
 
-        public override void CreateModel()
+        protected override void CreateModel()
         {
-            _model = new T(); 
-            _model.id = ((IEditorGraphAccess) Graph).GenerateId(this);
+            _model = new T();
+            ValidateUniqueId();
         }
     }
 }

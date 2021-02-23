@@ -2,41 +2,59 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Collections.Generic;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Dash
 {
     [Experimental]
     [Category(NodeCategoryType.GRAPH)]
-    [OutputCount(1)]
-    [InputCount(1)]
     public class SubGraphNode : NodeBase<SubGraphNodeModel>
     {
+        [NonSerialized]
         private DashGraph _instancedSubGraph;
-        
+
         private int _selfReferenceIndex = -1;
         private byte[] _boundSubGraphData;
         private List<Object> _boundSubGraphReferences;
 
+        public override int InputCount
+        {
+            get
+            {
+                return SubGraph != null ? SubGraph.GetAllNodesByType<InputNode>().Count : 0;
+            }
+        }
+        
+        public override int OutputCount
+        {
+            get
+            {
+                return SubGraph != null ? SubGraph.GetAllNodesByType<OutputNode>().Count : 0;
+            }
+        }
+        
+        public DashGraph SubGraph => GetSubGraphInstance();
+
         protected override void Initialize()
         {
-            GetSubGraphInstance();
-            if (_instancedSubGraph != null)
+            if (SubGraph != null)
             {
-                _instancedSubGraph.Initialize(Graph.Controller);
-                _instancedSubGraph.OnOutput += (node, data) => ExecuteEnd(Graph.GetOutputIndex(node), data);
+                SubGraph.Initialize(Graph.Controller);
+                SubGraph.OnOutput += (node, data) => ExecuteEnd(Graph.GetOutputIndex(node), data);
             }
         }
 
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (CheckException(_instancedSubGraph, "There is no graph defined"))
+            if (CheckException(SubGraph, "There is no graph defined"))
                 return;
             
-            _instancedSubGraph.GetNodeByType<InputNode>()?.Execute(p_flowData);
+            SubGraph.GetNodeByType<InputNode>()?.Execute(p_flowData);
         }
 
         protected void ExecuteEnd(int p_outputIndex, NodeFlowData p_flowData)
@@ -91,6 +109,15 @@ namespace Dash
             _instancedSubGraph.name = Graph.name+"/"+Model.id+"[Bound]";
         }
         
+        public void ReserializeBound()
+        {
+            if (_instancedSubGraph != null)
+            {
+                _boundSubGraphData = _instancedSubGraph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
+                _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == _instancedSubGraph);
+            }
+        }
+
 #if UNITY_EDITOR
         public override void DrawInspector()
         {
