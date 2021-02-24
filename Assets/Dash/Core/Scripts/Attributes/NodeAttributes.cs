@@ -7,19 +7,24 @@ using System;
 namespace Dash.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SingleInstanceAttribute : Attribute
+    public class HelpAttribute : Attribute
     {
-        public SingleInstanceAttribute()
+        public string help { get; }
+
+        public HelpAttribute(string p_help)
         {
+            help = p_help;
         }
     }
     
     [AttributeUsage(AttributeTargets.Class)]
+    public class SingleInstanceAttribute : Attribute
+    {
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
     public class DisableBaseGUIAttribute : Attribute
-    { 
-        public DisableBaseGUIAttribute()
-        {
-        }
+    {
     }
     
     [AttributeUsage(AttributeTargets.Class)]
