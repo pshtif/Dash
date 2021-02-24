@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dash.Attributes;
-using Dash.Popup;
 using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -51,7 +50,10 @@ namespace Dash
 
                     if (CheckMultiple(type))
                         continue;
-                        
+                    
+                    HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
+                    string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    
                     CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
                     NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
                     string categoryString = category.ToString();
@@ -59,13 +61,14 @@ namespace Dash
 
                     string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
                     node = node.Substring(0, node.Length-4);
+                    
                     if (category == NodeCategoryType.GRAPH)
                     {
-                        menu.AddItem(new GUIContent(node), false, CreateNode, type);
+                        menu.AddItem(new GUIContent(node, tooltip), false, CreateNode, type);
                     }
                     else
                     {
-                        menu.AddItem(new GUIContent(categoryString + "/" + node), false, CreateNode,
+                        menu.AddItem(new GUIContent(categoryString + "/" + node, tooltip), false, CreateNode,
                             type);
                     }
                 }
