@@ -287,8 +287,7 @@ namespace Dash
                     _currentNode = _currentNode.parent;
                 }
             }
-
-            int i = 0;
+            
             foreach (var node in _currentNode.Nodes)
             {
                 if (node.separator)
