@@ -145,6 +145,7 @@ namespace Dash
         {
             selectedNodes.Clear();
             
+            Config.editingGraphPath = "";
             Config.editingGraph = p_graph;
             if (p_graph != null)
                 ((IEditorGraphAccess)p_graph).SetController(null);
