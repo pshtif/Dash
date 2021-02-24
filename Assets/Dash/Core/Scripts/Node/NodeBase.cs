@@ -715,7 +715,6 @@ namespace Dash
         
         protected void ValidateUniqueId()
         {
-            Debug.Log("ValidateUniqueId");
             string id = _model.id;
             if (string.IsNullOrEmpty(id))
             {

@@ -28,6 +28,14 @@ namespace Dash
             rect.width +=6;
             EditorGUI.DrawRect(rect, p_color);
         }
+        
+        public static void Separator() {
+            var lastRect = GUILayoutUtility.GetLastRect();
+            GUILayout.Space(7);
+            GUI.color = new Color(0, 0, 0, 0.3f);
+            GUI.DrawTexture(Rect.MinMaxRect(lastRect.xMin, lastRect.yMax + 4, lastRect.xMax, lastRect.yMax + 6), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+        }
 
         static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null,
             bool p_drawLabel = true, bool p_notExpression = false)

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dash.Popup;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -369,7 +370,7 @@ namespace Dash
                             }
                             else
                             {
-                                GraphContextMenu.Show();
+                                GraphContextMenu.ShowAsPopup();
                             }
                         }
                     }

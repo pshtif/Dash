@@ -62,8 +62,8 @@ namespace Dash
                     GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
                     GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"),
                         GUILayout.Width(120));
+                    
                     Rect lastRect = GUILayoutUtility.GetLastRect();
-
 
                     if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
                         minStyle))

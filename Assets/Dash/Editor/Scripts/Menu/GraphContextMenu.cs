@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dash.Attributes;
+using Dash.Popup;
 using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -21,7 +22,19 @@ namespace Dash
         static public void Show()
         {
             _lastMousePosition = Event.current.mousePosition;
-            
+
+            Get().ShowAsContext();
+        }
+
+        static public void ShowAsPopup()
+        {
+            _lastMousePosition = Event.current.mousePosition;
+
+            TypeMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
+        }
+        
+        static public GenericMenu Get()
+        {
             GenericMenu menu = new GenericMenu();
             
             if (DashEditorCore.Config.editingGraph != null)
@@ -48,17 +61,17 @@ namespace Dash
                     node = node.Substring(0, node.Length-4);
                     if (category == NodeCategoryType.GRAPH)
                     {
-                        menu.AddItem(new GUIContent("Create Node/" + node), false, CreateNode, type);
+                        menu.AddItem(new GUIContent(node), false, CreateNode, type);
                     }
                     else
                     {
-                        menu.AddItem(new GUIContent("Create Node/" + categoryString + "/" + node), false, CreateNode,
+                        menu.AddItem(new GUIContent(categoryString + "/" + node), false, CreateNode,
                             type);
                     }
                 }
             }
-            
-            menu.ShowAsContext();
+
+            return menu;
         }
 
         static bool IsHidden(Type p_type)
@@ -88,6 +101,7 @@ namespace Dash
         {
             Graph.CreateNode((Type)p_nodeType, _lastMousePosition);
         }
+        
         static public int CategorySort(Type p_type1, Type p_type2)
         {
             CategoryAttribute attribute1 = p_type1.GetCustomAttribute<CategoryAttribute>();
