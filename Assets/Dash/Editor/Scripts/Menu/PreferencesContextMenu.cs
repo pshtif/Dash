@@ -17,6 +17,7 @@ namespace Dash
             menu.AddItem(new GUIContent("Show Variables"), p_graph.showVariables, () => p_graph.showVariables = !p_graph.showVariables);
             menu.AddItem(new GUIContent("Show Node Ids"), DashEditorCore.Config.showIds, () => DashEditorCore.Config.showIds = !DashEditorCore.Config.showIds);
             
+            menu.AddSeparator("");
             menu.AddItem(new GUIContent("Validate Serialization"), false, p_graph.ValidateSerialization);
             menu.AddItem(new GUIContent("Cleanup Null"), false, p_graph.RemoveNullReferences);
             menu.AddItem(new GUIContent("Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);

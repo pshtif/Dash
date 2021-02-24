@@ -10,16 +10,18 @@ using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash.Popup
+namespace Dash
 {
     public class MenuItemNode
     {
         public GUIContent content;
         public GenericMenu.MenuFunction func;
         public GenericMenu.MenuFunction2 func2;
-        public bool separator;
-        public bool on;
         public object userData;
+        // Not implemented yet
+        public bool separator;
+        // Not implemented yet
+        public bool on;
 
         public string name { get; }
         public MenuItemNode parent { get; }
@@ -45,11 +47,12 @@ namespace Dash.Popup
 
         public List<MenuItemNode> Search(string p_search)
         {
+            p_search = p_search.ToLower();
             List<MenuItemNode> result = new List<MenuItemNode>();
             
             foreach (var node in Nodes.Values)
             {
-                if (node.Nodes.Count == 0 && node.name.Contains(p_search))
+                if (node.Nodes.Count == 0 && node.name.ToLower().Contains(p_search))
                 {
                     result.Add(node);
                 }
@@ -114,6 +117,7 @@ namespace Dash.Popup
         private Vector2 _scrollPosition;
         private MenuItemNode _rootNode;
         private MenuItemNode _currentNode;
+        private MenuItemNode _hoverNode;
         private string _search;
 
         public TypeMenuPopup(GenericMenu p_menu, string p_title)
@@ -137,7 +141,8 @@ namespace Dash.Popup
 
             DrawTitle(p_rect);
             DrawSearch(p_rect);
-            DrawMenuItems(new Rect(p_rect.x, p_rect.y+46, p_rect.width, p_rect.height-60));
+            DrawMenuItems(new Rect(p_rect.x, p_rect.y+46, p_rect.width, p_rect.height-106));
+            DrawTooltip(new Rect(p_rect.x+5, p_rect.y + p_rect.height - 58, p_rect.width-10, 56));
             
             EditorGUI.FocusTextInControl("Search");
         }
@@ -147,7 +152,7 @@ namespace Dash.Popup
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.white;
             style.fontStyle = FontStyle.Bold;
-            style.fontSize = 18;
+            style.fontSize = 16;
             style.alignment = TextAnchor.LowerCenter;
             GUI.Label(new Rect(p_rect.x, p_rect.y, p_rect.width,24), _title, style);
         }
@@ -158,19 +163,23 @@ namespace Dash.Popup
             _search = GUI.TextArea(new Rect(p_rect.x, p_rect.y + 24, p_rect.width, 20), _search);
         }
 
+        private void DrawTooltip(Rect p_rect)
+        {
+            if (_hoverNode == null || _hoverNode.content == null || _hoverNode.content.tooltip.IsNullOrWhitespace())
+                return;
+
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 9;
+            style.wordWrap = true;
+            style.normal.textColor = Color.white;
+            GUI.Label(p_rect, _hoverNode.content.tooltip, style);
+        }
+
         private void DrawMenuItems(Rect p_rect)
         {
             GUILayout.BeginArea(p_rect);
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, false, false);
             GUILayout.BeginVertical();
-
-            if (_currentNode != _rootNode)
-            {
-                if (GUILayout.Button(_currentNode.GetPath(), ButtonStyle))
-                {
-                    _currentNode = _currentNode.parent;
-                }
-            }
 
             if (_search.IsNullOrWhitespace() || _search.Length<2)
             {
@@ -189,9 +198,17 @@ namespace Dash.Popup
         private void DrawNodeSearch()
         {
             List<MenuItemNode> search = _rootNode.Search(_search);
-            
+
+            string lastPath = "";
             foreach (var node in search)
             {
+                string nodePath = node.parent.GetPath();
+                if (nodePath != lastPath)
+                {
+                    GUILayout.Label(nodePath);
+                    lastPath = nodePath;
+                }
+                
                 if (GUILayout.Button(node.name, ButtonStyle))
                 {
                     {
@@ -199,6 +216,12 @@ namespace Dash.Popup
                         base.editorWindow.Close();
                     }
                     break;
+                }
+                
+                var buttonRect = GUILayoutUtility.GetLastRect();
+                if (buttonRect.Contains(Event.current.mousePosition))
+                {
+                    _hoverNode = node;
                 }
             }
 
@@ -210,6 +233,14 @@ namespace Dash.Popup
 
         private void DrawNodeTree()
         {
+            if (_currentNode != _rootNode)
+            {
+                if (GUILayout.Button(_currentNode.GetPath(), ButtonStyle))
+                {
+                    _currentNode = _currentNode.parent;
+                }
+            }
+            
             foreach (var node in _currentNode.Nodes)
             {
                 if (GUILayout.Button(node.Key, ButtonStyle))
@@ -225,6 +256,13 @@ namespace Dash.Popup
                     }
                     break;
                 }
+                
+                var buttonRect = GUILayoutUtility.GetLastRect();
+                if (buttonRect.Contains(Event.current.mousePosition))
+                {
+                    _hoverNode = node.Value;
+                }
+                
                 if (node.Value.Nodes.Count > 0)
                 {
                     Rect lastRect = GUILayoutUtility.GetLastRect();
@@ -259,9 +297,9 @@ namespace Dash.Popup
                 currentNode.content = content;
                 currentNode.func = (GenericMenu.MenuFunction)menuItemType.GetField("func").GetValue(menuItem);
                 currentNode.func2 = (GenericMenu.MenuFunction2)menuItemType.GetField("func2").GetValue(menuItem);
+                currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
                 currentNode.separator = (bool)menuItemType.GetField("separator").GetValue(menuItem);
                 currentNode.on = (bool)menuItemType.GetField("on").GetValue(menuItem);
-                currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
             }
 
             return rootNode;
