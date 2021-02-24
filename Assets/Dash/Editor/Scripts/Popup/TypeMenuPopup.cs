@@ -2,7 +2,6 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,23 +25,32 @@ namespace Dash
         public string name { get; }
         public MenuItemNode parent { get; }
         
-        public Dictionary<string, MenuItemNode> Nodes { get; private set; }
+        public List<MenuItemNode> Nodes { get; private set; }
         
         public MenuItemNode(string p_name = "", MenuItemNode p_parent = null)
         {
             name = p_name;
             parent = p_parent;
-            Nodes = new Dictionary<string, MenuItemNode>();
+            Nodes = new List<MenuItemNode>();
         }
 
+        public MenuItemNode CreateNode(string p_name)
+        {
+            var node = new MenuItemNode(p_name, this);
+            Nodes.Add(node);
+            return node;
+        }
+
+        // TODO Optimize
         public MenuItemNode GetOrCreateNode(string p_name)
         {
-            if (!Nodes.ContainsKey(p_name))
+            var node = Nodes.Find(n => n.name == p_name);
+            if (node == null)
             {
-                Nodes.Add(p_name, new MenuItemNode(p_name, this));
+                node = CreateNode(p_name);
             }
 
-            return Nodes[p_name];
+            return node;
         }
 
         public List<MenuItemNode> Search(string p_search)
@@ -50,7 +58,7 @@ namespace Dash
             p_search = p_search.ToLower();
             List<MenuItemNode> result = new List<MenuItemNode>();
             
-            foreach (var node in Nodes.Values)
+            foreach (var node in Nodes)
             {
                 if (node.Nodes.Count == 0 && node.name.ToLower().Contains(p_search))
                 {
@@ -88,27 +96,37 @@ namespace Dash
             PopupWindow.Show(new Rect(p_position.x, p_position.y, 0, 0), popup);
             return popup;
         }
-        
+
+        private GUIStyle _buttonStyle;
         public GUIStyle ButtonStyle 
         {
             get
             {
-                GUIStyle style = new GUIStyle(GUI.skin.button);
-                style.alignment = TextAnchor.MiddleLeft;
-                style.hover.background = Texture2D.grayTexture;
-                style.normal.textColor = Color.black;
-                return style;
+                if (_buttonStyle == null)
+                {
+                    _buttonStyle = new GUIStyle(GUI.skin.button);
+                    _buttonStyle.alignment = TextAnchor.MiddleLeft;
+                    _buttonStyle.hover.background = Texture2D.grayTexture;
+                    _buttonStyle.normal.textColor = Color.black;
+                }
+
+                return _buttonStyle;
             }
         }
 
+        private GUIStyle _plusStyle;
         public GUIStyle PlusStyle
         {
             get {
-                GUIStyle style = new GUIStyle();
-                style.fontStyle = FontStyle.Bold;
-                style.normal.textColor = Color.white;
-                style.fontSize = 16;
-                return style;
+                if (_plusStyle == null)
+                {
+                    _plusStyle = new GUIStyle();
+                    _plusStyle.fontStyle = FontStyle.Bold;
+                    _plusStyle.normal.textColor = Color.white;
+                    _plusStyle.fontSize = 16;
+                }
+
+                return _plusStyle;
             }
         }
         
@@ -119,6 +137,7 @@ namespace Dash
         private MenuItemNode _currentNode;
         private MenuItemNode _hoverNode;
         private string _search;
+        private bool _repaint = false;
 
         public TypeMenuPopup(GenericMenu p_menu, string p_title)
         {
@@ -183,11 +202,11 @@ namespace Dash
 
             if (_search.IsNullOrWhitespace() || _search.Length<2)
             {
-                DrawNodeTree();
+                DrawNodeTree(p_rect);
             }
             else
             {
-                DrawNodeSearch();
+                DrawNodeSearch(p_rect);
             }
 
             GUILayout.EndVertical();
@@ -195,7 +214,7 @@ namespace Dash
             GUILayout.EndArea();
         }
         
-        private void DrawNodeSearch()
+        private void DrawNodeSearch(Rect p_rect)
         {
             List<MenuItemNode> search = _rootNode.Search(_search);
 
@@ -209,19 +228,47 @@ namespace Dash
                     lastPath = nodePath;
                 }
                 
-                if (GUILayout.Button(node.name, ButtonStyle))
-                {
-                    {
-                        node.Execute();
-                        base.editorWindow.Close();
-                    }
-                    break;
-                }
+                ButtonStyle.fontStyle = node.Nodes.Count > 0 ? FontStyle.Bold : FontStyle.Normal;
+                GUI.color = _hoverNode == node ? Color.white : Color.gray;
+                GUIStyle style = new GUIStyle();
+                style.normal.background = Texture2D.grayTexture;
+                GUILayout.BeginHorizontal(style);
+                GUI.color = _hoverNode == node ? Color.white : Color.white;
+                GUILayout.Label(node.name);
+                GUILayout.EndHorizontal();
                 
-                var buttonRect = GUILayoutUtility.GetLastRect();
-                if (buttonRect.Contains(Event.current.mousePosition))
+                var nodeRect = GUILayoutUtility.GetLastRect();
+                if (Event.current.isMouse)
                 {
-                    _hoverNode = node;
+                    if (nodeRect.Contains(Event.current.mousePosition))
+                    {
+                        if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                        {
+                            if (node.Nodes.Count > 0)
+                            {
+                                _currentNode = node;
+                                _repaint = true;
+                            }
+                            else
+                            {
+                                node.Execute();
+                                base.editorWindow.Close();
+                            }
+
+                            break;
+                        }
+                        
+                        if (_hoverNode != node)
+                        {
+                            _hoverNode = node;
+                            _repaint = true;
+                        }
+                    }
+                    else if (_hoverNode == node)
+                    {
+                        _hoverNode = null;
+                        _repaint = true;
+                    }
                 }
             }
 
@@ -231,7 +278,7 @@ namespace Dash
             }
         }
 
-        private void DrawNodeTree()
+        private void DrawNodeTree(Rect p_rect)
         {
             if (_currentNode != _rootNode)
             {
@@ -240,34 +287,72 @@ namespace Dash
                     _currentNode = _currentNode.parent;
                 }
             }
-            
+
+            int i = 0;
             foreach (var node in _currentNode.Nodes)
             {
-                if (GUILayout.Button(node.Key, ButtonStyle))
+                if (node.separator)
                 {
-                    if (node.Value.Nodes.Count > 0)
-                    {
-                        _currentNode = node.Value;
-                    }
-                    else
-                    {
-                        node.Value.Execute();
-                        base.editorWindow.Close();
-                    }
-                    break;
+                    GUILayout.Space(4);
+                    continue;
                 }
                 
-                var buttonRect = GUILayoutUtility.GetLastRect();
-                if (buttonRect.Contains(Event.current.mousePosition))
-                {
-                    _hoverNode = node.Value;
-                }
+                ButtonStyle.fontStyle = node.Nodes.Count > 0 ? FontStyle.Bold : FontStyle.Normal;
+                GUI.color = _hoverNode == node ? Color.white : Color.gray;
+                GUIStyle style = new GUIStyle();
+                style.normal.background = Texture2D.grayTexture;
+                GUILayout.BeginHorizontal(style);
+                GUI.color = _hoverNode == node ? Color.white : Color.white;
+                GUILayout.Label(node.name);
+                GUILayout.EndHorizontal();
                 
-                if (node.Value.Nodes.Count > 0)
+                var nodeRect = GUILayoutUtility.GetLastRect();
+                if (Event.current.isMouse)
+                {
+                    if (nodeRect.Contains(Event.current.mousePosition))
+                    {
+                        if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                        {
+                            if (node.Nodes.Count > 0)
+                            {
+                                _currentNode = node;
+                                _repaint = true;
+                            }
+                            else
+                            {
+                                node.Execute();
+                                base.editorWindow.Close();
+                            }
+
+                            break;
+                        }
+                        
+                        if (_hoverNode != node)
+                        {
+                            _hoverNode = node;
+                            _repaint = true;
+                        }
+                    }
+                    else if (_hoverNode == node)
+                    {
+                        _hoverNode = null;
+                        _repaint = true;
+                    }
+                }
+
+                if (node.Nodes.Count > 0)
                 {
                     Rect lastRect = GUILayoutUtility.GetLastRect();
                     GUI.Label(new Rect(lastRect.x+lastRect.width-16, lastRect.y-2, 20, 20), "+", PlusStyle);
                 }
+            }
+        }
+        
+        void OnEditorUpdate() {
+            if (_repaint)
+            {
+                _repaint = false;
+                base.editorWindow.Repaint();
             }
         }
 
@@ -286,23 +371,43 @@ namespace Dash
                 var menuItemType = menuItem.GetType();
                 GUIContent content = (GUIContent)menuItemType.GetField("content").GetValue(menuItem);
                 
+                bool separator = (bool)menuItemType.GetField("separator").GetValue(menuItem);
                 string path = content.text;
                 string[] splitPath = path.Split('/');
                 MenuItemNode currentNode = rootNode;
                 for (int i = 0; i < splitPath.Length; i++)
                 {
-                    currentNode = currentNode.GetOrCreateNode(splitPath[i]);
+                    currentNode = (i < splitPath.Length - 1)
+                        ? currentNode.GetOrCreateNode(splitPath[i])
+                        : currentNode.CreateNode(splitPath[i]);
                 }
 
-                currentNode.content = content;
-                currentNode.func = (GenericMenu.MenuFunction)menuItemType.GetField("func").GetValue(menuItem);
-                currentNode.func2 = (GenericMenu.MenuFunction2)menuItemType.GetField("func2").GetValue(menuItem);
-                currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
-                currentNode.separator = (bool)menuItemType.GetField("separator").GetValue(menuItem);
-                currentNode.on = (bool)menuItemType.GetField("on").GetValue(menuItem);
+                if (separator)
+                {
+                    currentNode.separator = true;
+                }
+                else
+                {
+                    currentNode.content = content;
+                    currentNode.func = (GenericMenu.MenuFunction) menuItemType.GetField("func").GetValue(menuItem);
+                    currentNode.func2 = (GenericMenu.MenuFunction2) menuItemType.GetField("func2").GetValue(menuItem);
+                    currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
+                    currentNode.on = (bool) menuItemType.GetField("on").GetValue(menuItem);
+                }
             }
 
             return rootNode;
+        }
+        
+        public override void OnOpen() 
+        {
+            EditorApplication.update -= OnEditorUpdate;
+            EditorApplication.update += OnEditorUpdate;
+        }
+        
+        public override void OnClose() 
+        {
+            EditorApplication.update -= OnEditorUpdate;
         }
     }
 }

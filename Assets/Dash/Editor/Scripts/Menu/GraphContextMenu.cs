@@ -22,7 +22,14 @@ namespace Dash
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            Get().ShowAsContext();
+            if (DashEditorCore.Config.advancedMenu)
+            {
+                TypeMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
+            }
+            else
+            {
+                Get().ShowAsContext();
+            }
         }
 
         static public void ShowAsPopup()

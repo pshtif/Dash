@@ -41,6 +41,8 @@ namespace Dash
 
         public bool showIds = false;
 
+        public bool advancedMenu = false;
+
         public bool showExperimental = false;
 
 #region SERIALIZATION

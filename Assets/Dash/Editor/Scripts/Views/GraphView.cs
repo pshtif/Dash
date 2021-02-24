@@ -369,7 +369,7 @@ namespace Dash
                             }
                             else
                             {
-                                GraphContextMenu.ShowAsPopup();
+                                GraphContextMenu.Show();
                             }
                         }
                     }
