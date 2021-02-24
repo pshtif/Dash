@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Animate RectTransform position on current target.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

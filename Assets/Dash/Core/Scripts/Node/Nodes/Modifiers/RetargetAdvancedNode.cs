@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Changes a current target within NodeFlowData with advanced option.")]
     [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]

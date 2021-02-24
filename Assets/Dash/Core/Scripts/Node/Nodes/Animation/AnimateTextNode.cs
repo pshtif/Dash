@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Animate TextMeshPro text per character.")]
     [Experimental]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]

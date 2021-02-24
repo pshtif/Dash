@@ -8,6 +8,7 @@ using DG.Tweening;
 
 namespace Dash
 {
+    [Help("Creates for loop per item execution.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(2)]
     [InputCount(1)]

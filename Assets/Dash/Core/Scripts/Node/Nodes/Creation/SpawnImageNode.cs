@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
+    [Help("Spawn GameObject with Image component.")]
     [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]

@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Changes an active state of target.")]
     [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]

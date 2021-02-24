@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Executes on custom event callback.")]
     [Attributes.Category(NodeCategoryType.EVENTS)]
     [OutputCount(1)]
     public class OnCustomEventNode : NodeBase<OnCustomEventNodeModel>

@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Destroy target GameObject.")]
     [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]

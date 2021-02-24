@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Adds a custom attribute to NodeFlowData.")]
     [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]
