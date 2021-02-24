@@ -78,7 +78,7 @@ namespace Dash
             if (Graph == null || selectedNodes.Count == 0)
                 return;
             
-            Undo.RegisterCompleteObjectUndo(Graph, "DuplicateNodes");
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Nodes");
             
             List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
             List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
@@ -92,7 +92,7 @@ namespace Dash
             if (Graph == null || selectedNodes.Count == 0)
                 return;
             
-            Undo.RegisterCompleteObjectUndo(Graph, "DeleteNodes");
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Nodes");
 
             var nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
             nodes.ForEach(n => Graph.DeleteNode(n));
@@ -106,11 +106,25 @@ namespace Dash
         {
             if (Graph == null)
                 return;
-            
-            Undo.RegisterCompleteObjectUndo(Graph, "DuplicateNode");
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
             
             NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
             selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
+        }
+        
+        public static void DeleteNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+            
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Node");
+
+            int index = p_node.Index;
+            Graph.DeleteNode(p_node);
+            selectedNodes.Remove(index);
+            ReindexSelected(index);
             
             SetDirty();
         }

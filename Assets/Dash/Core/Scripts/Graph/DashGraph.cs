@@ -513,6 +513,7 @@ namespace Dash
                 return;
             
             Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
+            
             NodeBase node = NodeBase.Create(p_nodeType, this);
 
             if (node != null)
