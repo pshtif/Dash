@@ -117,7 +117,7 @@ namespace Dash
             return Nodes.Find(n => n.Id == p_id);
         }
 
-        public void RemoveNode(NodeBase p_node)
+        public void DeleteNode(NodeBase p_node)
         {
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
             ((INodeAccess)p_node).Remove();
@@ -131,12 +131,12 @@ namespace Dash
             Nodes.Add(clone);
             return clone;
         }
-        
+
         public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
         {
             if (p_nodes == null || p_nodes.Count == 0)
                 return null;
-            
+
             List<NodeBase> newNodes = new List<NodeBase>();
             foreach (NodeBase node in p_nodes)
             {
@@ -153,7 +153,8 @@ namespace Dash
                     _connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
                 foreach (NodeConnection connection in connections)
                 {
-                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex, newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);   
+                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,
+                        newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);
                 }
             }
 
