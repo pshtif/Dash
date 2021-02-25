@@ -24,7 +24,7 @@ namespace Dash
 
             if (DashEditorCore.Config.advancedMenu)
             {
-                TypeMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
+                GenericMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
             }
             else
             {
@@ -36,7 +36,7 @@ namespace Dash
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            TypeMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
+            GenericMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
         }
         
         static public GenericMenu Get()

@@ -26,7 +26,7 @@ namespace Dash
         public MenuItemNode parent { get; }
         
         public List<MenuItemNode> Nodes { get; private set; }
-        
+
         public MenuItemNode(string p_name = "", MenuItemNode p_parent = null)
         {
             name = p_name;
@@ -89,28 +89,28 @@ namespace Dash
         }
     }
     
-    public class TypeMenuPopup : PopupWindowContent
+    public class GenericMenuPopup : PopupWindowContent
     {
-        public static TypeMenuPopup Show(GenericMenu p_menu, Vector2 p_position, string p_title) {
-            var popup = new TypeMenuPopup(p_menu, p_title);
+        public static GenericMenuPopup Show(GenericMenu p_menu, Vector2 p_position, string p_title, bool p_showOnStatus = true) {
+            var popup = new GenericMenuPopup(p_menu, p_title);
             PopupWindow.Show(new Rect(p_position.x, p_position.y, 0, 0), popup);
             return popup;
         }
 
-        private GUIStyle _buttonStyle;
-        public GUIStyle ButtonStyle 
+        private GUIStyle _backStyle;
+        public GUIStyle BackStyle 
         {
             get
             {
-                if (_buttonStyle == null)
+                if (_backStyle == null)
                 {
-                    _buttonStyle = new GUIStyle(GUI.skin.button);
-                    _buttonStyle.alignment = TextAnchor.MiddleLeft;
-                    _buttonStyle.hover.background = Texture2D.grayTexture;
-                    _buttonStyle.normal.textColor = Color.black;
+                    _backStyle = new GUIStyle(GUI.skin.button);
+                    _backStyle.alignment = TextAnchor.MiddleLeft;
+                    _backStyle.hover.background = Texture2D.grayTexture;
+                    _backStyle.normal.textColor = Color.black;
                 }
 
-                return _buttonStyle;
+                return _backStyle;
             }
         }
 
@@ -131,7 +131,6 @@ namespace Dash
         }
         
         private string _title;
-
         private Vector2 _scrollPosition;
         private MenuItemNode _rootNode;
         private MenuItemNode _currentNode;
@@ -139,7 +138,7 @@ namespace Dash
         private string _search;
         private bool _repaint = false;
 
-        public TypeMenuPopup(GenericMenu p_menu, string p_title)
+        public GenericMenuPopup(GenericMenu p_menu, string p_title)
         {
             _title = p_title;
             _currentNode = _rootNode = GenerateMenuItemNodeTree(p_menu);
@@ -228,13 +227,19 @@ namespace Dash
                     lastPath = nodePath;
                 }
                 
-                ButtonStyle.fontStyle = node.Nodes.Count > 0 ? FontStyle.Bold : FontStyle.Normal;
                 GUI.color = _hoverNode == node ? Color.white : Color.gray;
                 GUIStyle style = new GUIStyle();
                 style.normal.background = Texture2D.grayTexture;
                 GUILayout.BeginHorizontal(style);
+                
+                style = new GUIStyle("box");
+                style.normal.background = Texture2D.whiteTexture;
+                GUI.color = node.on ? new Color(0, .6f, .8f) : new Color(.2f, .2f, .2f);
+                GUILayout.Box("", style, GUILayout.Width(14), GUILayout.Height(14));
+                
                 GUI.color = _hoverNode == node ? Color.white : Color.white;
                 GUILayout.Label(node.name);
+                
                 GUILayout.EndHorizontal();
                 
                 var nodeRect = GUILayoutUtility.GetLastRect();
@@ -282,7 +287,7 @@ namespace Dash
         {
             if (_currentNode != _rootNode)
             {
-                if (GUILayout.Button(_currentNode.GetPath(), ButtonStyle))
+                if (GUILayout.Button(_currentNode.GetPath(), BackStyle))
                 {
                     _currentNode = _currentNode.parent;
                 }
@@ -296,13 +301,21 @@ namespace Dash
                     continue;
                 }
                 
-                ButtonStyle.fontStyle = node.Nodes.Count > 0 ? FontStyle.Bold : FontStyle.Normal;
                 GUI.color = _hoverNode == node ? Color.white : Color.gray;
                 GUIStyle style = new GUIStyle();
                 style.normal.background = Texture2D.grayTexture;
                 GUILayout.BeginHorizontal(style);
+                
+                style = new GUIStyle("box");
+                style.normal.background = Texture2D.whiteTexture;
+                GUI.color = node.on ? new Color(0, .6f, .8f, .5f) : new Color(.2f, .2f, .2f, .2f);
+                GUILayout.Box("", style, GUILayout.Width(14), GUILayout.Height(14));
+                
                 GUI.color = _hoverNode == node ? Color.white : Color.white;
-                GUILayout.Label(node.name);
+                style = new GUIStyle("label");
+                style.fontStyle = node.Nodes.Count > 0 ? FontStyle.Bold : FontStyle.Normal;
+                GUILayout.Label(node.name, style);
+                
                 GUILayout.EndHorizontal();
                 
                 var nodeRect = GUILayoutUtility.GetLastRect();
