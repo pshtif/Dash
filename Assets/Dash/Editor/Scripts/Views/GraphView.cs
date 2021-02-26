@@ -63,17 +63,17 @@ namespace Dash
                 GUIScaleUtils.EndScale();
                 
                 Graph.DrawComments(p_rect, false);
+                
+                DrawHelp(p_rect);
+
+                DrawControllerInfo(p_rect);
+
+                DrawPreviewInfo(p_rect);
+                
+                DrawSelectingRegion(p_rect);
             }
 
-            DrawHelp(p_rect);
-
-            DrawControllerInfo(p_rect);
-
-            DrawPreviewInfo(p_rect);
-
             DrawTitle(p_rect);
-
-            DrawSelectingRegion(p_rect);
         }
         
         void DrawHelp(Rect p_rect)
@@ -369,7 +369,7 @@ namespace Dash
                             }
                             else
                             {
-                                GraphContextMenu.Show();
+                                CreateNodeContextMenu.Show();
                             }
                         }
                     }

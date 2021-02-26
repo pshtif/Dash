@@ -13,7 +13,7 @@ using Object = System.Object;
 
 namespace Dash
 { 
-    public class GraphContextMenu
+    public class CreateNodeContextMenu
     {
         static private DashGraph Graph => DashEditorCore.Config.editingGraph;
         
