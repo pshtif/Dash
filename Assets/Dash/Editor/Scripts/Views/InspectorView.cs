@@ -41,10 +41,6 @@ namespace Dash
                 if (_previouslyInspected != DashEditorCore.selectedBox) GUI.FocusControl("");
                 _previouslyInspected = DashEditorCore.selectedBox;
             }
-            else
-            {
-                GUI.FocusControl("");
-            }
         }
 
         private void DrawBoxGUI(Rect p_rect)
