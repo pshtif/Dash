@@ -20,6 +20,7 @@ namespace Dash
 
         public object Resolve(string p_name, IAttributeDataCollection p_collection)
         {
+            hasErrorInResolving = false;
             object result;
             if (ResolveReservedVariable(p_name, out result))
             {
