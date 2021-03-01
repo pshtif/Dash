@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.4b - 01.03.2021
+
+#### Fixed
+- fixed leaking error state to next parameter resolving
+- fixed correct invalidation of node on any inspector values change
+- fixed unique ID validation
+- fix when no node is selected focus breaks for graph variable view
+
+#### Changed
+- removed Enter/Exit node as they are obsolete
+- renamed and restructuralized node categories
+- detailed text on nodes and custom gui is now invisible when zoomed out
+
+#### Added
+- started adding tooltips/help to nodes
+- implemented InputNode type
+- first rollout of SubGraphs HIGHLY EXPERIMENTAL (new paradigms needed)
+- added a lot of UI stuff for sub graph handling
+- added UI to go directly to animation preset code
+- new implementation for Create Node menu through popup with search and tooltips
+- delete nodes shortcut
+
+
 ### Release 0.2.3b - 22.02.2021
 
 #### Fixed
