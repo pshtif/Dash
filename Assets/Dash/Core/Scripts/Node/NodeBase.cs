@@ -92,7 +92,7 @@ namespace Dash
         
         [NonSerialized] 
         private int _inputCount;
-        public int InputCount
+        public virtual int InputCount
         {
             get
             {
@@ -104,8 +104,21 @@ namespace Dash
         }
         
         [NonSerialized] 
+        private string[] _inputLabels;
+        public virtual string[] InputLabels
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+        
+                return _inputLabels;
+            }
+        }
+        
+        [NonSerialized] 
         private int _outputCount;
-        public int OutputCount
+        public virtual int OutputCount
         {
             get
             {
@@ -118,7 +131,7 @@ namespace Dash
 
         [NonSerialized] 
         private string[] _outputLabels;
-        public string[] OutputLabels
+        public virtual string[] OutputLabels
         {
             get
             {
@@ -155,7 +168,7 @@ namespace Dash
         {
             if (!hasErrorsInExecution)
             {
-                Graph.ExecuteOutputs(this, p_index, p_flowData);
+                Graph.ExecuteNodeOutputs(this, p_index, p_flowData);
             }
 
             //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
@@ -170,7 +183,7 @@ namespace Dash
             }
         }
 
-        public abstract void CreateModel();
+        protected abstract void CreateModel();
         
         protected bool CheckException(NodeFlowData p_flowData, string p_variableName)
         {
@@ -223,6 +236,9 @@ namespace Dash
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
             
+            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputLabelsAttribute));
+            _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
+            
             OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputCountAttribute));
             _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
             
@@ -238,8 +254,8 @@ namespace Dash
             SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SizeAttribute));
             _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
             
-            SettingsAttribute settingsAttribute = (SettingsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SettingsAttribute));
-            _baseGUIEnabled = settingsAttribute != null ? settingsAttribute.enableBaseGUI : true;
+            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(GetType(), typeof(DisableBaseGUIAttribute));
+            _baseGUIEnabled = disableBaseGuiAttribute == null;
             
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             
@@ -403,10 +419,7 @@ namespace Dash
             return typeString.ToString().Substring(5, typeString.ToString().Length - 9);
         }
 
-        public virtual bool Invalidate()
-        {
-            return true;
-        }
+        protected virtual void Invalidate() { }
 
         public void ValidateSerialization()
         {
@@ -438,7 +451,8 @@ namespace Dash
 
             DrawOutline(offsetRect);
 
-            DrawCustomGUI(offsetRect);
+            if (DashEditorCore.DetailsVisible) 
+                DrawCustomGUI(offsetRect);
             
             DrawConnectors(p_rect);
         }
@@ -521,7 +535,7 @@ namespace Dash
             }
             else
             {
-                _model.id = ((IEditorGraphAccess)Graph).GenerateId(this, "");
+                ValidateUniqueId();
             }
             GUI.color = Color.white;
         }
@@ -645,7 +659,7 @@ namespace Dash
                 if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
 
-                if (OutputLabels != null && OutputLabels.Length > i)
+                if (OutputLabels != null && OutputLabels.Length > i && DashEditorCore.DetailsVisible)
                 {
                     GUIStyle style = new GUIStyle();
                     style.normal.textColor = Color.white;
@@ -671,6 +685,7 @@ namespace Dash
             
             if (invalidate)
             {
+                ValidateUniqueId();
                 Invalidate();
                 EditorUtility.SetDirty(Graph);
             }
@@ -697,6 +712,24 @@ namespace Dash
 
             return false;
         }
+        
+        protected void ValidateUniqueId()
+        {
+            string id = _model.id;
+            if (string.IsNullOrEmpty(id))
+            {
+                string type = GetType().ToString();
+                id = type.Substring(5, type.Length-9) + "1";
+            }
+
+            while (Graph.Nodes.Exists(n => n != this && n.Id == id))
+            {
+                string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
+                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
+            }
+
+            _model.id = id;
+        }
 #endif
 
         #endregion
@@ -719,10 +752,10 @@ namespace Dash
             }
         }
 
-        public override void CreateModel()
+        protected override void CreateModel()
         {
-            _model = new T(); 
-            _model.id = ((IEditorGraphAccess) Graph).GenerateId(this);
+            _model = new T();
+            ValidateUniqueId();
         }
     }
 }

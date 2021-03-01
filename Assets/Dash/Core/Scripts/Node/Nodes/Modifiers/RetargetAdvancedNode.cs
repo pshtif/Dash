@@ -4,13 +4,16 @@
 
 using System.Collections.Generic;
 using Dash.Attributes;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.RETARGET)]
+    [Help("Changes a current target within NodeFlowData with advanced option.")]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]
+    [Size(160,85)]
     public class RetargetAdvancedNode : NodeBase<RetargetAdvancedNodeModel>
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
@@ -77,8 +80,9 @@ namespace Dash
                     }
                     else
                     {
-                        DOPreview.DelayedCall(Model.delay.GetValue(ParameterResolver) * i,
-                            () => { OnExecuteOutput(0, data); });
+                        Tween call = DOVirtual.DelayedCall(Model.delay.GetValue(ParameterResolver) * i,
+                            () => OnExecuteOutput(0, data) );
+                        DOPreview.StartPreview(call);
                     }
                 }
 
@@ -88,10 +92,8 @@ namespace Dash
                 }
                 else
                 {
-                    DOPreview.DelayedCall(Model.delay.GetValue(ParameterResolver) * transforms.Count, () =>
-                    {
-                        OnExecuteEnd();
-                    });
+                    Tween call = DOVirtual.DelayedCall(Model.delay.GetValue(ParameterResolver) * transforms.Count, () => OnExecuteEnd());
+                    DOPreview.StartPreview(call);
                 }
             }
             else

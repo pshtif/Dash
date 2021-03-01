@@ -32,12 +32,16 @@ namespace Dash
         }
         
         public DashGraph editingGraph;
+
+        public string editingGraphPath = "";
         
         public bool deleteNull;
 
         public float zoom = 1;
 
         public bool showIds = false;
+
+        public bool advancedMenu = false;
 
         public bool showExperimental = false;
 

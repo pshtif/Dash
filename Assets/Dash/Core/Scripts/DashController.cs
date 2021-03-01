@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -117,7 +119,7 @@ namespace Dash
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
                 data.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
                 
-                Graph.Enter(data);
+                Graph.ExecuteGraphInput("test", data);
             }
         }
 
@@ -149,6 +151,7 @@ namespace Dash
         #if UNITY_EDITOR
         [HideInInspector]
         public bool previewing = false;
+        public string graphPath = "";
         #endif
         
         // Handle Unity property exposing - may be removed later to avoid external references
@@ -233,6 +236,28 @@ namespace Dash
                 _boundGraphData = _instancedGraph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _instancedGraph);
             }
+        }
+
+        public DashGraph GetGraphAtPath(string p_path)
+        {
+            if (string.IsNullOrWhiteSpace(p_path))
+                return Graph;
+
+            List<string> split = p_path.Split('/').ToList();
+            DashGraph currentGraph = Graph;
+            foreach (string id in split)
+            {
+                SubGraphNode node = currentGraph.GetNodeById(id) as SubGraphNode;
+                if (node == null)
+                {
+                    Debug.LogWarning("Cannot retrieve subgraph at invalid graph path " + p_path);
+                    return null;
+                }
+
+                currentGraph = node.GetSubGraphInstance();
+            }
+
+            return currentGraph;
         }
 
         #endregion

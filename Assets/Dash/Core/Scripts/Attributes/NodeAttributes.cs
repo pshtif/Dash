@@ -7,17 +7,24 @@ using System;
 namespace Dash.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SettingsAttribute : Attribute
+    public class HelpAttribute : Attribute
     {
-        public bool canHaveMultiple { get; }
-        
-        public bool enableBaseGUI { get; }
-        
-        public SettingsAttribute(bool p_canHaveMultiple, bool p_enableBaseGUI)
+        public string help { get; }
+
+        public HelpAttribute(string p_help)
         {
-            canHaveMultiple = p_canHaveMultiple;
-            enableBaseGUI = p_enableBaseGUI;
+            help = p_help;
         }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class SingleInstanceAttribute : Attribute
+    {
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DisableBaseGUIAttribute : Attribute
+    {
     }
     
     [AttributeUsage(AttributeTargets.Class)]
@@ -77,6 +84,17 @@ namespace Dash.Attributes
         public InputCountAttribute(int p_count)
         {
             count = p_count;
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class InputLabelsAttribute : Attribute
+    {
+        public string[] labels { get; }
+
+        public InputLabelsAttribute(params string[] p_labels)
+        {
+            labels = p_labels;
         }
     }
     

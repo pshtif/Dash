@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.SPAWN)]
+    [Help("Destroy target GameObject.")]
+    [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]
     public class DestroyNode : RetargetNodeBase<DestroyNodeModel>

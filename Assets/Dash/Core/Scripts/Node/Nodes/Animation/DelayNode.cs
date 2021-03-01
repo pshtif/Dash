@@ -24,11 +24,12 @@ namespace Dash
             }
             else
             {
-                DOPreview.DelayedCall(time, () =>
+                Tween call = DOVirtual.DelayedCall(time, () =>
                 {
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);
                 });
+                DOPreview.StartPreview(call);
             }
         }
         

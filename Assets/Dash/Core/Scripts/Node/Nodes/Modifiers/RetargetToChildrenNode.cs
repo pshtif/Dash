@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.RETARGET)]
+    [Help("Changes a current target within NodeFlowData to each child of target and executes on it.")]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(2)]
     [InputCount(1)]
     [Size(200,110)]
@@ -29,10 +30,8 @@ namespace Dash
                 }
                 else
                 {
-                    DOPreview.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () =>
-                    {
-                        OnExecuteOutput(0, childData);
-                    });
+                    Tween call = DOVirtual.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () => OnExecuteOutput(0, childData));
+                    DOPreview.StartPreview(call);
                 }
             }
 
@@ -42,10 +41,8 @@ namespace Dash
             }
             else
             {
-                DOPreview.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () =>
-                {
-                    ExecuteEnd(p_flowData);
-                });
+                Tween call = DOVirtual.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () => ExecuteEnd(p_flowData));
+                DOPreview.StartPreview(call);
             }
         }
             

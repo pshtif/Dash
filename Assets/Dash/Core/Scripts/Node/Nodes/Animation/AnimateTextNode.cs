@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Animate TextMeshPro text per character.")]
     [Experimental]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
@@ -34,7 +35,8 @@ namespace Dash
                  DOPreview.StartPreview(tween);
             }
 
-            DOPreview.DelayedCall(text.text.Length * .1f, () => ExecuteEnd(p_flowData));
+            Tween call = DOVirtual.DelayedCall(text.text.Length * .1f, () => ExecuteEnd(p_flowData));
+            DOPreview.StartPreview(call);
         }
         
         void ExecuteEnd(NodeFlowData p_flowData)

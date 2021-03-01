@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.RETARGET)]
+    [Help("Changes a current target within NodeFlowData.")]
+    [Category(NodeCategoryType.MODIFIERS)]
     [Size(180,85)]
     [OutputCount(1)]
     [InputCount(1)]

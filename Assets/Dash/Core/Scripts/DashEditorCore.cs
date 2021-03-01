@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 namespace Dash
@@ -16,7 +15,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.3b";
+        public const string VERSION = "0.2.4b";
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -47,6 +46,8 @@ namespace Dash
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 
+        static public bool DetailsVisible => Config.zoom < 2.5;
+        
         static DashEditorCore()
         {
             CreateConfig();
@@ -77,9 +78,26 @@ namespace Dash
             if (Graph == null || selectedNodes.Count == 0)
                 return;
             
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Nodes");
+            
             List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
             List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
             selectedNodes = newNodes.Select(n => n.Index).ToList();
+            
+            SetDirty();
+        }
+
+        public static void DeleteSelectedNodes()
+        {
+            if (Graph == null || selectedNodes.Count == 0)
+                return;
+            
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Nodes");
+
+            var nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+            nodes.ForEach(n => Graph.DeleteNode(n));
+
+            selectedNodes = new List<int>();
             
             SetDirty();
         }
@@ -88,9 +106,25 @@ namespace Dash
         {
             if (Graph == null)
                 return;
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
             
             NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
             selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
+        }
+        
+        public static void DeleteNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+            
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Node");
+
+            int index = p_node.Index;
+            Graph.DeleteNode(p_node);
+            selectedNodes.Remove(index);
+            ReindexSelected(index);
             
             SetDirty();
         }
@@ -120,14 +154,15 @@ namespace Dash
             }
         }
         
-        public static void EditController(DashController p_controller, DashGraph p_graph = null)
+        public static void EditController(DashController p_controller, string p_graphPath = "")
         {
             selectedNodes.Clear();
             
             if (p_controller != null)
             {
-                Config.editingGraph = p_graph != null ? p_graph : p_controller.Graph;
-
+                Config.editingGraphPath = p_graphPath;
+                Config.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
+                
                 if (Graph != null)
                 {
                     ((IEditorGraphAccess) Graph).SetController(p_controller);
@@ -143,6 +178,7 @@ namespace Dash
         {
             selectedNodes.Clear();
             
+            Config.editingGraphPath = "";
             Config.editingGraph = p_graph;
             if (p_graph != null)
                 ((IEditorGraphAccess)p_graph).SetController(null);
@@ -164,7 +200,7 @@ namespace Dash
         {
             if (Graph != null && Graph.Controller != null)
             {
-                EditController(Graph.Controller);
+                EditController(Graph.Controller, Config.editingGraphPath);
             }
         }
         
@@ -266,9 +302,9 @@ namespace Dash
                     return IconManager.GetIcon("Event_Icon");
                 case NodeCategoryType.ANIMATION:
                     return IconManager.GetIcon("Animation_Icon");
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return IconManager.GetIcon("Retargeting_Icon");
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return IconManager.GetIcon("Spawn_Icon");
                 case NodeCategoryType.LOGIC:
                     return IconManager.GetIcon("Settings_Icon");
@@ -285,10 +321,12 @@ namespace Dash
                     return new Color(1f, 0.7f, 0.7f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.7f, 0.7f, 1f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.7f, 1f, 1f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(1f, 0.7f, 1f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(0.8f, 0.6f, 0f);
                 case NodeCategoryType.LOGIC:
                     return Color.white;
             }
@@ -304,10 +342,12 @@ namespace Dash
                     return new Color(0.8f, 0.5f, 0.5f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.5f, 0.5f, 0.8f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.5f, 0.7f, 0.7f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(0.7f, 0.5f, 0.7f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(0.8f, 0.5f, 0f);
                 case NodeCategoryType.LOGIC:
                     return new Color(.6f, .6f, 0.7f);
             }
@@ -323,10 +363,12 @@ namespace Dash
                     return new Color(1, 0.8f, 0.8f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.8f, 0.8f, 1f);
-                case NodeCategoryType.RETARGET:
+                case NodeCategoryType.MODIFIERS:
                     return new Color(0.8f, 1f, 1f);
-                case NodeCategoryType.SPAWN:
+                case NodeCategoryType.CREATION:
                     return new Color(1f, 0.8f, 1f);
+                case NodeCategoryType.GRAPH:
+                    return new Color(1f, 0.8f, 0.5f);
                 case NodeCategoryType.LOGIC:
                     return new Color(.9f, .9f, 1f);
             }

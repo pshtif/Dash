@@ -63,17 +63,17 @@ namespace Dash
                 GUIScaleUtils.EndScale();
                 
                 Graph.DrawComments(p_rect, false);
+                
+                DrawHelp(p_rect);
+
+                DrawControllerInfo(p_rect);
+
+                DrawPreviewInfo(p_rect);
+                
+                DrawSelectingRegion(p_rect);
             }
 
-            DrawHelp(p_rect);
-
-            DrawControllerInfo(p_rect);
-
-            DrawPreviewInfo(p_rect);
-
             DrawTitle(p_rect);
-
-            DrawSelectingRegion(p_rect);
         }
         
         void DrawHelp(Rect p_rect)
@@ -117,6 +117,14 @@ namespace Dash
             else if (Graph != null)
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
+            }
+
+            if (Graph.parentGraph != null)
+            {
+                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 80, 100, 32), "GO TO PARENT"))
+                {
+                    DashEditorCore.EditController(Graph.Controller);
+                }
             }
         }
 
@@ -361,7 +369,7 @@ namespace Dash
                             }
                             else
                             {
-                                GraphContextMenu.Show();
+                                CreateNodeContextMenu.Show();
                             }
                         }
                     }

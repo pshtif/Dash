@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.LOGIC)]
+    [Help("Tries to increment a number inside a TextMeshPro text.")]
+    [Category(NodeCategoryType.MODIFIERS)]
     [InputCount(1)]
     [OutputCount(1)]
     public class IncrementTextNode : RetargetNodeBase<IncrementTextNodeModel>

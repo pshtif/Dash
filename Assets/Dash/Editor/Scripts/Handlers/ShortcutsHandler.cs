@@ -18,6 +18,9 @@ namespace Dash
                 case KeyCode.D:
                     DashEditorCore.DuplicateSelectedNodes();
                     break;
+                case KeyCode.X:
+                    DashEditorCore.DeleteSelectedNodes();
+                    break;
             }
         }
     }

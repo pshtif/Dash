@@ -31,7 +31,7 @@ namespace Dash
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
             
-            int nodeIndex = Controller.Graph.Nodes.IndexOf(p_node);
+            int nodeIndex = DashEditorCore.Config.editingGraph.Nodes.IndexOf(p_node);
 
             Controller.previewing = true;
             EditorUtility.SetDirty(Controller);
@@ -42,17 +42,13 @@ namespace Dash
             EditorApplication.update += OnUpdate;
             
             // Cloning graph for preview
-            _previewGraph = Controller.Graph.Clone();
+            _previewGraph = DashEditorCore.Config.editingGraph.Clone();
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
             
             if (p_node == null)
             {
-                EnterNode enterNode = _previewGraph.GetNodeByType<EnterNode>();
-                if (enterNode != null)
-                {
-                    enterNode.Execute(NodeFlowDataFactory.Create(Controller.transform));
-                }
+                _previewGraph.previewNode?.Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
             else
             {
@@ -87,7 +83,7 @@ namespace Dash
 
             DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
             DashController controller = controllers.ToList().Find(c => c.previewing);
-            DashEditorCore.EditController(controller);
+            DashEditorCore.EditController(controller, DashEditorCore.Config.editingGraphPath);
             controller.previewing = false;
             EditorUtility.SetDirty(Controller);
             EditorSceneManager.SaveOpenScenes();

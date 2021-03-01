@@ -20,12 +20,14 @@ namespace Dash
 
         public object Resolve(string p_name, IAttributeDataCollection p_collection)
         {
+            hasErrorInResolving = false;
             object result;
             if (ResolveReservedVariable(p_name, out result))
             {
                 return result;
             }
 
+            // Will be removed in next iteration
             if (p_name.StartsWith("g_"))
             {
                 string name = p_name.Substring(2);
@@ -35,6 +37,12 @@ namespace Dash
                     Variable variable = _graph.variables.GetVariable(name);
                     return variable.value;
                 }
+            }
+            
+            if (_graph.variables.HasVariable(p_name))
+            {
+                Variable variable = _graph.variables.GetVariable(p_name);
+                return variable.value;
             }
             
             if (p_collection != null)

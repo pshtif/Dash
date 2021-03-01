@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Help("Send a custom event.")]
     [Category(NodeCategoryType.EVENTS)]
     [InputCount(1)]
     public class SendEventNode : NodeBase<SendEventNodeModel>

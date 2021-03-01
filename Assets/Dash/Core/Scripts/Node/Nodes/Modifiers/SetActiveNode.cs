@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.LOGIC)]
+    [Help("Changes an active state of target.")]
+    [Category(NodeCategoryType.MODIFIERS)]
     [OutputCount(1)]
     [InputCount(1)]
     public class SetActiveNode : RetargetNodeBase<SetActiveNodeModel>

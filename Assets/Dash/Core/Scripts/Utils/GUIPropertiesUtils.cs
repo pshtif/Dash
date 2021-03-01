@@ -28,6 +28,14 @@ namespace Dash
             rect.width +=6;
             EditorGUI.DrawRect(rect, p_color);
         }
+        
+        public static void Separator() {
+            var lastRect = GUILayoutUtility.GetLastRect();
+            GUILayout.Space(7);
+            GUI.color = new Color(0, 0, 0, 0.3f);
+            GUI.DrawTexture(Rect.MinMaxRect(lastRect.xMin, lastRect.yMax + 4, lastRect.xMax, lastRect.yMax + 6), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+        }
 
         static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, string p_name = null,
             bool p_drawLabel = true, bool p_notExpression = false)
@@ -73,7 +81,7 @@ namespace Dash
 
         static bool IsPopupProperty(FieldInfo p_fieldInfo)
         {
-            PopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<PopupAttribute>();
+            ClassPopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<ClassPopupAttribute>();
             return popupAttribute != null;
         }
         
@@ -82,7 +90,7 @@ namespace Dash
             if (!IsPopupProperty(p_fieldInfo))
                 return false;
             
-            PopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<PopupAttribute>();
+            ClassPopupAttribute popupAttribute = p_fieldInfo.GetCustomAttribute<ClassPopupAttribute>();
 
             // We are caching assembly domain lookups as it is heavy operation
             // TODO need to enable option to recache later since users can implement new types
@@ -96,16 +104,26 @@ namespace Dash
             object value = p_fieldInfo.GetValue(p_object);
             int index = value == null ? 0 : options.IndexOf(value.ToString());
 
+            EditorGUILayout.BeginHorizontal();
+
             EditorGUI.BeginChangeCheck();
-            
             int newIndex = EditorGUILayout.Popup(p_name, index, options.ToArray());
+            
+            if (index != 0)
+            {
+                if (GUILayout.Button(IconManager.GetIcon("Script_Icon"), GUIStyle.none, GUILayout.MaxWidth(20), GUILayout.MaxHeight(20)))
+                {
+                    AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(cachedTypes[popupAttribute.ClassType][index-1]), 1);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
 
             if (EditorGUI.EndChangeCheck())
             {
                 if (newIndex != index)
                 {
                     p_fieldInfo.SetValue(p_object,
-                        index == 0 ? null : Activator.CreateInstance(cachedTypes[popupAttribute.ClassType][index - 1]));
+                        newIndex == 0 ? null : Activator.CreateInstance(cachedTypes[popupAttribute.ClassType][newIndex - 1]));
                 }
 
                 return true;
