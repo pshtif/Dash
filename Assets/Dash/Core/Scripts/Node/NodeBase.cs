@@ -40,6 +40,11 @@ namespace Dash
             return _model != null;
         }
         
+        public NodeModelBase GetModel()
+        {
+            return _model;
+        }
+        
         [NonSerialized] 
         public bool hasErrorsInExecution = false;
         
@@ -527,7 +532,7 @@ namespace Dash
             GUI.color = Color.gray;
             if (!String.IsNullOrEmpty(_model.id))
             {
-                if (DashEditorCore.Config.showIds)
+                if (DashEditorCore.Config.showNodeIds)
                 {
                     GUI.Label(
                         new Rect(new Vector2(p_rect.x, p_rect.y - 20), new Vector2(rect.width - 5, 20)), _model.id);

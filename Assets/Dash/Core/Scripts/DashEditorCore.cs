@@ -73,6 +73,24 @@ namespace Dash
             }
         }
 
+        public static NodeBase Search(string p_search, int p_index)
+        {
+            if (Graph == null)
+                return null;
+            
+            selectedNodes.Clear();
+
+            var searchNodes = Graph.Nodes.FindAll(n => n.Id.ToLower().Contains(p_search)).ToList();
+            if (searchNodes.Count == 0)
+                return null;
+            
+            if (p_index >= searchNodes.Count) p_index = p_index%searchNodes.Count;
+
+            var node = searchNodes[p_index];
+            selectedNodes.Add(node.Index);
+            return node;
+        }
+
         public static void DuplicateSelectedNodes()
         {
             if (Graph == null || selectedNodes.Count == 0)
