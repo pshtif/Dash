@@ -47,6 +47,8 @@ namespace Dash
         static public List<int> selectingNodes = new List<int>();
 
         static public bool DetailsVisible => Config.zoom < 2.5;
+
+        static public string propertyReference;
         
         static DashEditorCore()
         {
