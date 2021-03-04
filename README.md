@@ -63,9 +63,10 @@ Various properties in many node models are parameters rather than direct values.
 
 ### Expressions
 
-As mentioned in parametrization some values can be driven by expression evaluation and since this is quite a big topic we will discuss it separately. It is also something that will get added on as additional expression functions are implemented.
+Some node properties can be either direct values or use parametrization which means they are driven by expression evaluation.
 
-[Function Documentation Here](./Documentation/ExpressionFunctions.md)
+[Expression Documentation Here](./Documentation/Expression.md)
+
 
 ### Variables
 
