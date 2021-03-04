@@ -1,92 +1,104 @@
-# EXPRESSION FUNCTIONS
+# EXPRESSION 
 
-These are function that can be called within parameter expressions. They are sorted by return type rather than category in this documentation as for now it seems like a better option.
+Parametric properties in Dash can either use direct values or a string expression that will be evaluated at runtime. To switch a property from value type to expression type you need to toggle the icon right beside the property in the inspector.
 
-## Vector2
+Expression can consist of parameters, operators, functions or values. All of these have their own rules.
 
-### FromToRect
-> ***FloatToRect(RectTransform from, RectTransform to)***  
-Function calculates position transform from one rectangle space to another.
+## Parameters
 
-### Vector2
-> ***Vector2(Float x, Float y)***  
-Function creates a Vector2.
+Parameters inside expression are identificators that should be evaluated externally. Basically anything that is not a function, value or operator will be handled as a parameter and evaluator will try to resolve it. Generally parameters should contain only alpha numeric characters and they should never start with a number.
 
-### RandomV2
-> ***RandomV2()***  
-Function creates a random unit Vector2  
-> ***RandomV2(Float min, Float max)***  
-Function creates a random Vector2 where both components will be randomized within the min/max range.  
-> ***RandomV2(Float minX, Float maxX, Float minX, Float maxX)***  
-Function creates a random Vector2 where each component uses its own min/max.
+In following example the evaluator will try to resolve test as a variable and then add 5 and divide it by 2. This expression consists only of operators and single parameter.
+```c#
+(test+5)/2
+```
 
-#### Normalize
-> ***Normalize()***
-Function returns a normalized Vector2 value.
+Inside Dash parameter can also be a reference to other property within the evaluating graph. It utilizes a special syntax as follows.
+```c#
+[$DelayNode2.time]
+```
+The brackets are used to tell the evaluator that this parameter contains special characters, the $ sign tells it that this part is a reference to node model through it's ID since each node inside Dash graph has its own unique ID. The part after the . is telling it the name of the property we are referencing from the target node model.
 
-#### Scale
-> ***Scale(Vector2 value)***  
-Function returns a Vector2 scaled by float.
+Additionally this supports nested property lookup so this is also possible:
+```c#
+[$AnimateAnchoredPosition6.fromPosition.x]
+```
 
-#### Add(Generic)
-> ***Add(Vector2 value1, Vector2 value2)***  
-Function adds two Vector2 values and returns a Vector2 if evaluated Parameter is Vector2.
+Where you are referencing directly the X part from the Vector2 position.
 
-#### Random(Generic)
-> ***Random(Float min, Float max)***  
-Function creates a random Vector2 value when evaluated Parameter is Vector2 and both components will be randomized within the min/max range.
+## Operators
 
-## Vector3
+Expressions support the standard operators as follows.
 
-#### Vector3
-> ***Vector3(Float x, Float y, Float z)***  
-Function creates a Vector3.
+### Additive
+```
++ -
+```
+### Multiplicative
+```
+* / %
+```
+### Logical
+```
+|| &&
+```
+### Bitwise
+```
+& | ^ << >>
+```
+### Relational
+```
+= == != <> < <= > >=
+```
+### Primary
+```
+( )
+```
+### Unary
+```
+! - ~
+```
 
-#### RandomV3
-Function creates a random Vector3.
+## Values
 
-#### Normalize
-Function returns a normalized Vector3 value.
+These are basic value types that are supported.
 
-#### Scale
-Function returns a Vector3 scaled by float.
+### Integer
+```
+1234
+- any number without the floating point will be evaluated as Int32
+```
 
-#### Add<T>
-Function adds two Vector3 values and returns a Vector3 if evaluated Parameter is Vector3.
+### Float
+```
+123.456
+- any number containing floating point will be evaluated as Float
+```
 
-#### Random<T>
-Function creates a random Vector3 value when evaluated Parameter is Vector3.
+### Double
+```
+2.41e7
+- any number using scientific notation will be evaluated as Double
+```
 
-## Int
+### String
+```
+'hello world'
+-any part of expression enclosed with ' will be evaluated as a string value, special characters need to be escaped by \
+```
 
-#### GetChildIndex
-Function returns index of a child transform specified as parameter.
+### Boolean
+```
+true
+- boolean can be either true or false
+```
 
-#### Ceil
-Function returns a ceiled Float as Int.
+## Functions
 
-#### Random<T>
-Function creates a random Int value when evaluated Parameter is Int.
+A function is made of a name followed by braces, containing optionally any number of arguments as values or parameters or even other functions.
 
-## Float
+```
+RandomF(1,2)
+```
 
-#### RandomF
-Function creates a random Float value.
-
-#### Magnitude
-Function returns a magnitude of a vector value.
-
-#### Random<T>
-Function creates a random Float value when evaluated Parameter is Float.
-
-## Transform
-
-#### GetChild
-Function finds a child of a specified transform by its name.
-
-#### GetParent
-Function returns a parent of specified transform.
-
-#### GetChildAt
-Function returns a child of specified transform at index.
-
+For documentation on implemented functions you can go to [Expression Functions documentation](ExpressionFunctions.md)
