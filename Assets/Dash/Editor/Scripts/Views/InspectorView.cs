@@ -60,11 +60,7 @@ namespace Dash
             GUILayout.EndScrollView();
             GUILayout.EndArea();
 
-            if (rect.Contains(Event.current.mousePosition) &&
-                Event.current.type == EventType.MouseDown)
-            {
-                Event.current.type = EventType.Used;
-            }
+            UseEvent(rect);
         }
 
         private void DrawNodeGUI(Rect p_rect) 
@@ -89,12 +85,8 @@ namespace Dash
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
-
-            if (rect.Contains(Event.current.mousePosition) &&
-                Event.current.type == EventType.MouseDown)
-            {
-                Event.current.type = EventType.Used;
-            }
+            
+            UseEvent(rect);
         }
         
         void DrawScriptButton(Rect p_rect)
