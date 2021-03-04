@@ -72,10 +72,10 @@ namespace Dash
             }
         }
 
-        [NonSerialized] 
-        protected int _executionCounter = 0;
+        public virtual int ExecutionCount { get; protected set; } = 0;
+        
 
-        public bool IsExecuting => _executionCounter > 0;
+        public virtual bool IsExecuting => ExecutionCount > 0;
         
         
 
@@ -157,8 +157,7 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            ((IEditorGraphAccess)Graph).IncreaseExecutionCount();
-            _executionCounter++;
+            ExecutionCount++;
             
 #if UNITY_EDITOR
             executeTime = 1;
@@ -183,8 +182,7 @@ namespace Dash
         {
             if (!hasErrorsInExecution)
             {
-                ((IEditorGraphAccess) Graph).DecreaseExecutionCount();
-                _executionCounter--;
+                ExecutionCount--;
             }
         }
 
