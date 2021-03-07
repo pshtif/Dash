@@ -33,7 +33,7 @@ namespace Dash
                 : rectTransform.anchoredPosition;
 
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
-
+            
             if (Model.time == 0)
             {
                 UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition);

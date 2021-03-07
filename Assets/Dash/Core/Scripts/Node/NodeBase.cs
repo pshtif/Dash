@@ -192,7 +192,7 @@ namespace Dash
         {
             if (!p_flowData.HasAttribute(p_variableName))
             {
-                SetError("Variable "+p_variableName+" not found during execution of "+this);
+                SetError("Attribute "+p_variableName+" not found during execution of "+this);
 
                 return true;
             }
