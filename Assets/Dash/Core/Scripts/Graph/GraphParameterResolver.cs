@@ -30,18 +30,18 @@ namespace Dash
             if (ResolveReference(p_name, p_collection, out result))
                 return result;
 
-            if (_graph.variables.HasVariable(p_name))
-            {
-                Variable variable = _graph.variables.GetVariable(p_name);
-                return variable.value;
-            }
-
             if (p_collection != null)
             {
                 if (p_collection.HasAttribute(p_name))
                 {
                     return p_collection.GetAttribute(p_name);
                 }
+            }
+            
+            if (_graph.variables.HasVariable(p_name))
+            {
+                Variable variable = _graph.variables.GetVariable(p_name);
+                return variable.value;
             }
 
             hasErrorInResolving = true;
@@ -59,12 +59,6 @@ namespace Dash
 
             if (ResolveReference(p_name, p_collection, out result))
                 return (T)result;
-            
-            if (_graph.variables.HasVariable(p_name))
-            {
-                Variable<T> variable = _graph.variables.GetVariable<T>(p_name);
-                return variable.value;
-            }
 
             if (p_collection != null)
             {
@@ -72,6 +66,12 @@ namespace Dash
                 {
                     return p_collection.GetAttribute<T>(p_name);
                 }
+            }
+            
+            if (_graph.variables.HasVariable(p_name))
+            {
+                Variable<T> variable = _graph.variables.GetVariable<T>(p_name);
+                return variable.value;
             }
 
             hasErrorInResolving = true;
