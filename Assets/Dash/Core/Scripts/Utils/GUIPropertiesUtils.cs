@@ -347,7 +347,7 @@ namespace Dash
             return false;
         }
 
-        protected static void HandleReferencing(Object p_object, FieldInfo p_fieldInfo, Parameter p_parameter = null)
+        protected static void HandleReferencing(Object p_object, FieldInfo p_fieldInfo, Parameter p_parameter = null, FieldInfo p_expression = null)
         {
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) &&
                 Event.current.button == 1 && Event.current.type == EventType.MouseDown)
@@ -364,6 +364,12 @@ namespace Dash
                 {
                     menu.AddItem(new GUIContent("Paste reference"), false,
                         () => { p_parameter.expression = DashEditorCore.propertyReference; });
+                }
+                
+                if (p_expression != null && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
+                {
+                    menu.AddItem(new GUIContent("Paste reference"), false,
+                        () => { p_expression.SetValue(p_object, DashEditorCore.propertyReference); });
                 }
 
                 menu.ShowAsContext();
@@ -392,6 +398,7 @@ namespace Dash
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(p_name, GUILayout.Width(120));
+                HandleReferencing(p_object, p_fieldInfo, null, expressionField);
                 string expression = GUILayout.TextArea((string)expressionField.GetValue(p_object), GUILayout.Width(170));
                 expressionField.SetValue(p_object, expression);
                 GUILayout.EndHorizontal();
