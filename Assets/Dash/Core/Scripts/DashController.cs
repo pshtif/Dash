@@ -102,6 +102,8 @@ namespace Dash
 
         public bool autoStart = true;
 
+        public string autoStartInput = "Input";
+
         void Awake()
         {
             if (Graph != null)
@@ -118,7 +120,7 @@ namespace Dash
             {
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
 
-                Graph.ExecuteGraphInput("test", data);
+                Graph.ExecuteGraphInput(autoStartInput, data);
             }
         }
 
