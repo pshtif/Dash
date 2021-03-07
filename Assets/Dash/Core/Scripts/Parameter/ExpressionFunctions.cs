@@ -154,7 +154,7 @@ namespace Dash
             }
 
             object[] evalParams = p_args.EvaluateParameters();
-            Debug.Log(typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()));
+            
             if (evalParams[0] != null && typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()))
             {
                 p_args.HasResult = true;
