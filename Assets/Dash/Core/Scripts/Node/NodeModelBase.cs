@@ -80,7 +80,7 @@ namespace Dash
                 if (lastGroupMinimized)
                     continue;
 
-                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this);
+                invalidate = invalidate || GUIPropertiesUtils.PropertyField(this, field, this);
             }
 
             return invalidate;

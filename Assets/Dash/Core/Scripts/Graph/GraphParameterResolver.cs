@@ -127,12 +127,12 @@ namespace Dash
                 }
             }
             
-            if (value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
+            if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
             {
                 value = value.GetType().GetMethod("Resolve").Invoke(value, new object[] { _graph.Controller });
                 Debug.Log(value);
             }
-
+    
             p_result = value;
             return true;
         }

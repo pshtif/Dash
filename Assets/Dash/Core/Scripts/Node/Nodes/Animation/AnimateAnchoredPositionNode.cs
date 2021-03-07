@@ -33,8 +33,10 @@ namespace Dash
                 : rectTransform.anchoredPosition;
 
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
-            
-            if (Model.time == 0)
+
+            float time = GetParameterValue(Model.time);
+            float delay = GetParameterValue(Model.delay);
+            if (time == 0)
             {
                 UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition);
                 ExecuteEnd(p_flowData);
@@ -44,8 +46,8 @@ namespace Dash
                 // Virtual tween to update from directly
                 Tween tween = DOTween
                     .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition), 0,
-                        1, Model.time)
-                    .SetDelay(Model.delay)
+                        1, time)
+                    .SetDelay(delay)
                     .SetEase(Ease.Linear)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 
