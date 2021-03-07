@@ -145,7 +145,7 @@ namespace Dash
             return false;
         }
 
-        private static bool GetPosition(FunctionArgs p_args)
+        private static bool GetAnchoredPosition(FunctionArgs p_args)
         {
             if (p_args.Parameters.Length != 1)
             {
@@ -154,11 +154,11 @@ namespace Dash
             }
 
             object[] evalParams = p_args.EvaluateParameters();
-
-            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
+            Debug.Log(typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()));
+            if (evalParams[0] != null && typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()))
             {
                 p_args.HasResult = true;
-                p_args.Result = ((Transform) evalParams[0]).position;
+                p_args.Result = ((RectTransform) evalParams[0]).anchoredPosition;
                 return true;
             }
 
