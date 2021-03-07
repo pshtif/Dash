@@ -118,7 +118,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             { 
-                errorMessage = "Invalid parameters in GetChild function.";
+                errorMessage = "Invalid number of parameters in GetChild function.";
                 return false;
             }
             
@@ -142,6 +142,27 @@ namespace Dash
             }
             
             errorMessage = "Invalid parameters in GetChildAt function.";
+            return false;
+        }
+
+        private static bool GetPosition(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            {
+                errorMessage = "Invalid number of parameters in GetPosition function.";
+                return false;
+            }
+
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Transform) evalParams[0]).position;
+                return true;
+            }
+
+            errorMessage = "Invalid parameters in GetPosition function.";
             return false;
         }
 
@@ -283,20 +304,20 @@ namespace Dash
             return false;
         }
 
-        private static bool Random(FunctionArgs p_args)
-        {
-            if (p_args.Parameters.Length == 2)
-                return RandomF(p_args);
-
-            if (p_args.Parameters.Length == 4)
-                return RandomV2(p_args);
-
-            if (p_args.Parameters.Length == 6)
-                return RandomV3(p_args);
-            
-            errorMessage = "Invalid parameters in Random function";
-            return false;
-        }
+        // private static bool Random(FunctionArgs p_args)
+        // {
+        //     if (p_args.Parameters.Length == 2)
+        //         return RandomF(p_args);
+        //
+        //     if (p_args.Parameters.Length == 4)
+        //         return RandomV2(p_args);
+        //
+        //     if (p_args.Parameters.Length == 6)
+        //         return RandomV3(p_args);
+        //     
+        //     errorMessage = "Invalid parameters in Random function";
+        //     return false;
+        // }
 
         private static bool RandomF(FunctionArgs p_args)
         {
