@@ -75,12 +75,18 @@ namespace Dash
             }
 
             hasErrorInResolving = true;
-            errorMessage = "Variable "+ p_name +" not found.";
+            errorMessage = "Variable/Attribute "+ p_name +" not found.";
             return default(T);
         }
 
         protected bool ResolveReservedVariable(string p_name, out object p_result)
         {
+            if (p_name == "controller")
+            {
+                p_result = _graph.Controller.transform;
+                return true;
+            }
+            
             if (p_name == "mousePosition")
             {
                 p_result = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
