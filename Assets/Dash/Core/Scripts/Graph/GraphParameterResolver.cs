@@ -126,6 +126,12 @@ namespace Dash
                     value = value.GetType().GetMethod("GetValue").Invoke(value, new object[] {this, p_collection});
                 }
             }
+            
+            if (value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
+            {
+                value = value.GetType().GetMethod("Resolve").Invoke(value, new object[] { _graph.Controller });
+                Debug.Log(value);
+            }
 
             p_result = value;
             return true;
