@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.5b - 08.03.2021
+
+#### Fixed
+- fixed mouse blocking for variables and inspector views
+
+#### Changed
+- added additional focus management, clicking in graph will defocus fields etc.
+- [BREAKING] graph variables no longer use g_ prefix, so all old g_ stuff will stop working
+
+#### Added
+- added an UI to search for nodes in editor
+- additional expression functions
+- new property referencing through graph within expressions, first introduced in Machina but now reworked with event better implementation in Dash that also handles nested reflection
+- execution count for debugging is now nested (for subgraph solving)
+- refactored execution counting and interfaces, now gathered per update (small performance hit but not crucial as this is only for editor time debugging)
+- added functionality and context menu for reference copy/pasting
+
 ### Release 0.2.4b - 01.03.2021
 
 #### Fixed
