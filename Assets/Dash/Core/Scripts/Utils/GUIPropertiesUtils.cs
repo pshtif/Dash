@@ -422,8 +422,10 @@ namespace Dash
             return false;
         }
 
-        static bool ValueProperty(NodeModelBase p_nodeModel, FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, FieldInfo p_originalInfo)
+        static bool ValueProperty(NodeModelBase p_nodeModel, FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, FieldInfo p_parameterInfo = null)
         {
+            FieldInfo referenceInfo = p_parameterInfo != null ? p_parameterInfo : p_fieldInfo;
+            
             string type = p_fieldInfo.FieldType.ToString();
             switch (type)
             {
@@ -431,7 +433,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(120));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     var stringValue = GUILayout.TextField((String) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -479,7 +481,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name,  GUILayout.Width(120));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     var intValue = EditorGUILayout.IntField((int) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -494,7 +496,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name,  GUILayout.Width(120));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     var singleValue = EditorGUILayout.FloatField((float) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -509,7 +511,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(120));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     var boolValue = EditorGUILayout.Toggle((bool) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -523,7 +525,7 @@ namespace Dash
                 case "UnityEngine.Vector2":
                     EditorGUI.BeginChangeCheck();
                     var vector2Value = EditorGUILayout.Vector2Field(p_name, (Vector2) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector2Value);
@@ -534,7 +536,7 @@ namespace Dash
                 case "UnityEngine.Vector3":
                     EditorGUI.BeginChangeCheck();
                     var vector3Value = EditorGUILayout.Vector3Field(p_name, (Vector3) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector3Value);
@@ -545,7 +547,7 @@ namespace Dash
                 case "UnityEngine.Vector4":
                     EditorGUI.BeginChangeCheck();
                     var vector4Value = EditorGUILayout.Vector4Field(p_name, (Vector3) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector4Value);
@@ -556,7 +558,7 @@ namespace Dash
                 case "UnityEngine.Color":
                     EditorGUI.BeginChangeCheck();
                     var colorValue = EditorGUILayout.ColorField(p_name, (Color) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_nodeModel, p_originalInfo);
+                    HandleReferencing(p_nodeModel, referenceInfo);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, colorValue);
