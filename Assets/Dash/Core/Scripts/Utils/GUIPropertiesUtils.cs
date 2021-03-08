@@ -566,7 +566,7 @@ namespace Dash
                         () => { p_parameter.expression = DashEditorCore.propertyReference; });
                 }
                 
-                if (p_directExpression != null && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
+                if (p_directExpression && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
                 {
                     menu.AddItem(new GUIContent("Paste reference"), false,
                         () => { p_fieldInfo.SetValue(p_reference, DashEditorCore.propertyReference); });
