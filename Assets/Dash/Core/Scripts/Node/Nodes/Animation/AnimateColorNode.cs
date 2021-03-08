@@ -59,15 +59,17 @@ namespace Dash
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
-            if (Model.time == 0)
+            float time = GetParameterValue(Model.time);
+            float delay = GetParameterValue(Model.delay);
+            if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, Model.time)
-                    .SetDelay(Model.delay)
+                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
+                    .SetDelay(delay)
                     .SetEase(Model.easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 
@@ -77,18 +79,20 @@ namespace Dash
         
         void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
+            float time = GetParameterValue(Model.time);
+            float delay = GetParameterValue(Model.delay);
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
-            if (Model.time == 0)
+            if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, Model.time)
-                    .SetDelay(Model.delay)
+                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
+                    .SetDelay(delay)
                     .SetEase(Model.easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 

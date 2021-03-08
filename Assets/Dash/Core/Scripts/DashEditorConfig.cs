@@ -39,11 +39,13 @@ namespace Dash
 
         public float zoom = 1;
 
-        public bool showIds = false;
+        public bool showNodeIds = false;
 
         public bool advancedMenu = false;
 
         public bool showExperimental = false;
+
+        public bool showNodeSearch = false;
 
 #region SERIALIZATION
         

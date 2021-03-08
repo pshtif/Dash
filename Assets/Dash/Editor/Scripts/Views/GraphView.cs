@@ -233,6 +233,11 @@ namespace Dash
             if (p_event.button != 0)
                 return;
 
+            if (p_event.type == EventType.MouseDown)
+            {
+                GUI.FocusControl("");
+            }
+
             // Select
             if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
             {

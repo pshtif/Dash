@@ -51,7 +51,7 @@ namespace Dash
                     foreach (var field in fields)
                     {
                         if (field.IsConstant()) continue;
-                        invalidate = GUIPropertiesUtils.PropertyField(field, preset);
+                        invalidate = GUIPropertiesUtils.PropertyField(this, field, preset);
                     }
                 }
             }

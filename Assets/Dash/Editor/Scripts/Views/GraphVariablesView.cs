@@ -62,7 +62,7 @@ namespace Dash
                 TypesMenu.Show(OnAddVariable);
             }
 
-            if (new Rect(0, 0, rect.width, rect.height).Contains(p_event.mousePosition) &&
+            if (new Rect(rect.x, rect.y, rect.width, rect.height).Contains(p_event.mousePosition) &&
                 p_event.type != EventType.Layout && p_event.type != EventType.Repaint)
             {
                 p_event.type = EventType.Used;

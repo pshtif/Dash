@@ -71,8 +71,8 @@ namespace Dash
                 {
                     return (T)Convert.ChangeType(obj, typeof(T));
                 }
-                
-                Debug.LogWarning("Invalid expression casting.");
+
+                Debug.LogWarning("Invalid expression casting " + obj.GetType() + " and " + typeof(T));
             }
 
             return default(T);
@@ -108,6 +108,11 @@ namespace Dash
                     errorMessage = ExpressionFunctions.errorMessage;
                 }
                 hasErrorInEvaluation = hasErrorInEvaluation || !success;
+            }
+            else
+            {
+                errorMessage = "Function " + p_name + " not found";
+                hasErrorInEvaluation = true;
             }
         }
     }

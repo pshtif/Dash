@@ -9,14 +9,14 @@ namespace Dash
 {
     public class AnimationNodeBaseModel : RetargetNodeBaseModel
     {
-        [Order(0)]
+        [Order(0)] 
         [TitledGroup("Animation")]
         [Dependency("useAnimationTime", false)]
-        public float time = 1;
+        public Parameter<float> time = new Parameter<float>(1);
         
         [Order(1)]
         [TitledGroup("Animation")]
-        public float delay = 0;
+        public Parameter<float> delay = new Parameter<float>(0);
 
         [Order(2)]
         [TitledGroup("Animation")]

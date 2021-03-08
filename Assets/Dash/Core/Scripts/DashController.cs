@@ -102,6 +102,8 @@ namespace Dash
 
         public bool autoStart = true;
 
+        public string autoStartInput = "Input";
+
         void Awake()
         {
             if (Graph != null)
@@ -117,9 +119,8 @@ namespace Dash
             if (autoStart)
             {
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
-                data.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
-                
-                Graph.ExecuteGraphInput("test", data);
+
+                Graph.ExecuteGraphInput(autoStartInput, data);
             }
         }
 
@@ -138,8 +139,6 @@ namespace Dash
             
             p_flowData = p_flowData.Clone();
 
-            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.CONTROLLER, transform);
-            
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, transform);

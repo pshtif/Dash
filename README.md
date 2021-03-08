@@ -61,11 +61,8 @@ Attributes are properties on the node flow data instance. There can be reserved 
 
 Various properties in many node models are parameters rather than direct values. This means they can either just hold a value or be expression driven. When a property is driven by expression there is no direct value but the value is evaluated based on the expression defined. This can be as simple as a reference to a data attribute or as complex as multiple nested function calls.
 
-### Expressions
+[Expression Documentation Here](./Documentation/Expression.md)
 
-As mentioned in parametrization some values can be driven by expression evaluation and since this is quite a big topic we will discuss it separately. It is also something that will get added on as additional expression functions are implemented.
-
-[Function Documentation Here](./Documentation/ExpressionFunctions.md)
 
 ### Variables
 

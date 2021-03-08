@@ -27,11 +27,12 @@ namespace Dash
             for (int i = 0; i < text.text.Length; i++)
                  TMPTweenExtension.Scale(text, i, 0);
             
-            
+            float time = GetParameterValue(Model.time);
+
             for (int i = 0; i < text.text.Length; i++)
             {
                  int index = i; // Rescope variable to avoid modified closure trap
-                 Tween tween = DOTween.To((f) => TMPTweenExtension.Scale(text, index, f), 0, 1, Model.time).SetDelay(index * Model.characterDelay);
+                 Tween tween = DOTween.To((f) => TMPTweenExtension.Scale(text, index, f), 0, 1, time).SetDelay(index * Model.characterDelay);
                  DOPreview.StartPreview(tween);
             }
 
