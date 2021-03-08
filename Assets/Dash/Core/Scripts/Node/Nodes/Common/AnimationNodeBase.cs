@@ -24,8 +24,17 @@ namespace Dash
         {
             base.DrawCustomGUI(p_rect);
 
-            GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
-                "Time: " + Model.time.ToString() + "s", DashEditorCore.Skin.GetStyle("NodeText"));
+            //if (Model.time == null) Model.time = new Parameter<float>(1);
+            if (Model.time.isExpression)
+            {
+                GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
+                    "Time: [Exp]", DashEditorCore.Skin.GetStyle("NodeText"));
+            }
+            else
+            {
+                GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
+                    "Time: " + Model.time.GetValue(null) + "s", DashEditorCore.Skin.GetStyle("NodeText"));
+            }
         }
 #endif
     }

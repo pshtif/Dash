@@ -40,6 +40,11 @@ namespace Dash
             return _model != null;
         }
         
+        public NodeModelBase GetModel()
+        {
+            return _model;
+        }
+        
         [NonSerialized] 
         public bool hasErrorsInExecution = false;
         
@@ -67,10 +72,10 @@ namespace Dash
             }
         }
 
-        [NonSerialized] 
-        protected int _executionCounter = 0;
+        public virtual int ExecutionCount { get; protected set; } = 0;
+        
 
-        public bool IsExecuting => _executionCounter > 0;
+        public virtual bool IsExecuting => ExecutionCount > 0;
         
         
 
@@ -152,8 +157,7 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            ((IEditorGraphAccess)Graph).IncreaseExecutionCount();
-            _executionCounter++;
+            ExecutionCount++;
             
 #if UNITY_EDITOR
             executeTime = 1;
@@ -178,8 +182,7 @@ namespace Dash
         {
             if (!hasErrorsInExecution)
             {
-                ((IEditorGraphAccess) Graph).DecreaseExecutionCount();
-                _executionCounter--;
+                ExecutionCount--;
             }
         }
 
@@ -189,7 +192,7 @@ namespace Dash
         {
             if (!p_flowData.HasAttribute(p_variableName))
             {
-                SetError("Variable "+p_variableName+" not found during execution of "+this);
+                SetError("Attribute "+p_variableName+" not found during execution of "+this);
 
                 return true;
             }
@@ -527,7 +530,7 @@ namespace Dash
             GUI.color = Color.gray;
             if (!String.IsNullOrEmpty(_model.id))
             {
-                if (DashEditorCore.Config.showIds)
+                if (DashEditorCore.Config.showNodeIds)
                 {
                     GUI.Label(
                         new Rect(new Vector2(p_rect.x, p_rect.y - 20), new Vector2(rect.width - 5, 20)), _model.id);

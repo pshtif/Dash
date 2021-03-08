@@ -372,17 +372,7 @@ namespace Dash
         [NonSerialized]
         protected int _executionCount;
 
-        public int CurrentExecutionCount => _executionCount;
-
-        void IEditorGraphAccess.IncreaseExecutionCount()
-        {
-            _executionCount++;
-        }
-        
-        void IEditorGraphAccess.DecreaseExecutionCount()
-        {
-            _executionCount--;
-        }
+        public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
 
         void IEditorGraphAccess.SetController(DashController p_controller)
         {

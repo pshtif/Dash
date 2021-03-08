@@ -36,5 +36,14 @@ namespace Dash
         }
         
         public virtual void ProcessEvent(Event p_event, Rect p_rect) { }
+
+        protected void UseEvent(Rect p_rect)
+        {
+            if (p_rect.Contains(Event.current.mousePosition) &&
+                Event.current.type != EventType.Layout && Event.current.type != EventType.Repaint)
+            {
+                Event.current.type = EventType.Used;
+            }
+        }
     }
 }

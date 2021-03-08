@@ -22,6 +22,14 @@ namespace Dash
         private byte[] _boundSubGraphData;
         private List<Object> _boundSubGraphReferences;
 
+        public override int ExecutionCount
+        {
+            get
+            {
+                return SubGraph != null ? SubGraph.CurrentExecutionCount : 0;
+            }
+        }
+
         public override int InputCount
         {
             get

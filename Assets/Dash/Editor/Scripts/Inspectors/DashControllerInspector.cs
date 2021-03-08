@@ -92,6 +92,12 @@ namespace Dash
                 }
 
                 Controller.autoStart = EditorGUILayout.Toggle("Auto Start", Controller.autoStart);
+
+                if (Controller.autoStart)
+                {
+                    Controller.autoStartInput =
+                        EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
+                }
                 
                 GUILayout.EndVertical();
 

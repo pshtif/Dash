@@ -34,7 +34,10 @@ namespace Dash
 
             Vector3 toRotation = GetParameterValue<Vector3>(Model.toRotation, p_flowData);
 
-            if (Model.time == 0)
+            float time = GetParameterValue(Model.time);
+            float delay = GetParameterValue(Model.delay);
+            
+            if (time == 0)
             {
                 UpdateTween(rectTransform, 1, p_flowData, startRotation, toRotation);
                 ExecuteEnd(p_flowData);
@@ -44,8 +47,8 @@ namespace Dash
                 // Virtual tween to update from directly
                 Tween tween = DOTween
                     .To((f) => UpdateTween(rectTransform, f, p_flowData, startRotation, toRotation), 0,
-                        1, Model.time)
-                    .SetDelay(Model.delay)
+                        1, time)
+                    .SetDelay(delay)
                     .SetEase(Ease.Linear)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 

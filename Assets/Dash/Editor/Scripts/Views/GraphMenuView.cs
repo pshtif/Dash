@@ -2,12 +2,18 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using OdinSerializer.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
 {
     public class GraphMenuView
     {
+        private string _previousSearch = "";
+        private string _search = "";
+        private int _index = 0;
+        
         public void Draw(DashGraph p_graph)
         {
             if (p_graph != null)
@@ -25,7 +31,39 @@ namespace Dash
                 }
                 
                 GUI.DrawTexture(new Rect(202, 6, 10, 10), IconManager.GetIcon("ArrowDown_Icon"));
+
+                if (DashEditorCore.Config.showNodeSearch)
+                {
+                    _search = GUI.TextField(new Rect(230, 2, 100, 19), _search);
+                    if (GUI.Button(new Rect(332, 3, 60, 18), "Search"))
+                    {
+                        if (!_search.IsNullOrWhitespace())
+                        {
+                            if (_search != _previousSearch)
+                            {
+                                _previousSearch = _search;
+                                _index = 0;
+                            }
+                            else
+                            {
+                                _index++;
+                            }
+
+                            var node = DashEditorCore.Search(_search, _index);
+                            if (node != null)
+                            {
+                                p_graph.viewOffset = -node.rect.center + DashEditorCore.Config.zoom *
+                                    DashEditorWindow.instance.position.size / 2;
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        private void DoSearch(DashGraph p_graph, string p_search)
+        {
+            
         }
     }
 }

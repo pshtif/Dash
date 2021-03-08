@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Reflection;
 using NCalc;
 using UnityEngine;
 
@@ -117,7 +118,7 @@ namespace Dash
         {
             if (p_args.Parameters.Length != 2)
             { 
-                errorMessage = "Invalid parameters in GetChild function.";
+                errorMessage = "Invalid number of parameters in GetChild function.";
                 return false;
             }
             
@@ -141,6 +142,27 @@ namespace Dash
             }
             
             errorMessage = "Invalid parameters in GetChildAt function.";
+            return false;
+        }
+
+        private static bool GetAnchoredPosition(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            {
+                errorMessage = "Invalid number of parameters in GetPosition function.";
+                return false;
+            }
+
+            object[] evalParams = p_args.EvaluateParameters();
+            
+            if (evalParams[0] != null && typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((RectTransform) evalParams[0]).anchoredPosition;
+                return true;
+            }
+
+            errorMessage = "Invalid parameters in GetPosition function.";
             return false;
         }
 
@@ -281,6 +303,21 @@ namespace Dash
             errorMessage = "Random function for type " + typeof(T) + " is not implemented.";
             return false;
         }
+
+        // private static bool Random(FunctionArgs p_args)
+        // {
+        //     if (p_args.Parameters.Length == 2)
+        //         return RandomF(p_args);
+        //
+        //     if (p_args.Parameters.Length == 4)
+        //         return RandomV2(p_args);
+        //
+        //     if (p_args.Parameters.Length == 6)
+        //         return RandomV3(p_args);
+        //     
+        //     errorMessage = "Invalid parameters in Random function";
+        //     return false;
+        // }
 
         private static bool RandomF(FunctionArgs p_args)
         {
@@ -550,6 +587,30 @@ namespace Dash
             }
 
             errorMessage = "Scale function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.";
+            return false;
+        }
+        
+        private static bool Ref(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            {
+                errorMessage = "Invalid number of parameters in Ref function "+p_args.Parameters.Length;
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            evalParams = p_args.EvaluateParameters();
+            
+            if (typeof(NodeModelBase).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                FieldInfo fieldInfo = evalParams[0].GetType().GetField(evalParams[1].ToString());
+                p_args.HasResult = true;
+                p_args.Result = fieldInfo.GetValue(evalParams[0]);
+                return true;
+            }
+
+            errorMessage = "Invalid parameters in Ref function";
             return false;
         }
     }
