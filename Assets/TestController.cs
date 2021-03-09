@@ -4,6 +4,7 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
     public Sprite[] sprites;
+    [Range(0,2)]
     public int type = 0;
     [Range(0,100)]
     public int count = 10;
