@@ -104,6 +104,8 @@ namespace Dash
 
         public string autoStartInput = "Input";
 
+        private event Action UpdateCallback;
+
         void Awake()
         {
             if (Graph != null)
@@ -122,6 +124,21 @@ namespace Dash
 
                 Graph.ExecuteGraphInput(autoStartInput, data);
             }
+        }
+
+        public void RegisterUpdateCallback(Action p_callback)
+        {
+            UpdateCallback += p_callback;
+        }
+
+        public void UnregisterUpdateCallback(Action p_callback)
+        {
+            UpdateCallback -= p_callback;
+        }
+
+        void Update()
+        {
+            UpdateCallback?.Invoke();
         }
 
         public void SendEvent(string p_name)
