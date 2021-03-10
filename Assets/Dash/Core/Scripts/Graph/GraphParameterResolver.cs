@@ -23,13 +23,6 @@ namespace Dash
         {
             hasErrorInResolving = false;
 
-            object result;
-            if (ResolveReservedVariable(p_name, out result))
-                return result;
-
-            if (ResolveReference(p_name, p_collection, out result))
-                return result;
-
             if (p_collection != null)
             {
                 if (p_collection.HasAttribute(p_name))
@@ -38,6 +31,13 @@ namespace Dash
                 }
             }
             
+            object result;
+            if (ResolveReservedVariable(p_name, out result))
+                return result;
+
+            if (ResolveReference(p_name, p_collection, out result))
+                return result;
+
             if (_graph.variables.HasVariable(p_name))
             {
                 Variable variable = _graph.variables.GetVariable(p_name);
@@ -49,35 +49,35 @@ namespace Dash
             return null;
         }
 
-        public T Resolve<T>(string p_name, IAttributeDataCollection p_collection)
-        {
-            hasErrorInResolving = false;
-
-            object result;
-            if (ResolveReservedVariable(p_name, out result))
-                return (T)result;
-
-            if (ResolveReference(p_name, p_collection, out result))
-                return (T)result;
-
-            if (p_collection != null)
-            {
-                if (p_collection.HasAttribute(p_name))
-                {
-                    return p_collection.GetAttribute<T>(p_name);
-                }
-            }
-            
-            if (_graph.variables.HasVariable(p_name))
-            {
-                Variable<T> variable = _graph.variables.GetVariable<T>(p_name);
-                return variable.value;
-            }
-
-            hasErrorInResolving = true;
-            errorMessage = "Variable/Attribute "+ p_name +" not found.";
-            return default(T);
-        }
+        // public T Resolve<T>(string p_name, IAttributeDataCollection p_collection)
+        // {
+        //     hasErrorInResolving = false;
+        //
+        //     if (p_collection != null)
+        //     {
+        //         if (p_collection.HasAttribute(p_name))
+        //         {
+        //             return p_collection.GetAttribute<T>(p_name);
+        //         }
+        //     }
+        //     
+        //     object result;
+        //     if (ResolveReservedVariable(p_name, out result))
+        //         return (T)result;
+        //
+        //     if (ResolveReference(p_name, p_collection, out result))
+        //         return (T)result;
+        //
+        //     if (_graph.variables.HasVariable(p_name))
+        //     {
+        //         Variable<T> variable = _graph.variables.GetVariable<T>(p_name);
+        //         return variable.value;
+        //     }
+        //
+        //     hasErrorInResolving = true;
+        //     errorMessage = "Variable/Attribute "+ p_name +" not found.";
+        //     return default(T);
+        // }
 
         protected bool ResolveReservedVariable(string p_name, out object p_result)
         {
