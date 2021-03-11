@@ -5,6 +5,7 @@
 using System;
 using Dash.Attributes;
 using DG.Tweening;
+using UnityEngine;
 
 namespace Dash
 {
@@ -19,6 +20,7 @@ namespace Dash
         {
             int firstIndex = GetParameterValue(Model.firstIndex, p_flowData);
             int lastIndex = GetParameterValue(Model.lastIndex, p_flowData);
+
             int length = lastIndex - firstIndex;
             
             if (length == 0)

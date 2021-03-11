@@ -31,7 +31,6 @@ namespace Dash
             RectTransform rect = Controller.GetComponent<RectTransform>();
             Vector2 point;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, mousePos, Camera.main, out point);
-            Debug.Log(point);
             p_flowData.SetAttribute("mousePosition", point);
             
             OnExecuteOutput(0, p_flowData);

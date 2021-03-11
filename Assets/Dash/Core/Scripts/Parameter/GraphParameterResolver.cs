@@ -32,12 +32,14 @@ namespace Dash
             }
             
             object result;
-            if (ResolveReservedVariable(p_name, out result))
-                return result;
-
+            if (GlobalVariables.Resolve(_graph, p_name, out result))
+            {
+                return result;                
+            }
+            
             if (ResolveReference(p_name, p_collection, out result))
                 return result;
-
+            
             if (_graph.variables.HasVariable(p_name))
             {
                 Variable variable = _graph.variables.GetVariable(p_name);
@@ -79,24 +81,6 @@ namespace Dash
         //     return default(T);
         // }
 
-        protected bool ResolveReservedVariable(string p_name, out object p_result)
-        {
-            if (p_name == "controller")
-            {
-                p_result = _graph.Controller.transform;
-                return true;
-            }
-            
-            if (p_name == "mousePosition")
-            {
-                p_result = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                return true;
-            }
-            
-            p_result = null;
-            return false;
-        }
-        
         bool ResolveReference(string p_name, IAttributeDataCollection p_collection, out object p_result)
         {
             if (!p_name.StartsWith("$"))
