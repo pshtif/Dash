@@ -2,103 +2,39 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System.Collections.Generic;
 using Dash.Attributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Dash
 {
-    [Help("Executes on button mouse click.")]
+    [Help("Executes on any mouse click.")]
     [Category(NodeCategoryType.EVENTS)]
     [OutputCount(1)]
     public class OnMouseClickNode : NodeBase<OnMouseClickNodeModel>
     {
         protected override void Initialize()
         {
-            List<Button> buttons = new List<Button>();
-            Button button;
-            Transform transform;
-            if (Model.useReference)
-            {
-                button = Model.buttonReference.Resolve(Controller);
-                if (button != null) buttons.Add(button);
-            }
-            else
-            {
-                if (Model.isChild)
-                {
-                    if (Model.useFind)
-                    {
-                        if (Model.findAll)
-                        {
-                            List<Transform> transforms = Controller.transform.DeepFindAll(Model.button);
-                            foreach (Transform t in transforms)
-                            {
-                                button = t.GetComponent<Button>();
-                                if (button != null) buttons.Add(button);
-                            }
-                        }
-                        else
-                        {
-                            transform = Controller.transform.DeepFind(Model.button);
-                            button = transform == null ? null : transform.GetComponent<Button>();
-                            if (button != null) buttons.Add(button);
-                        }
-                    }
-                    else
-                    {
-                        transform = Controller.transform.Find(Model.button);
-                        button = transform == null ? null : transform.GetComponent<Button>();
-                        if (button != null) buttons.Add(button);
-                    }
-                }
-                else
-                {
-                    if (Model.useFind)
-                    {
-                        if (Model.findAll)
-                        {
-                            List<Transform> transforms = Controller.transform.root.DeepFindAll(Model.button);
-                            foreach (Transform t in transforms)
-                            {
-                                button = t.GetComponent<Button>();
-                                if (button != null) buttons.Add(button);
-                            }
-                        }
-                        else
-                        {
-                            transform = Controller.transform.root.DeepFind(Model.button);
-                            button = transform == null ? null : transform.GetComponent<Button>();
-                            if (button != null) buttons.Add(button);
-                        }
-                    }
-                    else
-                    {
-                        GameObject go = GameObject.Find(Model.button);
-                        button = go == null ? null : go.GetComponent<Button>();
-                        if (button != null) buttons.Add(button);
-                    }
-                }
-            }
+            Controller.RegisterUpdateCallback(() => HandleMouseCheck());
+        }
 
-            foreach (Button b in buttons)
+        protected void HandleMouseCheck()
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Model.retargetToButton)
-                {
-                    b.onClick.AddListener(() => Execute(NodeFlowDataFactory.Create(b.transform)));
-                }
-                else
-                {
-                    b.onClick.AddListener(() => Execute(NodeFlowDataFactory.Create(Controller.transform)));
-                }
+                Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
         }
 
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            OnExecuteEnd();
+            Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            RectTransform rect = Controller.GetComponent<RectTransform>();
+            Vector2 point;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, mousePos, Camera.main, out point);
+            p_flowData.SetAttribute("mousePosition", point);
+            
             OnExecuteOutput(0, p_flowData);
+            OnExecuteEnd();
         }
     }
 }

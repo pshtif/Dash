@@ -151,7 +151,7 @@ namespace Dash
                 if (lastGroupMinimized)
                     continue;
 
-                invalidate = GUIPropertiesUtils.PropertyField(null, field, this);
+                invalidate = GUIPropertiesUtils.PropertyField(field, this, null);
             }
 
             return invalidate;

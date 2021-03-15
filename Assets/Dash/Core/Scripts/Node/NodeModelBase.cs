@@ -11,8 +11,10 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class NodeModelBase
+    public class NodeModelBase : IReferencable
     {
+        public string Id => id;
+        
         [TitledGroup("Advanced", 1000, true)]
         public string id;
 
@@ -80,7 +82,7 @@ namespace Dash
                 if (lastGroupMinimized)
                     continue;
 
-                invalidate = invalidate || GUIPropertiesUtils.PropertyField(this, field, this);
+                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, this);
             }
 
             return invalidate;

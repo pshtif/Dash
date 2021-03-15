@@ -12,6 +12,6 @@ namespace Dash
         
         object Resolve(string p_name, IAttributeDataCollection p_collection = null);
         
-        V Resolve<V>(string p_name, IAttributeDataCollection p_collection = null);
+        //V Resolve<V>(string p_name, IAttributeDataCollection p_collection = null);
     }
 }

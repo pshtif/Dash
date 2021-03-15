@@ -40,7 +40,7 @@ namespace Dash
         protected void UseEvent(Rect p_rect)
         {
             if (p_rect.Contains(Event.current.mousePosition) &&
-                Event.current.type != EventType.Layout && Event.current.type != EventType.Repaint)
+                Event.current.type == EventType.MouseDown)
             {
                 Event.current.type = EventType.Used;
             }
