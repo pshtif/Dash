@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.6b - 15.03.2021
+
+#### Fixed
+- fixed tab key correctly working and not forced to used event in overlay views
+
+#### Changed
+- refactored ui utils mainly due to referencing
+- removed paid graphics assets
+- changed OnMouseClickNode to OnButtonClickNode correctly
+- changed priority of NodeFlowData resolving to highest
+
+#### Added
+- added referencing for Expression fields
+- added referencing for ExposedReference fields
+- added new example scene with free and selfcreated assets
+- added general mouse click node
+
 ### Release 0.2.5b - 08.03.2021
 
 #### Fixed
