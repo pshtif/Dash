@@ -19,7 +19,7 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            Transform targetTransform = p_target.GetComponent<Transform>();
+            Transform targetTransform = p_target.transform;
 
             if (CheckException(targetTransform, "No RectTransform component found on target"))
                 return;
