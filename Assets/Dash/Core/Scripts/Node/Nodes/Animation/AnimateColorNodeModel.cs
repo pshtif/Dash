@@ -11,21 +11,21 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateColorNodeModel : AnimationNodeBaseModel
+    public class AnimateColorNodeModel : AnimationNodeModelBase
     {
         [TitledGroup("Properties")]
-        public AlphaSourceType sourceType = AlphaSourceType.CANVASGROUP;
+        public AlphaTargetType targetType = AlphaTargetType.CANVASGROUP;
         
         [TitledGroup("Properties")]
-        [Dependency("sourceType", AlphaSourceType.CANVASGROUP)]
+        [Dependency("sourceType", AlphaTargetType.CANVASGROUP)]
         public Parameter<float> toAlpha = new Parameter<float>(1);
         
         [TitledGroup("Properties")]
-        [Dependency("sourceType", AlphaSourceType.CANVASGROUP)]
+        [Dependency("sourceType", AlphaTargetType.CANVASGROUP)]
         public bool isToRelative = true;
 
-        [DependencySingle("sourceType", AlphaSourceType.IMAGE)]
-        [DependencySingle("sourceType", AlphaSourceType.TEXTMESHPRO)]
+        [DependencySingle("sourceType", AlphaTargetType.IMAGE)]
+        [DependencySingle("sourceType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
         public Parameter<Color> toColor = new Parameter<Color>(Color.white);
     }

@@ -14,7 +14,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateWithPresetNodeModel : AnimationNodeBaseModel
+    public class AnimateWithPresetNodeModel : AnimationNodeModelBase
     {
         [ClassPopup(typeof(IAnimationPreset), true)]
         public IAnimationPreset preset;

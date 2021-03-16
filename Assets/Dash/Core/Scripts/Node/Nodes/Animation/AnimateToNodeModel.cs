@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateToNodeModel : AnimationNodeBaseModel
+    public class AnimateToNodeModel : AnimationNodeModelBase
     {
         [Order(10)] 
         [TitledGroup("Target")] 

@@ -7,7 +7,7 @@ using DG.Tweening;
 
 namespace Dash
 {
-    public class AnimationNodeBaseModel : RetargetNodeBaseModel
+    public class AnimationNodeModelBase : RetargetNodeModelBase
     {
         [Order(0)] 
         [TitledGroup("Animation")]

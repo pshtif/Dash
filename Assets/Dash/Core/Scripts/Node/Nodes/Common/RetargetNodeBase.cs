@@ -13,7 +13,7 @@ namespace Dash
     [InputCount(1)]
     [Size(160,85)]
     [InspectorHeight(380)]
-    public abstract class RetargetNodeBase<T> : NodeBase<T> where T:RetargetNodeBaseModel, new()
+    public abstract class RetargetNodeBase<T> : NodeBase<T> where T:RetargetNodeModelBase, new()
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {

@@ -15,7 +15,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class RetargetNodeBaseModel : NodeModelBase
+    public class RetargetNodeModelBase : NodeModelBase
     {
         [TitledGroup("Retargeting", -1)]
         [Tooltip("Change current target.")]

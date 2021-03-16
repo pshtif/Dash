@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class RetargetNodeModel : RetargetNodeBaseModel
+    public class RetargetNodeModel : RetargetNodeModelBase
     {
     }
 }

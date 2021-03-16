@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateScaleNodeModel : AnimationNodeBaseModel
+    public class AnimateScaleNodeModel : AnimationNodeModelBase
     {
         [Order(31)]
         [TitledGroup("Scale")]

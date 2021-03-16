@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class RetargetToChildrenNodeModel : RetargetNodeBaseModel
+    public class RetargetToChildrenNodeModel : RetargetNodeModelBase
     {
         [Tooltip("Delay in execution after each child.")]
         public Parameter<float> onChildDelay = new Parameter<float>(0);
