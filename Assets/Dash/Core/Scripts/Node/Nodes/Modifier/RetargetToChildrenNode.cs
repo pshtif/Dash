@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Help("Changes a current target within NodeFlowData to each child of target and executes on it.")]
-    [Category(NodeCategoryType.MODIFIERS)]
+    [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(2)]
     [InputCount(1)]
     [Size(200,110)]

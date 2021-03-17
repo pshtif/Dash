@@ -7,9 +7,9 @@ namespace Dash
     public enum NodeCategoryType
     {
         CREATION,
-        EVENTS,
+        EVENT,
         ANIMATION,
-        MODIFIERS,
+        MODIFIER,
         LOGIC,
         OTHER,
         GRAPH,
