@@ -149,3 +149,36 @@ Presets are custom implementations for any type of programmatic animation. You c
 ```
 preset - specifies the preset to use for the animation
 ```
+
+### Creation Nodes
+
+Creation nodes handle creation or destroyment of objects. 
+
+#### *Destroy*
+
+This node destroys target game object.
+
+This node imherits RetargetNodeBase so it can be locally retargeted without affecting the node data flow.
+
+```
+immediate - specifies if DestroyImmediate should be used
+```
+
+#### *SpawnImage*
+
+This node spawns a game object with an Image component attached to it.
+
+_This node imherits RetargetNodeBase so it can be locally retargeted without affecting the node data flow._
+
+```
+spawnedName - specifies the name that will be assigned as name of the spawned game object
+sprite - specifies the sprite that should be assigned to the Image component
+position - specifies the anchored position of the spawned game object
+
+setTargetAsParent - specifies if the target should be set as a parent of the spawned game object
+retargetToSpawned - specifies if the node flow data should be retargeted to the spawned game object
+
+createSpawnedAttribute - specifies if an attribute should be created within node flow data with the spawned game object as value (applicable only when retargetToSpawned is not checked)
+spawnedAttributeName - specifies the name of the attribute with spawned object (applicable only when createSpawnedAttribute is checked)
+
+```
