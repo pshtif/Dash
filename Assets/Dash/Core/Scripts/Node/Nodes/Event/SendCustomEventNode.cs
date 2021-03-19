@@ -10,7 +10,7 @@ namespace Dash
     [Help("Send a custom event.")]
     [Category(NodeCategoryType.EVENT)]
     [InputCount(1)]
-    public class SendEventNode : NodeBase<SendEventNodeModel>
+    public class SendCustomEventNode : NodeBase<SendCustomEventNodeModel>
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {

@@ -13,7 +13,6 @@ namespace Dash
         [Tooltip("Use scene reference as retarget.")]
         public bool useReference = false;
         
-        [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Retarget to child of controller.")]
         public bool isChild;
@@ -27,12 +26,10 @@ namespace Dash
         [Tooltip("Look up for all instances.")]
         public bool findAll;
         
-        [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Name of a button or child if relative, use / for hierachy.")]
         public string button;
         
-        [Dependency("retarget", true)]
         [Dependency("useReference", true)]
         [Tooltip("Reference of a button.")]
         public ExposedReference<Button> buttonReference;
