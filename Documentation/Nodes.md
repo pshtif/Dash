@@ -197,4 +197,48 @@ spawnedAttributeName - specifies the name of the attribute with spawned object (
 
 ### Event Nodes
 
-Creation nodes handle creation or destroyment of objects. 
+Event nodes deal with either receiving events which are nodes without input and stand at the beginning of the execution or sending events which are nodes without output.
+
+More documentation on sending and receiving events withint Dash is HERE.
+
+_Event nodes inherit base node directly there is no additional parametrization._
+
+#### *OnCustomEvent*
+
+This node executes upon receiving an event specified by a custom name. 
+
+```
+eventName - specifies the name of the custom event to listen to
+```
+
+#### *OnButtonClick*
+
+This node executes upon receiving a click event from a specified button.
+
+```
+useReference - specifies if we are going to look for the button by a reference
+
+buttonReference - specifies the reference of the button (applicable only when useReference is checked)
+
+isChild - specifies if the button we are looking for is child of current target (applicable only when useReference is unchecked)
+useFind - specifies if we are going to use complex find instead of just name lookup (applicable only when useReference is unchecked)
+findAll - specifies if we are looking for first button match or all matches (applicable only when useReference is unchecked and useFind is checked)
+button - specifies the string we are going to use for lookup/find (applicable only when useReference is not checked)
+
+retargetToButton - specifies if we want to change the target in node flow data to the button transform
+```
+
+#### *OnMouseClick* *__EXPERIMENTAL__*
+
+This node executes upon any mouse click event.
+
+``` 
+```
+
+#### *SendCustomEvent*
+
+This node sends a custom event specified by name.
+
+```
+eventName - specifies the name of the custom event to send
+```
