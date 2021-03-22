@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.7b - 22.03.2021
+
+#### Changed
+- cleanup and refactoring base classes
+- minor properties renaming
+- minor refactoring during documentation writeup
+- added dependencies on various properties
+- restructured documentation
+
+#### Added
+- complete Node documentation
+
 ### Release 0.2.6b - 15.03.2021
 
 #### Fixed
