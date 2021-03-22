@@ -8,12 +8,12 @@ namespace Dash
 {
     public class DebugNodeModel : NodeModelBase
     {
-        [Dependency("debugFlowData", false)]
-        public string text;
+        public bool debugFlowData = false;
         
         [Dependency("debugFlowData", false)]
-        public string variable;
+        public string text;
 
-        public bool debugFlowData = false;
+        [Dependency("debugFlowData", false)] 
+        public string variable;
     }
 }

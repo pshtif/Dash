@@ -10,6 +10,7 @@ namespace Dash
     [Serializable]
     public class DelayNodeModel : NodeModelBase
     {
-        [SerializeField] public Parameter<float> time = new Parameter<float>(0);
+        [SerializeField] 
+        public Parameter<float> time = new Parameter<float>(0);
     }
 }
