@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateRotationNodeModel : AnimationNodeBaseModel
+    public class AnimateRotationNodeModel : AnimationNodeModelBase
     {
         [Order(21)]
         [TitledGroup("Rotation")]

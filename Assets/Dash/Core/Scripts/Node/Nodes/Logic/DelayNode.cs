@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Category(NodeCategoryType.ANIMATION)]
+    [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     [InputCount(1)]
     public class DelayNode : NodeBase<DelayNodeModel>

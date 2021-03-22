@@ -4,7 +4,7 @@
 
 namespace Dash.Enums
 {
-    public enum AlphaSourceType
+    public enum AlphaTargetType
     {
         CANVASGROUP,
         IMAGE,

@@ -7,7 +7,7 @@ using DG.Tweening;
 
 namespace Dash
 {
-    public class AnimateTextNodeModel : AnimationNodeBaseModel
+    public class AnimateTextNodeModel : AnimationNodeModelBase
     {
         [Order(10)] 
         [TitledGroup("Text")] 

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Dash
 {
     [Help("Executes on button mouse click.")]
-    [Category(NodeCategoryType.EVENTS)]
+    [Category(NodeCategoryType.EVENT)]
     [OutputCount(1)]
     public class OnButtonClickNode : NodeBase<OnButtonClickNodeModel>
     {

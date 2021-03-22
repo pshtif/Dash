@@ -38,6 +38,15 @@ namespace Dash
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
             }
+            else if (Model.createSpawnedAttribute)
+            {
+                if (string.IsNullOrEmpty(Model.spawnedAttributeName))
+                {
+                    SetError("Attribute name cannot be empty");
+                }
+                
+                p_flowData.SetAttribute<Transform>(Model.spawnedAttributeName, spawned);
+            }
             
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);

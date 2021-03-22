@@ -25,6 +25,10 @@ Dash Animation System for Unity is a system that was designed to make animation 
 
 There are multiple building blocks in Dash Animation System that either depend on each other or communicate with each other. Lets go over them one by one and how to use them.
 
+### DashEditor
+
+We will refer to DashEditor as a single entity even though it is collection of multiple classes and utilities. Generaly when we are going to talk about editor we are referring to the editor window in Unity where you edit the visual represenation of the Dash graph.
+
 ### DashController
 
 DashController is a monobehaviour that connects the system with your project. It wraps a Dash Graph and communicates with it as well as optionally can bind properties with DashGraph. It is also the entry point to the DashGraph execution and its game object is the default target for graph logic execution.
@@ -35,27 +39,19 @@ DashGraph is the center of the animation system it is a single graph containing 
 
 There can be **asset** or **bound** graph. The asset graphs are saved as unity asset files that can be later used by any DashController instance as well as shared between projects while bound graphs are bound to a single DashController instance and are serialized within it.
 
-### DashEditor
+### Variables
 
-We will refer to DashEditor as a single entity even though it is collection of multiple classes and utilities. Generaly when we are going to talk about editor we are referring to the editor window in Unity where you edit the visual represenation of the Dash graph.
+Variables are special properties of node graph that can be referenced using parametrization inside node models. At the same time variables can be bound to external Unity properties. Through this combination it gives user the ability to drive node functionality based on external properties.
 
-### Node
+### Node / NodeModel
 
 Node is a building block of the Dash graph. There are numerous types of nodes separated in multiple categories depending on a common functionality of a particular node. Like Animation, Logic, Events etc. There will be new nodes in the future as the functionality of the framework expands as well as potentially new categories.
 
-Each node can have 0-X number of inputs as well as 0-Y number of outputs. The most basic node has one input and one output where the data just flows through it as it executes and continues to the next node. Nodes with 0 inputs are always entry points or events and need to be triggered externally or internally by other node streams rather than directly.
-
-### NodeModel
+Each node can have any number of inputs as well as any number of outputs. The most basic node has one input and one output where the data just flows through it as it executes and continues to the next node. Nodes with 0 inputs are always entry points or events and need to be triggered externally or internally by other node streams rather than directly.
 
 Each node has its own model which holds its properties, nodes themselves are stateless in nature and they just execute on target based on their properties hold by model.
 
-### NodeFlowData
-
-There is a data flowing through nodes when graph is executing, this data consist of attributes and may get modified by nodes as it passes through them. Each node clones the data when it is forwarding it rather than change being done on a single instance. So for example retargeting happening in a node down the graph will not retarget the data handled before this point in graph.
-
-### Attributes
-
-Attributes are properties on the node flow data instance. There can be reserved and predefined attributes or user defined attributes, it is possible to add attributes to the node flow data in the middle of graph as needed.
+[Nodes Documentation Here](./Documentation/Nodes.md)
 
 ### Parametrization
 
@@ -63,10 +59,11 @@ Various properties in many node models are parameters rather than direct values.
 
 [Expression Documentation Here](./Documentation/Expression.md)
 
+### NodeFlowData / Attributes
 
-### Variables
+There is a data flowing through nodes when graph is executing, this data consist of attributes and may get modified by nodes as it passes through them. Each node clones the data when it is forwarding it rather than change being done on a single instance. So for example retargeting happening in a node down the graph will not retarget the data handled before this point in graph.
 
-Variables are special properties of node graph that can be referenced using parametrization inside node models. At the same time variables can be bound to external Unity properties. Through this combination it gives user the ability to drive node functionality based on external properties.
+Attributes are properties on the node flow data instance. There can be reserved and predefined attributes or user defined attributes, it is possible to add attributes to the node flow data in the middle of graph as needed.
 
 ## Licensing
 

@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public class DestroyNodeModel : RetargetNodeBaseModel
+    public class DestroyNodeModel : RetargetNodeModelBase
     {
         public bool immediate = false;
     }

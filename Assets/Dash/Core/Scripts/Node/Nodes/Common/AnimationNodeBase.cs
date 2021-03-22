@@ -12,7 +12,7 @@ namespace Dash
     [InputCount(1)]
     [Size(160,85)]
     [InspectorHeight(380)]
-    public class AnimationNodeBase<T> : RetargetNodeBase<T> where T:AnimationNodeBaseModel, new()
+    public class AnimationNodeBase<T> : RetargetNodeBase<T> where T:AnimationNodeModelBase, new()
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {

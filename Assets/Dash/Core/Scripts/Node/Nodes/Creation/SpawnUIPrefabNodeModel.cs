@@ -14,6 +14,12 @@ namespace Dash
         public Parameter<Vector2> position = new Parameter<Vector2>(Vector2.zero);
 
         public bool setTargetAsParent = true;
-        public bool retargetToSpawned = true;
+        public bool retargetToSpawned = false;
+        
+        [Dependency("retargetToSpawned", false)]
+        public bool createSpawnedAttribute = false;
+        
+        [Dependency("createSpawnedAttribute", true)]
+        public string spawnedAttributeName = "image";
     }
 }

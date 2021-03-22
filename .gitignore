@@ -68,3 +68,4 @@ crashlytics-build.properties
 /Assets/_EXTERNAL*
 /PSD*
 /Assets/Plugins/IngameDebugConsole*
+.DS_Store

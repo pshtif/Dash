@@ -15,7 +15,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.6b";
+        public const string VERSION = "0.2.7b";
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -318,11 +318,11 @@ namespace Dash
         {
             switch (p_category)
             {
-                case NodeCategoryType.EVENTS:
+                case NodeCategoryType.EVENT:
                     return IconManager.GetIcon("Event_Icon");
                 case NodeCategoryType.ANIMATION:
                     return IconManager.GetIcon("Animation_Icon");
-                case NodeCategoryType.MODIFIERS:
+                case NodeCategoryType.MODIFIER:
                     return IconManager.GetIcon("Retargeting_Icon");
                 case NodeCategoryType.CREATION:
                     return IconManager.GetIcon("Spawn_Icon");
@@ -337,11 +337,11 @@ namespace Dash
         {
             switch (p_category)
             {
-                case NodeCategoryType.EVENTS:
+                case NodeCategoryType.EVENT:
                     return new Color(1f, 0.7f, 0.7f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.7f, 0.7f, 1f);
-                case NodeCategoryType.MODIFIERS:
+                case NodeCategoryType.MODIFIER:
                     return new Color(0.7f, 1f, 1f);
                 case NodeCategoryType.CREATION:
                     return new Color(1f, 0.7f, 1f);
@@ -358,11 +358,11 @@ namespace Dash
         {
             switch (p_category)
             {
-                case NodeCategoryType.EVENTS:
+                case NodeCategoryType.EVENT:
                     return new Color(0.8f, 0.5f, 0.5f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.5f, 0.5f, 0.8f);
-                case NodeCategoryType.MODIFIERS:
+                case NodeCategoryType.MODIFIER:
                     return new Color(0.5f, 0.7f, 0.7f);
                 case NodeCategoryType.CREATION:
                     return new Color(0.7f, 0.5f, 0.7f);
@@ -379,11 +379,11 @@ namespace Dash
         {
             switch (p_category)
             {
-                case NodeCategoryType.EVENTS:
+                case NodeCategoryType.EVENT:
                     return new Color(1, 0.8f, 0.8f);
                 case NodeCategoryType.ANIMATION:
                     return new Color(0.8f, 0.8f, 1f);
-                case NodeCategoryType.MODIFIERS:
+                case NodeCategoryType.MODIFIER:
                     return new Color(0.8f, 1f, 1f);
                 case NodeCategoryType.CREATION:
                     return new Color(1f, 0.8f, 1f);

@@ -24,9 +24,9 @@ namespace Dash
     {
         override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            switch (Model.sourceType)
+            switch (Model.targetType)
             {
-                case AlphaSourceType.IMAGE:
+                case AlphaTargetType.IMAGE:
                     Image image = p_target.GetComponent<Image>();
                     if (!CheckException(image, "No Image component found on target")) 
                     {
@@ -34,7 +34,7 @@ namespace Dash
                     }
 
                     break;
-                case AlphaSourceType.TEXTMESHPRO:
+                case AlphaTargetType.TEXTMESHPRO:
                     TMP_Text text = p_target.GetComponent<TMP_Text>();
                     if (!CheckException(text, "No TMP_Text component found on target"))
                     {

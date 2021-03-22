@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateAnchoredPositionNodeModel : AnimationNodeBaseModel
+    public class AnimateAnchoredPositionNodeModel : AnimationNodeModelBase
     {
         [Order(11)]
         [TitledGroup("Properties")]

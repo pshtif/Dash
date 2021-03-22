@@ -17,7 +17,7 @@ namespace Dash
     [InputCount(1)]
     [Size(200,85)]
     [Serializable]
-    public class AnimateToNode : RetargetNodeBase<AnimateToNodeModel>
+    public class AnimateToRectNode : RetargetNodeBase<AnimateToRectNodeModel>
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {

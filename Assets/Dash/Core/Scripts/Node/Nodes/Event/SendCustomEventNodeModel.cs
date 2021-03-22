@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public class SendEventNodeModel : NodeModelBase
+    public class SendCustomEventNodeModel : NodeModelBase
     {
         public string eventName = "";
     }

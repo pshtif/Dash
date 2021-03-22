@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [Help("Executes on any mouse click.")]
-    [Category(NodeCategoryType.EVENTS)]
+    [Category(NodeCategoryType.EVENT)]
     [OutputCount(1)]
     public class OnMouseClickNode : NodeBase<OnMouseClickNodeModel>
     {

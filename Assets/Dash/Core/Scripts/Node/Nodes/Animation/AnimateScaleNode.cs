@@ -18,18 +18,18 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            RectTransform rectTransform = p_target.GetComponent<RectTransform>();
+            Transform targetTransform = p_target.transform;
 
-            if (CheckException(rectTransform, "No RectTransform component found on target"))
+            if (CheckException(targetTransform, "No RectTransform component found on target"))
                 return;
 
             Vector3 fromScale = GetParameterValue(Model.fromScale, p_flowData);
             
             Vector3 startScale = Model.useFrom 
                 ? Model.isFromRelative
-                    ? rectTransform.localScale + Model.fromScale.GetValue(ParameterResolver, p_flowData)  
+                    ? targetTransform.localScale + Model.fromScale.GetValue(ParameterResolver, p_flowData)  
                     : fromScale 
-                : rectTransform.localScale;
+                : targetTransform.localScale;
             
             Vector3 toScale = GetParameterValue(Model.toScale, p_flowData);
             
@@ -38,14 +38,14 @@ namespace Dash
             
             if (time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startScale, toScale);
+                UpdateTween(targetTransform, 1, p_flowData, startScale, toScale);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startScale, toScale), 0,
+                    .To((f) => UpdateTween(targetTransform, f, p_flowData, startScale, toScale), 0,
                         1, time)
                     .SetDelay(delay)
                     .SetEase(Ease.Linear)
@@ -61,7 +61,7 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale)
+        protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale)
         {
             if (p_target == null)
                 return;

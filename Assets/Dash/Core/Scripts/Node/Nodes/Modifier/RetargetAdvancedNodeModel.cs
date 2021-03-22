@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using Dash.Attributes;
 using UnityEngine;
 
 namespace Dash
@@ -14,13 +15,14 @@ namespace Dash
         [Tooltip("Look up for all instances.")]
         public bool findAll = false;
         
-        [Tooltip("Name of a target or child if relative, use / for hierachy.")]
         public string target;
         
         [Tooltip("Delay in execution after each target.")]
+        [Dependency("findAll", true)]
         public Parameter<float> delay = new Parameter<float>(0);
 
         [Tooltip("Iterates targets in reverse order.")]
+        [Dependency("findAll", true)]
         public bool inReverse = false;
     }
 }

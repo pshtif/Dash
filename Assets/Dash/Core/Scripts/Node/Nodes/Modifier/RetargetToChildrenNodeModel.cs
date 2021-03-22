@@ -7,12 +7,14 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class RetargetToChildrenNodeModel : RetargetNodeBaseModel
+    public class RetargetToChildrenNodeModel : RetargetNodeModelBase
     {
         [Tooltip("Delay in execution after each child.")]
         public Parameter<float> onChildDelay = new Parameter<float>(0);
+        
         [Tooltip("Delay in execution after last child executed.")]
         public float onFinishDelay = 0;
+        
         [Tooltip("Iterates child in reverse order.")]
         public bool inReverse = false;
     }

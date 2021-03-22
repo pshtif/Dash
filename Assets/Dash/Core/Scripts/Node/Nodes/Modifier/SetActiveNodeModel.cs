@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public class SetActiveNodeModel : RetargetNodeBaseModel
+    public class SetActiveNodeModel : RetargetNodeModelBase
     {
         public bool active = true;
     }

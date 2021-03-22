@@ -13,7 +13,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateWithClipNodeModel : RetargetNodeBaseModel
+    public class AnimateWithClipNodeModel : RetargetNodeModelBase
     {
         [TitledGroup("Animation",2)]
         [Order(1)]
