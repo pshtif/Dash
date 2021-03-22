@@ -242,3 +242,151 @@ This node sends a custom event specified by name.
 ```
 eventName - specifies the name of the custom event to send
 ```
+
+### Graph Nodes
+
+Graph nodes are special category of nodes, that you will find in the root of the node creation context menu.
+
+#### *Input*
+
+This node creates a graph input with a specified name.
+
+```
+inputName - specifies the name of the input, this name needs to be unique as there cannot be two inputs with the same name, Dash will automatically detect and change it if it is not unique
+```
+
+#### *Output*
+
+This node creates a graph output with a specified name.
+
+```
+outputName - specifies the name of the output, this name needs to be unique as there cannot be two outputs with the same name, Dash will automatically detect and change it if it is not unique
+```
+
+#### *SubGraph* *__EXPERIMENTAL__*
+
+This node creates a sub graph node that wraps another Dash graph within this graph.
+
+```
+useAsset - specifies if we are going to use a Dash graph asset or contain the graph directly
+graphAsset - specifies the asset of the graph we are using (applicable only if useAsset is checked)
+```
+
+### Logic Nodes
+
+Delay nodes contain functionality for graph logic like loops, branches, debugging etc.
+
+#### *Branch*
+
+This node creates a branch logic based on parametric bool property.
+
+```
+expression - specifies the bool value or parametric expression to branch the flow
+```
+
+#### *Debug*
+
+This node outputs a debug text message or state of current node flow data.
+
+```
+debugFlowData - specifies if the current NodeFlowData instance attributes should be outputted
+text - specifies the text to output (applicable only when debugFlowData is not checked)
+attribute - specifies the attribute to output from current NodeFlowData (applicavle only when debugFlowData is not checked)
+```
+
+#### *Delay*
+
+This node creates a delay in graph execution.
+
+```
+time - specifies the time the node will wait till execution is resumed
+```
+
+#### *ForLoop*
+
+This node creates a for loop execution per iteration and an additional final execution at the end.
+
+```
+onIterationDelay - specifies a delay between execution of two iterations
+onFinishedDelay - specifies a delay between execution of last iteration and an additional final execution
+
+firstIndex - specifies starting index for iteration
+lastIndex - specifies ending index for iteration
+
+addIndexAttribute - specifies if we want to create an index attribute with the index value in the node flow data
+indexAttribute - specifies the name of the index attribute (applicable only when addIndexAttribute is checked)
+```
+
+#### *Null*
+
+This is a null node without a functionality commonly used for graph connection management.
+
+```
+```
+
+### Modifier Nodes
+
+Modifier nodes are nodes that change attributes and properties. It may be an attribute inside a node flow data or a property on a object.
+
+#### *AddAttribute*
+
+This nodes add an attribute of supported type into a node flow data.
+
+```
+attributeName - specifies the name of the attribute to add
+attributeType - specifies the type of the attribute to add
+expression - specifies the expression that will be used for evaluation to get the attribute value
+```
+
+#### *IncrementText*
+
+This node increments a number inside a TextMeshPro component text on a current target. (Used for value changes of things like gold or hp.)
+
+```
+useDotFormatting - specifies if we are using dot formatting for numbers text (1.000 instead of 1000)
+increment - specifies the increment we will use to alter the number
+```
+
+#### *RetargetAdvanced*
+
+This node changes the *target* attribute inside the node flow data and uses advanced find functionality for more specific target search. It can also look for multiple targets and execute per found instance.
+
+```
+isChild - specifies if the new target should be child of the current target
+findAll - specifies if we want to find all matching targets, if so it will execute per found instance
+target - specifies the name of the target we are looking for
+delay - specifies the delay in execution after each target (applicable only when findAll is checked)
+inReverse - specifies if we want to execute the found targets in reverse order (applicable only when findAll is checked)
+```
+
+#### *Retarget*
+
+This node changes the *target* attribute inside the node flow data using the default functionality.
+
+*This node inherits RetargetNodeBase so it contains basic retarget functionality on top of mentioned properties.*
+
+
+```
+```
+
+#### *RetargetToChildren*
+
+This node changes the *target* attribute inside the node flow data in an iterative way to each child of current target.
+
+*This node inherits RetargetNodeBase so it contains basic retarget functionality on top of mentioned properties.*
+
+```
+onChildDelay - specifies the delay between execution for each child
+onFinishDelay - specifies the delay between execution of last child and one additional final execution
+inReverse - specifies if we want to execute the children in reverse order
+```
+
+#### *SetActive*
+
+This node changes the active state of game object of current target.
+
+*This node inherits RetargetNodeBase so it contains basic retarget functionality on top of mentioned properties.*
+
+```
+active - specifies if it should be set to active or inactive.
+```
