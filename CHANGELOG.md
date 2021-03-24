@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Release 0.2.7b - 22.03.2021
 
+#### Fixed
+- fixed correct addIndexAttribute check in ForLoopNode
+
 #### Changed
 - cleanup and refactoring base classes
 - minor properties renaming
