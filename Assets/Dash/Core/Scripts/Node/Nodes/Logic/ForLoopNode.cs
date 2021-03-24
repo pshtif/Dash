@@ -29,7 +29,12 @@ namespace Dash
             for (int i = firstIndex; i != lastIndex; i += Math.Abs(length) / length)
             {
                 NodeFlowData data = p_flowData.Clone();
-                data.SetAttribute(Model.indexAttribute, i);
+
+                if (Model.addIndexAttribute)
+                {
+                    data.SetAttribute(Model.indexAttribute, i);
+                }
+
                 if (GetParameterValue(Model.OnIterationDelay, p_flowData) == 0)
                 {
                     OnExecuteOutput(0, data);
