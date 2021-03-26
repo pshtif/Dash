@@ -17,15 +17,15 @@ namespace Dash
         public AlphaTargetType targetType = AlphaTargetType.CANVASGROUP;
         
         [TitledGroup("Properties")]
-        [Dependency("sourceType", AlphaTargetType.CANVASGROUP)]
+        [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
         public Parameter<float> toAlpha = new Parameter<float>(1);
         
         [TitledGroup("Properties")]
-        [Dependency("sourceType", AlphaTargetType.CANVASGROUP)]
+        [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
         public bool isToRelative = true;
 
-        [DependencySingle("sourceType", AlphaTargetType.IMAGE)]
-        [DependencySingle("sourceType", AlphaTargetType.TEXTMESHPRO)]
+        [DependencySingle("targetType", AlphaTargetType.IMAGE)]
+        [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
         public Parameter<Color> toColor = new Parameter<Color>(Color.white);
     }
