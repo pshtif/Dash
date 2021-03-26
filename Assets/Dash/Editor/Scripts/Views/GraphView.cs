@@ -104,24 +104,34 @@ namespace Dash
         
         void DrawControllerInfo(Rect p_rect)
         {
+            if (Graph == null)
+                return;
+            
             GUI.color = Color.white;
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.white;
             style.fontSize = 24;
             style.fontStyle = FontStyle.Bold;
             GUI.color = new Color(1, 1, 1, 0.25f);
-            if (Graph != null && Graph.Controller != null)
+            if (Graph.IsBound)
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
             }
-            else if (Graph != null)
+            else
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
             }
 
-            if (Graph.parentGraph != null)
+            if (Graph.Controller != null)
             {
-                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 80, 100, 32), "GO TO PARENT"))
+                style.normal.textColor = Color.yellow;
+                style.fontSize = 18;
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), Graph.Controller.name, style);
+            }
+
+            if (Graph.parentGraph != null && Graph.Controller != null)
+            {
+                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 98, 100, 32), "GO TO PARENT"))
                 {
                     DashEditorCore.EditController(Graph.Controller);
                 }
@@ -163,7 +173,16 @@ namespace Dash
                 style.normal.textColor = Color.white;
                 style.fontStyle = FontStyle.Bold;
                 style.alignment = TextAnchor.MiddleLeft;
-                GUI.Label(new Rect(p_rect.width/2+40, 0, p_rect.width, 24), new GUIContent(Graph.name), style);
+                if (Graph.IsBound)
+                {
+                    GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
+                        new GUIContent(Graph.Controller.name), style);
+                }
+                else
+                {
+                    GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
+                        new GUIContent(Graph.name), style);
+                }
             }
             else
             {

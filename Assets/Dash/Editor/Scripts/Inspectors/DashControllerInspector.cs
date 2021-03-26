@@ -28,8 +28,8 @@ namespace Dash
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
-                    if ( EditorUtility.DisplayDialog("Create Graph", "Create an Instance or an Asset Graph?",
-                        "Instance", "Asset") ) {
+                    if ( EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
+                        "Bound", "Asset") ) {
                         
                         BindGraph(GraphUtils.CreateEmptyGraph());
                     } else {

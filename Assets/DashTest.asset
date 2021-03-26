@@ -1,0 +1,3117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f992b7b42e86e4193a2e97d9286a3d, type: 3}
+  m_Name: DashTest
+  m_EditorClassIdentifier: 
+  _connections:
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 0
+  - active: 1
+  - active: 1
+  - active: 1
+  - active: 1
+  _serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000}
+    - {fileID: 11400000, guid: 293abb35ffb2f2f43bf616709e52bdc0, type: 2}
+    - {fileID: 7400000, guid: c86511aa6b0f8564f9caa75235228ac8, type: 2}
+    - {fileID: 0}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: OnOutput
+      Entry: 6
+      Data: 
+    - Name: variables
+      Entry: 7
+      Data: 0|Dash.GraphVariables, Assembly-CSharp
+    - Name: _variables
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Dash.Variable, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 2|Dash.Variable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: _name
+      Entry: 1
+      Data: screen
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _boundProperty
+      Entry: 1
+      Data: 
+    - Name: _boundComponentName
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _extractedClipCache
+      Entry: 7
+      Data: 3|Dash.ExtractedClipCache, Assembly-CSharp
+    - Name: _clips
+      Entry: 7
+      Data: 4|System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule],[Dash.ExtractedClip, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 5|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
+        UnityEngine.AnimationModule]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _nodes
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Dash.NodeBase, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 18
+    - Name: 
+      Entry: 7
+      Data: 7|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 8|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition6
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 9|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: Content
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 1825010584
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 10|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 11|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: true
+    - Name: fromPosition
+      Entry: 7
+      Data: 12|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: true
+    - Name: toPosition
+      Entry: 7
+      Data: 13|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: true
+    - Name: expression
+      Entry: 1
+      Data: screen
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 359
+    - Name: 
+      Entry: 4
+      Data: 289
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 15|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition2
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 16|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1634517061
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 17|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 18|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 19|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 20|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 645.75
+    - Name: 
+      Entry: 4
+      Data: 734.25
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 21|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 22|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition3
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 23|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1122522395
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 24|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 25|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 26|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 27|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 345
+    - Name: 
+      Entry: 4
+      Data: 757.5
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 28|Dash.RetargetToChildrenNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 29|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: RetargetToChildren1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 30|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: Content/Buttons
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: onChildDelay
+      Entry: 7
+      Data: 31|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onFinishDelay
+      Entry: 4
+      Data: 0
+    - Name: inReverse
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 354
+    - Name: 
+      Entry: 4
+      Data: 568
+    - Name: 
+      Entry: 4
+      Data: 200
+    - Name: 
+      Entry: 4
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 32|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 33|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition4
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: false
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 34|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 35|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 36|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 37|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 38|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 644.75
+    - Name: 
+      Entry: 4
+      Data: 575
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 39|Dash.RetargetToChildrenNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 40|Dash.RetargetToChildrenNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: RetargetToChildren2
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 4
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 41|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: Content/Buttons
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: onChildDelay
+      Entry: 7
+      Data: 42|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 1
+      Data: '[$AnimateAnchoredPosition6.toPosition]'
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: onFinishDelay
+      Entry: 4
+      Data: 1
+    - Name: inReverse
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 663.25
+    - Name: 
+      Entry: 4
+      Data: 288.5
+    - Name: 
+      Entry: 4
+      Data: 200
+    - Name: 
+      Entry: 4
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 43|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 44|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition5
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: false
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 45|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 46|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 47|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 27
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 48|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 49|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 981.25
+    - Name: 
+      Entry: 4
+      Data: 192.75
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 50|Dash.AnimateScaleNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 51|Dash.AnimateScaleNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateScale1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 52|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 53|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 54|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: useFrom
+      Entry: 5
+      Data: true
+    - Name: fromScale
+      Entry: 7
+      Data: 55|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toScale
+      Entry: 7
+      Data: 56|Dash.Parameter`1[[UnityEngine.Vector3, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1013.25
+    - Name: 
+      Entry: 4
+      Data: 362.25
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 57|Dash.AnimateTextNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 58|Dash.AnimateTextNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateText1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 59|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1493098900
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 60|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 61|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: characterDelay
+      Entry: 4
+      Data: 0.1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 672.5
+    - Name: 
+      Entry: 4
+      Data: 872.75
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 62|Dash.OnCustomEventNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 63|Dash.OnCustomEventNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnCustomEvent1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: eventName
+      Entry: 1
+      Data: Hide
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -233.5
+    - Name: 
+      Entry: 4
+      Data: 1379.5
+    - Name: 
+      Entry: 4
+      Data: 110.0315
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 64|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 65|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition7
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 66|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -1122522395
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 67|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 68|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 26
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 69|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: false
+    - Name: toPosition
+      Entry: 7
+      Data: 70|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 400
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 86.25
+    - Name: 
+      Entry: 4
+      Data: 1320
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 71|Dash.AnimateAnchoredPositionNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 72|Dash.AnimateAnchoredPositionNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateAnchoredPosition1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: target
+      Entry: 7
+      Data: 73|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: Content
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 1825010584
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 6
+      Data: 
+    - Name: time
+      Entry: 7
+      Data: 74|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: true
+    - Name: expression
+      Entry: 1
+      Data: '[$AnimateAnchoredPosition7.time]*2'
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0.4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: delay
+      Entry: 7
+      Data: 75|Dash.Parameter`1[[System.Single, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: easing
+      Entry: 3
+      Data: 26
+    - Name: useFrom
+      Entry: 5
+      Data: false
+    - Name: fromPosition
+      Entry: 7
+      Data: 76|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isFromRelative
+      Entry: 5
+      Data: true
+    - Name: toPosition
+      Entry: 7
+      Data: 77|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 1
+      Data: g_screen
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1080
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isToRelative
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 87.25
+    - Name: 
+      Entry: 4
+      Data: 1447
+    - Name: 
+      Entry: 4
+      Data: 220
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 78|Dash.NullNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 79|Dash.NullNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Null1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 4
+      Data: 613.5
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 80|Dash.OnCustomEventNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 81|Dash.OnCustomEventNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnCustomEvent2
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: eventName
+      Entry: 1
+      Data: Show
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -362.5
+    - Name: 
+      Entry: 4
+      Data: 682
+    - Name: 
+      Entry: 4
+      Data: 116.156517
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 82|Dash.DebugNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 83|Dash.DebugNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Debug1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: debugFlowData
+      Entry: 5
+      Data: false
+    - Name: text
+      Entry: 1
+      Data: test
+    - Name: variable
+      Entry: 1
+      Data: target
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -116.75
+    - Name: 
+      Entry: 4
+      Data: 1171.75
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 84|Dash.AnimateWithClipNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 85|Dash.AnimateWithClipNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: AnimateWithClip1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 0
+    - Name: retarget
+      Entry: 5
+      Data: true
+    - Name: useReference
+      Entry: 5
+      Data: true
+    - Name: isChild
+      Entry: 5
+      Data: false
+    - Name: target
+      Entry: 7
+      Data: 86|Dash.Parameter`1[[System.String, mscorlib]], Assembly-CSharp
+    - Name: isExpression
+      Entry: 5
+      Data: false
+    - Name: expression
+      Entry: 6
+      Data: 
+    - Name: hasErrorInEvaluation
+      Entry: 5
+      Data: false
+    - Name: errorMessage
+      Entry: 6
+      Data: 
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targetReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: -2027625728
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: useExpression
+      Entry: 5
+      Data: false
+    - Name: targetExpression
+      Entry: 1
+      Data: 
+    - Name: useAnimationTime
+      Entry: 5
+      Data: true
+    - Name: time
+      Entry: 4
+      Data: 1
+    - Name: delay
+      Entry: 4
+      Data: 0
+    - Name: easing
+      Entry: 3
+      Data: 1
+    - Name: isReverse
+      Entry: 5
+      Data: false
+    - Name: isRelative
+      Entry: 5
+      Data: true
+    - Name: useDashAnimation
+      Entry: 5
+      Data: false
+    - Name: source
+      Entry: 10
+      Data: 1
+    - Name: clip
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 376.5
+    - Name: 
+      Entry: 4
+      Data: 927.75
+    - Name: 
+      Entry: 4
+      Data: 160
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _startsCaches
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 87|Dash.InputNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 88|Dash.InputNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: Input1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 2
+    - Name: inputName
+      Entry: 1
+      Data: test
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -359.5
+    - Name: 
+      Entry: 4
+      Data: 461
+    - Name: 
+      Entry: 4
+      Data: 100.843971
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 89|Dash.OnButtonClickNode, Assembly-CSharp
+    - Name: _model
+      Entry: 7
+      Data: 90|Dash.OnButtonClickNodeModel, Assembly-CSharp
+    - Name: id
+      Entry: 1
+      Data: OnButtonClick1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 2
+    - Name: useReference
+      Entry: 5
+      Data: false
+    - Name: isChild
+      Entry: 5
+      Data: true
+    - Name: useFind
+      Entry: 5
+      Data: true
+    - Name: findAll
+      Entry: 5
+      Data: true
+    - Name: button
+      Entry: 1
+      Data: Button
+    - Name: buttonReference
+      Entry: 7
+      Data: UnityEngine.ExposedReference`1[[UnityEngine.UI.Button, UnityEngine.UI]],
+        UnityEngine.CoreModule
+    - Name: exposedName
+      Entry: 7
+      Data: UnityEngine.PropertyName, UnityEngine.CoreModule
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: conflictIndex
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: defaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: retargetToButton
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -368.9493
+    - Name: 
+      Entry: 4
+      Data: 1172.054
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _connections
+      Entry: 7
+      Data: 91|System.Collections.Generic.List`1[[Dash.NodeConnection, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 15
+    - Name: 
+      Entry: 7
+      Data: 92|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 14
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 21
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 93|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 32
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 94|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 39
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 95|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 43
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 39
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 96|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 50
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 39
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 97|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 57
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 21
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 98|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 64
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 99|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 71
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 100|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 7
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 101|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 28
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 102|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: false
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 21
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 103|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 80
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 104|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 84
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 105|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 78
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 87
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 106|Dash.NodeConnection, Assembly-CSharp
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: <inputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 82
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 89
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <parentGraph>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Controller>k__BackingField
+      Entry: 10
+      Data: 3
+    - Name: _boxes
+      Entry: 7
+      Data: 107|System.Collections.Generic.List`1[[Dash.GraphBox, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: previewControlsViewMinimized
+      Entry: 5
+      Data: false
+    - Name: viewOffset
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 834.665649
+    - Name: 
+      Entry: 4
+      Data: -161.167938
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: showVariables
+      Entry: 5
+      Data: true
+    - Name: _previewNode
+      Entry: 9
+      Data: 87
+  _boxes: []
+  previewControlsViewMinimized: 0
+  viewOffset: {x: 834.66565, y: -161.16794}
+  showVariables: 1

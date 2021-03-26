@@ -89,7 +89,7 @@ namespace Dash
             }
 
             _instancedGraph.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
-            _instancedGraph.name = gameObject.name+"[Bound]";
+            _instancedGraph.name = "Bound";
         }
 
         void InstanceAssetGraph()
