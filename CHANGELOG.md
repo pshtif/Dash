@@ -7,9 +7,11 @@ All notable changes to this project will be documented in this file.
 ### Release 0.2.7b - 22.03.2021
 
 #### Fixed
+- fixed color property dependency in AnimateToColorNode
 - fixed correct addIndexAttribute check in ForLoopNode
 
 #### Changed
+- visual feedback on editing controller in graph view
 - cleanup and refactoring base classes
 - minor properties renaming
 - minor refactoring during documentation writeup
@@ -18,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 #### Added
 - complete Node documentation
+- added option for code based listeners using actions
 
 ### Release 0.2.6b - 15.03.2021
 
