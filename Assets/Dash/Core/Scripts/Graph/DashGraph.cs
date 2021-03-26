@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
@@ -50,7 +51,10 @@ namespace Dash
         public List<NodeConnection> Connections => _connections;
 
         [NonSerialized]
-        public Dictionary<string, List<NodeBase>> _listeners;
+        private Dictionary<string, List<NodeBase>> _nodeListeners;
+
+        [NonSerialized]
+        private Dictionary<string, List<Action<NodeFlowData>>> _actionListeners;
         
         public DashGraph parentGraph { get; private set; }
 
@@ -68,7 +72,7 @@ namespace Dash
 
             Controller = p_controller;
 
-            _listeners = new Dictionary<string, List<NodeBase>>();
+            _nodeListeners = new Dictionary<string, List<NodeBase>>();
 
             _initialized = true;
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
@@ -84,10 +88,15 @@ namespace Dash
         }
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            if (!_listeners.ContainsKey(p_name) || _listeners[p_name].Count == 0)
+            if (!_nodeListeners.ContainsKey(p_name) || _nodeListeners[p_name].Count == 0)
                 return;
             
-            _listeners[p_name].ForEach(n => n.Execute(p_flowData));
+            _nodeListeners[p_name].ForEach(n => n.Execute(p_flowData));
+            
+            if (!_actionListeners.ContainsKey(p_name) || _actionListeners[p_name].Count == 0)
+                return;
+
+            _actionListeners[p_name].ForEach(c => c.Invoke(p_flowData));
         }
 
         public void AddListener(string p_name, NodeBase p_node)
@@ -95,21 +104,43 @@ namespace Dash
             if (p_name == "")
                 return;
             
-            if (!_listeners.ContainsKey(p_name))
-                _listeners[p_name] = new List<NodeBase>();
+            if (!_nodeListeners.ContainsKey(p_name))
+                _nodeListeners[p_name] = new List<NodeBase>();
             
-            if (!_listeners[p_name].Contains(p_node))
-                _listeners[p_name].Add(p_node);
+            if (!_nodeListeners[p_name].Contains(p_node))
+                _nodeListeners[p_name].Add(p_node);
+        }
+
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback)
+        {
+            if (p_name == "")
+                return;
+            
+            if (!_actionListeners.ContainsKey(p_name))
+                _actionListeners[p_name] = new List<Action<NodeFlowData>>();
+            
+            if (!_actionListeners[p_name].Contains(p_callback))
+                _actionListeners[p_name].Add(p_callback);
         }
 
         public void RemoveListener(string p_name, NodeBase p_node)
         {
-            if (!_listeners.ContainsKey(p_name))
+            if (!_nodeListeners.ContainsKey(p_name))
                 return;
 
-            _listeners[p_name].Remove(p_node);
-            if (_listeners[p_name].Count == 0)
-                _listeners.Remove(p_name);
+            _nodeListeners[p_name].Remove(p_node);
+            if (_nodeListeners[p_name].Count == 0)
+                _nodeListeners.Remove(p_name);
+        }
+        
+        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
+        {
+            if (!_actionListeners.ContainsKey(p_name))
+                return;
+
+            _actionListeners[p_name].Remove(p_callback);
+            if (_actionListeners[p_name].Count == 0)
+                _actionListeners.Remove(p_name);
         }
 
         public NodeBase GetNodeById(string p_id)
