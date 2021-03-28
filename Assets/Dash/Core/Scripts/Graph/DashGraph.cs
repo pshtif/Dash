@@ -73,6 +73,7 @@ namespace Dash
             Controller = p_controller;
 
             _nodeListeners = new Dictionary<string, List<NodeBase>>();
+            _actionListeners = new Dictionary<string, List<Action<NodeFlowData>>>();
 
             _initialized = true;
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
