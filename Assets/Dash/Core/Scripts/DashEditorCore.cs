@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Dash
@@ -67,7 +69,9 @@ namespace Dash
 
             if (Graph.IsBound)
             {
+                Graph.Controller.ReserializeBound();
                 EditorUtility.SetDirty(Graph.Controller);
+                //EditorSceneManager.MarkSceneDirty(Graph.Controller.gameObject.scene);
             }
             else
             {
@@ -163,6 +167,8 @@ namespace Dash
             });
 
             Graph.CreateBox(region);
+            
+            SetDirty();
         }
 
         public static void ReindexSelected(int p_index)

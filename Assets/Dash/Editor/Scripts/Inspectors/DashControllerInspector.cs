@@ -23,37 +23,47 @@ namespace Dash
             GUILayout.Box(Resources.Load<Texture>("Textures/das"), GUILayout.ExpandWidth(true));
             GUILayout.EndHorizontal();
 
-            if (((IEditorControllerAccess)Controller).graphAsset == null && !Controller.IsGraphBound)
+            if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
+            
+            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
             {
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
-                    if ( EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
-                        "Bound", "Asset") ) {
-                        
+                    if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
+                        "Bound", "Asset"))
+                    {
+
                         BindGraph(GraphUtils.CreateEmptyGraph());
-                    } else {
-                        ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
+                    }
+                    else
+                    {
+                        ((IEditorControllerAccess) Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
                 }
+
                 GUI.color = Color.white;
-                
-                ((IEditorControllerAccess)Controller).graphAsset = (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset, typeof(DashGraph), true);
+
+                ((IEditorControllerAccess) Controller).graphAsset =
+                    (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
+                        typeof(DashGraph), true);
             }
             else
             {
                 GUILayout.BeginVertical();
-                
+
                 GUI.color = new Color(1, 0.75f, 0.5f);
-                if (GUILayout.Button("Open Editor", GUILayout.Height(40))) {
+                if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
+                {
                     OpenEditor();
                 }
+
                 GUI.color = Color.white;
-                
+
                 if (!Controller.IsGraphBound)
                 {
                     EditorGUI.BeginChangeCheck();
-                    
+
                     ((IEditorControllerAccess) Controller).graphAsset =
                         (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
                             typeof(DashGraph), true);
@@ -79,30 +89,34 @@ namespace Dash
                             ((IEditorControllerAccess) Controller).graphAsset = graph;
                         }
                     }
-                    
+
                     if (GUILayout.Button("Delete Graph"))
                     {
                         if (DashEditorCore.Config.editingGraph == Controller.Graph)
                         {
                             DashEditorCore.UnloadGraph();
                         }
-                        
+
                         Controller.BindGraph(null);
                     }
                 }
-
-                Controller.autoStart = EditorGUILayout.Toggle("Auto Start", Controller.autoStart);
-
-                if (Controller.autoStart)
-                {
-                    Controller.autoStartInput =
-                        EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
-                }
-                
-                GUILayout.EndVertical();
-
-                //DrawDefaultInspector();   
             }
+
+            EditorGUI.BeginChangeCheck();
+                
+            Controller.autoStart = EditorGUILayout.Toggle("Auto Start", Controller.autoStart);
+
+            if (Controller.autoStart)
+            {
+                Controller.autoStartInput =
+                    EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
+            }
+
+            EditorGUI.EndChangeCheck();
+            EditorUtility.SetDirty(target);
+            
+            GUILayout.EndVertical();
+            serializedObject.ApplyModifiedProperties();
         }
         
         void BindGraph(DashGraph p_graph)

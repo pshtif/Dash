@@ -546,7 +546,7 @@ namespace Dash
                 Nodes.Add(node);
             }
             
-            EditorUtility.SetDirty(this);
+            DashEditorCore.SetDirty();
         }
 
         public void RemoveNullReferences()

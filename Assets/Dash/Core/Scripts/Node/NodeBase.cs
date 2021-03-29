@@ -690,7 +690,7 @@ namespace Dash
             {
                 ValidateUniqueId();
                 Invalidate();
-                EditorUtility.SetDirty(Graph);
+                DashEditorCore.SetDirty();
             }
         }
 

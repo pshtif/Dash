@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer;
 using OdinSerializer.Utilities;
+using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -168,6 +171,17 @@ namespace Dash
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
+        
+        public void ReserializeBound()
+        {
+            if (_instancedGraph != null)
+            {
+                _boundGraphData = _instancedGraph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
+                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _instancedGraph);
+            }
+            
+            //EditorUtility.SetDirty(this);
+        }
         #endif
         
         // Handle Unity property exposing - may be removed later to avoid external references
@@ -245,17 +259,9 @@ namespace Dash
             }
         }
 
-        public void ReserializeBound()
-        {
-            if (_instancedGraph != null)
-            {
-                _boundGraphData = _instancedGraph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
-                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _instancedGraph);
-            }
-        }
-
         public DashGraph GetGraphAtPath(string p_path)
         {
+            _instancedGraph = null;
             if (string.IsNullOrWhiteSpace(p_path))
                 return Graph;
 

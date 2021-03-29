@@ -19,16 +19,32 @@ namespace Dash
         {
             _isDirty = p_dirty;
         }
+
+        private void OnEnable()
+        {
+            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
+            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing += OnPrefabStageClosing;
+        }
+
+        private void OnDisable()
+        {
+            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
+        }
         
+        void OnPrefabStageClosing(UnityEditor.Experimental.SceneManagement.PrefabStage stage) {
+            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            DashEditorCore.EditController(null);
+        }
+
         public static bool IsDirty => _isDirty;
 
         protected List<ViewBase> _views;
 
-        public static DashEditorWindow InitEditorWindow(DashControllerInspector pDashControllerInspector)
+        public static DashEditorWindow InitEditorWindow(DashControllerInspector p_dashControllerInspector)
         {
-            if (pDashControllerInspector != null)
+            if (p_dashControllerInspector != null)
             {
-                DashEditorCore.EditController(pDashControllerInspector.Controller);
+                DashEditorCore.EditController(p_dashControllerInspector.Controller);
             }
 
             AssetDatabase.SaveAssets();
