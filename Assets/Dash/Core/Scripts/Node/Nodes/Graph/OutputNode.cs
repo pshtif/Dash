@@ -19,17 +19,17 @@ namespace Dash
             OnExecuteEnd();
             ((IInternalGraphAccess) Graph).OutputExecuted(this, p_flowData);
         }
-        
+
+#if UNITY_EDITOR
+        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
+        public override string CustomName => "Output " + Model.outputName;
+
         protected override void Invalidate()
         {
             base.Invalidate();
             ValidateUniqueOutputName();
         }
         
-#if UNITY_EDITOR
-        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
-        public override string CustomName => "Output " + Model.outputName;
-
         protected override void DrawCustomGUI(Rect p_rect)
         {
             Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);

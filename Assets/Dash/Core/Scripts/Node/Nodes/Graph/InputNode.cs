@@ -29,12 +29,6 @@ namespace Dash
             OnExecuteOutput(0, p_flowData);
         }
 
-        protected override void Invalidate()
-        {
-            base.Invalidate();
-            ValidateUniqueInputName();
-        }
-
 #if UNITY_EDITOR
         // protected override Color NodeBackgroundColor => new Color(0.8f, 0.6f, 0f);
         // protected override Color TitleBackgroundColor => new Color(0.8f, 0.5f, 0f);
@@ -42,6 +36,12 @@ namespace Dash
         public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
         public override string CustomName => "Input " + Model.inputName;
 
+        protected override void Invalidate()
+        {
+            base.Invalidate();
+            ValidateUniqueInputName();
+        }
+        
         protected override void DrawCustomGUI(Rect p_rect)
         {
             Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
