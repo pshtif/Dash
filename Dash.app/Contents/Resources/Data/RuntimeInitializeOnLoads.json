@@ -1,1 +1,0 @@
-{"root":[{"assemblyName":"OdinSerializer","nameSpace":"OdinSerializer","className":"UnitySerializationInitializer","methodName":"InitializeRuntime","loadTypes":1,"isUnityClass":false},{"assemblyName":"OdinSerializer","nameSpace":"OdinSerializer.Utilities","className":"UnityVersion","methodName":"EnsureLoaded","loadTypes":1,"isUnityClass":false}]}
