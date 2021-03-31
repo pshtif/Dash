@@ -32,7 +32,7 @@ namespace Dash
             Vector2 point;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, mousePos, Camera.main, out point);
             p_flowData.SetAttribute("mousePosition", point);
-            
+
             OnExecuteOutput(0, p_flowData);
             OnExecuteEnd();
         }

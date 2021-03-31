@@ -256,7 +256,6 @@ namespace Dash
 
         public DashGraph GetGraphAtPath(string p_path)
         {
-            _instancedGraph = null;
             if (string.IsNullOrWhiteSpace(p_path))
                 return Graph;
 
