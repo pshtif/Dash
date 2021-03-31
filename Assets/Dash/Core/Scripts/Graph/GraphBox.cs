@@ -14,6 +14,7 @@ namespace Dash
     [Serializable]
     public class GraphBox
     {
+        #if UNITY_EDITOR
         public DashGraph Graph => DashEditorCore.Config.editingGraph;
         
         public string comment;
@@ -39,7 +40,7 @@ namespace Dash
             comment = p_comment;
             rect = p_rect;
         }
-
+        
         public void DrawGUI()
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, rect.width, rect.height);
@@ -155,5 +156,6 @@ namespace Dash
 
             return invalidate;
         }
+        #endif
     }
 }

@@ -65,6 +65,8 @@ namespace Dash
         
         public DashController Controller { get; private set; }
 
+        public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
+
         public void Initialize(DashController p_controller)
         {
             if (_initialized)
@@ -155,43 +157,6 @@ namespace Dash
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
         }
-        
-        public NodeBase DuplicateNode(NodeBase p_node)
-        {
-            NodeBase clone = p_node.Clone();
-            clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
-            Nodes.Add(clone);
-            return clone;
-        }
-
-        public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
-        {
-            if (p_nodes == null || p_nodes.Count == 0)
-                return null;
-
-            List<NodeBase> newNodes = new List<NodeBase>();
-            foreach (NodeBase node in p_nodes)
-            {
-                NodeBase clone = node.Clone();
-                clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
-                Nodes.Add(clone);
-                newNodes.Add(clone);
-            }
-
-            // Recreate connections within duplicated part
-            foreach (NodeBase node in p_nodes)
-            {
-                List<NodeConnection> connections =
-                    _connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
-                foreach (NodeConnection connection in connections)
-                {
-                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,
-                        newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);
-                }
-            }
-
-            return newNodes;
-        }
 
         public T GetNodeByType<T>() where T:NodeBase
         {
@@ -223,12 +188,6 @@ namespace Dash
             return Nodes.FindAll(n => n is OutputNode).IndexOf(p_node);
         }
 
-        public void ValidateSerialization()
-        {
-            Nodes?.ForEach(n => n.ValidateSerialization());
-            EditorUtility.SetDirty(this);
-        }
-        
         public void Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
         {
             bool exists = Connections.Exists(c =>
@@ -349,8 +308,10 @@ namespace Dash
                 UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
             }
             
+            #if UNITY_EDITOR
             if (IsBound && Controller != null)
                 Controller.ReserializeBound();
+            #endif
         }
         
         public byte[] SerializeToBytes(DataFormat p_format, ref List<Object> p_references)
@@ -401,10 +362,6 @@ namespace Dash
 #if UNITY_EDITOR
         
 #region EDITOR_ACCESS
-        [NonSerialized]
-        protected int _executionCount;
-
-        public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
 
         void IEditorGraphAccess.SetController(DashController p_controller)
         {
@@ -446,6 +403,12 @@ namespace Dash
         [NonSerialized]
         public int connectingOutputIndex;
 
+        public void ValidateSerialization()
+        {
+            Nodes?.ForEach(n => n.ValidateSerialization());
+            EditorUtility.SetDirty(this);
+        }
+        
         public void DrawGUI(Rect p_rect)
         {
             // Sometimes when looking for a serialization issue it is good to keep null references for better debug/migration
@@ -547,6 +510,43 @@ namespace Dash
             }
             
             DashEditorCore.SetDirty();
+        }
+        
+        public NodeBase DuplicateNode(NodeBase p_node)
+        {
+            NodeBase clone = p_node.Clone();
+            clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
+            Nodes.Add(clone);
+            return clone;
+        }
+        
+        public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
+        {
+            if (p_nodes == null || p_nodes.Count == 0)
+                return null;
+
+            List<NodeBase> newNodes = new List<NodeBase>();
+            foreach (NodeBase node in p_nodes)
+            {
+                NodeBase clone = node.Clone();
+                clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
+                Nodes.Add(clone);
+                newNodes.Add(clone);
+            }
+
+            // Recreate connections within duplicated part
+            foreach (NodeBase node in p_nodes)
+            {
+                List<NodeConnection> connections =
+                    _connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
+                foreach (NodeConnection connection in connections)
+                {
+                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,
+                        newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);
+                }
+            }
+
+            return newNodes;
         }
 
         public void RemoveNullReferences()

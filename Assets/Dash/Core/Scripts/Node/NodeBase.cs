@@ -283,6 +283,24 @@ namespace Dash
             
             return clone;
         }
+        
+        protected void ValidateUniqueId()
+        {
+            string id = _model.id;
+            if (string.IsNullOrEmpty(id))
+            {
+                string type = GetType().ToString();
+                id = type.Substring(5, type.Length-9) + "1";
+            }
+
+            while (Graph.Nodes.Exists(n => n != this && n.Id == id))
+            {
+                string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
+                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
+            }
+
+            _model.id = id;
+        }
 
         #region EDITOR_CODE
 #if UNITY_EDITOR
@@ -714,24 +732,6 @@ namespace Dash
             }
 
             return false;
-        }
-        
-        protected void ValidateUniqueId()
-        {
-            string id = _model.id;
-            if (string.IsNullOrEmpty(id))
-            {
-                string type = GetType().ToString();
-                id = type.Substring(5, type.Length-9) + "1";
-            }
-
-            while (Graph.Nodes.Exists(n => n != this && n.Id == id))
-            {
-                string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
-                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
-            }
-
-            _model.id = id;
         }
 #endif
 

@@ -26,6 +26,7 @@ namespace Dash
             typeof(GameObject)
         };
             
+        #if UNITY_EDITOR
         public static void Show(Action<Type> p_callback)
         {
             GenericMenu menu = new GenericMenu();
@@ -42,5 +43,6 @@ namespace Dash
 
             menu.ShowAsContext();
         }
+        #endif
     }
 }

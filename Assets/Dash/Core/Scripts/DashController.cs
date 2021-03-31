@@ -6,12 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer;
-using OdinSerializer.Utilities;
-using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace Dash
