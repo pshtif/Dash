@@ -25,10 +25,13 @@ namespace Dash
                 return;
 
             Vector3 fromRotation = GetParameterValue(Model.fromRotation, p_flowData);
+            fromRotation.x = fromRotation.x > 180 ? fromRotation.x - 360 : fromRotation.x; 
+            fromRotation.y = fromRotation.y > 180 ? fromRotation.y - 360 : fromRotation.y; 
+            fromRotation.z = fromRotation.z > 180 ? fromRotation.z - 360 : fromRotation.z; 
             
             Quaternion startRotation = Model.useFrom
                 ? Model.isFromRelative
-                    ? targetTransform.rotation * Quaternion.Euler(Model.fromRotation.GetValue(ParameterResolver, p_flowData))
+                    ? targetTransform.rotation * Quaternion.Euler(fromRotation)
                     : Quaternion.Euler(fromRotation) 
                 : targetTransform.rotation;
 
@@ -68,14 +71,19 @@ namespace Dash
                 return;
 
             Quaternion rotation = Quaternion.Euler(p_toRotation);
-            if (Model.isToRelative) rotation = rotation * Quaternion.Inverse(p_startRotation);
+            if (Model.isToRelative) rotation = rotation * p_startRotation;
+            p_target.localRotation = Quaternion.Lerp(p_startRotation, rotation, DOVirtual.EasedValue(0,1, p_delta, Model.easing));
+
+            /*
+            Debug.Log(rotation.eulerAngles + " : " + p_toRotation + " : " + p_startRotation.eulerAngles);
             Vector3 finalRotation = rotation.eulerAngles;
+            finalRotation.z = finalRotation.z > 180 ? finalRotation.z - 360 : finalRotation.z;
             Vector3 easedRotation = new Vector3(DOVirtual.EasedValue(0, finalRotation.x, p_delta, Model.easing),
                 DOVirtual.EasedValue(0, finalRotation.y, p_delta, Model.easing),
                 DOVirtual.EasedValue(0, finalRotation.z, p_delta, Model.easing));
-
             
             p_target.localRotation = p_startRotation * Quaternion.Euler(easedRotation);
+            */
         }
     }
 }
