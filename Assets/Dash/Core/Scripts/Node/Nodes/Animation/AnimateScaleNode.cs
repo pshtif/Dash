@@ -35,17 +35,18 @@ namespace Dash
             
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
+            Ease easing = GetParameterValue(Model.easing);
             
             if (time == 0)
             {
-                UpdateTween(targetTransform, 1, p_flowData, startScale, toScale);
+                UpdateTween(targetTransform, 1, p_flowData, startScale, toScale, easing);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(targetTransform, f, p_flowData, startScale, toScale), 0,
+                    .To((f) => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easing), 0,
                         1, time)
                     .SetDelay(delay)
                     .SetEase(Ease.Linear)
@@ -61,23 +62,23 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale)
+        protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale, Ease p_easing)
         {
             if (p_target == null)
                 return;
 
             if (Model.isToRelative)
             {
-                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, Model.easing),
-                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, Model.easing),
-                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, Model.easing));
+                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, p_easing),
+                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, p_easing),
+                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, p_easing));
             }
             else
             {
                 p_toScale -= p_startScale;
-                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, Model.easing),
-                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, Model.easing),
-                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, Model.easing));
+                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, p_easing),
+                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, p_easing),
+                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, p_easing));
             }
         }
     }

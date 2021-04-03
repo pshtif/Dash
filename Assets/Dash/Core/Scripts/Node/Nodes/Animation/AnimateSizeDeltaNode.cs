@@ -36,17 +36,18 @@ namespace Dash
 
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
+            Ease easing = GetParameterValue(Model.easing);
             
             if (time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startSizeDelta, toSizeDelta);
+                UpdateTween(rectTransform, 1, p_flowData, startSizeDelta, toSizeDelta, easing);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startSizeDelta, toSizeDelta), 0,
+                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startSizeDelta, toSizeDelta, easing), 0,
                         1, time)
                     .SetDelay(delay)
                     .SetEase(Ease.Linear)
@@ -62,7 +63,7 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startSizeDelta, Vector2 p_toSizeDelta)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startSizeDelta, Vector2 p_toSizeDelta, Ease p_easing)
         {
             if (p_target == null)
                 return;
@@ -70,13 +71,13 @@ namespace Dash
             if (Model.isToRelative)
             {
                 p_target.sizeDelta =
-                    p_startSizeDelta + new Vector2(DOVirtual.EasedValue(0, p_toSizeDelta.x, p_delta, Model.easing),
-                        DOVirtual.EasedValue(0, p_toSizeDelta.y, p_delta, Model.easing));
+                    p_startSizeDelta + new Vector2(DOVirtual.EasedValue(0, p_toSizeDelta.x, p_delta, p_easing),
+                        DOVirtual.EasedValue(0, p_toSizeDelta.y, p_delta, p_easing));
             }
             else
             {
-                p_target.sizeDelta = new Vector2(DOVirtual.EasedValue(p_startSizeDelta.x, p_toSizeDelta.x, p_delta, Model.easing),
-                    DOVirtual.EasedValue(p_startSizeDelta.y, p_toSizeDelta.y, p_delta, Model.easing));
+                p_target.sizeDelta = new Vector2(DOVirtual.EasedValue(p_startSizeDelta.x, p_toSizeDelta.x, p_delta, p_easing),
+                    DOVirtual.EasedValue(p_startSizeDelta.y, p_toSizeDelta.y, p_delta, p_easing));
             }
         }
     }

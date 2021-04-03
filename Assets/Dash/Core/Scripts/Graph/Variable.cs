@@ -214,6 +214,9 @@ namespace Dash
                                 EditorGUILayout.ObjectField((Transform) Convert.ChangeType(value, typeof(Transform)),
                                     typeof(Transform), false), typeof(T));
                             break;
+                        case "DG.Tweening.Ease":
+                            value = (T)Convert.ChangeType(EditorGUILayout.EnumPopup(value as Enum), typeof(T));
+                            break;
                         default:
                             Debug.LogWarning("Variable of type " + type + " is not supported.");
                             break;

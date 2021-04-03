@@ -20,6 +20,6 @@ namespace Dash
 
         [Order(2)]
         [TitledGroup("Animation")]
-        public Ease easing = Ease.Linear;
+        public Parameter<Ease> easing = new Parameter<Ease>(Ease.Linear);
     }
 }

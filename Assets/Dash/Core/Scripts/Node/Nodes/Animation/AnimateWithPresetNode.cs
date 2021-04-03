@@ -26,7 +26,9 @@ namespace Dash
         {
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
-            Model.preset.Execute(p_target, time, delay, Model.easing, () =>
+            Ease easing = GetParameterValue(Model.easing);
+            
+            Model.preset.Execute(p_target, time, delay, easing, () =>
             {
                 OnExecuteEnd();
                 OnExecuteOutput(0, p_flowData);

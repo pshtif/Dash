@@ -33,19 +33,20 @@ namespace Dash
                 : rectTransform.anchoredPosition;
 
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
+            Ease easing = GetParameterValue(Model.easing);
 
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
             if (time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition);
+                UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition, easing);
                 ExecuteEnd(p_flowData);
             }
             else
             {
                 // Virtual tween to update from directly
                 Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition), 0,
+                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition, easing), 0,
                         1, time)
                     .SetDelay(delay)
                     .SetEase(Ease.Linear)
@@ -61,7 +62,7 @@ namespace Dash
             OnExecuteOutput(0,p_flowData);
         }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Vector2 p_finalPosition)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Vector2 p_finalPosition, Ease p_easing)
         {
             if (p_target == null)
                 return;
@@ -69,13 +70,13 @@ namespace Dash
             if (Model.isToRelative)
             {
                 p_target.anchoredPosition =
-                    p_startPosition + new Vector2(DOVirtual.EasedValue(0, p_finalPosition.x, p_delta, Model.easing),
-                        DOVirtual.EasedValue(0, p_finalPosition.y, p_delta, Model.easing));
+                    p_startPosition + new Vector2(DOVirtual.EasedValue(0, p_finalPosition.x, p_delta, p_easing),
+                        DOVirtual.EasedValue(0, p_finalPosition.y, p_delta, p_easing));
             }
             else
             {
-                p_target.anchoredPosition = new Vector2(DOVirtual.EasedValue(p_startPosition.x, p_finalPosition.x, p_delta, Model.easing),
-                    DOVirtual.EasedValue(p_startPosition.y, p_finalPosition.y, p_delta, Model.easing));
+                p_target.anchoredPosition = new Vector2(DOVirtual.EasedValue(p_startPosition.x, p_finalPosition.x, p_delta, p_easing),
+                    DOVirtual.EasedValue(p_startPosition.y, p_finalPosition.y, p_delta, p_easing));
             }
         }
     }

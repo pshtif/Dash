@@ -61,6 +61,8 @@ namespace Dash
 
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
+            Ease easing = GetParameterValue(Model.easing);
+            
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
@@ -70,7 +72,7 @@ namespace Dash
             {
                 Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
                     .SetDelay(delay)
-                    .SetEase(Model.easing)
+                    .SetEase(easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 
                 DOPreview.StartPreview(tween);
@@ -81,6 +83,7 @@ namespace Dash
         {
             float time = GetParameterValue(Model.time);
             float delay = GetParameterValue(Model.delay);
+            Ease easing = GetParameterValue(Model.easing);
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
@@ -93,7 +96,7 @@ namespace Dash
             {
                 Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
                     .SetDelay(delay)
-                    .SetEase(Model.easing)
+                    .SetEase(easing)
                     .OnComplete(() => ExecuteEnd(p_flowData));
 
                 DOPreview.StartPreview(tween);
