@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.8b - 03.04.2021
+
+#### Fixed
+- duplication of nodes with exposed references now create a copy of exposed reference instead of using the same incorrectly
+- rotation parameter in AnimateRotationNode now can accept negative values and rotates correctly
+- when there is no preview node the previewer is disabled
+
+#### Changed
+- easing property in all animation nodes is now Parameter **BREAKING NEEDS RESERIALIZATION**
+
+#### Added
+
 ### Release 0.2.7b - 22.03.2021
 
 #### Fixed
