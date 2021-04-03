@@ -21,8 +21,35 @@ namespace Dash
         [TitledGroup("Advanced", 1000, true)]
         public string comment;
 
+        public NodeModelBase Clone()
+        {
+            // Doing a shallow copy
+            var clone = (NodeModelBase)this.MemberwiseClone();
+            
+            // Exposed references are not copied so they will refer to the same exposed reference instance not just the unity object reference, so they need to be deep copied
+            FieldInfo[] fields = clone.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+            fields.ToList().FindAll(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>)).ForEach(f =>
+            {
+                Type exposedRefType = typeof(ExposedReference<>).MakeGenericType(f.FieldType.GenericTypeArguments[0]);
+                
+                IExposedPropertyTable propertyTable = DashEditorCore.Config.editingGraph.Controller;
+                var curExposedRef = f.GetValue(clone);
+                UnityEngine.Object exposedValue = (UnityEngine.Object)curExposedRef.GetType().GetMethod("Resolve")
+                    .Invoke(curExposedRef, new object[] {propertyTable});
+                
+                var clonedExposedRef = Activator.CreateInstance(exposedRefType);
+                PropertyName newExposedName = new PropertyName(UnityEditor.GUID.Generate().ToString());
+                propertyTable.SetReferenceValue(newExposedName, exposedValue);
+                clonedExposedRef.GetType().GetField("exposedName")
+                    .SetValue(clonedExposedRef, newExposedName);
+                f.SetValue(clone, clonedExposedRef);
+            });
+            
+            return clone;
+        }
 
 #if UNITY_EDITOR
+
         private int groupsMinized = -1;
         
         public virtual bool DrawInspector()
