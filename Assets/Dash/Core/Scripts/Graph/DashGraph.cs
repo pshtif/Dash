@@ -156,6 +156,7 @@ namespace Dash
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
+            if (previewNode == p_node) previewNode = null;
         }
 
         public T GetNodeByType<T>() where T:NodeBase
@@ -376,25 +377,8 @@ namespace Dash
         public Vector2 viewOffset = Vector2.zero;
         public bool showVariables = false;
 
-        private NodeBase _previewNode;
-
-        public NodeBase previewNode
-        {
-            get
-            {
-                if (_previewNode != null)
-                {
-                    return _previewNode;
-                }
-                
-                return GetNodeByType<InputNode>();
-            }
-            set
-            {
-                _previewNode = value;
-            }
-        }
-
+        public NodeBase previewNode;
+        
         public bool IsSelected(NodeBase p_node) => DashEditorCore.selectedNodes.Exists(i => i == Nodes.IndexOf(p_node));
         public bool IsSelecting(NodeBase p_node) => DashEditorCore.selectingNodes.Exists(n => n == Nodes.IndexOf(p_node));
 

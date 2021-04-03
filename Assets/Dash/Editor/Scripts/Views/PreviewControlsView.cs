@@ -60,8 +60,8 @@ namespace Dash
                 {
                     GUI.Label(new Rect(rect.x + 220, rect.y + 32, 180, 30), "No preview node.");
                 }
-                
-                GUI.enabled = !_previewRunning;
+
+                GUI.enabled = !_previewRunning && Graph.previewNode != null;
                 if (GUI.Button(new Rect(rect.x + 4, rect.y + 32, 100, 30), "RUN"))
                 {
                     DashEditorCore.Previewer.StartPreview(Graph.previewNode);
