@@ -32,7 +32,7 @@ namespace Dash
             }
             
             object result;
-            if (GlobalVariables.Resolve(_graph, p_name, out result))
+            if (ReservedVariables.Resolve(_graph, p_name, out result))
             {
                 return result;                
             }
@@ -43,6 +43,12 @@ namespace Dash
             if (_graph.variables.HasVariable(p_name))
             {
                 Variable variable = _graph.variables.GetVariable(p_name);
+                return variable.value;
+            }
+
+            if (DashCore.Instance.variables.HasVariable(p_name))
+            {
+                Variable variable = DashCore.Instance.variables.GetVariable(p_name);
                 return variable.value;
             }
 
@@ -114,7 +120,6 @@ namespace Dash
             if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
             {
                 value = value.GetType().GetMethod("Resolve").Invoke(value, new object[] { _graph.Controller });
-                Debug.Log(value);
             }
     
             p_result = value;

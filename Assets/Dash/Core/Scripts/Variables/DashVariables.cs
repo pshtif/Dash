@@ -13,7 +13,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class GraphVariables : IEnumerable<Variable>
+    public class DashVariables : IEnumerable<Variable>
     {
         public int Count => _variables.Count;
         
@@ -22,7 +22,7 @@ namespace Dash
 
         protected List<Variable> _variables;
 
-        public GraphVariables()
+        public DashVariables()
         {
             _lookup = new Dictionary<string, Variable>();
             _variables = new List<Variable>();
@@ -123,5 +123,17 @@ namespace Dash
         {
             return ((IEnumerable)_lookup.Values).GetEnumerator();
         }
+
+        #if UNITY_EDITOR
+        public void AddNewVariable(Type p_type)
+        {
+            string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
+
+            int index = 0;
+            while (HasVariable(name + index)) index++;
+            
+            AddVariableByType((Type)p_type, name+index, null);
+        }
+        #endif
     }
 }

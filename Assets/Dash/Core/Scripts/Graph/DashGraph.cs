@@ -23,7 +23,7 @@ namespace Dash
     {
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
-        public GraphVariables variables = new GraphVariables();
+        public DashVariables variables = new DashVariables();
 
         private ExtractedClipCache _extractedClipCache;
 

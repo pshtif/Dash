@@ -2,7 +2,9 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Scripting;
 
 [assembly: Preserve]
@@ -27,6 +29,26 @@ namespace Dash
         }
 
         private List<DashController> _controllers = new List<DashController>();
+
+        [NonSerialized]
+        private DashVariables _globalVariables;
+        
+        public DashVariables variables
+        {
+            get
+            {
+                if (_globalVariables == null)
+                {
+                    var component = GameObject.FindObjectOfType<DashGlobalVariables>();
+                    if (component != null)
+                    {
+                        _globalVariables = component.variables;
+                    }
+                }
+
+                return _globalVariables;
+            }
+        }
 
         public void Bind(DashController p_controller)
         {

@@ -169,13 +169,17 @@ namespace Dash
 #if UNITY_EDITOR
         public override void PropertyField()
         {
+            FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
             {
                 EditorGUILayout.LabelField(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
             }
             else
             {
-                if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
+                if (IsEnumProperty(valueField))
+                {
+                    EnumProperty(valueField);
+                } else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
                     objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
@@ -184,45 +188,84 @@ namespace Dash
                     switch (type)
                     {
                         case "System.Int32":
-                            value = (T) Convert.ChangeType(EditorGUILayout.IntField(Convert.ToInt32(value)),
-                                typeof(T));
+                            // value = (T) Convert.ChangeType(EditorGUILayout.IntField(Convert.ToInt32(value)),
+                            //     typeof(T));
+                            EditorGUI.BeginChangeCheck();
+                            var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, intValue);
+                            }
                             break;
                         case "System.Single":
-                            value = (T) Convert.ChangeType(EditorGUILayout.FloatField(Convert.ToSingle(value)),
-                                typeof(T));
+                            // value = (T) Convert.ChangeType(EditorGUILayout.FloatField(Convert.ToSingle(value)),
+                            //     typeof(T));
+                            EditorGUI.BeginChangeCheck();
+                            var floatValue = EditorGUILayout.FloatField((float)valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, floatValue);
+                            }
                             break;
                         case "UnityEngine.Vector2":
-                            value = (T) Convert.ChangeType(
-                                EditorGUILayout.Vector2Field("",
-                                    (Vector2) Convert.ChangeType(value, typeof(Vector2))),
-                                typeof(T));
+                            // value = (T) Convert.ChangeType(
+                            //     EditorGUILayout.Vector2Field("",
+                            //         (Vector2) Convert.ChangeType(value, typeof(Vector2))),
+                            //     typeof(T));
+                            EditorGUI.BeginChangeCheck();
+                            var vector2Value = EditorGUILayout.Vector2Field("", (Vector2) valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, vector2Value);
+                            }
                             break;
                         case "UnityEngine.Vector3":
-                            value = (T) Convert.ChangeType(
-                                EditorGUILayout.Vector3Field("",
-                                    (Vector3) Convert.ChangeType(value, typeof(Vector3))),
-                                typeof(T));
+                            // value = (T) Convert.ChangeType(
+                            //     EditorGUILayout.Vector3Field("",
+                            //         (Vector3) Convert.ChangeType(value, typeof(Vector3))),
+                            //     typeof(T));
+                            EditorGUI.BeginChangeCheck();
+                            var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, vector3Value);
+                            }
                             break;
-                        case "UnityEngine.Quaternion":
-                            Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
-                            Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
-                            v4 = EditorGUILayout.Vector4Field("", v4);
-                            value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
-                            break;
-                        case "UnityEngine.Transform":
-                            value = (T) Convert.ChangeType(
-                                EditorGUILayout.ObjectField((Transform) Convert.ChangeType(value, typeof(Transform)),
-                                    typeof(Transform), false), typeof(T));
-                            break;
-                        case "DG.Tweening.Ease":
-                            value = (T)Convert.ChangeType(EditorGUILayout.EnumPopup(value as Enum), typeof(T));
-                            break;
+                        // case "UnityEngine.Quaternion":
+                        //     Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
+                        //     Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
+                        //     v4 = EditorGUILayout.Vector4Field("", v4);
+                        //     value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
+                        //     break;
                         default:
                             Debug.LogWarning("Variable of type " + type + " is not supported.");
                             break;
                     }
                 }
             }
+        }
+        
+        bool IsEnumProperty(FieldInfo p_fieldInfo)
+        {
+            return p_fieldInfo.FieldType.IsEnum;
+        }
+
+        bool EnumProperty(FieldInfo p_fieldInfo)
+        {
+            if (!IsEnumProperty(p_fieldInfo))
+                return false;
+            
+            EditorGUI.BeginChangeCheck();
+            
+            var newValue = EditorGUILayout.EnumPopup((Enum) p_fieldInfo.GetValue(this));
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                p_fieldInfo.SetValue(this, newValue);
+                return true;
+            }
+
+            return false;
         }
 #endif
     }

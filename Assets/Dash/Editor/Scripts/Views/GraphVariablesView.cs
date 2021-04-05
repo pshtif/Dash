@@ -80,7 +80,11 @@ namespace Dash
 
             GUI.color = p_variable.IsBound ? Color.yellow : Color.gray;
             
-            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
+            GUIStyle style = GUIStyle.none;
+            style.padding.top = 3;
+            style.padding.bottom = -3;
+
+            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), style, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
                 GetVariableMenu(p_variable).ShowAsContext();
             }
