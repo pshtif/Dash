@@ -27,6 +27,8 @@ namespace Dash
             
             if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
             {
+                GUILayout.BeginVertical();
+                
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
