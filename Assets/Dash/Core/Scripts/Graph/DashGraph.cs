@@ -91,15 +91,15 @@ namespace Dash
         }
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            if (!_nodeListeners.ContainsKey(p_name) || _nodeListeners[p_name].Count == 0)
-                return;
-            
-            _nodeListeners[p_name].ForEach(n => n.Execute(p_flowData));
-            
-            if (!_actionListeners.ContainsKey(p_name) || _actionListeners[p_name].Count == 0)
-                return;
+            if (_nodeListeners.ContainsKey(p_name))
+            {
+                _nodeListeners[p_name].ForEach(n => n.Execute(p_flowData));
+            }
 
-            _actionListeners[p_name].ForEach(c => c.Invoke(p_flowData));
+            if (_actionListeners.ContainsKey(p_name))
+            {
+                _actionListeners[p_name].ForEach(c => c.Invoke(p_flowData));
+            }
         }
 
         public void AddListener(string p_name, NodeBase p_node)
@@ -128,22 +128,22 @@ namespace Dash
 
         public void RemoveListener(string p_name, NodeBase p_node)
         {
-            if (!_nodeListeners.ContainsKey(p_name))
-                return;
-
-            _nodeListeners[p_name].Remove(p_node);
-            if (_nodeListeners[p_name].Count == 0)
-                _nodeListeners.Remove(p_name);
+            if (_nodeListeners.ContainsKey(p_name))
+            {
+                _nodeListeners[p_name].Remove(p_node);
+                if (_nodeListeners[p_name].Count == 0)
+                    _nodeListeners.Remove(p_name);
+            }
         }
         
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
         {
-            if (!_actionListeners.ContainsKey(p_name))
-                return;
-
-            _actionListeners[p_name].Remove(p_callback);
-            if (_actionListeners[p_name].Count == 0)
-                _actionListeners.Remove(p_name);
+            if (_actionListeners.ContainsKey(p_name))
+            {
+                _actionListeners[p_name].Remove(p_callback);
+                if (_actionListeners[p_name].Count == 0)
+                    _actionListeners.Remove(p_name);
+            }
         }
 
         public NodeBase GetNodeById(string p_id)
@@ -156,7 +156,9 @@ namespace Dash
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
             ((INodeAccess)p_node).Remove();
             Nodes.Remove(p_node);
+            #if UNITY_EDITOR
             if (previewNode == p_node) previewNode = null;
+            #endif
         }
 
         public T GetNodeByType<T>() where T:NodeBase

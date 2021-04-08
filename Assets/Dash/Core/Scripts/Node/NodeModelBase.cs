@@ -21,6 +21,10 @@ namespace Dash
         [TitledGroup("Advanced", 1000, true)]
         public string comment;
 
+#if UNITY_EDITOR
+
+        private int groupsMinized = -1;
+        
         public NodeModelBase Clone()
         {
             // Doing a shallow copy
@@ -47,10 +51,6 @@ namespace Dash
             
             return clone;
         }
-
-#if UNITY_EDITOR
-
-        private int groupsMinized = -1;
         
         public virtual bool DrawInspector()
         {
