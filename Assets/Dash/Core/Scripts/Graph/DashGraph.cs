@@ -116,14 +116,18 @@ namespace Dash
 
         public void AddListener(string p_name, Action<NodeFlowData> p_callback)
         {
-            if (p_name == "")
-                return;
-            
-            if (!_actionListeners.ContainsKey(p_name))
-                _actionListeners[p_name] = new List<Action<NodeFlowData>>();
-            
-            if (!_actionListeners[p_name].Contains(p_callback))
-                _actionListeners[p_name].Add(p_callback);
+            if (!string.IsNullOrWhiteSpace(p_name))
+            {
+                if (!_actionListeners.ContainsKey(p_name))
+                    _actionListeners[p_name] = new List<Action<NodeFlowData>>();
+
+                if (!_actionListeners[p_name].Contains(p_callback))
+                    _actionListeners[p_name].Add(p_callback);
+            }
+            else
+            {
+                Debug.LogWarning("Invalid event name, cannot be null or whitespace.");
+            }
         }
 
         public void RemoveListener(string p_name, NodeBase p_node)
