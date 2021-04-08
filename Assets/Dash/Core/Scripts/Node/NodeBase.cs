@@ -447,13 +447,6 @@ namespace Dash
             return node;
         }
 
-        public NodeBase Clone()
-        {
-            NodeBase node = Create(GetType(), _graph);
-            node._model = _model.Clone();
-            return node;
-        }
-        
         public virtual void DrawGUI(Rect p_rect)
         {
             GUISkin skin = DashEditorCore.Skin;
