@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer;
 using UnityEngine;
 
 namespace Dash
@@ -28,9 +29,9 @@ namespace Dash
         public NodeModelBase Clone()
         {
             // Doing a shallow copy
-            var clone = (NodeModelBase)this.MemberwiseClone();
-            
-            // Exposed references are not copied so they will refer to the same exposed reference instance not just the unity object reference, so they need to be deep copied
+            var clone = (NodeModelBase)SerializationUtility.CreateCopy(this);
+
+            // Exposed references are not copied in serialization as they are external Unity references so they will refer to the same exposed reference instance not just the unity object reference, we need to copy them additionally
             FieldInfo[] fields = clone.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
             fields.ToList().FindAll(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>)).ForEach(f =>
             {
@@ -48,7 +49,7 @@ namespace Dash
                     .SetValue(clonedExposedRef, newExposedName);
                 f.SetValue(clone, clonedExposedRef);
             });
-            
+
             return clone;
         }
         

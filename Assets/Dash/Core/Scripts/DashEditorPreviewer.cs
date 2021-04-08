@@ -40,6 +40,7 @@ namespace Dash
 
             _isPreviewing = true;
             EditorApplication.update += OnUpdate;
+            DashCore.Instance.FetchGlobalVariables();
             
             // Cloning graph for preview
             _previewGraph = DashEditorCore.Config.editingGraph.Clone();

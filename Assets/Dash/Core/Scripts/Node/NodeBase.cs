@@ -439,6 +439,13 @@ namespace Dash
         {
             _model.ValidateSerialization();
         }
+        
+        public NodeBase Clone()
+        {
+            NodeBase node = Create(GetType(), _graph);
+            node._model = _model.Clone();
+            return node;
+        }
 
         public NodeBase Clone()
         {

@@ -47,7 +47,7 @@ namespace Dash
         }
 
         [NonSerialized]
-        public DashGraph _instancedGraph;
+        private DashGraph _instancedGraph;
         
         public DashGraph Graph => GetGraphInstance();
 

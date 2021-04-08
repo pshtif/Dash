@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class GlobalVariables
+    public class ReservedVariables
     {
         // Using MethodInfo directly without compiling actions using Expression trees as it is slow and problematic on IL2CPP
         private static Dictionary<string, MethodInfo> _methodCache;
@@ -47,7 +47,7 @@ namespace Dash
                 return true;
             }
 
-            PropertyInfo property = typeof(GlobalVariables).GetProperty(p_name, BindingFlags.NonPublic | BindingFlags.Static);
+            PropertyInfo property = typeof(ReservedVariables).GetProperty(p_name, BindingFlags.NonPublic | BindingFlags.Static);
             
             if (property == null)
             {
