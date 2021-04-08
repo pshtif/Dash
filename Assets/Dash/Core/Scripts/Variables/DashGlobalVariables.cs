@@ -1,3 +1,4 @@
+using System;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
@@ -17,7 +18,17 @@ namespace Dash
                 return _variables;
             }
         }
-        
+
+        private void Awake()
+        {
+            DashCore.Instance.SetGlobalVariables(variables);
+        }
+
+        private void OnDestroy()
+        {
+            DashCore.Instance.SetGlobalVariables(null);
+        }
+
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
         

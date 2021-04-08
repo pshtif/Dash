@@ -40,8 +40,9 @@ namespace Dash
 
             _isPreviewing = true;
             EditorApplication.update += OnUpdate;
-            DashCore.Instance.FetchGlobalVariables();
-            
+
+            FetchGlobalVariables();
+
             // Cloning graph for preview
             _previewGraph = DashEditorCore.Config.editingGraph.Clone();
             _previewGraph.Initialize(Controller);
@@ -63,6 +64,24 @@ namespace Dash
             {
                 if (_previewGraph.CurrentExecutionCount == 0)
                     StopPreview();
+            }
+        }
+
+        void FetchGlobalVariables()
+        {
+            var components = GameObject.FindObjectsOfType<DashGlobalVariables>();
+            if (components.Length > 1)
+            {
+                Debug.LogWarning("Multiple global variables found, only first instance used.");
+            }
+            
+            if (components.Length > 0)
+            {
+                DashCore.Instance.SetGlobalVariables(components[0].variables);
+            }
+            else
+            {
+                DashCore.Instance.SetGlobalVariables(null);
             }
         }
 

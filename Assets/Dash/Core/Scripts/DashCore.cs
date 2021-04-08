@@ -35,29 +35,11 @@ namespace Dash
 
         public DashVariables globalVariables => _globalVariables;
 
-        public DashCore()
+        public void SetGlobalVariables(DashVariables p_variables)
         {
-            FetchGlobalVariables();
+            _globalVariables = p_variables;
         }
 
-        public void FetchGlobalVariables() 
-        {
-            var components = GameObject.FindObjectsOfType<DashGlobalVariables>();
-            if (components.Length > 1)
-            {
-                Debug.LogWarning("Multiple global variables found, only first instance used.");
-            }
-            
-            if (components.Length > 0)
-            {
-                _globalVariables = components[0].variables;
-            }
-            else
-            {
-                _globalVariables = null;
-            }
-        }
-        
         public void Bind(DashController p_controller)
         {
             _controllers.Add(p_controller);
