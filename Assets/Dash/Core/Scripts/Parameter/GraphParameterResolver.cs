@@ -46,9 +46,9 @@ namespace Dash
                 return variable.value;
             }
 
-            if (DashCore.Instance.variables.HasVariable(p_name))
+            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.HasVariable(p_name))
             {
-                Variable variable = DashCore.Instance.variables.GetVariable(p_name);
+                Variable variable = DashCore.Instance.globalVariables.GetVariable(p_name);
                 return variable.value;
             }
 
