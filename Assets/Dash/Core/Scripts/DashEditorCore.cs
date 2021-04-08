@@ -17,7 +17,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.2.9b";
+        public const string VERSION = "0.2.10b";
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -54,12 +54,27 @@ namespace Dash
         
         static DashEditorCore()
         {
+            SetExecutionOrder(typeof(DashGlobalVariables), -501);
+            SetExecutionOrder(typeof(DashController), -500);
+            
             CreateConfig();
             CreatePreviewer();
 
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAssemblyReload;
+        }
+        
+        static void SetExecutionOrder(Type p_classType, int p_order){
+            MonoScript[] scripts = (MonoScript[])Resources.FindObjectsOfTypeAll(typeof(MonoScript));
+            
+            MonoScript classScript = scripts.First(s => s.GetClass() == p_classType);
+
+            // We need to check the order first and set only if different otherwise we may get into infinity reload assembly loop.
+            if (MonoImporter.GetExecutionOrder(classScript) != p_order)
+            {
+                MonoImporter.SetExecutionOrder(classScript, p_order);
+            }
         }
 
         public static void SetDirty()
