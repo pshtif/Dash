@@ -151,14 +151,6 @@ namespace Dash
             return Nodes.Find(n => n.Id == p_id);
         }
 
-        public void DeleteNode(NodeBase p_node)
-        {
-            _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
-            ((INodeAccess)p_node).Remove();
-            Nodes.Remove(p_node);
-            if (previewNode == p_node) previewNode = null;
-        }
-
         public T GetNodeByType<T>() where T:NodeBase
         {
             return (T)Nodes.Find(n => n is T);
@@ -391,6 +383,15 @@ namespace Dash
         {
             Nodes?.ForEach(n => n.ValidateSerialization());
             EditorUtility.SetDirty(this);
+        }
+        
+        public void DeleteNode(NodeBase p_node)
+        {
+            _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
+            ((INodeAccess)p_node).Remove();
+            Nodes.Remove(p_node);
+            
+            if (previewNode == p_node) previewNode = null;
         }
         
         public void DrawGUI(Rect p_rect)

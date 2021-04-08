@@ -277,60 +277,6 @@ namespace Dash
             _attributesInitialized = true;
         }
 
-        public NodeBase Clone()
-        {
-            NodeBase node = Create(GetType(), _graph);
-            node._model = _model.Clone();
-            return node;
-        }
-        
-        public NodeBase Clone2()
-        {
-            NodeBase clone = (NodeBase)SerializationUtility.CreateCopy(this);
-            clone._graph = _graph;
-            
-            return clone;
-        }
-
-        public NodeBase Clone3()
-        {
-            List<UnityEngine.Object> references = new List<UnityEngine.Object>();
-            byte[] bytes = this.SerializeToBytes(DataFormat.Binary, out references);
-
-            var node = DeserializeFromBytes(bytes, DataFormat.Binary, references);
-
-            return node;
-        }
-
-        public byte[] SerializeToBytes(DataFormat p_format, out List<UnityEngine.Object> p_references)
-        {
-            byte[] bytes;
-
-            using (var cachedContext = Cache<SerializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything; 
-                bytes = SerializationUtility.SerializeValue<NodeBase>(this, p_format, out p_references, cachedContext.Value);
-            }
-
-            Debug.Log(p_references[0]);
-            
-            return bytes;
-        }
-
-        public NodeBase DeserializeFromBytes(byte[] p_bytes, DataFormat p_format, List<UnityEngine.Object> p_references)
-        {
-            NodeBase node;
-            
-            using (var cachedContext = Cache<DeserializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                node = (NodeBase)SerializationUtility.DeserializeValueWeak(p_bytes, p_format, p_references);
-            }
-
-            Debug.Log(node._graph);
-            return node;
-        }
-        
         protected void ValidateUniqueId()
         {
             string id = _model.id;
@@ -492,6 +438,13 @@ namespace Dash
         public void ValidateSerialization()
         {
             _model.ValidateSerialization();
+        }
+        
+        public NodeBase Clone()
+        {
+            NodeBase node = Create(GetType(), _graph);
+            node._model = _model.Clone();
+            return node;
         }
 
         public virtual void DrawGUI(Rect p_rect)
