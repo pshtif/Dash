@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## BETA RELEASES
 
+### Release 0.2.9b - 09.04.2021
+
+#### Fixed
+- fixed issue with cloned nodes referencing same parameter instance
+- fixed issue with invalid inspector of new DashController
+- fixed issue with callback listeners not working when there zero node listeners
+
+#### Changed
+- multiple node methods to create, delete, clone nodes were moved to Editor assembly
+
+#### Added
+- added DashGlobalVariables for global variables support 
+
 ### Release 0.2.8b - 03.04.2021
 
 #### Fixed
