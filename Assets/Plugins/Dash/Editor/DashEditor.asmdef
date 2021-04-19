@@ -1,0 +1,18 @@
+{
+    "name": "DashEditor",
+    "references": [
+        "GUID:6eb3fab2df54d4a0ac79e873fbca31ed",
+        "GUID:775e0a0a8d40e0348aef1a9d26aebe37"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
