@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Tries to increment a number inside a TextMeshPro text.")]
+    [Help("Sets text on a TextMeshPro component.")]
     [Category(NodeCategoryType.MODIFIER)]
     [InputCount(1)]
     [OutputCount(1)]
-    public class IncrementTextNode : RetargetNodeBase<IncrementTextNodeModel>
+    public class SetTextNode : RetargetNodeBase<SetTextNodeModel>
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
@@ -23,33 +23,7 @@ namespace Dash
             if (CheckException(tmp, "Target doesn't contain TMP_Text component"))
                 return;
 
-            string text = tmp.text;
-            if (Model.useDotFormating)
-            {
-                text = text.Replace(".", "");
-            }
-
-            int value;
-            if (!Int32.TryParse(text, out value))
-            {
-                Debug.LogWarning("Not a valid Int value in target text");
-                return;
-            }
-
-            value += Model.increment;
-            text = value.ToString();
-
-            if (Model.useDotFormating)
-            {
-                int i = text.Length;
-                while (i > 3)
-                {
-                    i -= 3;
-                    text = text.Insert(i, ".");
-                }
-            }
-
-            tmp.text = text;
+            tmp.text = GetParameterValue(Model.text);
             
             OnExecuteOutput(0, p_flowData);
             OnExecuteEnd();

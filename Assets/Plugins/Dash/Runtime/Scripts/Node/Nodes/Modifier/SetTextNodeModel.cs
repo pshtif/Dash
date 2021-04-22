@@ -4,9 +4,8 @@
 
 namespace Dash
 {
-    public class IncrementTextNodeModel : RetargetNodeModel
+    public class SetTextNodeModel : RetargetNodeModel
     {
-        public bool useDotFormating = true;
-        public int increment = 1;
+        public Parameter<string> text = new Parameter<string>("");
     }
 }
