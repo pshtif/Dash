@@ -187,9 +187,23 @@ namespace Dash
                     string type = typeof(T).ToString();
                     switch (type)
                     {
+                        case "System.String":
+                            EditorGUI.BeginChangeCheck();
+                            var stringValue = EditorGUILayout.TextField((string)valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, stringValue);
+                            }
+                            break;
+                        case "System.Boolean":
+                            EditorGUI.BeginChangeCheck();
+                            var boolValue = EditorGUILayout.Toggle((bool)valueField.GetValue(this), GUILayout.Width(16));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, boolValue);
+                            }
+                            break;
                         case "System.Int32":
-                            // value = (T) Convert.ChangeType(EditorGUILayout.IntField(Convert.ToInt32(value)),
-                            //     typeof(T));
                             EditorGUI.BeginChangeCheck();
                             var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this));
                             if (EditorGUI.EndChangeCheck())
@@ -220,10 +234,6 @@ namespace Dash
                             }
                             break;
                         case "UnityEngine.Vector3":
-                            // value = (T) Convert.ChangeType(
-                            //     EditorGUILayout.Vector3Field("",
-                            //         (Vector3) Convert.ChangeType(value, typeof(Vector3))),
-                            //     typeof(T));
                             EditorGUI.BeginChangeCheck();
                             var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this));
                             if (EditorGUI.EndChangeCheck())
@@ -231,12 +241,24 @@ namespace Dash
                                 valueField.SetValue(this, vector3Value);
                             }
                             break;
-                        // case "UnityEngine.Quaternion":
-                        //     Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
-                        //     Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
-                        //     v4 = EditorGUILayout.Vector4Field("", v4);
-                        //     value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
-                        //     break;
+                        case "UnityEngine.Vector4":
+                            EditorGUI.BeginChangeCheck();
+                            var vector4Value = EditorGUILayout.Vector4Field("", (Vector4) valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, vector4Value);
+                            }
+                            break;
+                        case "UnityEngine.Quaternion":
+                            EditorGUI.BeginChangeCheck();
+                            Quaternion q = (Quaternion) valueField.GetValue(this);
+                            Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
+                            v4 = EditorGUILayout.Vector4Field("", v4);
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, new Quaternion(v4.x, v4.y, v4.z, v4.w));
+                            }
+                            break;
                         default:
                             Debug.LogWarning("Variable of type " + type + " is not supported.");
                             break;

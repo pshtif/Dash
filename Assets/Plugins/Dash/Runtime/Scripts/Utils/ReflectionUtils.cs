@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using OdinSerializer.Utilities;
 
 namespace Dash
 {
@@ -54,6 +55,28 @@ namespace Dash
         public static string GetTypeNameWithoutAssembly(string p_type)
         {
             return p_type.Substring(p_type.LastIndexOf('.')+1);
+        }
+
+        static private Type[] _typeCache;
+        static private Assembly[] _assemblyCache;
+
+        private static Assembly[] GetAllAssemblies()
+        {
+            return _assemblyCache != null ? _assemblyCache : _assemblyCache = AppDomain.CurrentDomain.GetAssemblies();   
+        } 
+
+        public static Type[] GetAllTypes() {
+            if ( _typeCache != null ) {
+                return _typeCache;
+            }
+
+            var assemblies = GetAllAssemblies();
+
+            var result = new List<Type>();
+
+            assemblies.ForEach(a => result.AddRange(a.GetExportedTypes()));
+            
+            return _typeCache = result.OrderBy(t => t.Namespace).ThenBy(t => t.Name).ToArray();
         }
     }
 }

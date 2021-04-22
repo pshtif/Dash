@@ -14,8 +14,11 @@ namespace Dash
     {
         static private Type[] SupportedBasicTypes =
         {
+            typeof(bool),
+            typeof(string),
             typeof(int),
             typeof(float),
+            typeof(Vector4),
             typeof(Vector3),
             typeof(Vector2),
             typeof(Quaternion)
