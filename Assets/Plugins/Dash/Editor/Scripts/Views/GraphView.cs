@@ -343,7 +343,7 @@ namespace Dash
 
         void ProcessRightClick(Event p_event, Rect p_rect)
         {
-            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || p_event.button != 1 || Graph == null)
+            if (p_event.button != 1)
                 return;
             
             if (p_event.type == EventType.MouseDown)
@@ -361,7 +361,12 @@ namespace Dash
                     _rightDrag = true;
                     Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
                 }
+                
+                DashEditorWindow.SetDirty(true);
             }
+            
+            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || Graph == null)
+                return;
 
             if (p_event.type == EventType.MouseUp)
             {
@@ -404,9 +409,9 @@ namespace Dash
                 }
 
                 p_event.Use();
+                
+                DashEditorWindow.SetDirty(true);
             }
-            
-            DashEditorWindow.SetDirty(true);
         }
 
         void AddSelectedNode(int p_nodeIndex)
