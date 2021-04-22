@@ -3,6 +3,8 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -54,6 +56,21 @@ namespace Dash
                 p_to.rect.height * p_to.pivot.y + p_to.rect.yMin);
             
             return p_to.anchoredPosition + localPosition - toPivotOffset;
+        }
+
+        public static Transform Find(this Transform p_parent, string p_name, bool p_includeInactive = false)
+        {
+            if (!p_includeInactive)
+            {
+                return p_parent.Find(p_name);
+            }
+            else
+            {
+                Debug.Log(p_parent);
+                Transform[] children = p_parent.GetComponentsInChildren<Transform>(true);
+                //children.ForEach(c => Debug.Log(c.name));
+                return children.FirstOrDefault(c => c.name == p_name);
+            }
         }
         
         public static Transform DeepFind(this Transform p_parent, string p_name, bool p_partialMatch = false)

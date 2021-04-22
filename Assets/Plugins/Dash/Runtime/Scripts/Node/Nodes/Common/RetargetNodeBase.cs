@@ -58,7 +58,7 @@ namespace Dash
                     if (Model.isChild)
                     {
                         string find = GetParameterValue(Model.target, p_flowData);
-                        target = target.Find(find);
+                        target = target.Find(find, true);
                     }
                     else
                     {
