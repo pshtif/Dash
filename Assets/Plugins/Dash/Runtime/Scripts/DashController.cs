@@ -152,8 +152,8 @@ namespace Dash
             if (Graph == null)
                 return;
             
-            p_flowData = p_flowData.Clone();
-
+            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(transform) : p_flowData.Clone();
+                
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, transform);
