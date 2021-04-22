@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Plugins/Dash/Examples/Scenes/TestScene.unity
+    path: Assets/Examples/Scenes/TestScene.unity
     guid: dab2833a55dfe3e4898df100c7822746
   m_configObjects: {}
