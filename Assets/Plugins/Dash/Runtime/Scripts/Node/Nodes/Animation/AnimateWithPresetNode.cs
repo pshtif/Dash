@@ -22,17 +22,13 @@ namespace Dash
     [Serializable]
     public class AnimateWithPresetNode : AnimationNodeBase<AnimateWithPresetNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
             Ease easing = GetParameterValue(Model.easing, p_flowData);
-            
-            Model.preset.Execute(p_target, time, delay, easing, () =>
-            {
-                OnExecuteEnd();
-                OnExecuteOutput(0, p_flowData);
-            });
+
+            return Model.preset.Execute(p_target, time, delay, easing);
         }
     }
 }

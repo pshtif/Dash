@@ -17,12 +17,12 @@ namespace Dash
     [Serializable]
     public class AnimateAnchoredPositionNode : AnimationNodeBase<AnimateAnchoredPositionNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
 
             if (CheckException(rectTransform, "No RectTransform component found on target"))
-                return;
+                return null;
 
             Vector2 fromPosition = GetParameterValue<Vector2>(Model.fromPosition, p_flowData);
 
@@ -40,7 +40,7 @@ namespace Dash
             if (time == 0)
             {
                 UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition, easing);
-                ExecuteEnd(p_flowData);
+                return null;
             }
             else
             {
@@ -49,17 +49,10 @@ namespace Dash
                     .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition, easing), 0,
                         1, time)
                     .SetDelay(delay)
-                    .SetEase(Ease.Linear)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
-
-                DOPreview.StartPreview(tween);
+                    .SetEase(Ease.Linear);
+                    
+                return tween;
             }
-        }
-        
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
         }
 
         protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Vector2 p_finalPosition, Ease p_easing)

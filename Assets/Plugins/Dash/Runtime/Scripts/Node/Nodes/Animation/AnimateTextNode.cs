@@ -16,12 +16,12 @@ namespace Dash
     [InputCount(1)]
     public class AnimateTextNode : AnimationNodeBase<AnimateTextNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             TMP_Text text = p_target.GetComponent<TMP_Text>();
 
             if (CheckException(text, "No TMP_Text component found on target"))
-                return;
+                return null;
             
             text.ForceMeshUpdate();
             for (int i = 0; i < text.text.Length; i++)
@@ -36,14 +36,8 @@ namespace Dash
                  DOPreview.StartPreview(tween);
             }
 
-            Tween call = DOVirtual.DelayedCall(text.text.Length * .1f, () => ExecuteEnd(p_flowData));
-            DOPreview.StartPreview(call);
-        }
-        
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
+            Tween call = DOVirtual.DelayedCall(text.text.Length * .1f, null);
+            return call;
         }
     }
 }

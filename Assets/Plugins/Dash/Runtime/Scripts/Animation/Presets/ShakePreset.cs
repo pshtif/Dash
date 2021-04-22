@@ -15,7 +15,7 @@ namespace Dash
         public float shakeStrength = 1;
         public bool fade = false;
 
-        public void Execute(Transform p_transform, float p_duration, float p_delay, Ease p_ease, Action p_onComplete)
+        public Tween Execute(Transform p_transform, float p_duration, float p_delay, Ease p_ease)
         {
             RectTransform rect = p_transform as RectTransform;
 
@@ -39,9 +39,8 @@ namespace Dash
                     .SetEase(Ease.InQuad);
                 sequence.Append(tween2);
             }
-
-            sequence.OnComplete(() => p_onComplete?.Invoke());
-            DOPreview.StartPreview(sequence);
+            
+            return sequence;
         }
     }
 }

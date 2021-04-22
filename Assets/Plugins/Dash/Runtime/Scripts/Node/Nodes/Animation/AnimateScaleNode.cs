@@ -16,12 +16,12 @@ namespace Dash
     [Serializable]
     public class AnimateScaleNode : AnimationNodeBase<AnimateScaleNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             Transform targetTransform = p_target.transform;
 
             if (CheckException(targetTransform, "No RectTransform component found on target"))
-                return;
+                return null;
 
             Vector3 fromScale = GetParameterValue(Model.fromScale, p_flowData);
             
@@ -40,7 +40,8 @@ namespace Dash
             if (time == 0)
             {
                 UpdateTween(targetTransform, 1, p_flowData, startScale, toScale, easing);
-                ExecuteEnd(p_flowData);
+                
+                return null;
             }
             else
             {
@@ -49,17 +50,10 @@ namespace Dash
                     .To((f) => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easing), 0,
                         1, time)
                     .SetDelay(delay)
-                    .SetEase(Ease.Linear)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
-
-                DOPreview.StartPreview(tween);
+                    .SetEase(Ease.Linear);
+                
+                return tween;
             }
-        }
-        
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
         }
 
         protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale, Ease p_easing)

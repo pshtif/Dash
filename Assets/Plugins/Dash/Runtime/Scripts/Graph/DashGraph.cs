@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DG.Tweening;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
@@ -340,6 +341,8 @@ namespace Dash
 
 #region INTERNAL_ACCESS
 
+        private List<(Object key,Tween value)> _activeTweens;
+
         DashGraph IInternalGraphAccess.parentGraph
         {
             set
@@ -351,6 +354,26 @@ namespace Dash
         void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
         {
             OnOutput?.Invoke(p_node, p_flowData);
+        }
+
+        void IInternalGraphAccess.AddActiveTween(Object p_target, Tween p_tween)
+        {
+            if (_activeTweens == null) _activeTweens = new List<(Object key, Tween value)>();
+            
+            _activeTweens.Add((p_target,p_tween));
+        }
+
+        void IInternalGraphAccess.RemoveActiveTween(Tween p_tween)
+        {
+            if (_activeTweens != null)
+            {
+                _activeTweens.RemoveAll(t => t.value == p_tween);
+            }
+        }
+
+        void IInternalGraphAccess.StopActiveTweens(Object p_target, bool p_complete = false)
+        {
+            _activeTweens.FindAll(t => t.key == p_target || p_target == null).ForEach(t => t.value.Kill(p_complete));
         }
 
 #endregion

@@ -22,7 +22,7 @@ namespace Dash
     [Serializable]
     public class AnimateColorNode : AnimationNodeBase<AnimateColorNodeModel>
     {
-        override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        override protected Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             switch (Model.targetType)
             {
@@ -30,7 +30,7 @@ namespace Dash
                     Image image = p_target.GetComponent<Image>();
                     if (!CheckException(image, "No Image component found on target")) 
                     {
-                        ExecuteAs(image, p_flowData);
+                        return ExecuteAs(image, p_flowData);
                     }
 
                     break;
@@ -38,23 +38,16 @@ namespace Dash
                     TMP_Text text = p_target.GetComponent<TMP_Text>();
                     if (!CheckException(text, "No TMP_Text component found on target"))
                     {
-                        ExecuteAs(text, p_flowData);
+                        return ExecuteAs(text, p_flowData);
                     }
 
                     break;
-                default:
-                    ExecuteEnd(p_flowData);
-                    break;
             }
+            
+            return null;
         }
 
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
-        }
-
-        void ExecuteAs(Image p_target, NodeFlowData p_flowData)
+        Tween ExecuteAs(Image p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
@@ -66,20 +59,20 @@ namespace Dash
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
-                ExecuteEnd(p_flowData);
+
+                return null;
             }
             else
             {
                 Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
                     .SetDelay(delay)
-                    .SetEase(easing)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
+                    .SetEase(easing);
 
-                DOPreview.StartPreview(tween);
+                return tween;
             }
         }
         
-        void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
+        Tween ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
@@ -90,16 +83,15 @@ namespace Dash
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
-                ExecuteEnd(p_flowData);
+                return null;
             }
             else
             {
                 Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
                     .SetDelay(delay)
-                    .SetEase(easing)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
-
-                DOPreview.StartPreview(tween);
+                    .SetEase(easing);
+                
+                return tween;
             }
         }
 

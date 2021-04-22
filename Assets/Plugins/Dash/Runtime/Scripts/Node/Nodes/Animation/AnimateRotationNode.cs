@@ -17,12 +17,12 @@ namespace Dash
     [Serializable]
     public class AnimateRotationNode : AnimationNodeBase<AnimateRotationNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             Transform targetTransform = p_target.transform;
 
             if (CheckException(targetTransform, "No RectTransform component found on target"))
-                return;
+                return null;
 
             Vector3 fromRotation = GetParameterValue(Model.fromRotation, p_flowData);
             fromRotation.x = fromRotation.x > 180 ? fromRotation.x - 360 : fromRotation.x; 
@@ -44,7 +44,8 @@ namespace Dash
             if (time == 0)
             {
                 UpdateTween(targetTransform, 1, p_flowData, startRotation, toRotation, easing);
-                ExecuteEnd(p_flowData);
+                
+                return null;
             }
             else
             {
@@ -53,17 +54,10 @@ namespace Dash
                     .To((f) => UpdateTween(targetTransform, f, p_flowData, startRotation, toRotation, easing), 0,
                         1, time)
                     .SetDelay(delay)
-                    .SetEase(Ease.Linear)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
+                    .SetEase(Ease.Linear);
 
-                DOPreview.StartPreview(tween);
+                return tween;
             }
-        }
-        
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
         }
 
         protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation, Vector3 p_toRotation, Ease p_easing)
