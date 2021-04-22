@@ -47,9 +47,7 @@ namespace Dash
         {
             if (isExpression)
             {
-                // TODO Maybe do this directly after editing?
-                expression = expression.RemoveWhitespace();
-                if (string.IsNullOrEmpty(expression))
+                if (string.IsNullOrWhiteSpace(expression))
                 {
                     Debug.LogWarning("Expression cannot be empty returning default value.");
                     return default(T);
