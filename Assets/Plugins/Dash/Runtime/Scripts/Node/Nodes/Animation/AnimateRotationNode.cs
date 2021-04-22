@@ -37,9 +37,9 @@ namespace Dash
 
             Vector3 toRotation = GetParameterValue<Vector3>(Model.toRotation, p_flowData);
 
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            Ease easing = GetParameterValue(Model.easing, p_flowData);
             
             if (time == 0)
             {

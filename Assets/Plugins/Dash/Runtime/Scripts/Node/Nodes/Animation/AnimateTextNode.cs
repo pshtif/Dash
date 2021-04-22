@@ -27,7 +27,7 @@ namespace Dash
             for (int i = 0; i < text.text.Length; i++)
                  TMPTweenExtension.Scale(text, i, 0);
             
-            float time = GetParameterValue(Model.time);
+            float time = GetParameterValue(Model.time, p_flowData);
 
             for (int i = 0; i < text.text.Length; i++)
             {

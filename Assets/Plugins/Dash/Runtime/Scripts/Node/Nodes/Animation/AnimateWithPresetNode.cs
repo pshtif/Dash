@@ -24,9 +24,9 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            Ease easing = GetParameterValue(Model.easing, p_flowData);
             
             Model.preset.Execute(p_target, time, delay, easing, () =>
             {

@@ -33,10 +33,10 @@ namespace Dash
                 : rectTransform.anchoredPosition;
 
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
-            Ease easing = GetParameterValue(Model.easing);
+            Ease easing = GetParameterValue(Model.easing, p_flowData);
 
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
             if (time == 0)
             {
                 UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition, easing);

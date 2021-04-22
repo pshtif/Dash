@@ -59,9 +59,9 @@ namespace Dash
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            Ease easing = GetParameterValue(Model.easing, p_flowData);
             
             if (time == 0)
             {
@@ -81,9 +81,9 @@ namespace Dash
         
         void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            Ease easing = GetParameterValue(Model.easing, p_flowData);
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 

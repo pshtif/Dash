@@ -222,7 +222,7 @@ namespace Dash
             hasErrorsInExecution = true;
         }
         
-        protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData = null)
+        protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
         {
             T value = p_parameter.GetValue(ParameterResolver, p_flowData);
             if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
