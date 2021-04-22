@@ -18,7 +18,7 @@ namespace Dash
             // Debug.Log("Call: "+p_className+", "+p_methodName+", "+p_parameters.Length);
             
             Assembly editorAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                .First(a => a.FullName.StartsWith("Assembly-CSharp-Editor,"));
+                .First(a => a.FullName.StartsWith("DashEditor"));
 
             Type utilityType = editorAssembly.GetTypes()
                 .FirstOrDefault(t => t.FullName.Contains(p_className));
