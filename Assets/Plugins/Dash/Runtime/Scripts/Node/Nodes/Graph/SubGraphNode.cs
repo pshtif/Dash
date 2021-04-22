@@ -16,7 +16,7 @@ namespace Dash
     public class SubGraphNode : NodeBase<SubGraphNodeModel>
     {
         [NonSerialized]
-        private DashGraph _instancedSubGraph;
+        private DashGraph _subGraphInstance;
 
         private int _selfReferenceIndex = -1;
         private byte[] _boundSubGraphData;
@@ -79,7 +79,7 @@ namespace Dash
                 return Model.graphAsset;
             }
 #endif
-            if (_instancedSubGraph == null)
+            if (_subGraphInstance == null)
             {
                 if (Model.useAsset && Model.graphAsset != null)
                 {
@@ -91,7 +91,7 @@ namespace Dash
                 }
             }
             
-            return _instancedSubGraph;
+            return _subGraphInstance;
         }
         
         void InstanceAssetGraph()
@@ -99,30 +99,30 @@ namespace Dash
             if (Model.graphAsset == null)
                 return;
             
-            _instancedSubGraph = Model.graphAsset.Clone();
+            _subGraphInstance = Model.graphAsset.Clone();
         }
         
         void InstanceBoundGraph()
         {
-            _instancedSubGraph = ScriptableObject.CreateInstance<DashGraph>();
+            _subGraphInstance = ScriptableObject.CreateInstance<DashGraph>();
             
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
             {
-                _boundSubGraphReferences[_selfReferenceIndex] = _instancedSubGraph;
-                _instancedSubGraph.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
+                _boundSubGraphReferences[_selfReferenceIndex] = _subGraphInstance;
+                _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            ((IInternalGraphAccess)_instancedSubGraph).parentGraph = Graph;
-            _instancedSubGraph.name = Graph.name+"/"+Model.id+"[Bound]";
+            ((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
+            _subGraphInstance.name = Graph.name+"/"+Model.id+"[Bound]";
         }
         
         public void ReserializeBound()
         {
-            if (_instancedSubGraph != null)
+            if (_subGraphInstance != null)
             {
-                _boundSubGraphData = _instancedSubGraph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
-                _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == _instancedSubGraph);
+                _boundSubGraphData = _subGraphInstance.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
+                _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == _subGraphInstance);
             }
         }
 

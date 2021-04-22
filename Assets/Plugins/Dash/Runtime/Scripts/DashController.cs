@@ -47,7 +47,7 @@ namespace Dash
         }
 
         [NonSerialized]
-        private DashGraph _instancedGraph;
+        private DashGraph _graphInstance;
         
         public DashGraph Graph => GetGraphInstance();
 
@@ -61,7 +61,7 @@ namespace Dash
                 return _assetGraph;
             }
 #endif
-            if (_instancedGraph == null)
+            if (_graphInstance == null)
             {
                 if (_boundGraphData?.Length > 0)
                 {
@@ -73,21 +73,21 @@ namespace Dash
                 }
             }
             
-            return _instancedGraph;
+            return _graphInstance;
         }
         
         void InstanceBoundGraph()
         {
-            _instancedGraph = ScriptableObject.CreateInstance<DashGraph>();
+            _graphInstance = ScriptableObject.CreateInstance<DashGraph>();
             
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
             {
-                _boundGraphReferences[_selfReferenceIndex] = _instancedGraph;
+                _boundGraphReferences[_selfReferenceIndex] = _graphInstance;
             }
 
-            _instancedGraph.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
-            _instancedGraph.name = "Bound";
+            _graphInstance.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
+            _graphInstance.name = "Bound";
         }
 
         void InstanceAssetGraph()
@@ -95,7 +95,7 @@ namespace Dash
             if (_assetGraph == null)
                 return;
             
-            _instancedGraph = _assetGraph.Clone();
+            _graphInstance = _assetGraph.Clone();
         }
 
         public bool autoStart = true;
@@ -169,10 +169,10 @@ namespace Dash
         
         public void ReserializeBound()
         {
-            if (_instancedGraph != null)
+            if (_graphInstance != null)
             {
-                _boundGraphData = _instancedGraph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
-                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _instancedGraph);
+                _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
+                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
             
             //EditorUtility.SetDirty(this);
@@ -242,7 +242,7 @@ namespace Dash
         public void BindGraph(DashGraph p_graph)
         {
             _assetGraph = null;
-            _instancedGraph = null;
+            _graphInstance = null;
             _boundGraphData = null;
             _boundGraphReferences = null;
 
