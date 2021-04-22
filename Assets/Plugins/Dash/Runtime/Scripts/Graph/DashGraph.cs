@@ -341,6 +341,7 @@ namespace Dash
 
 #region INTERNAL_ACCESS
 
+        [NonSerialized]
         private List<(Object key,Tween value)> _activeTweens;
 
         DashGraph IInternalGraphAccess.parentGraph
@@ -365,15 +366,13 @@ namespace Dash
 
         void IInternalGraphAccess.RemoveActiveTween(Tween p_tween)
         {
-            if (_activeTweens != null)
-            {
-                _activeTweens.RemoveAll(t => t.value == p_tween);
-            }
+            _activeTweens?.RemoveAll(t => t.value == p_tween);
         }
 
         void IInternalGraphAccess.StopActiveTweens(Object p_target, bool p_complete = false)
         {
-            _activeTweens.FindAll(t => t.key == p_target || p_target == null).ForEach(t => t.value.Kill(p_complete));
+            _activeTweens?.FindAll(t => t.key == p_target || p_target == null).ForEach(t => t.value.Kill(p_complete));
+            _activeTweens?.RemoveAll(t => t.key == p_target || p_target == null);
         }
 
 #endregion
