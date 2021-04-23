@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Dash
 {
@@ -90,7 +92,7 @@ namespace Dash
         {
             if (duration == 0 && delay == 0)
             {
-                _updateCallback?.Invoke(EaseValue(from, to, current/(duration-delay), easeType));
+                _updateCallback?.Invoke(EaseValue(from, to, 1, easeType));
                 _completeCallback?.Invoke();
                 Clean();
             }
@@ -102,7 +104,14 @@ namespace Dash
 
         public void Kill(bool p_complete)
         {
-            // TODO Implement
+            if (p_complete)
+            {
+                current = duration+delay;
+                _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
+                _completeCallback?.Invoke();
+            }
+            
+            Clean();
         }
 
         bool IInternalTweenAccess.Update(float p_time)
@@ -111,17 +120,18 @@ namespace Dash
                 return false;
             
             current += p_time;
-            if (current > duration + delay)
+            if (current >= duration + delay)
             {
                 current = duration+delay;
-                _updateCallback?.Invoke(EaseValue(from, to, current/(duration-delay), easeType));
+                
+                _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
                 _completeCallback?.Invoke();
                 Clean();
                 return true;
             }
             else
             {
-                _updateCallback?.Invoke(EaseValue(from, to, current/(duration-delay), easeType));
+                _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
                 return false;
             }
         }
@@ -139,9 +149,9 @@ namespace Dash
             _pooledTweens.Clear();
         }
         
-        public static float EaseValue(float p_from, float p_to, float p_delta, EaseType p_easing)
+        public static float EaseValue(float p_from, float p_to, float p_delta, EaseType p_easeType)
         {
-            return p_from + (p_to - p_from) * EaseFunctions.Evaluate(p_delta, 1f, p_easing);
+            return p_from + (p_to - p_from) * EaseFunctions.Evaluate(p_delta, 1f, p_easeType);
         }
     }
 }
