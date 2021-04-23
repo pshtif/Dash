@@ -66,6 +66,7 @@ namespace Dash
             
             GUIStyle minStyle = GUIStyle.none;
             minStyle.normal.textColor = Color.white;
+            minStyle.fontStyle = FontStyle.Bold;
             minStyle.fontSize = 16;
             
             var fields = this.GetType().GetFields();
@@ -90,18 +91,17 @@ namespace Dash
                     }
 
                     GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
-                    GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"),
-                        GUILayout.Width(120));
+                    GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"));
                     
                     Rect lastRect = GUILayoutUtility.GetLastRect();
 
-                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
-                        minStyle))
+                    bool isMinimized = (groupsMinized & groupMask) != 0;
+                    if (GUI.Button(new Rect(lastRect.x, lastRect.y - 25, lastRect.width, 20), "", minStyle))
                     {
-                        groupsMinized = (groupsMinized & groupMask) == 0
-                            ? groupsMinized + groupMask
-                            : groupsMinized - groupMask;
+                        groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
                     }
+                    
+                    GUI.Label(new Rect(lastRect.x + 316 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", minStyle);
 
                     lastGroup = currentGroup;
                     lastGroupMinimized = (groupsMinized & groupMask) != 0;
