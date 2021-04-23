@@ -406,7 +406,7 @@ namespace Dash
         public void ValidateSerialization()
         {
             Nodes?.ForEach(n => n.ValidateSerialization());
-            EditorUtility.SetDirty(this);
+            DashEditorCore.SetDirty();
         }
         
         public void DeleteNode(NodeBase p_node)
