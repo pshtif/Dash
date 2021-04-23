@@ -40,11 +40,13 @@ namespace Dash
 
             EditorGUIUtility.labelWidth = 100;
 
+            GameObject boundObject = Graph.Controller == null ? null : Graph.Controller.gameObject;
+            
             int index = 0;
             foreach (var variable in Graph.variables)
             {
                 //var r = new Rect(0, 25 + 24 * index, rect.width, 30);
-                VariableField(variable);
+                GUIVariableUtils.VariableField(Graph.variables, variable.Name, boundObject);
                 EditorGUILayout.Space(4);
                 index++;
             }

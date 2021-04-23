@@ -197,6 +197,7 @@ namespace Dash
                             break;
                         case "System.Boolean":
                             EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.Space(0, true);
                             var boolValue = EditorGUILayout.Toggle((bool)valueField.GetValue(this), GUILayout.Width(16));
                             if (EditorGUI.EndChangeCheck())
                             {

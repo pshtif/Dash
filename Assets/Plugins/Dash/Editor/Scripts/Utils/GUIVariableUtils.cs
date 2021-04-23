@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ namespace Dash
         {
             var variable = p_variables.GetVariable(p_name);
             EditorGUILayout.BeginHorizontal();
-            string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(120));
-            EditorGUILayout.Space(8);
+            string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(140));
+            EditorGUILayout.Space(4, false);
             if (newName != p_name) 
             {
                 p_variables.RenameVariable(p_name, newName);
@@ -23,11 +24,14 @@ namespace Dash
             variable.PropertyField();
 
             GUI.color = variable.IsBound ? Color.yellow : Color.gray;
-            
-            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
+
+            EditorGUILayout.BeginVertical(GUILayout.Width(16));
+            EditorGUILayout.Space(2,false);
+            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
                 GetVariableMenu(p_variables, p_name, p_boundObject).ShowAsContext();
             }
+            EditorGUILayout.EndVertical();
             
             GUI.color = Color.white;
 
@@ -45,14 +49,18 @@ namespace Dash
             } 
             else
             {
-                Dictionary<Component, List<PropertyInfo>> bindableFields = GetBindableProperties(p_variables, p_name, p_boundObject);
-                foreach (var infoKeys in bindableFields)
+                if (p_boundObject != null)
                 {
-                    foreach (PropertyInfo property in infoKeys.Value)
+                    Dictionary<Component, List<PropertyInfo>> bindableFields =
+                        GetBindableProperties(p_variables, p_name, p_boundObject);
+                    foreach (var infoKeys in bindableFields)
                     {
-                        //PropertyInfo prop = property;
-                        menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key + "/" + property.Name), false,
-                            () => OnBindVariable(variable, property, infoKeys.Key));
+                        foreach (PropertyInfo property in infoKeys.Value)
+                        {
+                            menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key.name + "/" + property.Name),
+                                false,
+                                () => OnBindVariable(variable, property, infoKeys.Key));
+                        }
                     }
                 }
             }
