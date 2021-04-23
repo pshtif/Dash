@@ -14,7 +14,7 @@ namespace Dash
         
         void RemoveActiveTween(DashTween p_tween);
 
-        void StopActiveTweens(Object p_target, bool p_complete = false);
+        void StopActiveTweens(System.Object p_target, bool p_complete = false);
 
         void OutputExecuted(OutputNode p_node, NodeFlowData p_data);
     }
