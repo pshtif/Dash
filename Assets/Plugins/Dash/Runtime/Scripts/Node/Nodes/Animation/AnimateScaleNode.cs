@@ -46,8 +46,8 @@ namespace Dash
             {
                 // Virtual tween to update from directly
                 return DashTween.To(targetTransform, 0, 1, time)
-                    .SetDelay(delay)
-                    .OnUpdate(f => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easeType));
+                    .OnUpdate(f => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easeType))
+                    .SetDelay(delay);
             }
         }
 

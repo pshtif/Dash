@@ -26,7 +26,7 @@ namespace Dash
                 ExecuteEnd(p_flowData);
             } else {
                 tween.OnComplete(() => ExecuteEnd(p_flowData, tween)).Start();
-                //((IInternalGraphAccess)Graph).AddActiveTween(p_target, tween);
+                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
         }
 
@@ -34,10 +34,10 @@ namespace Dash
         
         protected void ExecuteEnd(NodeFlowData p_flowData, DashTween p_tween = null)
         {
-            // if (p_tween != null)
-            // {
-            //     ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
-            // }
+            if (p_tween != null)
+            {
+                ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
+            }
 
             OnExecuteEnd();
             OnExecuteOutput(0,p_flowData);
