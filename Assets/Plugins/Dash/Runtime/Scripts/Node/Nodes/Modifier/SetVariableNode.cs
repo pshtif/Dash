@@ -28,28 +28,68 @@ namespace Dash
                     SetError(ExpressionEvaluator.errorMessage);
                     return;
                 }
-                
-                if (Graph.variables.HasVariable(Model.variableName))
-                {
-                    var variable = Graph.variables.GetVariable(Model.variableName);
-                    if (variable.GetVariableType() != Model.attributeType || (variable.GetVariableType() != value.GetType() && !variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType())))
-                    {
-                        Debug.Log(variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType()));
-                        SetError("Cannot set existing variable of different type! Expecting "+variable.GetVariableType()+" got "+Model.attributeType);
-                        return;
-                    }
 
-                    variable.value = value;
-                }
-                else
+                if (Model.isGlobal)
                 {
-                    if (Model.enableCreate)
+                    if (DashCore.Instance.globalVariables == null)
                     {
-                        Graph.variables.AddVariable(Model.variableName, value);   
+                        SetError("Global variables not found!");
+                    } else if (DashCore.Instance.globalVariables.HasVariable(Model.variableName))
+                    {
+                        Variable variable = DashCore.Instance.globalVariables.GetVariable(Model.variableName);
+                        if (variable.GetVariableType() != Model.attributeType ||
+                            (variable.GetVariableType() != value.GetType() && !variable.GetVariableType()
+                                .IsImplicitlyAssignableFrom(value.GetType())))
+                        {
+                            Debug.Log(variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType()));
+                            SetError("Cannot set existing variable of different type! Expecting " +
+                                     variable.GetVariableType() + " got " + Model.attributeType);
+                            return;
+                        }
+
+                        variable.value = value;
                     }
                     else
                     {
-                        SetError("Variable "+Model.variableName+" doesn't exist, if you want to create enable it.");
+                        if (Model.enableCreate)
+                        {
+                            DashCore.Instance.globalVariables.AddVariable(Model.variableName, value);
+                        }
+                        else
+                        {
+                            SetError("Variable " + Model.variableName +
+                                     " doesn't exist, if you want to create enable it.");
+                        }
+                    }
+                } 
+                else
+                {
+                    if (Graph.variables.HasVariable(Model.variableName))
+                    {
+                        var variable = Graph.variables.GetVariable(Model.variableName);
+                        if (variable.GetVariableType() != Model.attributeType ||
+                            (variable.GetVariableType() != value.GetType() && !variable.GetVariableType()
+                                .IsImplicitlyAssignableFrom(value.GetType())))
+                        {
+                            Debug.Log(variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType()));
+                            SetError("Cannot set existing variable of different type! Expecting " +
+                                     variable.GetVariableType() + " got " + Model.attributeType);
+                            return;
+                        }
+
+                        variable.value = value;
+                    }
+                    else
+                    {
+                        if (Model.enableCreate)
+                        {
+                            Graph.variables.AddVariable(Model.variableName, value);
+                        }
+                        else
+                        {
+                            SetError("Variable " + Model.variableName +
+                                     " doesn't exist, if you want to create enable it.");
+                        }
                     }
                 }
             }
