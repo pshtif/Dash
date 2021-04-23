@@ -28,6 +28,7 @@ namespace Dash
             }
         }
 
+        [NonSerialized]
         private List<DashController> _controllers = new List<DashController>();
 
         [NonSerialized]

@@ -52,6 +52,8 @@ namespace Dash
                 tween.current = 0;
                 tween.running = false;
                 tween.delay = 0;
+                tween._updateCallback = null;
+                tween._completeCallback = null;
             }
             
             tween.target = p_target;
