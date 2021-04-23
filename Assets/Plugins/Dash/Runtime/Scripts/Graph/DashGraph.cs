@@ -5,11 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using DG.Tweening;
 using OdinSerializer;
-using OdinSerializer.Utilities;
 using UnityEngine;
+using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -288,7 +286,7 @@ namespace Dash
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
             //Debug.Log("OnAfterDeserialize");
-            using (var cachedContext = Cache<DeserializationContext>.Claim())
+            using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
@@ -300,7 +298,7 @@ namespace Dash
             GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
             
             //Debug.Log("OnBeforeSerialize");
-            using (var cachedContext = Cache<SerializationContext>.Claim())
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
@@ -317,7 +315,7 @@ namespace Dash
             //Debug.Log("SerializeToBytes "+this);
             byte[] bytes = null;
 
-            using (var cachedContext = Cache<SerializationContext>.Claim())
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.SerializeUnityObject(this, ref bytes, ref p_references, p_format, true,
@@ -330,7 +328,7 @@ namespace Dash
         public void DeserializeFromBytes(byte[] p_bytes, DataFormat p_format, ref List<Object> p_references)
         {
             //Debug.Log("DeserializeToBytes "+this);
-            using (var cachedContext = Cache<DeserializationContext>.Claim())
+            using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref p_bytes, ref p_references, p_format,
@@ -342,7 +340,7 @@ namespace Dash
 #region INTERNAL_ACCESS
 
         [NonSerialized]
-        private List<(Object key,Tween value)> _activeTweens;
+        private List<DashTween> _activeTweens;
 
         DashGraph IInternalGraphAccess.parentGraph
         {
@@ -357,22 +355,22 @@ namespace Dash
             OnOutput?.Invoke(p_node, p_flowData);
         }
 
-        void IInternalGraphAccess.AddActiveTween(Object p_target, Tween p_tween)
+        void IInternalGraphAccess.AddActiveTween(DashTween p_tween)
         {
-            if (_activeTweens == null) _activeTweens = new List<(Object key, Tween value)>();
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
             
-            _activeTweens.Add((p_target,p_tween));
+            _activeTweens.Add(p_tween);
         }
 
-        void IInternalGraphAccess.RemoveActiveTween(Tween p_tween)
+        void IInternalGraphAccess.RemoveActiveTween(DashTween p_tween)
         {
-            _activeTweens?.RemoveAll(t => t.value == p_tween);
+            _activeTweens?.Remove(p_tween);
         }
 
         void IInternalGraphAccess.StopActiveTweens(Object p_target, bool p_complete = false)
         {
-            _activeTweens?.FindAll(t => t.key == p_target || p_target == null).ForEach(t => t.value.Kill(p_complete));
-            _activeTweens?.RemoveAll(t => t.key == p_target || p_target == null);
+            _activeTweens?.FindAll(t => t.target == p_target || p_target == null).ForEach(t => t.Kill(p_complete));
+            _activeTweens?.RemoveAll(t => t.target == p_target || p_target == null);
         }
 
 #endregion
@@ -427,16 +425,16 @@ namespace Dash
                 RemoveNullReferences();
 
             // Draw boxes
-            _boxes.Where(r => r != null).ForEach(r => r.DrawGUI());
+            LinqExtensions.ForEach(_boxes.Where(r => r != null), r => r.DrawGUI());
 
             _connections.RemoveAll(c => !c.IsValid());
             
             // Draw connections
-            _connections.Where(c => c != null).ForEach(c=> c.DrawGUI());
+            LinqExtensions.ForEach(_connections.Where(c => c != null), c=> c.DrawGUI());
             
             // Draw Nodes
             // Preselect non null to avoid null states from serialization issues
-            _nodes.Where(n => n != null).ForEach(n => n.DrawGUI(p_rect));
+            LinqExtensions.ForEach(_nodes.Where(n => n != null), n => n.DrawGUI(p_rect));
 
             // Draw user interaction with connections
             NodeConnection.DrawConnectionToMouse(connectingNode, connectingOutputIndex, Event.current.mousePosition);
@@ -446,7 +444,7 @@ namespace Dash
 
         public void DrawComments(Rect p_rect, bool p_zoomed)
         {
-            _nodes.Where(n => n != null).ForEach(n => n.DrawComment(p_rect, p_zoomed));
+            LinqExtensions.ForEach(_nodes.Where(n => n != null), n => n.DrawComment(p_rect, p_zoomed));
         }
 
         public NodeBase HitsNode(Vector2 p_position)

@@ -89,14 +89,14 @@ namespace Dash
         {
             // Debug.Log("EditorCore.StopPreview");
             
+            DashTween.CleanAll();
+            
             EditorApplication.update -= OnUpdate;
             
             if (!_isPreviewing)
                 return;
             
             _isPreviewing = false;
-
-            DOPreview.StopPreview();
 
             // Since we can do almost anything in preview we need to reload the scene before it
             EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path);

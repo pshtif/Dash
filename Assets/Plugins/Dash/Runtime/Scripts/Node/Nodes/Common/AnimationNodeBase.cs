@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Dash.Attributes;
-using DG.Tweening;
-using DG.Tweening.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -21,26 +19,25 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            Tween tween = AnimateOnTarget(p_target, p_flowData);
+            DashTween tween = AnimateOnTarget(p_target, p_flowData);
 
             if (tween == null)
             {
                 ExecuteEnd(p_flowData);
             } else {
-                tween.OnComplete(() => ExecuteEnd(p_flowData, tween));
-                ((IInternalGraphAccess)Graph).AddActiveTween(p_target, tween);
-                DOPreview.StartPreview(tween);
+                tween.OnComplete(() => ExecuteEnd(p_flowData, tween)).Start();
+                //((IInternalGraphAccess)Graph).AddActiveTween(p_target, tween);
             }
         }
 
-        protected abstract Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData);
+        protected abstract DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData);
         
-        protected void ExecuteEnd(NodeFlowData p_flowData, Tween p_tween = null)
+        protected void ExecuteEnd(NodeFlowData p_flowData, DashTween p_tween = null)
         {
-            if (p_tween != null)
-            {
-                ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
-            }
+            // if (p_tween != null)
+            // {
+            //     ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
+            // }
 
             OnExecuteEnd();
             OnExecuteOutput(0,p_flowData);

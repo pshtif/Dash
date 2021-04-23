@@ -4,7 +4,6 @@
 
 using System;
 using Dash.Attributes;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Dash
@@ -16,7 +15,7 @@ namespace Dash
     [Serializable]
     public class AnimateScaleNode : AnimationNodeBase<AnimateScaleNodeModel>
     {
-        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             Transform targetTransform = p_target.transform;
 
@@ -35,44 +34,40 @@ namespace Dash
             
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
-            Ease easing = GetParameterValue(Model.easing, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
             if (time == 0)
             {
-                UpdateTween(targetTransform, 1, p_flowData, startScale, toScale, easing);
+                UpdateTween(targetTransform, 1, p_flowData, startScale, toScale, easeType);
                 
                 return null;
             }
             else
             {
                 // Virtual tween to update from directly
-                Tween tween = DOTween
-                    .To((f) => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easing), 0,
-                        1, time)
+                return DashTween.To(targetTransform, 0, 1, time)
                     .SetDelay(delay)
-                    .SetEase(Ease.Linear);
-                
-                return tween;
+                    .OnUpdate(f => UpdateTween(targetTransform, f, p_flowData, startScale, toScale, easeType));
             }
         }
 
-        protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale, Ease p_easing)
+        protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startScale, Vector3 p_toScale, EaseType p_easeType)
         {
             if (p_target == null)
                 return;
 
             if (Model.isToRelative)
             {
-                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, p_easing),
-                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, p_easing),
-                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, p_easing));
+                p_target.localScale = p_startScale + new Vector3(DashTween.EaseValue(0, p_toScale.x, p_delta, p_easeType),
+                    DashTween.EaseValue(0, p_toScale.y, p_delta, p_easeType),
+                    DashTween.EaseValue(0, p_toScale.z, p_delta, p_easeType));
             }
             else
             {
                 p_toScale -= p_startScale;
-                p_target.localScale = p_startScale + new Vector3(DOVirtual.EasedValue(0, p_toScale.x, p_delta, p_easing),
-                    DOVirtual.EasedValue(0, p_toScale.y, p_delta, p_easing),
-                    DOVirtual.EasedValue(0, p_toScale.z, p_delta, p_easing));
+                p_target.localScale = p_startScale + new Vector3(DashTween.EaseValue(0, p_toScale.x, p_delta, p_easeType),
+                    DashTween.EaseValue(0, p_toScale.y, p_delta, p_easeType),
+                    DashTween.EaseValue(0, p_toScale.z, p_delta, p_easeType));
             }
         }
     }

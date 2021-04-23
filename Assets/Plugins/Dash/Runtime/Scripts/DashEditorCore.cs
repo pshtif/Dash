@@ -270,6 +270,8 @@ namespace Dash
 
             if (p_change == PlayModeStateChange.EnteredEditMode)
             {
+                DashTweenCore.Reset();
+                
                 if (Config.enteringPlayModeController != null)
                 {
                     EditController(Config.enteringPlayModeController);    

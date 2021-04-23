@@ -3,13 +3,10 @@
  */
 
 using System;
-using System.Xml;
-using DG.Tweening;
 using Dash.Attributes;
 using UnityEngine;
-
 #if UNITY_EDITOR
-using UnityEditor;
+
 #endif
 
 namespace Dash
@@ -22,13 +19,13 @@ namespace Dash
     [Serializable]
     public class AnimateWithPresetNode : AnimationNodeBase<AnimateWithPresetNodeModel>
     {
-        protected override Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
-            Ease easing = GetParameterValue(Model.easing, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
 
-            return Model.preset.Execute(p_target, time, delay, easing);
+            return Model.preset.Execute(p_target, time, delay, easeType);
         }
     }
 }

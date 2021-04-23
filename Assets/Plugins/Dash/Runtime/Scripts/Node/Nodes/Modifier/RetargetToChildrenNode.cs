@@ -2,8 +2,6 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System.Reflection;
-using DG.Tweening;
 using Dash.Attributes;
 using UnityEngine;
 
@@ -30,8 +28,8 @@ namespace Dash
                 }
                 else
                 {
-                    Tween call = DOVirtual.DelayedCall(GetParameterValue(Model.onChildDelay, p_flowData) * i, () => OnExecuteOutput(0, childData));
-                    DOPreview.StartPreview(call);
+                    float time = GetParameterValue(Model.onChildDelay, p_flowData) * i;
+                    DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() => OnExecuteOutput(0, childData)).Start();
                 }
             }
 
@@ -41,8 +39,9 @@ namespace Dash
             }
             else
             {
-                Tween call = DOVirtual.DelayedCall(Model.onFinishDelay + GetParameterValue(Model.onChildDelay,p_flowData) * p_target.childCount, () => ExecuteEnd(p_flowData));
-                DOPreview.StartPreview(call);
+                float time = Model.onFinishDelay +
+                             GetParameterValue(Model.onChildDelay, p_flowData) * p_target.childCount;
+                DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() => ExecuteEnd(p_flowData)).Start();
             }
         }
             

@@ -2,7 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using DG.Tweening;
+using UnityEngine;
 
 namespace Dash
 {
@@ -10,11 +10,11 @@ namespace Dash
     {
         DashGraph parentGraph { set; }
         
-        void AddActiveTween(UnityEngine.Object p_target, Tween p_tween);
+        void AddActiveTween(DashTween p_tween);
         
-        void RemoveActiveTween(Tween p_tween);
+        void RemoveActiveTween(DashTween p_tween);
 
-        void StopActiveTweens(UnityEngine.Object p_target, bool p_complete = false);
+        void StopActiveTweens(Object p_target, bool p_complete = false);
 
         void OutputExecuted(OutputNode p_node, NodeFlowData p_data);
     }

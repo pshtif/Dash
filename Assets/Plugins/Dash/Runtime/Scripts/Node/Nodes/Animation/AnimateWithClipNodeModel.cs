@@ -4,8 +4,8 @@
 
 using System;
 using Dash.Attributes;
-using DG.Tweening;
 using UnityEngine;
+
 #if UNITY_EDITOR
 
 #endif

@@ -3,10 +3,8 @@
  */
 
 using System;
-using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Dash
 {
@@ -26,7 +24,7 @@ namespace Dash
         
         static private Type[] SupportedUnityTypes =
         {
-            typeof(Ease),
+            typeof(EaseType),
             typeof(Sprite),
             typeof(GameObject)
         };

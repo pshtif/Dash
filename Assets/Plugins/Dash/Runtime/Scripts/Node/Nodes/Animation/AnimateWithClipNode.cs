@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using Dash.Attributes;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Dash
@@ -19,13 +18,13 @@ namespace Dash
     {
         protected Dictionary<Transform, AnimationStartsCache> _startsCaches;
 
-        override protected Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
+        override protected DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
-            Ease easing = GetParameterValue(Model.easing, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
-            Tween tween;
+            DashTween tween;
             if (Model.useDashAnimation)
             {
                 if (Model.source == null)
@@ -40,9 +39,10 @@ namespace Dash
                 time = Model.useAnimationTime ? Model.source.Duration : time; 
 
                 // Virtual tween to update from sampler
-                tween = DOTween.To((f) => UpdateFromAnimation(p_target, f), 0, Model.source.Duration, time)
+                tween = DashTween.To(p_target, 0, Model.source.Duration, time)
+                    .OnUpdate(f => UpdateFromAnimation(p_target, f))
                     .SetDelay(delay)
-                    .SetEase(easing);
+                    .SetEase(easeType);
             }
             else
             {
@@ -56,9 +56,10 @@ namespace Dash
                 time = Model.useAnimationTime ? Model.clip.length : time;
 
                 // Virtual tween to update from sampler
-                tween = DOTween.To((f) => UpdateFromClip(p_target, f), 0, Model.clip.length, time)
+                tween = DashTween.To(p_target, 0, Model.clip.length, time)
+                    .OnUpdate(f => UpdateFromClip(p_target, f))
                     .SetDelay(delay)
-                    .SetEase(easing);
+                    .SetEase(easeType);
             }
 
             return tween;

@@ -60,16 +60,32 @@ namespace Dash
 
         public static Transform Find(this Transform p_parent, string p_name, bool p_includeInactive = false)
         {
-            if (!p_includeInactive)
+            string[] split = p_name.Split('/');
+
+            if (split.Length > 1)
             {
-                return p_parent.Find(p_name);
+                var first = p_parent.Find(split[0], p_includeInactive);
+                if (first != null)
+                {
+                    return first.Find(p_name.Substring(p_name.IndexOf("/") + 1), p_includeInactive);
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
-                Debug.Log(p_parent);
-                Transform[] children = p_parent.GetComponentsInChildren<Transform>(true);
-                //children.ForEach(c => Debug.Log(c.name));
-                return children.FirstOrDefault(c => c.name == p_name);
+                if (!p_includeInactive)
+                {
+                    return p_parent.Find(p_name);
+                }
+                else
+                {
+                    Transform[] children = p_parent.GetComponentsInChildren<Transform>(true);
+                    //children.ForEach(c => Debug.Log(c.name));
+                    return children.FirstOrDefault(c => c.name == p_name);
+                }
             }
         }
         

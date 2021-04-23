@@ -3,7 +3,6 @@
  */
 
 using Dash.Attributes;
-using DG.Tweening;
 
 namespace Dash
 {
@@ -20,7 +19,7 @@ namespace Dash
 
         [Order(2)]
         [TitledGroup("Animation",2)]
-        public Parameter<Ease> easing = new Parameter<Ease>(Ease.Linear);
+        public Parameter<EaseType> easeType = new Parameter<EaseType>(EaseType.LINEAR);
 
         [Order(3)]
         [TitledGroup("Animation",2)]

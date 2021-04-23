@@ -5,10 +5,10 @@
 using System;
 using Dash.Attributes;
 using Dash.Enums;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 #if UNITY_EDITOR
 
 #endif
@@ -22,7 +22,7 @@ namespace Dash
     [Serializable]
     public class AnimateColorNode : AnimationNodeBase<AnimateColorNodeModel>
     {
-        override protected Tween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
+        override protected DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             switch (Model.targetType)
             {
@@ -47,14 +47,14 @@ namespace Dash
             return null;
         }
 
-        Tween ExecuteAs(Image p_target, NodeFlowData p_flowData)
+        DashTween ExecuteAs(Image p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
-            Ease easing = GetParameterValue(Model.easing, p_flowData);
+            EaseType easing = GetParameterValue(Model.easeType, p_flowData);
             
             if (time == 0)
             {
@@ -64,19 +64,17 @@ namespace Dash
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
-                    .SetDelay(delay)
-                    .SetEase(easing);
-
-                return tween;
+                return DashTween.To(p_target, 0, 1, time)
+                    .OnUpdate(f => UpdateTween(p_target, f, p_flowData, startColor, toColor))
+                    .SetDelay(delay);
             }
         }
         
-        Tween ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
+        DashTween ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
-            Ease easing = GetParameterValue(Model.easing, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
@@ -87,10 +85,10 @@ namespace Dash
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
-                    .SetDelay(delay)
-                    .SetEase(easing);
-                
+                DashTween tween = DashTween.To(p_target, 0, 1, time)
+                    .OnUpdate(f => UpdateTween(p_target, f, p_flowData, startColor, toColor))
+                    .SetDelay(delay);
+
                 return tween;
             }
         }

@@ -3,7 +3,6 @@
  */
 
 using Dash.Attributes;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Dash
@@ -24,12 +23,11 @@ namespace Dash
             }
             else
             {
-                Tween call = DOVirtual.DelayedCall(time, () =>
+                DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() =>
                 {
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);
-                });
-                DOPreview.StartPreview(call);
+                }).Start();
             }
         }
         

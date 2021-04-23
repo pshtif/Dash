@@ -3,7 +3,6 @@
  */
 
 using Dash.Attributes;
-using DG.Tweening;
 
 namespace Dash
 {
