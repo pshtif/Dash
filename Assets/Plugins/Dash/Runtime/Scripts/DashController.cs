@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -98,8 +99,9 @@ namespace Dash
             _graphInstance = _assetGraph.Clone();
         }
 
-        public bool autoStart = true;
+        public bool autoStart = false;
 
+        [Dependency("autoStart", true)]
         public string autoStartInput = "Input";
 
         private event Action UpdateCallback;
