@@ -26,6 +26,8 @@ namespace Dash
         {
             typeof(EaseType),
             typeof(Sprite),
+            typeof(RectTransform),
+            typeof(Transform),
             typeof(GameObject)
         };
             
