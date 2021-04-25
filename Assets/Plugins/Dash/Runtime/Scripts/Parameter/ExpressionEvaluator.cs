@@ -56,6 +56,9 @@ namespace Dash
                 //Debug.Log(e);
                 hasErrorInEvaluation = true;
             }
+            
+            cachedExpression.EvaluateFunction -= evalFunction;
+            cachedExpression.EvaluateParameter -= evalParam;
 
             return obj;
         }
