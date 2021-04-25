@@ -23,7 +23,7 @@ namespace Dash
             EditorGUI.BeginChangeCheck();
             variable.ValueField(p_maxWidth-172);
 
-            GUI.color = variable.IsBound ? Color.yellow : Color.gray;
+            GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             
             EditorGUILayout.BeginVertical(GUILayout.Width(16));
             EditorGUILayout.Space(2,false);
@@ -49,7 +49,7 @@ namespace Dash
             } 
             else
             {
-                if (p_boundObject != null)
+                if (p_boundObject != null && !variable.IsLookup)
                 {
                     Dictionary<Component, List<PropertyInfo>> bindableProperties =
                         GetBindableProperties(p_variables, p_name, p_boundObject);
@@ -74,6 +74,15 @@ namespace Dash
                                 () => OnBindVariable(variable, field, infoKeys.Key));
                         }
                     }
+                }
+
+                if (variable.IsLookup)
+                {
+                    menu.AddItem(new GUIContent("Unset as Lookup"), false, () => OnLookupVariable(p_variables, p_name));
+                }
+                else
+                {
+                    menu.AddItem(new GUIContent("Set as Lookup"), false, () => OnLookupVariable(p_variables, p_name));
                 }
             }
             
@@ -168,6 +177,12 @@ namespace Dash
         static void OnDeleteVariable(DashVariables p_variables, string p_name)
         {
             p_variables.RemoveVariable(p_name);
+        }
+        
+        static void OnLookupVariable(DashVariables p_variables, string p_name)
+        {
+            var variable = p_variables.GetVariable(p_name);
+            variable.SetAsLookup(!variable.IsLookup);
         }
 
         static void OnCopyVariable(DashVariables p_variables, string p_name)
