@@ -37,7 +37,9 @@ namespace Dash
                 {
                     if (Model.useExpression)
                     {
-                        var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
+                        // var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
+                        //     ParameterResolver, p_flowData);
+                        var value = ExpressionEvaluator.EvaluateUntypedExpression(Model.targetExpression,
                             ParameterResolver, p_flowData);
 
                         if (ExpressionEvaluator.hasErrorInEvaluation)
@@ -46,7 +48,18 @@ namespace Dash
                             return;
                         }
 
-                        target = (Transform) value;
+                        target = value as Transform;
+                        
+                        Debug.Log(value);
+                        
+                        if (target == null && value == typeof(GameObject))
+                        {
+                            target = (value as GameObject).transform;
+                        } 
+                        else if (target == null && value is Component)
+                        {
+                            target = (value as Component).transform;
+                        }
                     }
                     else
                     {
