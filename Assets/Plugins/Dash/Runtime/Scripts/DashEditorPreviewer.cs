@@ -48,14 +48,7 @@ namespace Dash
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
             
-            if (p_node == null)
-            {
-                _previewGraph.previewNode?.Execute(NodeFlowDataFactory.Create(Controller.transform));
-            }
-            else
-            {
-                _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
-            }
+            _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
         }
 
         void OnUpdate()
