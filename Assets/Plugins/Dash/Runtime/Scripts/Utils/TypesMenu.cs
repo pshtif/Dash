@@ -5,6 +5,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Dash
 {
@@ -28,7 +29,8 @@ namespace Dash
             typeof(Sprite),
             typeof(RectTransform),
             typeof(Transform),
-            typeof(GameObject)
+            typeof(GameObject),
+            typeof(Button),
         };
             
         #if UNITY_EDITOR
