@@ -14,7 +14,7 @@ namespace Dash
             var variable = p_variables.GetVariable(p_name);
             EditorGUILayout.BeginHorizontal();
             string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(140));
-            EditorGUILayout.Space(4, false);
+            EditorGUILayout.Space(2, false);
             if (newName != p_name) 
             {
                 p_variables.RenameVariable(p_name, newName);
@@ -64,8 +64,9 @@ namespace Dash
                     }
                 }
             }
-
+            
             menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name));
+            menu.AddItem(new GUIContent("Copy Variable"), false, () => OnCopyVariable(p_variables, p_name));
 
             return menu;
         }
@@ -114,6 +115,11 @@ namespace Dash
         static void OnDeleteVariable(DashVariables p_variables, string p_name)
         {
             p_variables.RemoveVariable(p_name);
+        }
+
+        static void OnCopyVariable(DashVariables p_variables, string p_name)
+        {
+            DashEditorCore.CopyVariable(p_variables.GetVariable(p_name));
         }
     }
 }

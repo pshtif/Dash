@@ -33,16 +33,16 @@ namespace Dash
 
         public string Name => _name;
 
-        public void Rename(string p_newName)
+        internal void Rename(string p_newName)
         {
             _name = p_newName;
         }
         
         abstract public void BindProperty(PropertyInfo prop, Component p_component);
-        
+
         abstract public void UnbindProperty();
 
-        abstract public void InitializeBinding(GameObject p_target);
+        abstract public bool InitializeBinding(GameObject p_target);
 
         public abstract Variable Clone();
 
@@ -114,6 +114,8 @@ namespace Dash
         public override Variable Clone()
         {
             Variable<T> v = new Variable<T>(Name, value);
+            v._boundProperty = _boundProperty;
+            v._boundComponentName = _boundComponentName;
             return v;
         }
         
@@ -126,6 +128,14 @@ namespace Dash
             InitializeBinding(p_component.gameObject);
         }
 
+        public void RebindProperty(GameObject p_gameObject)
+        {
+            if (IsBound)
+            {
+                InitializeBinding(p_gameObject);
+            }
+        }
+
         public override void UnbindProperty()
         {
             _boundProperty = String.Empty;
@@ -134,20 +144,26 @@ namespace Dash
             _setter = null;
         }
 
-        public override void InitializeBinding(GameObject p_target)
+        public override bool InitializeBinding(GameObject p_target)
         {
             if (!IsBound)
-                return;
+                return false;
 
             Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
             Component component = p_target.GetComponent(componentType);
             if (component == null)
+            {
                 Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);
+                return false;
+            }
 
             PropertyInfo property = componentType.GetProperty(_boundProperty);
             if (property == null)
-                Debug.LogWarning("Cannot find property " + _boundProperty+" on component "+component.name);
-            
+            {
+                Debug.LogWarning("Cannot find property " + _boundProperty + " on component " + component.name);
+                return false;
+            }
+
             var method = property.GetGetMethod();
             var delegateGetType = typeof(Func<>).MakeGenericType(method.ReturnType);
 
@@ -159,6 +175,8 @@ namespace Dash
                 var delegateSetType = typeof(Action<>).MakeGenericType(method.ReturnType);
                 _setter = ConvertDelegate<Action<T>>(Delegate.CreateDelegate(delegateSetType, component, setMethod, true));
             }
+
+            return true;
         }
 
         private K ConvertDelegate<K>(Delegate p_delegate)
@@ -172,7 +190,7 @@ namespace Dash
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
             {
-                EditorGUILayout.LabelField(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
+                GUILayout.Label(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
             }
             else
             {

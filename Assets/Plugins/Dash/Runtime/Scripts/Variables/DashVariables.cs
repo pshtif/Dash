@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -82,6 +83,17 @@ namespace Dash
             InvalidateLookup();
         }
 
+        public void PasteVariable(Variable p_variable, GameObject p_target)
+        {
+            p_variable.Rename(GetUniqueName(p_variable.Name));
+            _variables.Add(p_variable);
+            if (p_target != null)
+            {
+                p_variable.InitializeBinding(p_target);
+            }
+            InvalidateLookup();
+        }
+
         public void RemoveVariable(string p_name)
         {
             _variables.RemoveAll(v => v.Name == p_name);
@@ -90,11 +102,8 @@ namespace Dash
         // Renaming in dictionary is tricky but still better than having list as renaming is sporadic
         public bool RenameVariable(string p_oldName, string p_newName)
         {
-            if (!HasVariable(p_oldName) || HasVariable(p_newName))
-                return false;
-
             var variable = _variables.Find(v => v.Name == p_oldName);
-            variable.Rename(p_newName);
+            variable.Rename(GetUniqueName(p_newName));
             InvalidateLookup();
 
             return true;
@@ -124,16 +133,24 @@ namespace Dash
             return ((IEnumerable)_lookup.Values).GetEnumerator();
         }
 
+        private string GetUniqueName(string p_name)
+        {
+            while (HasVariable(p_name))
+            {
+                string number = string.Concat(p_name.Reverse().TakeWhile(char.IsNumber).Reverse());
+                p_name = p_name.Substring(0,p_name.Length-number.Length) + (string.IsNullOrEmpty(number) ? 1 : (Int32.Parse(number)+1));
+            }
+
+            return p_name;
+        }
+
         #if UNITY_EDITOR
         public void AddNewVariable(Type p_type)
         {
             string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
 
-            int index = 0;
-            while (HasVariable(name + index)) index++;
-            
-            AddVariableByType((Type)p_type, name+index, null);
+            AddVariableByType((Type)p_type, GetUniqueName(name), null);
         }
-        #endif
+#endif
     }
 }

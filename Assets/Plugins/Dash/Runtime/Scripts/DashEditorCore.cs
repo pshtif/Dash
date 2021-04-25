@@ -51,6 +51,8 @@ namespace Dash
         static public GraphBox editingBoxComment;
         static public GraphBox selectedBox;
 
+        static public List<Variable> copiedVariables = new List<Variable>();
+        
         static public List<NodeBase> copiedNodes = new List<NodeBase>();
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
@@ -218,6 +220,26 @@ namespace Dash
             ReindexSelected(index);
             
             SetDirty();
+        }
+
+        public static void CopyVariables(DashVariables p_fromVariables)
+        {
+            copiedVariables.Clear();
+            foreach (var variable in p_fromVariables)
+            {
+                copiedVariables.Add(variable);
+            }
+        }
+        
+        public static void CopyVariable(Variable p_variable)
+        {
+            copiedVariables.Clear();
+            copiedVariables.Add(p_variable);
+        }
+
+        public static void PasteVariables(DashVariables p_toVariables, GameObject p_target)
+        {
+            copiedVariables.ForEach(v => p_toVariables.PasteVariable(v.Clone(), p_target));
         }
 
         public static void CreateBoxAroundSelectedNodes()
