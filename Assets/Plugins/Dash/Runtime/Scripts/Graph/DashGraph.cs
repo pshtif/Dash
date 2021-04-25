@@ -523,7 +523,7 @@ namespace Dash
         
         public NodeBase DuplicateNode(NodeBase p_node)
         {
-            NodeBase clone = p_node.Clone();
+            NodeBase clone = p_node.Clone(this);
             clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
             Nodes.Add(clone);
             return clone;
@@ -537,17 +537,18 @@ namespace Dash
             List<NodeBase> newNodes = new List<NodeBase>();
             foreach (NodeBase node in p_nodes)
             {
-                NodeBase clone = node.Clone();
+                NodeBase clone = node.Clone(this);
                 clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
                 Nodes.Add(clone);
                 newNodes.Add(clone);
             }
 
+            DashGraph originalGraph = p_nodes[0].Graph;
             // Recreate connections within duplicated part
             foreach (NodeBase node in p_nodes)
             {
                 List<NodeConnection> connections =
-                    _connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
+                    originalGraph.Connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
                 foreach (NodeConnection connection in connections)
                 {
                     Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,

@@ -50,7 +50,8 @@ namespace Dash
 
         static public GraphBox editingBoxComment;
         static public GraphBox selectedBox;
-        
+
+        static public List<NodeBase> copiedNodes = new List<NodeBase>();
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 
@@ -131,6 +132,63 @@ namespace Dash
             
             SetDirty();
         }
+        
+        public static void DuplicateNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
+            
+            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
+            selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
+        }
+        
+        public static void CopySelectedNodes()
+        {
+            if (Graph == null || selectedNodes.Count == 0)
+                return;
+
+            copiedNodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+        }
+        
+        public static void CopyNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+
+            copiedNodes.Clear();
+            copiedNodes.Add(p_node);
+        }
+
+        public static bool HasCopiedNodes()
+        {
+            return copiedNodes.Count != 0;
+        }
+        
+        public static void PasteNodes(Vector2 p_mousePosition)
+        {
+            if (Graph == null || copiedNodes.Count == 0)
+                return;
+            
+            List<NodeBase> newNodes = Graph.DuplicateNodes(copiedNodes);
+            
+            float zoom = Config.zoom;
+            newNodes[0].rect = new Rect(p_mousePosition.x * zoom - Graph.viewOffset.x,
+                p_mousePosition.y * zoom - Graph.viewOffset.y, 0, 0);
+
+            for (int i = 1; i < newNodes.Count; i++)
+            {
+                NodeBase node = newNodes[i];
+                node.rect.x = newNodes[0].rect.x + (node.rect.x - copiedNodes[0].rect.x);
+                node.rect.y = newNodes[0].rect.y + (node.rect.y - copiedNodes[0].rect.y);
+            }
+            
+            selectedNodes = newNodes.Select(n => n.Index).ToList();
+
+            SetDirty();
+        }
 
         public static void DeleteSelectedNodes()
         {
@@ -143,18 +201,6 @@ namespace Dash
             nodes.ForEach(n => Graph.DeleteNode(n));
 
             selectedNodes = new List<int>();
-            
-            SetDirty();
-        }
-
-        public static void DuplicateNode(NodeBase p_node)
-        {
-            if (Graph == null)
-                return;
-            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
-            
-            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
-            selectedNodes = new List<int> { node.Index };
             
             SetDirty();
         }

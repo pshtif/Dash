@@ -18,12 +18,14 @@ namespace Dash
             
             if (DashEditorCore.selectedNodes.Count > 1)
             {
+                menu.AddItem(new GUIContent("Copy Nodes"), false, CopyNode, null);
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
                 menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
                 menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
             }
             else
             {
+                menu.AddItem(new GUIContent("Copy Node"), false, CopyNode, p_node);
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
                 menu.AddSeparator("");
@@ -43,7 +45,19 @@ namespace Dash
 
             menu.ShowAsContext();
         }
-        
+
+        static void CopyNode(object p_node)
+        {
+            if (p_node == null)
+            {
+                DashEditorCore.CopySelectedNodes();
+            }
+            else
+            {
+                DashEditorCore.CopyNode((NodeBase)p_node);
+            }
+        }
+
         static void DeleteNode(object p_node)
         {
             if (p_node == null)

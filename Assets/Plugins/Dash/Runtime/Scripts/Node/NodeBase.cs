@@ -440,9 +440,9 @@ namespace Dash
             _model.ValidateSerialization();
         }
         
-        public NodeBase Clone()
+        public NodeBase Clone(DashGraph p_graph)
         {
-            NodeBase node = Create(GetType(), _graph);
+            NodeBase node = Create(GetType(), p_graph);
             node._model = _model.Clone();
             return node;
         }
