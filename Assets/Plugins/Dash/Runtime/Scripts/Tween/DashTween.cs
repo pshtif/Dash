@@ -35,8 +35,15 @@ namespace Dash
         {
             DashTweenCore.Initialize();
             
-            DashTween tween = DashTween.Create(p_target, p_from, p_to, p_time);
+            DashTween tween = Create(p_target, p_from, p_to, p_time);
             return tween;
+        }
+
+        public static void DelayedCall(float p_time, Action p_callback)
+        {
+            DashTweenCore.Initialize();
+
+            Create(null, 0, 1, p_time).OnComplete(p_callback).Start();
         }
 
         private static DashTween Create(Object p_target, float p_from, float p_to, float p_duration)
