@@ -19,32 +19,33 @@ namespace Dash
         public int Count => _variables.Count;
         
         [NonSerialized]
-        protected Dictionary<string, Variable> _lookup;
+        protected Dictionary<string, Variable> _lookupDictionary;
 
         protected List<Variable> _variables;
 
         public DashVariables()
         {
-            _lookup = new Dictionary<string, Variable>();
+            _lookupDictionary = new Dictionary<string, Variable>();
             _variables = new List<Variable>();
         }
 
-        public void InitializeBindings(GameObject p_target)
+        public void Initialize(GameObject p_target)
         {
             _variables.ForEach(v => v.InitializeBinding(p_target));
+            _variables.ForEach(v => v.InitializeLookup(p_target));
         }
 
         public void ClearVariables()
         {
-            _lookup = new Dictionary<string, Variable>();
+            _lookupDictionary = new Dictionary<string, Variable>();
             _variables = new List<Variable>();
         }
 
         public bool HasVariable(string p_name)
         {
-            if (_lookup == null) InvalidateLookup();
+            if (_lookupDictionary == null) InvalidateLookup();
             
-            return _lookup.ContainsKey(p_name);
+            return _lookupDictionary.ContainsKey(p_name);
         }
 
         public Variable GetVariable(string p_name)
@@ -52,7 +53,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return _lookup[p_name];
+            return _lookupDictionary[p_name];
         }
 
         public Variable<T> GetVariable<T>(string p_name)
@@ -60,7 +61,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return (Variable<T>) _lookup[p_name];
+            return (Variable<T>) _lookupDictionary[p_name];
         }
         
         public void AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
@@ -111,10 +112,10 @@ namespace Dash
 
         private void InvalidateLookup()
         { 
-            _lookup = new Dictionary<string, Variable>();
+            _lookupDictionary = new Dictionary<string, Variable>();
             foreach (Variable variable in _variables)
             {
-                _lookup.Add(variable.Name, variable);
+                _lookupDictionary.Add(variable.Name, variable);
             }
         }
 
@@ -130,7 +131,7 @@ namespace Dash
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)_lookup.Values).GetEnumerator();
+            return ((IEnumerable)_lookupDictionary.Values).GetEnumerator();
         }
 
         private string GetUniqueName(string p_name)

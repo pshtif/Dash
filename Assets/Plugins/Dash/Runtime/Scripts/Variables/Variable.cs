@@ -16,9 +16,13 @@ namespace Dash
     [Serializable]
     public abstract class Variable
     {
-        abstract protected object objectValue { get; set; }
+        public VariableType Type { get; protected set; } = VariableType.VALUE;
         
-        abstract public bool IsBound { get; }
+        public bool IsBound => Type == VariableType.BOUND;
+
+        public bool IsLookup => Type == VariableType.LOOKUP;
+        
+        abstract protected object objectValue { get; set; }
 
         public object value
         {
@@ -45,6 +49,13 @@ namespace Dash
         abstract public void UnbindProperty();
 
         abstract public bool InitializeBinding(GameObject p_target);
+
+        public void SetAsLookup(bool p_lookup)
+        {
+            Type = p_lookup ? VariableType.LOOKUP : VariableType.VALUE;
+        }
+
+        abstract public void InitializeLookup(GameObject p_target);
 
         public abstract Variable Clone();
 
@@ -73,8 +84,6 @@ namespace Dash
     {
         protected T _value;
 
-        public override bool IsBound => !String.IsNullOrEmpty(_boundName);
-
         [NonSerialized]
         private Func<T> _getter;
         [NonSerialized]
@@ -100,6 +109,13 @@ namespace Dash
         public override Type GetVariableType()
         {
             return typeof(T);
+        }
+
+        public string GetVariableTypeShortName()
+        {
+            string name = typeof(T).ToString();
+            name = name.IndexOf(".") >= 0 ? name.Substring(name.LastIndexOf(".") + 1) : name;
+            return name;
         }
         
         protected override object objectValue
@@ -134,6 +150,7 @@ namespace Dash
         
         public override void BindField(FieldInfo p_field, Component p_component)
         {
+            Type = VariableType.BOUND;
             _boundType = VariableBindType.FIELD;
             _boundName = p_field.Name;
             _boundComponentName = p_component.GetType().FullName;
@@ -143,7 +160,7 @@ namespace Dash
 
         public void RebindProperty(GameObject p_gameObject)
         {
-            if (IsBound)
+            if (Type == VariableType.BOUND)
             {
                 InitializeBinding(p_gameObject);
             }
@@ -155,6 +172,7 @@ namespace Dash
             _boundComponentName = String.Empty;
             _getter = null;
             _setter = null;
+            Type = VariableType.VALUE;
         }
 
         public override bool InitializeBinding(GameObject p_target)
@@ -209,6 +227,39 @@ namespace Dash
 
             return true;
         }
+        
+        public override void InitializeLookup(GameObject p_target)
+        {
+            if (!IsLookup)
+                return;
+            
+            var rect = p_target.transform.DeepFind(Name);
+
+            bool found = false;
+            if (rect != null)
+            {
+                if (typeof(T).IsAssignableFrom(rect.GetType()))
+                {
+                    objectValue = rect;
+                    found = true;
+                }
+                else
+                {
+                    var component = rect.GetComponent<T>();
+                    if (component == null)
+                    {
+                        objectValue = component;
+                        found = true;
+                    }
+                }
+            }
+
+            if (!found) 
+            {
+                Debug.LogWarning("Lookup variable "+Name+" wasn't able to find object of same name!");
+                objectValue = null;
+            }
+        }
 
         private K ConvertDelegate<K>(Delegate p_delegate)
         {
@@ -222,6 +273,10 @@ namespace Dash
             if (IsBound)
             {
                 GUILayout.Label(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundName, GUILayout.Width(p_maxWidth));
+            }
+            else if (IsLookup)
+            {
+                GUILayout.Label(GetVariableTypeShortName()+".LOOKUP", GUILayout.Width(p_maxWidth));
             }
             else
             {

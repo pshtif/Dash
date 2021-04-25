@@ -78,7 +78,7 @@ namespace Dash
 
             _initialized = true;
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
-            variables.InitializeBindings(p_controller.gameObject);
+            variables.Initialize(p_controller.gameObject);
         }
 
         public void SendEvent(string p_name, Transform p_target)
@@ -391,7 +391,7 @@ namespace Dash
 
         public bool previewControlsViewMinimized = true;
         public Vector2 viewOffset = Vector2.zero;
-        public bool showVariables = false;
+        public bool variablesMinimized = true;
 
         public NodeBase previewNode;
         
