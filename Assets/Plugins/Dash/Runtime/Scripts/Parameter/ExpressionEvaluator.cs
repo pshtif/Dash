@@ -25,6 +25,41 @@ namespace Dash
             return generic.Invoke(null, new object[] { p_expression, p_resolver, p_collection });
         }
         
+        public static object EvaluateUntypedExpression(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
+        {
+            hasErrorInEvaluation = false;
+            if (_cachedExpressions == null) _cachedExpressions = new Dictionary<string, Expression>();
+
+            Expression cachedExpression;
+            if (!_cachedExpressions.ContainsKey(p_expression))
+            {
+                cachedExpression = new Expression(p_expression);
+                _cachedExpressions.Add(p_expression, cachedExpression);
+            }
+            else
+            {
+                cachedExpression = _cachedExpressions[p_expression];
+            }
+            
+            EvaluateFunctionHandler evalFunction = (name, args) => EvaluateFunction(name, args);
+            cachedExpression.EvaluateFunction += evalFunction; 
+            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection);
+            cachedExpression.EvaluateParameter += evalParam;
+            
+            object obj = null;
+            try
+            {
+                obj = cachedExpression.Evaluate();
+            }
+            catch //(Exception e)
+            {
+                //Debug.Log(e);
+                hasErrorInEvaluation = true;
+            }
+
+            return obj;
+        }
+        
         public static T EvaluateExpression<T>(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
         {
             hasErrorInEvaluation = false;
@@ -69,7 +104,7 @@ namespace Dash
                 
                 if (typeof(T).IsImplicitlyAssignableFrom(obj.GetType()))
                 {
-                    return (T)Convert.ChangeType(obj, typeof(T));
+                    return (T) Convert.ChangeType(obj, typeof(T));
                 }
 
                 Debug.LogWarning("Invalid expression casting " + obj.GetType() + " and " + typeof(T));
@@ -101,6 +136,27 @@ namespace Dash
                     methodInfo = methodInfo.MakeGenericMethod(typeof(T));
                 }
                 
+                // TODO maybe typize the args but it would probably just slow things down
+                bool success = (bool)methodInfo.Invoke(null, new object[] {p_args});
+                if (!hasErrorInEvaluation && !success)
+                {
+                    errorMessage = ExpressionFunctions.errorMessage;
+                }
+                hasErrorInEvaluation = hasErrorInEvaluation || !success;
+            }
+            else
+            {
+                errorMessage = "Function " + p_name + " not found";
+                hasErrorInEvaluation = true;
+            }
+        }
+        
+        static void EvaluateFunction(string p_name, FunctionArgs p_args)
+        {
+            MethodInfo methodInfo = typeof(ExpressionFunctions).GetMethod(p_name, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+
+            if (methodInfo != null)
+            {
                 // TODO maybe typize the args but it would probably just slow things down
                 bool success = (bool)methodInfo.Invoke(null, new object[] {p_args});
                 if (!hasErrorInEvaluation && !success)
