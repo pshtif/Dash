@@ -37,27 +37,21 @@ namespace Dash
             EditorGUI.BeginChangeCheck();
 
             GameObject boundObject = Graph.Controller == null ? null : Graph.Controller.gameObject;
-            
+
             int index = 0;
             foreach (var variable in Graph.variables)
             {
                 //var r = new Rect(0, 25 + 24 * index, rect.width, 30);
-                GUIVariableUtils.VariableField(Graph.variables, variable.Name, boundObject);
+                GUIVariableUtils.VariableField(Graph.variables, variable.Name, boundObject, rect.width-10);
                 EditorGUILayout.Space(4);
                 index++;
             }
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                EditorUtility.SetDirty(Graph);
-            }
-            
             GUILayout.EndScrollView();
             GUILayout.EndArea();
 
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 48, rect.width - 8, 20), "Add Variable"))
             {
-                Debug.Log("here");
                 TypesMenu.Show(OnAddVariable);
             }
             
@@ -69,6 +63,11 @@ namespace Dash
             if (GUI.Button(new Rect(rect.x + rect.width/2 + 2, rect.y + rect.height - 24, rect.width/2-6, 20), "Paste Variables"))
             {
                 DashEditorCore.PasteVariables(Graph.variables, Graph.Controller != null ? Graph.Controller.gameObject : null);
+            }
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(Graph);
             }
 
             UseEvent(new Rect(rect.x, rect.y, rect.width, rect.height));
@@ -82,6 +81,8 @@ namespace Dash
             while (Graph.variables.HasVariable(name + index)) index++;
             
             Graph.variables.AddVariableByType((Type)p_type, name+index, null);
+            
+            DashEditorCore.SetDirty();
         }
     }
 }

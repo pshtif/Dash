@@ -16,7 +16,7 @@ namespace Dash
             int index = 0;
             foreach (var variable in variables)
             {
-                GUIVariableUtils.VariableField(variables, variable.Name, ((DashGlobalVariables)target).gameObject);
+                GUIVariableUtils.VariableField(variables, variable.Name, ((DashGlobalVariables)target).gameObject, EditorGUIUtility.currentViewWidth-20);
                 EditorGUILayout.Space(4);
                 index++;
             }

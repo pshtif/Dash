@@ -38,7 +38,9 @@ namespace Dash
             _name = p_newName;
         }
         
-        abstract public void BindProperty(PropertyInfo prop, Component p_component);
+        abstract public void BindProperty(PropertyInfo p_property, Component p_component);
+        
+        abstract public void BindField(FieldInfo p_field, Component p_component);
 
         abstract public void UnbindProperty();
 
@@ -47,7 +49,7 @@ namespace Dash
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void PropertyField();
+        public abstract void ValueField(float p_maxWidth);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -71,7 +73,7 @@ namespace Dash
     {
         protected T _value;
 
-        public override bool IsBound => !String.IsNullOrEmpty(_boundProperty);
+        public override bool IsBound => !String.IsNullOrEmpty(_boundName);
 
         [NonSerialized]
         private Func<T> _getter;
@@ -79,7 +81,8 @@ namespace Dash
         private Action<T> _setter;
         
         // Tried to use Type/MethodInfo directly but it is not good for serialization so using string
-        private string _boundProperty;
+        private VariableBindType _boundType;
+        private string _boundName;
         private string _boundComponentName;
 
         public new T value
@@ -114,15 +117,25 @@ namespace Dash
         public override Variable Clone()
         {
             Variable<T> v = new Variable<T>(Name, value);
-            v._boundProperty = _boundProperty;
+            v._boundType = _boundType;
+            v._boundName = _boundName;
             v._boundComponentName = _boundComponentName;
             return v;
         }
         
         public override void BindProperty(PropertyInfo p_property, Component p_component)
         {
-            _boundProperty = p_property.Name;
-            
+            _boundType = VariableBindType.PROPERTY;
+            _boundName = p_property.Name;
+            _boundComponentName = p_component.GetType().FullName;
+
+            InitializeBinding(p_component.gameObject);
+        }
+        
+        public override void BindField(FieldInfo p_field, Component p_component)
+        {
+            _boundType = VariableBindType.FIELD;
+            _boundName = p_field.Name;
             _boundComponentName = p_component.GetType().FullName;
 
             InitializeBinding(p_component.gameObject);
@@ -138,7 +151,7 @@ namespace Dash
 
         public override void UnbindProperty()
         {
-            _boundProperty = String.Empty;
+            _boundName = String.Empty;
             _boundComponentName = String.Empty;
             _getter = null;
             _setter = null;
@@ -157,23 +170,41 @@ namespace Dash
                 return false;
             }
 
-            PropertyInfo property = componentType.GetProperty(_boundProperty);
-            if (property == null)
+            if (_boundType == VariableBindType.PROPERTY)
             {
-                Debug.LogWarning("Cannot find property " + _boundProperty + " on component " + component.name);
-                return false;
+                PropertyInfo property = componentType.GetProperty(_boundName);
+                if (property == null)
+                {
+                    Debug.LogWarning("Cannot find property " + _boundName + " on component " + component.name);
+                    return false;
+                }
+
+                var method = property.GetGetMethod();
+                var delegateGetType = typeof(Func<>).MakeGenericType(method.ReturnType);
+
+                _getter = ConvertDelegate<Func<T>>(Delegate.CreateDelegate(delegateGetType, component, method, true));
+
+                var setMethod = property.GetSetMethod();
+                if (setMethod != null)
+                {
+                    var delegateSetType = typeof(Action<>).MakeGenericType(method.ReturnType);
+                    _setter = ConvertDelegate<Action<T>>(Delegate.CreateDelegate(delegateSetType, component, setMethod,
+                        true));
+                }
             }
-
-            var method = property.GetGetMethod();
-            var delegateGetType = typeof(Func<>).MakeGenericType(method.ReturnType);
-
-            _getter = ConvertDelegate<Func<T>>(Delegate.CreateDelegate(delegateGetType, component, method, true));
-
-            var setMethod = property.GetSetMethod();
-            if (setMethod != null)
+            
+            if (_boundType == VariableBindType.FIELD)
             {
-                var delegateSetType = typeof(Action<>).MakeGenericType(method.ReturnType);
-                _setter = ConvertDelegate<Action<T>>(Delegate.CreateDelegate(delegateSetType, component, setMethod, true));
+                FieldInfo field = componentType.GetField(_boundName);
+                if (field == null)
+                {
+                    Debug.LogWarning("Cannot find field " + _boundName + " on component " + component.name);
+                    return false;
+                }
+
+                _getter = () => (T)field.GetValue(component);
+
+                _setter = (T t) => field.SetValue(component, t);
             }
 
             return true;
@@ -185,12 +216,12 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void PropertyField()
+        public override void ValueField(float p_maxWidth)
         {
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
             {
-                GUILayout.Label(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
+                GUILayout.Label(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundName, GUILayout.Width(p_maxWidth));
             }
             else
             {
