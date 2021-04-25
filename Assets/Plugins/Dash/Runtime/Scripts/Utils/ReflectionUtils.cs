@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using OdinSerializer.Utilities;
+using UnityEngine;
 
 namespace Dash
 {
@@ -43,12 +44,22 @@ namespace Dash
             if(type != null)
                 return type;
 
-            var assemblyName = p_typeName.Substring(0, p_typeName.LastIndexOf('.'));
+            Assembly assembly; 
+            if (p_typeName.IndexOf(".") >= 0)
+            {
+
+                var assemblyName = p_typeName.Substring(0, p_typeName.LastIndexOf('.'));
+
+                assembly = Assembly.Load(assemblyName);
+            }
+            else
+            {
+                assembly = Assembly.Load("Assembly-CSharp");
+            }
             
-            var assembly = Assembly.Load(assemblyName);
-            if( assembly == null )
+            if (assembly == null)
                 return null;
-            
+
             return assembly.GetType(p_typeName);
         }
 
