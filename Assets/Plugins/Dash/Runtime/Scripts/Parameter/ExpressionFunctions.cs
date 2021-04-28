@@ -589,29 +589,42 @@ namespace Dash
             errorMessage = "Scale function for types " + evalParams[0].GetType()+", " + evalParams[1].GetType() + " is not implemented.";
             return false;
         }
-        
-        private static bool Ref(FunctionArgs p_args)
+
+        private static bool String(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length != 2)
+            if (p_args.Parameters.Length != 1)
             {
-                errorMessage = "Invalid number of parameters in Ref function "+p_args.Parameters.Length;
+                errorMessage = "Invalid number of parameters in String function "+p_args.Parameters.Length;
                 return false;
             }
             
             object[] evalParams = p_args.EvaluateParameters();
-
-            evalParams = p_args.EvaluateParameters();
             
-            if (typeof(NodeModelBase).IsAssignableFrom(evalParams[0].GetType()))
-            {
-                FieldInfo fieldInfo = evalParams[0].GetType().GetField(evalParams[1].ToString());
-                p_args.HasResult = true;
-                p_args.Result = fieldInfo.GetValue(evalParams[0]);
-                return true;
-            }
-
-            errorMessage = "Invalid parameters in Ref function";
-            return false;
+            p_args.HasResult = true;
+            p_args.Result = evalParams[0].ToString();
+            return true;
         }
+        
+        // private static bool Ref(FunctionArgs p_args)
+        // {
+        //     if (p_args.Parameters.Length != 2)
+        //     {
+        //         errorMessage = "Invalid number of parameters in Ref function "+p_args.Parameters.Length;
+        //         return false;
+        //     }
+        //     
+        //     object[] evalParams = p_args.EvaluateParameters();
+        //     
+        //     if (typeof(NodeModelBase).IsAssignableFrom(evalParams[0].GetType()))
+        //     {
+        //         FieldInfo fieldInfo = evalParams[0].GetType().GetField(evalParams[1].ToString());
+        //         p_args.HasResult = true;
+        //         p_args.Result = fieldInfo.GetValue(evalParams[0]);
+        //         return true;
+        //     }
+        //
+        //     errorMessage = "Invalid parameters in Ref function";
+        //     return false;
+        // }
     }
 }
