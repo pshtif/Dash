@@ -89,9 +89,9 @@ namespace Dash
             {
                 obj = cachedExpression.Evaluate();
             }
-            catch //(Exception e)
+            catch (Exception e)
             {
-                //Debug.Log(e);
+                errorMessage = e.Message; 
                 hasErrorInEvaluation = true;
             }
 
