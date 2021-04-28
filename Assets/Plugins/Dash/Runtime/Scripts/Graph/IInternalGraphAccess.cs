@@ -8,7 +8,7 @@ namespace Dash
 {
     public interface IInternalGraphAccess
     {
-        DashGraph parentGraph { set; }
+        //DashGraph parentGraph { set; }
         
         void AddActiveTween(DashTween p_tween);
         

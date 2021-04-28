@@ -128,12 +128,12 @@ namespace Dash
                 style.fontSize = 18;
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), Graph.Controller.name, style);
             }
-
-            if (Graph.parentGraph != null && Graph.Controller != null)
+            
+            if (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) && Graph.Controller != null)
             {
                 if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 98, 100, 32), "GO TO PARENT"))
                 {
-                    DashEditorCore.EditController(Graph.Controller);
+                    DashEditorCore.EditController(DashEditorCore.Config.editingGraph.Controller, GraphUtils.GetParentPath(DashEditorCore.Config.editingGraphPath));
                 }
             }
         }
@@ -176,12 +176,12 @@ namespace Dash
                 if (Graph.IsBound)
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Graph.Controller.name), style);
+                        new GUIContent(Graph.Controller.name + (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) ? "/"+DashEditorCore.Config.editingGraphPath : "")), style);
                 }
                 else
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Graph.name), style);
+                        new GUIContent(Graph.name + (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) ? "/"+DashEditorCore.Config.editingGraphPath : "")), style);
                 }
             }
             else

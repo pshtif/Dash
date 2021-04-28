@@ -20,10 +20,15 @@ namespace Dash
             return p_path + (p_path.Length>0 ?  "/" : "") + p_subPath;
         }
 
+        public static bool IsSubGraph(string p_path)
+        {
+            return !string.IsNullOrEmpty(p_path);
+        }
+
         public static string GetParentPath(string p_path)
         {
             if (string.IsNullOrWhiteSpace(p_path) || p_path.IndexOf("/") == -1)
-                return p_path;
+                return "";
 
             return p_path.Substring(0, p_path.LastIndexOf("/"));
         }

@@ -100,11 +100,13 @@ namespace Dash
                 return;
             
             _subGraphInstance = Model.graphAsset.Clone();
+            //((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
+            _subGraphInstance.name = Model.id;
         }
         
         void InstanceBoundGraph()
         {
-            _subGraphInstance = ScriptableObject.CreateInstance<DashGraph>();
+            _subGraphInstance = GraphUtils.CreateEmptyGraph();
             
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
@@ -113,8 +115,8 @@ namespace Dash
                 _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            ((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
-            _subGraphInstance.name = Graph.name+"/"+Model.id+"[Bound]";
+            //((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
+            _subGraphInstance.name = Model.id;
         }
         
         public void ReserializeBound()

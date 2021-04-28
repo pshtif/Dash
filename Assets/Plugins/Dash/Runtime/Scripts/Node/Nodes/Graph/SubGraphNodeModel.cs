@@ -11,7 +11,6 @@ namespace Dash
 {
     public class SubGraphNodeModel : NodeModelBase
     {
-        [HideInInspector]
         public bool useAsset = false;
         
         [Dependency("useAsset", true)]

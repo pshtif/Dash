@@ -57,7 +57,7 @@ namespace Dash
         [NonSerialized]
         private Dictionary<string, List<Action<NodeFlowData>>> _actionListeners;
         
-        public DashGraph parentGraph { get; private set; }
+        //public DashGraph parentGraph { get; private set; }
 
         [NonSerialized]
         protected bool _initialized = false;
@@ -344,13 +344,13 @@ namespace Dash
         [NonSerialized]
         private List<DashTween> _activeTweens;
 
-        DashGraph IInternalGraphAccess.parentGraph
-        {
-            set
-            {
-                parentGraph = value;
-            }
-        }
+        // DashGraph IInternalGraphAccess.parentGraph
+        // {
+        //     set
+        //     {
+        //         parentGraph = value;
+        //     }
+        // }
         
         void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
         {
