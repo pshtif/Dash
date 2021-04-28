@@ -49,10 +49,8 @@ namespace Dash
                         }
 
                         target = value as Transform;
-                        
-                        Debug.Log(value);
-                        
-                        if (target == null && value == typeof(GameObject))
+
+                        if (target == null && value.GetType() == typeof(GameObject))
                         {
                             target = (value as GameObject).transform;
                         } 
