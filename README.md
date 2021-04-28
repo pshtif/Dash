@@ -21,6 +21,32 @@ Dash Animation System for Unity is a system that was designed to make animation 
 * Unity 2019.4 LTS + (It may work on older versions but there are no guarantees and support.)
 * NET 4.X API Compatibility Level
 
+## Installation
+
+### UnityPackage
+
+The old school version of installing stuff within Unity is using the _.unitypackage_ this can be found in releases. Just download the _.unitypackage_ and open it inside Unity.
+
+### Unity Package Manager (Prefferred)
+
+Using Package Manager is now the prefferred method, all releases should be updated immediately.
+
+Add Scoped Registry into Package manager using Project Settings => Package Manager as below:  
+Name:  
+```
+Dash Registry
+```  
+URL:  
+```
+http://package.binaryego.com:4873
+```  
+Scopes:  
+```
+com.shtif
+com.teamsirenix
+```
+
+
 ## Where to start
 
 There are multiple building blocks in Dash Animation System that either depend on each other or communicate with each other. Lets go over them one by one and how to use them.
