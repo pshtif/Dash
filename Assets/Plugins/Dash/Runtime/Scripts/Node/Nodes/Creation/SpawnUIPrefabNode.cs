@@ -29,7 +29,7 @@ namespace Dash
             RectTransform spawned = GameObject.Instantiate(Model.prefab);
             if (Model.setTargetAsParent)
             {
-                spawned.transform.parent = target;
+                spawned.transform.SetParent(target, false);
             }
             
             spawned.anchoredPosition = Model.position.GetValue(ParameterResolver, p_flowData);
