@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 
+## RELEASE CANDIDATES
+
+### Release 0.4.0RC2 - 28.04.2021
+
+#### Added
+
+- Added new installation option using Unity Package Manager viz README
+- Added initial support for Graph versioning and migration validation between versions
+- Added support for new type of lookup variables so instead of binding to gameobject/component they lookup in hierarchy on runtime
+- Added support for COPY/PASTE of variables
+- Added support for retargeting expressions to take any component/gameobject and retarget to its transform instead of need for direct reference
+- Added Global event listeners on DashCore
+- Added support for COPY/PASTE of nodes between graphs
+- Added new supported variable types (Bool, String, Vector4, Quaternion, Transform, RectTransform)
+- Added StopAnimationsNode to stop all animations within graph or a particular target
+
+#### Changed
+
+- Removed DoTween from the framework **[BREAKING]** (all easings on existing animation nodes will be LINEAR after migration)
+- All AnimationNodes now inherit AnimationBaseNode
+- All AnimationNodes were refactored to enable tween/animation lookup
+- AnimateClipNode properties are now parametrized
+- whitespace are now no longer removed from expressions (for string usage)
+- FlowData parameter is now mandatory on evaluation
+- DashController auto start disabled by default
+
+#### Fixed
+
+- fixed incorrectly rendered variables UI when bound
+- fixed no longer settings DashController dirty when there was no change detected
+- fixed GUI for minimizing/maximizing property groups in model inspector
+- fixed correct component names in binding context menu
+- fixed bound graph now correctly set to dirty after serialization validation
+- fixed right mouse button drag now works in play mode
+
+### Release 0.3.0RC - 16.04.2021
+
+#### Fixed
+- Mainly preparations for RC release
+
 ## BETA RELEASES
 
 ### Release 0.2.9b - 09.04.2021
