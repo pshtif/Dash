@@ -105,6 +105,5 @@ For license information read here [LICENSE](LICENSE.md)
 
 List of 3rd Party libraries used in the project
 
-* DOTween (http://dotween.demigiant.com)
 * Odin Serializer (https://github.com/TeamSirenix/odin-serializer)
 * NCalc (https://github.com/sklose/NCalc2) 
