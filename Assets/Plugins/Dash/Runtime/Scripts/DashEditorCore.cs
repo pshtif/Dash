@@ -23,7 +23,35 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.3.0rc";
+        public const string VERSION = "0.4.0RC2";
+        
+        public static int GetVersionNumber() 
+        {
+            var split = VERSION.Split('.');
+            int result = 0;
+            for (int i = 0; i < split.Length; i++)
+            {
+                string number = string.Concat(split[i].TakeWhile(char.IsNumber));
+                result += Int32.Parse(number) * (int) Mathf.Pow(1000, split.Length - i - 1);
+            }
+
+            return result;
+        }
+        
+        public static string GetVersionString(int p_number)
+        {
+            string result = "";
+            int number = p_number;
+            while (number > 0)
+            {
+                result = "." + (number % 1000) + result;
+                number /= 1000;
+            }
+            
+            result = p_number <= 1000000 ? "0" + result : result.Substring(1);
+
+            return result;
+        }
 
         static public DashEditorConfig Config { get; private set; }
 

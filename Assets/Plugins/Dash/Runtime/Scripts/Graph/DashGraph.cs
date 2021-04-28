@@ -20,6 +20,8 @@ namespace Dash
     [Serializable]
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
     {
+        public int version { get; private set; } = 0;
+        
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
         public DashVariables variables = new DashVariables();
@@ -384,7 +386,13 @@ namespace Dash
         {
             Controller = p_controller;
         }
-        #endregion
+
+        void IEditorGraphAccess.SetVersion(int p_version)
+        {
+            version = p_version;
+        }
+        
+#endregion
 
         [SerializeField]
         private List<GraphBox> _boxes = new List<GraphBox>();
@@ -406,6 +414,7 @@ namespace Dash
         public void ValidateSerialization()
         {
             Nodes?.ForEach(n => n.ValidateSerialization());
+            version = DashEditorCore.GetVersionNumber();
             DashEditorCore.SetDirty();
         }
         

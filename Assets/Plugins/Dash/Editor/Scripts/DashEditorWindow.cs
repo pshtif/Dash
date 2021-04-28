@@ -82,21 +82,56 @@ namespace Dash
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
             if (Event.current.type == EventType.Repaint && !_previousLayoutDone) return;
-            
-            ShortcutsHandler.Handle();
-            
-            // Draw view GUIs
-            _views.ForEach(v => v.DrawGUI(Event.current, editorRect));
-            
-            // Process events after views update so overlaying views had chance to block mouse
-            _views.ForEach(v => v.ProcessEvent(Event.current, editorRect));
 
-            // Local dirty is no longer used but I will left it here as it will back come to use after optimization refactor
-            if (IsDirty)
+            if (CheckVersionUI())
             {
-                SetDirty(false);
-                Repaint();
+                ShortcutsHandler.Handle();
+
+                // Draw view GUIs
+                _views.ForEach(v => v.DrawGUI(Event.current, editorRect));
+
+                // Process events after views update so overlaying views had chance to block mouse
+                _views.ForEach(v => v.ProcessEvent(Event.current, editorRect));
+                
+                // Local dirty is no longer used but I will left it here as it will back come to use after optimization refactor
+                if (IsDirty)
+                {
+                    SetDirty(false);
+                    Repaint();
+                }
             }
+        }
+
+        private bool CheckVersionUI()
+        {
+            if (DashEditorCore.Config.editingGraph != null &&
+                DashEditorCore.Config.editingGraph.version < DashEditorCore.GetVersionNumber())
+            {
+                GUIStyle style = DashEditorCore.Skin.GetStyle("ViewBase");
+                var rect = new Rect(position.width / 2 - 160, position.height / 2 - 70, 320, 160);
+                GUI.Box(rect, new GUIContent("Version Warning"), style);
+                GUILayout.BeginArea(new Rect(rect.x + 6, rect.y+34, rect.width -12, rect.height-36));
+                GUILayout.BeginVertical();
+                GUIStyle textStyle = new GUIStyle();
+                textStyle.normal.textColor = Color.white;
+                textStyle.wordWrap = true;
+                textStyle.alignment = TextAnchor.UpperCenter;
+                GUILayout.TextArea("This graph was created by previous version of Dash Animation System version: "+DashEditorCore.Config.editingGraph.version+"\n"+
+                                   "The current version is "+DashEditorCore.GetVersionString(DashEditorCore.GetVersionNumber())+
+                                   " so it is needed to migrate and revalidate serialization or the Graph may not work correctly.\n"+
+                                   "Make sure you have backup of this Graph.", textStyle);
+                GUILayout.Space(4);
+                if (GUILayout.Button("Migrate"))
+                {
+                    DashEditorCore.Graph.ValidateSerialization();
+                }
+                GUILayout.EndVertical();
+                GUILayout.EndArea();
+
+                return false;
+            }
+
+            return true;
         }
 
         private void OnInspectorUpdate()

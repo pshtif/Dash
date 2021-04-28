@@ -33,13 +33,11 @@ namespace Dash
             
             object result;
             if (ReservedVariables.Resolve(_graph, p_name, out result))
-            {
-                return result;                
-            }
-            
+                return result;
+
             if (ResolveReference(p_name, p_collection, out result))
                 return result;
-            
+
             if (_graph.variables.HasVariable(p_name))
             {
                 Variable variable = _graph.variables.GetVariable(p_name);
