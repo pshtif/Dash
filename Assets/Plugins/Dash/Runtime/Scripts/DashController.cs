@@ -5,21 +5,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Dash
 {
-    [AddComponentMenu("Dash/DashController")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable {
-        
+    [AddComponentMenu("Dash/Dash Controller")]
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable
+    {
+
         public DashCore DashCore => DashCore.Instance;
 
         [HideInInspector]
         [SerializeField]
         protected DashGraph _assetGraph;
-        
+
         [HideInInspector]
         [SerializeField]
         private byte[] _boundGraphData;
@@ -48,7 +55,7 @@ namespace Dash
 
         [NonSerialized]
         private DashGraph _graphInstance;
-        
+
         public DashGraph Graph => GetGraphInstance();
 
         public bool IsGraphBound => _boundGraphData?.Length > 0;
@@ -67,19 +74,19 @@ namespace Dash
                 {
                     InstanceBoundGraph();
                 }
-                else 
+                else
                 {
-                    InstanceAssetGraph();        
+                    InstanceAssetGraph();
                 }
             }
-            
+
             return _graphInstance;
         }
-        
+
         void InstanceBoundGraph()
         {
             _graphInstance = ScriptableObject.CreateInstance<DashGraph>();
-            
+
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
             {
@@ -94,12 +101,13 @@ namespace Dash
         {
             if (_assetGraph == null)
                 return;
-            
+
             _graphInstance = _assetGraph.Clone();
         }
 
-        public bool autoStart = true;
+        public bool autoStart = false;
 
+        [Dependency("autoStart", true)] 
         public string autoStartInput = "Input";
 
         private event Action UpdateCallback;
@@ -111,11 +119,12 @@ namespace Dash
 
             DashCore.Bind(this);
         }
-        
-        void Start() {
+
+        void Start()
+        {
             if (Graph == null)
                 return;
-            
+
             if (autoStart)
             {
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
@@ -143,7 +152,7 @@ namespace Dash
         {
             if (Graph == null)
                 return;
-            
+
             Graph.SendEvent(p_name, NodeFlowDataFactory.Create(transform));
         }
 
@@ -151,8 +160,8 @@ namespace Dash
         {
             if (Graph == null)
                 return;
-            
-            p_flowData = p_flowData.Clone();
+
+            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(transform) : p_flowData.Clone();
 
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
@@ -161,12 +170,18 @@ namespace Dash
 
             Graph.SendEvent(p_name, p_flowData);
         }
-        
-        #if UNITY_EDITOR
+
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback) =>
+            Graph?.AddListener(p_name, p_callback);
+
+        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback) =>
+            Graph?.RemoveListener(p_name, p_callback);
+
+#if UNITY_EDITOR
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
-        
+
         public void ReserializeBound()
         {
             if (_graphInstance != null)
@@ -174,16 +189,17 @@ namespace Dash
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
-            
+
             //EditorUtility.SetDirty(this);
         }
-        #endif
-        
+#endif
+
         // Handle Unity property exposing - may be removed later to avoid external references
+
         #region EXPOSE_TABLE
 
-        [HideInInspector]
-        [SerializeField] 
+        [HideInInspector] 
+        [SerializeField]
         protected List<PropertyName> _propertyNames = new List<PropertyName>();
 
         [HideInInspector]
@@ -196,13 +212,13 @@ namespace Dash
             {
                 if (p_existingGUIDs.Contains(_propertyNames[i].ToString()))
                     continue;
-                
+
                 _propertyNames.RemoveAt(i);
                 _references.RemoveAt(i);
                 i--;
             }
         }
-        
+
         public void ClearReferenceValue(PropertyName id)
         {
             int index = _propertyNames.IndexOf(id);
@@ -212,7 +228,7 @@ namespace Dash
                 _propertyNames.RemoveAt(index);
             }
         }
-        
+
         public Object GetReferenceValue(PropertyName id, out bool idValid)
         {
             int index = _propertyNames.IndexOf(id);
@@ -221,10 +237,11 @@ namespace Dash
                 idValid = true;
                 return _references[index];
             }
+
             idValid = false;
             return null;
         }
-        
+
         public void SetReferenceValue(PropertyName id, Object value)
         {
             int index = _propertyNames.IndexOf(id);
@@ -234,11 +251,11 @@ namespace Dash
             }
             else
             {
-                _propertyNames.Add(id); 
+                _propertyNames.Add(id);
                 _references.Add(value);
             }
         }
-        
+
         public void BindGraph(DashGraph p_graph)
         {
             _assetGraph = null;

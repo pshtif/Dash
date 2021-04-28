@@ -3,10 +3,7 @@
  */
 
 using System;
-using System.Xml;
-using DG.Tweening;
 using Dash.Attributes;
-using TMPro;
 using UnityEngine;
 
 namespace Dash
@@ -17,59 +14,49 @@ namespace Dash
     [InputCount(1)]
     [Size(200,85)]
     [Serializable]
-    public class AnimateToRectNode : RetargetNodeBase<AnimateToRectNodeModel>
+    public class AnimateToRectNode : AnimationNodeBase<AnimateToRectNodeModel>
     {
-        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             RectTransform rectTransform = (RectTransform)p_target;
 
             if (CheckException(rectTransform, "No RectTransform component found on target"))
-                return;
+                return null;
 
             Transform towards = Model.toTarget.Resolve(Controller);
 
             if (CheckException(towards, "Towards not defined in node "+_model.id))
-                return;
+                return null;
 
             RectTransform rectTowards = towards.GetComponent<RectTransform>();
 
             if (CheckException(rectTowards, "No RectTransform component found on towards"))
-                return;
+                return null;
 
             Vector2 startPosition = rectTransform.anchoredPosition; 
             Quaternion startRotation = rectTransform.localRotation;
             Vector3 startScale = rectTransform.localScale;
 
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
             if (time == 0)
             {
-                UpdateTween(rectTransform, 1, p_flowData, startPosition, startRotation, startScale, rectTowards, easing);
-                ExecuteEnd(p_flowData);
+                UpdateTween(rectTransform, 1, p_flowData, startPosition, startRotation, startScale, rectTowards, easeType);
+                return null;
             }
             else
             {
                 // Virtual tween to update from directly
-                Tween tween = DOTween
-                    .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, startRotation, startScale, rectTowards, easing), 0,
-                        1, time)
-                    .SetDelay(delay)
-                    .SetEase(Ease.Linear)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
-
-                DOPreview.StartPreview(tween);
+                return DashTween.To(rectTransform, 0, 1, time)
+                    .OnUpdate(f => UpdateTween(rectTransform, f, p_flowData, startPosition, startRotation, startScale,
+                        rectTowards, easeType))
+                    .SetDelay(delay);
             }
         }
-        
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
-        }
 
-        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Quaternion p_startRotation, Vector3 p_startScale, RectTransform p_towards, Ease p_easing)
+        protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Quaternion p_startRotation, Vector3 p_startScale, RectTransform p_towards, EaseType p_easeType)
         {
             if (p_target == null)
                 return;
@@ -79,8 +66,8 @@ namespace Dash
                 Vector2 towardsPosition = TransformExtensions.FromToRectTransform(p_towards, p_target);
                 //towardsPosition = towardsPosition - p_target.anchoredPosition;
                 
-                towardsPosition = new Vector2(DOVirtual.EasedValue(p_startPosition.x, towardsPosition.x, p_delta, p_easing),
-                        DOVirtual.EasedValue(p_startPosition.y, towardsPosition.y, p_delta, p_easing));
+                towardsPosition = new Vector2(DashTween.EaseValue(p_startPosition.x, towardsPosition.x, p_delta, p_easeType),
+                        DashTween.EaseValue(p_startPosition.y, towardsPosition.y, p_delta, p_easeType));
 
                 p_target.anchoredPosition = towardsPosition;
             }

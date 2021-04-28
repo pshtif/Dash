@@ -25,6 +25,8 @@ namespace Dash
 
             if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
             
+            EditorGUI.BeginChangeCheck();
+            
             if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
             {
                 GUILayout.BeginVertical();
@@ -104,8 +106,6 @@ namespace Dash
                 }
             }
 
-            EditorGUI.BeginChangeCheck();
-                
             Controller.autoStart = EditorGUILayout.Toggle("Auto Start", Controller.autoStart);
 
             if (Controller.autoStart)
@@ -114,9 +114,11 @@ namespace Dash
                     EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
             }
 
-            EditorGUI.EndChangeCheck();
-            EditorUtility.SetDirty(target);
-            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);
+            }
+
             GUILayout.EndVertical();
             serializedObject.ApplyModifiedProperties();
         }

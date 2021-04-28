@@ -16,9 +16,13 @@ namespace Dash
     [Serializable]
     public abstract class Variable
     {
-        abstract protected object objectValue { get; set; }
+        public VariableType Type { get; protected set; } = VariableType.VALUE;
         
-        abstract public bool IsBound { get; }
+        public bool IsBound => Type == VariableType.BOUND;
+
+        public bool IsLookup => Type == VariableType.LOOKUP;
+        
+        abstract protected object objectValue { get; set; }
 
         public object value
         {
@@ -33,21 +37,30 @@ namespace Dash
 
         public string Name => _name;
 
-        public void Rename(string p_newName)
+        internal void Rename(string p_newName)
         {
             _name = p_newName;
         }
         
-        abstract public void BindProperty(PropertyInfo prop, Component p_component);
+        abstract public void BindProperty(PropertyInfo p_property, Component p_component);
         
+        abstract public void BindField(FieldInfo p_field, Component p_component);
+
         abstract public void UnbindProperty();
 
-        abstract public void InitializeBinding(GameObject p_target);
+        abstract public bool InitializeBinding(GameObject p_target);
+
+        public void SetAsLookup(bool p_lookup)
+        {
+            Type = p_lookup ? VariableType.LOOKUP : VariableType.VALUE;
+        }
+
+        abstract public void InitializeLookup(GameObject p_target);
 
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void PropertyField();
+        public abstract void ValueField(float p_maxWidth);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -71,15 +84,14 @@ namespace Dash
     {
         protected T _value;
 
-        public override bool IsBound => !String.IsNullOrEmpty(_boundProperty);
-
         [NonSerialized]
         private Func<T> _getter;
         [NonSerialized]
         private Action<T> _setter;
         
         // Tried to use Type/MethodInfo directly but it is not good for serialization so using string
-        private string _boundProperty;
+        private VariableBindType _boundType;
+        private string _boundName;
         private string _boundComponentName;
 
         public new T value
@@ -98,6 +110,13 @@ namespace Dash
         {
             return typeof(T);
         }
+
+        public string GetVariableTypeShortName()
+        {
+            string name = typeof(T).ToString();
+            name = name.IndexOf(".") >= 0 ? name.Substring(name.LastIndexOf(".") + 1) : name;
+            return name;
+        }
         
         protected override object objectValue
         {
@@ -114,50 +133,131 @@ namespace Dash
         public override Variable Clone()
         {
             Variable<T> v = new Variable<T>(Name, value);
+            v._boundType = _boundType;
+            v._boundName = _boundName;
+            v._boundComponentName = _boundComponentName;
             return v;
         }
         
         public override void BindProperty(PropertyInfo p_property, Component p_component)
         {
-            _boundProperty = p_property.Name;
-            
+            _boundType = VariableBindType.PROPERTY;
+            _boundName = p_property.Name;
+            _boundComponentName = p_component.GetType().FullName;
+
+            InitializeBinding(p_component.gameObject);
+        }
+        
+        public override void BindField(FieldInfo p_field, Component p_component)
+        {
+            Type = VariableType.BOUND;
+            _boundType = VariableBindType.FIELD;
+            _boundName = p_field.Name;
             _boundComponentName = p_component.GetType().FullName;
 
             InitializeBinding(p_component.gameObject);
         }
 
+        public void RebindProperty(GameObject p_gameObject)
+        {
+            if (Type == VariableType.BOUND)
+            {
+                InitializeBinding(p_gameObject);
+            }
+        }
+
         public override void UnbindProperty()
         {
-            _boundProperty = String.Empty;
+            _boundName = String.Empty;
             _boundComponentName = String.Empty;
             _getter = null;
             _setter = null;
+            Type = VariableType.VALUE;
         }
 
-        public override void InitializeBinding(GameObject p_target)
+        public override bool InitializeBinding(GameObject p_target)
         {
             if (!IsBound)
-                return;
+                return false;
 
             Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
             Component component = p_target.GetComponent(componentType);
             if (component == null)
-                Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);
-
-            PropertyInfo property = componentType.GetProperty(_boundProperty);
-            if (property == null)
-                Debug.LogWarning("Cannot find property " + _boundProperty+" on component "+component.name);
-            
-            var method = property.GetGetMethod();
-            var delegateGetType = typeof(Func<>).MakeGenericType(method.ReturnType);
-
-            _getter = ConvertDelegate<Func<T>>(Delegate.CreateDelegate(delegateGetType, component, method, true));
-
-            var setMethod = property.GetSetMethod();
-            if (setMethod != null)
             {
-                var delegateSetType = typeof(Action<>).MakeGenericType(method.ReturnType);
-                _setter = ConvertDelegate<Action<T>>(Delegate.CreateDelegate(delegateSetType, component, setMethod, true));
+                Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);
+                return false;
+            }
+
+            if (_boundType == VariableBindType.PROPERTY)
+            {
+                PropertyInfo property = componentType.GetProperty(_boundName);
+                if (property == null)
+                {
+                    Debug.LogWarning("Cannot find property " + _boundName + " on component " + component.name);
+                    return false;
+                }
+
+                var method = property.GetGetMethod();
+                var delegateGetType = typeof(Func<>).MakeGenericType(method.ReturnType);
+
+                _getter = ConvertDelegate<Func<T>>(Delegate.CreateDelegate(delegateGetType, component, method, true));
+
+                var setMethod = property.GetSetMethod();
+                if (setMethod != null)
+                {
+                    var delegateSetType = typeof(Action<>).MakeGenericType(method.ReturnType);
+                    _setter = ConvertDelegate<Action<T>>(Delegate.CreateDelegate(delegateSetType, component, setMethod,
+                        true));
+                }
+            }
+            
+            if (_boundType == VariableBindType.FIELD)
+            {
+                FieldInfo field = componentType.GetField(_boundName);
+                if (field == null)
+                {
+                    Debug.LogWarning("Cannot find field " + _boundName + " on component " + component.name);
+                    return false;
+                }
+
+                _getter = () => (T)field.GetValue(component);
+
+                _setter = (T t) => field.SetValue(component, t);
+            }
+
+            return true;
+        }
+        
+        public override void InitializeLookup(GameObject p_target)
+        {
+            if (!IsLookup)
+                return;
+            
+            var rect = p_target.transform.DeepFind(Name);
+
+            bool found = false;
+            if (rect != null)
+            {
+                if (typeof(T).IsAssignableFrom(rect.GetType()))
+                {
+                    objectValue = rect;
+                    found = true;
+                }
+                else
+                {
+                    var component = rect.GetComponent<T>();
+                    if (component == null)
+                    {
+                        objectValue = component;
+                        found = true;
+                    }
+                }
+            }
+
+            if (!found) 
+            {
+                Debug.LogWarning("Lookup variable "+Name+" wasn't able to find object of same name!");
+                objectValue = null;
             }
         }
 
@@ -167,12 +267,16 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void PropertyField()
+        public override void ValueField(float p_maxWidth)
         {
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
             {
-                EditorGUILayout.LabelField(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundProperty);
+                GUILayout.Label(ReflectionUtils.GetTypeNameWithoutAssembly(_boundComponentName) + "." + _boundName, GUILayout.Width(p_maxWidth));
+            }
+            else if (IsLookup)
+            {
+                GUILayout.Label(GetVariableTypeShortName()+".LOOKUP", GUILayout.Width(p_maxWidth));
             }
             else
             {
@@ -187,9 +291,24 @@ namespace Dash
                     string type = typeof(T).ToString();
                     switch (type)
                     {
+                        case "System.String":
+                            EditorGUI.BeginChangeCheck();
+                            var stringValue = EditorGUILayout.TextField((string)valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, stringValue);
+                            }
+                            break;
+                        case "System.Boolean":
+                            EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.Space(0, true);
+                            var boolValue = EditorGUILayout.Toggle((bool)valueField.GetValue(this), GUILayout.Width(16));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, boolValue);
+                            }
+                            break;
                         case "System.Int32":
-                            // value = (T) Convert.ChangeType(EditorGUILayout.IntField(Convert.ToInt32(value)),
-                            //     typeof(T));
                             EditorGUI.BeginChangeCheck();
                             var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this));
                             if (EditorGUI.EndChangeCheck())
@@ -220,10 +339,6 @@ namespace Dash
                             }
                             break;
                         case "UnityEngine.Vector3":
-                            // value = (T) Convert.ChangeType(
-                            //     EditorGUILayout.Vector3Field("",
-                            //         (Vector3) Convert.ChangeType(value, typeof(Vector3))),
-                            //     typeof(T));
                             EditorGUI.BeginChangeCheck();
                             var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this));
                             if (EditorGUI.EndChangeCheck())
@@ -231,12 +346,24 @@ namespace Dash
                                 valueField.SetValue(this, vector3Value);
                             }
                             break;
-                        // case "UnityEngine.Quaternion":
-                        //     Quaternion q = (Quaternion) Convert.ChangeType(value, typeof(Quaternion));
-                        //     Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
-                        //     v4 = EditorGUILayout.Vector4Field("", v4);
-                        //     value = (T) Convert.ChangeType(new Quaternion(v4.x, v4.y, v4.z, v4.w), typeof(T));
-                        //     break;
+                        case "UnityEngine.Vector4":
+                            EditorGUI.BeginChangeCheck();
+                            var vector4Value = EditorGUILayout.Vector4Field("", (Vector4) valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, vector4Value);
+                            }
+                            break;
+                        case "UnityEngine.Quaternion":
+                            EditorGUI.BeginChangeCheck();
+                            Quaternion q = (Quaternion) valueField.GetValue(this);
+                            Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
+                            v4 = EditorGUILayout.Vector4Field("", v4);
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, new Quaternion(v4.x, v4.y, v4.z, v4.w));
+                            }
+                            break;
                         default:
                             Debug.LogWarning("Variable of type " + type + " is not supported.");
                             break;

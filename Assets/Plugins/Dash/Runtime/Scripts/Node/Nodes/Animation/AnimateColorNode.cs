@@ -5,10 +5,10 @@
 using System;
 using Dash.Attributes;
 using Dash.Enums;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 #if UNITY_EDITOR
 
 #endif
@@ -22,7 +22,7 @@ namespace Dash
     [Serializable]
     public class AnimateColorNode : AnimationNodeBase<AnimateColorNodeModel>
     {
-        override protected void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
+        override protected DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             switch (Model.targetType)
             {
@@ -30,7 +30,7 @@ namespace Dash
                     Image image = p_target.GetComponent<Image>();
                     if (!CheckException(image, "No Image component found on target")) 
                     {
-                        ExecuteAs(image, p_flowData);
+                        return ExecuteAs(image, p_flowData);
                     }
 
                     break;
@@ -38,68 +38,58 @@ namespace Dash
                     TMP_Text text = p_target.GetComponent<TMP_Text>();
                     if (!CheckException(text, "No TMP_Text component found on target"))
                     {
-                        ExecuteAs(text, p_flowData);
+                        return ExecuteAs(text, p_flowData);
                     }
 
                     break;
-                default:
-                    ExecuteEnd(p_flowData);
-                    break;
             }
+            
+            return null;
         }
 
-        void ExecuteEnd(NodeFlowData p_flowData)
-        {
-            OnExecuteEnd();
-            OnExecuteOutput(0,p_flowData);
-        }
-
-        void ExecuteAs(Image p_target, NodeFlowData p_flowData)
+        DashTween ExecuteAs(Image p_target, NodeFlowData p_flowData)
         {
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            EaseType easing = GetParameterValue(Model.easeType, p_flowData);
             
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
-                ExecuteEnd(p_flowData);
+
+                return null;
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
-                    .SetDelay(delay)
-                    .SetEase(easing)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
-
-                DOPreview.StartPreview(tween);
+                return DashTween.To(p_target, 0, 1, time)
+                    .OnUpdate(f => UpdateTween(p_target, f, p_flowData, startColor, toColor))
+                    .SetDelay(delay);
             }
         }
         
-        void ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
+        DashTween ExecuteAs(TMP_Text p_target, NodeFlowData p_flowData)
         {
-            float time = GetParameterValue(Model.time);
-            float delay = GetParameterValue(Model.delay);
-            Ease easing = GetParameterValue(Model.easing);
+            float time = GetParameterValue(Model.time, p_flowData);
+            float delay = GetParameterValue(Model.delay, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             Color startColor = p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
 
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
-                ExecuteEnd(p_flowData);
+                return null;
             }
             else
             {
-                Tween tween = DOTween.To(f => UpdateTween(p_target, f, p_flowData, startColor, toColor), 0, 1, time)
-                    .SetDelay(delay)
-                    .SetEase(easing)
-                    .OnComplete(() => ExecuteEnd(p_flowData));
+                DashTween tween = DashTween.To(p_target, 0, 1, time)
+                    .OnUpdate(f => UpdateTween(p_target, f, p_flowData, startColor, toColor))
+                    .SetDelay(delay);
 
-                DOPreview.StartPreview(tween);
+                return tween;
             }
         }
 

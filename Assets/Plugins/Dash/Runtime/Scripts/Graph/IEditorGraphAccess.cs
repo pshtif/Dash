@@ -8,6 +8,8 @@ namespace Dash
     {
         #if UNITY_EDITOR
         void SetController(DashController p_controller);
-#endif
+
+        void SetVersion(int p_version);
+        #endif
     }
 }

@@ -4,8 +4,6 @@
 
 using System;
 using Dash.Attributes;
-using DG.Tweening;
-using UnityEngine;
 
 namespace Dash
 {
@@ -41,11 +39,11 @@ namespace Dash
                 }
                 else
                 {
-                    Tween call = DOVirtual.DelayedCall(GetParameterValue(Model.OnIterationDelay, p_flowData) * i, () =>
+                    float time = GetParameterValue(Model.OnIterationDelay, p_flowData) * i;
+                    DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() =>
                     {
                         OnExecuteOutput(0, data);
-                    });
-                    DOPreview.StartPreview(call);
+                    }).Start();
                 }
             }
             
@@ -55,11 +53,11 @@ namespace Dash
             }
             else
             {
-                Tween call = DOVirtual.DelayedCall(Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length, () =>
+                float time = Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length;
+                DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() =>
                 {
                     EndLoop(p_flowData);
-                });
-                DOPreview.StartPreview(call);
+                }).Start();
             }
         }
 

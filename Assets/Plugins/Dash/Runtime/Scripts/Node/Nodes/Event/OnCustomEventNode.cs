@@ -22,6 +22,7 @@ namespace Dash
 
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
+            //Debug.Log("OnCustomEvent: "+Model.eventName);
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);
         }

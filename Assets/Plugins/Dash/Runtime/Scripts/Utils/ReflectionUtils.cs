@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using OdinSerializer.Utilities;
+using UnityEngine;
 
 namespace Dash
 {
@@ -42,18 +44,50 @@ namespace Dash
             if(type != null)
                 return type;
 
-            var assemblyName = p_typeName.Substring(0, p_typeName.LastIndexOf('.'));
+            Assembly assembly; 
+            if (p_typeName.IndexOf(".") >= 0)
+            {
+
+                var assemblyName = p_typeName.Substring(0, p_typeName.LastIndexOf('.'));
+
+                assembly = Assembly.Load(assemblyName);
+            }
+            else
+            {
+                assembly = Assembly.Load("Assembly-CSharp");
+            }
             
-            var assembly = Assembly.Load(assemblyName);
-            if( assembly == null )
+            if (assembly == null)
                 return null;
-            
+
             return assembly.GetType(p_typeName);
         }
 
         public static string GetTypeNameWithoutAssembly(string p_type)
         {
             return p_type.Substring(p_type.LastIndexOf('.')+1);
+        }
+
+        static private Type[] _typeCache;
+        static private Assembly[] _assemblyCache;
+
+        private static Assembly[] GetAllAssemblies()
+        {
+            return _assemblyCache != null ? _assemblyCache : _assemblyCache = AppDomain.CurrentDomain.GetAssemblies();   
+        } 
+
+        public static Type[] GetAllTypes() {
+            if ( _typeCache != null ) {
+                return _typeCache;
+            }
+
+            var assemblies = GetAllAssemblies();
+
+            var result = new List<Type>();
+
+            assemblies.ForEach(a => result.AddRange(a.GetExportedTypes()));
+            
+            return _typeCache = result.OrderBy(t => t.Namespace).ThenBy(t => t.Name).ToArray();
         }
     }
 }

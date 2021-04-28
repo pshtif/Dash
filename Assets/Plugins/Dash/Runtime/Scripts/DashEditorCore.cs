@@ -23,7 +23,35 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.3.0rc";
+        public const string VERSION = "0.4.0RC2";
+        
+        public static int GetVersionNumber() 
+        {
+            var split = VERSION.Split('.');
+            int result = 0;
+            for (int i = 0; i < split.Length; i++)
+            {
+                string number = string.Concat(split[i].TakeWhile(char.IsNumber));
+                result += Int32.Parse(number) * (int) Mathf.Pow(1000, split.Length - i - 1);
+            }
+
+            return result;
+        }
+        
+        public static string GetVersionString(int p_number)
+        {
+            string result = "";
+            int number = p_number;
+            while (number > 0)
+            {
+                result = "." + (number % 1000) + result;
+                number /= 1000;
+            }
+            
+            result = p_number <= 1000000 ? "0" + result : result.Substring(1);
+
+            return result;
+        }
 
         static public DashEditorConfig Config { get; private set; }
 
@@ -50,7 +78,10 @@ namespace Dash
 
         static public GraphBox editingBoxComment;
         static public GraphBox selectedBox;
+
+        static public List<Variable> copiedVariables = new List<Variable>();
         
+        static public List<NodeBase> copiedNodes = new List<NodeBase>();
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 
@@ -131,6 +162,63 @@ namespace Dash
             
             SetDirty();
         }
+        
+        public static void DuplicateNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
+            
+            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
+            selectedNodes = new List<int> { node.Index };
+            
+            SetDirty();
+        }
+        
+        public static void CopySelectedNodes()
+        {
+            if (Graph == null || selectedNodes.Count == 0)
+                return;
+
+            copiedNodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
+        }
+        
+        public static void CopyNode(NodeBase p_node)
+        {
+            if (Graph == null)
+                return;
+
+            copiedNodes.Clear();
+            copiedNodes.Add(p_node);
+        }
+
+        public static bool HasCopiedNodes()
+        {
+            return copiedNodes.Count != 0;
+        }
+        
+        public static void PasteNodes(Vector2 p_mousePosition)
+        {
+            if (Graph == null || copiedNodes.Count == 0)
+                return;
+            
+            List<NodeBase> newNodes = Graph.DuplicateNodes(copiedNodes);
+            
+            float zoom = Config.zoom;
+            newNodes[0].rect = new Rect(p_mousePosition.x * zoom - Graph.viewOffset.x,
+                p_mousePosition.y * zoom - Graph.viewOffset.y, 0, 0);
+
+            for (int i = 1; i < newNodes.Count; i++)
+            {
+                NodeBase node = newNodes[i];
+                node.rect.x = newNodes[0].rect.x + (node.rect.x - copiedNodes[0].rect.x);
+                node.rect.y = newNodes[0].rect.y + (node.rect.y - copiedNodes[0].rect.y);
+            }
+            
+            selectedNodes = newNodes.Select(n => n.Index).ToList();
+
+            SetDirty();
+        }
 
         public static void DeleteSelectedNodes()
         {
@@ -143,18 +231,6 @@ namespace Dash
             nodes.ForEach(n => Graph.DeleteNode(n));
 
             selectedNodes = new List<int>();
-            
-            SetDirty();
-        }
-
-        public static void DuplicateNode(NodeBase p_node)
-        {
-            if (Graph == null)
-                return;
-            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
-            
-            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
-            selectedNodes = new List<int> { node.Index };
             
             SetDirty();
         }
@@ -172,6 +248,26 @@ namespace Dash
             ReindexSelected(index);
             
             SetDirty();
+        }
+
+        public static void CopyVariables(DashVariables p_fromVariables)
+        {
+            copiedVariables.Clear();
+            foreach (var variable in p_fromVariables)
+            {
+                copiedVariables.Add(variable);
+            }
+        }
+        
+        public static void CopyVariable(Variable p_variable)
+        {
+            copiedVariables.Clear();
+            copiedVariables.Add(p_variable);
+        }
+
+        public static void PasteVariables(DashVariables p_toVariables, GameObject p_target)
+        {
+            copiedVariables.ForEach(v => p_toVariables.PasteVariable(v.Clone(), p_target));
         }
 
         public static void CreateBoxAroundSelectedNodes()
@@ -270,6 +366,8 @@ namespace Dash
 
             if (p_change == PlayModeStateChange.EnteredEditMode)
             {
+                DashTweenCore.Reset();
+                
                 if (Config.enteringPlayModeController != null)
                 {
                     EditController(Config.enteringPlayModeController);    

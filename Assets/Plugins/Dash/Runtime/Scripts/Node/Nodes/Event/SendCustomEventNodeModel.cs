@@ -6,6 +6,10 @@ namespace Dash
 {
     public class SendCustomEventNodeModel : NodeModelBase
     {
-        public string eventName = "";
+        public Parameter<string> eventName = new Parameter<string>("");
+
+        public Parameter<bool> global = new Parameter<bool>(false);
+
+        public Parameter<bool> sendData = new Parameter<bool>(true);
     }
 }

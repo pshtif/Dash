@@ -2,8 +2,11 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
+using System.Collections.Generic;
 using Dash.Attributes;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Dash
 {
@@ -12,19 +15,39 @@ namespace Dash
     [InputCount(1)]
     [Size(160,85)]
     [InspectorHeight(380)]
-    public class AnimationNodeBase<T> : RetargetNodeBase<T> where T:AnimationNodeModelBase, new()
+    public abstract class AnimationNodeBase<T> : RetargetNodeBase<T> where T:AnimationNodeModelBase, new()
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            Debug.LogWarning("ExecuteOnTarget not implemented in AnimationNodeBase class.");
+            DashTween tween = AnimateOnTarget(p_target, p_flowData);
+
+            if (tween == null)
+            {
+                ExecuteEnd(p_flowData);
+            } else {
+                tween.OnComplete(() => ExecuteEnd(p_flowData, tween)).Start();
+                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
+            }
         }
+
+        protected abstract DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData);
         
+        protected void ExecuteEnd(NodeFlowData p_flowData, DashTween p_tween = null)
+        {
+            if (p_tween != null)
+            {
+                ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
+            }
+
+            OnExecuteEnd();
+            OnExecuteOutput(0,p_flowData);
+        }
+
 #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)
         {
             base.DrawCustomGUI(p_rect);
-
-            //if (Model.time == null) Model.time = new Parameter<float>(1);
+            
             if (Model.time.isExpression)
             {
                 GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),

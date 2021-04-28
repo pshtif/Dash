@@ -48,14 +48,7 @@ namespace Dash
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
             
-            if (p_node == null)
-            {
-                _previewGraph.previewNode?.Execute(NodeFlowDataFactory.Create(Controller.transform));
-            }
-            else
-            {
-                _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
-            }
+            _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
         }
 
         void OnUpdate()
@@ -89,14 +82,14 @@ namespace Dash
         {
             // Debug.Log("EditorCore.StopPreview");
             
+            DashTween.CleanAll();
+            
             EditorApplication.update -= OnUpdate;
             
             if (!_isPreviewing)
                 return;
             
             _isPreviewing = false;
-
-            DOPreview.StopPreview();
 
             // Since we can do almost anything in preview we need to reload the scene before it
             EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path);

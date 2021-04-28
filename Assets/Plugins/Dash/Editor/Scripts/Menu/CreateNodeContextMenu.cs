@@ -79,6 +79,11 @@ namespace Dash
                             type);
                     }
                 }
+
+                if (DashEditorCore.HasCopiedNodes())
+                {
+                    menu.AddItem(new GUIContent("Paste Nodes"), false, PasteNodes);
+                }
             }
 
             return menu;
@@ -105,6 +110,11 @@ namespace Dash
                 return true;
 
             return false;
+        }
+
+        static void PasteNodes()
+        {
+            DashEditorCore.PasteNodes(_lastMousePosition);
         }
 
         static void CreateNode(object p_nodeType)
