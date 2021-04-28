@@ -36,18 +36,21 @@ namespace Dash
             fields.ToList().FindAll(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>)).ForEach(f =>
             {
                 Type exposedRefType = typeof(ExposedReference<>).MakeGenericType(f.FieldType.GenericTypeArguments[0]);
-                
-                IExposedPropertyTable propertyTable = DashEditorCore.Config.editingGraph.Controller;
-                var curExposedRef = f.GetValue(clone);
-                UnityEngine.Object exposedValue = (UnityEngine.Object)curExposedRef.GetType().GetMethod("Resolve")
-                    .Invoke(curExposedRef, new object[] {propertyTable});
-                
-                var clonedExposedRef = Activator.CreateInstance(exposedRefType);
-                PropertyName newExposedName = new PropertyName(UnityEditor.GUID.Generate().ToString());
-                propertyTable.SetReferenceValue(newExposedName, exposedValue);
-                clonedExposedRef.GetType().GetField("exposedName")
-                    .SetValue(clonedExposedRef, newExposedName);
-                f.SetValue(clone, clonedExposedRef);
+
+                if (DashEditorCore.Config.editingGraph.Controller != null)
+                {
+                    IExposedPropertyTable propertyTable = DashEditorCore.Config.editingGraph.Controller;
+                    var curExposedRef = f.GetValue(clone);
+                    UnityEngine.Object exposedValue = (UnityEngine.Object) curExposedRef.GetType().GetMethod("Resolve")
+                        .Invoke(curExposedRef, new object[] {propertyTable});
+
+                    var clonedExposedRef = Activator.CreateInstance(exposedRefType);
+                    PropertyName newExposedName = new PropertyName(UnityEditor.GUID.Generate().ToString());
+                    propertyTable.SetReferenceValue(newExposedName, exposedValue);
+                    clonedExposedRef.GetType().GetField("exposedName")
+                        .SetValue(clonedExposedRef, newExposedName);
+                    f.SetValue(clone, clonedExposedRef);
+                }
             });
 
             return clone;
