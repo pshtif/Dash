@@ -46,6 +46,12 @@ com.shtif
 com.teamsirenix
 ```
 
+![Package Settings](https://i.imgur.com/Ln5ulBe.png)
+
+After this you can find Dash in My Registries inside Package Manager.
+
+![Package Manager](https://i.imgur.com/B0sJD6n.png)
+
 
 ## Where to start
 
