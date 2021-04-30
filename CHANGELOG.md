@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 - Added support for COPY/PASTE of nodes between graphs
 - Added new supported variable types (Bool, String, Vector4, Quaternion, Transform, RectTransform)
 - Added StopAnimationsNode to stop all animations within graph or a particular target
+- Added String() expression function to convert variable/attribute to string to avoid casting issues (for example when setting text using indices) 
+- Added more EXPERIMENTAL SubGraphNode functionality (UI, logic, handling...)
 
 #### Changed
 
@@ -27,6 +29,7 @@ All notable changes to this project will be documented in this file.
 - whitespace are now no longer removed from expressions (for string usage)
 - FlowData parameter is now mandatory on evaluation
 - DashController auto start disabled by default
+- usage of SetParent in SpawnNode to avoid UI scaling issues upon spawning.
 
 #### Fixed
 
@@ -36,6 +39,8 @@ All notable changes to this project will be documented in this file.
 - fixed correct component names in binding context menu
 - fixed bound graph now correctly set to dirty after serialization validation
 - fixed right mouse button drag now works in play mode
+- fixed all catched exceptions now correctly sent to debug output when there is error in node execution
+- fixed crash when cloning nodes with exposed references to Asset graphs
 
 ### Release 0.3.0RC - 16.04.2021
 
