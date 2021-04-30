@@ -10,7 +10,7 @@ namespace Dash
     {
         [Order(10)] 
         [TitledGroup("Text")] 
-        public float characterDelay = .1f;
+        public Parameter<float> characterDelay = new Parameter<float>(.1f);
 
     }
 }

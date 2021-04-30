@@ -27,13 +27,17 @@ namespace Dash
                  TMPTweenExtension.Scale(text, i, 0);
             
             float time = GetParameterValue(Model.time, p_flowData);
+            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
+            float characterDelay = GetParameterValue(Model.characterDelay, p_flowData);
 
             for (int i = 0; i < text.text.Length; i++)
             {
                  int index = i; // Rescope variable to avoid modified closure trap
                  DashTween.To(text, 0, 1, time)
                      .OnUpdate(f => TMPTweenExtension.Scale(text, index, f))
-                     .SetDelay(index * Model.characterDelay).Start();
+                     .SetDelay(index * characterDelay)
+                     .SetEase(easeType)
+                     .Start();
             }
 
             return DashTween.To(p_target, 0, 1, text.text.Length * .1f);
