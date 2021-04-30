@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -45,6 +46,23 @@ namespace Dash
             _globalVariables = p_variables;
         }
 
+        public DashController GetController(string p_name)
+        {
+            #if UNITY_EDITOR
+            if (Application.isPlaying)
+            {
+                return _controllers.Find(dc => dc.gameObject.name == p_name);
+            }
+            else
+            {
+                var found = GameObject.FindObjectsOfType<DashController>(); 
+                return found.Length== 0 ? null : found.ToList().Find(dc => dc.gameObject.name == p_name);
+            }
+            #else
+            return _controllers.Find(dc => dc.gameObject.name == p_name);
+            #endif
+        }
+
         public void Bind(DashController p_controller)
         {
             _controllers.Add(p_controller);
@@ -53,7 +71,7 @@ namespace Dash
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
             //Debug.Log("DashCore.SendEvent: "+p_name);
-            _controllers.ForEach(dc => dc.SendEvent(p_name, p_flowData));
+            _controllers.ForEach(dc => dc?.SendEvent(p_name, p_flowData));
             
             if (_listeners.ContainsKey(p_name))
             {
