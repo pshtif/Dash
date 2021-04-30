@@ -53,9 +53,12 @@ namespace Dash
 
         void OnUpdate()
         {
+            float time = 0;
+            _previewGraph.Nodes.ForEach(n => time = Mathf.Max(n.executeTime));
+
             if (_isPreviewing)
             {
-                if (_previewGraph.CurrentExecutionCount == 0)
+                if (_previewGraph.CurrentExecutionCount == 0 && time <= 0)
                     StopPreview();
             }
         }
