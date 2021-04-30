@@ -59,6 +59,7 @@ namespace Dash
                 tween.current = 0;
                 tween.running = false;
                 tween.delay = 0;
+                tween.easeType = EaseType.LINEAR;
                 tween._updateCallback = null;
                 tween._completeCallback = null;
             }
@@ -136,13 +137,16 @@ namespace Dash
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
                 _completeCallback?.Invoke();
                 Clean();
+                
                 return true;
             }
-            else
+            
+            if (current > delay)
             {
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
-                return false;
             }
+
+            return false;
         }
 
         void Clean()
