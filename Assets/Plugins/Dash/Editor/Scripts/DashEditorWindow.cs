@@ -40,14 +40,9 @@ namespace Dash
 
         protected List<ViewBase> _views;
 
-        public static DashEditorWindow InitEditorWindow(DashControllerInspector p_dashControllerInspector)
+        public static DashEditorWindow InitEditorWindow(DashController p_dashController)
         {
-            if (p_dashControllerInspector != null)
-            {
-                DashEditorCore.EditController(p_dashControllerInspector.Controller);
-            }
-
-            AssetDatabase.SaveAssets();
+            DashEditorCore.EditController(p_dashController);
 
             instance = GetWindow<DashEditorWindow>();
             instance.titleContent = new GUIContent("Dash Editor");
