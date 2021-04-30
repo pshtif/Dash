@@ -217,7 +217,7 @@ namespace Dash
 
 		static public float SineInOut(float p_time, float p_duration)
 		{
-			return -0.5f * Mathf.Cos(3.14159274f * p_time / p_duration) - 1.0f;
+			return -0.5f * (Mathf.Cos(3.14159274f * p_time / p_duration) - 1.0f);
 		}
 
 		static public float CircleIn(float p_time, float p_duration)
