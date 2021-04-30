@@ -158,7 +158,7 @@ namespace Dash
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            if (Graph == null)
+            if (Graph == null || transform == null)
                 return;
 
             p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(transform) : p_flowData.Clone();
