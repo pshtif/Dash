@@ -15,8 +15,11 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            p_target.gameObject.SetActive(Model.active);
-            
+            if (p_target != null)
+            {
+                p_target.gameObject.SetActive(Model.active);
+            }
+
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);
         }

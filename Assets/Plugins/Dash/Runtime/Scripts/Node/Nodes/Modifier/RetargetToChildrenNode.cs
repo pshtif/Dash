@@ -17,6 +17,12 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
+            if (p_target == null)
+            {
+                ExecuteEnd(p_flowData);
+                return;
+            }
+            
             for (int i = 0; i < p_target.childCount; i++) 
             {
                 NodeFlowData childData = p_flowData.Clone();

@@ -19,6 +19,12 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
+            if (p_target == null)
+            {
+                ExecuteEnd(p_flowData);
+                return;
+            }
+            
             DashTween tween = AnimateOnTarget(p_target, p_flowData);
 
             if (tween == null)

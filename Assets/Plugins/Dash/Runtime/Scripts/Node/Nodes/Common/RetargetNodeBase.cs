@@ -29,7 +29,7 @@ namespace Dash
 
 
             target = p_flowData.GetAttribute<Transform>("target");
-            
+
             // Handle retargeting
             if (Model.retarget)
             {
@@ -66,16 +66,19 @@ namespace Dash
                 }
                 else
                 {
-                    if (Model.isChild)
+                    if (target != null)
                     {
-                        string find = GetParameterValue(Model.target, p_flowData);
-                        target = target.Find(find, true);
-                    }
-                    else
-                    {
-                        string find = GetParameterValue(Model.target, p_flowData);
-                        GameObject go = GameObject.Find(find);
-                        target = go == null ? null : go.transform;
+                        if (Model.isChild)
+                        {
+                            string find = GetParameterValue(Model.target, p_flowData);
+                            target = target.Find(find, true);
+                        }
+                        else
+                        {
+                            string find = GetParameterValue(Model.target, p_flowData);
+                            GameObject go = GameObject.Find(find);
+                            target = go == null ? null : go.transform;
+                        }
                     }
                 }
             }
