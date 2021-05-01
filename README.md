@@ -23,11 +23,11 @@ Dash Animation System for Unity is a system that was designed to make animation 
 
 ## Installation
 
-#### UnityPackage
+#### Import using .unitypackage 
 
 The old school version of installing stuff within Unity is using the _.unitypackage_ this can be found in releases. Just download the _.unitypackage_ and open it inside Unity.
 
-#### Unity Package Manager (Prefferred)
+#### Install Unity Package Manager (Prefferred)
 
 Using Package Manager is now the prefferred method, all releases should be updated immediately.
 
