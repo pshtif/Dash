@@ -24,6 +24,8 @@ namespace Dash
     public class DashEditorCore
     {
         public const string VERSION = "0.4.1RC2";
+
+        public static Action<string> OnDebugMessage;
         
         public static int GetVersionNumber() 
         {
@@ -87,6 +89,8 @@ namespace Dash
 
         static public bool DetailsVisible => Config.zoom < 2.5;
 
+        static public List<string> DebugList { get; private set; }
+
         static public string propertyReference;
 
         static DashEditorCore()
@@ -100,6 +104,18 @@ namespace Dash
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAssemblyReload;
+        }
+
+        static public void Debug(string p_debug)
+        {
+            if (DebugList == null)
+            {
+                DebugList = new List<string>();
+            }
+            
+            DebugList.Add(p_debug);
+            
+            OnDebugMessage?.Invoke(p_debug);
         }
         
         static void SetExecutionOrder(Type p_classType, int p_order){

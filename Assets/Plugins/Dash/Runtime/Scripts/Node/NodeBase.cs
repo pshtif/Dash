@@ -158,6 +158,18 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
+            double time;
+            #if UNITY_EDITOR
+            time = EditorApplication.timeSinceStartup;
+            #else
+            time = Time.time;
+            #endif
+            
+            TimeSpan span = TimeSpan.FromSeconds(time);
+            string timeString = span.ToString(@"hh\:mm\:ss\:fff");
+
+            DashEditorCore.Debug(timeString + "|" + Graph.Controller.name + "|" + Graph.GraphPath + "|" + _model.id + "|" + p_flowData.GetAttribute<Transform>("target").name);
+            
             ExecutionCount++;
             
 #if UNITY_EDITOR
