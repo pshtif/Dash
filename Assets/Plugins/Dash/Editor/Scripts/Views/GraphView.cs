@@ -217,10 +217,15 @@ namespace Dash
                 return;
 
             ProcessZoom(p_event, p_rect);
-            
-            ProcessLeftClick(p_event, p_rect);
 
-            ProcessRightClick(p_event, p_rect);
+            if (!Application.isPlaying && !DashEditorCore.Previewer.IsPreviewing && Graph != null)
+            {
+                ProcessLeftClick(p_event, p_rect);
+
+                ProcessRightClick(p_event, p_rect);
+            }
+
+            ProcessDragging(p_event, p_rect);
 
             if (Graph.connectingNode != null)
                 DashEditorWindow.SetDirty(true);
@@ -299,14 +304,6 @@ namespace Dash
             // Dragging
             if (p_event.type == EventType.MouseDrag)
             {
-                if (p_event.alt)
-                {
-                    if (Graph != null)
-                    {
-                        Graph.viewOffset += p_event.delta * Zoom;
-                    }
-                }
-
                 switch (dragging)
                 {
                     case DraggingType.NODE:
@@ -344,28 +341,6 @@ namespace Dash
         void ProcessRightClick(Event p_event, Rect p_rect)
         {
             if (p_event.button != 1)
-                return;
-            
-            if (p_event.type == EventType.MouseDown)
-            {
-                _rightDragStart = p_event.mousePosition;
-            }
-
-            if (p_event.type == EventType.MouseDrag)
-            {
-                if (_rightDrag)
-                {
-                    Graph.viewOffset += p_event.delta * Zoom;
-                } else if ((p_event.mousePosition - _rightDragStart).magnitude > 5)
-                {
-                    _rightDrag = true;
-                    Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
-                }
-                
-                DashEditorWindow.SetDirty(true);
-            }
-            
-            if (Application.isPlaying || DashEditorCore.Previewer.IsPreviewing || Graph == null)
                 return;
 
             if (p_event.type == EventType.MouseUp)
@@ -409,6 +384,41 @@ namespace Dash
                 }
 
                 p_event.Use();
+                
+                DashEditorWindow.SetDirty(true);
+            }
+        }
+
+        void ProcessDragging(Event p_event, Rect p_rect)
+        {
+            // Left drag
+            if (p_event.button == 0 && p_event.alt && p_event.type == EventType.MouseDrag)
+            {
+                if (Graph != null)
+                {
+                    Graph.viewOffset += p_event.delta * Zoom;
+                    
+                    DashEditorWindow.SetDirty(true);
+                }
+            }
+            
+            // Right drag start
+            if (p_event.button == 1 && p_event.type == EventType.MouseDown)
+            {
+                _rightDragStart = p_event.mousePosition;
+            }
+
+            // Right drag
+            if (p_event.button == 1 && p_event.type == EventType.MouseDrag)
+            {
+                if (_rightDrag)
+                {
+                    Graph.viewOffset += p_event.delta * Zoom;
+                } else if ((p_event.mousePosition - _rightDragStart).magnitude > 5)
+                {
+                    _rightDrag = true;
+                    Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
+                }
                 
                 DashEditorWindow.SetDirty(true);
             }
