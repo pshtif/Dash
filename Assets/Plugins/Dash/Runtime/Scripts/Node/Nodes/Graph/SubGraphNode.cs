@@ -100,7 +100,7 @@ namespace Dash
                 return;
             
             _subGraphInstance = Model.graphAsset.Clone();
-            //((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
             _subGraphInstance.name = Model.id;
         }
         
@@ -115,7 +115,7 @@ namespace Dash
                 _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            //((IInternalGraphAccess)_subGraphInstance).parentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
             _subGraphInstance.name = Model.id;
         }
         

@@ -57,7 +57,18 @@ namespace Dash
         [NonSerialized]
         private Dictionary<string, List<Action<NodeFlowData>>> _actionListeners;
         
-        //public DashGraph parentGraph { get; private set; }
+        public DashGraph ParentGraph { get; private set; }
+        
+        public string GraphPath
+        {
+            get
+            {
+                if (ParentGraph != null)
+                    return ParentGraph.GraphPath + "/"+ name;
+
+                return name;
+            }
+        }
 
         [NonSerialized]
         protected bool _initialized = false;
@@ -250,7 +261,7 @@ namespace Dash
             }
             
             graph.DeserializeFromBytes(bytes, DataFormat.Binary, ref references);
-            graph.name = name + "(Clone)";
+            graph.name = name;
             return graph;
         }
 
@@ -344,13 +355,13 @@ namespace Dash
         [NonSerialized]
         private List<DashTween> _activeTweens;
 
-        // DashGraph IInternalGraphAccess.parentGraph
-        // {
-        //     set
-        //     {
-        //         parentGraph = value;
-        //     }
-        // }
+        DashGraph IInternalGraphAccess.ParentGraph
+        {
+             set
+             {
+                 ParentGraph = value;
+             }
+        }
         
         void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
         {
