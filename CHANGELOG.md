@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.1RC2 - 03.05.2021
+
+#### Added
+
+- Added multiple changes added to AnimateTextNode like parametrization etc.
+
+#### Fixed
+
+- Fixed SINE_INOUT easing now behaves correctly
+- Fixed delayed tweens should no longer call update before the delay runs out with negative values
+- Fixed easing is now correctly reset on tween pooling so next tweens that didn't set easing explicitly will have correct LINEAR value
+- Fixed right click now gets correctly consumed when over model insepctor
+- Fixed multiple transform checks through framework to handle destroyed gameobject transforms with correct Unity null check
+- Fixed opening new graph created inside assetbrowser will no longer incorrectly show migration warning
+
 ### Release 0.4.0RC2 - 28.04.2021
 
 #### Added
