@@ -23,7 +23,7 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public const string VERSION = "0.4.0RC2";
+        public const string VERSION = "0.4.1RC2";
         
         public static int GetVersionNumber() 
         {
