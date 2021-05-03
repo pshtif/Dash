@@ -53,7 +53,7 @@ namespace Dash
                             if (node != null)
                             {
                                 p_graph.viewOffset = -node.rect.center + DashEditorCore.Config.zoom *
-                                    DashEditorWindow.instance.position.size / 2;
+                                    DashEditorWindow.Instance.position.size / 2;
                             }
                         }
                     }
