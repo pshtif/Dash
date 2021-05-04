@@ -94,7 +94,7 @@ namespace Dash
                         }
                     }
 
-                    if (GUILayout.Button("Delete Graph"))
+                    if (GUILayout.Button("Remove Graph"))
                     {
                         if (DashEditorCore.Config.editingGraph == Controller.Graph)
                         {
