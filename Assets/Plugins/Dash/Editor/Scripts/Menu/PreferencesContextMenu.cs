@@ -13,16 +13,15 @@ namespace Dash
         {
             GenericMenu menu = new GenericMenu();
             
-            menu.AddItem(new GUIContent("Show Experimental"), DashEditorCore.Config.showExperimental, () => DashEditorCore.Config.showExperimental = !DashEditorCore.Config.showExperimental);
-            //menu.AddItem(new GUIContent("Show Variables"), p_graph.showVariables, () => p_graph.showVariables = !p_graph.showVariables);
-            menu.AddItem(new GUIContent("Show Node Ids"), DashEditorCore.Config.showNodeIds, () => DashEditorCore.Config.showNodeIds = !DashEditorCore.Config.showNodeIds);
-            menu.AddItem(new GUIContent("Show Node Search"), DashEditorCore.Config.showNodeSearch, () => DashEditorCore.Config.showNodeSearch = !DashEditorCore.Config.showNodeSearch);
+            menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.Config.showExperimental, () => DashEditorCore.Config.showExperimental = !DashEditorCore.Config.showExperimental);
+            menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.Config.showNodeIds, () => DashEditorCore.Config.showNodeIds = !DashEditorCore.Config.showNodeIds);
+            menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.Config.showNodeSearch, () => DashEditorCore.Config.showNodeSearch = !DashEditorCore.Config.showNodeSearch);
 
 
             menu.AddSeparator("");
-            menu.AddItem(new GUIContent("Validate Serialization"), false, p_graph.ValidateSerialization);
-            menu.AddItem(new GUIContent("Cleanup Null"), false, p_graph.RemoveNullReferences);
-            menu.AddItem(new GUIContent("Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
+            menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
+            menu.AddItem(new GUIContent("Advanced/Cleanup Null"), false, p_graph.RemoveNullReferences);
+            menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
             menu.ShowAsContext();
         }
     }

@@ -49,12 +49,7 @@ namespace Dash
                                 _index++;
                             }
 
-                            var node = DashEditorCore.Search(_search, _index);
-                            if (node != null)
-                            {
-                                p_graph.viewOffset = -node.rect.center + DashEditorCore.Config.zoom *
-                                    DashEditorWindow.Instance.position.size / 2;
-                            }
+                            DashEditorCore.Search(_search, _index);
                         }
                     }
                 }

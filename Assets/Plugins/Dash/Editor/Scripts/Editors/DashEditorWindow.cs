@@ -24,8 +24,6 @@ namespace Dash
         {
             UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
             UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing += OnPrefabStageClosing;
-            
-            
         }
 
         private void OnDisable()
@@ -57,6 +55,8 @@ namespace Dash
 
         private void OnGUI()
         {
+            DashEditorCore.Config.editorPosition = position;
+            
             if (Event.current.type == EventType.MouseDown)
                 DashEditorCore.editingBoxComment = null;
 

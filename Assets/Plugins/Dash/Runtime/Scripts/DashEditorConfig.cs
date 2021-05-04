@@ -45,6 +45,8 @@ namespace Dash
 
         public bool showNodeSearch = false;
 
+        public Rect editorPosition;
+
 #region SERIALIZATION
         
         [SerializeField, HideInInspector] private SerializationData _serializationData;

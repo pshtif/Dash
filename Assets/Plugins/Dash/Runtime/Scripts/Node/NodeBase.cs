@@ -164,11 +164,8 @@ namespace Dash
             #else
             time = Time.time;
             #endif
-            
-            TimeSpan span = TimeSpan.FromSeconds(time);
-            string timeString = span.ToString(@"hh\:mm\:ss\:fff");
 
-            DashEditorCore.Debug(timeString + "|" + Graph.Controller.name + "|" + Graph.GraphPath + "|" + _model.id + "|" + p_flowData.GetAttribute<Transform>("target").name);
+            DashEditorDebug.Debug(time, Graph.Controller, Graph.GraphPath, _model.id, p_flowData.GetAttribute<Transform>("target"));
             
             ExecutionCount++;
             

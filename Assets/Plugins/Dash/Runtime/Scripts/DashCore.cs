@@ -48,7 +48,7 @@ namespace Dash
             _globalVariables = p_variables;
         }
 
-        public DashController GetController(string p_name)
+        public DashController GetControllerByName(string p_name)
         {
             #if UNITY_EDITOR
             if (Application.isPlaying)
@@ -57,13 +57,37 @@ namespace Dash
             }
             else
             {
-                var found = GameObject.FindObjectsOfType<DashController>(); 
-                return found.Length== 0 ? null : found.ToList().Find(dc => dc.gameObject.name == p_name);
+                var found = GameObject.FindObjectsOfType<DashController>().ToList()
+                    .FindAll(dc => dc.gameObject.name == p_name);
+                if (found.Count == 0)
+                    return null;
+                
+                if (found.Count > 1)
+                    Debug.LogWarning("Using GetControllerByName with multiple DashControllers with the same name: "+p_name);
+
+                return found[0];
             }
             #else
             return _controllers.Find(dc => dc.gameObject.name == p_name);
             #endif
         }
+        
+//         public DashController GetControllerById(string p_id)
+//         {
+// #if UNITY_EDITOR
+//             if (Application.isPlaying)
+//             {
+//                 return _controllers.Find(dc => dc.Id == p_id);
+//             }
+//             else
+//             {
+//                 var found = GameObject.FindObjectsOfType<DashController>(); 
+//                 return found.Length== 0 ? null : found.ToList().Find(dc => dc.Id == p_id);
+//             }
+// #else
+//             return _controllers.Find(dc => dc.Id == p_id);
+// #endif
+//         }
 
         public void Bind(DashController p_controller)
         {

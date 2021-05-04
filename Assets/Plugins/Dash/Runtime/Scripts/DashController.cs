@@ -58,6 +58,8 @@ namespace Dash
 
         public DashGraph Graph => GetGraphInstance();
 
+        // public string Id = "DC";
+
         public bool IsGraphBound => _boundGraphData?.Length > 0;
 
         private DashGraph GetGraphInstance()

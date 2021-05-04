@@ -20,8 +20,6 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        public static Action<string> OnDebugMessage;
-
         static public DashEditorConfig Config { get; private set; }
 
         static public DashEditorPreviewer Previewer { get; private set; }
@@ -56,8 +54,6 @@ namespace Dash
 
         static public bool DetailsVisible => Config.zoom < 2.5;
 
-        static public List<string> DebugList { get; private set; }
-
         static public string propertyReference;
 
         static DashEditorCore()
@@ -67,25 +63,16 @@ namespace Dash
             
             CreateConfig();
             CreatePreviewer();
+            
+            //InvalidateControllersIds();
 
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAssemblyReload;
         }
 
-        static public void Debug(string p_debug)
+        static void SetExecutionOrder(Type p_classType, int p_order)
         {
-            if (DebugList == null)
-            {
-                DebugList = new List<string>();
-            }
-            
-            DebugList.Add(p_debug);
-            
-            OnDebugMessage?.Invoke(p_debug);
-        }
-        
-        static void SetExecutionOrder(Type p_classType, int p_order){
             MonoScript[] scripts = (MonoScript[])Resources.FindObjectsOfTypeAll(typeof(MonoScript));
             
             MonoScript classScript = scripts.First(s => s.GetClass() == p_classType);
@@ -106,7 +93,6 @@ namespace Dash
             {
                 Graph.Controller.ReserializeBound();
                 EditorUtility.SetDirty(Graph.Controller);
-                //EditorSceneManager.MarkSceneDirty(Graph.Controller.gameObject.scene);
             }
             else
             {
@@ -118,8 +104,6 @@ namespace Dash
         {
             if (Graph == null)
                 return null;
-            
-            selectedNodes.Clear();
 
             var searchNodes = Graph.Nodes.FindAll(n => n.Id.ToLower().Contains(p_search)).ToList();
             if (searchNodes.Count == 0)
@@ -128,8 +112,39 @@ namespace Dash
             if (p_index >= searchNodes.Count) p_index = p_index%searchNodes.Count;
 
             var node = searchNodes[p_index];
-            selectedNodes.Add(node.Index);
+            SelectNode(node);
             return node;
+        }
+        
+        public static bool GoToNode(DashController p_controller, string p_graphPath, string p_nodeId)
+        {
+            if (p_controller == null)
+                return false;
+            
+            EditController(p_controller, p_graphPath);
+
+            var graph = DashEditorCore.Config.editingGraph;
+            if (graph == null)
+                return false;
+            
+            var node = graph.Nodes.Find(n => n.Id == p_nodeId);
+            if (node == null)
+                return false;
+            
+            SelectNode(node);
+
+            return true;
+        }
+
+        public static void SelectNode(NodeBase p_node)
+        {
+            selectedNodes.Clear();
+
+            if (p_node == null || Graph == null)
+                return;
+            
+            selectedNodes.Add(p_node.Index);
+            Graph.viewOffset = -p_node.rect.center + Config.zoom * Config.editorPosition.size / 2;
         }
 
         public static void DuplicateSelectedNodes()
@@ -288,7 +303,7 @@ namespace Dash
             {
                 Config.editingGraphPath = p_graphPath;
                 Config.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
-                
+
                 if (Graph != null)
                 {
                     ((IEditorGraphAccess) Graph).SetController(p_controller);
@@ -319,8 +334,31 @@ namespace Dash
         
         static void OnHierarchyChanged()
         {
-            // Debug.Log("OnHierarchyChanged");
+            if (EditorApplication.isPlaying || Previewer.IsPreviewing)
+                return;
+
+            // InvalidateControllersIds();
         }
+
+        // static void InvalidateControllersIds()
+        // {
+        //     var found = GameObject.FindObjectsOfType<DashController>(true).ToList();
+        //     if (found.Count == 0)
+        //         return;
+        //
+        //     foreach (var controller in found)
+        //     {
+        //         var cid = controller.Id;
+        //
+        //         while (found.Exists(dc => dc != controller && dc.Id == cid))
+        //         {
+        //             int number = cid.Length > 2 ? Int32.Parse(cid.Substring(2)) : 0;
+        //             cid = "DC" + (number + 1);
+        //         }
+        //     
+        //         controller.Id = cid;
+        //     }
+        // }
 
         static void OnAssemblyReload()
         {
