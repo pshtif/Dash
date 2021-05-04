@@ -162,6 +162,20 @@ namespace Dash
             }
         }
 
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback)
+        {
+            if (_actionListeners.ContainsKey(p_name))
+            {
+                _actionListeners[p_name].Clear();
+            }
+            else
+            {
+                _actionListeners[p_name] = new List<Action<NodeFlowData>>();
+            }
+            
+            _actionListeners[p_name].Add(p_callback);
+        }
+
         public NodeBase GetNodeById(string p_id)
         {
             return Nodes.Find(n => n.Id == p_id);
@@ -425,7 +439,7 @@ namespace Dash
         public void ValidateSerialization()
         {
             Nodes?.ForEach(n => n.ValidateSerialization());
-            version = DashEditorCore.GetVersionNumber();
+            version = DashCore.GetVersionNumber();
             DashEditorCore.SetDirty();
         }
         
