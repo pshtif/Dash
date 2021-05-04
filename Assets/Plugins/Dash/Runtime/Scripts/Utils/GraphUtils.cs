@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OdinSerializer;
-using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,7 +13,14 @@ namespace Dash
 {
     public static class GraphUtils
     {
-        #if UNITY_EDITOR
+        public static DashGraph CreateEmptyGraph()
+        {
+            DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
+            ((IEditorGraphAccess)graph).SetVersion(DashCore.GetVersionNumber());
+            return graph;
+        }
+        
+#if UNITY_EDITOR
         public static string AddChildPath(string p_path, string p_subPath)
         {
             return p_path + (p_path.Length>0 ?  "/" : "") + p_subPath;
@@ -59,13 +65,6 @@ namespace Dash
             AssetDatabase.Refresh();
 
             return p_graph;
-        }
-
-        public static DashGraph CreateEmptyGraph()
-        {
-            DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
-            ((IEditorGraphAccess)graph).SetVersion(DashEditorCore.GetVersionNumber());
-            return graph;
         }
 
         public static DashGraph LoadGraph()

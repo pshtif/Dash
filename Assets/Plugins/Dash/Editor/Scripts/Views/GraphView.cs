@@ -205,7 +205,7 @@ namespace Dash
             style = new GUIStyle();
             style.normal.textColor = Color.gray;
             style.alignment = TextAnchor.MiddleRight;
-            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashEditorCore.VERSION,
+            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashCore.VERSION,
                 style);
 
             _graphMenuView.Draw(Graph);

@@ -14,6 +14,8 @@ namespace Dash
 {
     public class DashCore
     {
+        public const string VERSION = "0.4.2RC2";
+        
         private static DashCore _instance = null;
 
         public static DashCore Instance
@@ -103,6 +105,34 @@ namespace Dash
                 if (_listeners[p_name].Count == 0)
                     _listeners.Remove(p_name);
             }
+        }
+        
+        public static int GetVersionNumber() 
+        {
+            var split = VERSION.Split('.');
+            int result = 0;
+            for (int i = 0; i < split.Length; i++)
+            {
+                string number = string.Concat(split[i].TakeWhile(char.IsNumber));
+                result += Int32.Parse(number) * (int) Mathf.Pow(1000, split.Length - i - 1);
+            }
+
+            return result;
+        }
+        
+        public static string GetVersionString(int p_number)
+        {
+            string result = "";
+            int number = p_number;
+            while (number > 0)
+            {
+                result = "." + (number % 1000) + result;
+                number /= 1000;
+            }
+            
+            result = p_number <= 1000000 ? "0" + result : result.Substring(1);
+
+            return result;
         }
     }
 }
