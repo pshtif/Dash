@@ -177,6 +177,9 @@ namespace Dash
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback) =>
             Graph?.RemoveListener(p_name, p_callback);
 
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback) =>
+            Graph?.SetListener(p_name, p_callback);
+
 #if UNITY_EDITOR
         [HideInInspector]
         public bool previewing = false;
