@@ -74,7 +74,7 @@ namespace Dash
                 return;
             }
 
-            var editorRect = new Rect(0, 0, position.width, position.height);
+            var rect = new Rect(0, 0, position.width, position.height);
             
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
@@ -85,10 +85,10 @@ namespace Dash
                 ShortcutsHandler.Handle();
 
                 // Draw view GUIs
-                _views.ForEach(v => v.DrawGUI(Event.current, editorRect));
+                _views.ForEach(v => v.DrawGUI(Event.current, rect));
 
                 // Process events after views update so overlaying views had chance to block mouse
-                _views.ForEach(v => v.ProcessEvent(Event.current, editorRect));
+                _views.ForEach(v => v.ProcessEvent(Event.current, rect));
                 
                 // Local dirty is no longer used but I will left it here as it will back come to use after optimization refactor
                 if (IsDirty)

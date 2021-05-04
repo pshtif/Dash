@@ -106,7 +106,7 @@ namespace Dash
         
         void InstanceBoundGraph()
         {
-            _subGraphInstance = GraphUtils.CreateEmptyGraph();
+            _subGraphInstance = ScriptableObject.CreateInstance<DashGraph>();
             
             // Empty graphs don't self reference
             if (_selfReferenceIndex != -1)
@@ -130,8 +130,7 @@ namespace Dash
 
 #if UNITY_EDITOR
 
-        public override Vector2 Size => new Vector2(150,
-            85 + (InputCount > OutputCount
+        public override Vector2 Size => new Vector2(150, 85 + (InputCount > OutputCount
                 ? (InputCount > 2 ? (InputCount - 2) * 25 : 0)
                 : (OutputCount > 2 ? (OutputCount - 2) * 25 : 0)));
         
