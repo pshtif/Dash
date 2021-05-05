@@ -668,6 +668,7 @@ namespace Dash
                         {
                             Undo.RegisterCompleteObjectUndo(_graph, "Connect node");
                             Graph.Connect(this, i, Graph.connectingNode, Graph.connectingOutputIndex);
+                            DashEditorCore.SetDirty();
                             Graph.connectingNode = null;
                         }
                     }
