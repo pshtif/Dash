@@ -16,7 +16,7 @@ namespace Dash
         public static DashGraph CreateEmptyGraph()
         {
             DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
-            ((IEditorGraphAccess)graph).SetVersion(DashCore.GetVersionNumber());
+            ((IInternalGraphAccess)graph).SetVersion(DashCore.GetVersionNumber());
             return graph;
         }
         

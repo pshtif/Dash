@@ -399,6 +399,11 @@ namespace Dash
             _activeTweens?.FindAll(t => t.target == p_target || p_target == null).ForEach(t => t.Kill(p_complete));
             _activeTweens?.RemoveAll(t => t.target == p_target || p_target == null);
         }
+        
+        void IInternalGraphAccess.SetVersion(int p_version)
+        {
+            version = p_version;
+        }
 
 #endregion
 
@@ -412,11 +417,6 @@ namespace Dash
             Controller = p_controller;
         }
 
-        void IEditorGraphAccess.SetVersion(int p_version)
-        {
-            version = p_version;
-        }
-        
 #endregion
 
         [SerializeField]

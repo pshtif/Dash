@@ -17,5 +17,7 @@ namespace Dash
         void StopActiveTweens(System.Object p_target, bool p_complete = false);
 
         void OutputExecuted(OutputNode p_node, NodeFlowData p_data);
+        
+        void SetVersion(int p_version);
     }
 }
