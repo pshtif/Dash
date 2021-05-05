@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+
+### Release 0.4.2RC2 - 05.05.2021
+
+#### Added
+
+- Added SetListener method that removes all current listeners and sets a new one
+- Added Initial commit of experimental debug console window.
+
+#### Changed
+
+- Changed version info moved to Runtime assembly
+- Changed Advanced context creation menu is now the default one.
+
+#### Fixed
+
+- Fixed dragging view is now decoupled and the only mouse interaction that should work during preview or play mode.
+- Fixed various editor references in runtime assembly.
+- Fixed migration warning should now show the correct version format.
+- Fixed last connection now correctly gets saved when editing in Prefab
+
 ### Release 0.4.1RC2 - 03.05.2021
 
 #### Added
