@@ -184,7 +184,9 @@ namespace Dash
 
         private void OnDestroy()
         {
-            ((IInternalGraphAccess)Graph).StopActiveTweens(null);
+            if (Graph != null) {
+                ((IInternalGraphAccess)Graph).StopActiveTweens(null);
+            }
         }
 
 #if UNITY_EDITOR
