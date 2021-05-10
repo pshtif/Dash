@@ -56,7 +56,7 @@ namespace Dash
 
         [NonSerialized]
         private Dictionary<string, List<Action<NodeFlowData>>> _actionListeners;
-        
+
         public DashGraph ParentGraph { get; private set; }
         
         public string GraphPath
@@ -305,6 +305,12 @@ namespace Dash
             return false;
         }
 
+        public void Stop()
+        {
+            ((IInternalGraphAccess)this).StopActiveTweens(null);
+            Nodes.FindAll(n => n is SubGraphNode).ForEach(n => n.Graph.Stop());
+        }
+
 #region SERIALIZATION
 
         [SerializeField, HideInInspector]
@@ -394,9 +400,9 @@ namespace Dash
             _activeTweens?.Remove(p_tween);
         }
 
-        void IInternalGraphAccess.StopActiveTweens(System.Object p_target, bool p_complete)
+        void IInternalGraphAccess.StopActiveTweens(System.Object p_target)
         {
-            _activeTweens?.FindAll(t => t.target == p_target || p_target == null).ForEach(t => t.Kill(p_complete));
+            _activeTweens?.FindAll(t => t.target == p_target || p_target == null).ForEach(t => t.Kill(false));
             _activeTweens?.RemoveAll(t => t.target == p_target || p_target == null);
         }
         

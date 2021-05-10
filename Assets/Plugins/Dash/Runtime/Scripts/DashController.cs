@@ -182,6 +182,11 @@ namespace Dash
         public void SetListener(string p_name, Action<NodeFlowData> p_callback) =>
             Graph?.SetListener(p_name, p_callback);
 
+        private void OnDestroy()
+        {
+            ((IInternalGraphAccess)Graph).StopActiveTweens(null);
+        }
+
 #if UNITY_EDITOR
         [HideInInspector]
         public bool previewing = false;
