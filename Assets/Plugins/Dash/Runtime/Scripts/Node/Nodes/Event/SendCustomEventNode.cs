@@ -3,6 +3,7 @@
  */
 
 using Dash.Attributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
@@ -22,7 +23,18 @@ namespace Dash
 
             if (global)
             {
+                #if UNITY_EDITOR
+                if (DashEditorCore.Previewer.IsPreviewing)
+                {
+                    _graph.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                }
+                else
+                {
+                    DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                }
+                #else
                 DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                #endif
             }
             else
             {
