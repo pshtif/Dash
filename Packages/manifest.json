@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.teamsirenix.odinserializer": "2021.4.9",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ide.rider": "2.0.7",
@@ -16,5 +17,14 @@
   },
   "testables": [
     "com.unity.test-framework.performance"
+  ],
+  "scopedRegistries": [
+    {
+      "name": "sHTiF",
+      "url": "http://package.binaryego.com:4873",
+      "scopes": [
+        "com.teamsirenix"
+      ]
+    }
   ]
 }
