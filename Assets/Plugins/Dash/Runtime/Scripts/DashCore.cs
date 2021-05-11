@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.4.2RC2";
+        public const string VERSION = "0.4.3RC2";
         
         private static DashCore _instance = null;
 
