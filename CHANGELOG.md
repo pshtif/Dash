@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.3RC2 - 11.05.2021
+
+#### Added
+
+- Added OnDestroy on DashController now stops underlying graph
+- Added Stop method on DashGraph that stops all running animations within graph and all subgraphs.
+- Added Unbind method and Unbind controller on OnDestroy.
+
+#### Changed
+
+- Changed Moved DashEditorConfig to Assets/Resources/Editor folder to avoid packaging it into build. This will create a new config!
+- Changed: Global events are sent as local while in Preview mode.
 
 ### Release 0.4.2RC2 - 05.05.2021
 
