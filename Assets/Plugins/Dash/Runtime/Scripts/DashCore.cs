@@ -93,6 +93,11 @@ namespace Dash
         {
             _controllers.Add(p_controller);
         }
+        
+        public void Unbind(DashController p_controller)
+        {
+            _controllers.Remove(p_controller);
+        }
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {

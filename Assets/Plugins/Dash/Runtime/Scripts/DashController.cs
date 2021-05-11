@@ -184,6 +184,8 @@ namespace Dash
 
         private void OnDestroy()
         {
+            DashCore.Unbind(this);
+            
             if (Graph != null) {
                 ((IInternalGraphAccess)Graph).StopActiveTweens(null);
             }
