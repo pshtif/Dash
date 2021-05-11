@@ -407,7 +407,7 @@ namespace Dash
 
         static void CreateConfig()
         {
-            Config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/DashEditorConfig.asset",
+            Config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
                 typeof(DashEditorConfig));
             
             if (Config == null)
@@ -418,8 +418,13 @@ namespace Dash
                     if (!AssetDatabase.IsValidFolder("Assets/Resources"))
                     {
                         AssetDatabase.CreateFolder("Assets", "Resources");
+                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
+                    } 
+                    else if (!AssetDatabase.IsValidFolder("Assets/Resources/Editor"))
+                    {
+                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
                     }
-                    AssetDatabase.CreateAsset(Config, "Assets/Resources/DashEditorConfig.asset");
+                    AssetDatabase.CreateAsset(Config, "Assets/Resources/Editor/DashEditorConfig.asset");
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
                 }
