@@ -5,7 +5,7 @@ using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class GUIVariableUtils
     {

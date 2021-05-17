@@ -11,7 +11,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using Object = System.Object;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class GraphVariablesView : ViewBase
     {

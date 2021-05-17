@@ -5,10 +5,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
     [CustomEditor(typeof(DashGraph))]
-    public class DashGraphAssetInspector : Editor
+    public class DashGraphAssetInspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

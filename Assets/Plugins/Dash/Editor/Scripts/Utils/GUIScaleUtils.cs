@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
-namespace Dash 
+namespace Dash.Editor
 {
 
 	public static class GUIScaleUtils

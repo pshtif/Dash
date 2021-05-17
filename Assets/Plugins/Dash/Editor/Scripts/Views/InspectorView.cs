@@ -6,10 +6,8 @@ using System.Reflection;
 using Dash.Attributes;
 using UnityEditor;
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
 
-namespace Dash
+namespace Dash.Editor
 {
     public class InspectorView : ViewBase
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class DashGraphAssetHandler
     {

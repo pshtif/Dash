@@ -2,10 +2,10 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
     [CustomEditor(typeof(DashGlobalVariables))]
-    public class DashGlobalVariablesInspector : Editor
+    public class DashGlobalVariablesInspector : UnityEditor.Editor
     {
         protected DashVariables variables => ((DashGlobalVariables) target).variables;
 

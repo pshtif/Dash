@@ -5,7 +5,7 @@
 using System;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
     public abstract class ViewBase
     {

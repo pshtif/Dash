@@ -4,7 +4,7 @@
 
 using UnityEditor;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class AnimationClipChangesHandler : AssetPostprocessor
     {

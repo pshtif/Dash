@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace Dash
+namespace Dash.Editor
 {
     public class GraphView : ViewBase
     {
@@ -373,7 +373,7 @@ namespace Dash
                             }
                             else
                             {
-                                CreateNodeContextMenu.Show();
+                                CreateNodeContextMenu.ShowAsPopup();
                             }
                         }
                     }

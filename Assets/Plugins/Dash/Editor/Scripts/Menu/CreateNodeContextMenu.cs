@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
-namespace Dash
+namespace Dash.Editor
 { 
     public class CreateNodeContextMenu
     {
@@ -22,15 +22,15 @@ namespace Dash
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            GenericMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
-            //Get().ShowAsContext();
+            //GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition);
+            Get().ShowAsContext();
         }
 
         static public void ShowAsPopup()
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            GenericMenuPopup.Show(Get(), _lastMousePosition, "Create Node");
+            GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition);
         }
         
         static public GenericMenu Get()

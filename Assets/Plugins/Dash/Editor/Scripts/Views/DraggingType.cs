@@ -2,7 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-namespace Dash
+namespace Dash.Editor
 {
     public enum DraggingType
     {

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class NodeContextMenu
     {

@@ -5,10 +5,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
     [CustomEditor(typeof(DashController))]
-    public class DashControllerInspector : Editor
+    public class DashControllerInspector : UnityEditor.Editor
     {
         public DashController Controller => (DashController) target;
 
