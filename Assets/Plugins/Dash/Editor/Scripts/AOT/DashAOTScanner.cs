@@ -42,16 +42,10 @@ namespace Dash.Editor
         public static void GenerateDLL(bool p_generateLinkXml = true, bool p_includeOdin = false)
         {
             if (DashEditorCore.Config.scannedAOTTypes == null) DashEditorCore.Config.scannedAOTTypes = new List<Type>();
-
             if (DashEditorCore.Config.explicitAOTTypes == null) DashEditorCore.Config.explicitAOTTypes = new List<Type>();
 
             DashEditorCore.Config.AOTAssemblyGeneratedTime = DateTime.Now;
             
-            List<Type> aotTypes = DashEditorCore.Config.scannedAOTTypes.Concat(DashEditorCore.Config.explicitAOTTypes)
-                .ToList();
-            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath,
-                DashEditorCore.Config.AOTAssemblyName, aotTypes, false);
-
             if (p_generateLinkXml)
             {
                 if (p_includeOdin)
@@ -59,17 +53,24 @@ namespace Dash.Editor
                     File.WriteAllText(DashEditorCore.Config.AOTAssemblyPath + "/link.xml",
                         @"<linker>                    
                          <assembly fullname=""" + DashEditorCore.Config.AOTAssemblyName + @""" preserve=""all""/>
+                         <assembly fullname=""DashRuntime"" preserve=""all""/>
                          <assembly fullname=""OdinSerializer"" preserve=""all""/>
                       </linker>");
                 }
                 else
                 {
-                    File.WriteAllText(DashEditorCore.Config.AOTAssemblyPath + "link.xml",
+                    File.WriteAllText(DashEditorCore.Config.AOTAssemblyPath + "/link.xml",
                         @"<linker>                    
                          <assembly fullname=""" + DashEditorCore.Config.AOTAssemblyName + @""" preserve=""all""/>
+                         <assembly fullname=""DashRuntime"" preserve=""all""/>
                       </linker>");
                 }
             }
+            
+            List<Type> aotTypes = DashEditorCore.Config.scannedAOTTypes.Concat(DashEditorCore.Config.explicitAOTTypes)
+                .ToList();
+            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath,
+                DashEditorCore.Config.AOTAssemblyName, aotTypes, false);
         }
 
         public static void RemoveScannedAOTType(Type p_type)
