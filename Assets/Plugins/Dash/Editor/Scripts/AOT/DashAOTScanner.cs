@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Dash;
@@ -38,12 +39,31 @@ namespace Dash.Editor
             DashEditorCore.Config.scannedAOTTypes = scannedTypes;
         }
 
-        public static void GenerateDLL()
+        public static void GenerateDLL(bool p_generateLinkXml = true, bool p_includeOdin = false)
         {
             DashEditorCore.Config.AOTAssemblyGeneratedTime = DateTime.Now;
             var aotTypes = DashEditorCore.Config.scannedAOTTypes.Concat(DashEditorCore.Config.explicitAOTTypes)
                 .ToList();
-            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath, DashEditorCore.Config.AOTAssemblyName, aotTypes);
+            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath, DashEditorCore.Config.AOTAssemblyName, aotTypes, false);
+
+            if (p_generateLinkXml)
+            {
+                if (p_includeOdin)
+                {
+                    File.WriteAllText(DashEditorCore.Config.AOTAssemblyPath + "/link.xml",
+                        @"<linker>                    
+                         <assembly fullname=""" + DashEditorCore.Config.AOTAssemblyName + @""" preserve=""all""/>
+                         <assembly fullname=""OdinSerializer"" preserve=""all""/>
+                      </linker>");
+                }
+                else
+                {
+                    File.WriteAllText(DashEditorCore.Config.AOTAssemblyPath + "link.xml",
+                        @"<linker>                    
+                         <assembly fullname=""" + DashEditorCore.Config.AOTAssemblyName + @""" preserve=""all""/>
+                      </linker>");
+                }
+            }
         }
 
         public static void RemoveScannedAOTType(Type p_type)
