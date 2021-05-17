@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.4RC2 - 17.05.2021
+
+#### Added
+
+- Added AOT editor, generator and project scanning for Dash referenced types to preserve them on AOT platforms
+
 ### Release 0.4.3RC2 - 11.05.2021
 
 #### Added
