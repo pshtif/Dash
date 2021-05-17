@@ -4,6 +4,7 @@
 
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEditor;
@@ -46,6 +47,13 @@ namespace Dash
         public bool showNodeSearch = false;
 
         public Rect editorPosition;
+            
+        public string AOTAssemblyPath = "Assets/Plugins";
+        public string AOTAssemblyName = "DashAOTAssembly";
+        public DateTime AOTAssemblyGeneratedTime;
+        
+        public List<Type> scannedAOTTypes;
+        public List<Type> explicitAOTTypes;
 
 #region SERIALIZATION
         
