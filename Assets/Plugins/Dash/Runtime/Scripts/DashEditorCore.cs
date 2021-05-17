@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 namespace Dash
 {
@@ -547,6 +548,32 @@ namespace Dash
             return new Color(.9f, .9f, 1f);
         }
 
+        private static Dictionary<Color, Texture2D> _cachedColorTextures;
+        public static Texture2D GetColorTexture(Color p_color)
+        {
+            if (_cachedColorTextures == null)
+            {
+                _cachedColorTextures = new Dictionary<Color, Texture2D>();
+            }
+
+            if (_cachedColorTextures.ContainsKey(p_color) && _cachedColorTextures[p_color] != null)
+            {
+                return _cachedColorTextures[p_color];
+            }
+
+            var tex = new Texture2D(4, 4);
+            var cols = tex.GetPixels();
+            for (int i = 0; i < cols.Length; i++)
+            {
+                cols[i] = p_color;
+            }
+
+            tex.SetPixels(cols);
+            tex.Apply();
+
+            _cachedColorTextures[p_color] = tex;
+            return tex;
+        }
     }
 }
 #endif
