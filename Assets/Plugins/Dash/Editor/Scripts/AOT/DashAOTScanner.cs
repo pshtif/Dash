@@ -41,10 +41,16 @@ namespace Dash.Editor
 
         public static void GenerateDLL(bool p_generateLinkXml = true, bool p_includeOdin = false)
         {
+            if (DashEditorCore.Config.scannedAOTTypes == null) DashEditorCore.Config.scannedAOTTypes = new List<Type>();
+
+            if (DashEditorCore.Config.explicitAOTTypes == null) DashEditorCore.Config.explicitAOTTypes = new List<Type>();
+
             DashEditorCore.Config.AOTAssemblyGeneratedTime = DateTime.Now;
-            var aotTypes = DashEditorCore.Config.scannedAOTTypes.Concat(DashEditorCore.Config.explicitAOTTypes)
+            
+            List<Type> aotTypes = DashEditorCore.Config.scannedAOTTypes.Concat(DashEditorCore.Config.explicitAOTTypes)
                 .ToList();
-            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath, DashEditorCore.Config.AOTAssemblyName, aotTypes, false);
+            AOTSupportUtilities.GenerateDLL(DashEditorCore.Config.AOTAssemblyPath,
+                DashEditorCore.Config.AOTAssemblyName, aotTypes, false);
 
             if (p_generateLinkXml)
             {
