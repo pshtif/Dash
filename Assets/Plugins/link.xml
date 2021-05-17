@@ -1,0 +1,3 @@
+<linker>
+       <assembly fullname="DashAOTAssembly" preserve="all"/>
+</linker>
