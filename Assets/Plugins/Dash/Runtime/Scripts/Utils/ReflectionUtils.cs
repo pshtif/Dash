@@ -36,7 +36,7 @@ namespace Dash
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                 .Where(x => p_type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
         }
-        
+
         public static Type GetTypeByName(string p_typeName)
         {
             var type = Type.GetType(p_typeName);
@@ -85,7 +85,7 @@ namespace Dash
 
             var result = new List<Type>();
 
-            assemblies.ForEach(a => result.AddRange(a.GetExportedTypes()));
+            assemblies.Where(a => !a.IsDynamic).ForEach(a => result.AddRange(a.GetExportedTypes()));
             
             return _typeCache = result.OrderBy(t => t.Namespace).ThenBy(t => t.Name).ToArray();
         }
