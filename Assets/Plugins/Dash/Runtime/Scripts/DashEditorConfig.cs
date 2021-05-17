@@ -49,7 +49,7 @@ namespace Dash
         public Rect editorPosition;
             
         public string AOTAssemblyPath = "Assets/Plugins";
-        public string AOTAssemblyName = "DashAOTAssembly";
+        public string AOTAssemblyName = "DashAOTAssembly"; 
         public DateTime AOTAssemblyGeneratedTime;
         
         public List<Type> scannedAOTTypes;
