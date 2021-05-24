@@ -15,20 +15,23 @@ MonoBehaviour:
   editingGraph: {fileID: 0}
   editingGraphPath: 
   deleteNull: 0
-  zoom: 1
+  zoom: 1.75
   showNodeIds: 0
   showExperimental: 0
   showNodeSearch: 0
   editorPosition:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
+    x: 349
+    y: 138
+    width: 1739
+    height: 963
+  AOTAssemblyPath: Assets/Plugins
+  AOTAssemblyName: DashAOTAssembly
   _serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -41,8 +44,8 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: editingGraph
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: editingGraphPath
       Entry: 1
       Data: 
@@ -51,7 +54,7 @@ MonoBehaviour:
       Data: false
     - Name: zoom
       Entry: 4
-      Data: 1
+      Data: 1.75
     - Name: showNodeIds
       Entry: 5
       Data: false
@@ -66,16 +69,31 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 349
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 138
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 1739
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 963
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: AOTAssemblyPath
+      Entry: 1
+      Data: Assets/Plugins
+    - Name: AOTAssemblyName
+      Entry: 1
+      Data: DashAOTAssembly
+    - Name: AOTAssemblyGeneratedTime
+      Entry: 7
+      Data: System.DateTime, mscorlib
+    - Name: 
+      Entry: 3
+      Data: -8585803240039738190
     - Name: 
       Entry: 8
       Data: 
@@ -84,7 +102,7 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 88
+      Data: 92
     - Name: 
       Entry: 7
       Data: 1|System.RuntimeType, mscorlib
@@ -612,7 +630,7 @@ MonoBehaviour:
       Data: 59|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Dash.Variable`1[[UnityEngine.Sprite, UnityEngine.CoreModule]], DashRuntime
+      Data: Dash.Variable`1[[System.String, mscorlib]], DashRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -621,7 +639,7 @@ MonoBehaviour:
       Data: 60|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Dash.Variable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: Dash.Variable`1[[UnityEngine.Sprite, UnityEngine.CoreModule]], DashRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -630,7 +648,7 @@ MonoBehaviour:
       Data: 61|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Dash.VariableBindType, DashRuntime
+      Data: Dash.Variable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: 
       Entry: 8
       Data: 
@@ -639,13 +657,31 @@ MonoBehaviour:
       Data: 62|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Dash.VariableType, DashRuntime
+      Data: Dash.Variable`1[[UnityEngine.Vector4, UnityEngine.CoreModule]], DashRuntime
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
       Data: 63|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Dash.VariableBindType, DashRuntime
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 64|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Dash.VariableType, DashRuntime
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 65|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Action`2[[Dash.OutputNode, DashRuntime],[Dash.NodeFlowData, DashRuntime]],
@@ -655,7 +691,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 64|System.RuntimeType, mscorlib
+      Data: 66|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Boolean, mscorlib
@@ -664,7 +700,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 65|System.RuntimeType, mscorlib
+      Data: 67|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip, UnityEngine.AnimationModule],[Dash.ExtractedClip,
@@ -674,7 +710,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 66|System.RuntimeType, mscorlib
+      Data: 68|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.Dictionary`2[[UnityEngine.Transform, UnityEngine.CoreModule],[Dash.AnimationStartsCache,
@@ -684,7 +720,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 67|System.RuntimeType, mscorlib
+      Data: 69|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.IEqualityComparer`1[[UnityEngine.AnimationClip,
@@ -694,7 +730,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 68|System.RuntimeType, mscorlib
+      Data: 70|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]], mscorlib
@@ -703,7 +739,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 69|System.RuntimeType, mscorlib
+      Data: 71|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.List`1[[Dash.NodeBase, DashRuntime]], mscorlib
@@ -712,7 +748,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 70|System.RuntimeType, mscorlib
+      Data: 72|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.List`1[[Dash.NodeConnection, DashRuntime]],
@@ -722,7 +758,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 71|System.RuntimeType, mscorlib
+      Data: 73|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.List`1[[Dash.Variable, DashRuntime]], mscorlib
@@ -731,7 +767,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 72|System.RuntimeType, mscorlib
+      Data: 74|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
@@ -741,7 +777,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 73|System.RuntimeType, mscorlib
+      Data: 75|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Int32, mscorlib
@@ -750,7 +786,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 74|System.RuntimeType, mscorlib
+      Data: 76|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Single, mscorlib
@@ -759,7 +795,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 75|System.RuntimeType, mscorlib
+      Data: 77|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.String, mscorlib
@@ -768,7 +804,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 76|System.RuntimeType, mscorlib
+      Data: 78|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.AnimationClip, UnityEngine.AnimationModule
@@ -777,7 +813,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 77|System.RuntimeType, mscorlib
+      Data: 79|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.ExposedReference`1[[UnityEngine.Transform, UnityEngine.CoreModule]],
@@ -787,7 +823,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 78|System.RuntimeType, mscorlib
+      Data: 80|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.ExposedReference`1[[UnityEngine.UI.Button, UnityEngine.UI]],
@@ -797,7 +833,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 79|System.RuntimeType, mscorlib
+      Data: 81|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Object, UnityEngine.CoreModule
@@ -806,7 +842,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 80|System.RuntimeType, mscorlib
+      Data: 82|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.PropertyName, UnityEngine.CoreModule
@@ -815,7 +851,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 81|System.RuntimeType, mscorlib
+      Data: 83|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -824,7 +860,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 82|System.RuntimeType, mscorlib
+      Data: 84|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Sprite, UnityEngine.CoreModule
@@ -833,7 +869,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 83|System.RuntimeType, mscorlib
+      Data: 85|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Transform, UnityEngine.CoreModule
@@ -842,7 +878,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 84|System.RuntimeType, mscorlib
+      Data: 86|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.UI.Button, UnityEngine.UI
@@ -851,7 +887,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 85|System.RuntimeType, mscorlib
+      Data: 87|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
@@ -860,7 +896,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 86|System.RuntimeType, mscorlib
+      Data: 88|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -869,7 +905,25 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 87|System.RuntimeType, mscorlib
+      Data: 89|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: UnityEngine.Vector4, UnityEngine.CoreModule
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 90|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: System.DateTime, mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 91|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
@@ -878,7 +932,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 88|System.RuntimeType, mscorlib
+      Data: 92|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Type, mscorlib
@@ -893,10 +947,19 @@ MonoBehaviour:
       Data: 
     - Name: explicitAOTTypes
       Entry: 7
-      Data: 89|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
+      Data: 93|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 94|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: UnityEngine.ParticleSystemRenderer, UnityEngine.ParticleSystemModule
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

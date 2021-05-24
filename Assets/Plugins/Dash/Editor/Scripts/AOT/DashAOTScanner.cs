@@ -26,7 +26,6 @@ namespace Dash.Editor
 
     public static class DashAOTScanner
     {
-        //[MenuItem("Tools/Dash/Scan AOT")]
         public static void Scan()
         {
             List<Type> scannedTypes = StartScan();
