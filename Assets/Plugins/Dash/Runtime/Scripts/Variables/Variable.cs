@@ -293,7 +293,7 @@ namespace Dash
                     {
                         case "System.String":
                             EditorGUI.BeginChangeCheck();
-                            var stringValue = EditorGUILayout.TextField((string)valueField.GetValue(this));
+                            var stringValue = EditorGUILayout.TextField((string)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, stringValue);
@@ -310,7 +310,7 @@ namespace Dash
                             break;
                         case "System.Int32":
                             EditorGUI.BeginChangeCheck();
-                            var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this));
+                            var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, intValue);
@@ -320,7 +320,7 @@ namespace Dash
                             // value = (T) Convert.ChangeType(EditorGUILayout.FloatField(Convert.ToSingle(value)),
                             //     typeof(T));
                             EditorGUI.BeginChangeCheck();
-                            var floatValue = EditorGUILayout.FloatField((float)valueField.GetValue(this));
+                            var floatValue = EditorGUILayout.FloatField((float)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, floatValue);
@@ -332,7 +332,7 @@ namespace Dash
                             //         (Vector2) Convert.ChangeType(value, typeof(Vector2))),
                             //     typeof(T));
                             EditorGUI.BeginChangeCheck();
-                            var vector2Value = EditorGUILayout.Vector2Field("", (Vector2) valueField.GetValue(this));
+                            var vector2Value = EditorGUILayout.Vector2Field("", (Vector2) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, vector2Value);
@@ -340,7 +340,7 @@ namespace Dash
                             break;
                         case "UnityEngine.Vector3":
                             EditorGUI.BeginChangeCheck();
-                            var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this));
+                            var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, vector3Value);
@@ -348,7 +348,7 @@ namespace Dash
                             break;
                         case "UnityEngine.Vector4":
                             EditorGUI.BeginChangeCheck();
-                            var vector4Value = EditorGUILayout.Vector4Field("", (Vector4) valueField.GetValue(this));
+                            var vector4Value = EditorGUILayout.Vector4Field("", (Vector4) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, vector4Value);
@@ -358,7 +358,7 @@ namespace Dash
                             EditorGUI.BeginChangeCheck();
                             Quaternion q = (Quaternion) valueField.GetValue(this);
                             Vector4 v4 = new Vector4(q.x, q.y, q.z, q.w);
-                            v4 = EditorGUILayout.Vector4Field("", v4);
+                            v4 = EditorGUILayout.Vector4Field("", v4, GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, new Quaternion(v4.x, v4.y, v4.z, v4.w));

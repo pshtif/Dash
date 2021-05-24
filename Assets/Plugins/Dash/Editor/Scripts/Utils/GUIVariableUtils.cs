@@ -13,7 +13,7 @@ namespace Dash.Editor
         {
             var variable = p_variables.GetVariable(p_name);
             GUILayout.BeginHorizontal();
-            string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(140));
+            string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(120));
             EditorGUILayout.Space(2, false);
             if (newName != p_name) 
             {
@@ -21,7 +21,7 @@ namespace Dash.Editor
             }
             
             EditorGUI.BeginChangeCheck();
-            variable.ValueField(p_maxWidth-172);
+            variable.ValueField(p_maxWidth-170);
 
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             

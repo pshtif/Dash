@@ -145,7 +145,7 @@ namespace Dash
             return p_name;
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         public void AddNewVariable(Type p_type)
         {
             string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);

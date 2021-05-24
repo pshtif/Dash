@@ -27,14 +27,14 @@ namespace Dash.Editor
             if (Graph == null)
                 return;
 
-            Rect rect = new Rect(20, 30, 340, Graph.variablesMinimized ? 32 : 200);
+            Rect rect = new Rect(20, 30, 380, Graph.variablesMinimized ? 32 : 200);
             DrawBoxGUI(rect, "Graph Variables", TextAnchor.UpperCenter);
 
             var minStyle = new GUIStyle();
             minStyle.normal.textColor = Color.white;
             minStyle.fontStyle = FontStyle.Bold;
             minStyle.fontSize = 20;
-            if (GUI.Button(new Rect(rect.x + 320 + (Graph.variablesMinimized ? 0 : 2), rect.y + 2, 20, 20), Graph.variablesMinimized ? "+" : "-", minStyle))
+            if (GUI.Button(new Rect(rect.x + rect.width - 20 + (Graph.variablesMinimized ? 0 : 2), rect.y + 2, 20, 20), Graph.variablesMinimized ? "+" : "-", minStyle))
             {
                 Graph.variablesMinimized = !Graph.variablesMinimized;
             }
@@ -44,7 +44,7 @@ namespace Dash.Editor
 
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-79));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
-            
+
             EditorGUI.BeginChangeCheck();
 
             GameObject boundObject = Graph.Controller == null ? null : Graph.Controller.gameObject;

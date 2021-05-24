@@ -17,7 +17,7 @@ namespace Dash.Editor
 
         public NodeBase SelectedNode => Graph == null
             ? null
-            : DashEditorCore.selectedNodes.Count == 1
+            : DashEditorCore.selectedNodes != null && DashEditorCore.selectedNodes.Count == 1
             ? Graph.Nodes[DashEditorCore.selectedNodes[0]]
             : null;
 
