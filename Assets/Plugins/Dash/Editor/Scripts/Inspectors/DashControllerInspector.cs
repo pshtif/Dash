@@ -106,12 +106,20 @@ namespace Dash.Editor
                 }
             }
 
-            Controller.autoStart = EditorGUILayout.Toggle("Auto Start", Controller.autoStart);
+            Controller.autoStart = EditorGUILayout.Toggle(new GUIContent("Auto Start", "Automatically call an input on a graph when controller is started."), Controller.autoStart);
 
             if (Controller.autoStart)
             {
                 Controller.autoStartInput =
                     EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
+            }
+            
+            Controller.autoOnEnable = EditorGUILayout.Toggle(new GUIContent("Auto OnEnable", "Automatically call an input on a graph when controller is enabled."), Controller.autoOnEnable);
+
+            if (Controller.autoOnEnable)
+            {
+                Controller.autoOnEnableInput =
+                    EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
             }
 
             if (EditorGUI.EndChangeCheck())

@@ -106,12 +106,17 @@ namespace Dash
 
             _graphInstance = _assetGraph.Clone();
         }
-
+        
         public bool autoStart = false;
 
         [Dependency("autoStart", true)] 
-        public string autoStartInput = "Input";
+        public string autoStartInput = "StartInput";
+        
+        public bool autoOnEnable = false;
 
+        [Dependency("autoEnabled", true)]
+        public string autoOnEnableInput = "OnEnableInput";
+        
         private event Action UpdateCallback;
 
         void Awake()
@@ -132,6 +137,19 @@ namespace Dash
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
 
                 Graph.ExecuteGraphInput(autoStartInput, data);
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (Graph == null)
+                return;
+            
+            if (autoOnEnable)
+            {
+                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+
+                Graph.ExecuteGraphInput(autoOnEnableInput, data);
             }
         }
 
