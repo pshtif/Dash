@@ -30,7 +30,7 @@ namespace Dash.Editor
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition);
+            GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition, 240, 300);
         }
         
         static public GenericMenu Get()
