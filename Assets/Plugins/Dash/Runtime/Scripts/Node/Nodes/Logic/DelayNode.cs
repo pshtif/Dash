@@ -23,11 +23,15 @@ namespace Dash
             }
             else
             {
-                DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() =>
+                DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                tween.OnComplete(() =>
                 {
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);
-                }).Start();
+                    ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
+                });
+                tween.Start();
+                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
         }
         
