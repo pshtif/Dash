@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.5RC2 - 24.05.2021
+
+#### Added
+
+- Added option to execute specified Graph input on OnEnable of DashController gameobject
+
+#### Changed
+
+- Various resizes of inspector and popup GUIs
+
+#### Fixed
+
+- Fixed error when selected node list could be null after undo
+- Fixed controller error in debug when destroyed previously
+
 ### Release 0.4.4RC2 - 17.05.2021
 
 #### Added
