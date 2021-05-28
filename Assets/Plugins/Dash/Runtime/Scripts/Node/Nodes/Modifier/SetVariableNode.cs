@@ -20,7 +20,7 @@ namespace Dash
         {
             if (!Model.variableName.IsNullOrWhitespace())
             {
-                var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.attributeType,
+                var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.variableType,
                     ParameterResolver, p_flowData);
                     
                 if (ExpressionEvaluator.hasErrorInEvaluation)
@@ -37,13 +37,13 @@ namespace Dash
                     } else if (DashCore.Instance.globalVariables.HasVariable(Model.variableName))
                     {
                         Variable variable = DashCore.Instance.globalVariables.GetVariable(Model.variableName);
-                        if (variable.GetVariableType() != Model.attributeType ||
+                        if (variable.GetVariableType() != Model.variableType ||
                             (variable.GetVariableType() != value.GetType() && !variable.GetVariableType()
                                 .IsImplicitlyAssignableFrom(value.GetType())))
                         {
                             Debug.Log(variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType()));
                             SetError("Cannot set existing variable of different type! Expecting " +
-                                     variable.GetVariableType() + " got " + Model.attributeType);
+                                     variable.GetVariableType() + " got " + Model.variableType);
                             return;
                         }
 
@@ -53,7 +53,7 @@ namespace Dash
                     {
                         if (Model.enableCreate)
                         {
-                            DashCore.Instance.globalVariables.AddVariable(Model.variableName, value);
+                            DashCore.Instance.globalVariables.AddVariableByType(Model.variableType, Model.variableName, value);
                         }
                         else
                         {
@@ -67,13 +67,13 @@ namespace Dash
                     if (Graph.variables.HasVariable(Model.variableName))
                     {
                         var variable = Graph.variables.GetVariable(Model.variableName);
-                        if (variable.GetVariableType() != Model.attributeType ||
+                        if (variable.GetVariableType() != Model.variableType ||
                             (variable.GetVariableType() != value.GetType() && !variable.GetVariableType()
                                 .IsImplicitlyAssignableFrom(value.GetType())))
                         {
                             Debug.Log(variable.GetVariableType().IsImplicitlyAssignableFrom(value.GetType()));
                             SetError("Cannot set existing variable of different type! Expecting " +
-                                     variable.GetVariableType() + " got " + Model.attributeType);
+                                     variable.GetVariableType() + " got " + Model.variableType);
                             return;
                         }
 
