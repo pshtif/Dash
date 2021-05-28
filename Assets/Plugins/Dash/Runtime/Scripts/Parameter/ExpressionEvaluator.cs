@@ -51,9 +51,9 @@ namespace Dash
             {
                 obj = cachedExpression.Evaluate();
             }
-            catch //(Exception e)
+            catch (Exception e)
             {
-                //Debug.Log(e);
+                errorMessage = e.Message;
                 hasErrorInEvaluation = true;
             }
             
@@ -118,6 +118,7 @@ namespace Dash
 
         static void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection)
         {
+            //Debug.Log("EvaluateParameter: "+p_name);
             p_args.Result = p_resolver.Resolve(p_name, p_collection);
             // Only log first error
             if (!hasErrorInEvaluation && p_resolver.hasErrorInResolving)
@@ -129,6 +130,7 @@ namespace Dash
 
         static void EvaluateFunction<T>(string p_name, FunctionArgs p_args)
         {
+            //Debug.Log("EvaluateFunction("+p_name+","+p_args+")");
             MethodInfo methodInfo = typeof(ExpressionFunctions).GetMethod(p_name, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
 
             if (methodInfo != null)

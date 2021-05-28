@@ -2,6 +2,9 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using OdinSerializer.Utilities;
 using UnityEngine;
@@ -23,35 +26,43 @@ namespace Dash
         {
             hasErrorInResolving = false;
 
-            if (p_collection != null)
+            string name = p_name;
+            string[] nameSplit = null;
+            if (p_name.IndexOf('.') > 0)
             {
-                if (p_collection.HasAttribute(p_name))
-                {
-                    return p_collection.GetAttribute(p_name);
-                }
+                nameSplit = p_name.Split('.');
+                name = nameSplit[0];
             }
             
-            object result;
-            if (ReservedVariables.Resolve(_graph, p_name, out result))
-                return result;
-
-            if (ResolveReference(p_name, p_collection, out result))
-                return result;
-
-            if (_graph.variables.HasVariable(p_name))
+            if (p_collection != null)
             {
-                Variable variable = _graph.variables.GetVariable(p_name);
-                return variable.value;
+                if (p_collection.HasAttribute(name))
+                {
+                    return ResolveNested(nameSplit, 0, p_collection.GetAttribute(name));
+                }
             }
 
-            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.HasVariable(p_name))
+            object result;
+            if (ReservedVariables.Resolve(_graph, name, out result))
+                return ResolveNested(nameSplit, 0, result);
+
+            if (ResolveReference(name, p_collection, out result))
+                return ResolveNested(nameSplit, 0, result);
+
+            if (_graph.variables.HasVariable(name))
             {
-                Variable variable = DashCore.Instance.globalVariables.GetVariable(p_name);
-                return variable.value;
+                Variable variable = _graph.variables.GetVariable(name);
+                return ResolveNested(nameSplit, 0, variable.value);
+            }
+
+            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.HasVariable(name))
+            {
+                Variable variable = DashCore.Instance.globalVariables.GetVariable(name);
+                return ResolveNested(nameSplit, 0, variable.value);
             }
 
             hasErrorInResolving = true;
-            errorMessage = "Variable "+ p_name +" not found.";
+            errorMessage = "Variable "+ name +" not found.";
             return null;
         }
 
@@ -84,6 +95,34 @@ namespace Dash
         //     errorMessage = "Variable/Attribute "+ p_name +" not found.";
         //     return default(T);
         // }
+
+        object ResolveNested(string[] p_properties, int p_index, object p_result)
+        {
+            if (p_properties == null || p_result == null || p_index >= p_properties.Length-1)
+                return p_result;
+            
+            p_index++;
+            string property = p_properties[p_index];
+            FieldInfo fieldInfo = p_result.GetType().GetField(property);
+            
+            if (fieldInfo == null)
+            {
+                PropertyInfo propertyInfo = p_result.GetType().GetProperty(property);
+
+                if (propertyInfo == null)
+                {
+                    hasErrorInResolving = true;
+                    errorMessage = "Nested property lookup " + String.Join(".", p_properties) + " not found.";
+                    return null;
+                }
+
+                p_result = propertyInfo.GetValue(p_result);
+                return ResolveNested(p_properties, p_index, p_result);
+            }
+
+            p_result = fieldInfo.GetValue(p_result);
+            return ResolveNested(p_properties, p_index, p_result);
+        }
 
         bool ResolveReference(string p_name, IAttributeDataCollection p_collection, out object p_result)
         {
