@@ -247,7 +247,7 @@ namespace Dash.Editor
 
                         foreach (var dashController in sceneGOs)
                         {
-                            if (dashController.gameObject.scene != openScene) continue;
+                            if (dashController.gameObject.scene != openScene || dashController.Graph == null) continue;
 
                             if ((dashController.gameObject.hideFlags & HideFlags.DontSaveInBuild) == 0)
                             {
