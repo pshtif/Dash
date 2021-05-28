@@ -145,27 +145,6 @@ namespace Dash
             return false;
         }
 
-        private static bool GetAnchoredPosition(FunctionArgs p_args)
-        {
-            if (p_args.Parameters.Length != 1)
-            {
-                errorMessage = "Invalid number of parameters in GetPosition function.";
-                return false;
-            }
-
-            object[] evalParams = p_args.EvaluateParameters();
-            
-            if (evalParams[0] != null && typeof(RectTransform).IsAssignableFrom(evalParams[0].GetType()))
-            {
-                p_args.HasResult = true;
-                p_args.Result = ((RectTransform) evalParams[0]).anchoredPosition;
-                return true;
-            }
-
-            errorMessage = "Invalid parameters in GetPosition function.";
-            return false;
-        }
-
         /**
          *  Create a Vector2 value
          */
