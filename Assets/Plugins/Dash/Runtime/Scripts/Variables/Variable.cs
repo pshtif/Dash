@@ -141,6 +141,7 @@ namespace Dash
         
         public override void BindProperty(PropertyInfo p_property, Component p_component)
         {
+            Type = VariableType.BOUND;
             _boundType = VariableBindType.PROPERTY;
             _boundName = p_property.Name;
             _boundComponentName = p_component.GetType().FullName;
@@ -179,7 +180,7 @@ namespace Dash
         {
             if (!IsBound)
                 return false;
-
+            
             Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
             Component component = p_target.GetComponent(componentType);
             if (component == null)
