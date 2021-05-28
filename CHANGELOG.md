@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.6RC2 - 28.05.2021
+
+#### Added
+
+- Added dot resolving for variable properties so it is possible to resolve something like this [target.sizeDelta.x] in parametrized properties
+
+#### Changed
+
+- [BREAKING] Changed attributeType to correct variableType name in SetVariableType node, you will need to recreate all your SetVariable nodes unfortunately. The autofix for such changes is planned in future releases.
+
+#### Fixed
+
+- Fixed correct variable binding to properties.
+- Fixed AOT scanner error when scanned DashController doesn't have any graphs.
+- Fixed when creating using SetVariableNode it correctly creates variable of specified type instead of Object.
+
 ### Release 0.4.5RC2 - 24.05.2021
 
 #### Added
