@@ -22,6 +22,8 @@ namespace Dash.Editor
 
         private void OnEnable()
         {
+            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageOpened -= OnPrefabStageOpened;
+            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageOpened += OnPrefabStageOpened;
             UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
             UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing += OnPrefabStageClosing;
         }
@@ -31,7 +33,12 @@ namespace Dash.Editor
             UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
         }
         
-        void OnPrefabStageClosing(UnityEditor.Experimental.SceneManagement.PrefabStage stage) {
+        void OnPrefabStageClosing(UnityEditor.Experimental.SceneManagement.PrefabStage p_stage) {
+            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            DashEditorCore.EditController(null);
+        }
+        
+        void OnPrefabStageOpened(UnityEditor.Experimental.SceneManagement.PrefabStage p_stage) {
             //when exiting prefab state we are left with a floating graph instance which can creat confusion
             DashEditorCore.EditController(null);
         }
