@@ -32,7 +32,7 @@ namespace Dash
 
         private PrefabStage _stage;
 
-        private SerializationData _serializationData;
+        private DashGraph _originalGraph;
 
         public void StartPreview(NodeBase p_node)
         {
@@ -55,7 +55,6 @@ namespace Dash
             else
             {
                 bool state = (bool)_stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
-                Debug.Log(state);
             }
 
             _isPreviewing = true;
@@ -127,6 +126,13 @@ namespace Dash
             else
             {
                 _stage.GetType().GetMethod("ReloadStage", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
+             
+                DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
+                DashController controller = controllers.ToList().Find(c => c.previewing);
+                DashEditorCore.EditController(controller, DashEditorCore.Config.editingGraphPath);
+                controller.previewing = false;
+
+                bool state = (bool)_stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
             }
         }
     }
