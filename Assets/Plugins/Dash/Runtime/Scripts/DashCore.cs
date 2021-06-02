@@ -43,6 +43,8 @@ namespace Dash
 
         public DashVariables globalVariables => _globalVariables;
 
+        public bool useScaledTime = true;
+
         public void SetGlobalVariables(DashVariables p_variables)
         {
             _globalVariables = p_variables;
@@ -106,7 +108,7 @@ namespace Dash
             
             if (_listeners.ContainsKey(p_name))
             {
-                _listeners[p_name].ForEach(c => c.Invoke(p_flowData));
+                _listeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
             }
         }
 
@@ -131,8 +133,8 @@ namespace Dash
             if (_listeners.ContainsKey(p_name))
             {
                 _listeners[p_name].Remove(p_callback);
-                if (_listeners[p_name].Count == 0)
-                    _listeners.Remove(p_name);
+                // if (_listeners[p_name].Count == 0)
+                //     _listeners.Remove(p_name);
             }
         }
         

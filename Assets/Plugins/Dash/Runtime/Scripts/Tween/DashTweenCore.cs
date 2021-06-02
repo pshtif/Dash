@@ -42,7 +42,7 @@ namespace Dash
 
         void Update()
         {
-            UpdateInternal(Time.deltaTime);
+            UpdateInternal(DashCore.Instance.useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
         }
 
         static void UpdateInternal(float p_delta)
