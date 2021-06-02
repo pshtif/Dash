@@ -16,6 +16,19 @@ namespace Dash
         public AlphaTargetType targetType = AlphaTargetType.CANVASGROUP;
         
         [TitledGroup("Properties")]
+        public bool useFrom = false;
+        
+        [TitledGroup("Properties")]
+        [Dependency("useFrom", true)]
+        [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
+        public Parameter<float> fromAlpha = new Parameter<float>(0);
+        
+        [TitledGroup("Properties")]
+        [Dependency("useFrom", true)]
+        [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
+        public bool isFromRelative = true;
+        
+        [TitledGroup("Properties")]
         [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
         public Parameter<float> toAlpha = new Parameter<float>(1);
         
@@ -23,6 +36,12 @@ namespace Dash
         [Dependency("targetType", AlphaTargetType.CANVASGROUP)]
         public bool isToRelative = true;
 
+        [DependencySingle("targetType", AlphaTargetType.IMAGE)]
+        [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
+        [Dependency("useFrom", true)]
+        [TitledGroup("Properties")]
+        public Parameter<Color> fromColor = new Parameter<Color>(Color.white);
+        
         [DependencySingle("targetType", AlphaTargetType.IMAGE)]
         [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
