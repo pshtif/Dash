@@ -105,12 +105,12 @@ namespace Dash
         {
             if (_nodeListeners.ContainsKey(p_name))
             {
-                _nodeListeners[p_name].ForEach(n => n.Execute(p_flowData));
+                _nodeListeners[p_name].ToList().ForEach(n => n.Execute(p_flowData));
             }
 
             if (_actionListeners.ContainsKey(p_name))
             {
-                _actionListeners[p_name].ForEach(c => c.Invoke(p_flowData));
+                _actionListeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
             }
         }
 
