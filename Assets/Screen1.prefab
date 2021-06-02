@@ -1,0 +1,1725 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1288485301537142272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4978810445194708753}
+  - component: {fileID: 3457473916665551271}
+  - component: {fileID: 5725144439495092643}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4978810445194708753
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301537142272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1304624305828367118}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 8.200012}
+  m_SizeDelta: {x: 0, y: -31.359138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3457473916665551271
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301537142272}
+  m_CullTransparentMesh: 0
+--- !u!114 &5725144439495092643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301537142272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Example 3
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278979596
+  m_fontColor: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1288485301824295960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4978810445436003593}
+  - component: {fileID: 3457473916394879935}
+  - component: {fileID: 5725144439732177851}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4978810445436003593
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301824295960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1304624306124220694}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 8.2}
+  m_SizeDelta: {x: 0, y: -31.359138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3457473916394879935
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301824295960}
+  m_CullTransparentMesh: 0
+--- !u!114 &5725144439732177851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485301824295960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Example 2
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278979596
+  m_fontColor: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1288485302425354441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4978810445916484056}
+  - component: {fileID: 3457473915776511854}
+  - component: {fileID: 5725144438203129706}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4978810445916484056
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485302425354441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1304624304569417159}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 8.2}
+  m_SizeDelta: {x: 0, y: -31.359138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3457473915776511854
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485302425354441}
+  m_CullTransparentMesh: 0
+--- !u!114 &5725144438203129706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288485302425354441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Example 4
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278979596
+  m_fontColor: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2631594471746493962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594471746494005}
+  - component: {fileID: 2631594471746494007}
+  - component: {fileID: 2631594471746494004}
+  m_Layer: 5
+  m_Name: Title
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594471746494005
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471746493962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2631594471940975082}
+  m_Father: {fileID: 2631594473040746353}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000024438, y: 725}
+  m_SizeDelta: {x: 906.594, y: 153.24048}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2631594471746494007
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471746493962}
+  m_CullTransparentMesh: 0
+--- !u!114 &2631594471746494004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471746493962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6313726, g: 0.5686275, b: 0.5019608, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!1 &2631594471756072802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594471756072813}
+  - component: {fileID: 2631594471756072815}
+  - component: {fileID: 2631594471756072812}
+  m_Layer: 5
+  m_Name: Footer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594471756072813
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471756072802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2631594472237275526}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000012398, y: -803}
+  m_SizeDelta: {x: 898.65564, y: 41.780502}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2631594471756072815
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471756072802}
+  m_CullTransparentMesh: 0
+--- !u!114 &2631594471756072812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471756072802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Dash Animation system v0.2 beta
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4286747812
+  m_fontColor: {r: 0.6415094, g: 0.5803542, b: 0.51139194, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 37.35
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2631594471940975083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594471940975082}
+  - component: {fileID: 2631594471940974996}
+  - component: {fileID: 2631594471940974997}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594471940975082
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471940975083}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2631594471746494005}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -7}
+  m_SizeDelta: {x: 0, y: 130.26917}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &2631594471940974996
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471940975083}
+  m_CullTransparentMesh: 0
+--- !u!114 &2631594471940974997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594471940975083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Dash Examples
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 90
+  m_fontSizeBase: 90
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2631594472237275527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594472237275526}
+  - component: {fileID: 2631594472237275520}
+  - component: {fileID: 2631594472237275521}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594472237275526
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594472237275527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2631594472897490883}
+  - {fileID: 2631594471756072813}
+  m_Father: {fileID: 2631594473040746353}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -225}
+  m_SizeDelta: {x: -10, y: 1690}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &2631594472237275520
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594472237275527}
+  m_CullTransparentMesh: 0
+--- !u!114 &2631594472237275521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594472237275527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.26415092, g: 0.21555711, b: 0.21555711, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!1 &2631594472897490880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594472897490883}
+  m_Layer: 5
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594472897490883
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594472897490880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5332099022376994665}
+  - {fileID: 1304624306124220694}
+  - {fileID: 1304624305828367118}
+  - {fileID: 1304624304569417159}
+  m_Father: {fileID: 2631594472237275526}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2631594473040746315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631594473040746353}
+  - component: {fileID: 2631594473040746358}
+  - component: {fileID: 2631594473040746359}
+  - component: {fileID: 2631594473040746356}
+  - component: {fileID: 2631594473040746314}
+  m_Layer: 5
+  m_Name: Screen1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2631594473040746353
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594473040746315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 2631594472237275526}
+  - {fileID: 2631594471746494005}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &2631594473040746358
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594473040746315}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &2631594473040746359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594473040746315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 1
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &2631594473040746356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594473040746315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2631594473040746314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631594473040746315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c945ee359c1744141bd21d632fad9fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _assetGraph: {fileID: 0}
+  _boundGraphData: 1701180000003c00760065007200730069006f006e003e006b005f005f004200610063006b0069006e0067004600690065006c006400a60f00002d01080000004f006e004f00750074007000750074000101090000007600610072006900610062006c00650073002f00000000011f00000044006100730068002e0044006100730068005600610072006900610062006c00650073002c0020004400610073006800520075006e00740069006d0065000000000001010a0000005f007600610072006900610062006c00650073002f010000000149000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e005600610072006900610062006c0065002c0020004400610073006800520075006e00740069006d0065005d005d002c0020006d00730063006f0072006c006900620001000000060100000000000000022f02000000014b00000044006100730068002e005600610072006900610062006c006500600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020004400610073006800520075006e00740069006d006500020000001d01150000003c0054007900700065003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000000000002701050000005f006e0061006d0065000106000000730063007200650065006e000301060000005f00760061006c00750065002f03000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650020000087442000000000051d010a0000005f0062006f0075006e006400540079007000650000000000000000002d010a0000005f0062006f0075006e0064004e0061006d0065002701130000005f0062006f0075006e00640043006f006d0070006f006e0065006e0074004e0061006d0065000100000000050705050101130000005f0065007800740072006100630074006500640043006c0069007000430061006300680065002f04000000012400000044006100730068002e0045007800740072006100630074006500640043006c0069007000430061006300680065002c0020004400610073006800520075006e00740069006d006500030000000101060000005f0063006c006900700073002f05000000018d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b0055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e0043006c00690070002c00200055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e004d006f00640075006c0065005d002c005b0044006100730068002e0045007800740072006100630074006500640043006c00690070002c0020004400610073006800520075006e00740069006d0065005d005d002c0020006d00730063006f0072006c00690062000400000001010800000063006f006d00700061007200650072002f060000000177000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004f0062006a0065006300740045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e0043006c00690070002c00200055006e0069007400790045006e00670069006e0065002e0041006e0069006d006100740069006f006e004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c006900620005000000050600000000000000000705050101060000005f006e006f006400650073002f070000000149000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e004e006f006400650042006100730065002c0020004400610073006800520075006e00740069006d0065005d005d002c0020006d00730063006f0072006c006900620006000000061400000000000000022f08000000012d00000044006100730068002e0041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e004e006f00640065002c0020004400610073006800520075006e00740069006d006500070000000101060000005f006d006f00640065006c002f09000000013200000044006100730068002e0041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065000800000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0036002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c006400010101060000007400610072006700650074002f0a000000013800000044006100730068002e0050006100720061006d006500740065007200600031005b005b00530079007300740065006d002e0053007400720069006e0067002c0020006d00730063006f0072006c00690062005d005d002c0020004400610073006800520075006e00740069006d006500090000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c0075006500010700000043006f006e00740065006e0074000503010f0000007400610072006700650074005200650066006500720065006e00630065002f0b000000016700000055006e0069007400790045006e00670069006e0065002e004500780070006f007300650064005200650066006500720065006e0063006500600031005b005b0055006e0069007400790045006e00670069006e0065002e005400720061006e00730066006f0072006d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650003010b0000006500780070006f007300650064004e0061006d0065002f0c000000013000000055006e0069007400790045006e00670069006e0065002e00500072006f00700065007200740079004e0061006d0065002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500170102000000690064009873c76c17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d0065002f0d000000013800000044006100730068002e0050006100720061006d006500740065007200600031005b005b00530079007300740065006d002e00530069006e0067006c0065002c0020006d00730063006f0072006c00690062005d005d002c0020004400610073006800520075006e00740069006d0065000a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500cdcccc3e05010105000000640065006c0061007900300d0000000b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000000005010108000000650061007300650054007900700065002f0e000000013b00000044006100730068002e0050006100720061006d006500740065007200600031005b005b0044006100730068002e00450061007300650054007900700065002c0020004400610073006800520075006e00740069006d0065005d005d002c0020004400610073006800520075006e00740069006d0065000c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c004100630074006900760065002f0f000000013900000044006100730068002e0050006100720061006d006500740065007200600031005b005b00530079007300740065006d002e0042006f006f006c00650061006e002c0020006d00730063006f0072006c00690062005d005d002c0020004400610073006800520075006e00740069006d0065000d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000101010c000000660072006f006d0050006f0073006900740069006f006e002f10000000014c00000044006100730068002e0050006100720061006d006500740065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020004400610073006800520075006e00740069006d0065000e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500300300000020000087c4200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000101010a00000074006f0050006f0073006900740069006f006e0030100000000f0000002b010c00000069007300450078007000720065007300730069006f006e000127010a000000650078007000720065007300730069006f006e000106000000730063007200650065006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074002f11000000012800000055006e0069007400790045006e00670069006e0065002e0052006500630074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c006500200080b34320008090432000005c43200000aa420505023008000000100000000101060000005f006d006f00640065006c0030090000001100000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0032002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000120000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c00000017010200000069006400bb3f939e17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d000000130000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000803f05010105000000640065006c0061007900300d000000140000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000150000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000160000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003010000000170000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000c84305052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003010000000180000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000c8c305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200070214420009037442000005c43200000aa420505023008000000190000000101060000005f006d006f00640065006c0030090000001a00000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0033002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a0000001b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c00000017010200000069006400e5aa17bd17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d0000001c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000803f05010105000000640065006c0061007900300d0000001d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e0000001e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f0000001f0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003010000000200000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003010000000210000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000c84305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200080ac432000603d442000005c43200000aa420505022f12000000012800000044006100730068002e005200650074006100720067006500740054006f004300680069006c006400720065006e004e006f00640065002c0020004400610073006800520075006e00740069006d006500220000000101060000005f006d006f00640065006c002f13000000012d00000044006100730068002e005200650074006100720067006500740054006f004300680069006c006400720065006e004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d006500230000002701020000006900640001130000005200650074006100720067006500740054006f004300680069006c006400720065006e0031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300a000000240000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c0075006500010f00000043006f006e00740065006e0074002f0042007500740074006f006e0073000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e0001010c0000006f006e004300680069006c006400440065006c0061007900300d000000250000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c007500650000000000051f010d0000006f006e00460069006e00690073006800440065006c0061007900000000002b010900000069006e00520065007600650072007300650000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200000ad432000c011442000004843200000dc420505023008000000260000000101060000005f006d006f00640065006c0030090000002700000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0034002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400002b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000280000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d000000290000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000000005010105000000640065006c0061007900300d0000002a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e0000002b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f0000002c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e0030100000002d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e0030100000002e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500300300000020000087c4200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c006400000000000301040000007200650063007400301100000020003021442000c00f442000005c43200000aa4205050230120000002f0000000101060000005f006d006f00640065006c003013000000300000002701020000006900640001130000005200650074006100720067006500740054006f004300680069006c006400720065006e0032002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400040000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300a000000310000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c0075006500010f00000043006f006e00740065006e0074002f0042007500740074006f006e0073000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e0001010c0000006f006e004300680069006c006400440065006c0061007900300d000000320000002b010c00000069007300450078007000720065007300730069006f006e000027010a000000650078007000720065007300730069006f006e0001260000005b00240041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0036002e0074006f0050006f0073006900740069006f006e005d002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500cdcccc3d051f010d0000006f006e00460069006e00690073006800440065006c00610079000000803f2b010900000069006e00520065007600650072007300650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000030104000000720065006300740030110000002000d0254420004090432000004843200000dc420505023008000000330000000101060000005f006d006f00640065006c0030090000003400000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0035002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400002b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000350000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d000000360000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500cdcc4c3e05010105000000640065006c0061007900300d000000370000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000380000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650014000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000390000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e0030100000003a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e0030100000003b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000030104000000720065006300740030110000002000b075442000c040432000005c43200000aa420505022f14000000012200000044006100730068002e0041006e0069006d006100740065005300630061006c0065004e006f00640065002c0020004400610073006800520075006e00740069006d0065003c0000000101060000005f006d006f00640065006c002f15000000012700000044006100730068002e0041006e0069006d006100740065005300630061006c0065004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065003d00000027010200000069006400010d00000041006e0069006d006100740065005300630061006c00650031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300a0000003e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c007500650001050000004c006100620065006c000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d0000003f0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500cdcc4c3e05010105000000640065006c0061007900300d000000400000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000410000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650014000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000420000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d0001010109000000660072006f006d005300630061006c0065002f16000000014c00000044006100730068002e0050006100720061006d006500740065007200600031005b005b0055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020004400610073006800520075006e00740069006d006500430000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c00750065002f17000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720033002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650020000000402000000040200000004005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010700000074006f005300630061006c0065003016000000440000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c00750065003017000000200000803f200000803f200000803f05052b010c0000006900730054006f00520065006c006100740069007600650000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000030104000000720065006300740030110000002000507d44200020b5432000002043200000aa420505022f18000000012100000044006100730068002e0041006e0069006d0061007400650054006500780074004e006f00640065002c0020004400610073006800520075006e00740069006d006500450000000101060000005f006d006f00640065006c002f19000000012600000044006100730068002e0041006e0069006d0061007400650054006500780074004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065004600000027010200000069006400010c00000041006e0069006d00610074006500540065007800740031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000470000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064006c1e01a717010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d000000480000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000803f05010105000000640065006c0061007900300d000000490000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e0000004a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f0000004b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c0075006500000501010e000000630068006100720061006300740065007200440065006c0061007900300d0000004c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000000005050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c006400000000000301040000007200650063007400301100000020002028442000305a442000002043200000aa420505022f1a000000012300000044006100730068002e004f006e0043007500730074006f006d004500760065006e0074004e006f00640065002c0020004400610073006800520075006e00740069006d0065004d0000000101060000005f006d006f00640065006c002f1b000000012800000044006100730068002e004f006e0043007500730074006f006d004500760065006e0074004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065004e00000027010200000069006400010e0000004f006e0043007500730074006f006d004500760065006e00740031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002701090000006500760065006e0074004e0061006d00650001040000004800690064006500050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c006400000000000301040000007200650063007400301100000020008069c3200070ac44200080dc42200000aa4205050230080000004f0000000101060000005f006d006f00640065006c0030090000005000000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0037002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000510000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002d01060000005f00760061006c00750065000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c00000017010200000069006400e5aa17bd17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d000000520000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065009a99993e05010105000000640065006c0061007900300d000000530000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000540000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000550000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e003010000000560000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0050006f0073006900740069006f006e003010000000570000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000000000200000c84305052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200080ac42200000a5442000005c43200000aa420505023008000000580000000101060000005f006d006f00640065006c0030090000005900000027010200000069006400011800000041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c00640001010106000000740061007200670065007400300a0000005a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c0075006500010700000043006f006e00740065006e0074000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064009873c76c17010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e00002d0110000000740061007200670065007400450078007000720065007300730069006f006e00010104000000740069006d006500300d0000005b0000002b010c00000069007300450078007000720065007300730069006f006e000127010a000000650078007000720065007300730069006f006e0001220000005b00240041006e0069006d0061007400650041006e00630068006f0072006500640050006f0073006900740069006f006e0037002e00740069006d0065005d002a0032002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500cdcccc3e05010105000000640065006c0061007900300d0000005c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e0000005d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f0000005e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0050006f0073006900740069006f006e0030100000005f0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000008744200000000005052b010e00000069007300460072006f006d00520065006c00610074006900760065000101010a00000074006f0050006f0073006900740069006f006e003010000000600000002b010c00000069007300450078007000720065007300730069006f006e000027010a000000650078007000720065007300730069006f006e00010800000067005f00730063007200650065006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c007500650030030000002000008744200000000005052b010c0000006900730054006f00520065006c006100740069007600650001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200080ae422000e0b4442000005c43200000aa420505022f1c000000011a00000044006100730068002e004e0075006c006c004e006f00640065002c0020004400610073006800520075006e00740069006d006500610000000101060000005f006d006f00640065006c002f1d000000011f00000044006100730068002e004e0075006c006c004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d006500620000002701020000006900640001050000004e0075006c006c0031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a006500640000000000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c006400000000000301040000007200650063007400301100000020245575402000601944200000aa42200000aa42050502301a000000630000000101060000005f006d006f00640065006c00301b0000006400000027010200000069006400010e0000004f006e0043007500730074006f006d004500760065006e00740032002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002701090000006500760065006e0074004e0061006d0065000104000000530068006f007700050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200040b5c32000802a44200000e742200000aa420505022f1e000000011b00000044006100730068002e00440065006200750067004e006f00640065002c0020004400610073006800520075006e00740069006d006500650000000101060000005f006d006f00640065006c002f1f000000012000000044006100730068002e00440065006200750067004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d006500660000002701020000006900640001060000004400650062007500670031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010d0000006400650062007500670046006c006f0077004400610074006100002701040000007400650078007400010400000074006500730074002701080000007600610072006900610062006c0065000106000000740061007200670065007400050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200080e9c220007892442000001643200000aa420505022f20000000012500000044006100730068002e0041006e0069006d00610074006500570069007400680043006c00690070004e006f00640065002c0020004400610073006800520075006e00740069006d006500670000000101060000005f006d006f00640065006c002f21000000012a00000044006100730068002e0041006e0069006d00610074006500570069007400680043006c00690070004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065006800000027010200000069006400011000000041006e0069006d00610074006500570069007400680043006c006900700031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400000000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000690000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c0000001701020000006900640000e3248717010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e0000270110000000740061007200670065007400450078007000720065007300730069006f006e000100000000010104000000740069006d006500300d0000006a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000000005010105000000640065006c0061007900300d0000006b0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e0000006c0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f0000006d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b011000000075007300650041006e0069006d006100740069006f006e00540069006d006500012b0109000000690073005200650076006500720073006500002b010a00000069007300520065006c0061007400690076006500012b0110000000750073006500440061007300680041006e0069006d006100740069006f006e00000b010600000073006f007500720063006500010000000b010400000063006c006900700002000000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000200080bb4320005068442000002043200000aa42052d010d0000005f0073007400610072007400730043006100630068006500730005022f22000000011b00000044006100730068002e0049006e007000750074004e006f00640065002c0020004400610073006800520075006e00740069006d0065006e0000000101060000005f006d006f00640065006c002f23000000012000000044006100730068002e0049006e007000750074004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065006f00000027010200000069006400010600000049006e0070007500740031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a00650064000200000027010900000069006e007000750074004e0061006d00650001040000007400650073007400050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000030104000000720065006300740030110000002000c0b3c3200080e643200000cb42200000aa420505022f24000000012300000044006100730068002e004f006e0042007500740074006f006e0043006c00690063006b004e006f00640065002c0020004400610073006800520075006e00740069006d006500700000000101060000005f006d006f00640065006c002f25000000012800000044006100730068002e004f006e0042007500740074006f006e0043006c00690063006b004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065007100000027010200000069006400010e0000004f006e0042007500740074006f006e0043006c00690063006b0031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400020000002b010c0000007500730065005200650066006500720065006e0063006500002b0107000000690073004300680069006c006400012b0107000000750073006500460069006e006400012b0107000000660069006e00640041006c006c000127010600000062007500740074006f006e00010600000042007500740074006f006e0003010f00000062007500740074006f006e005200650066006500720065006e00630065002f26000000015f00000055006e0069007400790045006e00670069006e0065002e004500780070006f007300650064005200650066006500720065006e0063006500600031005b005b0055006e0069007400790045006e00670069006e0065002e00550049002e0042007500740074006f006e002c00200055006e0069007400790045006e00670069006e0065002e00550049005d005d002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650003010b0000006500780070006f007300650064004e0061006d006500300c000000170102000000690064000000000017010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b01100000007200650074006100720067006500740054006f0042007500740074006f006e0001050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000003010400000072006500630074003011000000208379b8c320ba8192442000001643200000aa420505022f27000000012500000044006100730068002e0041006e0069006d0061007400650052006f0074006100740069006f006e004e006f00640065002c0020004400610073006800520075006e00740069006d006500720000000101060000005f006d006f00640065006c002f28000000012a00000044006100730068002e0041006e0069006d0061007400650052006f0074006100740069006f006e004e006f00640065004d006f00640065006c002c0020004400610073006800520075006e00740069006d0065007300000027010200000069006400011000000041006e0069006d0061007400650052006f0074006100740069006f006e0031002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400080000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a000000740000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c00000017010200000069006400e142a22217010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e0000270110000000740061007200670065007400450078007000720065007300730069006f006e000100000000010104000000740069006d006500300d000000750000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000803f05010105000000640065006c0061007900300d000000760000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000770000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650001000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000780000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000101010c000000660072006f006d0052006f0074006100740069006f006e003016000000790000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500301700000020000000002000000000200000a04105052b010e00000069007300460072006f006d00520065006c00610074006900760065000001010a00000074006f0052006f0074006100740069006f006e0030160000007a0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500301700000020000000002000000000200000a0c105052b010c0000006900730054006f00520065006c006100740069007600650000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c00640000000000030104000000720065006300740030110000002018e971c120c8afb3422000004843200000aa4205050230270000007b0000000101060000005f006d006f00640065006c0030280000007c00000027010200000069006400011000000041006e0069006d0061007400650052006f0074006100740069006f006e0032002d010700000063006f006d006d0065006e00740017010d000000670072006f007500700073004d0069006e0069007a0065006400080000002b010800000072006500740061007200670065007400012b010c0000007500730065005200650066006500720065006e0063006500012b0107000000690073004300680069006c00640000010106000000740061007200670065007400300a0000007d0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002701060000005f00760061006c007500650001000000000503010f0000007400610072006700650074005200650066006500720065006e0063006500300b00000003010b0000006500780070006f007300650064004e0061006d006500300c00000017010200000069006400fa8c0fd717010d00000063006f006e0066006c0069006300740049006e0064006500780000000000052d010c000000640065006600610075006c007400560061006c0075006500052b010d000000750073006500450078007000720065007300730069006f006e0000270110000000740061007200670065007400450078007000720065007300730069006f006e000100000000010104000000740069006d006500300d0000007e0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c00750065000000000005010105000000640065006c0061007900300d0000007f0000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001f01060000005f00760061006c0075006500000000000501010800000065006100730065005400790070006500300e000000800000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065001d01060000005f00760061006c007500650000000000000000000501010a0000006b0069006c006c00410063007400690076006500300f000000810000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065002b01060000005f00760061006c007500650000052b0107000000750073006500460072006f006d000001010c000000660072006f006d0052006f0074006100740069006f006e003016000000820000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500301700000020000000002000000000200000a04105052b010e00000069007300460072006f006d00520065006c00610074006900760065000101010a00000074006f0052006f0074006100740069006f006e003016000000830000002b010c00000069007300450078007000720065007300730069006f006e00002d010a000000650078007000720065007300730069006f006e002b01140000006800610073004500720072006f00720049006e004500760061006c0075006100740069006f006e00002d010c0000006500720072006f0072004d006500730073006100670065000301060000005f00760061006c0075006500301700000020000000002000000000200000b4c205052b010c0000006900730054006f00520065006c006100740069007600650000050b01060000005f00670072006100700068000000000017011f0000003c0045007800650063007500740069006f006e0043006f0075006e0074003e006b005f005f004200610063006b0069006e0067004600690065006c006400000000000301040000007200650063007400301100000020a8e681c3203847c4422000004843200000aa420505070501010c0000005f0063006f006e006e0065006300740069006f006e0073002f29000000014f000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e004e006f006400650043006f006e006e0065006300740069006f006e002c0020004400610073006800520075006e00740069006d0065005d005d002c0020006d00730063006f0072006c006900620084000000061000000000000000022f2a000000012000000044006100730068002e004e006f006400650043006f006e006e0065006300740069006f006e002c0020004400610073006800520075006e00740069006d006500850000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001000000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400190000000502302a000000860000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002600000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400220000000502302a000000870000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002f00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400070000000502302a000000880000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003300000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002f0000000502302a000000890000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064003c00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002f0000000502302a0000008a0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004500000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400190000000502302a0000008b0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004f00000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004d0000000502302a0000008c0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064005800000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064004d0000000502302a0000008d0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064000700000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400610000000502302a0000008e0000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064002200000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400610000000502302a0000008f0000002b01060000006100630074006900760065000017011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064001900000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400610000000502302a000000900000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064006100000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400630000000502302a000000910000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064006700000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400610000000502302a000000920000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064006100000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064006e0000000502302a000000930000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064006500000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c006400700000000502302a000000940000002b01060000006100630074006900760065000117011b0000003c0069006e0070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000017011c0000003c006f007500740070007500740049006e006400650078003e006b005f005f004200610063006b0069006e0067004600690065006c0064000000000009011a0000003c0069006e007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064007200000009011b0000003c006f00750074007000750074004e006f00640065003e006b005f005f004200610063006b0069006e0067004600690065006c0064007b0000000507052d011c0000003c0050006100720065006e007400470072006100700068003e006b005f005f004200610063006b0069006e0067004600690065006c0064000b011b0000003c0043006f006e00740072006f006c006c00650072003e006b005f005f004200610063006b0069006e0067004600690065006c006400030000000101060000005f0062006f007800650073002f2b0000000149000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0044006100730068002e004700720061007000680042006f0078002c0020004400610073006800520075006e00740069006d0065005d005d002c0020006d00730063006f0072006c00690062009500000006000000000000000007052b011c000000700072006500760069006500770043006f006e00740072006f006c00730056006900650077004d0069006e0069006d0069007a00650064000003010a00000076006900650077004f006600660073006500740030030000002000e80f442000e02a43052b01120000007600610072006900610062006c00650073004d0069006e0069006d0069007a00650064000109010b00000070007200650076006900650077004e006f006400650063000000
+  _selfReferenceIndex: 0
+  _boundGraphReferences:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 293abb35ffb2f2f43bf616709e52bdc0, type: 2}
+  - {fileID: 7400000, guid: c86511aa6b0f8564f9caa75235228ac8, type: 2}
+  - {fileID: 2631594473040746314}
+  autoStart: 1
+  autoStartInput: test
+  autoOnEnable: 0
+  autoOnEnableInput: OnEnabledInput
+  previewing: 0
+  graphPath: 
+  _propertyNames:
+  - d45f9ecd78c56d24f9ddbbf75dbf6c0f
+  - 7bcf6608df933cc43b2efae1c289dc3b
+  - 82ebd2708f72af64792e533496251728
+  - 4bee40ee7d6066a41adad2b0fe44136d
+  - 722d2535c9c8f0f458a049935d10dedb
+  - 6876d64f9e5939d409612cd16e2e6282
+  - 5623234f3744e8849aec44d08fda0d8c
+  - 0d9a9e0f37e84a349a7b6c1f8ac69718
+  - fdb28b5a99722eb408670aeb67675a1a
+  - b9db67b187bc02d40871f3ec61c56b70
+  - 1b0786dff8641fe49a9a4d57f96b3d8e
+  - 31615dc95e8d7b443934fb42640ca19c
+  - 85df99db859e749d59b5b7cfe1fe059a
+  - b1ecfa127009f4934a9d8d992b9a6275
+  - d84c3580bfe9549dbafb9888ca7678b8
+  - 33a51f49945824ccc9db7b9e2ba36d64
+  - 07ba437577dcc4b5fa2982b05e1a2b96
+  - cdf508a79e38c4928b4cec4926b30e00
+  - 4c0fc4b86213746cd808a2f4a7496964
+  - 85df99db859e749d59b5b7cfe1fe059a:581059297
+  - :0
+  - 34f2023d9f8d447338e97f59f2adeef9:-1738210182
+  - 39d9af6d1203f467986bd1c4f7a679e0
+  - 61da88ae9efe945e692ffadd911031fd
+  - 0790ed70d11bc4f0fbfb01e064ab58a7
+  - 2166bcc9db20a4b2080be3b89c2423d6
+  - aaa891b5c6594476cb13096a61e3018c
+  - 40ce524bbdab647d881f092dc67deb68
+  - 0b0803b9d92564689accfadf6ee92f7e
+  - fe7ea8aad0d3a4ed78f9b4e632122db1
+  - e1def21aaeb9e4943bc76b414f1c033d
+  - 866b0302117064ab5985e0d996a53288
+  - ba3a8ac8735a24eeabba3b6c5b1508d9
+  - ddb93071334b0496b99e1178c811b495
+  - cfafd3094b1e54c1ea2e2d29a2a1b8ee
+  - ce4ad2a5451f6477c9d4da660ae5a18a
+  - 3e89337455a6f478493ece3e5cdfd384
+  - 66b284c4cc7f549aca8f9858c8126585
+  - 2db8bac499c1447b4be73218443cba17
+  - fc163edf070224cbc9280e246d3a0102
+  - 1ac05fc8e9e124da382f46283f83ec3b
+  - dc8eed1d56f9946b794654e948a8841f
+  - cb3df948fad284f49aaeb3947d2abafe
+  _references:
+  - {fileID: 2631594472237275526}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471940975082}
+  - {fileID: 3936068963946783429, guid: 6bf195359545f314bb8ffbe74dc1f092, type: 3}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+  - {fileID: 2631594472237275526}
+  - {fileID: 2631594471746494005}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594471746494005}
+  - {fileID: 2631594472237275526}
+  - {fileID: 2631594471746494005}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+  - {fileID: 0}
+  - {fileID: 5332099022376994665}
+  - {fileID: 5332099022376994665}
+--- !u!1 &4358897422566051498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304624305828367118}
+  - component: {fileID: 3343346174829652290}
+  - component: {fileID: 3837029980901038265}
+  - component: {fileID: 792099831005857766}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1304624305828367118
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897422566051498}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4978810445194708753}
+  m_Father: {fileID: 2631594472897490883}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -1020}
+  m_SizeDelta: {x: 576, y: 220}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3343346174829652290
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897422566051498}
+  m_CullTransparentMesh: 0
+--- !u!114 &3837029980901038265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897422566051498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.84640545, g: 0.90588236, b: 0.3725491, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!114 &792099831005857766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897422566051498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3837029980901038265}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &4358897423390092466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304624306124220694}
+  - component: {fileID: 3343346175066737498}
+  - component: {fileID: 3837029980659989153}
+  - component: {fileID: 792099830173410814}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1304624306124220694
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423390092466}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4978810445436003593}
+  m_Father: {fileID: 2631594472897490883}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -720}
+  m_SizeDelta: {x: 576, y: 220}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3343346175066737498
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423390092466}
+  m_CullTransparentMesh: 0
+--- !u!114 &3837029980659989153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423390092466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.84640545, g: 0.90588236, b: 0.3725491, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!114 &792099830173410814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423390092466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3837029980659989153}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &4358897423857530979
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304624304569417159}
+  - component: {fileID: 3343346173404454795}
+  - component: {fileID: 3837029982193823344}
+  - component: {fileID: 792099829580738863}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1304624304569417159
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423857530979}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4978810445916484056}
+  m_Father: {fileID: 2631594472897490883}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -1320}
+  m_SizeDelta: {x: 576, y: 220}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3343346173404454795
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423857530979}
+  m_CullTransparentMesh: 0
+--- !u!114 &3837029982193823344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423857530979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.84640545, g: 0.90588236, b: 0.3725491, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!114 &792099829580738863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358897423857530979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3837029982193823344}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &5333389669674416743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2233176917766654838}
+  - component: {fileID: 8367394670435096000}
+  - component: {fileID: 1483465088523888068}
+  m_Layer: 5
+  m_Name: Label
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2233176917766654838
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333389669674416743}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5332099022376994665}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 8.2}
+  m_SizeDelta: {x: 0, y: -31.359138}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8367394670435096000
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333389669674416743}
+  m_CullTransparentMesh: 0
+--- !u!114 &1483465088523888068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333389669674416743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Example 1
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278979596
+  m_fontColor: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 80
+  m_fontSizeBase: 80
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7464845262417740493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5332099022376994665}
+  - component: {fileID: 8466886641198392613}
+  - component: {fileID: 7987768750640321758}
+  - component: {fileID: 5844411944215300993}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5332099022376994665
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464845262417740493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2233176917766654838}
+  m_Father: {fileID: 2631594472897490883}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -420}
+  m_SizeDelta: {x: 576, y: 220}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8466886641198392613
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464845262417740493}
+  m_CullTransparentMesh: 0
+--- !u!114 &7987768750640321758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464845262417740493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.84640545, g: 0.90588236, b: 0.3725491, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.2
+--- !u!114 &5844411944215300993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464845262417740493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 7987768750640321758}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
