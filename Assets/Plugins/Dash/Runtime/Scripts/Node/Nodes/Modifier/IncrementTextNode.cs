@@ -5,6 +5,7 @@
 using System;
 using System.Globalization;
 using Dash.Attributes;
+using Dash.Runtime;
 using TMPro;
 using UnityEngine;
 
@@ -37,19 +38,7 @@ namespace Dash
             }
 
             value += Model.increment;
-            text = value.ToString();
-
-            if (Model.useDotFormating)
-            {
-                int i = text.Length;
-                while (i > 3)
-                {
-                    i -= 3;
-                    text = text.Insert(i, ".");
-                }
-            }
-
-            tmp.text = text;
+            tmp.text = Model.useDotFormating ? StringUtils.GetDotFormat(value) : value.ToString();
             
             OnExecuteOutput(0, p_flowData);
             OnExecuteEnd();
