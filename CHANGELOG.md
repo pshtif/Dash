@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.7RC2 - 03.06.2021
+
+#### Added
+
+- Added an option to use unscaled time inside Dash
+- Added CANVASGROUP alpha to AnimateColorNode
+- Added useFrom and From parameters for all types of AnimateColorNode
+
+#### Changed
+
+- Changed now cloning listeners list during event dispatch so removing a listener on dispatch will not cause iteration error
+- Changed Previewing in Prefab editor now completely reworked in no longer saves/loads scene but tries to save load prefab stage content
+- Changed when switching between scene and prefab editor the editing graph is reset to avoid editing graph cross scene/prefab stage.
+
+#### Fixed
+
+- Fixed various minor fixes in UI
+
 ### Release 0.4.6RC2 - 28.05.2021
 
 #### Added
