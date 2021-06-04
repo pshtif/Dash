@@ -34,16 +34,19 @@ namespace Dash.Editor
         {
             Undo.RegisterCompleteObjectUndo(Graph, "Delete connection.");
             Graph.Disconnect((NodeConnection)p_connection);
+            DashEditorCore.SetDirty();
         }
         
         static void DeactivateConnection(object p_connection)
         {
             ((NodeConnection) p_connection).active = false;
+            DashEditorCore.SetDirty();
         }
         
         static void ActivateConnection(object p_connection)
         {
             ((NodeConnection) p_connection).active = true;
+            DashEditorCore.SetDirty();
         }
     }
 }

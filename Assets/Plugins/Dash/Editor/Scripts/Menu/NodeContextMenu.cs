@@ -94,6 +94,7 @@ namespace Dash.Editor
         static void SetAsPreview(object p_node)
         {
             Graph.previewNode = (NodeBase)p_node;
+            DashEditorCore.SetDirty();
         }
         
         static void InstantPreview(object p_node)

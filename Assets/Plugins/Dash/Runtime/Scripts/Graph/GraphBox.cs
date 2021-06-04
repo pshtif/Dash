@@ -67,7 +67,12 @@ namespace Dash
             style.alignment = TextAnchor.LowerLeft;
             if (DashEditorCore.editingBoxComment == this)
             {
+                EditorGUI.BeginChangeCheck();
                 comment = GUI.TextField(titleRect, comment, style);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    DashEditorCore.SetDirty();
+                }
             }
             else
             {
@@ -151,7 +156,11 @@ namespace Dash
                 if (lastGroupMinimized)
                     continue;
 
-                invalidate = GUIPropertiesUtils.PropertyField(field, this, null);
+                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, null);
+            }
+
+            if (invalidate) {
+                DashEditorCore.SetDirty();
             }
 
             return invalidate;

@@ -332,6 +332,11 @@ namespace Dash.Editor
                     DashEditorCore.selectingNodes.Clear();
                 }
 
+                if (dragging == DraggingType.NODE || dragging == DraggingType.BOX)
+                {
+                    DashEditorCore.SetDirty();
+                }
+
                 dragging = DraggingType.NONE;
                 selectedRegion = Rect.zero;
                 DashEditorWindow.SetDirty(true);
