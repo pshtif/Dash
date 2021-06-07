@@ -17,7 +17,7 @@ namespace Dash
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (!Model.attributeName.IsNullOrWhitespace())
+            if (!Model.attributeName.IsNullOrWhitespace() && !Model.expression.IsNullOrWhitespace())
             {
                 if (!p_flowData.HasAttribute(Model.attributeName) ||
                     p_flowData.GetAttributeType(Model.attributeName) == Model.attributeType)
