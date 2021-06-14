@@ -142,7 +142,7 @@ namespace Dash
             
             GUILayout.Label(p_name, GUILayout.Width(120));
             
-            if (GUILayout.Button(value.Name))
+            if (GUILayout.Button(value == null ? "NONE" : value.Name))
             {
                 TypesMenu.Show((type) =>
                 {

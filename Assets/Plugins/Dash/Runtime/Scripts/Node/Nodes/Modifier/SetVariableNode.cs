@@ -18,7 +18,7 @@ namespace Dash
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (!Model.variableName.IsNullOrWhitespace())
+            if (!Model.variableName.IsNullOrWhitespace() && Model.variableType != null && !Model.expression.IsNullOrWhitespace())
             {
                 var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.variableType,
                     ParameterResolver, p_flowData);
