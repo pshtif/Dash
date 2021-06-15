@@ -40,7 +40,7 @@ namespace Dash
                      .Start();
             }
 
-            return DashTween.To(p_target, 0, 1, text.text.Length * .1f);
+            return DashTween.To(p_target, 0, 1, text.text.Length * characterDelay);
         }
     }
 }
