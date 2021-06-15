@@ -664,7 +664,8 @@ namespace Dash
             GUISkin skin = DashEditorCore.Skin;
 
             // Inputs
-            for (int i = 0; i < InputCount; i++)
+            int count = InputCount;
+            for (int i = 0; i < count; i++)
             {
                 bool isConnected = Graph.HasInputConnected(this, i);
                 GUI.color = isConnected ? DashEditorCore.CONNECTOR_INPUT_CONNECTED_COLOR

@@ -30,6 +30,10 @@ namespace Dash
 
         void OnConnectionRemovedHandler(NodeConnection p_connection)
         {
+            if (Graph.Connections.Exists(nc =>
+                nc.inputNode == p_connection.inputNode && nc.inputIndex == p_connection.inputIndex))
+                return;
+            
             var otherConnections = Graph.Connections.FindAll(nc => nc.inputNode == this && nc.inputIndex > p_connection.inputIndex);
             otherConnections.Sort((nc1, nc2) => nc1.inputIndex.CompareTo(nc2.inputIndex));
             otherConnections.ForEach(nc => nc.inputIndex--);
@@ -39,8 +43,15 @@ namespace Dash
         {
             get
             {
-                int currentInputCount = Graph.Connections.FindAll(nc => this == nc.inputNode).Count;
-                return currentInputCount + 1;
+                var connected = Graph.Connections.FindAll(nc => this == nc.inputNode);
+                if (connected.Count == 0)
+                    return 1;
+
+                int currentInputCount = 1;
+                connected.ForEach(nc =>
+                    currentInputCount = nc.inputIndex > currentInputCount - 1 ? nc.inputIndex + 1 : currentInputCount);
+                
+                return currentInputCount+1;
             }
         }
 
@@ -98,6 +109,7 @@ namespace Dash
                     break;
             }
 
+            Debug.Log(_accumulated);
             if (_accumulated)
             {
                 _currentInputMask = _executedInputsCount = _executedUniqueCount = 0;
