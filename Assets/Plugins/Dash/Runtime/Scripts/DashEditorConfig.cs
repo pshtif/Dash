@@ -31,8 +31,23 @@ namespace Dash
                 _enteringPlayModeController = value == null ? -1 : value.GetInstanceID();
             }
         }
-        
-        public DashGraph editingGraph;
+
+        [SerializeField]
+        private DashGraph _editingGraph;
+
+        // This clumsy looking get/set is here due to serialization issues on assembly reload
+        public DashGraph editingGraph
+        {
+            get
+            {
+                return _editingGraph;
+            }
+            set
+            {
+                _editingGraph = value;
+                // Debug.Log("WTF: "+_editingGraph);
+            }
+        }
 
         public string editingGraphPath = "";
         
@@ -45,6 +60,8 @@ namespace Dash
         public bool showExperimental = false;
 
         public bool showNodeSearch = false;
+        
+        public bool enableSoundInPreview = false;
 
         public Rect editorPosition;
             
