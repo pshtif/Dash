@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.4.8RC2 - 15.06.2021
+
+#### Added
+
+- Added SoundNode for playing sounds from graphs
+- Added AccumulatedNode to manage execution by accumulating various inputs  
+- Added SetActiveNode UI in editor now shows activation state.
+
+#### Changed
+
+- Changed preview mode now offsets execution to next frame to avoid "jump" or missed time
+
+#### Fixed
+
+- Fixed preview now correctly dirties Graph and Controller
+- Fixed SetVariableNode now avoids execution if the expression is empty
+- Fixed dragging nodes and boxes in prefab now sets the graph as dirty
+- Fixed actiovation/deactivation of node connection now sets the graph as dirty
+- Fixed marking node as preview now sets the graph as dirty
+- Fixed deleting connection now sets the graph as dirty
+- Fixed renaming box now sets the graph as dirty
+- Fixed correct mouse check for connections to other than first input
+
 ### Release 0.4.7RC2 - 03.06.2021
 
 #### Added
