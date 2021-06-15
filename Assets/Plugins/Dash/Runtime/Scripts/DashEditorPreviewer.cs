@@ -19,6 +19,7 @@ namespace Dash
     public class DashEditorPreviewer
     {
         private bool _isPreviewing = false;
+        private bool _previewStarted = false;
 
         public bool IsPreviewing => _isPreviewing;
 
@@ -27,6 +28,7 @@ namespace Dash
         private GameObject _selectedBeforePreview;
 
         private DashGraph _previewGraph;
+        private int _previewNodeIndex;
 
         private string _previousTag;
 
@@ -41,17 +43,19 @@ namespace Dash
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
             
-            int nodeIndex = DashEditorCore.Config.editingGraph.Nodes.IndexOf(p_node);
+            _previewNodeIndex = DashEditorCore.Config.editingGraph.Nodes.IndexOf(p_node);
 
             _stage = PrefabStageUtility.GetCurrentPrefabStage();
 
             _controllerSelected = Selection.activeGameObject == Controller.gameObject;
             
             Controller.previewing = true;
-            EditorUtility.SetDirty(Controller);
+            // Debug.Log("Set controller dirty");
+            DashEditorCore.SetDirty();
 
             if (_stage == null)
             {
+                // Debug.Log("Save Open Scenes");
                 EditorSceneManager.SaveOpenScenes();
             }
             else
@@ -60,19 +64,28 @@ namespace Dash
             }
 
             _isPreviewing = true;
-            EditorApplication.update += OnUpdate;
-
+            _previewStarted = false;
+            
+            // Debug.Log("Fetch Global Variables");
             FetchGlobalVariables();
 
-            // Cloning graph for preview
+            // Debug.Log("Cloning preview graph");
             _previewGraph = DashEditorCore.Config.editingGraph.Clone();
             _previewGraph.Initialize(Controller);
             DashEditorCore.Config.editingGraph = _previewGraph;
-            _previewGraph.Nodes[nodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
+            // Debug.Log("Start preview");
+            
+            EditorApplication.update += OnUpdate;
         }
 
         void OnUpdate()
         {
+            if (!_previewStarted)
+            {
+                _previewStarted = true;
+                _previewGraph.Nodes[_previewNodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
+            }
+            
             if (_isPreviewing)
             {
                 if (_previewGraph.CurrentExecutionCount == 0)
