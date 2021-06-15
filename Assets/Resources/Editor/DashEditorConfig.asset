@@ -15,16 +15,16 @@ MonoBehaviour:
   editingGraph: {fileID: 0}
   editingGraphPath: 
   deleteNull: 0
-  zoom: 1.75
+  zoom: 1
   showNodeIds: 0
-  showExperimental: 0
+  showExperimental: 1
   showNodeSearch: 0
   editorPosition:
     serializedVersion: 2
-    x: 349
-    y: 138
-    width: 1739
-    height: 963
+    x: 2711
+    y: 54
+    width: 1101
+    height: 869
   AOTAssemblyPath: Assets/Plugins
   AOTAssemblyName: DashAOTAssembly
   _serializationData:
@@ -54,13 +54,13 @@ MonoBehaviour:
       Data: false
     - Name: zoom
       Entry: 4
-      Data: 1.75
+      Data: 1
     - Name: showNodeIds
       Entry: 5
       Data: false
     - Name: showExperimental
       Entry: 5
-      Data: false
+      Data: true
     - Name: showNodeSearch
       Entry: 5
       Data: false
@@ -69,16 +69,16 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 349
+      Data: 2711
     - Name: 
       Entry: 4
-      Data: 138
+      Data: 54
     - Name: 
       Entry: 4
-      Data: 1739
+      Data: 1101
     - Name: 
       Entry: 4
-      Data: 963
+      Data: 869
     - Name: 
       Entry: 8
       Data: 
