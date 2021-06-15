@@ -89,7 +89,7 @@ namespace Dash
             if (_isPreviewing)
             {
                 if (_previewGraph.CurrentExecutionCount == 0)
-                    StopPreview();
+                    DashTween.DelayedCall(1f, StopPreview);
             }
         }
 
