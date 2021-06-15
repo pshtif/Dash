@@ -108,8 +108,7 @@ namespace Dash
                     }
                     break;
             }
-
-            Debug.Log(_accumulated);
+            
             if (_accumulated)
             {
                 _currentInputMask = _executedInputsCount = _executedUniqueCount = 0;

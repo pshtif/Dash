@@ -36,7 +36,7 @@ namespace Dash
             if (Model.audioClip != null)
             {
 #if UNITY_EDITOR
-                if (DashEditorCore.Config.enableSoundInPreview || (!Application.isEditor || Application.isPlaying))
+                if (DashEditorCore.Config.enableSoundInPreview || !Application.isEditor || Application.isPlaying)
 #endif
                     _audioSource.PlayOneShot(Model.audioClip, volume);
             }
