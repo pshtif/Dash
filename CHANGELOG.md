@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 #### Fixed
 
+- Fixed AnimateTextNode now has correct execution time
 - Fixed preview now correctly dirties Graph and Controller
 - Fixed SetVariableNode now avoids execution if the expression is empty
 - Fixed dragging nodes and boxes in prefab now sets the graph as dirty
