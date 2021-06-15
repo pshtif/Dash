@@ -227,8 +227,8 @@ namespace Dash
         
         public void Disconnect(NodeConnection p_connection)
         {
-            ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
             _connections.Remove(p_connection);
+            ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
         }
 
         public void ExecuteNodeOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
