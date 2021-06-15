@@ -32,7 +32,22 @@ namespace Dash
 
             return node;
         }
-        
+
+        [NonSerialized]
+        private Action<NodeConnection> _onConnectionRemoved;
+
+        Action<NodeConnection> INodeAccess.OnConnectionRemoved
+        {
+            get
+            {
+                return _onConnectionRemoved;
+            }
+            set
+            {
+                _onConnectionRemoved = value;
+            }
+        } 
+
         [SerializeField]
         protected NodeModelBase _model;
 
@@ -242,7 +257,7 @@ namespace Dash
             return value;
         }
         
-        private void InitializeAttributes()
+        protected virtual void InitializeAttributes()
         {
             _isExperimental = Attribute.GetCustomAttribute(GetType(), typeof(ExperimentalAttribute)) != null;
             

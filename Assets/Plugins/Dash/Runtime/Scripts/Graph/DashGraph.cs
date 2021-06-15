@@ -227,6 +227,7 @@ namespace Dash
         
         public void Disconnect(NodeConnection p_connection)
         {
+            ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
             _connections.Remove(p_connection);
         }
 
@@ -519,7 +520,8 @@ namespace Dash
                     connection.outputIndex * 32);
                 Vector3 startTan = startPos + Vector3.right * 50;
                 Vector3 endPos = new Vector3(inputOffsetRect.x - 8,
-                    inputOffsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT + DashEditorCore.CONNECTOR_HEIGHT / 2);
+                    inputOffsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT + DashEditorCore.CONNECTOR_HEIGHT / 2 +
+                    connection.inputIndex * 32);
                 Vector3 endTan = endPos + Vector3.left * 50;
 
                 if (HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos, endPos,

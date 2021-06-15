@@ -9,6 +9,7 @@ namespace Dash
 {
     public class NodeFlowData : IAttributeDataCollection
     {
+        public int inputIndex = 0;
         
         protected Dictionary<string, object> _attributes;
 
@@ -75,7 +76,9 @@ namespace Dash
 
         public NodeFlowData Clone()
         {
-            return new NodeFlowData(_attributes);
+            var ndf = new NodeFlowData(_attributes);
+            ndf.inputIndex = inputIndex;
+            return ndf;
         } 
         
         public Dictionary<string, object>.Enumerator GetEnumerator()

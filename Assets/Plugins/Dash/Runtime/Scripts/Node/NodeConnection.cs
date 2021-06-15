@@ -13,7 +13,7 @@ namespace Dash
     {
         public bool active = true;
 
-        public int inputIndex { get; }
+        public int inputIndex;
         public int outputIndex { get; }
         
         public NodeBase inputNode { get; }
@@ -44,6 +44,7 @@ namespace Dash
 #if UNITY_EDITOR
             executeTime = 1;
 #endif
+            p_flowData.inputIndex = inputIndex;
             inputNode.Execute(p_flowData);
         }
         
