@@ -40,6 +40,10 @@ URL:
 ```
 http://package.binaryego.com:4873
 ```  
+OPTIONAL URL2 if first SERVER is OUT 
+```
+https://binaryego.jfrog.io/ui/repos/tree/General/binaryego
+```  
 Scopes:  
 ```
 com.shtif
