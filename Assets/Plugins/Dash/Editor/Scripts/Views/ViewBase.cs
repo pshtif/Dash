@@ -3,6 +3,7 @@
  */
 
 using System;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -13,7 +14,7 @@ namespace Dash.Editor
 
         public abstract void DrawGUI(Event p_event, Rect p_rect);
         
-        public void DrawBoxGUI(Rect p_rect, string p_title, TextAnchor p_titleAlignment)
+        public void DrawBoxGUI(Rect p_rect, string p_title, TextAnchor p_titleAlignment, Color p_color)
         {
             GUIStyle style = DashEditorCore.Skin.GetStyle("ViewBase");
             style.alignment = p_titleAlignment;
@@ -31,8 +32,10 @@ namespace Dash.Editor
                     break;
             }
 
+            GUI.color = p_color;
             GUI.Box(p_rect, "", style);
             GUI.Box(new Rect(p_rect.x, p_rect.y, p_rect.width, 32), p_title, style);
+            GUI.color = Color.white;
         }
         
         public virtual void ProcessEvent(Event p_event, Rect p_rect) { }

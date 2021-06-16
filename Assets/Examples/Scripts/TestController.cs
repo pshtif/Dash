@@ -49,4 +49,14 @@ public class TestController : MonoBehaviour
     {
         Debug.Log("Hello World");
     }
+
+    public static void TestStatic()
+    {
+        
+    }
+
+    private void TestPrivate()
+    {
+        
+    }
 }

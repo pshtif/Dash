@@ -55,9 +55,9 @@ namespace Dash
                 return ResolveNested(nameSplit, 0, variable.value);
             }
 
-            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.HasVariable(name))
+            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.variables.HasVariable(name))
             {
-                Variable variable = DashCore.Instance.globalVariables.GetVariable(name);
+                Variable variable = DashCore.Instance.globalVariables.variables.GetVariable(name);
                 return ResolveNested(nameSplit, 0, variable.value);
             }
 

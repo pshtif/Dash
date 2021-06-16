@@ -22,29 +22,46 @@ namespace Dash
         public string componentName;
         [HideInInspector]
         public string methodName;
+
+        public bool includeNonPublic = false;
+
+        public bool includeStatic = false;
+
+        public bool includeInherited = false;
+
+        public string shortComponentName => componentName.IndexOf('.') == -1
+            ? componentName
+            : componentName.Substring(componentName.LastIndexOf('.') + 1);
         
 #if UNITY_EDITOR
 
         protected override void DrawCustomInspector()
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Method", GUILayout.Width(120));
+            var style = new GUIStyle();
+            style.alignment = TextAnchor.UpperCenter;
+            style.normal.textColor = Color.white;
+            //GUILayout.Label("Method");
+            //GUILayout.BeginHorizontal();
             if (componentName.IsNullOrWhitespace())
             {
-                if (GUILayout.Button("Bind"))
+                GUILayout.Label("No Method Bound", style);
+                
+                if (GUILayout.Button("Bind Method"))
                 {
                     GetMethodMenu(DashEditorCore.Config.editingGraph.Controller.gameObject).ShowAsContext();
                 }
             }
             else
             {
-                if (GUILayout.Button("Unbind"))
+                GUILayout.Label(shortComponentName+"."+methodName, style);
+                
+                if (GUILayout.Button("Unbind Method"))
                 {
                     OnUnbind();
                 }
             }
 
-            GUILayout.EndHorizontal();
+            //GUILayout.EndHorizontal();
         }
 
         void OnBindMethod(MethodInfo p_method, Component p_component)
@@ -65,7 +82,7 @@ namespace Dash
             if (p_boundObject != null)
             {
                 Dictionary<Component, List<MethodInfo>> bindableMethods =
-                    GetBindableMethods(p_boundObject, true);
+                    GetBindableMethods(p_boundObject, includeInherited, includeStatic, includeNonPublic);
                 foreach (var infoKeys in bindableMethods)
                 {
                     foreach (MethodInfo method in infoKeys.Value)
@@ -80,7 +97,7 @@ namespace Dash
             return menu;
         }
         
-        static Dictionary<Component, List<MethodInfo>> GetBindableMethods(GameObject p_boundObject, bool p_declaredOnly)
+        static Dictionary<Component, List<MethodInfo>> GetBindableMethods(GameObject p_boundObject, bool p_includeInherited, bool p_includeStatic, bool p_includeNonPublic)
         {
             Dictionary<Component, List<MethodInfo>> bindableMethods = new Dictionary<Component, List<MethodInfo>>();
 
@@ -91,7 +108,9 @@ namespace Dash
                 {
                     Type componentType = component.GetType();
                     var flags = BindingFlags.Instance | BindingFlags.Public;
-                    if (p_declaredOnly) flags = flags | BindingFlags.DeclaredOnly;
+                    if (!p_includeInherited) flags = flags | BindingFlags.DeclaredOnly;
+                    if (p_includeNonPublic) flags = flags | BindingFlags.NonPublic;
+                    if (p_includeStatic) flags = flags | BindingFlags.Static;
                     MethodInfo[] methods = componentType.GetMethods(flags);
                     foreach (MethodInfo method in methods)
                     {

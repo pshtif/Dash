@@ -5,6 +5,7 @@
 using System;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEngine;
 
 namespace Dash
@@ -35,6 +36,41 @@ namespace Dash
             var method = component.GetType().GetMethod(Model.methodName, BindingFlags.Instance | BindingFlags.Public);
             method.Invoke(component, new object[]{});
         }
+        
+#if UNITY_EDITOR
+
+        public override Vector2 Size
+        {
+            get
+            {
+                var textWidth = DashEditorCore.Skin.GetStyle("NodeText")
+                    .CalcSize(new GUIContent(Model.shortComponentName + "." + Model.methodName)).x + 35;
+                
+                return new Vector2(textWidth > 150 ? textWidth : 150, 85);
+            }
+        }
+
+        protected override void DrawCustomGUI(Rect p_rect)
+        {
+
+            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width,
+                rect.height);
+
+            if (Model.componentName.IsNullOrWhitespace())
+            {
+                GUI.Label(
+                    new Rect(
+                        new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
+                        new Vector2(100, 20)), "No Method", DashEditorCore.Skin.GetStyle("NodeText"));
+            } else {
+
+                GUI.Label(
+                    new Rect(
+                        new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
+                        new Vector2(100, 20)), Model.shortComponentName+"."+Model.methodName, DashEditorCore.Skin.GetStyle("NodeText"));
+            }
+        }
+#endif
 
     }
 }

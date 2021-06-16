@@ -21,7 +21,9 @@ namespace Dash
 
         private void Awake()
         {
-            DashCore.Instance.SetGlobalVariables(variables);
+            variables.Initialize(gameObject);
+            
+            DashCore.Instance.SetGlobalVariables(this);
         }
 
         private void OnDestroy()

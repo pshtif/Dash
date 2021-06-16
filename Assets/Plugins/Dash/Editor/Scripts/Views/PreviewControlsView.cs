@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -18,7 +19,7 @@ namespace Dash.Editor
             {
                 Rect rect = new Rect(p_rect.width / 2 + 170, p_rect.height - 28, 32, 70);
                 
-                DrawBoxGUI(rect, "", TextAnchor.UpperLeft);
+                DrawBoxGUI(rect, "", TextAnchor.UpperLeft, Color.white);
 
                 if (GUI.Button(new Rect(rect.x + rect.width - 28, rect.y + 4, 24, 24),
                     IconManager.GetIcon("RollIn_Icon"),
@@ -31,7 +32,7 @@ namespace Dash.Editor
             {
                 Rect rect = new Rect(p_rect.width / 2 - 220, p_rect.height - 80, 440, 70);
 
-                DrawBoxGUI(rect, "Preview Controls", TextAnchor.UpperLeft);
+                DrawBoxGUI(rect, "Preview Controls", TextAnchor.UpperLeft, Color.white);
                 
                 GUI.color = Color.yellow;
                 GUI.DrawTexture(new Rect(rect.x + 132, rect.y + 7, 16, 16), IconManager.GetIcon("Experimental_Icon"));

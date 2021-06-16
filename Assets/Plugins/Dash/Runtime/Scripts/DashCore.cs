@@ -39,15 +39,15 @@ namespace Dash
             new Dictionary<string, List<Action<NodeFlowData>>>();
 
         [NonSerialized]
-        private DashVariables _globalVariables;
+        private DashGlobalVariables _globalVariables;
 
-        public DashVariables globalVariables => _globalVariables;
+        public DashGlobalVariables globalVariables => _globalVariables;
 
         public bool useScaledTime = true;
 
-        public void SetGlobalVariables(DashVariables p_variables)
+        public void SetGlobalVariables(DashGlobalVariables p_globalVariables)
         {
-            _globalVariables = p_variables;
+            _globalVariables = p_globalVariables;
         }
 
         public DashController GetControllerByName(string p_name)

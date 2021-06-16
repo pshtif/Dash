@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -85,7 +86,7 @@ namespace Dash.Editor
             
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
-            if (Event.current.type == EventType.Repaint && !_previousLayoutDone) return;
+            if ((Event.current.type == EventType.Repaint || Event.current.isMouse) && !_previousLayoutDone) return;
 
             if (CheckVersionPopup.IsCurrentVersion())
             {
@@ -120,16 +121,17 @@ namespace Dash.Editor
             if (Instance != null)
             {
                 _views = new List<ViewBase>();
-                CreateView<GraphView>();
-                CreateView<InspectorView>();
-                CreateView<GraphVariablesView>();
-                CreateView<PreviewControlsView>();
+                AddView(new GraphView());
+                AddView(new InspectorView());
+                AddView(new GraphVariablesView());
+                AddView(new GlobalVariablesView());
+                AddView(new PreviewControlsView());
             }
         }
 
-        private void CreateView<T>() where T : ViewBase, new()
+        private void AddView(ViewBase p_view)
         {
-            _views.Add(new T());
+            _views.Add(p_view);
         }
     }
 }

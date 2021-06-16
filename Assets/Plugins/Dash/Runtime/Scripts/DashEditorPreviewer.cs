@@ -67,7 +67,7 @@ namespace Dash
             _previewStarted = false;
             
             // Debug.Log("Fetch Global Variables");
-            FetchGlobalVariables();
+            DashEditorCore.FetchGlobalVariables();
 
             // Debug.Log("Cloning preview graph");
             _previewGraph = DashEditorCore.Config.editingGraph.Clone();
@@ -90,24 +90,6 @@ namespace Dash
             {
                 if (_previewGraph.CurrentExecutionCount == 0)
                     DashTween.DelayedCall(1f, StopPreview);
-            }
-        }
-
-        void FetchGlobalVariables()
-        {
-            var components = GameObject.FindObjectsOfType<DashGlobalVariables>();
-            if (components.Length > 1)
-            {
-                Debug.LogWarning("Multiple global variables found, only first instance used.");
-            }
-            
-            if (components.Length > 0)
-            {
-                DashCore.Instance.SetGlobalVariables(components[0].variables);
-            }
-            else
-            {
-                DashCore.Instance.SetGlobalVariables(null);
             }
         }
 

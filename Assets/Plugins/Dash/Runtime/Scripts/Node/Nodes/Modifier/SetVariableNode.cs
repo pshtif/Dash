@@ -34,9 +34,9 @@ namespace Dash
                     if (DashCore.Instance.globalVariables == null)
                     {
                         SetError("Global variables not found!");
-                    } else if (DashCore.Instance.globalVariables.HasVariable(Model.variableName))
+                    } else if (DashCore.Instance.globalVariables.variables.HasVariable(Model.variableName))
                     {
-                        Variable variable = DashCore.Instance.globalVariables.GetVariable(Model.variableName);
+                        Variable variable = DashCore.Instance.globalVariables.variables.GetVariable(Model.variableName);
                         if (variable.GetVariableType() != Model.variableType ||
                             (variable.GetVariableType() != value.GetType() && !variable.GetVariableType()
                                 .IsImplicitlyAssignableFrom(value.GetType())))
@@ -53,7 +53,7 @@ namespace Dash
                     {
                         if (Model.enableCreate)
                         {
-                            DashCore.Instance.globalVariables.AddVariableByType(Model.variableType, Model.variableName, value);
+                            DashCore.Instance.globalVariables.variables.AddVariableByType(Model.variableType, Model.variableName, value);
                         }
                         else
                         {

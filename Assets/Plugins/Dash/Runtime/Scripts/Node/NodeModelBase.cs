@@ -82,7 +82,7 @@ namespace Dash
             if (GetType().GetCustomAttribute<CustomInspectorAttribute>() != null)
             {
                 lastGroupMinimized = DrawGroupTitle(null, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
-                DrawCustomInspector();
+                if (!lastGroupMinimized) DrawCustomInspector();
             }
 
             foreach (var field in fields)
