@@ -66,6 +66,12 @@ namespace Dash.Attributes
     }
     
     [AttributeUsage(AttributeTargets.Class)]
+    public class CustomInspectorAttribute : Attribute
+    {
+        public CustomInspectorAttribute() { }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
     public class InputsAttribute : Attribute
     {
         public string[] inputs { get; }

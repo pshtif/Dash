@@ -40,8 +40,7 @@ namespace Dash
         static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, IReferencable p_reference, FieldInfo p_parentInfo = null) 
             //string p_name = null, bool p_drawLabel = true)
         {
-            HideInInspector hideInInspectorAttribute = p_fieldInfo.GetCustomAttribute<HideInInspector>();
-            if (hideInInspectorAttribute != null)
+            if (IsHidden(p_fieldInfo))
                 return false;
             
             if (!MeetsDependencies(p_fieldInfo, p_object))
@@ -576,7 +575,7 @@ namespace Dash
             }
         }
         
-        static bool MeetsDependencies(FieldInfo p_fieldInfo, Object p_object)
+        static public bool MeetsDependencies(FieldInfo p_fieldInfo, Object p_object)
         {
             IEnumerable<DependencyAttribute> attributes = p_fieldInfo.GetCustomAttributes<DependencyAttribute>();
             foreach (DependencyAttribute attribute in attributes)
@@ -601,6 +600,12 @@ namespace Dash
                 return false;
 
             return true;
+        }
+
+        static public bool IsHidden(FieldInfo p_fieldInfo)
+        {
+            HideInInspector hideInInspectorAttribute = p_fieldInfo.GetCustomAttribute<HideInInspector>();
+            return hideInInspectorAttribute != null;
         }
         
         static public int GroupSort(FieldInfo p_field1, FieldInfo p_field2)

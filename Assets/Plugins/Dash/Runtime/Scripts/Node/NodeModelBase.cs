@@ -78,37 +78,19 @@ namespace Dash
             bool lastGroupMinimized = false;
             bool invalidate = false;
             int groupIndex = 0;
+
+            if (GetType().GetCustomAttribute<CustomInspectorAttribute>() != null)
+            {
+                lastGroupMinimized = DrawGroupTitle(null, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
+                DrawCustomInspector();
+            }
+
             foreach (var field in fields)
             {
-                if (field.IsConstant()) continue;
-
-                TitledGroupAttribute ga = field.GetCustomAttribute<TitledGroupAttribute>();
-                string currentGroup = ga != null ? ga.Group : "Properties";
-                if (currentGroup != lastGroup)
-                {
-                    int groupMask = (int)Math.Pow(2, groupIndex);
-                    groupIndex++;
-                    if (initializeMinimization && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
-                    {
-                        groupsMinized += groupMask;
-                    }
-
-                    GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
-                    GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"));
-                    
-                    Rect lastRect = GUILayoutUtility.GetLastRect();
-
-                    bool isMinimized = (groupsMinized & groupMask) != 0;
-                    if (GUI.Button(new Rect(lastRect.x, lastRect.y - 25, lastRect.width, 20), "", minStyle))
-                    {
-                        groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
-                    }
-                    
-                    GUI.Label(new Rect(lastRect.x + 316 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", minStyle);
-
-                    lastGroup = currentGroup;
-                    lastGroupMinimized = (groupsMinized & groupMask) != 0;
-                }
+                if (field.IsConstant() || !GUIPropertiesUtils.MeetsDependencies(field, this) || GUIPropertiesUtils.IsHidden(field)) 
+                    continue;
+                
+                lastGroupMinimized = DrawGroupTitle(field, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
 
                 if (lastGroupMinimized)
                     continue;
@@ -118,6 +100,40 @@ namespace Dash
 
             return invalidate;
         }
+
+        protected bool DrawGroupTitle(FieldInfo p_fieldInfo, ref int p_groupIndex, ref string p_lastGroup, bool p_initializeMinimized, GUIStyle p_style)
+        {
+            TitledGroupAttribute ga = p_fieldInfo?.GetCustomAttribute<TitledGroupAttribute>();
+            string currentGroup = ga != null ? ga.Group : "Properties";
+            if (currentGroup != p_lastGroup)
+            {
+                int groupMask = 1 << p_groupIndex;
+                p_groupIndex++;
+                if (p_initializeMinimized && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
+                {
+                    groupsMinized += groupMask;
+                }
+
+                GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
+                GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"));
+                    
+                Rect lastRect = GUILayoutUtility.GetLastRect();
+
+                bool isMinimized = (groupsMinized & groupMask) != 0;
+                if (GUI.Button(new Rect(lastRect.x, lastRect.y - 25, lastRect.width, 20), "", p_style))
+                {
+                    groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
+                }
+                    
+                GUI.Label(new Rect(lastRect.x + 316 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
+            
+                p_lastGroup = currentGroup;
+            }
+            
+            return (groupsMinized & (1 << (p_groupIndex - 1))) != 0;
+        }
+
+        protected virtual void DrawCustomInspector() { }
 
         public List<string> GetExposedGUIDs()
         {

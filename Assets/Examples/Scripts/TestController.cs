@@ -44,4 +44,9 @@ public class TestController : MonoBehaviour
             DashCore.Instance.SendEvent("Click", data);
         }    
     }
+
+    public void TestCall()
+    {
+        Debug.Log("Hello World");
+    }
 }
