@@ -4,8 +4,10 @@
 
 namespace Dash
 {
-    public class SetActiveNodeModel : RetargetNodeModelBase
+    public class SetMaskableNodeModel : RetargetNodeModelBase
     {
-        public bool active = true;
+        public Parameter<bool> maskable = new Parameter<bool>(true);
+
+        public Parameter<bool> wholeHierarchy = new Parameter<bool>(false);
     }
 }

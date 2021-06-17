@@ -3,7 +3,9 @@
  */
 
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Dash
 {
@@ -11,13 +13,25 @@ namespace Dash
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]
-    public class SetActiveNode : RetargetNodeBase<SetActiveNodeModel>
+    public class SetMaskableNode : RetargetNodeBase<SetMaskableNodeModel>
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             if (p_target != null)
             {
-                p_target.gameObject.SetActive(Model.active);
+                bool maskable = GetParameterValue(Model.maskable, p_flowData);
+                if (GetParameterValue(Model.wholeHierarchy, p_flowData))
+                {
+                    var graphics = p_target.GetComponentsInChildren<MaskableGraphic>();
+
+                    graphics.ForEach(g => g.maskable = maskable);
+                } else {
+                    var graphics = p_target.GetComponent<MaskableGraphic>();
+                    if (graphics != null)
+                    {
+                        graphics.maskable = maskable;
+                    }
+                }
             }
 
             OnExecuteEnd();
@@ -33,7 +47,7 @@ namespace Dash
 
             GUI.Label(
                 new Rect(new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
-                    new Vector2(100, 20)), Model.active ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
+                    new Vector2(100, 20)), Model.maskable.isExpression ? "EXP" : Model.maskable.GetValue(null) ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
         }
 #endif
     }
