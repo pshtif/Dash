@@ -17,12 +17,12 @@ namespace Dash.Editor
 
             if (p_connection.active)
             {
-                menu.AddItem(new GUIContent("Deactivate connection."), false, DeactivateConnection, p_connection);
+                menu.AddItem(new GUIContent("Deactivate Connection"), false, DeactivateConnection, p_connection);
 
             }
             else
             {
-                menu.AddItem(new GUIContent("Activate connection."), false, ActivateConnection, p_connection);
+                menu.AddItem(new GUIContent("Activate Connection"), false, ActivateConnection, p_connection);
             }
 
             menu.AddItem(new GUIContent("Delete Connection"), false, DeleteConnection, p_connection);
@@ -32,7 +32,7 @@ namespace Dash.Editor
         
         static void DeleteConnection(object p_connection)
         {
-            Undo.RegisterCompleteObjectUndo(Graph, "Delete connection.");
+            Undo.RegisterCompleteObjectUndo(Graph, "Delete Connection");
             Graph.Disconnect((NodeConnection)p_connection);
             DashEditorCore.SetDirty();
         }
