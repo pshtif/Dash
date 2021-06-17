@@ -89,6 +89,11 @@ namespace Dash
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
+            if (Model.colorToAttribute)
+            {
+                p_flowData.SetAttribute<Color>(Model.colorAttributeName, p_target.color);
+            }
+            
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startColor, toColor);
@@ -108,6 +113,11 @@ namespace Dash
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
+
+            if (Model.colorToAttribute)
+            {
+                p_flowData.SetAttribute<Color>(Model.colorAttributeName, p_target.color);
+            }
            
             Color startColor = Model.useFrom ? GetParameterValue(Model.fromColor, p_flowData) : p_target.color;
             Color toColor = GetParameterValue<Color>(Model.toColor, p_flowData);
