@@ -17,7 +17,7 @@ namespace Dash
         {
             if (p_target != null)
             {
-                p_target.gameObject.SetActive(Model.active);
+                p_target.gameObject.SetActive(GetParameterValue(Model.active, p_flowData));
             }
 
             OnExecuteEnd();
@@ -33,7 +33,7 @@ namespace Dash
 
             GUI.Label(
                 new Rect(new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
-                    new Vector2(100, 20)), Model.active ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
+                    new Vector2(100, 20)), Model.active.isExpression ? "EXP" : Model.active.GetValue(null) ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
         }
 #endif
     }
