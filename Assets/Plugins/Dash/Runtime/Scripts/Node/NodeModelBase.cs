@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
 
 namespace Dash
 {
-    public class NodeModelBase : IReferencable
+    public class NodeModelBase : IReferencable, ISerializationCallbackReceiver
     {
         public string Id => id;
         
@@ -21,6 +22,39 @@ namespace Dash
 
         [TitledGroup("Advanced", 1000, true)]
         public string comment;
+        
+        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        {
+            var fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public).ToList();
+            fields = fields.FindAll(fi => fi.FieldType.IsGenericType && fi.FieldType.GetGenericTypeDefinition() == typeof(Parameter<>));
+
+            if (fields.Count == 0)
+                return;
+            
+            foreach (var field in fields)
+            {
+                if (field.GetValue(this) != null)
+                    continue;
+                
+                var initializeFrom = field.GetCustomAttribute<InitializeFromAttribute>();
+                if (initializeFrom != null)
+                {
+                    var initializationField = GetType().GetField(initializeFrom.FieldName);
+                    field.SetValue(this,
+                        Activator.CreateInstance(field.FieldType,
+                            new object[] {initializationField == null ? true : initializationField.GetValue(this)}));
+                }
+                else
+                {
+                    field.SetValue(this, Activator.CreateInstance(field.FieldType, new object[] {true}));
+                }
+            }
+        }
+
+        void ISerializationCallbackReceiver.OnBeforeSerialize()
+        {
+            
+        }
 
 #if UNITY_EDITOR
 

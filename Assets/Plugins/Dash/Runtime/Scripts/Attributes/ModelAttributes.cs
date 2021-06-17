@@ -89,4 +89,15 @@ namespace Dash.Attributes
             LinkCode = p_linkCode;
         }
     }
+    
+    [AttributeUsage(AttributeTargets.Field)]
+    public class InitializeFromAttribute : Attribute
+    {
+        public string FieldName { get; }
+
+        public InitializeFromAttribute(string p_fieldName)
+        {
+            FieldName = p_fieldName;
+        }
+    }
 }
