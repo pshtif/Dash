@@ -35,6 +35,7 @@ namespace Dash
 
         static public int CONNECTOR_PADDING = 4;
 
+        static public Color PARAMETER_COLOR = new Color(0.5f, 1, 1);
         static public Color NODE_EXECUTING_COLOR = Color.cyan;
         static public Color NODE_SELECTED_COLOR = Color.green;
         static public Color CONNECTION_INACTIVE_COLOR = new Color(0.3f, 0.3f, .3f);
