@@ -27,6 +27,9 @@ namespace Dash
         
         void CallMethod()
         {
+            if (Model.componentName.IsNullOrWhitespace() || Model.methodName.IsNullOrWhitespace())
+                return;
+            
             Type componentType = ReflectionUtils.GetTypeByName(Model.componentName);
             Component component = Controller.GetComponent(componentType);
 
