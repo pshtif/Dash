@@ -46,7 +46,8 @@ namespace Dash
                 }
                 else
                 {
-                    field.SetValue(this, Activator.CreateInstance(field.FieldType, new object[] {true}));
+                    Debug.Log("hmm: "+field.FieldType+" : "+field.FieldType.GenericTypeArguments[0]);
+                    field.SetValue(this, Activator.CreateInstance(field.FieldType, new object[] {field.FieldType.GenericTypeArguments[0].GetDefaultValue()}));
                 }
             }
         }
