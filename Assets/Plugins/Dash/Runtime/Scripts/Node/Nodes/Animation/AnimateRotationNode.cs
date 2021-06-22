@@ -34,6 +34,12 @@ namespace Dash
                     : Quaternion.Euler(fromRotation) 
                 : targetTransform.rotation;
 
+            if (Model.storeToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Quaternion>(attribute, targetTransform.rotation);
+            }
+            
             Vector3 toRotation = GetParameterValue<Vector3>(Model.toRotation, p_flowData);
 
             float time = GetParameterValue(Model.time, p_flowData);

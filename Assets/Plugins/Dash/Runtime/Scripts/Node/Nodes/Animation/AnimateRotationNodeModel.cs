@@ -11,26 +11,35 @@ namespace Dash
     [Serializable]
     public class AnimateRotationNodeModel : AnimationNodeModelBase
     {
-        [Order(21)]
-        [TitledGroup("Rotation")]
+        [Order(11)]
+        [TitledGroup("Properties")]
         public bool useFrom = false;
         
-        [Order(22)]
+        [Order(12)]
         [Dependency("useFrom", true)]
-        [TitledGroup("Rotation")]
+        [TitledGroup("Properties")]
         public Parameter<Vector3> fromRotation = new Parameter<Vector3>(Vector3.zero);
 
-        [Order(23)]
+        [Order(13)]
         [Dependency("useFrom", true)]
-        [TitledGroup("Rotation")]
+        [TitledGroup("Properties")]
         public bool isFromRelative = false;
         
-        [Order(24)]
-        [TitledGroup("Rotation")]
+        [Order(14)]
+        [TitledGroup("Properties")]
         public Parameter<Vector3> toRotation = new Parameter<Vector3>(Vector3.zero);
         
-        [Order(25)]
-        [TitledGroup("Rotation")]
+        [Order(15)]
+        [TitledGroup("Properties")]
         public bool isToRelative = false;
+        
+        [Order(19)]
+        [TitledGroup("Properties")]
+        public bool storeToAttribute = false;
+        
+        [Order(20)]
+        [TitledGroup("Properties")]
+        [Dependency("storeToAttribute", true)]
+        public Parameter<string> storeAttributeName = new Parameter<string>("rotation");
     }
 }

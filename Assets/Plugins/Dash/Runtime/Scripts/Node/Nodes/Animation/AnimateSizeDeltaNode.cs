@@ -31,6 +31,12 @@ namespace Dash
                     : fromSizeDelta 
                 : rectTransform.sizeDelta;
             
+            if (Model.storeToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Vector2>(attribute, rectTransform.sizeDelta);
+            }
+            
             Vector2 toSizeDelta = GetParameterValue(Model.toSizeDelta, p_flowData);
 
             float time = GetParameterValue(Model.time, p_flowData);

@@ -32,5 +32,14 @@ namespace Dash
         [Order(15)]
         [TitledGroup("Properties")]
         public bool isToRelative = false;
+        
+        [Order(19)]
+        [TitledGroup("Properties")]
+        public bool storeToAttribute = false;
+        
+        [Order(20)]
+        [TitledGroup("Properties")]
+        [Dependency("storeToAttribute", true)]
+        public Parameter<string> storeAttributeName = new Parameter<string>("position");
     }
 }

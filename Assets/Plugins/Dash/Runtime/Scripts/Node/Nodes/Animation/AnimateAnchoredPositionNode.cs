@@ -31,6 +31,12 @@ namespace Dash
                     : fromPosition 
                 : rectTransform.anchoredPosition;
 
+            if (Model.storeToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Vector2>(attribute, rectTransform.anchoredPosition);
+            }
+
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
 

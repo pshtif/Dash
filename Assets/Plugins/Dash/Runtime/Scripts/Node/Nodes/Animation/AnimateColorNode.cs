@@ -89,9 +89,10 @@ namespace Dash
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
-            if (Model.colorToAttribute)
+            if (Model.storeToAttribute)
             {
-                p_flowData.SetAttribute<Color>(Model.colorAttributeName, p_target.color);
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Color>(attribute, p_target.color);
             }
             
             if (time == 0)
@@ -114,9 +115,10 @@ namespace Dash
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
 
-            if (Model.colorToAttribute)
+            if (Model.storeToAttribute)
             {
-                p_flowData.SetAttribute<Color>(Model.colorAttributeName, p_target.color);
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Color>(attribute, p_target.color);
             }
            
             Color startColor = Model.useFrom ? GetParameterValue(Model.fromColor, p_flowData) : p_target.color;

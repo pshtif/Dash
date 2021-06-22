@@ -11,26 +11,35 @@ namespace Dash
     [Serializable]
     public class AnimateScaleNodeModel : AnimationNodeModelBase
     {
-        [Order(31)]
-        [TitledGroup("Scale")]
+        [Order(11)]
+        [TitledGroup("Properties")]
         public bool useFrom = false;
         
-        [Order(32)]
+        [Order(12)]
         [Dependency("useFrom", true)]
-        [TitledGroup("Scale")]
+        [TitledGroup("Properties")]
         public Parameter<Vector3> fromScale = new Parameter<Vector3>(Vector3.one);
         
-        [Order(33)]
+        [Order(13)]
         [Dependency("useFrom", true)]
-        [TitledGroup("Scale")]
+        [TitledGroup("Properties")]
         public bool isFromRelative = false;
         
-        [Order(34)]
-        [TitledGroup("Scale")]
+        [Order(14)]
+        [TitledGroup("Properties")]
         public Parameter<Vector3> toScale = new Parameter<Vector3>(Vector3.one);
         
-        [Order(35)]
-        [TitledGroup("Scale")]
+        [Order(15)]
+        [TitledGroup("Properties")]
         public bool isToRelative = false;
+        
+        [Order(19)]
+        [TitledGroup("Properties")]
+        public bool storeToAttribute = false;
+        
+        [Order(20)]
+        [TitledGroup("Properties")]
+        [Dependency("storeToAttribute", true)]
+        public Parameter<string> storeAttributeName = new Parameter<string>("scale");
     }
 }

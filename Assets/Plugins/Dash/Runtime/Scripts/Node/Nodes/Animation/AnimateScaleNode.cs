@@ -30,6 +30,12 @@ namespace Dash
                     : fromScale 
                 : targetTransform.localScale;
             
+            if (Model.storeToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<Vector3>(attribute, targetTransform.localScale);
+            }
+            
             Vector3 toScale = GetParameterValue(Model.toScale, p_flowData);
             
             float time = GetParameterValue(Model.time, p_flowData);

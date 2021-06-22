@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using Dash.Attributes;
 using Dash.Enums;
 using UnityEngine;
@@ -59,13 +60,13 @@ namespace Dash
         [DependencySingle("targetType", AlphaTargetType.IMAGE)]
         [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
-        public bool colorToAttribute = false;
+        public bool storeToAttribute = false;
         
         [Order(20)]
         [DependencySingle("targetType", AlphaTargetType.IMAGE)]
         [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
-        [Dependency("colorToAttribute", true)]
-        public string colorAttributeName = "color";
+        [Dependency("storeToAttribute", true)]
+        public Parameter<string> storeAttributeName = new Parameter<string>("color");
     }
 }
