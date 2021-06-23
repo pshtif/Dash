@@ -121,6 +121,7 @@ namespace Dash
 
         void Awake()
         {
+            Debug.Log(this);
             if (Graph != null)
                 Graph.Initialize(this);
 
@@ -221,8 +222,6 @@ namespace Dash
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
-
-            //EditorUtility.SetDirty(this);
         }
 #endif
 

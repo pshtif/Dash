@@ -40,7 +40,7 @@ namespace Dash
 
         [NonSerialized]
         private DashGlobalVariables _globalVariables;
-
+        
         public DashGlobalVariables globalVariables => _globalVariables;
 
         public bool useScaledTime = true;

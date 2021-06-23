@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer;
 using UnityEngine;
+using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -23,8 +24,21 @@ namespace Dash
         public int version { get; private set; } = 0;
         
         public event Action<OutputNode, NodeFlowData> OnOutput;
-        
-        public DashVariables variables = new DashVariables();
+
+        [FormerlySerializedAs("variables")]
+        [SerializeField]
+        private DashVariables _variables;
+
+        public DashVariables variables
+        {
+            get
+            {
+                if (_variables == null)
+                    _variables = new DashVariables();
+
+                return _variables;
+            }
+        }
 
         private ExtractedClipCache _extractedClipCache;
 
@@ -319,7 +333,6 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            //Debug.Log("OnAfterDeserialize");
             using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
@@ -617,7 +630,11 @@ namespace Dash
             if (Controller)
                 Controller.CleanupReferences(exposedGUIDs);
         }
-        
+
+        public void ResetPosition()
+        {
+            viewOffset = new Vector2();
+        }
 #endif
 #endregion
     }

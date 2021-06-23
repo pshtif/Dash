@@ -23,7 +23,7 @@ namespace Dash.Editor
             if (Graph == null)
                 return;
 
-            DrawVariablesGUI(new Vector2(20,30), "Graph Variables", Color.white, Graph.variables, ref Graph.graphVariablesMinimized,
+            DrawVariablesGUI(new Vector2(20,30), false, Color.white, Graph.variables, ref Graph.graphVariablesMinimized,
                 Graph.Controller == null ? null : Graph.Controller.gameObject);
         }
     }

@@ -20,9 +20,9 @@ namespace Dash.Editor
                 p_variables.RenameVariable(p_name, newName);
             }
             
-            EditorGUI.BeginChangeCheck();
             variable.ValueField(p_maxWidth-170);
 
+            var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             
             EditorGUILayout.BeginVertical(GUILayout.Width(16));
@@ -32,8 +32,8 @@ namespace Dash.Editor
                 GetVariableMenu(p_variables, p_name, p_boundObject).ShowAsContext();
             }
             EditorGUILayout.EndVertical();
-            
-            GUI.color = Color.white;
+
+            GUI.color = oldColor;
 
             EditorGUILayout.EndHorizontal();
         }
@@ -86,7 +86,7 @@ namespace Dash.Editor
                 }
             }
             
-            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name));
+            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_boundObject));
             menu.AddItem(new GUIContent("Copy Variable"), false, () => OnCopyVariable(p_variables, p_name));
 
             return menu;
@@ -174,9 +174,10 @@ namespace Dash.Editor
             p_variable.BindField(p_field, p_boundComponent);
         }
         
-        static void OnDeleteVariable(DashVariables p_variables, string p_name)
+        static void OnDeleteVariable(DashVariables p_variables, string p_name, GameObject p_boundObject)
         {
             p_variables.RemoveVariable(p_name);
+            EditorUtility.SetDirty(p_boundObject);
         }
         
         static void OnLookupVariable(DashVariables p_variables, string p_name)

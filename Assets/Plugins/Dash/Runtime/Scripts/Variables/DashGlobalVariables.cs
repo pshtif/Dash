@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class DashGlobalVariables : MonoBehaviour, ISerializationCallbackReceiver
+    public class DashGlobalVariables : MonoBehaviour, ISerializationCallbackReceiver, ISupportsPrefabSerialization
     {
         [SerializeField]
         protected DashVariables _variables;
@@ -15,6 +15,7 @@ namespace Dash
             get
             {
                 if (_variables == null) _variables = new DashVariables();
+
                 return _variables;
             }
         }
@@ -33,6 +34,8 @@ namespace Dash
 
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
+        
+        SerializationData ISupportsPrefabSerialization.SerializationData { get { return this._serializationData; } set { this._serializationData = value; } }
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {

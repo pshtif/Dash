@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using OdinSerializer;
 using UnityEngine;
 
 namespace Dash
@@ -17,22 +18,28 @@ namespace Dash
     public class DashVariables : IEnumerable<Variable>
     {
         public int Count => _variables.Count;
-        
+
         [NonSerialized]
         protected Dictionary<string, Variable> _lookupDictionary;
 
+        [SerializeField]
         protected List<Variable> _variables;
 
-        public DashVariables()
+        public List<Variable> variables
         {
-            _lookupDictionary = new Dictionary<string, Variable>();
-            _variables = new List<Variable>();
+            get
+            {
+                if (_variables == null)
+                    _variables = new List<Variable>();
+
+                return _variables;
+            }
         }
 
         public void Initialize(GameObject p_target)
         {
-            _variables.ForEach(v => v.InitializeBinding(p_target));
-            _variables.ForEach(v => v.InitializeLookup(p_target));
+            variables.ForEach(v => v.InitializeBinding(p_target));
+            variables.ForEach(v => v.InitializeLookup(p_target));
         }
 
         public void ClearVariables()
@@ -121,12 +128,12 @@ namespace Dash
 
         public IEnumerator<Variable> GetEnumerator()
         {
-            return _variables.GetEnumerator();
+            return variables.GetEnumerator();
         }
 
         IEnumerator<Variable> IEnumerable<Variable>.GetEnumerator()
         {
-             return _variables.GetEnumerator();
+            return variables.GetEnumerator();
         }
         
         IEnumerator IEnumerable.GetEnumerator()

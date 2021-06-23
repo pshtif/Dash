@@ -1,5 +1,7 @@
 using System;
+using OdinSerializer.Utilities;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -13,23 +15,41 @@ namespace Dash.Editor
         {
             EditorGUIUtility.labelWidth = 100;
 
-            int index = 0;
-            foreach (var variable in variables)
+            if (PrefabUtility.GetPrefabInstanceStatus(target) != PrefabInstanceStatus.NotAPrefab)
             {
-                GUIVariableUtils.VariableField(variables, variable.Name, ((DashGlobalVariables)target).gameObject, EditorGUIUtility.currentViewWidth-20);
-                EditorGUILayout.Space(4);
-                index++;
+                EditorGUILayout.LabelField("Prefab overrides are not supported.");
             }
-
-            if (GUILayout.Button("Add Variable"))
+            else
             {
-                TypesMenu.Show(OnAddNewVariable);
+                EditorGUI.BeginChangeCheck();
+
+                int index = 0;
+                variables?.ForEach(variable =>
+                {
+                    GUIVariableUtils.VariableField(variables, variable.Name, ((DashGlobalVariables) target).gameObject,
+                        EditorGUIUtility.currentViewWidth - 20);
+                    EditorGUILayout.Space(4);
+                    index++;
+                });
+
+                if (GUILayout.Button("Add Variable"))
+                {
+                    TypesMenu.Show(OnAddNewVariable);
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    EditorUtility.SetDirty(target);
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+                }
             }
         }
-
+        
         void OnAddNewVariable(Type p_type)
         {
             variables.AddNewVariable(p_type);
+            EditorUtility.SetDirty(target);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(target);
         }
     }
 }

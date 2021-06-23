@@ -74,7 +74,8 @@ namespace Dash
 
 #region SERIALIZATION
         
-        [SerializeField, HideInInspector] private SerializationData _serializationData;
+        [SerializeField, HideInInspector] 
+        private SerializationData _serializationData;
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {

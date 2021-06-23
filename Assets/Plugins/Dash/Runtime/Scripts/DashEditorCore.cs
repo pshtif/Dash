@@ -70,7 +70,8 @@ namespace Dash
 
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
-            AssemblyReloadEvents.afterAssemblyReload += OnAssemblyReload;
+            AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
+            AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
         }
 
         static void SetExecutionOrder(Type p_classType, int p_order)
@@ -380,17 +381,24 @@ namespace Dash
         //     }
         // }
 
-        static void OnAssemblyReload()
+        static void OnAfterAssemblyReload()
         {
+            Debug.Log("OnAfterAssemblyReload");
+            
             if (Graph != null && Graph.Controller != null)
             {
                 EditController(Graph.Controller, Config.editingGraphPath);
             }
         }
+
+        static void OnBeforeAssemblyReload()
+        {
+            Debug.Log("OnBeforeAssemblyReload");
+        }
         
         static void OnPlayModeChanged(PlayModeStateChange p_change)
         {
-            // Debug.Log("[PLAYMODECHANGE] "+p_change);
+            //Debug.Log("[PLAYMODECHANGE] "+p_change);
             
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {

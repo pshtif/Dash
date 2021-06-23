@@ -244,8 +244,8 @@ namespace Dash.Editor
             if (zoom > 4) zoom = 4;
             if (previousZoom != zoom && Graph != null)
             {
-                Graph.viewOffset.x += (zoom - previousZoom) * p_rect.width / 2;
-                Graph.viewOffset.y += (zoom - previousZoom) * p_rect.height / 2;
+                Graph.viewOffset.x += (zoom - previousZoom) * p_rect.width / 2 + (p_event.mousePosition.x - p_rect.x - p_rect.width/2) * (zoom - previousZoom);
+                Graph.viewOffset.y += (zoom - previousZoom) * p_rect.height / 2 + (p_event.mousePosition.y - p_rect.y - p_rect.height/2) * (zoom - previousZoom);
             }
 
             DashEditorCore.Config.zoom = zoom;

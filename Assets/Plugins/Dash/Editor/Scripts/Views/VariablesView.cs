@@ -22,10 +22,10 @@ namespace Dash.Editor
             
         }
         
-        protected void DrawVariablesGUI(Vector2 p_position, string p_title, Color p_color, DashVariables p_variables, ref bool p_minimized, GameObject p_boundObject) 
+        protected void DrawVariablesGUI(Vector2 p_position, bool p_global, Color p_color, DashVariables p_variables, ref bool p_minimized, GameObject p_boundObject) 
         {
             Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : 200);
-            DrawBoxGUI(rect, p_title, TextAnchor.UpperCenter, p_color);
+            DrawBoxGUI(rect, p_global ? "Global Variables" : "Graph Variables", TextAnchor.UpperCenter, p_color);
 
             var minStyle = new GUIStyle();
             minStyle.normal.textColor = Color.white;
@@ -39,6 +39,17 @@ namespace Dash.Editor
 
             if (p_minimized)
                 return;
+
+            if (p_global && PrefabUtility.GetPrefabInstanceStatus(p_boundObject) != PrefabInstanceStatus.NotAPrefab)
+            {
+                var style = new GUIStyle();
+                style.alignment = TextAnchor.MiddleCenter;
+                style.normal.textColor = Color.white;
+                style.fontSize = 20;
+                style.wordWrap = true;
+                EditorGUI.TextArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-30),"Global variables on prefab instances are not supported!", style);
+                return;
+            }
 
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-79));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);

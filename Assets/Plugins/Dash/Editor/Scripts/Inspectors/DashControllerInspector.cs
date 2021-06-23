@@ -30,7 +30,8 @@ namespace Dash.Editor
             if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
             {
                 GUILayout.BeginVertical();
-                
+
+                var oldColor = GUI.color;
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
@@ -46,7 +47,7 @@ namespace Dash.Editor
                     }
                 }
 
-                GUI.color = Color.white;
+                GUI.color = oldColor;
 
                 ((IEditorControllerAccess) Controller).graphAsset =
                     (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
@@ -56,13 +57,14 @@ namespace Dash.Editor
             {
                 GUILayout.BeginVertical();
 
+                var oldColor = GUI.color;
                 GUI.color = new Color(1, 0.75f, 0.5f);
                 if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                 {
                     OpenEditor();
                 }
 
-                GUI.color = Color.white;
+                GUI.color = oldColor;
 
                 if (!Controller.IsGraphBound)
                 {
