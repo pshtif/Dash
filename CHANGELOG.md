@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.5.0RC3 - 24.06.2021
+
+#### Added
+
+- Added support for custom inspector implementations for NodeModels
+- Added SetMaskableNode
+- Added CallMethodNode for calling methods on any Component on DashController's GameObject
+- Added inspector for Global Variables in Graph Editor
+- Added GetCanvas expression function
+- Added Canvas to supported types
+
+#### Changed
+
+- Changed coloring for Parametrized properties in inspector for better visual feedback
+- Changed zooming in/out now depends on mouse cursor position
+- Changed various properties ordering within node models
+- Changed refactored property groups
+- Changed DashGlobalVariables now explicitly state that they don't support Prefab Overrides at it ended up in runtime issues  
+- [POTENTIONALLY BREAKING] changed serialization approach to automatically handle refactoring updates
+
+#### Fixed
+
+
+
 ### Release 0.4.8RC2 - 15.06.2021
 
 #### Added

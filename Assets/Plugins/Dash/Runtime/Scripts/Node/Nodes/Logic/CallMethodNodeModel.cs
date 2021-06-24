@@ -19,9 +19,9 @@ namespace Dash
     public class CallMethodNodeModel : NodeModelBase
     {
         [HideInInspector]
-        public string componentName;
+        public string componentName = "";
         [HideInInspector]
-        public string methodName;
+        public string methodName = "";
 
         public bool includeNonPublic = false;
 
@@ -30,8 +30,8 @@ namespace Dash
         public bool includeInherited = false;
 
         public string shortComponentName => componentName.IndexOf('.') == -1
-            ? componentName
-            : componentName.Substring(componentName.LastIndexOf('.') + 1);
+             ? componentName
+             : componentName.Substring(componentName.LastIndexOf('.') + 1);
         
 #if UNITY_EDITOR
 
