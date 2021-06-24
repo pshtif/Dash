@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Added inspector for Global Variables in Graph Editor
 - Added GetCanvas expression function
 - Added Canvas to supported types
+- Added Store to Attribute option for all animation nodes (to store the previous value)
 
 #### Changed
 
