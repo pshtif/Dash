@@ -174,9 +174,42 @@ namespace Dash
                 }
             }
             
-            errorMessage = "Invalid parameters in GetChildAt function.";
+            errorMessage = "Invalid parameters in GetImage function.";
             return false;
         }
+        
+        private static bool GetCanvas(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            {
+                errorMessage = "Invalid number of parameters in GetSprite function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                Transform transform = (Transform) evalParams[0];
+                Canvas canvas = transform.GetComponentInParent<Canvas>();
+                
+                if (canvas != null)
+                {
+                    p_args.HasResult = true;
+                    p_args.Result = canvas;
+                    return true;
+                }
+                else
+                {
+                    errorMessage = "Transform or its parents has no Canvas component in GetCanvas function.";
+                    return false;
+                }
+            }
+            
+            errorMessage = "Invalid parameters in GetCanvas function.";
+            return false;
+        }
+
 
         /**
          *  Create a Vector2 value

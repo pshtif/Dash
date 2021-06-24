@@ -31,7 +31,8 @@ namespace Dash
             typeof(Transform),
             typeof(GameObject),
             typeof(Button),
-            typeof(Color)
+            typeof(Color),
+            typeof(Canvas)
         };
             
         #if UNITY_EDITOR
