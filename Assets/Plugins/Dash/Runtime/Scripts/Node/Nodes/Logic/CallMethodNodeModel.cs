@@ -128,6 +128,6 @@ namespace Dash
 
             return bindableMethods;
         }
-    }
 #endif
+    }
 }

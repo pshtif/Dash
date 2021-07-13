@@ -35,11 +35,12 @@ namespace Dash
             {
                 if (field.GetValue(this) != null)
                     continue;
-                
+
                 var initializeFrom = field.GetCustomAttribute<InitializeFromAttribute>();
                 if (initializeFrom != null)
                 {
                     var initializationField = GetType().GetField(initializeFrom.FieldName);
+                    
                     field.SetValue(this,
                         Activator.CreateInstance(field.FieldType,
                             new object[] {initializationField == null ? true : initializationField.GetValue(this)}));

@@ -121,8 +121,7 @@ namespace Dash
 
         void Awake()
         {
-            Debug.Log(this);
-            if (Graph != null)
+            if (Graph != null) 
                 Graph.Initialize(this);
 
             DashCore.Bind(this);
