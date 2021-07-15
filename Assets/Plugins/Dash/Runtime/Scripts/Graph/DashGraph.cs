@@ -98,6 +98,11 @@ namespace Dash
             if (_initialized)
                 return;
 
+            if (version < DashCore.GetVersionNumber())
+            {
+                Debug.LogWarning("Current Dash version is higher than initialized Graph, can result in possible issues please migrate in editor. Controller "+p_controller.name);
+            }
+
             Controller = p_controller;
 
             _nodeListeners = new Dictionary<string, List<NodeBase>>();
