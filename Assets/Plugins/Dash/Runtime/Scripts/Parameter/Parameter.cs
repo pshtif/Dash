@@ -22,7 +22,9 @@ namespace Dash
         public string expression;
 
         // True if last evaluation was erroneous
+        [NonSerialized]
         public bool hasErrorInEvaluation = false;
+        [NonSerialized]
         public string errorMessage;
 
         public abstract FieldInfo GetValueFieldInfo();
