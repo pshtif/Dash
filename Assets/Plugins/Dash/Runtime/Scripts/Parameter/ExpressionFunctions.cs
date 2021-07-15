@@ -250,7 +250,7 @@ namespace Dash
         /**
          *  Add two values of type T together
          */
-        private static bool Add<T>(FunctionArgs p_args)
+        private static bool Add(FunctionArgs p_args)
         {
             if (p_args.Parameters.Length != 2)
             {
@@ -259,22 +259,85 @@ namespace Dash
             }
             
             object[] evalParams = p_args.EvaluateParameters();
-
-            if (typeof(T) == typeof(Vector2) && evalParams[0].GetType() == typeof(Vector2) &&  evalParams[1].GetType() == typeof(Vector2))
+            
+            if (evalParams[0].GetType() == typeof(Vector2) &&  evalParams[1].GetType() == typeof(Vector2))
             {
                 p_args.HasResult = true;
                 p_args.Result = (Vector2) evalParams[0] + (Vector2) evalParams[1];
                 return true;
             }
             
-            if (typeof(T) == typeof(Vector3) && evalParams[0].GetType() == typeof(Vector3) &&  evalParams[1].GetType() == typeof(Vector3))
+            if (evalParams[0].GetType() == typeof(Vector3) &&  evalParams[1].GetType() == typeof(Vector3))
             {
                 p_args.HasResult = true;
                 p_args.Result = (Vector3) evalParams[0] + (Vector3) evalParams[1];
                 return true;
             }
                 
-            errorMessage = "Add function for type "+typeof(T)+" is not implemented.";
+            errorMessage = "Add function not implemented for parameters " + evalParams[0].GetType() + " and " +
+                           evalParams[1].GetType();
+            return false;
+        }
+        
+        /**
+         *  Multiply two values of type T together
+         */
+        private static bool Mul(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 2)
+            {
+                errorMessage = "Invalid parameters in Mul function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+            
+            if (evalParams[0].GetType() == typeof(Vector2) &&  evalParams[1].GetType() == typeof(float))
+            {
+                p_args.HasResult = true;
+                p_args.Result = (Vector2) evalParams[0] * (float) evalParams[1];
+                return true;
+            }
+            
+            if (evalParams[0].GetType() == typeof(float) &&  evalParams[1].GetType() == typeof(Vector2))
+            {
+                p_args.HasResult = true;
+                p_args.Result = (float) evalParams[0] * (Vector2) evalParams[1];
+                return true;
+            }
+            
+            if (evalParams[0].GetType() == typeof(Vector2) &&  evalParams[1].GetType() == typeof(Vector2))
+            {
+                p_args.HasResult = true;
+                p_args.Result = (Vector2) evalParams[0] * (Vector2) evalParams[1];
+                return true;
+            }
+            
+            if (evalParams[0].GetType() == typeof(Vector3) &&  evalParams[1].GetType() == typeof(float))
+            {
+                p_args.HasResult = true;
+                p_args.Result = (Vector3) evalParams[0] * (float) evalParams[1];
+                return true;
+            }
+            
+            if (evalParams[0].GetType() == typeof(float) &&  evalParams[1].GetType() == typeof(Vector3))
+            {
+                p_args.HasResult = true;
+                p_args.Result = (float) evalParams[0] * (Vector3) evalParams[1];
+                return true;
+            }
+            
+            if (evalParams[0].GetType() == typeof(Vector3) &&  evalParams[1].GetType() == typeof(Vector3))
+            {
+                p_args.HasResult = true;
+                Vector3 scaled = (Vector3) evalParams[0];
+                scaled.Scale((Vector3) evalParams[1]);
+                p_args.Result = scaled;
+                return true;
+            }
+
+            errorMessage = "Mul function not implemented for parameters " + evalParams[0].GetType() + " and " +
+                           evalParams[1].GetType();
             return false;
         }
 
@@ -283,69 +346,72 @@ namespace Dash
          */
         private static bool Random<T>(FunctionArgs p_args)
         {
-            object[] evalParams = p_args.EvaluateParameters();
+            // object[] evalParams = p_args.EvaluateParameters();
+            //
+            // if (typeof(T) == typeof(Vector2))
+            // {
+            //     if (evalParams.Length != 2)
+            //     {
+            //         errorMessage = "Invalid parameters in Random function of type " + typeof(T);
+            //         return false;
+            //     }
+            //     
+            //     p_args.HasResult = true;
+            //     p_args.Result = new Vector2(
+            //         UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+            //         UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+            //     return true;
+            // }
+            //
+            // if (typeof(T) == typeof(Vector3))
+            // {
+            //     if (evalParams.Length != 2)
+            //     {
+            //         errorMessage = "Invalid parameters in Random function of type "+typeof(T);
+            //         return false;
+            //     }
+            //     
+            //     p_args.HasResult = true;
+            //     p_args.Result = new Vector3(
+            //         UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+            //         UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
+            //         UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+            //     return true;
+            // }
+            //
+            // // Merging float and double here will result always in float
+            // if (typeof(T) == typeof(float) || typeof(T) == typeof(double))
+            // {
+            //     if (evalParams.Length != 2)
+            //     {
+            //         errorMessage = "Invalid parameters in Random function of type "+typeof(T);
+            //         return false;
+            //     }
+            //     
+            //     p_args.HasResult = true;
+            //     p_args.Result = UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
+            //     return true;
+            // }
+            //
+            // // Merging int and uint here will always result in int
+            // if (typeof(T) == typeof(int) || typeof(T) == typeof(uint))
+            // {
+            //     if (evalParams.Length != 2)
+            //     {
+            //         errorMessage = "Invalid parameters in Random function of type "+typeof(T);
+            //         return false;
+            //     }
+            //     
+            //     p_args.HasResult = true;
+            //     p_args.Result = UnityEngine.Random.Range(Convert.ToInt32(evalParams[0]), Convert.ToInt32(evalParams[1]));
+            //     return true;
+            // }
+            //
+            //
+            // errorMessage = "Random function for type " + typeof(T) + " is not implemented.";
+            // return false;
             
-            if (typeof(T) == typeof(Vector2))
-            {
-                if (evalParams.Length != 2)
-                {
-                    errorMessage = "Invalid parameters in Random function of type " + typeof(T);
-                    return false;
-                }
-                
-                p_args.HasResult = true;
-                p_args.Result = new Vector2(
-                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
-                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
-                return true;
-            }
-            
-            if (typeof(T) == typeof(Vector3))
-            {
-                if (evalParams.Length != 2)
-                {
-                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
-                    return false;
-                }
-                
-                p_args.HasResult = true;
-                p_args.Result = new Vector3(
-                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
-                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])),
-                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
-                return true;
-            }
-            
-            // Merging float and double here will result always in float
-            if (typeof(T) == typeof(float) || typeof(T) == typeof(double))
-            {
-                if (evalParams.Length != 2)
-                {
-                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
-                    return false;
-                }
-                
-                p_args.HasResult = true;
-                p_args.Result = UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
-                return true;
-            }
-            
-            // Merging int and uint here will always result in int
-            if (typeof(T) == typeof(int) || typeof(T) == typeof(uint))
-            {
-                if (evalParams.Length != 2)
-                {
-                    errorMessage = "Invalid parameters in Random function of type "+typeof(T);
-                    return false;
-                }
-                
-                p_args.HasResult = true;
-                p_args.Result = UnityEngine.Random.Range(Convert.ToInt32(evalParams[0]), Convert.ToInt32(evalParams[1]));
-                return true;
-            }
-
-            
-            errorMessage = "Random function for type " + typeof(T) + " is not implemented.";
+            errorMessage = "Generic Random function was made obsolete, please use explicit functions.";
             return false;
         }
 
