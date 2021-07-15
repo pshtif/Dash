@@ -383,7 +383,7 @@ namespace Dash
 
         static void OnAfterAssemblyReload()
         {
-            Debug.Log("OnAfterAssemblyReload");
+            // Debug.Log("OnAfterAssemblyReload");
             
             if (Graph != null && Graph.Controller != null)
             {
@@ -393,7 +393,7 @@ namespace Dash
 
         static void OnBeforeAssemblyReload()
         {
-            Debug.Log("OnBeforeAssemblyReload");
+            // Debug.Log("OnBeforeAssemblyReload");
         }
         
         static void OnPlayModeChanged(PlayModeStateChange p_change)
