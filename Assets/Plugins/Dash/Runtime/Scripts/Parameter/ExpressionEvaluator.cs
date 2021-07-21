@@ -91,8 +91,12 @@ namespace Dash
             }
             catch (Exception e)
             {
-                errorMessage = e.Message; 
-                hasErrorInEvaluation = true;
+                // Only set if we didn't already encounter error in evaluation otherwise this may be unspecified exception as a result of the already logged error so we don't want to overwrite it
+                if (!hasErrorInEvaluation)
+                {
+                    errorMessage = e.Message;
+                    hasErrorInEvaluation = true;
+                }
             }
 
             cachedExpression.EvaluateFunction -= evalFunction;
