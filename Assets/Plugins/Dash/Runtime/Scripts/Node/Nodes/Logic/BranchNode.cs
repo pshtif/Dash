@@ -15,7 +15,7 @@ namespace Dash
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (Model.expression.GetValue(ParameterResolver, p_flowData))
+            if (GetParameterValue(Model.expression, p_flowData))
             {
                 OnExecuteEnd();
                 OnExecuteOutput(0,p_flowData);
