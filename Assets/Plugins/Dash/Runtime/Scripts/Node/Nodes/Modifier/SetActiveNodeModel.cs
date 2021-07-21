@@ -9,16 +9,12 @@ using System.Reflection;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Dash
 {
     public class SetActiveNodeModel : RetargetNodeModelBase
     {
-        [PreviouslySerializedAs("active")]
-        [HideInInspector]
-        public bool oldActive = true;
-        
-        [InitializeFrom("oldActive")]
         public Parameter<bool> active = new Parameter<bool>(true);
     }
 }
