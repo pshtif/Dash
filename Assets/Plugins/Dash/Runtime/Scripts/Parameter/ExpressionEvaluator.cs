@@ -155,7 +155,11 @@ namespace Dash
             }
             else
             {
-                errorMessage = "Function " + p_name + " not found";
+                if (!hasErrorInEvaluation)
+                {
+                    errorMessage = "Function " + p_name + " not found";
+                }
+
                 hasErrorInEvaluation = true;
             }
         }
@@ -172,11 +176,16 @@ namespace Dash
                 {
                     errorMessage = ExpressionFunctions.errorMessage;
                 }
+                
                 hasErrorInEvaluation = hasErrorInEvaluation || !success;
             }
             else
             {
-                errorMessage = "Function " + p_name + " not found";
+                if (!hasErrorInEvaluation)
+                {
+                    errorMessage = "Function " + p_name + " not found";
+                }
+
                 hasErrorInEvaluation = true;
             }
         }
