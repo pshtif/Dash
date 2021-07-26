@@ -43,7 +43,8 @@ namespace Dash.Editor
             }
             
             zoomedRect = new Rect(0, 0, p_rect.width, p_rect.height);
-            GUI.color = new Color(0f, .1f, .2f, 1);
+
+            GUI.color = DashEditorCore.Previewer.IsPreviewing ? new Color(0f, 1f, .2f, 1) :  new Color(0f, .1f, .2f, 1);
             GUI.Box(p_rect, "");
 
             if (Graph != null)
@@ -151,7 +152,7 @@ namespace Dash.Editor
             {
                 GUI.Label(new Rect(p_rect.width - 200, p_rect.height - 64, 200, 40), "ERROR!", style);
             }
-            style.normal.textColor = new Color(0,1,0,.4f);
+            style.normal.textColor = new Color(0,1,0,.8f);
             GUI.Label(new Rect(p_rect.width-200, p_rect.height-40, 200,40), "PREVIEWING...", style);
         }
         
