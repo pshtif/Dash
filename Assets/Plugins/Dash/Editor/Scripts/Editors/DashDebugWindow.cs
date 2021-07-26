@@ -3,6 +3,7 @@
  */
 
 using System;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -80,15 +81,20 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
             
             GUILayout.BeginArea(new Rect(rect.x, rect.y+30, rect.width, rect.height-30));
+            if (_isDirty)
+            {
+                _scrollPosition = new Vector2(0, int.MaxValue);
+            }
+
             _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, false);
             GUILayout.BeginVertical();
             
             var style = new GUIStyle();
             style.alignment = TextAnchor.MiddleLeft;
-            int count = 0;
             if (DashEditorDebug.DebugList != null)
             {
-                for (int i = DashEditorDebug.DebugList.Count-1; i>=0; i--)
+                int start = _maxLog < DashEditorDebug.DebugList.Count ? DashEditorDebug.DebugList.Count - _maxLog : 0;
+                for (int i = start; i<DashEditorDebug.DebugList.Count; i++)
                 {
                     var debug = DashEditorDebug.DebugList[i];
 
@@ -113,51 +119,15 @@ namespace Dash.Editor
                     
                     GUILayout.BeginHorizontal();
                     GUILayout.BeginHorizontal(GUILayout.Height(16));
-
-                    if (_showTime)
+                    
+                    switch (debug.type)
                     {
-                        GUILayout.Space(4);
-                        style.normal.textColor = Color.gray;
-                        TimeSpan span = TimeSpan.FromSeconds(debug.time);
-                        string timeString = span.ToString(@"hh\:mm\:ss\:fff");
-                        GUILayout.Label("[" + timeString + "] ", style, GUILayout.Width(85),
-                            GUILayout.ExpandWidth(false));
-                    }
-
-                    if (_showController)
-                    {
-                        GUILayout.Space(4);
-                        style.normal.textColor = Color.white;
-                        GUILayout.Label("Controller: ", style, GUILayout.ExpandWidth(false));
-                        style.normal.textColor = Color.green;
-                        GUILayout.Label(debug.controllerName, style, GUILayout.ExpandWidth(false));
-                    }
-
-                    if (_showGraph)
-                    {
-                        GUILayout.Space(4);
-                        style.normal.textColor = Color.white;
-                        GUILayout.Label(" Graph: ", style, GUILayout.ExpandWidth(false));
-                        style.normal.textColor = Color.yellow;
-                        GUILayout.Label(debug.graphPath, style, GUILayout.ExpandWidth(false));
-                    }
-
-                    if (_showNode)
-                    {
-                        GUILayout.Space(4);
-                        style.normal.textColor = Color.white;
-                        GUILayout.Label(" Node: ", style, GUILayout.ExpandWidth(false));
-                        style.normal.textColor = Color.cyan;
-                        GUILayout.Label(debug.nodeId, style, GUILayout.ExpandWidth(false));
-                    }
-
-                    if (_showTarget)
-                    {
-                        GUILayout.Space(4);
-                        style.normal.textColor = Color.white;
-                        GUILayout.Label(" Target: ", style, GUILayout.ExpandWidth(false));
-                        style.normal.textColor = Color.magenta;
-                        GUILayout.Label(debug.targetName, style, GUILayout.ExpandWidth(false));
+                        case DebugType.EXECUTE:
+                            DrawExecuteItem(debug, style);
+                            break;
+                        case DebugType.ERROR:
+                            DrawErrorItem(debug, style);
+                            break;
                     }
 
                     GUILayout.EndHorizontal();
@@ -167,10 +137,6 @@ namespace Dash.Editor
                     }
                     GUILayout.Space(4);
                     GUILayout.EndHorizontal();
-
-                    count++;
-                    if (count > _maxLog)
-                        break;
                 }
             }
 
@@ -182,6 +148,94 @@ namespace Dash.Editor
             {
                 _isDirty = false;
                 Repaint();
+            }
+        }
+
+        private void DrawErrorItem(DebugItem p_item, GUIStyle p_style)
+        {
+            if (_showTime)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.red;
+                TimeSpan span = TimeSpan.FromSeconds(p_item.time);
+                string timeString = span.ToString(@"hh\:mm\:ss\:fff");
+                GUILayout.Label("[" + timeString + "] ", p_style, GUILayout.Width(60),
+                    GUILayout.ExpandWidth(false));
+            }
+            
+            GUILayout.Space(30);
+            p_style.normal.textColor = Color.red;
+            GUILayout.Label("ERROR", p_style, GUILayout.ExpandWidth(false));
+            
+            GUILayout.Space(4);
+            p_style.normal.textColor = Color.white;
+            GUILayout.Label(" Graph: ", p_style, GUILayout.ExpandWidth(false));
+            p_style.normal.textColor = Color.yellow;
+            GUILayout.Label(p_item.graphPath, p_style, GUILayout.ExpandWidth(false));
+
+            GUILayout.Space(4);
+            p_style.normal.textColor = Color.white;
+            GUILayout.Label(" Node: ", p_style, GUILayout.ExpandWidth(false));
+            p_style.normal.textColor = Color.cyan;
+            GUILayout.Label(p_item.nodeId, p_style, GUILayout.ExpandWidth(false));
+
+            p_style.normal.textColor = Color.white;
+            GUILayout.Label(" Message: ", p_style, GUILayout.ExpandWidth(false));
+            p_style.normal.textColor = Color.yellow;
+            GUILayout.Label(" "+p_item.message, p_style, GUILayout.ExpandWidth(false));
+        }
+
+        private void DrawExecuteItem(DebugItem p_item, GUIStyle p_style)
+        {
+            if (_showTime)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.gray;
+                TimeSpan span = TimeSpan.FromSeconds(p_item.time);
+                string timeString = span.ToString(@"hh\:mm\:ss\:fff");
+                GUILayout.Label("[" + timeString + "] ", p_style, GUILayout.Width(60),
+                    GUILayout.ExpandWidth(false));
+            }
+
+            GUILayout.Space(30);
+            p_style.normal.textColor = Color.gray;
+            GUILayout.Label("EXECUTE", p_style, GUILayout.ExpandWidth(false));
+            
+
+            if (_showController)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.white;
+                GUILayout.Label("Controller: ", p_style, GUILayout.ExpandWidth(false));
+                p_style.normal.textColor = Color.green;
+                GUILayout.Label(p_item.controllerName, p_style, GUILayout.ExpandWidth(false));
+            }
+
+            if (_showGraph)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.white;
+                GUILayout.Label(" Graph: ", p_style, GUILayout.ExpandWidth(false));
+                p_style.normal.textColor = Color.yellow;
+                GUILayout.Label(p_item.graphPath, p_style, GUILayout.ExpandWidth(false));
+            }
+
+            if (_showNode)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.white;
+                GUILayout.Label(" Node: ", p_style, GUILayout.ExpandWidth(false));
+                p_style.normal.textColor = Color.cyan;
+                GUILayout.Label(p_item.nodeId, p_style, GUILayout.ExpandWidth(false));
+            }
+
+            if (_showTarget)
+            {
+                GUILayout.Space(4);
+                p_style.normal.textColor = Color.white;
+                GUILayout.Label(" Target: ", p_style, GUILayout.ExpandWidth(false));
+                p_style.normal.textColor = Color.magenta;
+                GUILayout.Label(p_item.targetName, p_style, GUILayout.ExpandWidth(false));
             }
         }
 

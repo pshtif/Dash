@@ -173,14 +173,7 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            double time;
-            #if UNITY_EDITOR
-            time = EditorApplication.timeSinceStartup;
-            #else
-            time = Time.time;
-            #endif
-
-            DashEditorDebug.Debug(time, Graph.Controller, Graph.GraphPath, _model.id, p_flowData.GetAttribute<Transform>("target"));
+            DashEditorDebug.Debug(DebugType.EXECUTE, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id, p_flowData.GetAttribute<Transform>("target"), "");
             
             ExecutionCount++;
             
@@ -189,6 +182,17 @@ namespace Dash
 #endif
 
             OnExecuteStart(p_flowData == null ? new NodeFlowData() : p_flowData.Clone());
+        }
+
+        protected double GetDebugTime()
+        {
+            double time;
+            #if UNITY_EDITOR
+            time = EditorApplication.timeSinceStartup;
+            #else
+            time = Time.time;
+            #endif
+            return time;
         }
 
         protected abstract void OnExecuteStart(NodeFlowData p_flowData);
@@ -242,6 +246,7 @@ namespace Dash
             if (!string.IsNullOrEmpty(p_warning))
             {
                 Debug.LogWarning(p_warning+" on node " + _model.id);
+                DashEditorDebug.Debug(DebugType.ERROR, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id, null, p_warning);
             }
             hasErrorsInExecution = true;
         }
