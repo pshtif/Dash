@@ -48,17 +48,17 @@ namespace Dash.Editor
 
         static void AddType(object p_type)
         {
-            if (DashEditorCore.Config.explicitAOTTypes == null)
+            if (DashEditorCore.EditorConfig.explicitAOTTypes == null)
             {
-                DashEditorCore.Config.explicitAOTTypes = new List<Type>();
+                DashEditorCore.EditorConfig.explicitAOTTypes = new List<Type>();
             }
 
-            if (!DashEditorCore.Config.explicitAOTTypes.Contains(p_type))
+            if (!DashEditorCore.EditorConfig.explicitAOTTypes.Contains(p_type))
             {
-                DashEditorCore.Config.explicitAOTTypes.Add((Type)p_type);
+                DashEditorCore.EditorConfig.explicitAOTTypes.Add((Type)p_type);
             }
             
-            EditorUtility.SetDirty(DashEditorCore.Config);
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
     }
 }

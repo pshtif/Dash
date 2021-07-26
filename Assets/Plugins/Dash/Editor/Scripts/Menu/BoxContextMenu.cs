@@ -9,7 +9,7 @@ namespace Dash.Editor
 {
     public class BoxContextMenu
     {
-        static private DashGraph Graph => DashEditorCore.Config.editingGraph;
+        static private DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         static public void Show(GraphBox p_region)
         {

@@ -16,7 +16,7 @@ namespace Dash.Editor
     {
         private bool _initialized = false;
 
-        private float Zoom => DashEditorCore.Config.zoom;
+        private float Zoom => DashEditorCore.EditorConfig.zoom;
 
         private Rect zoomedRect;
 
@@ -130,11 +130,11 @@ namespace Dash.Editor
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), Graph.Controller.name, style);
             }
             
-            if (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) && Graph.Controller != null)
+            if (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) && Graph.Controller != null)
             {
                 if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 98, 100, 32), "GO TO PARENT"))
                 {
-                    DashEditorCore.EditController(DashEditorCore.Config.editingGraph.Controller, GraphUtils.GetParentPath(DashEditorCore.Config.editingGraphPath));
+                    DashEditorCore.EditController(DashEditorCore.EditorConfig.editingGraph.Controller, GraphUtils.GetParentPath(DashEditorCore.EditorConfig.editingGraphPath));
                 }
             }
         }
@@ -177,12 +177,12 @@ namespace Dash.Editor
                 if (Graph.IsBound)
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Graph.Controller.name + (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) ? "/"+DashEditorCore.Config.editingGraphPath : "")), style);
+                        new GUIContent(Graph.Controller.name + (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) ? "/"+DashEditorCore.EditorConfig.editingGraphPath : "")), style);
                 }
                 else
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Graph.name + (GraphUtils.IsSubGraph(DashEditorCore.Config.editingGraphPath) ? "/"+DashEditorCore.Config.editingGraphPath : "")), style);
+                        new GUIContent(Graph.name + (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) ? "/"+DashEditorCore.EditorConfig.editingGraphPath : "")), style);
                 }
             }
             else
@@ -237,7 +237,7 @@ namespace Dash.Editor
             if (!p_event.isScrollWheel)
                 return;
             
-            float zoom = DashEditorCore.Config.zoom;
+            float zoom = DashEditorCore.EditorConfig.zoom;
             
             float previousZoom = zoom;
             zoom += p_event.delta.y / 12;
@@ -249,7 +249,7 @@ namespace Dash.Editor
                 Graph.viewOffset.y += (zoom - previousZoom) * p_rect.height / 2 + (p_event.mousePosition.y - p_rect.y - p_rect.height/2) * (zoom - previousZoom);
             }
 
-            DashEditorCore.Config.zoom = zoom;
+            DashEditorCore.EditorConfig.zoom = zoom;
             DashEditorWindow.SetDirty(true);
         }
         

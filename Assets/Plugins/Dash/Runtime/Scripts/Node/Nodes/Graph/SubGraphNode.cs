@@ -139,7 +139,7 @@ namespace Dash
             GUI.color = new Color(1, 0.75f, 0.5f);
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                DashEditorCore.EditController(DashEditorCore.Config.editingGraph.Controller, GraphUtils.AddChildPath(DashEditorCore.Config.editingGraphPath, Model.id));
+                DashEditorCore.EditController(DashEditorCore.EditorConfig.editingGraph.Controller, GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
             }
 
             GUI.color = Color.white;

@@ -226,7 +226,7 @@ namespace Dash
             if (!IsExposedReferenceProperty(p_fieldInfo))
                 return false;
             
-            IExposedPropertyTable propertyTable = DashEditorCore.Config.editingGraph.Controller;
+            IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingGraph.Controller;
             var exposedReference = p_fieldInfo.GetValue(p_object);
             
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);

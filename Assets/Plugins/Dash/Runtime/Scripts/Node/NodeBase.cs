@@ -529,7 +529,7 @@ namespace Dash
 
             Rect offsetRect = p_zoomed
                 ? new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x, Size.y)
-                : new Rect((rect.x + Graph.viewOffset.x) / DashEditorCore.Config.zoom, (rect.y + Graph.viewOffset.y) / DashEditorCore.Config.zoom, Size.x, Size.y);
+                : new Rect((rect.x + Graph.viewOffset.x) / DashEditorCore.EditorConfig.zoom, (rect.y + Graph.viewOffset.y) / DashEditorCore.EditorConfig.zoom, Size.x, Size.y);
             
             GUIStyle commentStyle = new GUIStyle();
             commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
@@ -577,7 +577,7 @@ namespace Dash
             GUI.color = Color.gray;
             if (!String.IsNullOrEmpty(_model.id))
             {
-                if (DashEditorCore.Config.showNodeIds)
+                if (DashEditorCore.EditorConfig.showNodeIds)
                 {
                     GUI.Label(
                         new Rect(new Vector2(p_rect.x, p_rect.y - 20), new Vector2(rect.width - 5, 20)), _model.id);
@@ -750,14 +750,14 @@ namespace Dash
 
         public bool IsInsideRect(Rect p_rect)
         {
-            if (p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
-                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
-                    (rect.y + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
-                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.Config.zoom,
-                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.Config.zoom)))
+            if (p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
+                    (rect.y + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
+                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
+                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)))
             {
                 return true;
             }

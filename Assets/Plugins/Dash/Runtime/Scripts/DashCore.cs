@@ -16,6 +16,8 @@ namespace Dash
     {
         public const string VERSION = "0.5.2RC3";
         
+        public DashRuntimeConfig Config { get; private set; }
+        
         private static DashCore _instance = null;
 
         public static DashCore Instance
@@ -50,6 +52,16 @@ namespace Dash
             _globalVariables = p_globalVariables;
         }
 
+        public DashCore()
+        {
+            LoadConfig();
+        }
+
+        void LoadConfig()
+        {
+            Config = Resources.Load<DashRuntimeConfig>("Assets/Resources/DashRuntimeConfig.asset");
+        }
+
         public DashController GetControllerByName(string p_name)
         {
             #if UNITY_EDITOR
@@ -73,23 +85,6 @@ namespace Dash
             return _controllers.Find(dc => dc.gameObject.name == p_name);
             #endif
         }
-        
-//         public DashController GetControllerById(string p_id)
-//         {
-// #if UNITY_EDITOR
-//             if (Application.isPlaying)
-//             {
-//                 return _controllers.Find(dc => dc.Id == p_id);
-//             }
-//             else
-//             {
-//                 var found = GameObject.FindObjectsOfType<DashController>(); 
-//                 return found.Length== 0 ? null : found.ToList().Find(dc => dc.Id == p_id);
-//             }
-// #else
-//             return _controllers.Find(dc => dc.Id == p_id);
-// #endif
-//         }
 
         public void Bind(DashController p_controller)
         {

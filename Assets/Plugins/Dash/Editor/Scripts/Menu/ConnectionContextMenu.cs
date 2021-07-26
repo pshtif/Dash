@@ -9,7 +9,7 @@ namespace Dash.Editor
 {
     public class ConnectionContextMenu
     {
-        static private DashGraph Graph => DashEditorCore.Config.editingGraph;
+        static private DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         static public void Show(NodeConnection p_connection)
         {

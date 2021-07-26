@@ -98,7 +98,7 @@ namespace Dash.Editor
 
                     if (GUILayout.Button("Remove Graph"))
                     {
-                        if (DashEditorCore.Config.editingGraph == Controller.Graph)
+                        if (DashEditorCore.EditorConfig.editingGraph == Controller.Graph)
                         {
                             DashEditorCore.UnloadGraph();
                         }
@@ -135,7 +135,7 @@ namespace Dash.Editor
         
         void BindGraph(DashGraph p_graph)
         {
-            bool editing = DashEditorCore.Config.editingGraph == p_graph;
+            bool editing = DashEditorCore.EditorConfig.editingGraph == p_graph;
             Controller.BindGraph(p_graph);
 
             // If we are currently editing this controller refresh

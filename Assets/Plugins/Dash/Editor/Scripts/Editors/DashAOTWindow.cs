@@ -52,15 +52,15 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Scanned types", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("Last scan found "+(DashEditorCore.Config.scannedAOTTypes == null ? 0 : DashEditorCore.Config.scannedAOTTypes.Count)+" types", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Last scan found "+(DashEditorCore.EditorConfig.scannedAOTTypes == null ? 0 : DashEditorCore.EditorConfig.scannedAOTTypes.Count)+" types", infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-85));
             GUILayout.BeginVertical();
             
-            if (DashEditorCore.Config.scannedAOTTypes != null)
+            if (DashEditorCore.EditorConfig.scannedAOTTypes != null)
             {
-                foreach (Type type in DashEditorCore.Config.scannedAOTTypes)
+                foreach (Type type in DashEditorCore.EditorConfig.scannedAOTTypes)
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label((string.IsNullOrEmpty(type.Namespace) ? "" : type.Namespace + ".") +
@@ -80,15 +80,15 @@ namespace Dash.Editor
 
             GUILayout.Space(4);
             GUILayout.Label("Explicit Types", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("You have "+(DashEditorCore.Config.explicitAOTTypes == null ? 0 : DashEditorCore.Config.explicitAOTTypes.Count)+" explicitly defined types.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("You have "+(DashEditorCore.EditorConfig.explicitAOTTypes == null ? 0 : DashEditorCore.EditorConfig.explicitAOTTypes.Count)+" explicitly defined types.", infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
             
             _scrollPositionExplicit = GUILayout.BeginScrollView(_scrollPositionExplicit, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-85));
             GUILayout.BeginVertical();
             
-            if (DashEditorCore.Config.explicitAOTTypes != null)
+            if (DashEditorCore.EditorConfig.explicitAOTTypes != null)
             {
-                foreach (Type type in DashEditorCore.Config.explicitAOTTypes)
+                foreach (Type type in DashEditorCore.EditorConfig.explicitAOTTypes)
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label((string.IsNullOrEmpty(type.Namespace) ? "" : type.Namespace + ".") +
@@ -127,14 +127,14 @@ namespace Dash.Editor
 
             GUILayout.EndHorizontal();
 
-            var dll = PluginImporter.GetAtPath(DashEditorCore.Config.AOTAssemblyPath + "/" +
-                                                  DashEditorCore.Config.AOTAssemblyName+".dll");
+            var dll = PluginImporter.GetAtPath(DashEditorCore.EditorConfig.AOTAssemblyPath + "/" +
+                                                  DashEditorCore.EditorConfig.AOTAssemblyName+".dll");
 
             if (dll != null)
             {
-                GUILayout.Label("Assembly generated in " + DashEditorCore.Config.AOTAssemblyPath + "/" +
-                                DashEditorCore.Config.AOTAssemblyName + ".dll" + " last generated on " +
-                                DashEditorCore.Config.AOTAssemblyGeneratedTime);
+                GUILayout.Label("Assembly generated in " + DashEditorCore.EditorConfig.AOTAssemblyPath + "/" +
+                                DashEditorCore.EditorConfig.AOTAssemblyName + ".dll" + " last generated on " +
+                                DashEditorCore.EditorConfig.AOTAssemblyGeneratedTime);
             }
             else
             {

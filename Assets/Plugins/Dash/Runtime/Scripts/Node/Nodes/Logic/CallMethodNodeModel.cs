@@ -48,7 +48,7 @@ namespace Dash
                 
                 if (GUILayout.Button("Bind Method"))
                 {
-                    GetMethodMenu(DashEditorCore.Config.editingGraph.Controller.gameObject).ShowAsContext();
+                    GetMethodMenu(DashEditorCore.EditorConfig.editingGraph.Controller.gameObject).ShowAsContext();
                 }
             }
             else

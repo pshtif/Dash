@@ -37,7 +37,7 @@ namespace Dash.Editor
                 textStyle.wordWrap = true;
                 textStyle.alignment = TextAnchor.UpperCenter;
                 GUILayout.TextArea("This graph was created by previous version of Dash Animation System version: " +
-                                   DashCore.GetVersionString(DashEditorCore.Config.editingGraph.version) + "\n" +
+                                   DashCore.GetVersionString(DashEditorCore.EditorConfig.editingGraph.version) + "\n" +
                                    "The current version is " +
                                    DashCore.GetVersionString(DashCore.GetVersionNumber()) +
                                    " so it is needed to migrate and revalidate serialization or the Graph may not work correctly.\n" +

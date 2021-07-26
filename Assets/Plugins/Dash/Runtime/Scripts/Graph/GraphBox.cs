@@ -15,7 +15,7 @@ namespace Dash
     public class GraphBox
     {
         #if UNITY_EDITOR
-        public DashGraph Graph => DashEditorCore.Config.editingGraph;
+        public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         public string comment;
 

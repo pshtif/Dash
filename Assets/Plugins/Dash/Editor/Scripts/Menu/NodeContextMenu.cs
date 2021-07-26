@@ -10,7 +10,7 @@ namespace Dash.Editor
 {
     public class NodeContextMenu
     {
-        static private DashGraph Graph => DashEditorCore.Config.editingGraph;
+        static private DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         public static void Show(NodeBase p_node)
         {

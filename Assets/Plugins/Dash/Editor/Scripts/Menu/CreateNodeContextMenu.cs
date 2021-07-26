@@ -15,7 +15,7 @@ namespace Dash.Editor
 { 
     public class CreateNodeContextMenu
     {
-        static private DashGraph Graph => DashEditorCore.Config.editingGraph;
+        static private DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         static private Vector2 _lastMousePosition;
         static public void Show()
@@ -37,13 +37,13 @@ namespace Dash.Editor
         {
             GenericMenu menu = new GenericMenu();
             
-            if (DashEditorCore.Config.editingGraph != null)
+            if (DashEditorCore.EditorConfig.editingGraph != null)
             {
                 Type[] nodeTypes = ReflectionUtils.GetAllTypes(typeof(NodeBase)).ToArray();
                 Array.Sort(nodeTypes, CategorySort);
                 foreach (Type type in nodeTypes)
                 {
-                    if (IsExperimental(type) && !DashEditorCore.Config.showExperimental)
+                    if (IsExperimental(type) && !DashEditorCore.EditorConfig.showExperimental)
                         continue;
 
                     if (IsHidden(type))

@@ -63,7 +63,7 @@ namespace Dash.Editor
 
         private void OnGUI()
         {
-            DashEditorCore.Config.editorPosition = position;
+            DashEditorCore.EditorConfig.editorPosition = position;
             
             if (Event.current.type == EventType.MouseDown)
                 DashEditorCore.editingBoxComment = null;

@@ -23,7 +23,7 @@ namespace Dash
 
         public bool IsPreviewing => _isPreviewing;
 
-        public DashController Controller => DashEditorCore.Config.editingGraph.Controller;
+        public DashController Controller => DashEditorCore.EditorConfig.editingGraph.Controller;
 
         private GameObject _selectedBeforePreview;
 
@@ -43,7 +43,7 @@ namespace Dash
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
             
-            _previewNodeIndex = DashEditorCore.Config.editingGraph.Nodes.IndexOf(p_node);
+            _previewNodeIndex = DashEditorCore.EditorConfig.editingGraph.Nodes.IndexOf(p_node);
 
             _stage = PrefabStageUtility.GetCurrentPrefabStage();
 
@@ -70,9 +70,9 @@ namespace Dash
             DashEditorCore.FetchGlobalVariables();
 
             // Debug.Log("Cloning preview graph");
-            _previewGraph = DashEditorCore.Config.editingGraph.Clone();
+            _previewGraph = DashEditorCore.EditorConfig.editingGraph.Clone();
             _previewGraph.Initialize(Controller);
-            DashEditorCore.Config.editingGraph = _previewGraph;
+            DashEditorCore.EditorConfig.editingGraph = _previewGraph;
             // Debug.Log("Start preview");
             
             EditorApplication.update += OnUpdate;
@@ -113,7 +113,7 @@ namespace Dash
                 
                 DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
                 DashController controller = controllers.ToList().Find(c => c.previewing);
-                DashEditorCore.EditController(controller, DashEditorCore.Config.editingGraphPath);
+                DashEditorCore.EditController(controller, DashEditorCore.EditorConfig.editingGraphPath);
                 controller.previewing = false;
                 EditorUtility.SetDirty(Controller);
                 EditorSceneManager.SaveOpenScenes();
@@ -126,7 +126,7 @@ namespace Dash
              
                 DashController[] controllers = _stage.prefabContentsRoot.GetComponentsInChildren<DashController>();
                 DashController controller = controllers.ToList().Find(c => c.previewing);
-                DashEditorCore.EditController(controller, DashEditorCore.Config.editingGraphPath);
+                DashEditorCore.EditController(controller, DashEditorCore.EditorConfig.editingGraphPath);
                 controller.previewing = false;
                 if (_controllerSelected)
                 {

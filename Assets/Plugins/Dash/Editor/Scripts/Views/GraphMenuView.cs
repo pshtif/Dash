@@ -32,7 +32,7 @@ namespace Dash.Editor
                 
                 GUI.DrawTexture(new Rect(202, 6, 10, 10), IconManager.GetIcon("ArrowDown_Icon"));
 
-                if (DashEditorCore.Config.showNodeSearch)
+                if (DashEditorCore.EditorConfig.showNodeSearch)
                 {
                     _search = GUI.TextField(new Rect(230, 2, 100, 19), _search);
                     if (GUI.Button(new Rect(332, 3, 60, 18), "Search"))

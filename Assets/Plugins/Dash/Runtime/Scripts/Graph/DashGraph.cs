@@ -481,7 +481,7 @@ namespace Dash
         public void DrawGUI(Rect p_rect)
         {
             // Sometimes when looking for a serialization issue it is good to keep null references for better debug/migration
-            if (DashEditorCore.Config.deleteNull)
+            if (DashEditorCore.EditorConfig.deleteNull)
                 RemoveNullReferences();
 
             // Draw boxes
@@ -573,7 +573,7 @@ namespace Dash
 
             if (node != null)
             {
-                float zoom = DashEditorCore.Config.zoom;
+                float zoom = DashEditorCore.EditorConfig.zoom;
                 node.rect = new Rect(mousePosition.x * zoom - viewOffset.x,
                     mousePosition.y * zoom - viewOffset.y, 0, 0);
                 Nodes.Add(node);

@@ -21,13 +21,15 @@ namespace Dash
     [InitializeOnLoad]
     public class DashEditorCore
     {
-        static public DashEditorConfig Config { get; private set; }
+        static public DashRuntimeConfig RuntimeConfig { get; private set; }
+        
+        static public DashEditorConfig EditorConfig { get; private set; }
 
         static public DashEditorPreviewer Previewer { get; private set; }
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
         
-        static public DashGraph Graph => Config.editingGraph;
+        static public DashGraph Graph => EditorConfig.editingGraph;
 
         static public int TITLE_TAB_HEIGHT = 26;
 
@@ -54,7 +56,7 @@ namespace Dash
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 
-        static public bool DetailsVisible => Config.zoom < 2.5;
+        static public bool DetailsVisible => EditorConfig.zoom < 2.5;
 
         static public string propertyReference;
 
@@ -63,7 +65,8 @@ namespace Dash
             SetExecutionOrder(typeof(DashGlobalVariables), -501);
             SetExecutionOrder(typeof(DashController), -500);
             
-            CreateConfig();
+            CreateEditorConfig();
+            CreateRuntimeConfig();
             CreatePreviewer();
             
             //InvalidateControllersIds();
@@ -126,7 +129,7 @@ namespace Dash
             
             EditController(p_controller, p_graphPath);
 
-            var graph = DashEditorCore.Config.editingGraph;
+            var graph = DashEditorCore.EditorConfig.editingGraph;
             if (graph == null)
                 return false;
             
@@ -147,7 +150,7 @@ namespace Dash
                 return;
             
             selectedNodes.Add(p_node.Index);
-            Graph.viewOffset = -p_node.rect.center + Config.zoom * Config.editorPosition.size / 2;
+            Graph.viewOffset = -p_node.rect.center + EditorConfig.zoom * EditorConfig.editorPosition.size / 2;
         }
 
         public static void DuplicateSelectedNodes()
@@ -205,7 +208,7 @@ namespace Dash
             
             List<NodeBase> newNodes = Graph.DuplicateNodes(copiedNodes);
             
-            float zoom = Config.zoom;
+            float zoom = EditorConfig.zoom;
             newNodes[0].rect = new Rect(p_mousePosition.x * zoom - Graph.viewOffset.x,
                 p_mousePosition.y * zoom - Graph.viewOffset.y, 0, 0);
 
@@ -304,8 +307,8 @@ namespace Dash
             
             if (p_controller != null)
             {
-                Config.editingGraphPath = p_graphPath;
-                Config.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
+                EditorConfig.editingGraphPath = p_graphPath;
+                EditorConfig.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
 
                 if (Graph != null)
                 {
@@ -314,7 +317,7 @@ namespace Dash
             }
             else
             {
-                Config.editingGraph = null;
+                EditorConfig.editingGraph = null;
             }
         }
         
@@ -340,8 +343,8 @@ namespace Dash
         {
             selectedNodes.Clear();
             
-            Config.editingGraphPath = "";
-            Config.editingGraph = p_graph;
+            EditorConfig.editingGraphPath = "";
+            EditorConfig.editingGraph = p_graph;
             if (p_graph != null)
                 ((IEditorGraphAccess)p_graph).SetController(null);
         }
@@ -350,7 +353,7 @@ namespace Dash
         {
             selectedNodes.Clear();
             
-            Config.editingGraph = null;
+            EditorConfig.editingGraph = null;
         }
         
         static void OnHierarchyChanged()
@@ -387,7 +390,7 @@ namespace Dash
             
             if (Graph != null && Graph.Controller != null)
             {
-                EditController(Graph.Controller, Config.editingGraphPath);
+                EditController(Graph.Controller, EditorConfig.editingGraphPath);
             }
         }
 
@@ -402,14 +405,14 @@ namespace Dash
             
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {
-                Config.enteringPlayModeController = Graph != null ? Graph.Controller : null;
+                EditorConfig.enteringPlayModeController = Graph != null ? Graph.Controller : null;
             }
             
             if (p_change == PlayModeStateChange.EnteredPlayMode)
             {
-                if (Config.enteringPlayModeController != null)
+                if (EditorConfig.enteringPlayModeController != null)
                 {
-                    EditController(Config.enteringPlayModeController);
+                    EditController(EditorConfig.enteringPlayModeController);
                 }
             }
 
@@ -417,13 +420,13 @@ namespace Dash
             {
                 DashTweenCore.Reset();
                 
-                if (Config.enteringPlayModeController != null)
+                if (EditorConfig.enteringPlayModeController != null)
                 {
-                    EditController(Config.enteringPlayModeController);    
+                    EditController(EditorConfig.enteringPlayModeController);    
                 }
                 else
                 {
-                    EditGraph(Config.enteringPlayModeGraph);
+                    EditGraph(EditorConfig.enteringPlayModeGraph);
                 }
             }
         }
@@ -433,15 +436,36 @@ namespace Dash
             Previewer = new DashEditorPreviewer();
         }
 
-        static void CreateConfig()
+        static void CreateRuntimeConfig()
         {
-            Config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
+            RuntimeConfig = (DashRuntimeConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/DashRuntimeConfig.asset",
+                typeof(DashRuntimeConfig));
+            
+            if (RuntimeConfig == null)
+            {
+                RuntimeConfig = ScriptableObject.CreateInstance<DashRuntimeConfig>();
+                if (RuntimeConfig != null)
+                {
+                    if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                    {
+                        AssetDatabase.CreateFolder("Assets", "Resources");
+                    }
+                    AssetDatabase.CreateAsset(RuntimeConfig, "Assets/Resources/DashRuntimeConfig.asset");
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+                }
+            }
+        }
+        
+        static void CreateEditorConfig()
+        {
+            EditorConfig = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
                 typeof(DashEditorConfig));
             
-            if (Config == null)
+            if (EditorConfig == null)
             {
-                Config = ScriptableObject.CreateInstance<DashEditorConfig>();
-                if (Config != null)
+                EditorConfig = ScriptableObject.CreateInstance<DashEditorConfig>();
+                if (EditorConfig != null)
                 {
                     if (!AssetDatabase.IsValidFolder("Assets/Resources"))
                     {
@@ -452,7 +476,7 @@ namespace Dash
                     {
                         AssetDatabase.CreateFolder("Assets/Resources", "Editor");
                     }
-                    AssetDatabase.CreateAsset(Config, "Assets/Resources/Editor/DashEditorConfig.asset");
+                    AssetDatabase.CreateAsset(EditorConfig, "Assets/Resources/Editor/DashEditorConfig.asset");
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
                 }

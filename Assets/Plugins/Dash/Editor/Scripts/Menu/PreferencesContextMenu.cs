@@ -13,10 +13,10 @@ namespace Dash.Editor
         {
             GenericMenu menu = new GenericMenu();
             
-            menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.Config.showExperimental, () => DashEditorCore.Config.showExperimental = !DashEditorCore.Config.showExperimental);
-            menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.Config.showNodeIds, () => DashEditorCore.Config.showNodeIds = !DashEditorCore.Config.showNodeIds);
-            menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.Config.showNodeSearch, () => DashEditorCore.Config.showNodeSearch = !DashEditorCore.Config.showNodeSearch);
-            menu.AddItem(new GUIContent("Settings/Enable Sound in Editor"), DashEditorCore.Config.enableSoundInPreview, () => DashEditorCore.Config.enableSoundInPreview = !DashEditorCore.Config.enableSoundInPreview);
+            menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.EditorConfig.showExperimental, () => DashEditorCore.EditorConfig.showExperimental = !DashEditorCore.EditorConfig.showExperimental);
+            menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.EditorConfig.showNodeIds, () => DashEditorCore.EditorConfig.showNodeIds = !DashEditorCore.EditorConfig.showNodeIds);
+            menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.EditorConfig.showNodeSearch, () => DashEditorCore.EditorConfig.showNodeSearch = !DashEditorCore.EditorConfig.showNodeSearch);
+            menu.AddItem(new GUIContent("Settings/Enable Sound in Editor"), DashEditorCore.EditorConfig.enableSoundInPreview, () => DashEditorCore.EditorConfig.enableSoundInPreview = !DashEditorCore.EditorConfig.enableSoundInPreview);
             
             menu.AddSeparator("");
             menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
