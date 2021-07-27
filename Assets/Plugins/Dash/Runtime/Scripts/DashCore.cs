@@ -55,11 +55,12 @@ namespace Dash
         public DashCore()
         {
             LoadConfig();
+            Debug.Log("Config Loaded: "+Config);
         }
 
         void LoadConfig()
         {
-            Config = Resources.Load<DashRuntimeConfig>("Assets/Resources/DashRuntimeConfig.asset");
+            Config = Resources.Load<DashRuntimeConfig>("DashRuntimeConfig");
         }
 
         public DashController GetControllerByName(string p_name)
