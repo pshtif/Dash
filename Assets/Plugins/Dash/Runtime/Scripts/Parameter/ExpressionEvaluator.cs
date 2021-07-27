@@ -131,11 +131,28 @@ namespace Dash
             }
             hasErrorInEvaluation = hasErrorInEvaluation || p_resolver.hasErrorInResolving;
         }
+        
+        private static Dictionary<string, MethodInfo> _methodCache = new Dictionary<string, MethodInfo>();
 
         static void EvaluateFunction<T>(string p_name, FunctionArgs p_args)
         {
             //Debug.Log("EvaluateFunction("+p_name+","+p_args+")");
-            MethodInfo methodInfo = typeof(ExpressionFunctions).GetMethod(p_name, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+            MethodInfo methodInfo = null;
+
+            if (_methodCache.ContainsKey(p_name))
+            {
+                methodInfo = _methodCache[p_name];
+            } else {
+                methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
+                    BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+                
+                if (methodInfo == null)
+                {
+                    methodInfo = GetCustomFunction(p_name);
+                }
+                
+                if (methodInfo != null) _methodCache.Add(p_name, methodInfo);
+            }
 
             if (methodInfo != null)
             {
@@ -164,14 +181,12 @@ namespace Dash
             }
         }
 
-        private static Dictionary<string, MethodInfo> _functionCache = new Dictionary<string, MethodInfo>();
-        
         static void EvaluateFunction(string p_name, FunctionArgs p_args)
         {
             MethodInfo methodInfo = null;
-            if (_functionCache.ContainsKey(p_name))
+            if (_methodCache.ContainsKey(p_name))
             {
-                methodInfo = _functionCache[p_name];
+                methodInfo = _methodCache[p_name];
             }
             else
             {
@@ -183,7 +198,7 @@ namespace Dash
                     methodInfo = GetCustomFunction(p_name);
                 }
                 
-                if (methodInfo != null) _functionCache.Add(p_name, methodInfo);
+                if (methodInfo != null) _methodCache.Add(p_name, methodInfo);
             }
 
             if (methodInfo != null)
@@ -210,8 +225,17 @@ namespace Dash
 
         static MethodInfo GetCustomFunction(string p_name)
         {
+            #if UNITY_EDITOR
+            List<Type> classes = DashEditorCore.RuntimeConfig.expressionClasses; 
+            #else
+            List<Type> classes = DashCore.Instance.Config.expressionClasses;
+            #endif
+            
+            if (classes == null)
+                return null;
+
             MethodInfo methodInfo = null;
-            foreach (Type type in DashCore.Instance.Config.expressionClasses)
+            foreach (Type type in classes)
             {
                 methodInfo = type.GetMethod(p_name,
                     BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
