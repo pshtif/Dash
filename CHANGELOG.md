@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.5.2RC3 - 27.07.2021
+
+#### Added
+- Added warning log when initializing graph of older version at runtime
+- Added ERROR messages in Dash debugger window
+- Added runtime caching of expression functions reflection lookup
+- Added ability to define custom Expression function classes for evaluation
+
+#### Changed
+- Changed removed generic expression functions to avoid AOT issues
+- Changed cleanup of various serialized properties to minify serialization
+- Changed error handling in node execution and parameter evaluation to first encountered instead of last encountered
+- Changed more distinctive UI colors/background when in preview mode
+- Changed Dash debug window now orders items from top/old to bottom/new like standard console
+- Changed split config into Runtime and Editor as API changes that need runtime configuration are being introduced
+
+#### Fixed
+- Fixed build time bug in compilation flags
+
 ### Release 0.5.0RC3 - 24.06.2021
 
 #### Added
