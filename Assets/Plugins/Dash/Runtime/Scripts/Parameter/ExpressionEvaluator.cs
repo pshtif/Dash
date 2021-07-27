@@ -163,10 +163,28 @@ namespace Dash
                 hasErrorInEvaluation = true;
             }
         }
+
+        private static Dictionary<string, MethodInfo> _functionCache = new Dictionary<string, MethodInfo>();
         
         static void EvaluateFunction(string p_name, FunctionArgs p_args)
         {
-            MethodInfo methodInfo = typeof(ExpressionFunctions).GetMethod(p_name, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+            MethodInfo methodInfo = null;
+            if (_functionCache.ContainsKey(p_name))
+            {
+                methodInfo = _functionCache[p_name];
+            }
+            else
+            {
+                methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
+                    BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+
+                if (methodInfo == null)
+                {
+                    methodInfo = GetCustomFunction(p_name);
+                }
+                
+                if (methodInfo != null) _functionCache.Add(p_name, methodInfo);
+            }
 
             if (methodInfo != null)
             {
@@ -188,6 +206,21 @@ namespace Dash
 
                 hasErrorInEvaluation = true;
             }
+        }
+
+        static MethodInfo GetCustomFunction(string p_name)
+        {
+            MethodInfo methodInfo = null;
+            foreach (Type type in DashCore.Instance.Config.expressionClasses)
+            {
+                methodInfo = type.GetMethod(p_name,
+                    BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+                
+                if (methodInfo != null)
+                    break;
+            }
+
+            return methodInfo;
         }
     }
 }

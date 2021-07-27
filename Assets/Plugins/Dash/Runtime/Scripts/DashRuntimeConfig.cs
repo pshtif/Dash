@@ -14,7 +14,7 @@ namespace Dash
     [Serializable]
     public class DashRuntimeConfig : ScriptableObject, ISerializationCallbackReceiver
     {
-        private List<string> _expressionFunctionClasses;
+        public List<Type> expressionClasses;
 
 #region SERIALIZATION
         
