@@ -23,7 +23,8 @@ namespace Dash.Editor
             return Instance;
         }
 
-        private Vector2 _scrollPosition;
+        private Vector2 _scrollPositionMacros;
+        private Vector2 _scrollPositionClasses;
         
         private void OnEnable()
         {
@@ -43,7 +44,48 @@ namespace Dash.Editor
             var scrollViewStyle = new GUIStyle();
             scrollViewStyle.normal.background = DashEditorCore.GetColorTexture(new Color(.1f, .1f, .1f));
             
-            _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height-45));
+            // _scrollPositionMacros = GUILayout.BeginScrollView(_scrollPositionMacros, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-45));
+            //
+            // GUILayout.BeginVertical();
+            //
+            // if (DashEditorCore.RuntimeConfig.expressionMacros != null)
+            // {
+            //     foreach (var pair in DashEditorCore.RuntimeConfig.expressionMacros)
+            //     {
+            //         GUILayout.BeginHorizontal();
+            //         string newKey = GUILayout.TextField(pair.Key);
+            //         string newValue = GUILayout.TextField(pair.Value);
+            //         if (GUILayout.Button("Remove", GUILayout.Width(120)))
+            //         {
+            //             DashEditorCore.RuntimeConfig.expressionMacros.Remove(pair.Key);
+            //             break;
+            //         }
+            //         
+            //         if (newKey != pair.Key)
+            //         {
+            //             // If key changed we need to remove/readd the value to new key
+            //             DashEditorCore.RuntimeConfig.expressionMacros.Remove(pair.Key);
+            //             DashEditorCore.RuntimeConfig.expressionMacros.Add(newKey, newValue);
+            //             break;
+            //         } 
+            //         if (newValue != pair.Value)
+            //         {
+            //             DashEditorCore.RuntimeConfig.expressionMacros[newKey] = newValue;
+            //             break;
+            //         }
+            //         GUILayout.EndHorizontal();
+            //     }
+            // }
+            //
+            // GUILayout.EndVertical();
+            // GUILayout.EndScrollView();
+            //
+            // if (GUILayout.Button("Create New Macro", GUILayout.Height(40)))
+            // {
+            //     AddMacro();
+            // }
+            
+            _scrollPositionClasses = GUILayout.BeginScrollView(_scrollPositionClasses, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height-45));
             
             GUILayout.BeginVertical();
             
@@ -86,6 +128,16 @@ namespace Dash.Editor
             
             EditorUtility.SetDirty(DashEditorCore.RuntimeConfig);
         }
+
+        // static void AddMacro()
+        // {
+        //     if (DashEditorCore.RuntimeConfig.expressionMacros == null)
+        //     {
+        //         DashEditorCore.RuntimeConfig.expressionMacros = new Dictionary<string, string>();
+        //     }
+        //     
+        //     DashEditorCore.RuntimeConfig.expressionMacros.Add("newMacro", "");
+        // }
 
         private void OnInspectorUpdate()
         {

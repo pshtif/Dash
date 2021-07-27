@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using OdinSerializer;
 using OdinSerializer.Utilities;
-using UnityEditor;
 using UnityEngine;
 
 namespace Dash
@@ -15,6 +14,8 @@ namespace Dash
     public class DashRuntimeConfig : ScriptableObject, ISerializationCallbackReceiver
     {
         public List<Type> expressionClasses;
+
+        // public Dictionary<string, string> expressionMacros;
 
 #region SERIALIZATION
         
