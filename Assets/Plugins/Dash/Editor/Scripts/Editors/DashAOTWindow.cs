@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -33,10 +34,6 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
 
-            GUILayout.BeginHorizontal();
-
-            GUILayout.EndHorizontal();
-            
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleCenter;
             titleStyle.normal.textColor = new Color(1, .5f, 0);
@@ -122,7 +119,7 @@ namespace Dash.Editor
             
             if (GUILayout.Button("Add Explicit Type", GUILayout.Height(40)))
             {
-                AddTypeContextMenu.ShowAsPopup();
+                AddTypeContextMenu.ShowAsPopup(AddType);
             }
 
             GUILayout.EndHorizontal();
@@ -156,6 +153,21 @@ namespace Dash.Editor
             {
                 DashAOTScanner.GenerateDLL(_generateLinkXml, _includeOdin);
             }
+        }
+        
+        static void AddType(object p_type)
+        {
+            if (DashEditorCore.EditorConfig.explicitAOTTypes == null)
+            {
+                DashEditorCore.EditorConfig.explicitAOTTypes = new List<Type>();
+            }
+
+            if (!DashEditorCore.EditorConfig.explicitAOTTypes.Contains((Type)p_type))
+            {
+                DashEditorCore.EditorConfig.explicitAOTTypes.Add((Type)p_type);
+            }
+            
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
     }
 }

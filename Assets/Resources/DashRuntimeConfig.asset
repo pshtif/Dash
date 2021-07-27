@@ -21,6 +21,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: _expressionFunctionClasses
-      Entry: 6
+    - Name: expressionClasses
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 

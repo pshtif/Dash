@@ -16,21 +16,22 @@ namespace Dash.Editor
     public class AddTypeContextMenu
     {
         static private Vector2 _lastMousePosition;
-        static public void Show()
+        
+        static public void Show(GenericMenu.MenuFunction2 p_callback)
         {
             _lastMousePosition = Event.current.mousePosition;
             
-            Get().ShowAsContext();
+            Get(p_callback).ShowAsContext();
         }
 
-        static public void ShowAsPopup()
+        static public void ShowAsPopup(GenericMenu.MenuFunction2 p_callback)
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            GenericMenuPopup.Show(Get(), "Select Type",  _lastMousePosition, 300, 300, true, false);
+            GenericMenuPopup.Show(Get(p_callback), "Select Type",  _lastMousePosition, 300, 300, true, false);
         }
         
-        static public GenericMenu Get()
+        static public GenericMenu Get(GenericMenu.MenuFunction2 p_callback)
         {
             GenericMenu menu = new GenericMenu();
 
@@ -40,25 +41,10 @@ namespace Dash.Editor
                 string path =
                     (string.IsNullOrEmpty(type.Namespace) ? "Without Namespace" : type.Namespace.Replace(".", "/")) + "/" +
                     type.Name;
-                menu.AddItem(new GUIContent(path, ""), false, AddType, type);
+                menu.AddItem(new GUIContent(path, ""), false, p_callback, type);
             }
 
             return menu;
-        }
-
-        static void AddType(object p_type)
-        {
-            if (DashEditorCore.EditorConfig.explicitAOTTypes == null)
-            {
-                DashEditorCore.EditorConfig.explicitAOTTypes = new List<Type>();
-            }
-
-            if (!DashEditorCore.EditorConfig.explicitAOTTypes.Contains(p_type))
-            {
-                DashEditorCore.EditorConfig.explicitAOTTypes.Add((Type)p_type);
-            }
-            
-            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
     }
 }
