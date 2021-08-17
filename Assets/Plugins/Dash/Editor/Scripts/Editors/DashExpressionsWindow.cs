@@ -93,6 +93,12 @@ namespace Dash.Editor
             {
                 foreach (Type type in DashEditorCore.RuntimeConfig.expressionClasses)
                 {
+                    if (type == null)
+                    {
+                        DashEditorCore.RuntimeConfig.expressionClasses.Remove(type);
+                        break;
+                    }
+                    
                     GUILayout.BeginHorizontal();
                     GUILayout.Label((string.IsNullOrEmpty(type.Namespace) ? "" : type.Namespace + ".") +
                                     type.GetReadableTypeName());
