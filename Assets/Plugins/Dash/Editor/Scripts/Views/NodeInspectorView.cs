@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class InspectorView : ViewBase
+    public class NodeInspectorView : ViewBase
     {
         private Vector2 scrollPosition;
 
@@ -21,7 +21,7 @@ namespace Dash.Editor
             ? Graph.Nodes[DashEditorCore.selectedNodes[0]]
             : null;
 
-        public InspectorView()
+        public NodeInspectorView()
         {
 
         }
