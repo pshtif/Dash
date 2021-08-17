@@ -466,6 +466,76 @@ namespace Dash
             errorMessage = "Unknown error in function RandomV2";
             return false;
         }
+
+        private static bool RandomInsideCircle(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 1 || p_args.Parameters.Length != 2)
+            {
+                errorMessage = "Invalid parameters in RandomInsideCircle function";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            switch (evalParams.Length)
+            {
+                case 0:
+                    p_args.HasResult = true;
+                    p_args.Result = UnityEngine.Random.insideUnitCircle;
+                    return true;
+
+                case 2:
+                    // TODO type checking?
+
+                    p_args.HasResult = true;
+                    p_args.Result = UnityEngine.Random.insideUnitCircle * Convert.ToSingle(evalParams[0]);
+                    return true;
+                case 4:
+                    p_args.HasResult = true;
+                    var vector = UnityEngine.Random.insideUnitCircle;
+                    vector.Scale(new Vector2(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+                    p_args.Result = vector;
+                    return true;
+            }
+
+            errorMessage = "Unknown error in function RandomInsideCircle";
+            return false;
+        }
+        
+        private static bool RandomOnCircle(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 1 || p_args.Parameters.Length != 2)
+            {
+                errorMessage = "Invalid parameters in RandomOnCircle function";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            switch (evalParams.Length)
+            {
+                case 0:
+                    p_args.HasResult = true;
+                    p_args.Result = UnityEngine.Random.insideUnitCircle.normalized;
+                    return true;
+
+                case 2:
+                    // TODO type checking?
+
+                    p_args.HasResult = true;
+                    p_args.Result = UnityEngine.Random.insideUnitCircle.normalized * Convert.ToSingle(evalParams[0]);
+                    return true;
+                case 4:
+                    p_args.HasResult = true;
+                    var vector = UnityEngine.Random.insideUnitCircle.normalized;
+                    vector.Scale(new Vector2(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+                    p_args.Result = vector;
+                    return true;
+            }
+
+            errorMessage = "Unknown error in function RandomInsideCircle";
+            return false;
+        }
         
         private static bool RandomV3(FunctionArgs p_args)
         {
