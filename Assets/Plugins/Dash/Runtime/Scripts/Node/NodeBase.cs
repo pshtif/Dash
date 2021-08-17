@@ -112,6 +112,19 @@ namespace Dash
         }
         
         [NonSerialized] 
+        private bool _hasDebugOverride;
+        public bool HasDebugOverride
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _hasDebugOverride;
+            }
+        }
+        
+        [NonSerialized] 
         private int _inputCount;
         public virtual int InputCount
         {
@@ -173,11 +186,15 @@ namespace Dash
 
         public void Execute(NodeFlowData p_flowData)
         {
-            DashEditorDebug.Debug(DebugType.EXECUTE, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id, p_flowData.GetAttribute<Transform>("target"), "");
-            
             ExecutionCount++;
             
 #if UNITY_EDITOR
+            if (!_hasDebugOverride)
+            {
+                DashEditorDebug.Debug(DebugType.EXECUTE, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id,
+                    p_flowData.GetAttribute<Transform>("target"), "");
+            }
+            
             executeTime = 1;
 #endif
 
@@ -253,6 +270,11 @@ namespace Dash
         
         protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
         {
+            if (p_parameter == null)
+            {
+                SetError("Parameter is null can't gather value. Probably a serialization issue that should be reported. Returning default ");
+                return default(T);
+            }
             T value = p_parameter.GetValue(ParameterResolver, p_flowData);
             if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
             {
@@ -264,6 +286,8 @@ namespace Dash
         
         protected virtual void InitializeAttributes()
         {
+            _hasDebugOverride = Attribute.GetCustomAttribute(GetType(), typeof(DebugOverrideAttribute)) != null;
+            
             _isExperimental = Attribute.GetCustomAttribute(GetType(), typeof(ExperimentalAttribute)) != null;
             
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));

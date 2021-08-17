@@ -13,6 +13,7 @@ namespace Dash
     [InputCount(1)]
     [Size(160,85)]
     [InspectorHeight(380)]
+    [DebugOverride]
     public abstract class RetargetNodeBase<T> : NodeBase<T> where T:RetargetNodeModelBase, new()
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
@@ -82,10 +83,15 @@ namespace Dash
                     }
                 }
             }
+            
+            #if UNITY_EDITOR
+            DashEditorDebug.Debug(DebugType.EXECUTE, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id,
+                target, "");
+            #endif
 
             if (CheckException(target, "No valid target found"))
                 return;
-            
+
             ExecuteOnTarget(target, p_flowData);
         }
 

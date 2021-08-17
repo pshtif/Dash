@@ -125,6 +125,14 @@ namespace Dash.Attributes
             labels = p_labels;
         }
     }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DebugOverrideAttribute : Attribute
+    {
+        public DebugOverrideAttribute()
+        {
+        }
+    }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class CategoryAttribute : Attribute
