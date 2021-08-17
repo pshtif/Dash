@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: 1|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Examples.Scripts.CustomFunctions, Assembly-CSharp
+      Data: Dash.AddAttributeNode, DashRuntime
     - Name: 
       Entry: 8
       Data: 

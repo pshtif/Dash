@@ -14,6 +14,9 @@ namespace Dash
     public class DashRuntimeConfig : ScriptableObject, ISerializationCallbackReceiver
     {
         public List<Type> expressionClasses;
+        
+        [OdinSerialize]
+        public Dictionary<DashPrefabInfo, GameObject> prefabs;
 
         // public Dictionary<string, string> expressionMacros;
 
