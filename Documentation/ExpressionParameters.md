@@ -2,7 +2,17 @@
 
 As mentioned in the general documentation Dash Animation System supports more complex parameter evaluation than basic parameters.
 
-There are basically 3 type of sources for parameters and these are Attributes (NodeFlowData) or Variables (Graph or Global) or a specific Reserved parameters mentioned.
+There are basically 3 type of sources for parameters and these are **Attributes** (NodeFlowData) or **Variables** (Graph or Global) or a specific **Reserved** parameters mentioned.
+
+### Reserved parameters
+
+Dash also internally implements reserved parameters. These are commonly used parameters that are evaluated internally by Dash. At the moment there is really a short list of such parameters but this list will get bigger once the most common use cases are covered.
+
+> ***mousePosition***  
+Returns a Vector2 value of current Input.mousePosition
+
+> ***controller***  
+Returns a DashController instance of a graph that evaluates this parameter
 
 ### Nested property evaluation
 
@@ -28,14 +38,3 @@ Additionally the nested evaluation works here as well:
 ```
 
 Where you are referencing directly the X part from the Vector2 position.
-
-
-### Reserved parameters
-
-Dash also internally implements reserved parameters. These are commonly used parameters that are evaluated internally by Dash. At the moment there is really a short list of such parameters but this list will get bigger once the most common use cases are covered.
-
-> ***mousePosition***  
-Returns a Vector2 value of current Input.mousePosition
-
-> ***controller***  
-Returns a DashController instance of a graph that evaluates this parameter
