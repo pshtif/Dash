@@ -89,19 +89,30 @@ Function returns a ceiled Float as Int.
 ## Float
 
 #### RandomF
-Function creates a random Float value.
+> ***RandomF(Float min, Float max)***  
+Function creates a random float from min to max
 
 #### Magnitude
-Function returns a magnitude of a vector value.
+> ***Magnitude(Vector2 vector)***  
+Function returns a magnitude of a Vector2 value.
+> ***Magnitude(Vector3 vector)***  
+Function returns a magnitude of a Vector3 value.
 
 ## Transform
 
 #### GetChild
+> ***GetChild(Transform transform, String childName)***  
 Function finds a child of a specified transform by its name.
 
-#### GetParent
+#### GetSiblingIndex
+> ***GetSiblingIndex(Transform transform)***  
+Function returns a singling index of specified transform
+
+#### GetParent OBSOLETE
+> ***GetParent(Transform transform)***  
 Function returns a parent of specified transform.
 
 #### GetChildAt
+> ***GetChildAt(Transform transform, Int index)***  
 Function returns a child of specified transform at index.
 

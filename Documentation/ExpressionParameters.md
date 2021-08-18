@@ -2,6 +2,8 @@
 
 As mentioned in the general documentation Dash Animation System supports more complex parameter evaluation than basic parameters.
 
+There are basically 3 type of sources for parameters and these are Attributes (NodeFlowData) or Variables (Graph or Global) or a specific Reserved parameters mentioned.
+
 ### Nested property evaluation
 
 For example it supports nested property evaluation for a parameters as follows.
