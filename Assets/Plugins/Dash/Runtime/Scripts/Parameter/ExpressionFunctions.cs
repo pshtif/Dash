@@ -512,24 +512,26 @@ namespace Dash
             
             object[] evalParams = p_args.EvaluateParameters();
 
+            var position = UnityEngine.Random.insideUnitCircle;
+            position = position.magnitude == 0 ? UnityEngine.Vector2.one : position.normalized;
+
             switch (evalParams.Length)
             {
                 case 0:
                     p_args.HasResult = true;
-                    p_args.Result = UnityEngine.Random.insideUnitCircle.normalized;
+                    p_args.Result = position;
                     return true;
 
                 case 2:
                     // TODO type checking?
 
                     p_args.HasResult = true;
-                    p_args.Result = UnityEngine.Random.insideUnitCircle.normalized * Convert.ToSingle(evalParams[0]);
+                    p_args.Result = position * Convert.ToSingle(evalParams[0]);
                     return true;
                 case 4:
                     p_args.HasResult = true;
-                    var vector = UnityEngine.Random.insideUnitCircle.normalized;
-                    vector.Scale(new Vector2(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
-                    p_args.Result = vector;
+                    position.Scale(new Vector2(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1])));
+                    p_args.Result = position;
                     return true;
             }
 
