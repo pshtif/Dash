@@ -43,7 +43,7 @@ namespace Dash
             }
 
             object result;
-            if (ReservedVariables.Resolve(_graph, name, out result))
+            if (ReservedParameters.Resolve(_graph, name, out result))
                 return ResolveNested(nameSplit, 0, result);
 
             if (ResolveReference(name, p_collection, out result))
