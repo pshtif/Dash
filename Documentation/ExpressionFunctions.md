@@ -80,10 +80,12 @@ Function adds two Vector3 values and returns a Vector3 if evaluated Parameter is
 
 ## Int
 
-#### GetChildIndex
-Function returns index of a child transform specified as parameter.
+#### GetSiblingIndex
+> ***GetSiblingIndex(Transform transform)***  
+Function returns a singling index of specified transform
 
 #### Ceil
+> ***Ceil(Float value)***  
 Function returns a ceiled Float as Int.
 
 ## Float
@@ -103,10 +105,6 @@ Function returns a magnitude of a Vector3 value.
 #### GetChild
 > ***GetChild(Transform transform, String childName)***  
 Function finds a child of a specified transform by its name.
-
-#### GetSiblingIndex
-> ***GetSiblingIndex(Transform transform)***  
-Function returns a singling index of specified transform
 
 #### GetParent OBSOLETE
 > ***GetParent(Transform transform)***  
