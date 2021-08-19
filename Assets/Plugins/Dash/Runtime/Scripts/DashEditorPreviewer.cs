@@ -98,6 +98,8 @@ namespace Dash
             // Debug.Log("EditorCore.StopPreview");
             
             DashTween.CleanAll();
+            DashTweenCore.Uninitialize();
+            DashCore.Instance.CleanPrefabPools();
             
             EditorApplication.update -= OnUpdate;
             

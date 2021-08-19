@@ -15,6 +15,8 @@ namespace Dash
     [InputCount(1)]
     public class SpawnUIPrefabNode : NodeBase<SpawnUIPrefabNodeModel>
     {
+        private PrefabPool _prefabPool;
+        
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
@@ -26,13 +28,28 @@ namespace Dash
                 return;
             }
 
-            RectTransform spawned = GameObject.Instantiate(Model.prefab);
+            RectTransform spawned = null;
+            if (Model.usePooling)
+            {
+                if (_prefabPool == null) _prefabPool = DashCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), Model.prefab);
+                spawned = _prefabPool.Get() as RectTransform;
+                
+                if (spawned == null)
+                {
+                    SetError("Prefab instance is not a RectTransform");
+                }
+            }
+            else
+            {
+                spawned = GameObject.Instantiate(Model.prefab);
+            }
+
             if (Model.setTargetAsParent)
             {
                 spawned.transform.SetParent(target, false);
             }
             
-            spawned.anchoredPosition = Model.position.GetValue(ParameterResolver, p_flowData);
+            spawned.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
             if (Model.retargetToSpawned)
             {

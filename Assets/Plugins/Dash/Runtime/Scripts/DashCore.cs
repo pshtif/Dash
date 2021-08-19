@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.5.2RC3";
+        public const string VERSION = "0.5.3RC3";
         
         public DashRuntimeConfig Config { get; private set; }
         
@@ -35,6 +35,34 @@ namespace Dash
 
         [NonSerialized]
         private List<DashController> _controllers = new List<DashController>();
+
+        [NonSerialized]
+        private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
+
+        public void CleanPrefabPools()
+        {
+            foreach (var pair in _prefabPools)
+            {
+                _prefabPools[pair.Key].Clean();
+            }
+
+            _prefabPools = new Dictionary<string, PrefabPool>();
+        }
+        
+        public PrefabPool GetOrCreatePrefabPool(string p_id, Transform p_prefab)
+        {
+            if (!_prefabPools.ContainsKey(p_id))
+            {
+                _prefabPools.Add(p_id, new PrefabPool(p_prefab));
+            }
+            
+            return _prefabPools[p_id]; 
+        }
+        
+        public PrefabPool GetPrefabPool(string p_id)
+        {
+            return _prefabPools.ContainsKey(p_id) ? _prefabPools[p_id] : null;
+        }
 
         [NonSerialized]
         private Dictionary<string, List<Action<NodeFlowData>>> _listeners =

@@ -4,9 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Dash
 {
@@ -39,6 +42,14 @@ namespace Dash
                 _initialized = true;
             }
         }
+        
+        #if UNITY_EDITOR
+        public static void Uninitialize()
+        {
+            _initialized = false;
+            EditorApplication.update -= UpdateEditor;
+        }
+        #endif
 
         void Update()
         {

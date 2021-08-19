@@ -18,15 +18,30 @@ namespace Dash
             if (p_target == null)
                 return;
 
-            if (Model.immediate || !Application.isPlaying)
+            if (Model.usePooling)
             {
-                GameObject.DestroyImmediate(p_target.gameObject);
+                var pool = DashCore.Instance.GetPrefabPool(Model.poolId);
+                if (pool == null)
+                {
+                    SetError("Prefab pool with id "+Model.poolId+" not found target not destroyed.");
+                }
+                else
+                {
+                    pool.Return(p_target);
+                }
             }
             else
             {
-                GameObject.Destroy(p_target.gameObject);
+                if (Model.immediate || !Application.isPlaying)
+                {
+                    GameObject.DestroyImmediate(p_target.gameObject);
+                }
+                else
+                {
+                    GameObject.Destroy(p_target.gameObject);
+                }
             }
-            
+
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);
         }

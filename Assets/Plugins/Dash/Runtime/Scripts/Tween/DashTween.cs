@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Object = System.Object;
 
 namespace Dash
@@ -29,6 +28,8 @@ namespace Dash
 
         private Action<float> _updateCallback;
         private Action _completeCallback;
+
+        private bool _justStarted = true;
 
         public static DashTween To(Object p_target, float p_from, float p_to, float p_time)
         {
@@ -61,6 +62,7 @@ namespace Dash
                 tween.easeType = EaseType.LINEAR;
                 tween._updateCallback = null;
                 tween._completeCallback = null;
+                tween._justStarted = true;
             }
             
             tween.target = p_target;
@@ -127,11 +129,17 @@ namespace Dash
         {
             if (!running)
                 return false;
+
+            if (_justStarted)
+            {
+                _justStarted = false;
+                return false;
+            }
             
             current += p_time;
             if (current >= duration + delay)
             {
-                current = duration+delay;
+                current = duration + delay;
                 
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
                 _completeCallback?.Invoke();
