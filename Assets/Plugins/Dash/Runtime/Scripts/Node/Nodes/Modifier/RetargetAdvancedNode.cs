@@ -80,7 +80,10 @@ namespace Dash
                     else
                     {
                         float time = Model.delay.GetValue(ParameterResolver) * i;
-                        DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() => OnExecuteOutput(0, data)).Start();
+                        DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                        tween.OnComplete(() => OnExecuteOutput(0, data));
+                        tween.Start();
+                        ((IInternalGraphAccess)Graph).AddActiveTween(tween);
                     }
                 }
 
@@ -91,7 +94,10 @@ namespace Dash
                 else
                 {
                     float time = Model.delay.GetValue(ParameterResolver) * transforms.Count;
-                    DashTween.To(Graph.Controller, 0, 1, time).OnComplete(() => OnExecuteEnd()).Start();
+                    DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                    tween.OnComplete(() => OnExecuteEnd());
+                    tween.Start();
+                    ((IInternalGraphAccess)Graph).AddActiveTween(tween);
                 }
             }
             else
