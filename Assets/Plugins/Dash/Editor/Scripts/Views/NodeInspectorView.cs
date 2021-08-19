@@ -43,7 +43,7 @@ namespace Dash.Editor
 
         private void DrawBoxGUI(Rect p_rect)
         {
-            Rect rect = new Rect(p_rect.width - 350, 30, 340, 340);
+            Rect rect = new Rect(p_rect.width - 400, 30, 390, 340);
             
             DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
             
@@ -66,7 +66,7 @@ namespace Dash.Editor
             InspectorHeightAttribute heightAttibute = SelectedNode.GetType().GetCustomAttribute<InspectorHeightAttribute>();
             float height = heightAttibute != null ? heightAttibute.height : 340;
 
-            Rect rect = new Rect(p_rect.width - 350, 30, 340, height);
+            Rect rect = new Rect(p_rect.width - 400, 30, 390, height);
             
             DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
 

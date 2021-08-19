@@ -409,7 +409,7 @@ namespace Dash
                 case "System.String":
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(p_name, GUILayout.Width(120));
+                    GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, referenceInfo);
                     var stringValue = GUILayout.TextField((String) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
@@ -457,7 +457,7 @@ namespace Dash
                 case "System.Int32":
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(p_name,  GUILayout.Width(120));
+                    GUILayout.Label(p_name,  GUILayout.Width(160));
                     HandleReferencing(p_reference, referenceInfo);
                     var intValue = EditorGUILayout.IntField((int) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
@@ -472,7 +472,7 @@ namespace Dash
                 case "System.Single":
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(p_name,  GUILayout.Width(120));
+                    GUILayout.Label(p_name,  GUILayout.Width(160));
                     HandleReferencing(p_reference, referenceInfo);
                     var singleValue = EditorGUILayout.FloatField((float) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
@@ -487,7 +487,7 @@ namespace Dash
                 case "System.Boolean":
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label(p_name, GUILayout.Width(120));
+                    GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, referenceInfo);
                     var boolValue = EditorGUILayout.Toggle((bool) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
