@@ -432,7 +432,7 @@ namespace Dash
         
         private static bool RandomV2(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 2 || p_args.Parameters.Length != 4)
+            if (p_args.Parameters.Length != 0 && p_args.Parameters.Length != 2 && p_args.Parameters.Length != 4)
             {
                 errorMessage = "Invalid parameters in RandomV2 function";
                 return false;
@@ -469,7 +469,7 @@ namespace Dash
 
         private static bool RandomInsideCircle(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 1 || p_args.Parameters.Length != 2)
+            if (p_args.Parameters.Length != 0 && p_args.Parameters.Length != 1 && p_args.Parameters.Length != 2)
             {
                 errorMessage = "Invalid parameters in RandomInsideCircle function";
                 return false;
@@ -504,7 +504,7 @@ namespace Dash
         
         private static bool RandomOnCircle(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 1 || p_args.Parameters.Length != 2)
+            if (p_args.Parameters.Length != 0 && p_args.Parameters.Length != 1 && p_args.Parameters.Length != 2)
             {
                 errorMessage = "Invalid parameters in RandomOnCircle function";
                 return false;
@@ -541,7 +541,7 @@ namespace Dash
         
         private static bool RandomV3(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length == 0 || p_args.Parameters.Length != 2 || p_args.Parameters.Length != 6)
+            if (p_args.Parameters.Length != 0 && p_args.Parameters.Length != 2 && p_args.Parameters.Length != 6)
             {
                 errorMessage = "Invalid parameters in RandomV3 function";
                 return false;
