@@ -18,7 +18,7 @@ namespace Dash.Editor
         public static DashPrefabWindow InitDebugWindow()
         {
             Instance = GetWindow<DashPrefabWindow>();
-            Instance.titleContent = new GUIContent("Dash Prefab Editor");
+            Instance.titleContent = new GUIContent("Dash Prefab Editor (Preview)");
 
             return Instance;
         }
@@ -105,7 +105,7 @@ namespace Dash.Editor
 
             _scrollPositionProperties = GUILayout.BeginScrollView(_scrollPositionProperties, false, false);
 
-            if (_selectedPrefabInfo != null && DashEditorCore.RuntimeConfig.prefabs.ContainsKey(_selectedPrefabInfo))
+            if (_selectedPrefabInfo != null && DashEditorCore.RuntimeConfig.prefabs != null && DashEditorCore.RuntimeConfig.prefabs.ContainsKey(_selectedPrefabInfo))
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Name", GUILayout.Width(100));
