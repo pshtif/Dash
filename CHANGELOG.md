@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.5.3RC3 - 19.08.2021
+
+#### Added
+
+- Added further documentation on functions and parameters as well as cleanup of obsolete and generic functions
+- Added RandomOnCircle and RandomInsideCircle expression functions
+- Added DebugOverride attribute for custom nodes to override execution debug
+
+#### Changed
+
+- Changed when parameter is null threat it as a node execution error and report. Return default value
+- Changed local retargeting is now the Target information in DashDebugConsole instead of the flow data target parameter
+
+#### Fixed
+
+- Fixed RetargetToChildrenNode and ForLoopNode correctly assing tweens to current running tweens that are destroyed after Graph Stop
+
 ### Release 0.5.2RC3 - 27.07.2021
 
 #### Added
