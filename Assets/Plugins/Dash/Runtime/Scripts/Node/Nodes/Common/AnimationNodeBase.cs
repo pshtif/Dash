@@ -53,17 +53,13 @@ namespace Dash
         protected override void DrawCustomGUI(Rect p_rect)
         {
             base.DrawCustomGUI(p_rect);
-            
-            if (Model.time.isExpression)
-            {
-                GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
-                    "Time: [Exp]", DashEditorCore.Skin.GetStyle("NodeText"));
-            }
-            else
-            {
-                GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
-                    "Time: " + Model.time.GetValue(null) + "s", DashEditorCore.Skin.GetStyle("NodeText"));
-            }
+
+            string text = Model.time.isExpression ? "Time: [Exp]" : "Time: " + Model.time.GetValue(null) + "s";
+            text = Model.delay.isExpression ? text + "   Delay: [Exp]" :
+                Model.delay.GetValue(null) > 0 ? text + "   Delay: " + Model.delay.GetValue(null) + "s" : text;
+
+            GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
+                text, DashEditorCore.Skin.GetStyle("NodeText"));
         }
 #endif
     }
