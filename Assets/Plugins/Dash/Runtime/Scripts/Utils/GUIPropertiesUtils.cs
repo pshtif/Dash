@@ -293,6 +293,12 @@ namespace Dash
                 return false;
 
             Parameter param = (Parameter)p_fieldInfo.GetValue(p_object);
+
+            if (param == null)
+            {
+                RecreateParameter(p_fieldInfo, p_object);
+                return true;
+            }
             
             // Can happen due to serialization/migration error
             if (param != null)
@@ -343,6 +349,15 @@ namespace Dash
             }
 
             return false;
+        }
+        
+        static void RecreateParameter(FieldInfo p_fieldInfo, Object p_object)
+        {
+            var genericType = p_fieldInfo.FieldType.GenericTypeArguments[0];
+            var parameterType = typeof(Parameter<>).MakeGenericType(genericType);
+            var parameter = Activator.CreateInstance(parameterType, genericType.GetDefaultValue());
+
+            p_fieldInfo.SetValue(p_object, parameter);
         }
 
         public static bool IsExpressionProperty(FieldInfo p_fieldInfo)
@@ -402,7 +417,7 @@ namespace Dash
         static bool ValueProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference, FieldInfo p_parameterInfo = null)
         {
             FieldInfo referenceInfo = p_parameterInfo != null ? p_parameterInfo : p_fieldInfo;
-            
+
             string type = p_fieldInfo.FieldType.ToString();
             switch (type)
             {
@@ -410,7 +425,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(160));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     var stringValue = GUILayout.TextField((String) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -458,7 +473,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name,  GUILayout.Width(160));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     var intValue = EditorGUILayout.IntField((int) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -473,7 +488,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name,  GUILayout.Width(160));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     var singleValue = EditorGUILayout.FloatField((float) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -488,7 +503,7 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(160));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     var boolValue = EditorGUILayout.Toggle((bool) p_fieldInfo.GetValue(p_object));
                     GUILayout.EndHorizontal();
 
@@ -502,7 +517,7 @@ namespace Dash
                 case "UnityEngine.Vector2":
                     EditorGUI.BeginChangeCheck();
                     var vector2Value = EditorGUILayout.Vector2Field(p_name, (Vector2) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector2Value);
@@ -513,7 +528,7 @@ namespace Dash
                 case "UnityEngine.Vector3":
                     EditorGUI.BeginChangeCheck();
                     var vector3Value = EditorGUILayout.Vector3Field(p_name, (Vector3) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector3Value);
@@ -524,7 +539,7 @@ namespace Dash
                 case "UnityEngine.Vector4":
                     EditorGUI.BeginChangeCheck();
                     var vector4Value = EditorGUILayout.Vector4Field(p_name, (Vector3) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, vector4Value);
@@ -535,7 +550,7 @@ namespace Dash
                 case "UnityEngine.Color":
                     EditorGUI.BeginChangeCheck();
                     var colorValue = EditorGUILayout.ColorField(p_name, (Color) p_fieldInfo.GetValue(p_object));
-                    HandleReferencing(p_reference, referenceInfo);
+                    HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, colorValue);
@@ -563,11 +578,15 @@ namespace Dash
                         DashEditorCore.propertyReference = "[$" + p_reference.Id + "." +
                                                            p_fieldInfo.Name + "]";
                     });
-                        
-                if (p_parameter != null && p_parameter.isExpression && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
+                
+                if (p_parameter != null && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
                 {
                     menu.AddItem(new GUIContent("Paste reference"), false,
-                        () => { p_parameter.expression = DashEditorCore.propertyReference; });
+                        () =>
+                        {
+                            p_parameter.isExpression = true;
+                            p_parameter.expression = DashEditorCore.propertyReference;
+                        });
                 }
                 
                 if (p_directExpression && !string.IsNullOrEmpty(DashEditorCore.propertyReference))
