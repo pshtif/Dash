@@ -68,6 +68,8 @@ namespace Dash
             CreateEditorConfig();
             CreateRuntimeConfig();
             CreatePreviewer();
+
+            CheckDashVersion();
             
             //InvalidateControllersIds();
 
@@ -75,6 +77,16 @@ namespace Dash
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+        }
+
+        static void CheckDashVersion()
+        {
+            if (EditorConfig.lastUsedVersion == 0 || DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
+            {
+                
+            }
+
+            EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
         }
 
         static void SetExecutionOrder(Type p_classType, int p_order)

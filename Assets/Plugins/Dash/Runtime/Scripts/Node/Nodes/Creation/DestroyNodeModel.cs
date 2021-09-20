@@ -14,6 +14,6 @@ namespace Dash
         public bool immediate = false;
         
         [Dependency("usePooling", true)]
-        public string poolId = "pool";
+        public Parameter<string> poolId = new Parameter<string>("pool");
     }
 }

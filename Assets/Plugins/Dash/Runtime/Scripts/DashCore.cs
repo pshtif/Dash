@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.5.3RC3";
+        public const string VERSION = "0.5.4RC3";
         
         public DashRuntimeConfig Config { get; private set; }
         
@@ -36,8 +36,27 @@ namespace Dash
         [NonSerialized]
         private List<DashController> _controllers = new List<DashController>();
 
+        [NonSerialized] 
+        private Dictionary<string,EventSequencer> _sequencers = new Dictionary<string, EventSequencer>();
+
         [NonSerialized]
         private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
+
+        public EventSequencer GetOrCreateSequencer(string p_id)
+        {
+            if (!_sequencers.ContainsKey(p_id))
+            {
+                var sequencer = new EventSequencer();
+                _sequencers.Add(p_id, sequencer);
+            }
+
+            return _sequencers[p_id];
+        }
+
+        public void CleanSequencers()
+        {
+            _sequencers = new Dictionary<string, EventSequencer>();
+        }
 
         public void CleanPrefabPools()
         {
@@ -128,7 +147,7 @@ namespace Dash
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
             //Debug.Log("DashCore.SendEvent: "+p_name);
-            _controllers.ForEach(dc => dc?.SendEvent(p_name, p_flowData));
+            _controllers.ToList().ForEach(dc => dc?.SendEvent(p_name, p_flowData));
             
             if (_listeners.ContainsKey(p_name))
             {

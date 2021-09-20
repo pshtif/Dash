@@ -22,14 +22,18 @@ namespace Dash
         [Dependency("createSpawnedAttribute", true)]
         public string spawnedAttributeName = "image";
         
+        [TitledGroup("Pooling")]
         public bool usePooling = false;
         
+        [TitledGroup("Pooling")]
         [Dependency("usePooling", true)]
         public Parameter<string> poolId = new Parameter<string>("");
         
+        [TitledGroup("Pooling")]
         [Dependency("usePooling", true)]
         public bool createPoolIdAttribute = true;
         
+        [TitledGroup("Pooling")]
         [Dependency("usePooling", true)]
         public string poolIdAttributeName = "pool";
     }

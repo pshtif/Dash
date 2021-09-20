@@ -20,10 +20,11 @@ namespace Dash
 
             if (Model.usePooling)
             {
-                var pool = DashCore.Instance.GetPrefabPool(Model.poolId);
+                var poolId = GetParameterValue(Model.poolId, p_flowData);
+                var pool = DashCore.Instance.GetPrefabPool(poolId);
                 if (pool == null)
                 {
-                    SetError("Prefab pool with id "+Model.poolId+" not found target not destroyed.");
+                    SetError("Prefab pool with id " + Model.poolId + " not found target not destroyed.");
                 }
                 else
                 {
@@ -32,13 +33,16 @@ namespace Dash
             }
             else
             {
-                if (Model.immediate || !Application.isPlaying)
+                if (p_target.gameObject != null)
                 {
-                    GameObject.DestroyImmediate(p_target.gameObject);
-                }
-                else
-                {
-                    GameObject.Destroy(p_target.gameObject);
+                    if (Model.immediate || !Application.isPlaying)
+                    {
+                        GameObject.DestroyImmediate(p_target.gameObject);
+                    }
+                    else
+                    {
+                        GameObject.Destroy(p_target.gameObject);
+                    }
                 }
             }
 

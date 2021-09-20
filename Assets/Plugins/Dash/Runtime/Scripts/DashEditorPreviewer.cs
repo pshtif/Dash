@@ -100,6 +100,7 @@ namespace Dash
             DashTween.CleanAll();
             DashTweenCore.Uninitialize();
             DashCore.Instance.CleanPrefabPools();
+            DashCore.Instance.CleanSequencers();
             
             EditorApplication.update -= OnUpdate;
             

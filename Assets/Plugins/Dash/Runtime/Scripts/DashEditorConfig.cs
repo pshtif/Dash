@@ -15,6 +15,8 @@ namespace Dash
     [Serializable]
     public class DashEditorConfig : ScriptableObject, ISerializationCallbackReceiver
     {
+        public int lastUsedVersion = 0;
+        
         public DashGraph enteringPlayModeGraph { get; private set; }
         private int _enteringPlayModeController;
 
