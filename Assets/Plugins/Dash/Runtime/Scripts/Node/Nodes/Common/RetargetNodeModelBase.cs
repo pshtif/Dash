@@ -32,7 +32,7 @@ namespace Dash
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [Tooltip("Retarget to child of current.")]
-        public bool isChild;
+        public bool isChild = true;
         
         [Order(3)]
         [TitledGroup("Retargeting", -1)]

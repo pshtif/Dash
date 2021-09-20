@@ -41,7 +41,7 @@ namespace Dash
                         // var value = ExpressionEvaluator.EvaluateTypedExpression(Model.targetExpression, typeof(Transform),
                         //     ParameterResolver, p_flowData);
                         var value = ExpressionEvaluator.EvaluateUntypedExpression(Model.targetExpression,
-                            ParameterResolver, p_flowData);
+                            ParameterResolver, p_flowData, false);
 
                         if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
@@ -102,12 +102,16 @@ namespace Dash
         {
             GUI.color = Color.white;
             var style = new GUIStyle();
-            style.alignment = TextAnchor.MiddleLeft;
+            style.alignment = TextAnchor.MiddleCenter;
 
-            Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.TITLE_TAB_HEIGHT, p_rect.width-48, 20);
+            Rect labelRect = new Rect(p_rect.x + p_rect.width/2 - 50, p_rect.y - 23, 100, 24);
 
             if (Model.retarget)
             {
+                GUI.color = new Color(0.35f, 0.35f, 0.35f);
+                GUI.Box(labelRect, "", DashEditorCore.Skin.GetStyle(TitleSkinId));
+                GUI.color = Color.white;
+                
                 if (Model.useReference)
                 {
                     if (Model.useExpression)
