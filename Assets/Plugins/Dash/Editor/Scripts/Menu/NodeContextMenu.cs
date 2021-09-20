@@ -41,9 +41,61 @@ namespace Dash.Editor
                 menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, p_node);
                 menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, p_node);
+                
+                if (p_node is InputNode)
+                {
+                    InputNode node = p_node as InputNode;
+                    menu.AddSeparator("");
+                    if (!node.Controller.autoStart || node.Controller.autoStartInput != node.Model.inputName)
+                    {
+                        menu.AddItem(new GUIContent("Set as Start Input"), false, SetAsStartInput, p_node);
+                    }
+                    else
+                    {
+                        menu.AddItem(new GUIContent("Remove as Start Input"), false, RemoveAsStartInput, p_node);
+                    }
+
+                    if (!node.Controller.autoOnEnable || node.Controller.autoOnEnableInput != node.Model.inputName)
+                    {
+                        menu.AddItem(new GUIContent("Set as OnEnable Input"), false, SetAsOnEnableInput, p_node);    
+                    }
+                    else
+                    {
+                        menu.AddItem(new GUIContent("Remove as OnEnable Input"), false, RemoveAsOnEnableInput, p_node);
+                    }
+                    
+                }
             }
 
             menu.ShowAsContext();
+        }
+
+        static void SetAsStartInput(object p_node)
+        {
+            InputNode node = p_node as InputNode;
+            node.Controller.autoStart = true;
+            node.Controller.autoStartInput = node.Model.inputName;
+        }
+        
+        static void RemoveAsStartInput(object p_node)
+        {
+            InputNode node = p_node as InputNode;
+            node.Controller.autoStart = false;
+            node.Controller.autoStartInput = "";
+        }
+
+        static void SetAsOnEnableInput(object p_node)
+        {
+            InputNode node = p_node as InputNode;
+            node.Controller.autoOnEnable = true;
+            node.Controller.autoOnEnableInput = node.Model.inputName;
+        }
+        
+        static void RemoveAsOnEnableInput(object p_node)
+        {
+            InputNode node = p_node as InputNode;
+            node.Controller.autoOnEnable = false;
+            node.Controller.autoOnEnableInput = "";
         }
 
         static void CopyNode(object p_node)
