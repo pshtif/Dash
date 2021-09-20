@@ -1,10 +1,11 @@
 {
   "dependencies": {
+    "com.pixelfederation.common.attributes": "0.2.5",
     "com.teamsirenix.odinserializer": "2021.4.9",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ide.rider": "2.0.7",
-    "com.unity.ide.visualstudio": "2.0.9",
+    "com.unity.ide.visualstudio": "2.0.11",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.mathematics": "1.2.1",
     "com.unity.textmeshpro": "2.1.4",
@@ -24,6 +25,13 @@
       "url": "http://package.binaryego.com:4873",
       "scopes": [
         "com.teamsirenix"
+      ]
+    },
+    {
+      "name": "Pixel Federation",
+      "url": "http://34.76.27.63:4873",
+      "scopes": [
+        "com.pixelfederation"
       ]
     }
   ]

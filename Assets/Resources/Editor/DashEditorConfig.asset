@@ -12,40 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d6fd3697e0491eb80aa4d3608a42e6, type: 3}
   m_Name: DashEditorConfig
   m_EditorClassIdentifier: 
-  editingGraph: {fileID: 0}
+  lastUsedVersion: 5004
+  _editingGraph: {fileID: 0}
   editingGraphPath: 
   deleteNull: 0
-  zoom: 1
+  zoom: 1.5
   showNodeIds: 0
   showExperimental: 1
   showNodeSearch: 0
+  enableSoundInPreview: 0
   editorPosition:
     serializedVersion: 2
-    x: 2711
-    y: 54
-    width: 1101
-    height: 869
+    x: 213
+    y: 174
+    width: 1601
+    height: 945
   AOTAssemblyPath: Assets/Plugins
   AOTAssemblyName: DashAOTAssembly
   _serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 0}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: lastUsedVersion
+      Entry: 3
+      Data: 5004
     - Name: <enteringPlayModeGraph>k__BackingField
       Entry: 6
       Data: 
     - Name: _enteringPlayModeController
       Entry: 3
       Data: 0
-    - Name: editingGraph
-      Entry: 10
-      Data: 0
+    - Name: _editingGraph
+      Entry: 6
+      Data: 
     - Name: editingGraphPath
       Entry: 1
       Data: 
@@ -54,7 +58,7 @@ MonoBehaviour:
       Data: false
     - Name: zoom
       Entry: 4
-      Data: 1
+      Data: 1.5
     - Name: showNodeIds
       Entry: 5
       Data: false
@@ -64,21 +68,24 @@ MonoBehaviour:
     - Name: showNodeSearch
       Entry: 5
       Data: false
+    - Name: enableSoundInPreview
+      Entry: 5
+      Data: false
     - Name: editorPosition
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2711
+      Data: 213
     - Name: 
       Entry: 4
-      Data: 54
+      Data: 174
     - Name: 
       Entry: 4
-      Data: 1101
+      Data: 1601
     - Name: 
       Entry: 4
-      Data: 869
+      Data: 945
     - Name: 
       Entry: 8
       Data: 

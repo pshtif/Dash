@@ -26,20 +26,26 @@ MonoBehaviour:
     m_Scopes:
     - com.teamsirenix
     m_IsDefault: 0
-  m_UserSelectedRegistryName: sHTiF
+  - m_Id: scoped:Pixel Federation
+    m_Name: Pixel Federation
+    m_Url: http://34.76.27.63:4873
+    m_Scopes:
+    - com.pixelfederation
+    m_IsDefault: 0
+  m_UserSelectedRegistryName: Pixel Federation
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 
     m_Original:
-      m_Id: scoped:sHTiF
-      m_Name: sHTiF
-      m_Url: http://package.binaryego.com:4873
+      m_Id: scoped:Pixel Federation
+      m_Name: Pixel Federation
+      m_Url: http://34.76.27.63:4873
       m_Scopes:
-      - com.teamsirenix
+      - com.pixelfederation
       m_IsDefault: 0
     m_Modified: 0
-    m_Name: sHTiF
-    m_Url: http://package.binaryego.com:4873
+    m_Name: Pixel Federation
+    m_Url: http://34.76.27.63:4873
     m_Scopes:
-    - com.teamsirenix
+    - com.pixelfederation
     m_SelectedScopeIndex: 0
