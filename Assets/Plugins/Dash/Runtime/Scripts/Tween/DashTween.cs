@@ -132,6 +132,7 @@ namespace Dash
 
             if (_justStarted)
             {
+                _updateCallback?.Invoke(from);
                 _justStarted = false;
                 return false;
             }
