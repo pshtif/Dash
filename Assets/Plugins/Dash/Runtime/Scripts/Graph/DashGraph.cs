@@ -22,7 +22,7 @@ namespace Dash
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
     {
         public int version { get; private set; } = 0;
-        
+
         public event Action<OutputNode, NodeFlowData> OnOutput;
 
         [FormerlySerializedAs("variables")]
@@ -242,6 +242,14 @@ namespace Dash
             NodeConnection connection = new NodeConnection(p_inputIndex, p_inputNode, p_outputIndex, p_outputNode);
 
             _connections.Add(connection);
+        }
+
+        public void Reconnect(NodeConnection p_connection)
+        {
+            connectingNode = p_connection.outputNode;
+            connectingOutputIndex = p_connection.outputIndex;
+
+            _connections.Remove(p_connection);
         }
         
         public void Disconnect(NodeConnection p_connection)
@@ -466,7 +474,15 @@ namespace Dash
         {
             Nodes?.ForEach(n => n.ValidateSerialization());
             version = DashCore.GetVersionNumber();
-            DashEditorCore.SetDirty();
+            if (IsBound)
+            {
+                Controller.ReserializeBound();
+                EditorUtility.SetDirty(Controller);
+            }
+            else
+            {
+                EditorUtility.SetDirty(this);
+            }
         }
         
         public void DeleteNode(NodeBase p_node)
@@ -490,7 +506,7 @@ namespace Dash
             _connections.RemoveAll(c => !c.IsValid());
             
             // Draw connections
-            LinqExtensions.ForEach(_connections.Where(c => c != null), c=> c.DrawGUI());
+            LinqExtensions.ForEach(_connections.Where(c => c != null).ToArray(), c=> c.DrawGUI());
             
             // Draw Nodes
             // Preselect non null to avoid null states from serialization issues

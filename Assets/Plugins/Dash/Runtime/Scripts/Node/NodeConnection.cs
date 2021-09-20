@@ -16,12 +16,15 @@ namespace Dash
         public int inputIndex;
         public int outputIndex { get; }
         
-        public NodeBase inputNode { get; }
+        public NodeBase inputNode { get; private set; }
         public NodeBase outputNode { get; }
         
         #if UNITY_EDITOR
         [NonSerialized] 
         public float executeTime = 0;
+
+        [NonSerialized] 
+        public bool buttonDown = false;
         #endif
 
         public bool IsValid()
@@ -72,9 +75,29 @@ namespace Dash
             
             DrawBezier(startPos, endPos, connectionColor, true);
 
+            DrawButton(startPos, endPos, connectionColor);
+
             Handles.EndGUI();
         }
-        
+
+        void DrawButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
+        {
+            var pos = (p_startPos + p_endPos) / 2;
+            var buttonRect = new Rect(pos.x - 6, pos.y - 6, 12, 12);
+            
+            //GUI.color = buttonRect.Contains(Event.current.mousePosition) ? Color.green : p_connectionColor;
+            GUI.color = p_connectionColor;
+            GUI.Box(buttonRect, "", DashEditorCore.Skin.GetStyle("NodeReconnect"));
+
+            if (Event.current.button == 0)
+            {
+                if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
+                {
+                    DashEditorCore.Graph.Reconnect(this); 
+                }
+            }
+        }
+
         static public void DrawBezier(Vector3 p_startPos, Vector3 p_endPos, Color p_color, bool p_shadow)
         {
             Handles.BeginGUI();

@@ -308,7 +308,8 @@ namespace Dash.Editor
                 switch (dragging)
                 {
                     case DraggingType.NODE:
-                        DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += p_event.delta*Zoom);
+                        Vector2 delta = p_event.alt ? Snapping.Snap(p_event.delta, new Vector2(10,10)): p_event.delta;
+                        DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += delta*Zoom);
                         break;
                     case DraggingType.BOX:
                         DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
@@ -398,7 +399,7 @@ namespace Dash.Editor
         void ProcessDragging(Event p_event, Rect p_rect)
         {
             // Left drag
-            if (p_event.button == 0 && p_event.alt && p_event.type == EventType.MouseDrag)
+            if (p_event.button == 0 && p_event.alt && p_event.type == EventType.MouseDrag && dragging == DraggingType.NONE)
             {
                 if (Graph != null)
                 {

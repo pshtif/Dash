@@ -16,7 +16,7 @@ namespace Dash
     public class NodeModelBase : IReferencable
     {
         public string Id => id;
-        
+
         [TitledGroup("Advanced", 1000, true)]
         public string id;
 
@@ -160,7 +160,7 @@ namespace Dash
                     groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
                 }
                     
-                GUI.Label(new Rect(lastRect.x + 316 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
+                GUI.Label(new Rect(lastRect.x + 356 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
             
                 p_lastGroup = currentGroup;
             }
@@ -172,7 +172,9 @@ namespace Dash
 
         public List<string> GetExposedGUIDs()
         {
-            return GetType().GetFields().ToList().FindAll(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>)).Select(
+            return GetType().GetFields().ToList().FindAll(f =>
+                    f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                .Select(
                     (f, i) => f.GetValue(this).GetType().GetField("exposedName").GetValue(f.GetValue(this)).ToString())
                 .ToList();
         }
@@ -187,21 +189,13 @@ namespace Dash
                 
                 if ((Parameter)field.GetValue(this) == null)
                 {
-                    if (!RecreateParameter(field))
-                    {
-                        Debug.LogWarning("Recreation of parameter property failed.");
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Recreation of parameter property succeeded.");
-                    }
+                    RecreateParameter(field);
                 }
             }
         }
         
         bool RecreateParameter(FieldInfo p_fieldInfo)
         {
-            Debug.LogWarning("Serialization error on parametrized property "+p_fieldInfo.Name+" encountered on model "+this+", recreating parameter to default values.");
             var genericType = p_fieldInfo.FieldType.GenericTypeArguments[0];
             var parameterType = typeof(Parameter<>).MakeGenericType(genericType);
             var parameter = Activator.CreateInstance(parameterType, genericType.GetDefaultValue());
