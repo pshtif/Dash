@@ -246,6 +246,32 @@ namespace Dash
             p_args.Result = new Vector3(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]), Convert.ToSingle(evalParams[2]));
             return true;
         }
+        
+        /**
+         *  Create a Color value
+         */
+        private static bool Color(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 4 && p_args.Parameters.Length != 3)
+            {
+                errorMessage = "Invalid parameters in Color function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+
+            p_args.HasResult = true;
+            if (p_args.Parameters.Length == 3)
+            {
+                p_args.Result = new Color(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]), Convert.ToSingle(evalParams[2]));    
+            }
+            else
+            {
+                p_args.Result = new Color(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]), Convert.ToSingle(evalParams[2]), Convert.ToSingle(evalParams[3]));
+            }
+            
+            return true;
+        }
 
         /**
          *  Add two values of type T together
