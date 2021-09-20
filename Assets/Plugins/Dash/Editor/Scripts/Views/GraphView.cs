@@ -280,24 +280,35 @@ namespace Dash.Editor
                 {
                     AddSelectedNode(hitNodeIndex);
 
-                    dragging = DraggingType.NODE;
+                    dragging = DraggingType.NODE_DRAG;
                 }
                 else
                 {
-                    GraphBox region = Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                    GraphBox box = Graph.HitsBoxDrag(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
 
-                    if (region != null)
+                    if (box != null)
                     {
-                        DashEditorCore.selectedBox = region;
+                        DashEditorCore.selectedBox = box;
                         DashEditorCore.selectedBox.StartDrag();
-                        dragging = DraggingType.BOX;
+                        dragging = DraggingType.BOX_DRAG;
                     }
                     else
                     {
-                        dragging = DraggingType.SELECTION;
-                        DashEditorCore.selectedBox = null;
-                        Graph.connectingNode = null;
-                        selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
+                        box = Graph.HitsBoxResize(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+
+                        if (box != null)
+                        {
+                            DashEditorCore.selectedBox = box;
+                            DashEditorCore.selectedBox.StartResize();
+                            dragging = DraggingType.BOX_RESIZE;
+                        }
+                        else
+                        {
+                            dragging = DraggingType.SELECTION;
+                            DashEditorCore.selectedBox = null;
+                            Graph.connectingNode = null;
+                            selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
+                        }
                     }
                 }
             }
@@ -307,12 +318,15 @@ namespace Dash.Editor
             {
                 switch (dragging)
                 {
-                    case DraggingType.NODE:
+                    case DraggingType.NODE_DRAG:
                         Vector2 delta = p_event.alt ? Snapping.Snap(p_event.delta, new Vector2(10,10)): p_event.delta;
                         DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += delta*Zoom);
                         break;
-                    case DraggingType.BOX:
+                    case DraggingType.BOX_DRAG:
                         DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
+                        break;
+                    case DraggingType.BOX_RESIZE:
+                        DashEditorCore.selectedBox.Resize(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
                         break;
                     case DraggingType.SELECTION:
                         selectedRegion.width += p_event.delta.x;
@@ -334,7 +348,7 @@ namespace Dash.Editor
                     DashEditorCore.selectingNodes.Clear();
                 }
 
-                if (dragging == DraggingType.NODE || dragging == DraggingType.BOX)
+                if (dragging == DraggingType.NODE_DRAG || dragging == DraggingType.BOX_DRAG || dragging == DraggingType.BOX_RESIZE)
                 {
                     DashEditorCore.SetDirty();
                 }
@@ -372,7 +386,7 @@ namespace Dash.Editor
                         else
                         {
                             GraphBox hitRegion =
-                                Graph.HitsBox(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                                Graph.HitsBoxResize(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
 
                             if (hitRegion != null)
                             {

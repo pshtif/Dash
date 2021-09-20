@@ -528,9 +528,14 @@ namespace Dash
             return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
         }
 
-        public GraphBox HitsBox(Vector2 p_position)
+        public GraphBox HitsBoxDrag(Vector2 p_position)
         {
-            return _boxes.AsEnumerable().Reverse().ToList().Find(r => r.titleRect.Contains(p_position - viewOffset));
+            return _boxes.AsEnumerable().Reverse().ToList().Find(b => b.titleRect.Contains(p_position - viewOffset));
+        }
+        
+        public GraphBox HitsBoxResize(Vector2 p_position)
+        {
+            return _boxes.AsEnumerable().Reverse().ToList().Find(b => b.resizeRect.Contains(p_position - viewOffset));
         }
 
         public void DeleteBox(GraphBox p_box)

@@ -7,8 +7,9 @@ namespace Dash.Editor
     public enum DraggingType
     {
         NONE,
-        NODE,
+        NODE_DRAG,
         SELECTION,
-        BOX
+        BOX_DRAG, 
+        BOX_RESIZE
     }
 }

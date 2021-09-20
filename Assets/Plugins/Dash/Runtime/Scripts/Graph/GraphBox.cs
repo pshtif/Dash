@@ -28,6 +28,8 @@ namespace Dash
 
         public Rect titleRect => new Rect(rect.x, rect.y, rect.width, 45);
 
+        public Rect resizeRect => new Rect(rect.x + rect.width - 32, rect.y + rect.height - 32, 32, 32);
+
         [NonSerialized]
         private List<NodeBase> _draggedNodes = new List<NodeBase>();
         [NonSerialized]
@@ -59,6 +61,7 @@ namespace Dash
                 _lastClickTime = EditorApplication.timeSinceStartup;
             }
 
+            GUI.DrawTexture(new Rect(offsetRect.x + offsetRect.width - 32, offsetRect.y + offsetRect.height - 32, 32, 32), IconManager.GetIcon("Resize_Icon"));
             GUI.color = Color.white;
             GUIStyle style = new GUIStyle();
             style.fontStyle = FontStyle.Bold;
@@ -78,7 +81,6 @@ namespace Dash
             {
                 GUI.Label(titleRect, comment, style);
             }
-            
         }
 
         public void StartDrag()
@@ -97,6 +99,16 @@ namespace Dash
                 _draggedNodes.ForEach(n => n.rect.position += p_offset);
 
             rect.position += p_offset;
+        }
+        
+        public void StartResize()
+        {
+        }
+
+        public void Resize(Vector2 p_offset)
+        {
+            rect.xMax += p_offset.x;
+            rect.yMax += p_offset.y;
         }
 
         public virtual bool DrawInspector()
