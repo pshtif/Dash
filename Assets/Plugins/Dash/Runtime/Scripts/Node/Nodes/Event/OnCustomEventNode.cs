@@ -28,14 +28,14 @@ namespace Dash
             {
                 DashCore.Instance.GetOrCreateSequencer(sequencerId).OnEvent(Model.eventName, () =>
                 {
-                    Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
+                    //Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);        
                 });
             }
             else
             {
-                Debug.Log("OnCustomEvent: "+Model.eventName);
+                //Debug.Log("OnCustomEvent: "+Model.eventName);
                 OnExecuteEnd();
                 OnExecuteOutput(0, p_flowData);
             }
