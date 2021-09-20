@@ -10,7 +10,7 @@ namespace Dash
         
         string errorMessage { get; }
         
-        object Resolve(string p_name, IAttributeDataCollection p_collection = null);
+        object Resolve(string p_name, IAttributeDataCollection p_collection = null, bool p_referenced = false);
         
         //V Resolve<V>(string p_name, IAttributeDataCollection p_collection = null);
     }

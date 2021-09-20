@@ -16,13 +16,13 @@ namespace Dash
         protected DashGraph _graph;
         public bool hasErrorInResolving { get; private set; } = false;
         public string errorMessage { get; private set; }
-        
+
         public GraphParameterResolver(DashGraph p_graph)
         {
             _graph = p_graph;
         }
 
-        public object Resolve(string p_name, IAttributeDataCollection p_collection)
+        public object Resolve(string p_name, IAttributeDataCollection p_collection, bool p_referenced)
         {
             hasErrorInResolving = false;
 
@@ -38,27 +38,27 @@ namespace Dash
             {
                 if (p_collection.HasAttribute(name))
                 {
-                    return ResolveNested(nameSplit, 0, p_collection.GetAttribute(name));
+                    return ResolveNested(nameSplit, 0, p_collection.GetAttribute(name), p_collection, p_referenced);
                 }
             }
 
             object result;
             if (ReservedParameters.Resolve(_graph, name, out result))
-                return ResolveNested(nameSplit, 0, result);
+                return ResolveNested(nameSplit, 0, result, p_collection, p_referenced);
 
             if (ResolveReference(name, p_collection, out result))
-                return ResolveNested(nameSplit, 0, result);
+                return ResolveNested(nameSplit, 0, result, p_collection, true);
 
             if (_graph.variables.HasVariable(name))
             {
                 Variable variable = _graph.variables.GetVariable(name);
-                return ResolveNested(nameSplit, 0, variable.value);
+                return ResolveNested(nameSplit, 0, variable.value, p_collection, p_referenced);
             }
 
             if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.variables.HasVariable(name))
             {
                 Variable variable = DashCore.Instance.globalVariables.variables.GetVariable(name);
-                return ResolveNested(nameSplit, 0, variable.value);
+                return ResolveNested(nameSplit, 0, variable.value, p_collection, p_referenced);
             }
 
             hasErrorInResolving = true;
@@ -96,7 +96,7 @@ namespace Dash
         //     return default(T);
         // }
 
-        object ResolveNested(string[] p_properties, int p_index, object p_result)
+        object ResolveNested(string[] p_properties, int p_index, object p_result, IAttributeDataCollection p_collection, bool p_referenced)
         {
             if (p_properties == null || p_result == null || p_index >= p_properties.Length-1)
                 return p_result;
@@ -117,11 +117,31 @@ namespace Dash
                 }
 
                 p_result = propertyInfo.GetValue(p_result);
-                return ResolveNested(p_properties, p_index, p_result);
             }
-
-            p_result = fieldInfo.GetValue(p_result);
-            return ResolveNested(p_properties, p_index, p_result);
+            else
+            {
+                p_result = fieldInfo.GetValue(p_result);
+            }
+            
+            if (typeof(Parameter).IsAssignableFrom(p_result.GetType()))
+            {
+                Parameter parameter = p_result as Parameter;
+                
+                if (!parameter.IsInReferenceChain(parameter))
+                {
+                    p_result = p_result.GetType().GetMethod("GetValue")
+                        .Invoke(p_result, new object[] { this, p_collection, p_referenced });
+                }
+                else
+                {
+                    hasErrorInResolving = true;
+                    errorMessage = "Reference chain encountered.";
+                    p_result = null;
+                    return p_result;
+                }
+            }
+            
+            return ResolveNested(p_properties, p_index, p_result, p_collection, p_referenced);
         }
 
         bool ResolveReference(string p_name, IAttributeDataCollection p_collection, out object p_result)
@@ -133,34 +153,20 @@ namespace Dash
             }
 
             string name = p_name.Substring(1);
-            string[] split = name.Split('.');
-            
-            object value = _graph.GetNodeById(split[0]).GetModel();
 
-            if (value == null || split.Length == 1)
+            object value = _graph.GetNodeById(name).GetModel();
+
+            if (value != null)
             {
                 p_result = value;
                 return true;
             }
-
-            for (int i = 1; i < split.Length; i++)
-            {
-                FieldInfo fieldInfo = value.GetType().GetField(split[i]);
-                value = fieldInfo.GetValue(value);
-                
-                if (typeof(Parameter).IsAssignableFrom(value.GetType()))
-                {
-                    value = value.GetType().GetMethod("GetValue").Invoke(value, new object[] {this, p_collection});
-                }
-            }
             
-            if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
-            {
-                value = value.GetType().GetMethod("Resolve").Invoke(value, new object[] { _graph.Controller });
-            }
-    
-            p_result = value;
-            return true;
+            hasErrorInResolving = true;
+            errorMessage = "Invalid node reference " + name;
+            
+            p_result = null;
+            return false;
         }
     }
 }

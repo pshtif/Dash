@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using NCalc;
@@ -28,6 +29,13 @@ namespace Dash
         public string errorMessage;
 
         public abstract FieldInfo GetValueFieldInfo();
+        
+        static protected List<Parameter> _referenceChain = new List<Parameter>();
+        
+        public bool IsInReferenceChain(Parameter p_parameter)
+        {
+            return _referenceChain.Contains(p_parameter);
+        }
     }
 
     [Serializable]
@@ -44,9 +52,18 @@ namespace Dash
         {
             return GetType().GetField("_value", BindingFlags.NonPublic | BindingFlags.Instance);
         }
-        
-        public T GetValue(IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
+
+        public T GetValue(IParameterResolver p_resolver, IAttributeDataCollection p_collection = null, bool p_referenced = false)
         {
+            if (!p_referenced)
+            {
+                _referenceChain.Clear();
+            }
+            else
+            {
+                _referenceChain.Add(this);
+            }
+            
             if (isExpression)
             {
                 if (string.IsNullOrWhiteSpace(expression))
@@ -54,8 +71,8 @@ namespace Dash
                     Debug.LogWarning("Expression cannot be empty returning default value.");
                     return default(T);
                 }
-                
-                T value = ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection);
+
+                T value = ExpressionEvaluator.EvaluateExpression<T>(expression, p_resolver, p_collection, p_referenced);
                 if (ExpressionEvaluator.hasErrorInEvaluation)
                 {
                     errorMessage = ExpressionEvaluator.errorMessage;

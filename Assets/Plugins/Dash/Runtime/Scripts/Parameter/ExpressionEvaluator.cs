@@ -22,10 +22,10 @@ namespace Dash
         {
             MethodInfo method = typeof(ExpressionEvaluator).GetMethod("EvaluateExpression", BindingFlags.Public | BindingFlags.Static);
             MethodInfo generic = method.MakeGenericMethod(p_returnType);
-            return generic.Invoke(null, new object[] { p_expression, p_resolver, p_collection });
+            return generic.Invoke(null, new object[] { p_expression, p_resolver, p_collection, false });
         }
         
-        public static object EvaluateUntypedExpression(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
+        public static object EvaluateUntypedExpression(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection, bool p_referenced)
         {
             hasErrorInEvaluation = false;
             if (_cachedExpressions == null) _cachedExpressions = new Dictionary<string, Expression>();
@@ -43,7 +43,7 @@ namespace Dash
             
             EvaluateFunctionHandler evalFunction = (name, args) => EvaluateFunction(name, args);
             cachedExpression.EvaluateFunction += evalFunction; 
-            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection);
+            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection, p_referenced);
             cachedExpression.EvaluateParameter += evalParam;
             
             object obj = null;
@@ -62,8 +62,8 @@ namespace Dash
 
             return obj;
         }
-        
-        public static T EvaluateExpression<T>(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection = null)
+
+        public static T EvaluateExpression<T>(string p_expression, IParameterResolver p_resolver, IAttributeDataCollection p_collection, bool p_referenced)
         {
             hasErrorInEvaluation = false;
             if (_cachedExpressions == null) _cachedExpressions = new Dictionary<string, Expression>();
@@ -81,7 +81,7 @@ namespace Dash
             
             EvaluateFunctionHandler evalFunction = (name, args) => EvaluateFunction<T>(name, args);
             cachedExpression.EvaluateFunction += evalFunction; 
-            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection);
+            EvaluateParameterHandler evalParam = (name, args) => EvaluateParameter(name, args, p_resolver, p_collection, p_referenced);
             cachedExpression.EvaluateParameter += evalParam;
             
             object obj = null;
@@ -120,10 +120,10 @@ namespace Dash
             return default(T);
         }
 
-        static void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection)
+        static void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection, bool p_referenced)
         {
             //Debug.Log("EvaluateParameter: "+p_name);
-            p_args.Result = p_resolver.Resolve(p_name, p_collection);
+            p_args.Result = p_resolver.Resolve(p_name, p_collection, p_referenced);
             // Only log first error
             if (!hasErrorInEvaluation && p_resolver.hasErrorInResolving)
             {
