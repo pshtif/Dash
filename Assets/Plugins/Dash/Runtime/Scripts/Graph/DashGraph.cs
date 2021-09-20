@@ -244,14 +244,6 @@ namespace Dash
             _connections.Add(connection);
         }
 
-        public void Reconnect(NodeConnection p_connection)
-        {
-            connectingNode = p_connection.outputNode;
-            connectingOutputIndex = p_connection.outputIndex;
-
-            _connections.Remove(p_connection);
-        }
-        
         public void Disconnect(NodeConnection p_connection)
         {
             _connections.Remove(p_connection);
@@ -483,6 +475,14 @@ namespace Dash
             {
                 EditorUtility.SetDirty(this);
             }
+        }
+        
+        public void Reconnect(NodeConnection p_connection)
+        {
+            connectingNode = p_connection.outputNode;
+            connectingOutputIndex = p_connection.outputIndex;
+
+            _connections.Remove(p_connection);
         }
         
         public void DeleteNode(NodeBase p_node)
