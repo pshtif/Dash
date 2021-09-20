@@ -11,5 +11,7 @@ namespace Dash
         public Parameter<bool> global = new Parameter<bool>(false);
 
         public Parameter<bool> sendData = new Parameter<bool>(true);
+        
+        public Parameter<string> sequencerId = new Parameter<string>("");
     }
 }

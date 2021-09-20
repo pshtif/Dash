@@ -3,6 +3,7 @@
  */
 
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,12 @@ namespace Dash
             string eventName = GetParameterValue(Model.eventName, p_flowData);
             bool global = GetParameterValue(Model.global, p_flowData);
             bool sendData = GetParameterValue(Model.sendData, p_flowData);
+            string sequencerId = GetParameterValue(Model.sequencerId, p_flowData);
+
+            if (!sequencerId.IsNullOrWhitespace())
+            {
+                DashCore.Instance.GetOrCreateSequencer(sequencerId).SendEvent(eventName);
+            }
 
             if (global)
             {

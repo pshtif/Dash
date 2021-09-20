@@ -9,6 +9,8 @@ namespace Dash
         public const string defaultEventName = "CustomEvent";
 
         public string eventName = defaultEventName;
+
+        public Parameter<string> sequencerId = new Parameter<string>("");
     }
 
 }

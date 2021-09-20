@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel;
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,9 +23,22 @@ namespace Dash
 
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            //Debug.Log("OnCustomEvent: "+Model.eventName);
-            OnExecuteEnd();
-            OnExecuteOutput(0, p_flowData);
+            string sequencerId = GetParameterValue(Model.sequencerId, p_flowData);
+            if (!sequencerId.IsNullOrWhitespace())
+            {
+                DashCore.Instance.GetOrCreateSequencer(sequencerId).OnEvent(Model.eventName, () =>
+                {
+                    Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
+                    OnExecuteEnd();
+                    OnExecuteOutput(0, p_flowData);        
+                });
+            }
+            else
+            {
+                Debug.Log("OnCustomEvent: "+Model.eventName);
+                OnExecuteEnd();
+                OnExecuteOutput(0, p_flowData);
+            }
         }
 
 #if UNITY_EDITOR
