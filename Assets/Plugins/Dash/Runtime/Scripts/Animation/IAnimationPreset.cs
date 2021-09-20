@@ -9,6 +9,6 @@ namespace Dash
 {
     public interface IAnimationPreset
     {
-        DashTween Execute(Transform p_transform, float p_duration, float p_delay, EaseType p_easeType);
+        DashTween Execute(Transform p_target, IParameterResolver p_resolver, NodeFlowData p_flowData);
     }
 }

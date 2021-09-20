@@ -14,7 +14,7 @@ namespace Dash
         public float shakeStrength = 1;
         public bool fade = false;
 
-        public DashTween Execute(Transform p_transform, float p_duration, float p_delay, EaseType p_easeType)
+        public DashTween Execute(Transform p_transform, IParameterResolver p_resolver, NodeFlowData p_flowData)
         {
             // RectTransform rect = p_transform as RectTransform;
             //

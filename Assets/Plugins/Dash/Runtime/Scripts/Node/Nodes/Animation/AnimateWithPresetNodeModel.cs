@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class AnimateWithPresetNodeModel : AnimationNodeModelBase
+    public class AnimateWithPresetNodeModel : RetargetNodeModelBase
     {
         [ClassPopup(typeof(IAnimationPreset), true)]
         public IAnimationPreset preset;

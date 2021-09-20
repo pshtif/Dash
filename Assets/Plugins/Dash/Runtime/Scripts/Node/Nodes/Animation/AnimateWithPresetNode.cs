@@ -17,15 +17,36 @@ namespace Dash
     [InputCount(1)]
     [Size(200,85)]
     [Serializable]
-    public class AnimateWithPresetNode : AnimationNodeBase<AnimateWithPresetNodeModel>
+    public class AnimateWithPresetNode : RetargetNodeBase<AnimateWithPresetNodeModel>
     {
-        protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
+        protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            float time = GetParameterValue(Model.time, p_flowData);
-            float delay = GetParameterValue(Model.delay, p_flowData);
-            EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
+            if (p_target == null)
+            {
+                ExecuteEnd(p_flowData);
+                return;
+            }
+            
+            DashTween tween = Model.preset.Execute(p_target, ParameterResolver, p_flowData);
 
-            return Model.preset.Execute(p_target, time, delay, easeType);
+            if (tween == null)
+            {
+                ExecuteEnd(p_flowData);
+            } else {
+                tween.OnComplete(() => ExecuteEnd(p_flowData, tween)).Start();
+                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
+            }
+        }
+        
+        protected void ExecuteEnd(NodeFlowData p_flowData, DashTween p_tween = null)
+        {
+            if (p_tween != null)
+            {
+                ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
+            }
+
+            OnExecuteEnd();
+            OnExecuteOutput(0,p_flowData);
         }
     }
 }
