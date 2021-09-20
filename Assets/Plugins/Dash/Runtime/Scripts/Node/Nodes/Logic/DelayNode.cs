@@ -24,12 +24,14 @@ namespace Dash
             else
             {
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                
                 tween.OnComplete(() =>
                 {
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);
                     ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
                 });
+                
                 tween.Start();
                 ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }

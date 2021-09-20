@@ -41,10 +41,13 @@ namespace Dash
                 {
                     float time = GetParameterValue(Model.OnIterationDelay, p_flowData) * i;
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                    
                     tween.OnComplete(() =>
                     {
                         OnExecuteOutput(0, data);
+                        ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
                     });
+                    
                     tween.Start();
                     ((IInternalGraphAccess)Graph).AddActiveTween(tween);
                 }
@@ -58,10 +61,13 @@ namespace Dash
             {
                 float time = Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length;
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
+                
                 tween.OnComplete(() =>
                 {
                     EndLoop(p_flowData);
+                    ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
                 });
+                
                 tween.Start();
                 ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
