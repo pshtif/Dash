@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.5.3RC3 - 19.08.2021
+
+#### Added
+- Added DebugOverride attribute for custom nodes to override execution debug
+- Added RandomOnCircle and RandomInsideCircle expression functions
+- Added prefab editor window for later ID pooling (PREVIEW)
+- Added further documentation on expression functions and parameters
+- Added pooling system into the Core
+- Added support for pooling for SpawnUIPrefabNode and DestroyNode
+
+#### Changed
+- Changed when parameter is null it is threated as a node execution error, returns default value.
+- Changed local retargeting is now the Target information in DashDebugConsole instead of NodeFlowData target parameter
+
+#### Fixed
+- Fixed RetargetToChildrenNode and ForLoopNode correctly assings and destroys tweens on Graph Stop
+- Fixed large time steps in editor preview causing infinity loops in OnComplete->Start tween chains.
+
 ### Release 0.5.2RC3 - 27.07.2021
 
 #### Added
