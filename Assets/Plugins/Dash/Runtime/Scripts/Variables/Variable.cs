@@ -9,6 +9,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditorInternal;
 #endif
 
 namespace Dash
@@ -363,6 +364,14 @@ namespace Dash
                             if (EditorGUI.EndChangeCheck())
                             {
                                 valueField.SetValue(this, new Quaternion(v4.x, v4.y, v4.z, v4.w));
+                            }
+                            break;
+                        case "UnityEngine.Color":
+                            EditorGUI.BeginChangeCheck();
+                            var colorValue = EditorGUILayout.ColorField((Color)valueField.GetValue(this));
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                valueField.SetValue(this, colorValue);
                             }
                             break;
                         default:
