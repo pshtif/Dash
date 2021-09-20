@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -97,9 +98,12 @@ namespace Dash
                 "",
                 "json");
 
-            List<Object> references = new List<Object>();
-            byte[] bytes = p_graph.SerializeToBytes(DataFormat.JSON, ref references);
-            File.WriteAllBytes(path, bytes);
+            if (!path.IsNullOrWhitespace())
+            {
+                List<Object> references = new List<Object>();
+                byte[] bytes = p_graph.SerializeToBytes(DataFormat.JSON, ref references);
+                File.WriteAllBytes(path, bytes);
+            }
         }
 #endif
     }
