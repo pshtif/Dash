@@ -417,7 +417,7 @@ namespace Dash
 
         private static bool RandomF(FunctionArgs p_args)
         {
-            if (p_args.Parameters.Length != 2)
+            if (p_args.Parameters.Length != 0 && p_args.Parameters.Length != 2)
             {
                 errorMessage = "Invalid parameters in RandomF function";
                 return false;
@@ -426,7 +426,17 @@ namespace Dash
             object[] evalParams = p_args.EvaluateParameters();
 
             p_args.HasResult = true;
-            p_args.Result = UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
+            if (p_args.Parameters.Length == 0)
+            {
+                p_args.Result =
+                    UnityEngine.Random.Range(0f, 1f);
+            }
+            else
+            {
+                p_args.Result =
+                    UnityEngine.Random.Range(Convert.ToSingle(evalParams[0]), Convert.ToSingle(evalParams[1]));
+            }
+
             return true;
         }
         
