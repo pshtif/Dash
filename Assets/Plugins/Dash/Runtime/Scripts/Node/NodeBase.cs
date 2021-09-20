@@ -268,18 +268,17 @@ namespace Dash
             hasErrorsInExecution = true;
         }
         
-        protected T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
+        public T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
         {
             if (p_parameter == null)
-            {
-                SetError("Parameter is null can't gather value. Probably a serialization issue that should be reported. Returning default ");
                 return default(T);
-            }
+
             T value = p_parameter.GetValue(ParameterResolver, p_flowData);
             if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
             {
                 SetError(p_parameter.errorMessage);
             }
+            
             hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
             return value;
         }
@@ -344,7 +343,7 @@ namespace Dash
                 string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
                 id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
             }
-
+            
             _model.id = id;
         }
 
@@ -497,6 +496,7 @@ namespace Dash
         {
             NodeBase node = Create(GetType(), p_graph);
             node._model = _model.Clone();
+            node.ValidateUniqueId();
             return node;
         }
 
@@ -523,11 +523,11 @@ namespace Dash
                 DrawId(offsetRect);
             }
 
-            DrawOutline(offsetRect);
-
             if (DashEditorCore.DetailsVisible) 
                 DrawCustomGUI(offsetRect);
             
+            DrawOutline(offsetRect);
+
             DrawConnectors(p_rect);
         }
 
@@ -604,7 +604,7 @@ namespace Dash
                 if (DashEditorCore.EditorConfig.showNodeIds)
                 {
                     GUI.Label(
-                        new Rect(new Vector2(p_rect.x, p_rect.y - 20), new Vector2(rect.width - 5, 20)), _model.id);
+                        new Rect(new Vector2(p_rect.x, p_rect.y + p_rect.height - 4), new Vector2(rect.width - 5, 20)), _model.id);
                 }
             }
             else
@@ -650,6 +650,39 @@ namespace Dash
                     IconManager.GetIcon("Error_Icon"));
             }
 
+            int labelOffset = 0;
+            if (this is InputNode)
+            {
+                InputNode node = this as InputNode;
+                if (Controller.autoStart && Controller.autoStartInput == node.Model.inputName)
+                {
+                    GUI.color = Color.white;
+                    GUIStyle style = new GUIStyle();
+                    style.normal.textColor = Color.green;
+                    style.fontStyle = FontStyle.Bold;
+                    style.fontSize = 20;
+                    style.alignment = TextAnchor.UpperCenter;
+                    GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height, rect.width, 20), "[START]", style);
+                    labelOffset++;
+                }
+            }
+            
+            if (this is InputNode)
+            {
+                InputNode node = this as InputNode;
+                if (Controller.autoOnEnable && Controller.autoOnEnableInput == node.Model.inputName)
+                {
+                    GUI.color = Color.white;
+                    GUIStyle style = new GUIStyle();
+                    style.normal.textColor = Color.green;
+                    style.fontStyle = FontStyle.Bold;
+                    style.fontSize = 20;
+                    style.alignment = TextAnchor.UpperCenter;
+                    GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height + labelOffset * 25, rect.width, 20), "[ONENABLE]", style);
+                    labelOffset++;
+                }
+            }
+
             if (Graph.previewNode == this)
             {
                 GUI.color = Color.white;
@@ -658,9 +691,9 @@ namespace Dash
                 style.fontStyle = FontStyle.Bold;
                 style.fontSize = 20;
                 style.alignment = TextAnchor.UpperCenter;
-                GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height, rect.width, 20), "[PREVIEW]", style);
+                GUI.Label(new Rect(p_rect.x, p_rect.y + rect.height + labelOffset * 25, rect.width, 20), "[PREVIEW]", style);
             }
-            
+
             GUI.color = Color.white;
         }
 
