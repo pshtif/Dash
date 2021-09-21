@@ -24,4 +24,10 @@ public class TestController : MonoBehaviour
     {
         DashCore.Instance.SendEvent("Hide", null);
     }
+    
+    [Button]
+    public void Popup()
+    {
+        DashCore.Instance.SendEvent("Popup", null);
+    }
 }
