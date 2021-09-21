@@ -271,7 +271,7 @@ namespace Dash.Editor
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
 
-                if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex))
+                if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex) && (!p_event.shift || hitNodeIndex == 0))
                 {
                     DashEditorCore.selectedNodes.Clear();
                 }
@@ -386,7 +386,7 @@ namespace Dash.Editor
                         else
                         {
                             GraphBox hitRegion =
-                                Graph.HitsBoxResize(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
+                                Graph.HitsBoxDrag(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
 
                             if (hitRegion != null)
                             {
