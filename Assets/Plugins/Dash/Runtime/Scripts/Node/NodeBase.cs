@@ -232,6 +232,11 @@ namespace Dash
             }
         }
 
+        public virtual bool IsSynchronous()
+        {
+            return true;
+        } 
+
         protected abstract void CreateModel();
         
         protected bool CheckException(NodeFlowData p_flowData, string p_variableName)
@@ -516,6 +521,14 @@ namespace Dash
             if (BaseGUIEnabled)
             {
                 GUI.color = NodeBackgroundColor;
+
+                if (!IsSynchronous() && DashEditorCore.DetailsVisible)
+                {
+                    GUI.DrawTexture(
+                        new Rect(offsetRect.x + offsetRect.width - 24, offsetRect.y - 20, 20, 20),
+                        IconManager.GetIcon("Time_Icon"));
+                }
+
                 GUI.Box(offsetRect, "", skin.GetStyle(BackgroundSkinId));
 
                 DrawTitle(offsetRect);

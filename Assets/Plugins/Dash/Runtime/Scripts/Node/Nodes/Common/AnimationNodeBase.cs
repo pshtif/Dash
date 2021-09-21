@@ -48,6 +48,11 @@ namespace Dash
             OnExecuteEnd();
             OnExecuteOutput(0,p_flowData);
         }
+        
+        public override bool IsSynchronous()
+        {
+            return !Model.time.isExpression && Model.time.GetValue(null) == 0;
+        }
 
 #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)

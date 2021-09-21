@@ -64,6 +64,12 @@ namespace Dash
             }
         }
             
+        public override bool IsSynchronous()
+        {
+            return !Model.onChildDelay.isExpression && Model.onChildDelay.GetValue(null) == 0 &&
+                   Model.onFinishDelay == 0;
+        }
+        
         void ExecuteEnd(NodeFlowData p_flowData)
         {
             OnExecuteEnd();

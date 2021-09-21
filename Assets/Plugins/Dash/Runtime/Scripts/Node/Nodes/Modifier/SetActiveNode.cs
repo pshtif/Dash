@@ -4,6 +4,7 @@
 
 using Dash.Attributes;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Dash
 {
@@ -30,10 +31,12 @@ namespace Dash
             base.DrawCustomGUI(p_rect);
             Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width,
                 rect.height);
-
+            
+            GUI.color = Model.active.isExpression ? Color.cyan : Color.white;
             GUI.Label(
                 new Rect(new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
-                    new Vector2(100, 20)), Model.active.isExpression ? "EXP" : Model.active.GetValue(null) ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
+                    new Vector2(100, 20)), Model.active.isExpression ? "[EXP]" : Model.active.GetValue(null) ? "True" : "False", DashEditorCore.Skin.GetStyle("NodeText"));
+            GUI.color = Color.white;
         }
 #endif
     }

@@ -118,6 +118,30 @@ namespace Dash
 
 #if UNITY_EDITOR
         public override Vector2 Size => new Vector2(150, 85 + (InputCount > 2 ? (InputCount - 2) * 25 : 0));
-        #endif
+        
+        protected override void DrawCustomGUI(Rect p_rect)
+        {
+            base.DrawCustomGUI(p_rect);
+            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width,
+                rect.height);
+
+            GUI.Label(
+                new Rect(new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 52),
+                    new Vector2(100, 20)), Model.accumulationType.ToString(), DashEditorCore.Skin.GetStyle("NodeText"));
+
+            if (Model.accumulationType == AccumulateType.ANY_COUNT ||
+                Model.accumulationType == AccumulateType.UNIQUE_COUNT)
+            {
+                GUI.color = Model.accumulationCount.isExpression ? Color.cyan : Color.white;
+                GUI.Label(
+                    new Rect(
+                        new Vector2(offsetRect.x + offsetRect.width * .5f - 50, offsetRect.y + offsetRect.height - 32),
+                        new Vector2(100, 20)),
+                    Model.accumulationCount.isExpression ? "[EXP]" : Model.accumulationCount.GetValue(null).ToString(),
+                    DashEditorCore.Skin.GetStyle("NodeText"));
+                GUI.color = Color.white;
+            }
+        }
+#endif
     }
 }

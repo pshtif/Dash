@@ -109,6 +109,11 @@ namespace Dash
             }
         }
 
+        public override bool IsSynchronous()
+        {
+            return !Model.delay.isExpression && Model.delay.GetValue(null) == 0;
+        }
+        
 #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)
         {

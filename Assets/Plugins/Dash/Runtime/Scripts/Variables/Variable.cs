@@ -375,7 +375,7 @@ namespace Dash
                             }
                             break;
                         default:
-                            Debug.LogWarning("Variable of type " + type + " is not supported.");
+                            GUILayout.Label("UI not supported.");
                             break;
                     }
                 }
