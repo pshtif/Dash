@@ -84,8 +84,8 @@ namespace Dash
         }
 
         [NonSerialized]
-        private Dictionary<string, List<Action<NodeFlowData>>> _listeners =
-            new Dictionary<string, List<Action<NodeFlowData>>>();
+        private Dictionary<string, List<EventHandler>> _listeners =
+            new Dictionary<string, List<EventHandler>>();
 
         [NonSerialized]
         private DashGlobalVariables _globalVariables;
@@ -155,15 +155,18 @@ namespace Dash
             }
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback)
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
         {
             if (!string.IsNullOrWhiteSpace(p_name))
             {
                 if (!_listeners.ContainsKey(p_name))
-                    _listeners[p_name] = new List<Action<NodeFlowData>>();
+                    _listeners[p_name] = new List<EventHandler>();
 
-                if (!_listeners[p_name].Contains(p_callback))
-                    _listeners[p_name].Add(p_callback);
+                if (!_listeners[p_name].Exists(e => e.Callback == p_callback))
+                {
+                    _listeners[p_name].Add(new EventHandler(p_callback, p_priority));
+                    _listeners[p_name].OrderBy(e => e.Priority);
+                }
             }
             else
             {
@@ -175,9 +178,10 @@ namespace Dash
         {
             if (_listeners.ContainsKey(p_name))
             {
-                _listeners[p_name].Remove(p_callback);
-                // if (_listeners[p_name].Count == 0)
-                //     _listeners.Remove(p_name);
+                _listeners[p_name].RemoveAll(e => e.Callback == p_callback);
+                
+                if (_listeners[p_name].Count == 0)
+                    _listeners.Remove(p_name);
             }
         }
         

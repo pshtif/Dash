@@ -18,7 +18,7 @@ namespace Dash
     {
         protected override void Initialize()
         {
-            _graph.AddListener(Model.eventName, this);
+            _graph.AddListener(Model.eventName, Execute, Model.priority);
         }
 
         override protected void OnExecuteStart(NodeFlowData p_flowData)

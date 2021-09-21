@@ -10,6 +10,8 @@ namespace Dash
 
         public string eventName = defaultEventName;
 
+        public int priority = 0;
+
         public Parameter<string> sequencerId = new Parameter<string>("");
     }
 

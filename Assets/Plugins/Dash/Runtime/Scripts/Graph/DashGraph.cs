@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
@@ -66,10 +67,10 @@ namespace Dash
         public List<NodeConnection> Connections => _connections;
 
         [NonSerialized]
-        private Dictionary<string, List<NodeBase>> _nodeListeners;
+        private Dictionary<string, List<EventHandler>> _nodeListeners;
 
         [NonSerialized]
-        private Dictionary<string, List<Action<NodeFlowData>>> _actionListeners;
+        private Dictionary<string, List<EventHandler>> _callbackListeners;
 
         public DashGraph ParentGraph { get; private set; }
         
@@ -105,8 +106,8 @@ namespace Dash
 
             Controller = p_controller;
 
-            _nodeListeners = new Dictionary<string, List<NodeBase>>();
-            _actionListeners = new Dictionary<string, List<Action<NodeFlowData>>>();
+            _nodeListeners = new Dictionary<string, List<EventHandler>>();
+            _callbackListeners = new Dictionary<string, List<EventHandler>>();
 
             _initialized = true;
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
@@ -124,36 +125,27 @@ namespace Dash
         {
             if (_nodeListeners.ContainsKey(p_name))
             {
-                _nodeListeners[p_name].ToList().ForEach(n => n.Execute(p_flowData));
+                _nodeListeners[p_name].ToList().ForEach(e => e.Invoke(p_flowData));
             }
 
-            if (_actionListeners.ContainsKey(p_name))
+            if (_callbackListeners.ContainsKey(p_name))
             {
-                _actionListeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
+                _callbackListeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
             }
         }
 
-        public void AddListener(string p_name, NodeBase p_node)
+        public void AddListener(string p_name, NodeBase p_node, int p_priority = 0)
         {
-            if (p_name == "")
-                return;
-            
-            if (!_nodeListeners.ContainsKey(p_name))
-                _nodeListeners[p_name] = new List<NodeBase>();
-            
-            if (!_nodeListeners[p_name].Contains(p_node))
-                _nodeListeners[p_name].Add(p_node);
-        }
-
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback)
-        {
-            if (!string.IsNullOrWhiteSpace(p_name))
+            if (!p_name.IsNullOrWhitespace())
             {
-                if (!_actionListeners.ContainsKey(p_name))
-                    _actionListeners[p_name] = new List<Action<NodeFlowData>>();
+                if (!_nodeListeners.ContainsKey(p_name))
+                    _nodeListeners[p_name] = new List<EventHandler>();
 
-                if (!_actionListeners[p_name].Contains(p_callback))
-                    _actionListeners[p_name].Add(p_callback);
+                if (!_nodeListeners[p_name].Exists(e => e.Callback == p_node.Execute))
+                {
+                    _nodeListeners[p_name].Add(new EventHandler(p_node.Execute, p_priority));
+                    _nodeListeners[p_name].OrderBy(e => e.Priority);
+                }
             }
             else
             {
@@ -161,38 +153,58 @@ namespace Dash
             }
         }
 
-        public void RemoveListener(string p_name, NodeBase p_node)
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
         {
-            if (_nodeListeners.ContainsKey(p_name))
+            if (!string.IsNullOrWhiteSpace(p_name))
             {
-                _nodeListeners[p_name].Remove(p_node);
-                if (_nodeListeners[p_name].Count == 0)
-                    _nodeListeners.Remove(p_name);
-            }
-        }
-        
-        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
-        {
-            if (_actionListeners.ContainsKey(p_name))
-            {
-                _actionListeners[p_name].Remove(p_callback);
-                if (_actionListeners[p_name].Count == 0)
-                    _actionListeners.Remove(p_name);
-            }
-        }
+                if (!_callbackListeners.ContainsKey(p_name))
+                    _callbackListeners[p_name] = new List<EventHandler>();
 
-        public void SetListener(string p_name, Action<NodeFlowData> p_callback)
-        {
-            if (_actionListeners.ContainsKey(p_name))
-            {
-                _actionListeners[p_name].Clear();
+                if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
+                {
+                    _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority));
+                    _callbackListeners[p_name].OrderBy(e => e.Priority);
+                }
             }
             else
             {
-                _actionListeners[p_name] = new List<Action<NodeFlowData>>();
+                Debug.LogWarning("Invalid event name, cannot be null or whitespace.");
+            }
+        }
+
+        // public void RemoveListener(string p_name, NodeBase p_node)
+        // {
+        //     if (_nodeListeners.ContainsKey(p_name))
+        //     {
+        //         _nodeListeners[p_name].Remove(p_node);
+        //         if (_nodeListeners[p_name].Count == 0)
+        //             _nodeListeners.Remove(p_name);
+        //     }
+        // }
+
+        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
+        {
+            if (_callbackListeners.ContainsKey(p_name))
+            {
+                _callbackListeners[p_name].RemoveAll(e => e.Callback == p_callback);
+                
+                if (_callbackListeners[p_name].Count == 0)
+                    _callbackListeners.Remove(p_name);
+            }
+        }
+
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
+        {
+            if (_callbackListeners.ContainsKey(p_name))
+            {
+                _callbackListeners[p_name].Clear();
+            }
+            else
+            {
+                _callbackListeners[p_name] = new List<EventHandler>();
             }
             
-            _actionListeners[p_name].Add(p_callback);
+            _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority));
         }
 
         public NodeBase GetNodeById(string p_id)
