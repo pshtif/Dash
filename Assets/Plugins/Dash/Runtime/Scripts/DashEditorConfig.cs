@@ -58,6 +58,8 @@ namespace Dash
         public float zoom = 1;
 
         public bool showNodeIds = false;
+        
+        public bool showNodeAsynchronity = true;
 
         public bool showExperimental = false;
 

@@ -522,7 +522,7 @@ namespace Dash
             {
                 GUI.color = NodeBackgroundColor;
 
-                if (!IsSynchronous() && DashEditorCore.DetailsVisible)
+                if (!IsSynchronous() && DashEditorCore.DetailsVisible && DashEditorCore.EditorConfig.showNodeAsynchronity)
                 {
                     GUI.DrawTexture(
                         new Rect(offsetRect.x + offsetRect.width - 24, offsetRect.y - 20, 20, 20),

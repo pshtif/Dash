@@ -16,6 +16,7 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.EditorConfig.showExperimental, () => DashEditorCore.EditorConfig.showExperimental = !DashEditorCore.EditorConfig.showExperimental);
             menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.EditorConfig.showNodeIds, () => DashEditorCore.EditorConfig.showNodeIds = !DashEditorCore.EditorConfig.showNodeIds);
             menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.EditorConfig.showNodeSearch, () => DashEditorCore.EditorConfig.showNodeSearch = !DashEditorCore.EditorConfig.showNodeSearch);
+            menu.AddItem(new GUIContent("Settings/Show Node Asynchronity"), DashEditorCore.EditorConfig.showNodeAsynchronity, () => DashEditorCore.EditorConfig.showNodeAsynchronity = !DashEditorCore.EditorConfig.showNodeAsynchronity);
             menu.AddItem(new GUIContent("Settings/Enable Sound in Editor"), DashEditorCore.EditorConfig.enableSoundInPreview, () => DashEditorCore.EditorConfig.enableSoundInPreview = !DashEditorCore.EditorConfig.enableSoundInPreview);
             
             menu.AddSeparator("");
