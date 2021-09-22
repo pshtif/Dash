@@ -118,11 +118,13 @@ namespace Dash
         {
             NodeFlowData flowData = new NodeFlowData();
             flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, p_target);
-            
+
             SendEvent(p_name, flowData);
         }
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
+            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
+            
             if (_nodeListeners.ContainsKey(p_name))
             {
                 _nodeListeners[p_name].ToList().ForEach(e => e.Invoke(p_flowData));
@@ -144,7 +146,7 @@ namespace Dash
                 if (!_nodeListeners[p_name].Exists(e => e.Callback == p_node.Execute))
                 {
                     _nodeListeners[p_name].Add(new EventHandler(p_node.Execute, p_priority));
-                    _nodeListeners[p_name].OrderBy(e => e.Priority);
+                    _nodeListeners[p_name] = _nodeListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }
             else
@@ -163,7 +165,7 @@ namespace Dash
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
                     _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority));
-                    _callbackListeners[p_name].OrderBy(e => e.Priority);
+                    _callbackListeners[p_name] = _callbackListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }
             else

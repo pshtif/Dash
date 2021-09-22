@@ -8,5 +8,6 @@ namespace Dash
     {
         public static string TARGET = "target";
         public static string CONTROLLER = "controller";
+        public static string EVENT = "event";
     }
 }

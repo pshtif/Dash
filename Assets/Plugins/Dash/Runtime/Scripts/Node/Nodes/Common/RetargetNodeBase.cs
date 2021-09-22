@@ -85,8 +85,7 @@ namespace Dash
             }
             
             #if UNITY_EDITOR
-            DashEditorDebug.Debug(DebugType.EXECUTE, GetDebugTime(), Graph.Controller, Graph.GraphPath, _model.id,
-                target, "");
+            DashEditorDebug.Debug(new ExecuteDebugItem(Graph.Controller, Graph.GraphPath, _model.id, target));
             #endif
 
             if (CheckException(target, "No valid target found"))

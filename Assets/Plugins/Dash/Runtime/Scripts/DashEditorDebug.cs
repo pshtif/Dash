@@ -2,8 +2,10 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
@@ -12,18 +14,19 @@ namespace Dash
     {
         public static Action OnDebugUpdate;
         
-        static public List<DebugItem> DebugList { get; private set; }
+        static public List<DebugItemBase> DebugList { get; private set; }
         
-        static public void Debug(DebugType p_type, double p_time, DashController p_controller, string p_graphPath, string p_nodeId, Transform p_target, string p_msg)
+        static public void Debug(DebugItemBase p_debugItem)
         {
             if (DebugList == null)
             {
-                DebugList = new List<DebugItem>();
+                DebugList = new List<DebugItemBase>();
             }
             
-            DebugList.Add(new DebugItem(p_type, p_time, p_controller, p_graphPath, p_nodeId, p_target, p_msg));
+            DebugList.Add(p_debugItem);
             
             OnDebugUpdate?.Invoke();
         }
     }
 }
+#endif

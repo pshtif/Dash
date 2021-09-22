@@ -38,6 +38,10 @@ namespace Dash
 
         [NonSerialized] 
         private Dictionary<string,EventSequencer> _sequencers = new Dictionary<string, EventSequencer>();
+        
+        #if UNITY_EDITOR
+        public Dictionary<string,EventSequencer> Sequencers => _sequencers;
+        #endif
 
         [NonSerialized]
         private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
@@ -46,7 +50,7 @@ namespace Dash
         {
             if (!_sequencers.ContainsKey(p_id))
             {
-                var sequencer = new EventSequencer();
+                var sequencer = new EventSequencer(p_id);
                 _sequencers.Add(p_id, sequencer);
             }
 
@@ -165,7 +169,7 @@ namespace Dash
                 if (!_listeners[p_name].Exists(e => e.Callback == p_callback))
                 {
                     _listeners[p_name].Add(new EventHandler(p_callback, p_priority));
-                    _listeners[p_name].OrderBy(e => e.Priority);
+                    _listeners[p_name] = _listeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }
             else

@@ -41,11 +41,13 @@ namespace Dash.Editor
         private void OnGUI()
         {
             var rect = new Rect(0, 0, position.width, position.height);
+            
+            GUICustomUtils.DrawTitle("Dash Prefab Editor");
 
             var scrollViewStyle = new GUIStyle();
             scrollViewStyle.normal.background = DashEditorCore.GetColorTexture(new Color(.1f, .1f, .1f));
 
-            GUILayout.BeginArea(new Rect(5, 5, rect.width-400, rect.height-10));
+            GUILayout.BeginArea(new Rect(5, 35, rect.width-400, rect.height-40));
             _scrollPositionPrefabs = GUILayout.BeginScrollView(_scrollPositionProperties, scrollViewStyle, GUILayout.ExpandWidth(true));
             
             GUILayout.BeginVertical();
@@ -98,7 +100,7 @@ namespace Dash.Editor
             
             GUILayout.EndArea();
 
-            var propertyRect = new Rect(rect.width - 390, 10, 385, rect.height - 25);
+            var propertyRect = new Rect(rect.width - 390, 35, 385, rect.height - 45);
             DrawBoxGUI(propertyRect, "Properties", TextAnchor.UpperRight, Color.white);
             
             GUILayout.BeginArea(new Rect(propertyRect.x+5, propertyRect.y+30, propertyRect.width-10, propertyRect.height-35));

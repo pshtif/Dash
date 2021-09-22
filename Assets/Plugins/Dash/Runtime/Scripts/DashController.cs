@@ -134,8 +134,10 @@ namespace Dash
 
             if (autoStart)
             {
+#if UNITY_EDITOR
+                DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.START, this));
+#endif
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
-
                 Graph.ExecuteGraphInput(autoStartInput, data);
             }
         }
@@ -147,8 +149,10 @@ namespace Dash
             
             if (autoOnEnable)
             {
+#if UNITY_EDITOR
+                DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONENABLE, this));
+#endif
                 NodeFlowData data = NodeFlowDataFactory.Create(transform);
-
                 Graph.ExecuteGraphInput(autoOnEnableInput, data);
             }
         }
@@ -173,7 +177,7 @@ namespace Dash
             if (Graph == null)
                 return;
 
-            Graph.SendEvent(p_name, NodeFlowDataFactory.Create(transform));
+            Graph.SendEvent(p_name, transform);
         }
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
@@ -187,6 +191,8 @@ namespace Dash
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, transform);
             }
+            
+            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
 
             Graph.SendEvent(p_name, p_flowData);
         }
