@@ -23,22 +23,25 @@ namespace Dash
 
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
-            string sequencerId = GetParameterValue(Model.sequencerId, p_flowData);
-            if (!sequencerId.IsNullOrWhitespace())
+            if (Model.useSequencer)
             {
-                DashCore.Instance.GetOrCreateSequencer(sequencerId).OnEvent(Model.eventName, () =>
+                string sequencerId = GetParameterValue(Model.sequencerId, p_flowData);
+                int sequencerPriority = GetParameterValue(Model.sequencerPriority, p_flowData);
+                if (!sequencerId.IsNullOrWhitespace())
                 {
-                    //Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
-                    OnExecuteEnd();
-                    OnExecuteOutput(0, p_flowData);        
-                });
+                    DashCore.Instance.GetOrCreateSequencer(sequencerId).StartEvent(Model.eventName, sequencerPriority, () =>
+                    {
+                        //Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
+                        OnExecuteEnd();
+                        OnExecuteOutput(0, p_flowData);
+                    });
+                    return;
+                }
             }
-            else
-            {
-                //Debug.Log("OnCustomEvent: "+Model.eventName);
-                OnExecuteEnd();
-                OnExecuteOutput(0, p_flowData);
-            }
+            
+            //Debug.Log("OnCustomEvent: "+Model.eventName);
+            OnExecuteEnd();
+            OnExecuteOutput(0, p_flowData);
         }
 
 #if UNITY_EDITOR
