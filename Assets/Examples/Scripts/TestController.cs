@@ -6,28 +6,34 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
     [Button()]
-    public void ShowSection1()
+    public void ShowScreen1()
     {
         DashCore.Instance.SendEvent("Hide", null);
         DashCore.Instance.SendEvent("Show", new NodeFlowData(new Dictionary<string, object>(){{"screen","Screen1"}}));
     }
 
     [Button]
-    public void ShowSection2()
+    public void ShowScreen2()
     {
         DashCore.Instance.SendEvent("Hide", null);
         DashCore.Instance.SendEvent("Show", new NodeFlowData(new Dictionary<string, object>(){{"screen","Screen2"}}));
     }
     
     [Button]
-    public void Hide()
+    public void HideScreen()
     {
         DashCore.Instance.SendEvent("Hide", null);
     }
     
     [Button]
-    public void Popup()
+    public void ShowPopup1()
     {
-        DashCore.Instance.SendEvent("Popup", null);
+        DashCore.Instance.SendEvent("Popup", new NodeFlowData(new Dictionary<string, object>(){{"popup","Popup1"}}));
+    }
+    
+    [Button]
+    public void ShowPopup2()
+    {
+        DashCore.Instance.SendEvent("Popup", new NodeFlowData(new Dictionary<string, object>(){{"popup","Popup2"}}));
     }
 }

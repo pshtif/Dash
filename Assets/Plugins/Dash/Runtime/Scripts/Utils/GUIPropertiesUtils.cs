@@ -559,7 +559,6 @@ namespace Dash
 
                     return false;
                 default:
-                    Debug.Log(p_fieldInfo.FieldType+" : "+(p_fieldInfo.FieldType == typeof(ExposedReference<>)));
                     Debug.Log(type + " type inspection not implemented. Field: " + p_fieldInfo.Name);
                     return false;
             }

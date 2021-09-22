@@ -33,6 +33,8 @@ namespace Dash.Editor
         private void OnGUI()
         {
             var rect = new Rect(0, 0, position.width, position.height);
+            
+            GUICustomUtils.DrawTitle("Dash AOT Scanner/Generator");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleCenter;
