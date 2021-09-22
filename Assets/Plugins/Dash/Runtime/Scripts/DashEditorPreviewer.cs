@@ -95,8 +95,6 @@ namespace Dash
 
         public void StopPreview()
         {
-            // Debug.Log("EditorCore.StopPreview");
-            
             DashTween.CleanAll();
             DashTweenCore.Uninitialize();
             DashCore.Instance.CleanPrefabPools();
@@ -117,7 +115,11 @@ namespace Dash
                 DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
                 DashController controller = controllers.ToList().Find(c => c.previewing);
                 DashEditorCore.EditController(controller, DashEditorCore.EditorConfig.editingGraphPath);
-                controller.previewing = false;
+                if (controller != null)
+                {
+                    controller.previewing = false;
+                }
+
                 EditorUtility.SetDirty(Controller);
                 EditorSceneManager.SaveOpenScenes();
 
