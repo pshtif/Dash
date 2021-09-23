@@ -26,6 +26,9 @@ namespace Dash
             {
                 if (_instance == null)
                 {
+#if UNITY_EDITOR
+                    DashEditorDebug.Debug(new CoreDebugItem(CoreDebugItem.CoreDebugItemType.INITIALIZE));
+#endif
                     _instance = new DashCore();
                 }
                 

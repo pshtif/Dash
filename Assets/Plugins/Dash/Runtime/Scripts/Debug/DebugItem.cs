@@ -11,8 +11,19 @@ using UnityEngine;
 
 namespace Dash
 {
+    public enum DebugItemType
+    {
+        CORE,
+        CONTROLLER,
+        SEQUENCER,
+        NODE,
+        ERROR
+    }
+    
     public abstract class DebugItemBase
     {
+        protected DebugItemType _type;
+        
         protected double _time;
         protected string _timeString;
         protected bool _hasContextMenu;
@@ -33,17 +44,25 @@ namespace Dash
             return time;
         }
 
-        public virtual GenericMenu GetContextMenu()
+        public virtual bool Search(string p_search, bool p_forceLowerCase)
+        {
+            return p_forceLowerCase
+                ? _type.ToString().ToLower().Contains(p_search)
+                : _type.ToString().Contains(p_search);
+        }
+
+        protected virtual GenericMenu GetContextMenu()
         {
             return null;
+
+            //menu.AddItem(new GUIContent("Show Only This Type"), false, () => GoToNode(p_debug));
+            //menu.AddItem(new GUIContent("Go to Node"), false, () => GoToNode(p_debug));
         }
         
         public void ShowContextMenu()
         {
             GenericMenu menu = GetContextMenu();
 
-            //menu.AddItem(new GUIContent("Go to Node"), false, () => GoToNode(p_debug));
-            
             if (menu != null)
                 menu.ShowAsContext();
         }
@@ -59,13 +78,16 @@ namespace Dash
             {
                 GUILayout.Space(4);
                 _style.normal.textColor = Color.gray;
-                TimeSpan span = TimeSpan.FromSeconds(_time);
-                string timeString = span.ToString(@"hh\:mm\:ss\:fff");
-                GUILayout.Label("[" + timeString + "] ", _style, GUILayout.Width(60),
+                GUILayout.Label("[" + _timeString + "] ", _style, GUILayout.Width(60),
                     GUILayout.ExpandWidth(false));
             }
             
             GUILayout.Space(30);
+
+            _style.normal.textColor = new Color(1, 0.5f, 0f);
+            _style.fontStyle = FontStyle.Bold;
+            GUILayout.Label(_type.ToString(), _style, GUILayout.ExpandWidth(false));
+            GUILayout.Space(4);
             
             DrawCustom();
             
@@ -81,50 +103,41 @@ namespace Dash
 
     public class NodeDebugItem : DebugItemBase
     {
+        public enum NodeDebugItemType
+        {
+            EXECUTE
+        }
+
+        protected NodeDebugItemType _subType;
         protected DashController _controller;
         protected string _controllerName;
         protected string _graphPath;
         protected string _relativeGraphPath;
+        private string _targetName;
         protected string _nodeId;
 
-        public NodeDebugItem(DashController p_controller, string p_graphPath,
-            string p_nodeId)
+        public NodeDebugItem(NodeDebugItemType p_subType, DashController p_controller, string p_graphPath,
+            string p_nodeId, Transform p_target)
         {
+            _type = DebugItemType.NODE;
+            _subType = p_subType;
             TimeSpan span = TimeSpan.FromSeconds(_time);
             _timeString = span.ToString(@"hh\:mm\:ss\:fff");
             _controller = p_controller;
             _controllerName = p_controller.name;
             _graphPath = p_graphPath;
             _relativeGraphPath = _graphPath.IndexOf("/") >= 0 ? _graphPath.Substring(_graphPath.IndexOf("/")+1) : "";
-            _nodeId = p_nodeId;
-        }
-
-        public override void DrawCustom()
-        {
-            
-        }
-    }
-
-    public class ExecuteDebugItem : NodeDebugItem
-    {
-        private Transform _target;
-        private string _targetName;
-        
-        public ExecuteDebugItem(DashController p_controller, string p_graphPath,
-            string p_nodeId, Transform p_target) : base(p_controller, p_graphPath, p_nodeId)
-        {
-            _target = p_target;
             _targetName = p_target != null ? p_target.name : "NONE";
+            _nodeId = p_nodeId;
         }
 
         public override void DrawCustom()
         {
             _style.normal.textColor = Color.white;
             _style.fontStyle = FontStyle.Bold;
-            GUILayout.Label("NODE EXECUTE", _style, GUILayout.ExpandWidth(false));
+            GUILayout.Label(_subType.ToString(), _style, GUILayout.ExpandWidth(false));
             _style.fontStyle = FontStyle.Normal;
-            
-            
+
             GUILayout.Space(4);
             _style.normal.textColor = Color.gray;
             GUILayout.Label("Controller: ", _style, GUILayout.ExpandWidth(false));
@@ -149,14 +162,42 @@ namespace Dash
             _style.normal.textColor = Color.magenta;
             GUILayout.Label(_targetName, _style, GUILayout.ExpandWidth(false));
         }
+
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _subType.ToString().ToLower().Contains(p_search)
+                : _subType.ToString().Contains(p_search));
+
+            found = found || (p_forceLowerCase
+                ? _controllerName.ToLower().Contains(p_search)
+                : _controllerName.Contains(p_search));
+
+            found = found || (p_forceLowerCase
+                ? _graphPath.ToLower().Contains(p_search)
+                : _graphPath.Contains(p_search));
+
+            found = found || (p_forceLowerCase
+                ? _nodeId.ToLower().Contains(p_search)
+                : _nodeId.Contains(p_search));
+
+            found = found || (p_forceLowerCase
+                ? _targetName.ToLower().Contains(p_search)
+                : _targetName.Contains(p_search));
+
+            return found;
+        }
     }
     
     public class ErrorDebugItem : DebugItemBase
     {
         private string _message;
         
-        public ErrorDebugItem(string p_msg) 
+        public ErrorDebugItem(string p_msg)
         {
+            _type = DebugItemType.ERROR;
             _message = p_msg;
         }
         
@@ -170,6 +211,17 @@ namespace Dash
             _style.normal.textColor = Color.yellow;
             GUILayout.Label(" "+_message, _style, GUILayout.ExpandWidth(false));
         }
+        
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _message.ToLower().Contains(p_search)
+                : _message.Contains(p_search));
+
+            return found;
+        }
     }
 
     public class SequencerDebugItem : DebugItemBase
@@ -181,14 +233,15 @@ namespace Dash
             ENDED
         }
         
-        private SequencerDebugItemType _type;
+        private SequencerDebugItemType _subType;
         private string _sequencerId;
         private string _event;
         private int _priority;
         
-        public SequencerDebugItem(SequencerDebugItemType p_type, string p_sequencerId, string p_event, int p_priority = 0)
+        public SequencerDebugItem(SequencerDebugItemType p_subType, string p_sequencerId, string p_event, int p_priority = 0)
         {
-            _type = p_type;
+            _type = DebugItemType.SEQUENCER;
+            _subType = p_subType;
             _sequencerId = p_sequencerId;
             _event = p_event;
             _priority = p_priority;
@@ -198,7 +251,7 @@ namespace Dash
         {
             _style.normal.textColor = Color.white;
             _style.fontStyle = FontStyle.Bold;
-            GUILayout.Label("SEQUENCER "+_type.ToString(), _style, GUILayout.ExpandWidth(false));
+            GUILayout.Label(_subType.ToString(), _style, GUILayout.ExpandWidth(false));
             _style.fontStyle = FontStyle.Normal;
 
             GUILayout.Space(4);
@@ -213,7 +266,7 @@ namespace Dash
             _style.normal.textColor = Color.white;
             GUILayout.Label(_event, _style, GUILayout.ExpandWidth(false));
 
-            if (_type == SequencerDebugItemType.ADDED)
+            if (_subType == SequencerDebugItemType.ADDED)
             {
                 GUILayout.Space(4);
                 _style.normal.textColor = Color.gray;
@@ -221,6 +274,25 @@ namespace Dash
                 _style.normal.textColor = Color.white;
                 GUILayout.Label(_priority.ToString(), _style, GUILayout.ExpandWidth(false));
             }
+        }
+        
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _subType.ToString().ToLower().Contains(p_search)
+                : _subType.ToString().Contains(p_search));
+            
+            found = found || (p_forceLowerCase
+                ? _sequencerId.ToLower().Contains(p_search)
+                : _sequencerId.Contains(p_search));
+            
+            found = found || (p_forceLowerCase
+                ? _event.ToLower().Contains(p_search)
+                : _event.Contains(p_search));
+
+            return found;
         }
     }
     
@@ -232,13 +304,14 @@ namespace Dash
             ONENABLE
         }
 
-        private ControllerDebugItemType _type;
+        private ControllerDebugItemType _subType;
         private DashController _controller;
         private string _controllerName;
         
         public ControllerDebugItem(ControllerDebugItemType p_type, DashController p_controller)
         {
-            _type = p_type;
+            _type = DebugItemType.CONTROLLER;
+            _subType = p_type;
             _controller = p_controller;
             _controllerName = p_controller.name;
         }
@@ -247,7 +320,7 @@ namespace Dash
         {
             _style.normal.textColor = Color.white;
             _style.fontStyle = FontStyle.Bold;
-            GUILayout.Label("CONTROLLER "+_type.ToString(), _style, GUILayout.ExpandWidth(false));
+            GUILayout.Label(_subType.ToString(), _style, GUILayout.ExpandWidth(false));
             _style.fontStyle = FontStyle.Normal;
             
             
@@ -256,6 +329,59 @@ namespace Dash
             GUILayout.Label("Controller: ", _style, GUILayout.ExpandWidth(false));
             _style.normal.textColor = Color.green;
             GUILayout.Label(_controllerName, _style, GUILayout.ExpandWidth(false));
+        }
+        
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _subType.ToString().ToLower().Contains(p_search)
+                : _subType.ToString().Contains(p_search));
+            
+            found = found || (p_forceLowerCase
+                ? _controllerName.ToLower().Contains(p_search)
+                : _controllerName.Contains(p_search));
+
+            return found;
+        }
+    }
+    
+    public class CoreDebugItem : DebugItemBase
+    {
+        private string _data;
+        
+        public enum CoreDebugItemType
+        {
+            INITIALIZE
+        }
+
+        private CoreDebugItemType _subType;
+
+        public CoreDebugItem(CoreDebugItemType p_type, string p_data = "")
+        {
+            _type = DebugItemType.CORE;
+            _subType = p_type;
+            _data = p_data;
+        }
+
+        public override void DrawCustom()
+        {
+            _style.normal.textColor = Color.white;
+            _style.fontStyle = FontStyle.Bold;
+            GUILayout.Label(_subType.ToString(), _style, GUILayout.ExpandWidth(false));
+            _style.fontStyle = FontStyle.Normal;
+        }
+        
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _subType.ToString().ToLower().Contains(p_search)
+                : _subType.ToString().Contains(p_search));
+
+            return found;
         }
     }
 }

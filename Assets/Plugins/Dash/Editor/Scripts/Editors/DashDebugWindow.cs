@@ -20,6 +20,7 @@ namespace Dash.Editor
         private bool _showGraph = true;
         private bool _showNode = true;
         private bool _showTarget = true;
+        private bool _forceLowerCase = true;
         
         public static DashDebugWindow Instance { get; private set; }
         
@@ -65,6 +66,8 @@ namespace Dash.Editor
             
             EditorGUIUtility.labelWidth = 35;
             _search = EditorGUILayout.TextField(new GUIContent("Filter:"), _search, GUILayout.ExpandWidth(true));
+            GUILayout.Space(4);
+            _forceLowerCase = GUILayout.Toggle(_forceLowerCase, new GUIContent("Lower Case"), GUILayout.Width(100));
             GUILayout.Space(8);
             EditorGUIUtility.labelWidth = 55;
             DashEditorCore.EditorConfig.maxLog = EditorGUILayout.IntField(new GUIContent("Max Log:"), DashEditorCore.EditorConfig.maxLog, GUILayout.Width(120));
@@ -99,6 +102,8 @@ namespace Dash.Editor
                     bool found = false;
                     if (!string.IsNullOrWhiteSpace(_search))
                     {
+                        found = found || debug.Search(_forceLowerCase ? _search.ToLower() : _search, _forceLowerCase);
+                        
                         if (!found)
                             continue;
                     }

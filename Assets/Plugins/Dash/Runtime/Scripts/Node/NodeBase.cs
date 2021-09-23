@@ -191,7 +191,7 @@ namespace Dash
 #if UNITY_EDITOR
             if (!_hasDebugOverride)
             {
-                DashEditorDebug.Debug(new ExecuteDebugItem(Graph.Controller, Graph.GraphPath, _model.id,
+                DashEditorDebug.Debug(new NodeDebugItem(NodeDebugItem.NodeDebugItemType.EXECUTE, Graph.Controller, Graph.GraphPath, _model.id,
                     p_flowData.GetAttribute<Transform>("target")));
             }
             
@@ -257,7 +257,9 @@ namespace Dash
             if (!string.IsNullOrEmpty(p_warning))
             {
                 Debug.LogWarning(p_warning+" on node " + _model.id);
+                #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ErrorDebugItem(p_warning));
+                #endif
             }
             hasErrorsInExecution = true;
         }
