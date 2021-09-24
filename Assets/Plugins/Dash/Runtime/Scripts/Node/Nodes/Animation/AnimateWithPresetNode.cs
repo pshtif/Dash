@@ -3,7 +3,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Dash.Attributes;
+using OdinSerializer;
 using UnityEngine;
 #if UNITY_EDITOR
 
@@ -19,6 +21,9 @@ namespace Dash
     [Serializable]
     public class AnimateWithPresetNode : RetargetNodeBase<AnimateWithPresetNodeModel>
     {
+        [NonSerialized] 
+        protected List<DashTween> _activeTweens = new List<DashTween>();
+        
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             if (p_target == null)
@@ -33,8 +38,8 @@ namespace Dash
             {
                 ExecuteEnd(p_flowData);
             } else {
+                _activeTweens.Add(tween);
                 tween.OnComplete(() => ExecuteEnd(p_flowData, tween)).Start();
-                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
         }
         
@@ -42,11 +47,16 @@ namespace Dash
         {
             if (p_tween != null)
             {
-                ((IInternalGraphAccess) Graph).RemoveActiveTween(p_tween);
+                _activeTweens.Remove(p_tween);
             }
 
             OnExecuteEnd();
             OnExecuteOutput(0,p_flowData);
+        }
+
+        protected override void Stop_Internal()
+        {
+            
         }
     }
 }

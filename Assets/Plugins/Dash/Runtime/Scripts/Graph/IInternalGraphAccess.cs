@@ -10,11 +10,11 @@ namespace Dash
     {
         DashGraph ParentGraph { set; }
         
-        void AddActiveTween(DashTween p_tween);
-        
-        void RemoveActiveTween(DashTween p_tween);
-
-        void StopActiveTweens(System.Object p_target);
+        // void AddActiveTween(DashTween p_tween);
+        //
+        // void RemoveActiveTween(DashTween p_tween);
+        //
+        // void StopActiveTweens(System.Object p_target);
 
         void OutputExecuted(OutputNode p_node, NodeFlowData p_data);
         

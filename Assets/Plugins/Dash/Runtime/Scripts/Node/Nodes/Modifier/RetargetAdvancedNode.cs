@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Collections.Generic;
 using Dash.Attributes;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace Dash
     [Size(160,85)]
     public class RetargetAdvancedNode : NodeBase<RetargetAdvancedNodeModel>
     {
+        [NonSerialized] 
+        protected List<DashTween> _activeTweens = new List<DashTween>();
+        
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
             List<Transform> transforms = new List<Transform>();
@@ -81,9 +85,13 @@ namespace Dash
                     {
                         float time = Model.delay.GetValue(ParameterResolver) * i;
                         DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
-                        tween.OnComplete(() => OnExecuteOutput(0, data));
+                        tween.OnComplete(() =>
+                        {
+                            _activeTweens.Remove(tween);
+                            OnExecuteOutput(0, data);
+                        });
                         tween.Start();
-                        ((IInternalGraphAccess)Graph).AddActiveTween(tween);
+                        _activeTweens.Add(tween);
                     }
                 }
 
@@ -95,9 +103,13 @@ namespace Dash
                 {
                     float time = Model.delay.GetValue(ParameterResolver) * transforms.Count;
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
-                    tween.OnComplete(() => OnExecuteEnd());
+                    tween.OnComplete(() =>
+                    {
+                        _activeTweens.Remove(tween);
+                        OnExecuteEnd();
+                    });
                     tween.Start();
-                    ((IInternalGraphAccess)Graph).AddActiveTween(tween);
+                    _activeTweens.Add(tween);
                 }
             }
             else

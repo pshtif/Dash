@@ -57,6 +57,11 @@ namespace Dash
             }
         }
 
+        protected override void Stop_Internal()
+        {
+            SubGraph.Stop();
+        }
+
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             if (CheckException(SubGraph, "There is no graph defined"))

@@ -19,7 +19,7 @@ namespace Dash
         protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             RectTransform rectTransform = p_target.GetComponent<RectTransform>();
-
+            
             if (CheckException(rectTransform, "No RectTransform component found on target"))
                 return null;
 
@@ -39,7 +39,7 @@ namespace Dash
 
             Vector2 finalPosition = GetParameterValue<Vector2>(Model.toPosition, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
-
+            
             float time = GetParameterValue(Model.time, p_flowData);
             float delay = GetParameterValue(Model.delay, p_flowData);
             if (time == 0)
@@ -47,20 +47,9 @@ namespace Dash
                 UpdateTween(rectTransform, 1, p_flowData, startPosition, finalPosition, easeType);
                 return null;
             }
-            else
-            {
-                // Virtual tween to update from directly
-                // Tween tween = DOTween
-                //     .To((f) => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition, easing), 0,
-                //         1, time)
-                //     .SetDelay(delay)
-                //     .SetEase(Ease.Linear);
-                //     
-                // return tween;
-
-                return DashTween.To(rectTransform, 0, 1, time).SetDelay(delay)
-                    .OnUpdate(f => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition, easeType));
-            }
+            
+            return DashTween.To(rectTransform, 0, 1, time).SetDelay(delay)
+                .OnUpdate(f => UpdateTween(rectTransform, f, p_flowData, startPosition, finalPosition, easeType));
         }
 
         protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Vector2 p_finalPosition, EaseType p_easeType)

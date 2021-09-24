@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Object = System.Object;
+using Random = UnityEngine.Random;
 
 namespace Dash
 {
@@ -30,6 +32,8 @@ namespace Dash
         private Action _completeCallback;
 
         private bool _justStarted = true;
+        private bool _active = true;
+        public int Id { get; private set; } = 0;
 
         public static DashTween To(Object p_target, float p_from, float p_to, float p_time)
         {
@@ -52,6 +56,7 @@ namespace Dash
             if (_pooledTweens.Count == 0)
             {
                 tween = new DashTween();
+                //tween.Id = Random.Range(100000, 999999);
             }
             else
             {
@@ -63,6 +68,7 @@ namespace Dash
                 tween._updateCallback = null;
                 tween._completeCallback = null;
                 tween._justStarted = true;
+                tween._active = true;
             }
             
             tween.target = p_target;
@@ -98,7 +104,7 @@ namespace Dash
             _completeCallback = p_callback;
             return this;
         }
-
+        
         public void Start()
         {
             if (duration == 0 && delay == 0)
@@ -125,16 +131,16 @@ namespace Dash
             Clean();
         }
 
-        bool IInternalTweenAccess.Update(float p_time)
+        void IInternalTweenAccess.Update(float p_time)
         {
             if (!running)
-                return false;
+                return;
 
             if (_justStarted)
             {
                 _updateCallback?.Invoke(from);
                 _justStarted = false;
-                return false;
+                return;
             }
             
             current += p_time;
@@ -143,22 +149,24 @@ namespace Dash
                 current = duration + delay;
                 
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
-                _completeCallback?.Invoke();
+                _completeCallback.Invoke();
                 Clean();
-                
-                return true;
+
+                return;
             }
             
             if (current > delay)
             {
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
             }
-
-            return false;
         }
 
         void Clean()
         {
+            if (!_active)
+                return;
+            
+            _active = false;
             running = false;
             _activeTweens.Remove(this);
             _pooledTweens.Enqueue(this);

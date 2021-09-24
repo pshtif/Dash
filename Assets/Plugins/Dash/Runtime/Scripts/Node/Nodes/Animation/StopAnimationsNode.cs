@@ -18,14 +18,14 @@ namespace Dash
     {
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            if (Model.allAnimations)
-            {
-                ((IInternalGraphAccess)Graph).StopActiveTweens(null);
-            }
-            else
-            {
-                ((IInternalGraphAccess) Graph).StopActiveTweens(p_target);
-            }
+            // if (Model.allAnimations)
+            // {
+            //     ((IInternalGraphAccess)Graph).StopActiveTweens(null);
+            // }
+            // else
+            // {
+            //     ((IInternalGraphAccess) Graph).StopActiveTweens(p_target);
+            // }
 
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);

@@ -6,6 +6,6 @@ namespace Dash
 {
     public interface IInternalTweenAccess
     {
-        bool Update(float p_time);
+        void Update(float p_time);
     }
 }

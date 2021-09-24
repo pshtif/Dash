@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -58,14 +59,19 @@ namespace Dash
 
         static void UpdateInternal(float p_delta)
         {
-            for (int i = 0; i < DashTween._activeTweens.Count; i++)
+            var cloned = DashTween._activeTweens.ToList();
+            cloned.ForEach(t =>
             {
-                if (((IInternalTweenAccess) DashTween._activeTweens[i]).Update(p_delta))
-                {
-                    // In place removing of completed tweens
-                    i--;
-                }
-            }
+                ((IInternalTweenAccess)t).Update(p_delta);
+            });
+            // for (int i = 0; i < cloned.Count; i++)
+            // {
+            //     if (((IInternalTweenAccess) DashTween.coned[i]).Update(p_delta))
+            //     {
+            //         // In place removing of completed tweens
+            //         i--;
+            //     }
+            // }
         }
         
         #if UNITY_EDITOR

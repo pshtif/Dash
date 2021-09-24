@@ -211,7 +211,7 @@ namespace Dash
             DashCore.Unbind(this);
             
             if (Graph != null) {
-                ((IInternalGraphAccess)Graph).StopActiveTweens(null);
+                Graph.Stop();
             }
         }
 

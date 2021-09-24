@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Dash.Attributes;
 
 namespace Dash
@@ -14,6 +15,9 @@ namespace Dash
     [OutputLabels("OnIteration", "OnFinished")]
     public class ForLoopNode : NodeBase<ForLoopNodeModel>
     {
+        [NonSerialized] 
+        protected List<DashTween> _activeTweens = new List<DashTween>();
+        
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             int firstIndex = GetParameterValue(Model.firstIndex, p_flowData);
@@ -45,11 +49,11 @@ namespace Dash
                     tween.OnComplete(() =>
                     {
                         OnExecuteOutput(0, data);
-                        ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
+                        _activeTweens.Remove(tween);
                     });
                     
+                    _activeTweens.Add(tween);
                     tween.Start();
-                    ((IInternalGraphAccess)Graph).AddActiveTween(tween);
                 }
             }
             
@@ -65,11 +69,11 @@ namespace Dash
                 tween.OnComplete(() =>
                 {
                     EndLoop(p_flowData);
-                    ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
+                    _activeTweens.Remove(tween);
                 });
                 
+                _activeTweens.Add(tween);
                 tween.Start();
-                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
         }
 

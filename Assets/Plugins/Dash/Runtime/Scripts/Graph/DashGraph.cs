@@ -341,8 +341,9 @@ namespace Dash
 
         public void Stop()
         {
-            ((IInternalGraphAccess)this).StopActiveTweens(null);
-            Nodes.FindAll(n => n is SubGraphNode).ForEach(n => n.Graph.Stop());
+            Nodes.ForEach(n => ((INodeAccess)n).Stop());
+            // ((IInternalGraphAccess)this).StopActiveTweens(null);
+            // Nodes.FindAll(n => n is SubGraphNode).ForEach(n => n.Graph.Stop());
         }
 
 #region SERIALIZATION
@@ -421,24 +422,6 @@ namespace Dash
             OnOutput?.Invoke(p_node, p_flowData);
         }
 
-        void IInternalGraphAccess.AddActiveTween(DashTween p_tween)
-        {
-            if (_activeTweens == null) _activeTweens = new List<DashTween>();
-            
-            _activeTweens.Add(p_tween);
-        }
-
-        void IInternalGraphAccess.RemoveActiveTween(DashTween p_tween)
-        {
-            _activeTweens?.Remove(p_tween);
-        }
-
-        void IInternalGraphAccess.StopActiveTweens(System.Object p_target)
-        {
-            _activeTweens?.FindAll(t => t.target == p_target || p_target == null).ForEach(t => t.Kill(false));
-            _activeTweens?.RemoveAll(t => t.target == p_target || p_target == null);
-        }
-        
         void IInternalGraphAccess.SetVersion(int p_version)
         {
             version = p_version;

@@ -2,6 +2,8 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
+using System.Collections.Generic;
 using Dash.Attributes;
 using UnityEngine;
 
@@ -12,8 +14,13 @@ namespace Dash
     [InputCount(1)]
     public class DelayNode : NodeBase<DelayNodeModel>
     {
+        [NonSerialized]
+        protected List<DashTween> _activeTweens;
+        
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
+            
             float time = GetParameterValue(Model.time, p_flowData);
 
             if (time == 0)
@@ -29,17 +36,23 @@ namespace Dash
                 {
                     OnExecuteEnd();
                     OnExecuteOutput(0, p_flowData);
-                    ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
+                    _activeTweens.Remove(tween);
                 });
                 
+                _activeTweens.Add(tween);
                 tween.Start();
-                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
         }
         
         public override bool IsSynchronous()
         {
             return !Model.time.isExpression && Model.time.GetValue(null) == 0;
+        }
+
+        protected override void Stop_Internal()
+        {
+            _activeTweens?.ForEach(t => t.Kill(false));
+            _activeTweens = new List<DashTween>();
         }
         
         #if UNITY_EDITOR

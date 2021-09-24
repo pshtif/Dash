@@ -47,6 +47,15 @@ namespace Dash
                 _onConnectionRemoved = value;
             }
         } 
+        
+        void INodeAccess.Stop()
+        {
+            Stop_Internal();
+            
+            ExecutionCount = 0;
+        }
+
+        protected virtual void Stop_Internal() { }
 
         [SerializeField]
         protected NodeModelBase _model;

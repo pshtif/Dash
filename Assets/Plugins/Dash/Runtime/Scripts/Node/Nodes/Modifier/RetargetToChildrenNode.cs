@@ -2,6 +2,8 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
+using System.Collections.Generic;
 using Dash.Attributes;
 using UnityEngine;
 
@@ -15,8 +17,13 @@ namespace Dash
     [OutputLabels("OnChild", "OnFinished")]
     public class RetargetToChildrenNode : RetargetNodeBase<RetargetToChildrenNodeModel>
     {
+        [NonSerialized] 
+        protected List<DashTween> _activeTweens;
+        
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
+            
             if (p_target == null)
             {
                 ExecuteEnd(p_flowData);
@@ -38,11 +45,11 @@ namespace Dash
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                     tween.OnComplete(() =>
                     {
+                        _activeTweens.Remove(tween);
                         OnExecuteOutput(0, childData);
-                        ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
                     });
+                    _activeTweens.Add(tween);
                     tween.Start();
-                    ((IInternalGraphAccess)Graph).AddActiveTween(tween);
                 }
             }
 
@@ -56,12 +63,18 @@ namespace Dash
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                 tween.OnComplete(() =>
                 {
+                    _activeTweens.Remove(tween);
                     ExecuteEnd(p_flowData);
-                    ((IInternalGraphAccess)Graph).RemoveActiveTween(tween);
                 });
+                _activeTweens.Add(tween);
                 tween.Start();
-                ((IInternalGraphAccess)Graph).AddActiveTween(tween);
             }
+        }
+        
+        protected override void Stop_Internal()
+        {
+            _activeTweens?.ForEach(t => t.Kill(false));
+            _activeTweens = new List<DashTween>();
         }
             
         public override bool IsSynchronous()

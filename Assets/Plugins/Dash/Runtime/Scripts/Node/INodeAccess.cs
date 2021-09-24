@@ -11,5 +11,6 @@ namespace Dash
         Action<NodeConnection> OnConnectionRemoved { get; set; }
         void Initialize();
         void Remove();
+        void Stop();
     }
 }
