@@ -667,7 +667,7 @@ namespace Dash
             if (this is InputNode)
             {
                 InputNode node = this as InputNode;
-                if (Controller.autoStart && Controller.autoStartInput == node.Model.inputName)
+                if (Controller != null && Controller.autoStart && Controller.autoStartInput == node.Model.inputName)
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();
@@ -683,7 +683,7 @@ namespace Dash
             if (this is InputNode)
             {
                 InputNode node = this as InputNode;
-                if (Controller.autoOnEnable && Controller.autoOnEnableInput == node.Model.inputName)
+                if (Controller != null && Controller.autoOnEnable && Controller.autoOnEnableInput == node.Model.inputName)
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();
