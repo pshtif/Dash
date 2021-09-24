@@ -123,13 +123,16 @@ namespace Dash.Editor
                 Controller.autoOnEnableInput =
                     EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
             }
+            
+            GUILayout.EndVertical();
+
+            GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
 
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(target);
             }
-
-            GUILayout.EndVertical();
+            
             serializedObject.ApplyModifiedProperties();
         }
         

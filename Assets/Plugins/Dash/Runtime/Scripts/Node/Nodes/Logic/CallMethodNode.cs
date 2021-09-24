@@ -41,7 +41,6 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-
         public override Vector2 Size
         {
             get

@@ -9,6 +9,40 @@ namespace Dash.Editor
 {
     public class GUIVariableUtils
     {
+        public static void DrawVariablesInspector(DashVariables p_variables, GameObject p_boundObject)
+        {
+            var style = new GUIStyle();
+            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.alignment = TextAnchor.MiddleCenter;
+            style.fontStyle = FontStyle.Bold;
+            style.normal.background = Texture2D.whiteTexture;
+            style.fontSize = 16;
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Variables", style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+
+            int index = 0;
+            p_variables.variables?.ForEach(variable =>
+            {
+                VariableField(p_variables, variable.Name, p_boundObject,
+                    EditorGUIUtility.currentViewWidth - 20);
+                EditorGUILayout.Space(4);
+                index++;
+            });
+
+            if (GUILayout.Button("Add Variable"))
+            {
+                TypesMenu.Show((type) => OnAddNewVariable(p_variables, type));
+            }
+        }
+        
+        static void OnAddNewVariable(DashVariables p_variables, Type p_type)
+        {
+            p_variables.AddNewVariable(p_type);
+            // EditorUtility.SetDirty(target);
+            // PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+        }
+        
         public static void VariableField(DashVariables p_variables, string p_name, GameObject p_boundObject, float p_maxWidth)
         {
             var variable = p_variables.GetVariable(p_name);

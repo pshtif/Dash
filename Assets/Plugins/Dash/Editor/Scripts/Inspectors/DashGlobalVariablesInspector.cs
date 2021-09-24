@@ -23,19 +23,7 @@ namespace Dash.Editor
             {
                 EditorGUI.BeginChangeCheck();
 
-                int index = 0;
-                variables?.ForEach(variable =>
-                {
-                    GUIVariableUtils.VariableField(variables, variable.Name, ((DashGlobalVariables) target).gameObject,
-                        EditorGUIUtility.currentViewWidth - 20);
-                    EditorGUILayout.Space(4);
-                    index++;
-                });
-
-                if (GUILayout.Button("Add Variable"))
-                {
-                    TypesMenu.Show(OnAddNewVariable);
-                }
+                GUIVariableUtils.DrawVariablesInspector(variables, ((DashGlobalVariables) target).gameObject);
 
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -43,13 +31,6 @@ namespace Dash.Editor
                     PrefabUtility.RecordPrefabInstancePropertyModifications(target);
                 }
             }
-        }
-        
-        void OnAddNewVariable(Type p_type)
-        {
-            variables.AddNewVariable(p_type);
-            EditorUtility.SetDirty(target);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(target);
         }
     }
 }

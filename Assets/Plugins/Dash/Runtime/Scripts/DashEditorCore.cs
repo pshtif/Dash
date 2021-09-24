@@ -114,6 +114,11 @@ namespace Dash
             }
             else
             {
+                if (Graph.Controller != null)
+                {
+                    EditorUtility.SetDirty(Graph.Controller);
+                }
+
                 EditorUtility.SetDirty(Graph);
             }
         }
