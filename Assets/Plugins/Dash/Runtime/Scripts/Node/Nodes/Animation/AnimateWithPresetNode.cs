@@ -22,10 +22,12 @@ namespace Dash
     public class AnimateWithPresetNode : RetargetNodeBase<AnimateWithPresetNodeModel>
     {
         [NonSerialized] 
-        protected List<DashTween> _activeTweens = new List<DashTween>();
+        protected List<DashTween> _activeTweens;
         
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
+            
             if (p_target == null)
             {
                 ExecuteEnd(p_flowData);

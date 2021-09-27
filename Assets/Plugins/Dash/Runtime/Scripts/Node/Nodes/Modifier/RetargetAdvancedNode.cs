@@ -16,11 +16,13 @@ namespace Dash
     [Size(160,85)]
     public class RetargetAdvancedNode : NodeBase<RetargetAdvancedNodeModel>
     {
-        [NonSerialized] 
-        protected List<DashTween> _activeTweens = new List<DashTween>();
+        [NonSerialized]
+        protected List<DashTween> _activeTweens;
         
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
+            
             List<Transform> transforms = new List<Transform>();
             Transform transform;
             

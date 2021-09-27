@@ -16,10 +16,12 @@ namespace Dash
     public class ForLoopNode : NodeBase<ForLoopNodeModel>
     {
         [NonSerialized] 
-        protected List<DashTween> _activeTweens = new List<DashTween>();
+        protected List<DashTween> _activeTweens;
         
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
+            if (_activeTweens == null) _activeTweens = new List<DashTween>();
+
             int firstIndex = GetParameterValue(Model.firstIndex, p_flowData);
             int lastIndex = GetParameterValue(Model.lastIndex, p_flowData);
 
