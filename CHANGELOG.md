@@ -4,6 +4,48 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.5.4RC3 - 4.10.2021
+
+#### Added
+
+- Added Graph variable inspector to Controller inspector as well
+- Added priority for event listeners
+- Added expression support to DebugNode
+- Added EndEventNode to end sequences instead of using custom SendEventNode
+- Added additive node selecting using shift
+- Added asynchronity indicator for nodes
+- Added more UI infor for AccumulateNode
+- Added Store/RestoreNode to store/restore the state of transform hierarchy (PREVIEW)
+- Added UI to support Graph box resizing
+- Added hangling of cyclic node referencing
+- Added expression function RandomF can now be called without parameters as well to generate random 0-1 value
+- Added visuals for Start/OnEnable Input nodes
+- Added Set/RemoveAsStartInput Set/RemoveAsOnEnableInput node context menu for Input nodes
+- Added reconnect ui and functionality
+- Added expression reference parameter resolving
+- Added inspector support for Color variables
+- Added expression functions for Color creation
+- Added event sequencers
+- Added multiple new debug events for DashDebugConsole (controller, dash, sequencer...)
+
+#### Changed
+
+- Changed refactored Graph stopping to node interfaces
+- Changed non supported variable types no longer fire Debug warnings just show up in editor
+- Changed implementation of copy pasting of property referencing to more intuitive UI
+- Changed just started tweens now fire update with from position in initial frame
+- Changed controllers list now shallow cloned to avoid iteration errors on controllers change as a result of event action
+- Changed local retargeting UI visuals
+- Changed removed arbitrary SetListener method for nodes, uses callback methods internally now
+- Changed refactored DashDebugConsole to handle internal events using wrapper classes
+
+#### Fixed
+
+- Fixed CallMethod AOT assembly lookup changes
+- Fixed null checks in json import/export
+- Fixed correctly removing tweens from active stack on completion on multiple nodes
+- Fixed expression reference lookups
+
 ### Release 0.5.3RC3 - 19.08.2021
 
 #### Added
