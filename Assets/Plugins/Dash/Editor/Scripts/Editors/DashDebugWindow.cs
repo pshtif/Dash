@@ -29,6 +29,7 @@ namespace Dash.Editor
         {
             Instance = GetWindow<DashDebugWindow>();
             Instance.titleContent = new GUIContent("Dash Debug Console");
+            Instance.minSize = new Vector2(800, 400);
 
             return Instance;
         }

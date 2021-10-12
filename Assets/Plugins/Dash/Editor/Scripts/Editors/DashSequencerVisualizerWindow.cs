@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashSequencerVisualizerWindow : EditorWindow
+    /*public class DashSequencerVisualizerWindow : EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private bool _isDirty = false;
@@ -73,5 +73,5 @@ namespace Dash.Editor
             if (Application.isPlaying)
                 Repaint();
         }
-    }
+    }*/
 }

@@ -19,6 +19,7 @@ namespace Dash.Editor
         {
             Instance = GetWindow<DashPrefabWindow>();
             Instance.titleContent = new GUIContent("Dash Prefab Editor (Preview)");
+            Instance.minSize = new Vector2(800, 400);
 
             return Instance;
         }
@@ -152,20 +153,6 @@ namespace Dash.Editor
             GUILayout.EndArea();
         }
         
-        static void AddClass(object p_type)
-        {
-            if (DashEditorCore.RuntimeConfig.expressionClasses == null)
-            {
-                DashEditorCore.RuntimeConfig.expressionClasses = new List<Type>();
-            }
-
-            if (!DashEditorCore.RuntimeConfig.expressionClasses.Contains((Type)p_type))
-            {
-                DashEditorCore.RuntimeConfig.expressionClasses.Add((Type)p_type);
-            }
-            
-            EditorUtility.SetDirty(DashEditorCore.RuntimeConfig);
-        }
         private void OnInspectorUpdate()
         {
             Repaint();

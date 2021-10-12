@@ -26,6 +26,7 @@ namespace Dash.Editor
         {
             Instance = GetWindow<DashAOTWindow>();
             Instance.titleContent = new GUIContent("Dash AOT Editor");
+            Instance.minSize = new Vector2(800, 400);
 
             return Instance;
         }
@@ -37,14 +38,16 @@ namespace Dash.Editor
             GUICustomUtils.DrawTitle("Dash AOT Scanner/Generator");
 
             var titleStyle = new GUIStyle();
-            titleStyle.alignment = TextAnchor.MiddleCenter;
+            titleStyle.alignment = TextAnchor.MiddleLeft;
+            titleStyle.padding.left = 5;
             titleStyle.normal.textColor = new Color(1, .5f, 0);
             titleStyle.fontStyle = FontStyle.Bold;
             titleStyle.fontSize = 16;
             
             var infoStyle = new GUIStyle();
             infoStyle.normal.textColor = Color.gray;
-            infoStyle.alignment = TextAnchor.MiddleCenter;
+            infoStyle.alignment = TextAnchor.MiddleLeft;
+            infoStyle.padding.left = 5;
 
             var scrollViewStyle = new GUIStyle();
             scrollViewStyle.normal.background = DashEditorCore.GetColorTexture(new Color(.1f, .1f, .1f));
@@ -54,7 +57,7 @@ namespace Dash.Editor
             GUILayout.Label("Last scan found "+(DashEditorCore.EditorConfig.scannedAOTTypes == null ? 0 : DashEditorCore.EditorConfig.scannedAOTTypes.Count)+" types", infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
-            _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-85));
+            _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-100));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.EditorConfig.scannedAOTTypes != null)
@@ -82,7 +85,7 @@ namespace Dash.Editor
             GUILayout.Label("You have "+(DashEditorCore.EditorConfig.explicitAOTTypes == null ? 0 : DashEditorCore.EditorConfig.explicitAOTTypes.Count)+" explicitly defined types.", infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
             
-            _scrollPositionExplicit = GUILayout.BeginScrollView(_scrollPositionExplicit, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-85));
+            _scrollPositionExplicit = GUILayout.BeginScrollView(_scrollPositionExplicit, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-100));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.EditorConfig.explicitAOTTypes != null)

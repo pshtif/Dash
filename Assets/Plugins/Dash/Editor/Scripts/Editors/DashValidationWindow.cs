@@ -22,6 +22,7 @@ namespace Dash.Editor
         {
             Instance = GetWindow<DashValidationWindow>();
             Instance.titleContent = new GUIContent("Dash Validator");
+            Instance.minSize = new Vector2(800, 400);
 
             return Instance;
         }
@@ -67,7 +68,6 @@ namespace Dash.Editor
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
             
-            
             GUILayout.BeginVertical();
             GUILayout.Space(4);
             GUILayout.BeginHorizontal();
@@ -75,7 +75,6 @@ namespace Dash.Editor
             bool scan = GUILayout.Button("Validate Project", GUILayout.Height(40));
 
             GUILayout.EndHorizontal();
-
             GUILayout.EndVertical();
 
             if (_isDirty)

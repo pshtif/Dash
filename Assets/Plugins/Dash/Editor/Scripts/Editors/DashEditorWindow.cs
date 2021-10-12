@@ -54,6 +54,7 @@ namespace Dash.Editor
 
             Instance = GetWindow<DashEditorWindow>();
             Instance.titleContent = new GUIContent("Dash Editor");
+            Instance.minSize = new Vector2(800, 400);
 
             return Instance;
         }
