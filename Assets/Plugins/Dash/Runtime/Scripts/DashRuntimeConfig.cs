@@ -13,14 +13,14 @@ namespace Dash
     [Serializable]
     public class DashRuntimeConfig : ScriptableObject, ISerializationCallbackReceiver
     {
+        public bool enableCustomExpressionClasses = false;
+        
         public List<Type> expressionClasses;
         
         [OdinSerialize]
         public Dictionary<DashPrefabInfo, GameObject> prefabs;
 
-        // public Dictionary<string, string> expressionMacros;
-
-#region SERIALIZATION
+        #region SERIALIZATION
         
         [SerializeField, HideInInspector] 
         private SerializationData _serializationData;

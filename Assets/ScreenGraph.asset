@@ -664,7 +664,7 @@ MonoBehaviour:
       Data: -178.5
     - Name: 
       Entry: 4
-      Data: 106.75
+      Data: 98.53795
     - Name: 
       Entry: 4
       Data: 85
@@ -1434,7 +1434,7 @@ MonoBehaviour:
       Data: 569.25
     - Name: 
       Entry: 4
-      Data: 115.5
+      Data: 109.9422
     - Name: 
       Entry: 4
       Data: 85
@@ -1518,7 +1518,7 @@ MonoBehaviour:
       Data: 1486.75
     - Name: 
       Entry: 4
-      Data: 110.25
+      Data: 103.425491
     - Name: 
       Entry: 4
       Data: 85
@@ -5157,10 +5157,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 747
+      Data: 1381.15454
     - Name: 
       Entry: 4
-      Data: -213.5
+      Data: 854.1115
     - Name: 
       Entry: 8
       Data: 
@@ -5202,6 +5202,6 @@ MonoBehaviour:
       width: 1353.5
       height: 209.75
   previewControlsViewMinimized: 0
-  viewOffset: {x: 747, y: -213.5}
+  viewOffset: {x: 1381.1545, y: 854.1115}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1
