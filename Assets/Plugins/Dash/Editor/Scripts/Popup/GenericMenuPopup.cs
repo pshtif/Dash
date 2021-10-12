@@ -458,8 +458,17 @@ namespace Dash.Editor
                 return rootNode;
             
             var menuItemsField = p_menu.GetType().GetField("menuItems", BindingFlags.Instance | BindingFlags.NonPublic);
-            var menuItems = menuItemsField.GetValue(p_menu) as ArrayList;
+
+            if (menuItemsField == null)
+            {
+                menuItemsField = p_menu.GetType().GetField("m_MenuItems", BindingFlags.Instance | BindingFlags.NonPublic);
+            }
             
+            if (menuItemsField == null)
+                return rootNode;
+
+            var menuItems = menuItemsField.GetValue(p_menu) as IEnumerable;
+
             foreach (var menuItem in menuItems)
             {
                 var menuItemType = menuItem.GetType();
