@@ -4,6 +4,7 @@
 
 #if UNITY_EDITOR
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Security.Permissions;
 using UnityEditor;
@@ -34,7 +35,7 @@ namespace Dash
         {
             _time = GetDebugTime();
             TimeSpan span = TimeSpan.FromSeconds(_time);
-            _timeString = span.ToString(@"hh\:mm\:ss\:fff");
+            _timeString = span.ToString(@"hh\:mm\:ss\:fff", CultureInfo.InvariantCulture);
         }
         
         protected double GetDebugTime()
