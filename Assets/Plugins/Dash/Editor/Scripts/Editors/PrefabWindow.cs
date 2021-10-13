@@ -10,14 +10,14 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashPrefabWindow : EditorWindow
+    public class PrefabWindow : UnityEditor.EditorWindow
     {
-        public static DashPrefabWindow Instance { get; private set; }
+        public static PrefabWindow Instance { get; private set; }
 
         [MenuItem ("Tools/Dash/Prefabs")]
-        public static DashPrefabWindow InitDebugWindow()
+        public static PrefabWindow InitDebugWindow()
         {
-            Instance = GetWindow<DashPrefabWindow>();
+            Instance = GetWindow<PrefabWindow>();
             Instance.titleContent = new GUIContent("Dash Prefab Editor (Preview)");
             Instance.minSize = new Vector2(800, 400);
 
@@ -26,7 +26,7 @@ namespace Dash.Editor
 
         private Vector2 _scrollPositionPrefabs;
         private Vector2 _scrollPositionProperties;
-        private DashPrefabInfo _selectedPrefabInfo;
+        private PrefabInfo _selectedPrefabInfo;
         
         private void OnEnable()
         {
@@ -94,9 +94,9 @@ namespace Dash.Editor
             if (GUILayout.Button("Add Prefab", GUILayout.Height(40)))
             {
                 if (DashEditorCore.RuntimeConfig.prefabs == null)
-                    DashEditorCore.RuntimeConfig.prefabs = new Dictionary<DashPrefabInfo, GameObject>();
+                    DashEditorCore.RuntimeConfig.prefabs = new Dictionary<PrefabInfo, GameObject>();
                 
-                DashEditorCore.RuntimeConfig.prefabs.Add(DashPrefabInfo.GetDefault(), null);
+                DashEditorCore.RuntimeConfig.prefabs.Add(PrefabInfo.GetDefault(), null);
             }
             
             GUILayout.EndArea();

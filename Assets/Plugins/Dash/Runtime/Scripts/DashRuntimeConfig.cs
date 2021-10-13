@@ -18,7 +18,7 @@ namespace Dash
         public List<Type> expressionClasses;
         
         [OdinSerialize]
-        public Dictionary<DashPrefabInfo, GameObject> prefabs;
+        public Dictionary<PrefabInfo, GameObject> prefabs;
 
         #region SERIALIZATION
         

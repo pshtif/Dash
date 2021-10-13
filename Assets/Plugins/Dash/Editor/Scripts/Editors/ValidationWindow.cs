@@ -10,17 +10,17 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashValidationWindow : EditorWindow
+    public class ValidationWindow : EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private bool _isDirty = false;
 
-        public static DashValidationWindow Instance { get; private set; }
+        public static ValidationWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/Validator")]
-        public static DashValidationWindow InitValidationWindow()
+        public static ValidationWindow InitValidationWindow()
         {
-            Instance = GetWindow<DashValidationWindow>();
+            Instance = GetWindow<ValidationWindow>();
             Instance.titleContent = new GUIContent("Dash Validator");
             Instance.minSize = new Vector2(800, 400);
 
@@ -46,7 +46,7 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Validation Scanner", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("Current version: "+DashCore.VERSION, infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Current version: "+DashRuntimeCore.VERSION, infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height-90));

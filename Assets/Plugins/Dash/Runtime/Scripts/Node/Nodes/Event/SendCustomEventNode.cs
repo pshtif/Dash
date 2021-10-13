@@ -31,7 +31,7 @@ namespace Dash
                 }
                 else
                 {
-                    DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                    DashRuntimeCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
                 }
                 #else
                 DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());

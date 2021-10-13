@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashEditorWindow : EditorWindow
+    public class EditorWindow : UnityEditor.EditorWindow
     {
-        public static DashEditorWindow Instance { get; private set; }
+        public static EditorWindow Instance { get; private set; }
 
         public static bool _isDirty = false;
 
@@ -48,11 +48,11 @@ namespace Dash.Editor
 
         protected List<ViewBase> _views;
 
-        public static DashEditorWindow InitEditorWindow(DashController p_dashController)
+        public static EditorWindow InitEditorWindow(DashController p_dashController)
         {
             DashEditorCore.EditController(p_dashController);
 
-            Instance = GetWindow<DashEditorWindow>();
+            Instance = GetWindow<EditorWindow>();
             Instance.titleContent = new GUIContent("Dash Editor");
             Instance.minSize = new Vector2(800, 400);
 

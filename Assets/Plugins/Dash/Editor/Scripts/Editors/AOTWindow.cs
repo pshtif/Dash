@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashAOTWindow : EditorWindow
+    public class AOTWindow : UnityEditor.EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private Vector2 _scrollPositionExplicit;
@@ -19,12 +19,12 @@ namespace Dash.Editor
         private bool _generateLinkXml = true;
         private bool _includeOdin = false;
 
-        public static DashAOTWindow Instance { get; private set; }
+        public static AOTWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/AOT")]
-        public static DashAOTWindow InitDebugWindow()
+        public static AOTWindow InitDebugWindow()
         {
-            Instance = GetWindow<DashAOTWindow>();
+            Instance = GetWindow<AOTWindow>();
             Instance.titleContent = new GUIContent("Dash AOT Editor");
             Instance.minSize = new Vector2(800, 400);
 

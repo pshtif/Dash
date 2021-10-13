@@ -146,7 +146,7 @@ namespace Dash
                 methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
                     BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
                 
-                if (methodInfo == null)
+                if (methodInfo == null && DashRuntimeCore.Instance.Config.enableCustomExpressionClasses)
                 {
                     methodInfo = GetCustomFunction(p_name);
                 }
@@ -193,7 +193,7 @@ namespace Dash
                 methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
                     BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
 
-                if (methodInfo == null && DashCore.Instance.Config.enableCustomExpressionClasses)
+                if (methodInfo == null && DashRuntimeCore.Instance.Config.enableCustomExpressionClasses)
                 {
                     methodInfo = GetCustomFunction(p_name);
                 }

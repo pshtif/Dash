@@ -7,7 +7,7 @@ using System;
 namespace Dash
 {
     [Serializable]
-    public class DashPrefabInfo
+    public class PrefabInfo
     {
         public string name;
 
@@ -17,9 +17,9 @@ namespace Dash
 
         public bool prewarm = false;
 
-        static public DashPrefabInfo GetDefault()
+        static public PrefabInfo GetDefault()
         {
-            var instance = new DashPrefabInfo();
+            var instance = new PrefabInfo();
             instance.name = "default";
             instance.count = 1;
 

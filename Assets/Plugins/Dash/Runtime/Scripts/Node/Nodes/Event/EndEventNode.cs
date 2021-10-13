@@ -21,7 +21,7 @@ namespace Dash
 
             if (!sequencerId.IsNullOrWhitespace())
             {
-                DashCore.Instance.GetOrCreateSequencer(sequencerId).EndEvent(eventName);
+                DashRuntimeCore.Instance.GetOrCreateSequencer(sequencerId).EndEvent(eventName);
             }
             
             OnExecuteEnd();

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashExpressionsWindow : EditorWindow
+    public class ExpressionsWindow : UnityEditor.EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private Vector2 _scrollPositionExplicit;
@@ -19,12 +19,12 @@ namespace Dash.Editor
         private bool _generateLinkXml = true;
         private bool _includeOdin = false;
 
-        public static DashExpressionsWindow Instance { get; private set; }
+        public static ExpressionsWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/Expressions")]
-        public static DashExpressionsWindow InitDebugWindow()
+        public static ExpressionsWindow InitDebugWindow()
         {
-            Instance = GetWindow<DashExpressionsWindow>();
+            Instance = GetWindow<ExpressionsWindow>();
             Instance.titleContent = new GUIContent("Dash Expressions Editor");
             Instance.minSize = new Vector2(800, 400);
 

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashDebugWindow : EditorWindow
+    public class DebugWindow : UnityEditor.EditorWindow
     {
         private String _search = "";
         private Vector2 _scrollPosition;
@@ -22,12 +22,12 @@ namespace Dash.Editor
         private bool _showTarget = true;
         private bool _forceLowerCase = true;
         
-        public static DashDebugWindow Instance { get; private set; }
+        public static DebugWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/Debug")]
-        public static DashDebugWindow InitDebugWindow()
+        public static DebugWindow InitDebugWindow()
         {
-            Instance = GetWindow<DashDebugWindow>();
+            Instance = GetWindow<DebugWindow>();
             Instance.titleContent = new GUIContent("Dash Debug Console");
             Instance.minSize = new Vector2(800, 400);
 

@@ -31,7 +31,7 @@ namespace Dash
             RectTransform spawned = null;
             if (Model.usePooling)
             {
-                if (_prefabPool == null) _prefabPool = DashCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), Model.prefab);
+                if (_prefabPool == null) _prefabPool = DashRuntimeCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), Model.prefab);
                 spawned = _prefabPool.Get() as RectTransform;
                 
                 if (spawned == null)

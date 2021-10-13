@@ -14,7 +14,7 @@ namespace Dash.Editor
 
         private void OpenEditor()
         {
-            DashEditorWindow.InitEditorWindow(Controller);
+            EditorWindow.InitEditorWindow(Controller);
         }
 
         public override void OnInspectorGUI()

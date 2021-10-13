@@ -206,7 +206,7 @@ namespace Dash.Editor
             style = new GUIStyle();
             style.normal.textColor = Color.gray;
             style.alignment = TextAnchor.MiddleRight;
-            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashCore.VERSION,
+            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashRuntimeCore.VERSION,
                 style);
 
             _graphMenuView.Draw(Graph);
@@ -229,7 +229,7 @@ namespace Dash.Editor
             ProcessDragging(p_event, p_rect);
 
             if (Graph.connectingNode != null)
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
         }
         
         void ProcessZoom(Event p_event, Rect p_rect)
@@ -250,7 +250,7 @@ namespace Dash.Editor
             }
 
             DashEditorCore.EditorConfig.zoom = zoom;
-            DashEditorWindow.SetDirty(true);
+            EditorWindow.SetDirty(true);
         }
         
         void ProcessLeftClick(Event p_event, Rect p_rect)
@@ -266,7 +266,7 @@ namespace Dash.Editor
             // Select
             if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
             {
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
                 
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
@@ -336,7 +336,7 @@ namespace Dash.Editor
                         break;
                 }
 
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
             }
 
             if (p_event.type == EventType.MouseUp)
@@ -355,7 +355,7 @@ namespace Dash.Editor
 
                 dragging = DraggingType.NONE;
                 selectedRegion = Rect.zero;
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
             }
         }
 
@@ -406,7 +406,7 @@ namespace Dash.Editor
 
                 p_event.Use();
                 
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
             }
         }
 
@@ -419,7 +419,7 @@ namespace Dash.Editor
                 {
                     Graph.viewOffset += p_event.delta * Zoom;
                     
-                    DashEditorWindow.SetDirty(true);
+                    EditorWindow.SetDirty(true);
                 }
             }
             
@@ -441,7 +441,7 @@ namespace Dash.Editor
                     Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
                 }
                 
-                DashEditorWindow.SetDirty(true);
+                EditorWindow.SetDirty(true);
             }
         }
 

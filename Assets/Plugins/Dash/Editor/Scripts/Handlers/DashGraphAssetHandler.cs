@@ -17,7 +17,7 @@ namespace Dash.Editor
             if (asset.GetType() == typeof(DashGraph))
             {
                 string path = AssetDatabase.GetAssetPath(asset);
-                DashEditorWindow.InitEditorWindow(null);
+                EditorWindow.InitEditorWindow(null);
                 DashEditorCore.EditGraph((DashGraph) AssetDatabase.LoadAssetAtPath<DashGraph>(path));
                 
                 return true;

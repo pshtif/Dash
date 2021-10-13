@@ -81,12 +81,12 @@ namespace Dash
 
         static void CheckDashVersion()
         {
-            if (EditorConfig.lastUsedVersion == 0 || DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
+            if (EditorConfig.lastUsedVersion == 0 || DashRuntimeCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
             {
                 
             }
 
-            EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
+            EditorConfig.lastUsedVersion = DashRuntimeCore.GetVersionNumber();
         }
 
         static void SetExecutionOrder(Type p_classType, int p_order)
@@ -348,11 +348,11 @@ namespace Dash
             
             if (components.Length > 0)
             {
-                DashCore.Instance.SetGlobalVariables(components[0]);
+                DashRuntimeCore.Instance.SetGlobalVariables(components[0]);
             }
             else
             {
-                DashCore.Instance.SetGlobalVariables(null);
+                DashRuntimeCore.Instance.SetGlobalVariables(null);
             }
         }
 

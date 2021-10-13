@@ -11,7 +11,7 @@ namespace Dash.Editor
         public static bool IsCurrentVersion()
         {
             if (DashEditorCore.Graph != null &&
-                DashEditorCore.Graph.version < DashCore.GetVersionNumber())
+                DashEditorCore.Graph.version < DashRuntimeCore.GetVersionNumber())
             {
                 return false;
             }
@@ -37,9 +37,9 @@ namespace Dash.Editor
                 textStyle.wordWrap = true;
                 textStyle.alignment = TextAnchor.UpperCenter;
                 GUILayout.TextArea("This graph was created by previous version of Dash Animation System version: " +
-                                   DashCore.GetVersionString(DashEditorCore.EditorConfig.editingGraph.version) + "\n" +
+                                   DashRuntimeCore.GetVersionString(DashEditorCore.EditorConfig.editingGraph.version) + "\n" +
                                    "The current version is " +
-                                   DashCore.GetVersionString(DashCore.GetVersionNumber()) +
+                                   DashRuntimeCore.GetVersionString(DashRuntimeCore.GetVersionNumber()) +
                                    " so it is needed to migrate and revalidate serialization or the Graph may not work correctly.\n" +
                                    "Make sure you have backup of this Graph.", textStyle);
                 GUILayout.Space(4);
