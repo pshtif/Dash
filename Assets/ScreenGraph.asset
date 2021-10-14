@@ -73,6 +73,10 @@ MonoBehaviour:
     inputIndex: 0
   - active: 1
     inputIndex: 0
+  - active: 1
+    inputIndex: 0
+  - active: 1
+    inputIndex: 0
   _serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -163,7 +167,7 @@ MonoBehaviour:
       Data: 6|System.Collections.Generic.List`1[[Dash.NodeBase, DashRuntime]], mscorlib
     - Name: 
       Entry: 12
-      Data: 31
+      Data: 32
     - Name: 
       Entry: 7
       Data: 7|Dash.SetActiveNode, DashRuntime
@@ -664,7 +668,7 @@ MonoBehaviour:
       Data: -178.5
     - Name: 
       Entry: 4
-      Data: 98.53795
+      Data: 102.375389
     - Name: 
       Entry: 4
       Data: 85
@@ -1434,7 +1438,7 @@ MonoBehaviour:
       Data: 569.25
     - Name: 
       Entry: 4
-      Data: 109.9422
+      Data: 109.375435
     - Name: 
       Entry: 4
       Data: 85
@@ -1518,7 +1522,7 @@ MonoBehaviour:
       Data: 1486.75
     - Name: 
       Entry: 4
-      Data: 103.425491
+      Data: 103.2504
     - Name: 
       Entry: 4
       Data: 85
@@ -4329,6 +4333,69 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 178|Dash.DebugNode, DashRuntime
+    - Name: _model
+      Entry: 7
+      Data: 179|Dash.DebugNodeModel, DashRuntime
+    - Name: id
+      Entry: 1
+      Data: Debug1
+    - Name: comment
+      Entry: 6
+      Data: 
+    - Name: groupsMinized
+      Entry: 3
+      Data: 2
+    - Name: debugFlowData
+      Entry: 5
+      Data: false
+    - Name: debug
+      Entry: 7
+      Data: 180|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+    - Name: isExpression
+      Entry: 5
+      Data: true
+    - Name: expression
+      Entry: 1
+      Data: Test()
+    - Name: _value
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _graph
+      Entry: 10
+      Data: 0
+    - Name: <ExecutionCount>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: rect
+      Entry: 7
+      Data: UnityEngine.Rect, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 682.6123
+    - Name: 
+      Entry: 4
+      Data: -355.873474
+    - Name: 
+      Entry: 4
+      Data: 150
+    - Name: 
+      Entry: 4
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -4336,14 +4403,14 @@ MonoBehaviour:
       Data: 
     - Name: _connections
       Entry: 7
-      Data: 178|System.Collections.Generic.List`1[[Dash.NodeConnection, DashRuntime]],
+      Data: 181|System.Collections.Generic.List`1[[Dash.NodeConnection, DashRuntime]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 30
+      Data: 32
     - Name: 
       Entry: 7
-      Data: 179|Dash.NodeConnection, DashRuntime
+      Data: 182|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4364,7 +4431,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 180|Dash.NodeConnection, DashRuntime
+      Data: 183|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4385,7 +4452,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 181|Dash.NodeConnection, DashRuntime
+      Data: 184|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4406,7 +4473,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 182|Dash.NodeConnection, DashRuntime
+      Data: 185|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4427,7 +4494,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 183|Dash.NodeConnection, DashRuntime
+      Data: 186|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4448,7 +4515,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 184|Dash.NodeConnection, DashRuntime
+      Data: 187|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4469,7 +4536,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 185|Dash.NodeConnection, DashRuntime
+      Data: 188|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4490,7 +4557,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 186|Dash.NodeConnection, DashRuntime
+      Data: 189|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4511,7 +4578,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 187|Dash.NodeConnection, DashRuntime
+      Data: 190|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4532,7 +4599,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 188|Dash.NodeConnection, DashRuntime
+      Data: 191|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4553,7 +4620,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 189|Dash.NodeConnection, DashRuntime
+      Data: 192|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4574,7 +4641,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 190|Dash.NodeConnection, DashRuntime
+      Data: 193|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4595,7 +4662,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 191|Dash.NodeConnection, DashRuntime
+      Data: 194|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4616,7 +4683,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 192|Dash.NodeConnection, DashRuntime
+      Data: 195|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4637,7 +4704,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 193|Dash.NodeConnection, DashRuntime
+      Data: 196|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4658,7 +4725,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 194|Dash.NodeConnection, DashRuntime
+      Data: 197|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4679,7 +4746,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 195|Dash.NodeConnection, DashRuntime
+      Data: 198|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4700,7 +4767,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 196|Dash.NodeConnection, DashRuntime
+      Data: 199|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4721,7 +4788,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 197|Dash.NodeConnection, DashRuntime
+      Data: 200|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4742,7 +4809,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 198|Dash.NodeConnection, DashRuntime
+      Data: 201|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4763,7 +4830,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 199|Dash.NodeConnection, DashRuntime
+      Data: 202|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4784,7 +4851,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 200|Dash.NodeConnection, DashRuntime
+      Data: 203|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4805,7 +4872,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 201|Dash.NodeConnection, DashRuntime
+      Data: 204|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4826,7 +4893,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 202|Dash.NodeConnection, DashRuntime
+      Data: 205|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4847,7 +4914,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 203|Dash.NodeConnection, DashRuntime
+      Data: 206|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4868,7 +4935,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 204|Dash.NodeConnection, DashRuntime
+      Data: 207|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4889,7 +4956,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 205|Dash.NodeConnection, DashRuntime
+      Data: 208|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4910,7 +4977,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 206|Dash.NodeConnection, DashRuntime
+      Data: 209|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4931,7 +4998,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 207|Dash.NodeConnection, DashRuntime
+      Data: 210|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4952,7 +5019,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 208|Dash.NodeConnection, DashRuntime
+      Data: 211|Dash.NodeConnection, DashRuntime
     - Name: active
       Entry: 5
       Data: true
@@ -4972,6 +5039,48 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 212|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 1
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 76
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 65
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 213|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 178
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 27
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -4985,14 +5094,14 @@ MonoBehaviour:
       Data: 1
     - Name: _boxes
       Entry: 7
-      Data: 209|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
+      Data: 214|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 210|Dash.GraphBox, DashRuntime
+      Data: 215|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Hide
@@ -5043,7 +5152,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 211|Dash.GraphBox, DashRuntime
+      Data: 216|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Show
@@ -5094,7 +5203,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 212|Dash.GraphBox, DashRuntime
+      Data: 217|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Initialize
@@ -5157,10 +5266,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1381.15454
+      Data: 356.8937
     - Name: 
       Entry: 4
-      Data: 854.1115
+      Data: 579.874756
     - Name: 
       Entry: 8
       Data: 
@@ -5172,7 +5281,7 @@ MonoBehaviour:
       Data: true
     - Name: previewNode
       Entry: 9
-      Data: 53
+      Data: 25
   _boxes:
   - comment: Hide
     color: {r: 0, g: 0, b: 0, a: 1}
@@ -5202,6 +5311,6 @@ MonoBehaviour:
       width: 1353.5
       height: 209.75
   previewControlsViewMinimized: 0
-  viewOffset: {x: 1381.1545, y: 854.1115}
+  viewOffset: {x: 356.8937, y: 579.87476}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1
