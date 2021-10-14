@@ -114,6 +114,11 @@ namespace Dash
                     return (T) Convert.ChangeType(obj, typeof(T));
                 }
 
+                if (typeof(T) == typeof(string))
+                {
+                    return (T) (object) obj.ToString();
+                }
+
                 Debug.LogWarning("Invalid expression casting " + obj.GetType() + " and " + typeof(T));
             }
 
