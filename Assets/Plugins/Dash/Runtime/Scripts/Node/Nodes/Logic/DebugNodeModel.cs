@@ -11,12 +11,12 @@ namespace Dash
         public bool debugFlowData = false;
 
         [Dependency("debugFlowData", false)]
-        public Parameter<string> debugText;
+        public Parameter<string> debug;
         
-        [Dependency("debugFlowData", false)]
+        /*[Dependency("debugFlowData", false)]
         public string text;
 
         [Dependency("debugFlowData", false)] 
-        public string variable;
+        public string variable;*/
     }
 }

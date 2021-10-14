@@ -21,10 +21,10 @@ namespace Dash
             }
             else
             {
-                var value = GetParameterValue(Model.debugText, p_flowData);
+                var value = GetParameterValue(Model.debug, p_flowData);
                 Debug.Log(value);
                 
-                if (!string.IsNullOrEmpty(Model.text))
+                /*if (!string.IsNullOrEmpty(Model.text))
                 {
                     Debug.Log(Model.text);
                 }
@@ -32,7 +32,7 @@ namespace Dash
                 if (!string.IsNullOrEmpty(Model.variable))
                 {
                     Debug.Log(ParameterResolver.Resolve(Model.variable, p_flowData, false));
-                }
+                }*/
             }
 
             OnExecuteEnd();
