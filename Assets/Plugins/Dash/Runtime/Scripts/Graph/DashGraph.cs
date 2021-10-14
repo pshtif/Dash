@@ -101,7 +101,7 @@ namespace Dash
 
             if (version < DashRuntimeCore.GetVersionNumber())
             {
-                Debug.LogWarning("Current Dash version is higher than initialized Graph, can result in possible issues please migrate in editor. Controller "+p_controller.name);
+                //Debug.LogWarning("Current Dash version is higher than initialized Graph, can result in possible issues please migrate in editor. Controller "+p_controller.name);
             }
 
             Controller = p_controller;
