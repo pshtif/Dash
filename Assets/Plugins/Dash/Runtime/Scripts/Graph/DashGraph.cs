@@ -314,7 +314,7 @@ namespace Dash
         }
 
 
-        public bool ExecuteGraphInput(int p_inputIndex, NodeFlowData p_flowData)
+        /*public bool ExecuteGraphInput(int p_inputIndex, NodeFlowData p_flowData)
         {
             InputNode inputNode = GetNodeByType<InputNode>();
             if (inputNode != null)
@@ -324,7 +324,7 @@ namespace Dash
             }
 
             return false;
-        }
+        }*/
         
         public bool ExecuteGraphInput(string p_inputName, NodeFlowData p_flowData)
         {
