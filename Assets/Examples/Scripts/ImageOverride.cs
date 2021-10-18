@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*
+ *	Created by:  Peter @sHTiF Stefcek
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,22 +16,18 @@ public class ImageOverride : Image
 
     public int tesselation = 1;
 
-    // No tesselation support yet
-    /*public Rect imageRect
+    public static ImageOverride Create(GameObject p_gameObject, int p_tesselation = 0)
     {
-        get
-        {
-            return new Rect(topLeft.x, topLeft.y, bottomRight.x-bottomLeft.x, bottomRight.y - topRight.y);
-        }
+        var image = p_gameObject.GetComponent<Image>();
+        DestroyImmediate(image);
 
-        set
-        {
-            topLeft = new Vector2(value.x, value.y);
-            topRight = new Vector2(value.x + value.width, value.y);
-            bottomLeft = new Vector2(value.x, value.y + value.height);
-            bottomRight = new Vector2(value.x + value.width, value.y + value.height);
-        }
-    } */
+        var over = p_gameObject.AddComponent<ImageOverride>();
+        over.sprite = image.sprite;
+        over.tesselation = p_tesselation;
+        over.Invalidate();
+
+        return over;
+    }
 
     public Vector2 bottomLeft
     {
@@ -81,6 +81,32 @@ public class ImageOverride : Image
             _vertexBuffer[(tesselation+2) * (tesselation + 2) - 1] = vertex;
         }
     }
+
+    public void ApplyForcePoint(Vector3 p_point, float p_force, float p_attenuation = 1)
+    {
+        for (int i = 0; i < 2 + tesselation; i++)
+        {
+            for (int j = 0; j < 2 + tesselation; j++)
+            {
+                int index = i * (tesselation + 2) + j;
+                UIVertex vertex = _vertexBuffer[index];
+                
+                Vector3 pointToVertex = vertex.position - p_point;
+                float attenuatedForce = p_force /  Mathf.Pow(pointToVertex.magnitude, p_attenuation);
+                //Debug.Log(index+" : "+attenuatedForce+" : "+pointToVertex.normalized * attenuatedForce);
+                vertex.position = vertex.position + pointToVertex.normalized * attenuatedForce;
+                
+                _vertexBuffer[index] = vertex;
+            }
+        }
+    }
+
+    public void SetVertexPosition(int p_index, Vector2 p_position)
+    {
+        UIVertex vertex = _vertexBuffer[p_index];
+        vertex.position = p_position;
+        _vertexBuffer[p_index] = vertex;
+    }
     
     public Vector3 QuadLerp(Vector3 p_a, Vector3 p_b, Vector3 p_c, Vector3 p_d, float p_u, float p_v)
     {
@@ -112,10 +138,6 @@ public class ImageOverride : Image
 
     protected override void OnPopulateMesh(VertexHelper p_helper)
     {
-        /*List<UIVertex> stream = new List<UIVertex>();
-        p_helper.GetUIVertexStream(stream);
-        stream.ForEach(v => Debug.Log(v.uv0));*/
-
         p_helper.Clear();
         p_helper.AddUIVertexStream(_vertexBuffer, _indexBuffer);
     }
