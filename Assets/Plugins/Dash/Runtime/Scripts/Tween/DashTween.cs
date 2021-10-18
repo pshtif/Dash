@@ -149,7 +149,7 @@ namespace Dash
                 current = duration + delay;
                 
                 _updateCallback?.Invoke(EaseValue(from, to, (current - delay) / duration, easeType));
-                _completeCallback.Invoke();
+                _completeCallback?.Invoke();
                 Clean();
 
                 return;
