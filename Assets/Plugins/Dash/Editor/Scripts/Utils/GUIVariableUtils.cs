@@ -222,7 +222,7 @@ namespace Dash.Editor
 
         static void OnCopyVariable(DashVariables p_variables, string p_name)
         {
-            DashEditorCore.CopyVariable(p_variables.GetVariable(p_name));
+            VariableUtils.CopyVariable(p_variables.GetVariable(p_name));
         }
     }
 }

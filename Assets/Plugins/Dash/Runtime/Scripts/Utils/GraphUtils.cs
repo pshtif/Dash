@@ -105,6 +105,20 @@ namespace Dash
                 File.WriteAllBytes(path, bytes);
             }
         }
+        
+        // static List<DashGraph> GetAllGraphs()
+        // {
+        //     List<DashGraph> graphs = new List<DashGraph>();
+        //     string[] graphGuids = AssetDatabase.FindAssets("t:DashGraph");
+        //     foreach (string graphGuid in graphGuids)
+        //     {
+        //         string path = AssetDatabase.GUIDToAssetPath(graphGuid);
+        //         DashGraph graph = AssetDatabase.LoadAssetAtPath<DashGraph>(path);
+        //         graphs.Add(graph);
+        //     }
+        //
+        //     return graphs;
+        // }
 #endif
     }
 }

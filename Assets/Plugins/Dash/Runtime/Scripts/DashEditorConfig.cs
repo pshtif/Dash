@@ -15,6 +15,45 @@ namespace Dash
     [Serializable]
     public class DashEditorConfig : ScriptableObject, ISerializationCallbackReceiver
     {
+        public static DashEditorConfig Create()
+        {
+            DashEditorConfig config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
+                typeof(DashEditorConfig));
+            
+            if (config == null)
+            {
+                config = ScriptableObject.CreateInstance<DashEditorConfig>();
+                if (config != null)
+                {
+                    if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                    {
+                        AssetDatabase.CreateFolder("Assets", "Resources");
+                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
+                    } 
+                    else if (!AssetDatabase.IsValidFolder("Assets/Resources/Editor"))
+                    {
+                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
+                    }
+                    AssetDatabase.CreateAsset(config, "Assets/Resources/Editor/DashEditorConfig.asset");
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+                }
+            }
+
+            if (config.theme == null)
+            {
+                Theme theme = ScriptableObject.CreateInstance<Theme>();
+                config.theme = theme;
+                EditorUtility.SetDirty(config);
+                    
+                AssetDatabase.CreateAsset(theme, "Assets/Resources/Editor/DashTheme.asset");
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+
+            return config;
+        }
+        
         public Theme theme;
         
         public int lastUsedVersion = 0;

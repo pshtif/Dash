@@ -78,12 +78,12 @@ namespace Dash.Editor
             
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width/2-6, 20), "Copy Variables"))
             {
-                DashEditorCore.CopyVariables(p_variables);
+                VariableUtils.CopyVariables(p_variables);
             }
             
             if (GUI.Button(new Rect(rect.x + rect.width/2 + 2, rect.y + rect.height - 24, rect.width/2-6, 20), "Paste Variables"))
             {
-                DashEditorCore.PasteVariables(p_variables, p_boundObject);
+                VariableUtils.PasteVariables(p_variables, p_boundObject);
             }
             
             if (EditorGUI.EndChangeCheck())

@@ -197,5 +197,41 @@ namespace Dash
             selectedNodes.AddRange(selectingNodes);
             selectingNodes.Clear();
         }
+        
+        public static NodeBase SearchAndSelectNode(DashGraph p_graph, string p_search, int p_index)
+        {
+            if (p_graph == null)
+                return null;
+
+            var searchNodes = p_graph.Nodes.FindAll(n => n.Id.ToLower().Contains(p_search)).ToList();
+            if (searchNodes.Count == 0)
+                return null;
+            
+            if (p_index >= searchNodes.Count) p_index = p_index%searchNodes.Count;
+
+            var node = searchNodes[p_index];
+            SelectNode(node, p_graph);
+            return node;
+        }
+        
+        // public static bool GoToNode(DashController p_controller, string p_graphPath, string p_nodeId)
+        // {
+        //     if (p_controller == null)
+        //         return false;
+        //     
+        //     EditController(p_controller, p_graphPath);
+        //
+        //     var graph = DashEditorCore.EditorConfig.editingGraph;
+        //     if (graph == null)
+        //         return false;
+        //     
+        //     var node = graph.Nodes.Find(n => n.Id == p_nodeId);
+        //     if (node == null)
+        //         return false;
+        //     
+        //     SelectionManager.SelectNode(node, graph);
+        //
+        //     return true;
+        // }
     }
 }

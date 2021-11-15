@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using OdinSerializer;
 using OdinSerializer.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
@@ -13,6 +14,31 @@ namespace Dash
     [Serializable]
     public class DashRuntimeConfig : ScriptableObject, ISerializationCallbackReceiver
     {
+        #if UNITY_EDITOR
+        public static DashRuntimeConfig Create()
+        {
+            DashRuntimeConfig config = (DashRuntimeConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/DashRuntimeConfig.asset",
+                typeof(DashRuntimeConfig));
+            
+            if (config == null)
+            {
+                config = ScriptableObject.CreateInstance<DashRuntimeConfig>();
+                if (config != null)
+                {
+                    if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                    {
+                        AssetDatabase.CreateFolder("Assets", "Resources");
+                    }
+                    AssetDatabase.CreateAsset(config, "Assets/Resources/DashRuntimeConfig.asset");
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+                }
+            }
+
+            return config;
+        }
+        #endif
+        
         public bool enableCustomExpressionClasses = false;
         
         public List<Type> expressionClasses;
