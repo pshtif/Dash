@@ -10,6 +10,8 @@ namespace Dash.Editor
 {
     public abstract class ViewBase
     {
+        public DashController Controller => DashEditorCore.EditorConfig.editingController;
+        
         public DashGraph Graph =>  DashEditorCore.EditorConfig.editingGraph;
 
         public abstract void DrawGUI(Event p_event, Rect p_rect);

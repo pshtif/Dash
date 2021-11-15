@@ -90,6 +90,22 @@ namespace Dash
                 _editingGraph = value;
             }
         }
+        
+        [SerializeField]
+        private DashController _editingController;
+
+        // This clumsy looking get/set is here due to serialization issues on assembly reload
+        public DashController editingController
+        {
+            get
+            {
+                return _editingController;
+            }
+            set
+            {
+                _editingController = value;
+            }
+        }
 
         public string editingGraphPath = "";
         

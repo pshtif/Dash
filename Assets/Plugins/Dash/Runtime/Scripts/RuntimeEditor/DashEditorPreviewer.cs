@@ -23,7 +23,7 @@ namespace Dash
 
         public bool IsPreviewing => _isPreviewing;
 
-        public DashController Controller => DashEditorCore.EditorConfig.editingGraph.Controller;
+        public DashController Controller => DashEditorCore.EditorConfig.editingController;
 
         private GameObject _selectedBeforePreview;
 
@@ -48,6 +48,8 @@ namespace Dash
             _stage = PrefabStageUtility.GetCurrentPrefabStage();
 
             _controllerSelected = Selection.activeGameObject == Controller.gameObject;
+            
+            Debug.Log(Controller);
             
             Controller.previewing = true;
             // Debug.Log("Set controller dirty");
@@ -115,12 +117,10 @@ namespace Dash
                 DashController[] controllers = GameObject.FindObjectsOfType<DashController>();
                 DashController controller = controllers.ToList().Find(c => c.previewing);
                 DashEditorCore.EditController(controller, DashEditorCore.EditorConfig.editingGraphPath);
-                if (controller != null)
-                {
-                    controller.previewing = false;
-                }
-
-                EditorUtility.SetDirty(Controller);
+                controller.previewing = false;
+                
+                Debug.Log(controller);
+                EditorUtility.SetDirty(controller);
                 EditorSceneManager.SaveOpenScenes();
 
                 Selection.activeGameObject = controller.gameObject;

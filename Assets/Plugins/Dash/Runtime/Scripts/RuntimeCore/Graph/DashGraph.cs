@@ -87,8 +87,6 @@ namespace Dash
         [NonSerialized]
         protected bool _initialized = false;
 
-        public bool IsBound => Controller != null && Controller.IsGraphBound;
-        
         public DashController Controller { get; private set; }
 
         public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
@@ -371,8 +369,17 @@ namespace Dash
             }
             
             #if UNITY_EDITOR
-            if (IsBound && Controller != null)
-                Controller.ReserializeBound();
+            if (DashEditorCore.EditorConfig.editingController != null)
+            {
+                if (DashEditorCore.EditorConfig.editingGraph != this)
+                {
+                    Debug.LogWarning("Reseliazing graph that we are not editing! Contact support with use case.");
+                }
+                else
+                {
+                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
+                }
+            }
             #endif
         }
         
@@ -435,7 +442,7 @@ namespace Dash
 
         void IEditorGraphAccess.SetController(DashController p_controller)
         {
-            Controller = p_controller;
+            //Controller = p_controller;
         }
 
 #endregion
@@ -455,20 +462,20 @@ namespace Dash
         [NonSerialized]
         public int connectingOutputIndex;
 
-        public void ValidateSerialization()
-        {
-            Nodes?.ForEach(n => n.ValidateSerialization());
-            version = DashRuntimeCore.GetVersionNumber();
-            if (IsBound)
-            {
-                Controller.ReserializeBound();
-                EditorUtility.SetDirty(Controller);
-            }
-            else
-            {
-                EditorUtility.SetDirty(this);
-            }
-        }
+        // public void ValidateSerialization()
+        // {
+        //     Nodes?.ForEach(n => n.ValidateSerialization());
+        //     version = DashRuntimeCore.GetVersionNumber();
+        //     if (IsBound)
+        //     {
+        //         Controller.ReserializeBound();
+        //         EditorUtility.SetDirty(Controller);
+        //     }
+        //     else
+        //     {
+        //         EditorUtility.SetDirty(this);
+        //     }
+        // }
         
         public void Reconnect(NodeConnection p_connection)
         {

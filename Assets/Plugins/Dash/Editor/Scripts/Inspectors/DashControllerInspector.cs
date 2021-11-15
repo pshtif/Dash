@@ -146,7 +146,9 @@ namespace Dash.Editor
 
             // If we are currently editing this controller refresh
             if (editing)
+            {
                 DashEditorCore.EditController(Controller);
+            }
         }
     }
 }

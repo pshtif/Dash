@@ -115,7 +115,8 @@ namespace Dash
                                 {
                                     Debug.Log(dashController.name+" : "+dashController.gameObject.name);
                                     Log.Add(("Validating serialization for DashController "+dashController.gameObject.name, Color.cyan));
-                                    dashController.Graph.ValidateSerialization();
+                                    Debug.LogWarning("Validation refactoring to controller centric not working atm.");
+                                    //dashController.ValidateSerialization();
                                 }
                                 finally
                                 {
@@ -256,7 +257,8 @@ namespace Dash
             {
                 Log.Add(("Found DashController in scene external assets "+obj.name, Color.white));
                 Log.Add(("Validating serialization "+obj.name, Color.cyan));
-                ((DashController) obj).Graph.ValidateSerialization();
+                Debug.LogWarning("Validation refactoring to controller centric not working atm.");
+                //((DashController) obj).Graph.ValidateSerialization();
             }
         }
     }

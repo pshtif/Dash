@@ -56,7 +56,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -183,7 +182,7 @@ MonoBehaviour:
       Data: -132
     - Name: 
       Entry: 4
-      Data: 115
+      Data: 107
     - Name: 
       Entry: 4
       Data: 85
@@ -385,7 +384,7 @@ MonoBehaviour:
       Data: 367.25
     - Name: 
       Entry: 4
-      Data: 131
+      Data: 123
     - Name: 
       Entry: 4
       Data: 85
@@ -405,11 +404,11 @@ MonoBehaviour:
       Entry: 1
       Data: Branch1
     - Name: comment
-      Entry: 6
+      Entry: 1
       Data: 
     - Name: groupsMinized
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: expression
       Entry: 7
       Data: 19|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
@@ -442,10 +441,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 724
+      Data: 718
     - Name: 
       Entry: 4
-      Data: 271.75
+      Data: 262.75
     - Name: 
       Entry: 4
       Data: 150
@@ -3230,8 +3229,8 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: <Controller>k__BackingField
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: _boxes
       Entry: 7
       Data: 137|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
@@ -3406,10 +3405,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 180.25
+      Data: -145.75
     - Name: 
       Entry: 4
-      Data: 453.5
+      Data: 39.5
     - Name: 
       Entry: 8
       Data: 
@@ -3451,6 +3450,6 @@ MonoBehaviour:
       width: 548
       height: 217.25
   previewControlsViewMinimized: 0
-  viewOffset: {x: 180.25, y: 453.5}
+  viewOffset: {x: -145.75, y: 39.5}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1

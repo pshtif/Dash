@@ -20,7 +20,7 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Settings/Enable Sound in Editor"), DashEditorCore.EditorConfig.enableSoundInPreview, () => DashEditorCore.EditorConfig.enableSoundInPreview = !DashEditorCore.EditorConfig.enableSoundInPreview);
             
             menu.AddSeparator("");
-            menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
+            //menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
             menu.AddItem(new GUIContent("Advanced/Cleanup Null"), false, p_graph.RemoveNullReferences);
             menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
             

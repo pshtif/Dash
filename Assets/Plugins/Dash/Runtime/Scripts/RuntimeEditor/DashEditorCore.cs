@@ -87,16 +87,16 @@ namespace Dash
             if (Graph == null)
                 return;
 
-            if (Graph.IsBound)
+            if (EditorConfig.editingController != null && EditorConfig.editingController.IsGraphBound)
             {
-                Graph.Controller.ReserializeBound();
-                EditorUtility.SetDirty(Graph.Controller);
+                EditorConfig.editingController.ReserializeBound();
+                EditorUtility.SetDirty(EditorConfig.editingController);
             }
             else
             {
-                if (Graph.Controller != null)
+                if (EditorConfig.editingController != null)
                 {
-                    EditorUtility.SetDirty(Graph.Controller);
+                    EditorUtility.SetDirty(EditorConfig.editingController);
                 }
 
                 EditorUtility.SetDirty(Graph);
@@ -111,11 +111,12 @@ namespace Dash
             {
                 EditorConfig.editingGraphPath = p_graphPath;
                 EditorConfig.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
-
-                if (Graph != null)
-                {
-                    ((IEditorGraphAccess) Graph).SetController(p_controller);
-                }
+                EditorConfig.editingController = p_controller;
+                    
+                // if (Graph != null)
+                // {
+                //     ((IEditorGraphAccess) Graph).SetController(p_controller);
+                // }
             }
             else
             {
@@ -129,6 +130,7 @@ namespace Dash
             
             EditorConfig.editingGraphPath = "";
             EditorConfig.editingGraph = p_graph;
+            
             if (p_graph != null)
                 ((IEditorGraphAccess)p_graph).SetController(null);
         }

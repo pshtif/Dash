@@ -17,16 +17,16 @@ namespace Dash.Attributes
     //     }
     // }
     
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-    public class BindDashVariable : Attribute
-    {
-        public bool overwrite { get; } 
-        public string customName { get; }
-
-        public BindDashVariable(bool p_overwrite = true, string p_customName = "")
-        {
-            overwrite = p_overwrite;
-            customName = p_customName;
-        }
-    }
+    // [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    // public class BindDashVariable : Attribute
+    // {
+    //     public bool overwrite { get; } 
+    //     public string customName { get; }
+    //
+    //     public BindDashVariable(bool p_overwrite = true, string p_customName = "")
+    //     {
+    //         overwrite = p_overwrite;
+    //         customName = p_customName;
+    //     }
+    // }
 }
