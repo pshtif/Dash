@@ -112,11 +112,6 @@ namespace Dash
                 EditorConfig.editingGraphPath = p_graphPath;
                 EditorConfig.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
                 EditorConfig.editingController = p_controller;
-                    
-                // if (Graph != null)
-                // {
-                //     ((IEditorGraphAccess) Graph).SetController(p_controller);
-                // }
             }
             else
             {
@@ -130,9 +125,7 @@ namespace Dash
             
             EditorConfig.editingGraphPath = "";
             EditorConfig.editingGraph = p_graph;
-            
-            if (p_graph != null)
-                ((IEditorGraphAccess)p_graph).SetController(null);
+            EditorConfig.editingController = null;
         }
         
         public static void UnloadGraph()

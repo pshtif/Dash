@@ -19,7 +19,7 @@ namespace Dash
 {
     [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IEditorGraphAccess, IInternalGraphAccess
+    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IInternalGraphAccess
     {
         public int version { get; private set; } = 0;
 
@@ -310,19 +310,6 @@ namespace Dash
             return graph;
         }
 
-
-        /*public bool ExecuteGraphInput(int p_inputIndex, NodeFlowData p_flowData)
-        {
-            InputNode inputNode = GetNodeByType<InputNode>();
-            if (inputNode != null)
-            {
-                inputNode.Execute(p_flowData);
-                return true;
-            }
-
-            return false;
-        }*/
-        
         public bool ExecuteGraphInput(string p_inputName, NodeFlowData p_flowData)
         {
             InputNode inputNode = GetAllNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
@@ -373,7 +360,7 @@ namespace Dash
             {
                 if (DashEditorCore.EditorConfig.editingGraph != this)
                 {
-                    Debug.LogWarning("Reseliazing graph that we are not editing! Contact support with use case.");
+                    Debug.LogWarning("Reserializing graph that we are not editing! Contact support with use case.");
                 }
                 else
                 {
@@ -437,15 +424,6 @@ namespace Dash
 
 #region EDITOR_CODE
 #if UNITY_EDITOR
-        
-#region EDITOR_ACCESS
-
-        void IEditorGraphAccess.SetController(DashController p_controller)
-        {
-            //Controller = p_controller;
-        }
-
-#endregion
 
         [SerializeField]
         private List<GraphBox> _boxes = new List<GraphBox>();

@@ -49,8 +49,6 @@ namespace Dash
 
             _controllerSelected = Selection.activeGameObject == Controller.gameObject;
             
-            Debug.Log(Controller);
-            
             Controller.previewing = true;
             // Debug.Log("Set controller dirty");
             DashEditorCore.SetDirty();
@@ -119,7 +117,6 @@ namespace Dash
                 DashEditorCore.EditController(controller, DashEditorCore.EditorConfig.editingGraphPath);
                 controller.previewing = false;
                 
-                Debug.Log(controller);
                 EditorUtility.SetDirty(controller);
                 EditorSceneManager.SaveOpenScenes();
 
