@@ -126,7 +126,10 @@ namespace Dash.Editor
             
             GUILayout.EndVertical();
 
-            GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
+            if (Controller.Graph != null)
+            {
+                GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
+            }
 
             if (EditorGUI.EndChangeCheck())
             {

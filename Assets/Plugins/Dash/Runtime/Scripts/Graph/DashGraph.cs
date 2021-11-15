@@ -13,7 +13,6 @@ using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
-
 #endif
 
 namespace Dash
@@ -512,7 +511,7 @@ namespace Dash
             // Draw user interaction with connections
             NodeConnection.DrawConnectionToMouse(connectingNode, connectingOutputIndex, Event.current.mousePosition);
 
-            EditorUtility.SetDirty(this);
+            DashEditorCore.SetDirty();
         }
 
         public void DrawComments(Rect p_rect, bool p_zoomed)
