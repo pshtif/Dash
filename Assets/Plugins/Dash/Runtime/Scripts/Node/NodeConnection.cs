@@ -64,8 +64,8 @@ namespace Dash
             Vector3 endPos = new Vector3(inputRect.x + inputRect.width / 2, inputRect.y + inputRect.height / 2);
 
             Color connectionColor = active
-                ? DashEditorCore.CONNECTION_ACTIVE_COLOR
-                : DashEditorCore.CONNECTION_INACTIVE_COLOR;
+                ? DashThemeManager.CONNECTION_ACTIVE_COLOR
+                : DashThemeManager.CONNECTION_INACTIVE_COLOR;
 
             if (executeTime > 0)
             {

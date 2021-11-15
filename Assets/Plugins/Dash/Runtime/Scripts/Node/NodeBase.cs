@@ -321,13 +321,13 @@ namespace Dash
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             
             IconAttribute iconAttribute = (IconAttribute) Attribute.GetCustomAttribute(GetType(), typeof(IconAttribute));
-            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.GetNodeIconByCategory(categoryAttribute.type);
+            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashThemeManager.GetNodeIconByCategory(categoryAttribute.type);
             
-            _nodeBackgroundColor = DashEditorCore.GetNodeBackgroundColorByCategory(categoryAttribute.type);
+            _nodeBackgroundColor = DashThemeManager.GetNodeBackgroundColorByCategory(categoryAttribute.type);
             
-            _titleBackgroundColor = DashEditorCore.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
+            _titleBackgroundColor = DashThemeManager.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
             
-            _titleTextColor = DashEditorCore.GetNodeTitleTextColorByCategory(categoryAttribute.type);
+            _titleTextColor = DashThemeManager.GetNodeTitleTextColorByCategory(categoryAttribute.type);
 
             #endif
 
@@ -743,8 +743,8 @@ namespace Dash
             for (int i = 0; i < count; i++)
             {
                 bool isConnected = Graph.HasInputConnected(this, i);
-                GUI.color = isConnected ? DashEditorCore.CONNECTOR_INPUT_CONNECTED_COLOR
-                    : DashEditorCore.CONNECTOR_INPUT_DISCONNECTED_COLOR;
+                GUI.color = isConnected ? DashThemeManager.CONNECTOR_INPUT_CONNECTED_COLOR
+                    : DashThemeManager.CONNECTOR_INPUT_DISCONNECTED_COLOR;
 
                 if (IsExecuting)
                     GUI.color = Color.cyan;
@@ -770,8 +770,8 @@ namespace Dash
             for (int i = 0; i < OutputCount; i++)
             {
                 bool isConnected = Graph.HasOutputConnected(this, i); 
-                GUI.color = isConnected ? DashEditorCore.CONNECTOR_OUTPUT_CONNECTED_COLOR
-                    : DashEditorCore.CONNECTOR_OUTPUT_DISCONNECTED_COLOR;
+                GUI.color = isConnected ? DashThemeManager.CONNECTOR_OUTPUT_CONNECTED_COLOR
+                    : DashThemeManager.CONNECTOR_OUTPUT_DISCONNECTED_COLOR;
 
                 if (Graph.connectingNode == this && Graph.connectingOutputIndex == i)
                     GUI.color = Color.green;

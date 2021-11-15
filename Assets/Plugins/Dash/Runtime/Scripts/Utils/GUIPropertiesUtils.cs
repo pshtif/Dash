@@ -310,7 +310,7 @@ namespace Dash
                 if (param.isExpression)
                 {
                     GUILayout.BeginHorizontal();
-                    GUI.color = DashEditorCore.PARAMETER_COLOR;
+                    GUI.color = DashThemeManager.PARAMETER_COLOR;
                     GUILayout.Label(p_name, GUILayout.Width(120));
                     HandleReferencing(p_reference, p_fieldInfo, false, param);
                     param.expression = GUILayout.TextArea(param.expression, GUILayout.ExpandWidth(true));
@@ -323,7 +323,7 @@ namespace Dash
                 }
 
                 
-                GUI.color = param.isExpression ? DashEditorCore.PARAMETER_COLOR : Color.gray;
+                GUI.color = param.isExpression ? DashThemeManager.PARAMETER_COLOR : Color.gray;
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
                     param.isExpression = !param.isExpression;
@@ -381,7 +381,7 @@ namespace Dash
             if ((bool)useExpressionField.GetValue(p_object))
             {
                 GUILayout.BeginHorizontal();
-                GUI.color = DashEditorCore.PARAMETER_COLOR;
+                GUI.color = DashThemeManager.PARAMETER_COLOR;
                 GUILayout.Label(p_name, GUILayout.Width(120));
                 HandleReferencing(p_reference, expressionField, true);
                 string expression = GUILayout.TextArea((string)expressionField.GetValue(p_object), GUILayout.ExpandWidth(true));
@@ -395,7 +395,7 @@ namespace Dash
             }
 
             bool useExpression = (bool)useExpressionField.GetValue(p_object);
-            GUI.color = useExpression ? DashEditorCore.PARAMETER_COLOR : Color.gray;
+            GUI.color = useExpression ? DashThemeManager.PARAMETER_COLOR : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
                 useExpressionField.SetValue(p_object, !useExpression);
