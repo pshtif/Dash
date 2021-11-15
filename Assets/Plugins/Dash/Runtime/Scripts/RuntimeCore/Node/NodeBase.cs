@@ -560,7 +560,7 @@ namespace Dash
         
         public void DrawComment(Rect p_rect, bool p_zoomed = true)
         {
-            if (_model.comment == null)
+            if (_model.comment.IsNullOrWhitespace())
                 return;
 
             Rect offsetRect = p_zoomed
