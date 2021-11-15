@@ -42,7 +42,7 @@ namespace Dash.Editor
             infoStyle.alignment = TextAnchor.MiddleCenter;
 
             var scrollViewStyle = new GUIStyle();
-            scrollViewStyle.normal.background = DashThemeManager.GetColorTexture(new Color(.1f, .1f, .1f));
+            scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));
             
             GUILayout.Space(4);
             GUILayout.Label("Validation Scanner", titleStyle, GUILayout.ExpandWidth(true));

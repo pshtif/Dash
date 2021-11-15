@@ -15,7 +15,6 @@ namespace Dash.Editor
 { 
     public class CreateNodeContextMenu
     {
-        static private DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         static private Vector2 _lastMousePosition;
         static public void Show()
@@ -74,7 +73,7 @@ namespace Dash.Editor
                     }
                 }
 
-                if (DashEditorCore.HasCopiedNodes())
+                if (SelectionManager.HasCopiedNodes())
                 {
                     menu.AddItem(new GUIContent("Paste Nodes"), false, PasteNodes);
                 }
@@ -100,7 +99,7 @@ namespace Dash.Editor
         
         static bool CheckMultiple(Type p_type)
         {
-            if (!NodeUtils.CanHaveMultipleInstances(p_type) && Graph.HasNodeOfType(p_type))
+            if (!NodeUtils.CanHaveMultipleInstances(p_type) && DashEditorCore.EditorConfig.editingGraph.HasNodeOfType(p_type))
                 return true;
 
             return false;
@@ -108,12 +107,12 @@ namespace Dash.Editor
 
         static void PasteNodes()
         {
-            DashEditorCore.PasteNodes(_lastMousePosition);
+            SelectionManager.PasteNodes(_lastMousePosition, DashEditorCore.EditorConfig.editingGraph);
         }
 
         static void CreateNode(object p_nodeType)
         {
-            Graph.CreateNode((Type)p_nodeType, _lastMousePosition);
+            DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition);
         }
         
         static public int CategorySort(Type p_type1, Type p_type2)

@@ -15,6 +15,8 @@ namespace Dash
     [Serializable]
     public class DashEditorConfig : ScriptableObject, ISerializationCallbackReceiver
     {
+        public Theme theme;
+        
         public int lastUsedVersion = 0;
         
         public DashGraph enteringPlayModeGraph { get; private set; }
@@ -47,7 +49,6 @@ namespace Dash
             set
             {
                 _editingGraph = value;
-                // Debug.Log("WTF: "+_editingGraph);
             }
         }
 

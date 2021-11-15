@@ -449,9 +449,6 @@ namespace Dash
         public bool globalVariablesMinimized = true;
 
         public NodeBase previewNode;
-        
-        public bool IsSelected(NodeBase p_node) => DashEditorCore.selectedNodes.Exists(i => i == Nodes.IndexOf(p_node));
-        public bool IsSelecting(NodeBase p_node) => DashEditorCore.selectingNodes.Exists(n => n == Nodes.IndexOf(p_node));
 
         [NonSerialized]
         public NodeBase connectingNode;

@@ -46,7 +46,7 @@ namespace Dash.Editor
             GUICustomUtils.DrawTitle("Dash Prefab Editor");
 
             var scrollViewStyle = new GUIStyle();
-            scrollViewStyle.normal.background = DashThemeManager.GetColorTexture(new Color(.1f, .1f, .1f));
+            scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));
 
             GUILayout.BeginArea(new Rect(5, 35, rect.width-400, rect.height-40));
             _scrollPositionPrefabs = GUILayout.BeginScrollView(_scrollPositionProperties, scrollViewStyle, GUILayout.ExpandWidth(true));

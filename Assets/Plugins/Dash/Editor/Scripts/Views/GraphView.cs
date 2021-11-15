@@ -271,9 +271,9 @@ namespace Dash.Editor
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
 
-                if (!DashEditorCore.selectedNodes.Contains(hitNodeIndex) && (!p_event.shift || hitNodeIndex == 0))
+                if (!SelectionManager.IsSelected(hitNodeIndex) && (!p_event.shift || hitNodeIndex == 0))
                 {
-                    DashEditorCore.selectedNodes.Clear();
+                    SelectionManager.ClearSelection();
                 }
 
                 if (hitNodeIndex >= 0)
@@ -320,7 +320,7 @@ namespace Dash.Editor
                 {
                     case DraggingType.NODE_DRAG:
                         Vector2 delta = p_event.alt ? Snapping.Snap(p_event.delta, new Vector2(10,10)): p_event.delta;
-                        DashEditorCore.selectedNodes.ForEach(n => Graph.Nodes[n].rect.position += delta*Zoom);
+                        SelectionManager.DragSelectedNodes(delta, Graph);
                         break;
                     case DraggingType.BOX_DRAG:
                         DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
@@ -332,7 +332,7 @@ namespace Dash.Editor
                         selectedRegion.width += p_event.delta.x;
                         selectedRegion.height += p_event.delta.y;
                         Rect fixedRect = FixRect(selectedRegion);
-                        DashEditorCore.selectingNodes = Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).Select(n => n.Index).ToList();
+                        SelectionManager.SelectingNodes(Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).Select(n => n.Index).ToList());
                         break;
                 }
 
@@ -341,11 +341,9 @@ namespace Dash.Editor
 
             if (p_event.type == EventType.MouseUp)
             {
-                if (dragging == DraggingType.SELECTION && DashEditorCore.selectedNodes.Count == 0)
+                if (dragging == DraggingType.SELECTION)
                 {
-                    DashEditorCore.selectedNodes.Clear();
-                    DashEditorCore.selectedNodes.AddRange(DashEditorCore.selectingNodes);
-                    DashEditorCore.selectingNodes.Clear();
+                    SelectionManager.SelectingToSelected();
                 }
 
                 if (dragging == DraggingType.NODE_DRAG || dragging == DraggingType.BOX_DRAG || dragging == DraggingType.BOX_RESIZE)
@@ -447,10 +445,10 @@ namespace Dash.Editor
 
         void AddSelectedNode(int p_nodeIndex)
         {
-            if (!DashEditorCore.selectedNodes.Contains(p_nodeIndex))
+            if (!SelectionManager.IsSelected(p_nodeIndex))
             {
-                DashEditorCore.selectedNodes.Add(p_nodeIndex);
-                
+                SelectionManager.AddNodeToSelection(p_nodeIndex);
+
                 // If the controller is not null autoselect it in hierarchy TODO: maybe put this as setting
                 if (Graph.Controller != null)
                 {

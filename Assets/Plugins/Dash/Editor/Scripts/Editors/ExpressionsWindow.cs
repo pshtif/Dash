@@ -52,7 +52,7 @@ namespace Dash.Editor
             infoStyle.padding.left = 5;
 
             var scrollViewStyle = new GUIStyle();
-            scrollViewStyle.normal.background = DashThemeManager.GetColorTexture(new Color(.1f, .1f, .1f));
+            scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));
 
             GUI.enabled = DashEditorCore.RuntimeConfig.enableCustomExpressionClasses;
             

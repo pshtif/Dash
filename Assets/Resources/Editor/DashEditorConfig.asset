@@ -12,35 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d6fd3697e0491eb80aa4d3608a42e6, type: 3}
   m_Name: DashEditorConfig
   m_EditorClassIdentifier: 
-  lastUsedVersion: 5004
-  _editingGraph: {fileID: 0}
+  theme: {fileID: 11400000, guid: 09998f0ada6991d4abc19f5944035710, type: 2}
+  lastUsedVersion: 6000
+  _editingGraph: {fileID: 11400000, guid: af03b7c9c61649f4dad670d3e2982d52, type: 2}
   editingGraphPath: 
   deleteNull: 0
   zoom: 1.5
+  maxLog: 100
   showNodeIds: 0
+  showNodeAsynchronity: 1
   showExperimental: 1
   showNodeSearch: 0
   enableSoundInPreview: 0
   editorPosition:
     serializedVersion: 2
-    x: 213
-    y: 174
-    width: 1601
-    height: 945
+    x: 306
+    y: 134
+    width: 800
+    height: 546
   AOTAssemblyPath: Assets/Plugins
   AOTAssemblyName: DashAOTAssembly
   _serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 09998f0ada6991d4abc19f5944035710, type: 2}
+    - {fileID: 11400000, guid: af03b7c9c61649f4dad670d3e2982d52, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: theme
+      Entry: 10
+      Data: 0
     - Name: lastUsedVersion
       Entry: 3
-      Data: 5004
+      Data: 6000
     - Name: <enteringPlayModeGraph>k__BackingField
       Entry: 6
       Data: 
@@ -48,8 +56,8 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: _editingGraph
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: editingGraphPath
       Entry: 1
       Data: 
@@ -59,9 +67,15 @@ MonoBehaviour:
     - Name: zoom
       Entry: 4
       Data: 1.5
+    - Name: maxLog
+      Entry: 3
+      Data: 100
     - Name: showNodeIds
       Entry: 5
       Data: false
+    - Name: showNodeAsynchronity
+      Entry: 5
+      Data: true
     - Name: showExperimental
       Entry: 5
       Data: true
@@ -76,16 +90,16 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 213
+      Data: 306
     - Name: 
       Entry: 4
-      Data: 174
+      Data: 134
     - Name: 
       Entry: 4
-      Data: 1601
+      Data: 800
     - Name: 
       Entry: 4
-      Data: 945
+      Data: 546
     - Name: 
       Entry: 8
       Data: 

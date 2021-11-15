@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Reflection;
 using Dash.Attributes;
 using UnityEditor;
@@ -15,12 +16,6 @@ namespace Dash.Editor
 
         protected object _previouslyInspected;
 
-        public NodeBase SelectedNode => Graph == null
-            ? null
-            : DashEditorCore.selectedNodes != null && DashEditorCore.selectedNodes.Count == 1
-            ? Graph.Nodes[DashEditorCore.selectedNodes[0]]
-            : null;
-
         public NodeInspectorView()
         {
 
@@ -28,11 +23,16 @@ namespace Dash.Editor
 
         public override void DrawGUI(Event p_event, Rect p_rect)
         {
-            if (SelectedNode != null)
+            if (Graph == null)
+                return;
+
+            var selectedNode = SelectionManager.GetSelectedNode(Graph);
+            
+            if (selectedNode != null)
             {
                 DrawNodeGUI(p_rect);
-                if (_previouslyInspected != SelectedNode) GUI.FocusControl("");
-                _previouslyInspected = SelectedNode;
+                if (_previouslyInspected != selectedNode) GUI.FocusControl("");
+                _previouslyInspected = selectedNode;
             } else if (DashEditorCore.selectedBox != null)
             {
                 DrawBoxGUI(p_rect);
@@ -63,23 +63,25 @@ namespace Dash.Editor
 
         private void DrawNodeGUI(Rect p_rect) 
         {
-            InspectorHeightAttribute heightAttibute = SelectedNode.GetType().GetCustomAttribute<InspectorHeightAttribute>();
+            var selectedNode = SelectionManager.GetSelectedNode(Graph);
+            
+            InspectorHeightAttribute heightAttibute = selectedNode.GetType().GetCustomAttribute<InspectorHeightAttribute>();
             float height = heightAttibute != null ? heightAttibute.height : 340;
 
             Rect rect = new Rect(p_rect.width - 400, 30, 390, height);
             
             DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
 
-            string nodeType = NodeBase.GetNodeNameFromType(SelectedNode.GetType());
+            string nodeType = NodeBase.GetNodeNameFromType(selectedNode.GetType());
             GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), nodeType, DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));
             
-            DrawScriptButton(rect);
+            DrawScriptButton(rect, selectedNode.GetType());
 
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
 
-            SelectedNode.DrawInspector();
+            selectedNode.DrawInspector();
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
@@ -87,12 +89,13 @@ namespace Dash.Editor
             UseEvent(rect);
         }
         
-        void DrawScriptButton(Rect p_rect)
+        void DrawScriptButton(Rect p_rect, Type p_type)
         {
+
             if (GUI.Button(new Rect(p_rect.x+242, p_rect.y+7, 16, 16),
                 IconManager.GetIcon("Script_Icon"), GUIStyle.none))
             {
-                AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(SelectedNode.GetType()), 1);
+                AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(p_type), 1);
             }
         }
     }

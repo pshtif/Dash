@@ -321,13 +321,13 @@ namespace Dash
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             
             IconAttribute iconAttribute = (IconAttribute) Attribute.GetCustomAttribute(GetType(), typeof(IconAttribute));
-            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashThemeManager.GetNodeIconByCategory(categoryAttribute.type);
+            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
             
-            _nodeBackgroundColor = DashThemeManager.GetNodeBackgroundColorByCategory(categoryAttribute.type);
+            _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);
             
-            _titleBackgroundColor = DashThemeManager.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
+            _titleBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
             
-            _titleTextColor = DashThemeManager.GetNodeTitleTextColorByCategory(categoryAttribute.type);
+            _titleTextColor = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(categoryAttribute.type);
 
             #endif
 
@@ -471,11 +471,7 @@ namespace Dash
                 return _titleTextColor;
             }
         }
-        
-        public bool IsSelected => Graph.IsSelected(this);
-        
-        public bool IsSelecting => Graph.IsSelecting(this);
-        
+
         public Rect rect;
 
         public virtual string CustomName => String.Empty;
@@ -629,7 +625,7 @@ namespace Dash
 
         void DrawOutline(Rect p_rect)
         {
-            if (IsSelected)
+            if (SelectionManager.IsSelected(Graph.Nodes.IndexOf(this)))
             {
                 GUI.color = Color.green;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
@@ -647,7 +643,7 @@ namespace Dash
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
             }
             
-            if (IsSelecting)
+            if (SelectionManager.IsSelecting(Graph.Nodes.IndexOf(this)))
             {
                 GUI.color = Color.yellow;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
@@ -743,8 +739,9 @@ namespace Dash
             for (int i = 0; i < count; i++)
             {
                 bool isConnected = Graph.HasInputConnected(this, i);
-                GUI.color = isConnected ? DashThemeManager.CONNECTOR_INPUT_CONNECTED_COLOR
-                    : DashThemeManager.CONNECTOR_INPUT_DISCONNECTED_COLOR;
+                GUI.color = isConnected
+                    ? DashEditorCore.EditorConfig.theme.ConnectorInputConnectedColor
+                    : DashEditorCore.EditorConfig.theme.ConnectorInputDisconnectedColor;
 
                 if (IsExecuting)
                     GUI.color = Color.cyan;
@@ -769,9 +766,10 @@ namespace Dash
             // Outputs
             for (int i = 0; i < OutputCount; i++)
             {
-                bool isConnected = Graph.HasOutputConnected(this, i); 
-                GUI.color = isConnected ? DashThemeManager.CONNECTOR_OUTPUT_CONNECTED_COLOR
-                    : DashThemeManager.CONNECTOR_OUTPUT_DISCONNECTED_COLOR;
+                bool isConnected = Graph.HasOutputConnected(this, i);
+                GUI.color = isConnected
+                    ? DashEditorCore.EditorConfig.theme.ConnectorOutputConnectedColor
+                    : DashEditorCore.EditorConfig.theme.ConnectorOutputDisconnectedColor;
 
                 if (Graph.connectingNode == this && Graph.connectingOutputIndex == i)
                     GUI.color = Color.green;

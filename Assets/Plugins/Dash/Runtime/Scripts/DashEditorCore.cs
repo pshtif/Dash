@@ -41,10 +41,6 @@ namespace Dash
         static public GraphBox selectedBox;
 
         static public List<Variable> copiedVariables = new List<Variable>();
-        
-        static public List<NodeBase> copiedNodes = new List<NodeBase>();
-        static public List<int> selectedNodes = new List<int>();
-        static public List<int> selectingNodes = new List<int>();
 
         static public bool DetailsVisible => EditorConfig.zoom < 2.5;
 
@@ -125,7 +121,7 @@ namespace Dash
             if (p_index >= searchNodes.Count) p_index = p_index%searchNodes.Count;
 
             var node = searchNodes[p_index];
-            SelectNode(node);
+            SelectionManager.SelectNode(node, Graph);
             return node;
         }
         
@@ -144,121 +140,9 @@ namespace Dash
             if (node == null)
                 return false;
             
-            SelectNode(node);
+            SelectionManager.SelectNode(node, graph);
 
             return true;
-        }
-
-        public static void SelectNode(NodeBase p_node)
-        {
-            selectedNodes.Clear();
-
-            if (p_node == null || Graph == null)
-                return;
-            
-            selectedNodes.Add(p_node.Index);
-            Graph.viewOffset = -p_node.rect.center + EditorConfig.zoom * EditorConfig.editorPosition.size / 2;
-        }
-
-        public static void DuplicateSelectedNodes()
-        {
-            if (Graph == null || selectedNodes.Count == 0)
-                return;
-            
-            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Nodes");
-            
-            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
-            List<NodeBase> newNodes = Graph.DuplicateNodes(nodes);
-            selectedNodes = newNodes.Select(n => n.Index).ToList();
-            
-            SetDirty();
-        }
-        
-        public static void DuplicateNode(NodeBase p_node)
-        {
-            if (Graph == null)
-                return;
-            Undo.RegisterCompleteObjectUndo(Graph, "Duplicate Node");
-            
-            NodeBase node = Graph.DuplicateNode((NodeBase) p_node);
-            selectedNodes = new List<int> { node.Index };
-            
-            SetDirty();
-        }
-        
-        public static void CopySelectedNodes()
-        {
-            if (Graph == null || selectedNodes.Count == 0)
-                return;
-
-            copiedNodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
-        }
-        
-        public static void CopyNode(NodeBase p_node)
-        {
-            if (Graph == null)
-                return;
-
-            copiedNodes.Clear();
-            copiedNodes.Add(p_node);
-        }
-
-        public static bool HasCopiedNodes()
-        {
-            return copiedNodes.Count != 0;
-        }
-        
-        public static void PasteNodes(Vector2 p_mousePosition)
-        {
-            if (Graph == null || copiedNodes.Count == 0)
-                return;
-            
-            List<NodeBase> newNodes = Graph.DuplicateNodes(copiedNodes);
-            
-            float zoom = EditorConfig.zoom;
-            newNodes[0].rect = new Rect(p_mousePosition.x * zoom - Graph.viewOffset.x,
-                p_mousePosition.y * zoom - Graph.viewOffset.y, 0, 0);
-
-            for (int i = 1; i < newNodes.Count; i++)
-            {
-                NodeBase node = newNodes[i];
-                node.rect.x = newNodes[0].rect.x + (node.rect.x - copiedNodes[0].rect.x);
-                node.rect.y = newNodes[0].rect.y + (node.rect.y - copiedNodes[0].rect.y);
-            }
-            
-            selectedNodes = newNodes.Select(n => n.Index).ToList();
-
-            SetDirty();
-        }
-
-        public static void DeleteSelectedNodes()
-        {
-            if (Graph == null || selectedNodes.Count == 0)
-                return;
-            
-            Undo.RegisterCompleteObjectUndo(Graph, "Delete Nodes");
-
-            var nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
-            nodes.ForEach(n => Graph.DeleteNode(n));
-
-            selectedNodes = new List<int>();
-            
-            SetDirty();
-        }
-        
-        public static void DeleteNode(NodeBase p_node)
-        {
-            if (Graph == null)
-                return;
-            
-            Undo.RegisterCompleteObjectUndo(Graph, "Delete Node");
-
-            int index = p_node.Index;
-            Graph.DeleteNode(p_node);
-            selectedNodes.Remove(index);
-            ReindexSelected(index);
-            
-            SetDirty();
         }
 
         public static void CopyVariables(DashVariables p_fromVariables)
@@ -281,36 +165,9 @@ namespace Dash
             copiedVariables.ForEach(v => p_toVariables.PasteVariable(v.Clone(), p_target));
         }
 
-        public static void CreateBoxAroundSelectedNodes()
-        {
-            List<NodeBase> nodes = selectedNodes.Select(i => Graph.Nodes[i]).ToList();
-            Rect region = nodes[0].rect;
-            
-            nodes.ForEach(n =>
-            {
-                if (n.rect.xMin < region.xMin) region.xMin = n.rect.xMin;
-                if (n.rect.yMin < region.yMin) region.yMin = n.rect.yMin;
-                if (n.rect.xMax > region.xMax) region.xMax = n.rect.xMax;
-                if (n.rect.yMax > region.yMax) region.yMax = n.rect.yMax;
-            });
-
-            Graph.CreateBox(region);
-            
-            SetDirty();
-        }
-
-        public static void ReindexSelected(int p_index)
-        {
-            for (int i = 0; i < selectedNodes.Count; i++)
-            {
-                if (selectedNodes[i] > p_index)
-                    selectedNodes[i]--;
-            }
-        }
-        
         public static void EditController(DashController p_controller, string p_graphPath = "")
         {
-            selectedNodes.Clear();
+            SelectionManager.ClearSelection();
             
             if (p_controller != null)
             {
@@ -348,7 +205,7 @@ namespace Dash
 
         public static void EditGraph(DashGraph p_graph)
         {
-            selectedNodes.Clear();
+            SelectionManager.ClearSelection();
             
             EditorConfig.editingGraphPath = "";
             EditorConfig.editingGraph = p_graph;
@@ -358,7 +215,7 @@ namespace Dash
         
         public static void UnloadGraph()
         {
-            selectedNodes.Clear();
+            SelectionManager.ClearSelection();
             
             EditorConfig.editingGraph = null;
         }
@@ -487,6 +344,16 @@ namespace Dash
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
                 }
+            }
+
+            if (EditorConfig.theme == null)
+            {
+                Theme theme = ScriptableObject.CreateInstance<Theme>();
+                EditorConfig.theme = theme;
+                    
+                AssetDatabase.CreateAsset(theme, "Assets/Resources/Editor/DashTheme.asset");
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
             }
         }
 
