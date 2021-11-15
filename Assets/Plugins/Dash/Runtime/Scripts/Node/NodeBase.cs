@@ -321,8 +321,8 @@ namespace Dash
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             Category = categoryAttribute.type;
             
-            IconAttribute iconAttribute = (IconAttribute) Attribute.GetCustomAttribute(GetType(), typeof(IconAttribute));
-            _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
+            
+            //_iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
             
             // _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);
             //
@@ -417,19 +417,19 @@ namespace Dash
             }
         }
 
-        [NonSerialized] 
-        private Texture _iconTexture;
-        
-        protected Texture IconTexture
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _iconTexture;
-            }
-        }
+        // [NonSerialized] 
+        // private Texture _iconTexture;
+        //
+        // protected Texture IconTexture
+        // {
+        //     get
+        //     {
+        //         if (!_attributesInitialized)
+        //             InitializeAttributes();
+        //
+        //         return _iconTexture;
+        //     }
+        // }
 
         // [NonSerialized] 
         // private Color _nodeBackgroundColor;
@@ -586,14 +586,16 @@ namespace Dash
         {
             GUI.color = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(Category);
             
+            Texture iconTexture =  DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(Category);
+
             GUI.Label(
-                new Rect(new Vector2(p_rect.x + (IconTexture != null ? 26 : 6), p_rect.y),
+                new Rect(new Vector2(p_rect.x + (iconTexture != null ? 26 : 6), p_rect.y),
                     new Vector2(100, 20)), Name, DashEditorCore.Skin.GetStyle("NodeTitle"));
                 
-            if (IconTexture != null)
+            if (iconTexture != null)
             {
                 GUI.DrawTexture(new Rect(p_rect.x + 6, p_rect.y + 4, 16, 16),
-                    IconTexture);
+                    iconTexture);
             }
 
             if (IsExperimental)

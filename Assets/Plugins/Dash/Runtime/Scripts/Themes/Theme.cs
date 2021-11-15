@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using UnityEditor.Graphs;
 using UnityEngine;
 
@@ -28,35 +29,48 @@ namespace Dash
         public Color CreationNodeBackgroundColor = new Color(1f, 0.7f, 1f);
         public Color GraphNodeBackgroundColor = new Color(0.8f, 0.6f, 0f);
         public Color LogicNodeBackgroundColor = Color.white;
-        
-        // public Color EventNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0.5f);
-        // public Color AnimationNodeTitleBackgroundColor = new Color(0.5f, 0.5f, 0.8f);
-        // public Color ModifierNodeTitleBackgroundColor = new Color(0.5f, 0.7f, 0.7f);
-        // public Color CreationNodeTitleBackgroundColor = new Color(0.7f, 0.5f, 0.7f);
-        // public Color GraphNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0f);
-        // public Color LogicNodeTitleBackgroundColor = new Color(.6f, .6f, 0.7f); 
-        
+
         public Color EventNodeTitleTextColor = new Color(1, 0.8f, 0.8f);
         public Color AnimationNodeTitleTextColor = new Color(0.8f, 0.8f, 1f);
         public Color ModifierNodeTitleTextColor = new Color(0.8f, 1f, 1f);
         public Color CreationNodeTitleTextColor = new Color(1f, 0.8f, 1f);
         public Color GraphNodeTitleTextColor = new Color(1f, 0.8f, 0.5f);
         public Color LogicNodeTitleTextColor = new Color(.9f, .9f, 1f);
-        
+
+        public Texture EventNodeIcon;
+        public Texture AnimationNodeIcon;
+        public Texture ModifierNodeIcon;
+        public Texture CreationNodeIcon;
+        public Texture LogicNodeIcon;
+
+        private void OnEnable()
+        {
+            if (EventNodeIcon == null)
+                EventNodeIcon = IconManager.GetIcon("Event_Icon");
+            if (AnimationNodeIcon == null)
+                AnimationNodeIcon = IconManager.GetIcon("Animation_Icon");
+            if (ModifierNodeIcon == null)
+                ModifierNodeIcon = IconManager.GetIcon("Retargeting_Icon");
+            if (CreationNodeIcon == null)
+                CreationNodeIcon = IconManager.GetIcon("Spawn_Icon");
+            if (LogicNodeIcon == null)
+                LogicNodeIcon = IconManager.GetIcon("Settings_Icon");
+        }
+
         public Texture GetNodeIconByCategory(NodeCategoryType p_category)
         {
             switch (p_category)
             {
                 case NodeCategoryType.EVENT:
-                    return IconManager.GetIcon("Event_Icon");
+                    return EventNodeIcon;
                 case NodeCategoryType.ANIMATION:
-                    return IconManager.GetIcon("Animation_Icon");
+                    return AnimationNodeIcon;
                 case NodeCategoryType.MODIFIER:
-                    return IconManager.GetIcon("Retargeting_Icon");
+                    return ModifierNodeIcon;
                 case NodeCategoryType.CREATION:
-                    return IconManager.GetIcon("Spawn_Icon");
+                    return CreationNodeIcon;
                 case NodeCategoryType.LOGIC:
-                    return IconManager.GetIcon("Settings_Icon");
+                    return LogicNodeIcon;
             }
 
             return null;
@@ -82,27 +96,6 @@ namespace Dash
 
             return Color.white;
         }
-        
-        // public Color GetNodeTitleBackgroundColorByCategory(NodeCategoryType p_category)
-        // {
-        //     switch (p_category)
-        //     {
-        //         case NodeCategoryType.EVENT:
-        //             return EventNodeTitleBackgroundColor;
-        //         case NodeCategoryType.ANIMATION:
-        //             return AnimationNodeTitleBackgroundColor;
-        //         case NodeCategoryType.MODIFIER:
-        //             return ModifierNodeTitleBackgroundColor;
-        //         case NodeCategoryType.CREATION:
-        //             return CreationNodeTitleBackgroundColor;
-        //         case NodeCategoryType.GRAPH:
-        //             return GraphNodeTitleBackgroundColor;
-        //         case NodeCategoryType.LOGIC:
-        //             return LogicNodeTitleBackgroundColor;
-        //     }
-        //
-        //     return new Color(.6f,.6f,.7f);
-        // }
         
         public Color GetNodeTitleTextColorByCategory(NodeCategoryType p_category)
         {

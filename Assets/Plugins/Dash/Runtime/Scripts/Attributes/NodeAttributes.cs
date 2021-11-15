@@ -26,18 +26,7 @@ namespace Dash.Attributes
     public class DisableBaseGUIAttribute : Attribute
     {
     }
-    
-    [AttributeUsage(AttributeTargets.Class)]
-    public class IconAttribute : Attribute
-    {
-        public string iconId { get; }
-        
-        public IconAttribute(string p_iconId)
-        {
-            iconId = p_iconId;
-        }
-    }
-    
+
     [AttributeUsage(AttributeTargets.Class)]
     public class SkinAttribute : Attribute
     {
