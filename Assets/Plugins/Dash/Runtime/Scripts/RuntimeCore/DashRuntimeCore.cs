@@ -42,9 +42,9 @@ namespace Dash
         [NonSerialized] 
         private Dictionary<string,EventSequencer> _sequencers = new Dictionary<string, EventSequencer>();
         
-        #if UNITY_EDITOR
-        public Dictionary<string,EventSequencer> Sequencers => _sequencers;
-        #endif
+        // #if UNITY_EDITOR
+        // public Dictionary<string,EventSequencer> Sequencers => _sequencers;
+        // #endif
 
         [NonSerialized]
         private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
@@ -120,11 +120,7 @@ namespace Dash
         public DashController GetControllerByName(string p_name)
         {
             #if UNITY_EDITOR
-            if (Application.isPlaying)
-            {
-                return _controllers.Find(dc => dc.gameObject.name == p_name);
-            }
-            else
+            if (!Application.isPlaying)
             {
                 var found = GameObject.FindObjectsOfType<DashController>().ToList()
                     .FindAll(dc => dc.gameObject.name == p_name);
@@ -136,9 +132,9 @@ namespace Dash
 
                 return found[0];
             }
-            #else
-            return _controllers.Find(dc => dc.gameObject.name == p_name);
             #endif
+            
+            return _controllers.Find(dc => dc.gameObject.name == p_name);
         }
 
         public void Bind(DashController p_controller)
