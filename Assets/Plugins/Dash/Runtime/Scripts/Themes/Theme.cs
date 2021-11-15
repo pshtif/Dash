@@ -29,12 +29,12 @@ namespace Dash
         public Color GraphNodeBackgroundColor = new Color(0.8f, 0.6f, 0f);
         public Color LogicNodeBackgroundColor = Color.white;
         
-        public Color EventNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0.5f);
-        public Color AnimationNodeTitleBackgroundColor = new Color(0.5f, 0.5f, 0.8f);
-        public Color ModifierNodeTitleBackgroundColor = new Color(0.5f, 0.7f, 0.7f);
-        public Color CreationNodeTitleBackgroundColor = new Color(0.7f, 0.5f, 0.7f);
-        public Color GraphNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0f);
-        public Color LogicNodeTitleBackgroundColor = new Color(.6f, .6f, 0.7f); 
+        // public Color EventNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0.5f);
+        // public Color AnimationNodeTitleBackgroundColor = new Color(0.5f, 0.5f, 0.8f);
+        // public Color ModifierNodeTitleBackgroundColor = new Color(0.5f, 0.7f, 0.7f);
+        // public Color CreationNodeTitleBackgroundColor = new Color(0.7f, 0.5f, 0.7f);
+        // public Color GraphNodeTitleBackgroundColor = new Color(0.8f, 0.5f, 0f);
+        // public Color LogicNodeTitleBackgroundColor = new Color(.6f, .6f, 0.7f); 
         
         public Color EventNodeTitleTextColor = new Color(1, 0.8f, 0.8f);
         public Color AnimationNodeTitleTextColor = new Color(0.8f, 0.8f, 1f);
@@ -83,26 +83,26 @@ namespace Dash
             return Color.white;
         }
         
-        public Color GetNodeTitleBackgroundColorByCategory(NodeCategoryType p_category)
-        {
-            switch (p_category)
-            {
-                case NodeCategoryType.EVENT:
-                    return EventNodeTitleBackgroundColor;
-                case NodeCategoryType.ANIMATION:
-                    return AnimationNodeTitleBackgroundColor;
-                case NodeCategoryType.MODIFIER:
-                    return ModifierNodeTitleBackgroundColor;
-                case NodeCategoryType.CREATION:
-                    return CreationNodeTitleBackgroundColor;
-                case NodeCategoryType.GRAPH:
-                    return GraphNodeTitleBackgroundColor;
-                case NodeCategoryType.LOGIC:
-                    return LogicNodeTitleBackgroundColor;
-            }
-
-            return new Color(.6f,.6f,.7f);
-        }
+        // public Color GetNodeTitleBackgroundColorByCategory(NodeCategoryType p_category)
+        // {
+        //     switch (p_category)
+        //     {
+        //         case NodeCategoryType.EVENT:
+        //             return EventNodeTitleBackgroundColor;
+        //         case NodeCategoryType.ANIMATION:
+        //             return AnimationNodeTitleBackgroundColor;
+        //         case NodeCategoryType.MODIFIER:
+        //             return ModifierNodeTitleBackgroundColor;
+        //         case NodeCategoryType.CREATION:
+        //             return CreationNodeTitleBackgroundColor;
+        //         case NodeCategoryType.GRAPH:
+        //             return GraphNodeTitleBackgroundColor;
+        //         case NodeCategoryType.LOGIC:
+        //             return LogicNodeTitleBackgroundColor;
+        //     }
+        //
+        //     return new Color(.6f,.6f,.7f);
+        // }
         
         public Color GetNodeTitleTextColorByCategory(NodeCategoryType p_category)
         {

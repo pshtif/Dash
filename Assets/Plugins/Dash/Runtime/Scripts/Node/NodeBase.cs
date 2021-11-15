@@ -319,15 +319,16 @@ namespace Dash
             _baseGUIEnabled = disableBaseGuiAttribute == null;
             
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
+            Category = categoryAttribute.type;
             
             IconAttribute iconAttribute = (IconAttribute) Attribute.GetCustomAttribute(GetType(), typeof(IconAttribute));
             _iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
             
-            _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);
-            
-            _titleBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
-            
-            _titleTextColor = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(categoryAttribute.type);
+            // _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);
+            //
+            // _titleBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
+            //
+            // _titleTextColor = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(categoryAttribute.type);
 
             #endif
 
@@ -354,7 +355,9 @@ namespace Dash
 
         #region EDITOR_CODE
 #if UNITY_EDITOR
-
+        
+        public NodeCategoryType Category { get; private set; } 
+        
         [NonSerialized]
         public float executeTime = 0;
 
@@ -428,49 +431,49 @@ namespace Dash
             }
         }
 
-        [NonSerialized] 
-        private Color _nodeBackgroundColor;
-        
-        // Using virtual getters so you can override it and avoid serialization at the same time and it is not
-        // possible to use Attributes for this due to non constant initializer
-        protected virtual Color NodeBackgroundColor
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _nodeBackgroundColor;
-            }
-        }
-
-        [NonSerialized]
-        private Color _titleBackgroundColor;
-
-        protected virtual Color TitleBackgroundColor
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _titleBackgroundColor;
-            }
-        }
-
-        [NonSerialized] 
-        private Color _titleTextColor;
-
-        protected virtual Color TitleTextColor
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-                
-                return _titleTextColor;
-            }
-        }
+        // [NonSerialized] 
+        // private Color _nodeBackgroundColor;
+        //
+        // // Using virtual getters so you can override it and avoid serialization at the same time and it is not
+        // // possible to use Attributes for this due to non constant initializer
+        // protected virtual Color NodeBackgroundColor
+        // {
+        //     get
+        //     {
+        //         if (!_attributesInitialized)
+        //             InitializeAttributes();
+        //
+        //         return _nodeBackgroundColor;
+        //     }
+        // }
+        //
+        // [NonSerialized]
+        // private Color _titleBackgroundColor;
+        //
+        // protected virtual Color TitleBackgroundColor
+        // {
+        //     get
+        //     {
+        //         if (!_attributesInitialized)
+        //             InitializeAttributes();
+        //
+        //         return _titleBackgroundColor;
+        //     }
+        // }
+        //
+        // [NonSerialized] 
+        // private Color _titleTextColor;
+        //
+        // protected virtual Color TitleTextColor
+        // {
+        //     get
+        //     {
+        //         if (!_attributesInitialized)
+        //             InitializeAttributes();
+        //         
+        //         return _titleTextColor;
+        //     }
+        // }
 
         public Rect rect;
 
@@ -516,7 +519,7 @@ namespace Dash
 
             if (BaseGUIEnabled)
             {
-                GUI.color = NodeBackgroundColor;
+                GUI.color = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(Category);
 
                 if (!IsSynchronous() && DashEditorCore.DetailsVisible && DashEditorCore.EditorConfig.showNodeAsynchronity)
                 {
@@ -581,7 +584,7 @@ namespace Dash
         
         void DrawTitle(Rect p_rect)
         {
-            GUI.color = TitleTextColor;
+            GUI.color = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(Category);
             
             GUI.Label(
                 new Rect(new Vector2(p_rect.x + (IconTexture != null ? 26 : 6), p_rect.y),
@@ -589,7 +592,6 @@ namespace Dash
                 
             if (IconTexture != null)
             {
-                GUI.color = TitleTextColor;
                 GUI.DrawTexture(new Rect(p_rect.x + 6, p_rect.y + 4, 16, 16),
                     IconTexture);
             }

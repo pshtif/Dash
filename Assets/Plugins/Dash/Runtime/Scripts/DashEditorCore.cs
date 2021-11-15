@@ -350,6 +350,7 @@ namespace Dash
             {
                 Theme theme = ScriptableObject.CreateInstance<Theme>();
                 EditorConfig.theme = theme;
+                EditorUtility.SetDirty(EditorConfig);
                     
                 AssetDatabase.CreateAsset(theme, "Assets/Resources/Editor/DashTheme.asset");
                 AssetDatabase.SaveAssets();
