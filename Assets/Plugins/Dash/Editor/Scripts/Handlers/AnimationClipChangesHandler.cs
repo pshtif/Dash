@@ -32,7 +32,7 @@ namespace Dash.Editor
 
             if (animChanged)
             {
-                DashEditorCore.RecacheAnimation();
+                DashAnimation.RecacheAnimationAssets();
             }
         }
     }
