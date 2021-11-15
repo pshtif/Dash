@@ -92,7 +92,7 @@ namespace Dash
             if (p_graph == null || selectedNodes.Count == 0)
                 return;
             
-            UndoManager.RegisterUndo(p_graph, "Duplicate Nodes");
+            UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Nodes");
 
             List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
             List<NodeBase> newNodes = p_graph.DuplicateNodes(nodes);
@@ -106,7 +106,7 @@ namespace Dash
             if (p_graph == null)
                 return;
             
-            UndoManager.RegisterUndo(p_graph, "Duplicate Node");
+            UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Node");
 
             NodeBase node = p_graph.DuplicateNode((NodeBase) p_node);
             selectedNodes = new List<int> { node.Index };
@@ -145,7 +145,7 @@ namespace Dash
             if (p_graph == null || selectedNodes.Count == 0)
                 return;
             
-            UndoManager.RegisterUndo(p_graph, "Delete Nodes");
+            UndoUtils.RegisterCompleteObject(p_graph, "Delete Nodes");
 
             var nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
             nodes.ForEach(n => p_graph.DeleteNode(n));
@@ -160,7 +160,7 @@ namespace Dash
             if (p_graph == null)
                 return;
             
-            UndoManager.RegisterUndo(p_graph, "Delete Node");
+            UndoUtils.RegisterCompleteObject(p_graph, "Delete Node");
 
             int index = p_node.Index;
             p_graph.DeleteNode(p_node);

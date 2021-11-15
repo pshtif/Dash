@@ -75,7 +75,7 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
-        internal static void Reset()
+        public static void Reset()
         {
             _initialized = false;
             DashTween.CleanAll();

@@ -172,7 +172,7 @@ namespace Dash
             _pooledTweens.Enqueue(this);
         }
 
-        internal static void CleanAll()
+        public static void CleanAll()
         {
             _activeTweens.Clear();
             _pooledTweens.Clear();
