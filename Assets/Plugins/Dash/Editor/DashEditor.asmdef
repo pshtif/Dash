@@ -1,9 +1,8 @@
 {
     "name": "DashEditor",
-    "rootNamespace": "",
     "references": [
         "GUID:775e0a0a8d40e0348aef1a9d26aebe37",
-        "GUID:fae950efabb8df5428efc28c1f524cfb"
+        "GUID:b96db29da3cc6a85aba51e6e3a352d1f"
     ],
     "includePlatforms": [
         "Editor"

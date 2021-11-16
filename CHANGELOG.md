@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - Changed classes folder structure to match what is editor related even though it is in Runtime assembly
 - Changed how Controller injection works during Preview, removed IEditorGraphAccess [POSSIBLE BREAK]
 - Changed DashCore is now DashRuntimeCore
+- Changed updated OdinSerializer to 2021.8.11
 
 #### Fixed
 
