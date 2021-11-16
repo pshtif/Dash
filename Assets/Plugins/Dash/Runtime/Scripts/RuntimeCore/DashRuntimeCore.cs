@@ -149,7 +149,6 @@ namespace Dash
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            //Debug.Log("DashCore.SendEvent: "+p_name);
             _controllers.ToList().ForEach(dc => dc?.SendEvent(p_name, p_flowData));
             
             if (_listeners.ContainsKey(p_name))

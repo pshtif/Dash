@@ -3,9 +3,8 @@
  */
 
 using System;
-using UnityEditor.Graphs;
 using UnityEngine;
-
+#if UNITY_EDITOR
 namespace Dash
 {
     [CreateAssetMenu(fileName = "Theme", menuName = "Dash/Create Theme", order = 1)]
@@ -123,3 +122,4 @@ namespace Dash
         }
     }
 }
+#endif

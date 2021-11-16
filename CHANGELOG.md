@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - Changed theme logic now separated from DashEditorCore using a scriptable Theme asset instead
 - Changed classes folder structure to match what is editor related even though it is in Runtime assembly
 - Changed how Controller injection works during Preview, removed IEditorGraphAccess [POSSIBLE BREAK]
+- Changed DashCore is now DashRuntimeCore
 
 #### Fixed
 

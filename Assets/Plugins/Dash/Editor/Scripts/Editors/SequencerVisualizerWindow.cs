@@ -43,9 +43,9 @@ namespace Dash.Editor
             eventStyle.alignment = TextAnchor.MiddleCenter;
 
             bool sequencersFound = false;
-            if (DashCore.Instance.Sequencers != null && DashCore.Instance.Sequencers.Count > 0)
+            if (DashRuntimeCore.Instance.Sequencers != null && DashRuntimeCore.Instance.Sequencers.Count > 0)
             {
-                foreach (var pair in DashCore.Instance.Sequencers)
+                foreach (var pair in DashRuntimeCore.Instance.Sequencers)
                 {
                     GUILayout.BeginVertical();
 

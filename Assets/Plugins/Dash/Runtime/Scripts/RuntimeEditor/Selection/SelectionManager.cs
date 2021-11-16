@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
 namespace Dash
 {
     public class SelectionManager
@@ -235,3 +236,4 @@ namespace Dash
         // }
     }
 }
+#endif

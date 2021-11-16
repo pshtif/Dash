@@ -233,7 +233,7 @@ namespace Dash
             #if UNITY_EDITOR
             List<Type> classes = DashEditorCore.RuntimeConfig.expressionClasses; 
             #else
-            List<Type> classes = DashCore.Instance.Config.expressionClasses;
+            List<Type> classes = DashRuntimeCore.Instance.Config.expressionClasses;
             #endif
             
             if (classes == null)
