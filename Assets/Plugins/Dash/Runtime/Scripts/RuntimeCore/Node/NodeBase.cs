@@ -318,7 +318,6 @@ namespace Dash
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
             Category = categoryAttribute.type;
             
-            
             //_iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
             
             // _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);

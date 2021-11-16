@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - Changed how Controller injection works during Preview, removed IEditorGraphAccess [POSSIBLE BREAK]
 - Changed DashCore is now DashRuntimeCore
 - Changed updated OdinSerializer to 2021.8.11
+- Changed removed IconAttribute as it is obsolete now and was ambiguous to the Unity 2021 new IconAttribute as well
 
 #### Fixed
 
