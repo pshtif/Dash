@@ -135,7 +135,7 @@ namespace Dash
             var style = new GUIStyle();
             style.alignment = TextAnchor.MiddleLeft;
 
-            Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.TITLE_TAB_HEIGHT, p_rect.width-48, 20);
+            Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight, p_rect.width-48, 20);
 
             
             style.normal.textColor = Color.white;

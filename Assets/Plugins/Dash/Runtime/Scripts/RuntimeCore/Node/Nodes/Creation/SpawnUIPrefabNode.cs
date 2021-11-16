@@ -80,7 +80,7 @@ namespace Dash
             style.fontStyle = FontStyle.Bold;
             style.normal.textColor = new Color(0.1f, .7f, 0.1f);
             
-            Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.TITLE_TAB_HEIGHT + 12, p_rect.width-48, 20);
+            Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + 12, p_rect.width-48, 20);
             GUI.Label(labelRect, Model.prefab.name, style);
             // Texture2D texture = AssetPreview.GetMiniThumbnail(Model.prefab);
             // GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32), texture);

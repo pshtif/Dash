@@ -534,11 +534,11 @@ namespace Dash
                     outputNode.rect.y + viewOffset.y, outputNode.Size.x, outputNode.Size.y);
 
                 Vector3 startPos = new Vector3(outputOffsetRect.x + outputOffsetRect.width + 8,
-                    outputOffsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT + DashEditorCore.CONNECTOR_HEIGHT / 2 +
+                    outputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
                     connection.outputIndex * 32);
                 Vector3 startTan = startPos + Vector3.right * 50;
                 Vector3 endPos = new Vector3(inputOffsetRect.x - 8,
-                    inputOffsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT + DashEditorCore.CONNECTOR_HEIGHT / 2 +
+                    inputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
                     connection.inputIndex * 32);
                 Vector3 endTan = endPos + Vector3.left * 50;
 

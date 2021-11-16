@@ -42,6 +42,10 @@ namespace Dash
         public Texture ModifierNodeIcon;
         public Texture CreationNodeIcon;
         public Texture LogicNodeIcon;
+        
+        public int TitleTabHeight = 26;
+        public int ConnectorHeight = 24;
+        public int ConnectorPadding = 4;
 
         private void OnEnable()
         {

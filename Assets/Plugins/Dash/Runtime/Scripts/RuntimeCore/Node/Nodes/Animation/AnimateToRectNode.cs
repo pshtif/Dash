@@ -93,7 +93,7 @@ namespace Dash
             var style = new GUIStyle(DashEditorCore.Skin.GetStyle("NodeText"));
             style.alignment = TextAnchor.MiddleRight;
             
-            GUI.Label(new Rect(p_rect.x + p_rect.width - 125, p_rect.y + DashEditorCore.TITLE_TAB_HEIGHT, 100, 20),
+            GUI.Label(new Rect(p_rect.x + p_rect.width - 125, p_rect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight, 100, 20),
                 towards == null ? "null" : towards.name, style);
         }
 #endif

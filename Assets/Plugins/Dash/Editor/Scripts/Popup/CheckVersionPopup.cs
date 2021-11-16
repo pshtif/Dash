@@ -10,8 +10,8 @@ namespace Dash.Editor
     {
         public static bool IsCurrentVersion()
         {
-            if (DashEditorCore.Graph != null &&
-                DashEditorCore.Graph.version < DashRuntimeCore.GetVersionNumber())
+            if (DashEditorCore.EditorConfig.editingGraph != null &&
+                DashEditorCore.EditorConfig.editingGraph.version < DashRuntimeCore.GetVersionNumber())
             {
                 return false;
             }

@@ -39,3 +39,6 @@ MonoBehaviour:
   ModifierNodeIcon: {fileID: 2800000, guid: 816292830efdb134f84536573de9bedc, type: 3}
   CreationNodeIcon: {fileID: 2800000, guid: c77fdba05f2bf8f4baa40932bcade4da, type: 3}
   LogicNodeIcon: {fileID: 2800000, guid: 4d6ad71c72fd6bf4ba8688a0ed2ff3b9, type: 3}
+  TitleTabHeight: 26
+  ConnectorHeight: 24
+  ConnectorPadding: 4

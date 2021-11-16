@@ -93,7 +93,7 @@ namespace Dash
             {
                 if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
                 {
-                    DashEditorCore.Graph.Reconnect(this); 
+                    DashEditorCore.EditorConfig.editingGraph.Reconnect(this); 
                 }
             }
         }

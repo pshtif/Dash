@@ -716,16 +716,16 @@ namespace Dash
             if (p_input)
             {
                 connectorRect = new Rect(offsetRect.x,
-                    offsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT +
-                    p_index * (DashEditorCore.CONNECTOR_HEIGHT + DashEditorCore.CONNECTOR_PADDING), 24,
-                    DashEditorCore.CONNECTOR_HEIGHT);
+                    offsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight +
+                    p_index * (DashEditorCore.EditorConfig.theme.ConnectorHeight + DashEditorCore.EditorConfig.theme.ConnectorPadding), 24,
+                    DashEditorCore.EditorConfig.theme.ConnectorHeight);
             }
             else
             {
                 connectorRect = new Rect(offsetRect.x + offsetRect.width - 24,
-                    offsetRect.y + DashEditorCore.TITLE_TAB_HEIGHT +
-                    p_index * (DashEditorCore.CONNECTOR_HEIGHT + DashEditorCore.CONNECTOR_PADDING), 24,
-                    DashEditorCore.CONNECTOR_HEIGHT);
+                    offsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight +
+                    p_index * (DashEditorCore.EditorConfig.theme.ConnectorHeight + DashEditorCore.EditorConfig.theme.ConnectorPadding), 24,
+                    DashEditorCore.EditorConfig.theme.ConnectorHeight);
             }
 
             return connectorRect;

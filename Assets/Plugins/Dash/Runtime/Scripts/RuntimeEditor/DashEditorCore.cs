@@ -26,14 +26,6 @@ namespace Dash
         static public DashEditorPreviewer Previewer { get; private set; }
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
-        
-        static public DashGraph Graph => EditorConfig.editingGraph;
-
-        static public int TITLE_TAB_HEIGHT = 26;
-
-        static public int CONNECTOR_HEIGHT = 24;
-
-        static public int CONNECTOR_PADDING = 4;
 
         static public GraphBox editingBoxComment;
         static public GraphBox selectedBox;
@@ -84,7 +76,7 @@ namespace Dash
 
         public static void SetDirty()
         {
-            if (Graph == null)
+            if (EditorConfig.editingGraph == null)
                 return;
 
             if (EditorConfig.editingController != null && EditorConfig.editingController.IsGraphBound)
@@ -99,7 +91,7 @@ namespace Dash
                     EditorUtility.SetDirty(EditorConfig.editingController);
                 }
 
-                EditorUtility.SetDirty(Graph);
+                EditorUtility.SetDirty(EditorConfig.editingGraph);
             }
         }
 
@@ -139,9 +131,9 @@ namespace Dash
         {
             // Debug.Log("OnAfterAssemblyReload");
             
-            if (Graph != null && Graph.Controller != null)
+            if (EditorConfig.editingController != null)
             {
-                EditController(Graph.Controller, EditorConfig.editingGraphPath);
+                EditController(EditorConfig.editingController, EditorConfig.editingGraphPath);
             }
         }
 
@@ -156,7 +148,7 @@ namespace Dash
             
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {
-                EditorConfig.enteringPlayModeController = Graph != null ? Graph.Controller : null;
+                EditorConfig.enteringPlayModeController = EditorConfig.editingController != null ? EditorConfig.editingController : null;
             }
             
             if (p_change == PlayModeStateChange.EnteredPlayMode)
