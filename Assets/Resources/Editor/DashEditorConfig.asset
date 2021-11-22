@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theme: {fileID: 11400000, guid: 09998f0ada6991d4abc19f5944035710, type: 2}
   lastUsedVersion: 0
-  _editingGraph: {fileID: 11400000, guid: af03b7c9c61649f4dad670d3e2982d52, type: 2}
+  _editingGraph: {fileID: 0}
+  _editingController: {fileID: 0}
   editingGraphPath: 
   deleteNull: 0
   zoom: 1
@@ -26,10 +27,10 @@ MonoBehaviour:
   enableSoundInPreview: 0
   editorPosition:
     serializedVersion: 2
-    x: 306
-    y: 134
-    width: 800
-    height: 546
+    x: 0
+    y: 0
+    width: 0
+    height: 0
   AOTAssemblyPath: Assets/Plugins
   AOTAssemblyName: DashAOTAssembly
   _serializationData:
@@ -37,7 +38,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 09998f0ada6991d4abc19f5944035710, type: 2}
-    - {fileID: 11400000, guid: af03b7c9c61649f4dad670d3e2982d52, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -56,8 +56,11 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: _editingGraph
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
+    - Name: _editingController
+      Entry: 6
+      Data: 
     - Name: editingGraphPath
       Entry: 1
       Data: 
@@ -90,16 +93,16 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 306
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 134
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 800
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 546
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
