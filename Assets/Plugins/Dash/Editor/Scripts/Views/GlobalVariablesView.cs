@@ -22,7 +22,7 @@ namespace Dash.Editor
             if (Graph == null)
                 return;
             
-            DashEditorCore.FetchGlobalVariables();
+            VariableUtils.FetchGlobalVariables();
 
             if (DashRuntimeCore.Instance.globalVariables == null)
                 return;

@@ -56,7 +56,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -169,6 +168,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 6
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -180,7 +182,7 @@ MonoBehaviour:
       Data: -132
     - Name: 
       Entry: 4
-      Data: 105.5
+      Data: 107
     - Name: 
       Entry: 4
       Data: 85
@@ -281,6 +283,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -365,6 +370,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 1
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -376,7 +384,7 @@ MonoBehaviour:
       Data: 367.25
     - Name: 
       Entry: 4
-      Data: 122
+      Data: 123
     - Name: 
       Entry: 4
       Data: 85
@@ -396,11 +404,11 @@ MonoBehaviour:
       Entry: 1
       Data: Branch1
     - Name: comment
-      Entry: 6
+      Entry: 1
       Data: 
     - Name: groupsMinized
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: expression
       Entry: 7
       Data: 19|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
@@ -425,6 +433,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 4
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -433,7 +444,7 @@ MonoBehaviour:
       Data: 724
     - Name: 
       Entry: 4
-      Data: 271.75
+      Data: 273.75
     - Name: 
       Entry: 4
       Data: 150
@@ -491,6 +502,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -551,15 +565,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 4
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 464.25
+      Data: 353.25
     - Name: 
       Entry: 4
-      Data: 1181.5
+      Data: 1208.5
     - Name: 
       Entry: 4
       Data: 150
@@ -611,15 +628,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 695.25
+      Data: 584.25
     - Name: 
       Entry: 4
-      Data: 1185.25
+      Data: 1212.25
     - Name: 
       Entry: 4
       Data: 150
@@ -843,6 +863,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -955,6 +978,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -1187,15 +1213,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 920.25
+      Data: 809.25
     - Name: 
       Entry: 4
-      Data: 1291.25
+      Data: 1318.25
     - Name: 
       Entry: 4
       Data: 220
@@ -1299,15 +1328,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1473.5
+      Data: 1362.5
     - Name: 
       Entry: 4
-      Data: 1183.75
+      Data: 1210.75
     - Name: 
       Entry: 4
       Data: 160
@@ -1531,15 +1563,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1754.25
+      Data: 1643.25
     - Name: 
       Entry: 4
-      Data: 1181.5
+      Data: 1208.5
     - Name: 
       Entry: 4
       Data: 220
@@ -1763,6 +1798,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -1875,6 +1913,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 3
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -2107,15 +2148,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 918.25
+      Data: 807.25
     - Name: 
       Entry: 4
-      Data: 1091
+      Data: 1118
     - Name: 
       Entry: 4
       Data: 220
@@ -2339,15 +2383,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 2
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2043.5
+      Data: 1932.5
     - Name: 
       Entry: 4
-      Data: 1183.5
+      Data: 1210.5
     - Name: 
       Entry: 4
       Data: 220
@@ -2399,6 +2446,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 4
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -2484,15 +2534,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 1
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 233.75
+      Data: 122.75
     - Name: 
       Entry: 4
-      Data: 1180.75
+      Data: 1207.75
     - Name: 
       Entry: 4
       Data: 150
@@ -2562,15 +2615,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 4
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1241.75
+      Data: 1130.75
     - Name: 
       Entry: 4
-      Data: 1184.25
+      Data: 1211.25
     - Name: 
       Entry: 4
       Data: 150
@@ -2649,15 +2705,18 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 1
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2387.75
+      Data: 2276.75
     - Name: 
       Entry: 4
-      Data: 1182
+      Data: 1209
     - Name: 
       Entry: 4
       Data: 170
@@ -2724,6 +2783,9 @@ MonoBehaviour:
     - Name: <ExecutionCount>k__BackingField
       Entry: 3
       Data: 0
+    - Name: <Category>k__BackingField
+      Entry: 3
+      Data: 1
     - Name: rect
       Entry: 7
       Data: UnityEngine.Rect, UnityEngine.CoreModule
@@ -3167,8 +3229,8 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: <Controller>k__BackingField
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: _boxes
       Entry: 7
       Data: 137|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
@@ -3208,10 +3270,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 186
+      Data: 75
     - Name: 
       Entry: 4
-      Data: 899.75
+      Data: 926.75
     - Name: 
       Entry: 4
       Data: 2407.75
@@ -3265,10 +3327,10 @@ MonoBehaviour:
       Data: 166
     - Name: 
       Entry: 4
-      Data: 1624.25
+      Data: 1693.25
     - Name: 
       Entry: 4
-      Data: 469.25
+      Data: 488.75
     - Name: 
       Entry: 8
       Data: 
@@ -3343,10 +3405,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 772
+      Data: -135.25
     - Name: 
       Entry: 4
-      Data: -65.25
+      Data: 146.25
     - Name: 
       Entry: 8
       Data: 
@@ -3365,8 +3427,8 @@ MonoBehaviour:
     moveNodes: 1
     rect:
       serializedVersion: 2
-      x: 186
-      y: 899.75
+      x: 75
+      y: 926.75
       width: 2407.75
       height: 557.25
   - comment: Open
@@ -3376,8 +3438,8 @@ MonoBehaviour:
       serializedVersion: 2
       x: 196.5
       y: 166
-      width: 1624.25
-      height: 469.25
+      width: 1693.25
+      height: 488.75
   - comment: Initialize
     color: {r: 0, g: 0, b: 0, a: 1}
     moveNodes: 1
@@ -3388,6 +3450,6 @@ MonoBehaviour:
       width: 548
       height: 217.25
   previewControlsViewMinimized: 0
-  viewOffset: {x: 772, y: -65.25}
+  viewOffset: {x: -135.25, y: 146.25}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1

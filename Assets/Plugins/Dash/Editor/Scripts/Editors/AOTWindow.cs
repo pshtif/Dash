@@ -50,7 +50,7 @@ namespace Dash.Editor
             infoStyle.padding.left = 5;
 
             var scrollViewStyle = new GUIStyle();
-            scrollViewStyle.normal.background = DashEditorCore.GetColorTexture(new Color(.1f, .1f, .1f));
+            scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));
             
             GUILayout.Space(4);
             GUILayout.Label("Scanned types", titleStyle, GUILayout.ExpandWidth(true));

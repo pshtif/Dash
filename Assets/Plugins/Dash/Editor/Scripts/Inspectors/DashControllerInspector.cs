@@ -126,7 +126,10 @@ namespace Dash.Editor
             
             GUILayout.EndVertical();
 
-            GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
+            if (Controller.Graph != null)
+            {
+                GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -143,7 +146,9 @@ namespace Dash.Editor
 
             // If we are currently editing this controller refresh
             if (editing)
+            {
                 DashEditorCore.EditController(Controller);
+            }
         }
     }
 }

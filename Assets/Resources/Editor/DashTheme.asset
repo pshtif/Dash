@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8749a976a9f24668871a4f425b61ec6d, type: 3}
+  m_Name: DashTheme
+  m_EditorClassIdentifier: 
+  ParameterColor: {r: 0.5, g: 1, b: 1, a: 1}
+  NodeExecutingColor: {r: 0, g: 1, b: 1, a: 1}
+  NodeSelectedColor: {r: 0, g: 1, b: 0, a: 1}
+  NodeInactiveColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  ConnectionActiveColor: {r: 0.8, g: 0.6, b: 0, a: 1}
+  ConnectionInactiveColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  ConnectorInputConnectedColor: {r: 0.9, g: 0.7, b: 0, a: 1}
+  ConnectorInputDisconnectedColor: {r: 0.4, g: 0.3, b: 0, a: 1}
+  ConnectorOutputConnectedColor: {r: 1, g: 0.7, b: 0, a: 1}
+  ConnectorOutputDisconnectedColor: {r: 1, g: 1, b: 1, a: 1}
+  EventNodeBackgroundColor: {r: 1, g: 0.7, b: 0.7, a: 1}
+  AnimationNodeBackgroundColor: {r: 0.7, g: 0.7, b: 1, a: 1}
+  ModifierNodeBackgroundColor: {r: 0.7, g: 1, b: 1, a: 1}
+  CreationNodeBackgroundColor: {r: 1, g: 0.7, b: 1, a: 1}
+  GraphNodeBackgroundColor: {r: 0.8, g: 0.6, b: 0, a: 1}
+  LogicNodeBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  EventNodeTitleTextColor: {r: 1, g: 0.8, b: 0.8, a: 1}
+  AnimationNodeTitleTextColor: {r: 0.8, g: 0.8, b: 1, a: 1}
+  ModifierNodeTitleTextColor: {r: 0.8, g: 1, b: 1, a: 1}
+  CreationNodeTitleTextColor: {r: 1, g: 0.8, b: 1, a: 1}
+  GraphNodeTitleTextColor: {r: 1, g: 0.8, b: 0.5, a: 1}
+  LogicNodeTitleTextColor: {r: 0.9, g: 0.9, b: 1, a: 1}
+  EventNodeIcon: {fileID: 2800000, guid: e5521bdf31704b14db37d9936a69889f, type: 3}
+  AnimationNodeIcon: {fileID: 2800000, guid: b0fea3a189d6b5a4ca416249b1fd2749, type: 3}
+  ModifierNodeIcon: {fileID: 2800000, guid: 816292830efdb134f84536573de9bedc, type: 3}
+  CreationNodeIcon: {fileID: 2800000, guid: c77fdba05f2bf8f4baa40932bcade4da, type: 3}
+  LogicNodeIcon: {fileID: 2800000, guid: 4d6ad71c72fd6bf4ba8688a0ed2ff3b9, type: 3}
+  TitleTabHeight: 26
+  ConnectorHeight: 24
+  ConnectorPadding: 4

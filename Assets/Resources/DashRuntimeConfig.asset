@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb50743a58c4710adbcd6ca524c96d0, type: 3}
   m_Name: DashRuntimeConfig
   m_EditorClassIdentifier: 
+  enableCustomExpressionClasses: 0
   _serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -21,24 +22,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: enableCustomExpressionClasses
+      Entry: 5
+      Data: false
     - Name: expressionClasses
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[System.Type, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 1|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: Dash.AddAttributeNode, DashRuntime
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
+    - Name: prefabs
+      Entry: 6
       Data: 

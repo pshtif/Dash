@@ -89,7 +89,7 @@ namespace Dash.Editor
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
             if ((Event.current.type == EventType.Repaint || Event.current.isMouse) && !_previousLayoutDone) return;
 
-            if (CheckVersionPopup.IsCurrentVersion())
+//            if (CheckVersionPopup.IsCurrentVersion())
             {
                 ShortcutsHandler.Handle();
 
@@ -106,10 +106,10 @@ namespace Dash.Editor
                     Repaint();
                 }
             }
-            else
-            {
-                CheckVersionPopup.ShowVersionMigrate(position);
-            }
+    //        else
+    //        {
+    //            CheckVersionPopup.ShowVersionMigrate(position);
+    //        }
         }
 
         private void OnInspectorUpdate()

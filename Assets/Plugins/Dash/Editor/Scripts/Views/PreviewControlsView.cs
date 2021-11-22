@@ -12,7 +12,7 @@ namespace Dash.Editor
 
         public override void DrawGUI(Event p_event, Rect p_rect)
         {
-            if (Application.isPlaying || Graph == null || Graph.Controller == null || !Graph.Controller.gameObject.activeInHierarchy)
+            if (Application.isPlaying || Graph == null || Controller == null || !Controller.gameObject.activeInHierarchy)
                 return;
 
             if (Graph.previewControlsViewMinimized)

@@ -49,16 +49,11 @@ namespace Dash.Editor
                                 _index++;
                             }
 
-                            DashEditorCore.Search(_search, _index);
+                            SelectionManager.SearchAndSelectNode(p_graph, _search, _index);
                         }
                     }
                 }
             }
-        }
-
-        private void DoSearch(DashGraph p_graph, string p_search)
-        {
-            
         }
     }
 }

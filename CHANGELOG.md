@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.6.0RC - 16.11.2021
+
+#### Added
+
+- Added if Parameter is of a string type and returned expression evaluation is not implicitly assignalbe to it it is converted using ToString() explicitly
+- Added support for custom expression function through custop user defined classes using DashExpressionsEditorWindow [PREVIEW]
+
+#### Changed
+
+- Changed Dash editor windows now all have minimal size to ensure valid UI states
+- Changed removed text/variable from DebugNode now everything can be debugged using parametrized debug property [BREAKING]
+- Changed removed graph version migration and warnings, should be on lower level
+- Changed selection logic now separated from DashEditorCore to SelectionManager
+- Changed theme logic now separated from DashEditorCore using a scriptable Theme asset instead
+- Changed classes folder structure to match what is editor related even though it is in Runtime assembly
+- Changed how Controller injection works during Preview, removed IEditorGraphAccess [POSSIBLE BREAK]
+- Changed DashCore is now DashRuntimeCore
+- Changed updated OdinSerializer to 2021.8.11
+- Changed removed IconAttribute as it is obsolete now and was ambiguous to the Unity 2021 new IconAttribute as well
+
+#### Fixed
+
+- Fixed type enumeration reworked to private member as it seems Unity changed API for GenericMenu internally
+- Fixed DashTween was always expecting OnCokmplete to be defined and called now it is optional
+- Fixed null error on Variables inspector when no Graph attached on Controller
+
 ### Release 0.5.4RC3 - 4.10.2021
 
 #### Added

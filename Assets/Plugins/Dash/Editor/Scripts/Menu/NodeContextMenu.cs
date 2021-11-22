@@ -16,7 +16,7 @@ namespace Dash.Editor
         {
             GenericMenu menu = new GenericMenu();
             
-            if (DashEditorCore.selectedNodes.Count > 1)
+            if (SelectionManager.SelectedCount > 1)
             {
                 menu.AddItem(new GUIContent("Copy Nodes"), false, CopyNode, null);
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
@@ -102,11 +102,11 @@ namespace Dash.Editor
         {
             if (p_node == null)
             {
-                DashEditorCore.CopySelectedNodes();
+                SelectionManager.CopySelectedNodes(Graph);
             }
             else
             {
-                DashEditorCore.CopyNode((NodeBase)p_node);
+                SelectionManager.CopyNode((NodeBase)p_node, Graph);
             }
         }
 
@@ -114,11 +114,11 @@ namespace Dash.Editor
         {
             if (p_node == null)
             {
-                DashEditorCore.DeleteSelectedNodes();
+                SelectionManager.DeleteSelectedNodes(Graph);
             }
             else
             {
-                DashEditorCore.DeleteNode((NodeBase)p_node);
+                SelectionManager.DeleteNode((NodeBase)p_node, Graph);
             }
             
             DashEditorCore.SetDirty();
@@ -128,11 +128,11 @@ namespace Dash.Editor
         {
             if (p_node == null)
             {
-                DashEditorCore.DuplicateSelectedNodes();
+                SelectionManager.DuplicateSelectedNodes(Graph);
             }
             else
             {
-                DashEditorCore.DuplicateNode((NodeBase)p_node);
+                SelectionManager.DuplicateNode((NodeBase)p_node, Graph);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Dash.Editor
         {
             Undo.RegisterCompleteObjectUndo(Graph, "Create Box");
             
-            DashEditorCore.CreateBoxAroundSelectedNodes();
+            SelectionManager.CreateBoxAroundSelectedNodes(Graph);
         }
         
         static void SetAsPreview(object p_node)
