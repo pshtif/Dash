@@ -9,13 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    /**
-     *    Ok I will be honest I wrote this code instead of buing DOTweenPro because I don't think it is
-     *    worth to buy DOTweenPro and have a burden of editor extension licensing just for TMP tweening. 
-     *     -- sHTiF
-     */
-    
-    public class TMPTweenExtension
+    public class TextMeshTweenUtils
     {
         static private Dictionary<TMP_Text, TMP_MeshInfo[]> _meshCache = new Dictionary<TMP_Text, TMP_MeshInfo[]>();
 

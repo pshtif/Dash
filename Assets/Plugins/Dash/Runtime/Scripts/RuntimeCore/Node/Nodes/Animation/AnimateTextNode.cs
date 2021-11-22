@@ -24,7 +24,7 @@ namespace Dash
             
             text.ForceMeshUpdate();
             for (int i = 0; i < text.text.Length; i++)
-                 TMPTweenExtension.Scale(text, i, 0);
+                 TextMeshTweenUtils.Scale(text, i, 0);
             
             float time = GetParameterValue(Model.time, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
@@ -34,7 +34,7 @@ namespace Dash
             {
                  int index = i; // Rescope variable to avoid modified closure trap
                  DashTween.To(text, 0, 1, time)
-                     .OnUpdate(f => TMPTweenExtension.Scale(text, index, f))
+                     .OnUpdate(f => TextMeshTweenUtils.Scale(text, index, f))
                      .SetDelay(index * characterDelay)
                      .SetEase(easeType)
                      .Start();
