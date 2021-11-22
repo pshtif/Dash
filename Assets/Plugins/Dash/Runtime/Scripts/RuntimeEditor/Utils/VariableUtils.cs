@@ -41,11 +41,11 @@ namespace Dash
             
             if (components.Length > 0)
             {
-                DashRuntimeCore.Instance.SetGlobalVariables(components[0]);
+                DashCore.Instance.SetGlobalVariables(components[0]);
             }
             else
             {
-                DashRuntimeCore.Instance.SetGlobalVariables(null);
+                DashCore.Instance.SetGlobalVariables(null);
             }
         }
     }

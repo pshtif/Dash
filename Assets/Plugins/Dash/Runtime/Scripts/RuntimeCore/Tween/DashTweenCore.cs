@@ -54,7 +54,7 @@ namespace Dash
 
         void Update()
         {
-            UpdateInternal(DashRuntimeCore.Instance.useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
+            UpdateInternal(DashCore.Instance.useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
         }
 
         static void UpdateInternal(float p_delta)

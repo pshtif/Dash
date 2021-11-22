@@ -21,7 +21,7 @@ namespace Dash
     public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable
     {
 
-        public DashRuntimeCore DashRuntimeCore => DashRuntimeCore.Instance;
+        public DashCore Core => DashCore.Instance;
 
         [HideInInspector]
         [SerializeField]
@@ -124,7 +124,7 @@ namespace Dash
             if (Graph != null) 
                 Graph.Initialize(this);
 
-            DashRuntimeCore.Bind(this);
+            Core.Bind(this);
         }
 
         void Start()
@@ -208,7 +208,7 @@ namespace Dash
 
         private void OnDestroy()
         {
-            DashRuntimeCore.Unbind(this);
+            Core.Unbind(this);
             
             if (Graph != null) {
                 Graph.Stop();

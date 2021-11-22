@@ -24,12 +24,12 @@ namespace Dash
         {
             variables.Initialize(gameObject);
             
-            DashRuntimeCore.Instance.SetGlobalVariables(this);
+            DashCore.Instance.SetGlobalVariables(this);
         }
 
         private void OnDestroy()
         {
-            DashRuntimeCore.Instance.SetGlobalVariables(null);
+            DashCore.Instance.SetGlobalVariables(null);
         }
 
         [SerializeField, HideInInspector]

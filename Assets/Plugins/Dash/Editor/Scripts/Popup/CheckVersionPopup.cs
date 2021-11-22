@@ -11,7 +11,7 @@ namespace Dash.Editor
         public static bool IsCurrentVersion()
         {
             if (DashEditorCore.EditorConfig.editingGraph != null &&
-                DashEditorCore.EditorConfig.editingGraph.version < DashRuntimeCore.GetVersionNumber())
+                DashEditorCore.EditorConfig.editingGraph.version < DashCore.GetVersionNumber())
             {
                 return false;
             }
@@ -37,9 +37,9 @@ namespace Dash.Editor
         //         textStyle.wordWrap = true;
         //         textStyle.alignment = TextAnchor.UpperCenter;
         //         GUILayout.TextArea("This graph was created by previous version of Dash Animation System version: " +
-        //                            DashRuntimeCore.GetVersionString(DashEditorCore.EditorConfig.editingGraph.version) + "\n" +
+        //                            DashCore.GetVersionString(DashEditorCore.EditorConfig.editingGraph.version) + "\n" +
         //                            "The current version is " +
-        //                            DashRuntimeCore.GetVersionString(DashRuntimeCore.GetVersionNumber()) +
+        //                            DashCore.GetVersionString(DashCore.GetVersionNumber()) +
         //                            " so it is needed to migrate and revalidate serialization or the Graph may not work correctly.\n" +
         //                            "Make sure you have backup of this Graph.", textStyle);
         //         GUILayout.Space(4);

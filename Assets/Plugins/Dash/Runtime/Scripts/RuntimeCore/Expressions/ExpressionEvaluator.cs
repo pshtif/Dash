@@ -151,7 +151,7 @@ namespace Dash
                 methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
                     BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
                 
-                if (methodInfo == null && DashRuntimeCore.Instance.Config.enableCustomExpressionClasses)
+                if (methodInfo == null && DashCore.Instance.Config.enableCustomExpressionClasses)
                 {
                     methodInfo = GetCustomFunction(p_name);
                 }
@@ -198,7 +198,7 @@ namespace Dash
                 methodInfo = typeof(ExpressionFunctions).GetMethod(p_name,
                     BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
 
-                if (methodInfo == null && DashRuntimeCore.Instance.Config.enableCustomExpressionClasses)
+                if (methodInfo == null && DashCore.Instance.Config.enableCustomExpressionClasses)
                 {
                     methodInfo = GetCustomFunction(p_name);
                 }
@@ -233,7 +233,7 @@ namespace Dash
             #if UNITY_EDITOR
             List<Type> classes = DashEditorCore.RuntimeConfig.expressionClasses; 
             #else
-            List<Type> classes = DashRuntimeCore.Instance.Config.expressionClasses;
+            List<Type> classes = DashCore.Instance.Config.expressionClasses;
             #endif
             
             if (classes == null)

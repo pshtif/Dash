@@ -31,10 +31,10 @@ namespace Dash
                 }
                 else
                 {
-                    DashRuntimeCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                    DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
                 }
                 #else
-                DashRuntimeCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
+                DashCore.Instance.SendEvent(eventName, sendData ? p_flowData : NodeFlowDataFactory.Create());
                 #endif
             }
             else

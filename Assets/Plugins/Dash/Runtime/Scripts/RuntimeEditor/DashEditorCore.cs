@@ -53,12 +53,12 @@ namespace Dash
 
         static void CheckDashVersion()
         {
-            if (EditorConfig.lastUsedVersion == 0 || DashRuntimeCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
+            if (EditorConfig.lastUsedVersion == 0 || DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
             {
                 // TODO let user know?
             }
 
-            EditorConfig.lastUsedVersion = DashRuntimeCore.GetVersionNumber();
+            EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
         }
 
         static void SetExecutionOrder(Type p_classType, int p_order)

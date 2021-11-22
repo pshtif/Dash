@@ -24,10 +24,10 @@ namespace Dash.Editor
             
             VariableUtils.FetchGlobalVariables();
 
-            if (DashRuntimeCore.Instance.globalVariables == null)
+            if (DashCore.Instance.globalVariables == null)
                 return;
             
-            DrawVariablesGUI(new Vector2(20, Graph.graphVariablesMinimized ? 65 : 230), true, new Color(1, .75f, .75f), DashRuntimeCore.Instance.globalVariables.variables, ref Graph.globalVariablesMinimized,  DashRuntimeCore.Instance.globalVariables.gameObject);
+            DrawVariablesGUI(new Vector2(20, Graph.graphVariablesMinimized ? 65 : 230), true, new Color(1, .75f, .75f), DashCore.Instance.globalVariables.variables, ref Graph.globalVariablesMinimized,  DashCore.Instance.globalVariables.gameObject);
         }
     }
 }

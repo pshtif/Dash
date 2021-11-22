@@ -29,7 +29,7 @@ namespace Dash
                 int sequencerPriority = GetParameterValue(Model.sequencerPriority, p_flowData);
                 if (!sequencerId.IsNullOrWhitespace())
                 {
-                    DashRuntimeCore.Instance.GetOrCreateSequencer(sequencerId).StartEvent(Model.eventName, sequencerPriority, () =>
+                    DashCore.Instance.GetOrCreateSequencer(sequencerId).StartEvent(Model.eventName, sequencerPriority, () =>
                     {
                         //Debug.Log("Sequenced OnCustomEvent: "+Model.eventName);
                         OnExecuteEnd();

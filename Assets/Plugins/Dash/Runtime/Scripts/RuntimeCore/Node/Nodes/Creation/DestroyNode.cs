@@ -21,7 +21,7 @@ namespace Dash
             if (Model.usePooling)
             {
                 var poolId = GetParameterValue(Model.poolId, p_flowData);
-                var pool = DashRuntimeCore.Instance.GetPrefabPool(poolId);
+                var pool = DashCore.Instance.GetPrefabPool(poolId);
                 if (pool == null)
                 {
                     SetError("Prefab pool with id " + Model.poolId + " not found target not destroyed.");

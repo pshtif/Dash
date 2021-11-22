@@ -11,6 +11,6 @@ public class MouseClickHandler : MonoBehaviour
     void Start()
     {
         Button[] buttons = GetComponentsInChildren<Button>();
-        buttons.ForEach(b => b.onClick.AddListener(() => DashRuntimeCore.Instance.SendEvent("MouseClick", NodeFlowDataFactory.Create(b.transform))));
+        buttons.ForEach(b => b.onClick.AddListener(() => DashCore.Instance.SendEvent("MouseClick", NodeFlowDataFactory.Create(b.transform))));
     }
 }

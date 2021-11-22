@@ -96,7 +96,7 @@ namespace Dash
             if (_initialized)
                 return;
 
-            if (version < DashRuntimeCore.GetVersionNumber())
+            if (version < DashCore.GetVersionNumber())
             {
                 //Debug.LogWarning("Current Dash version is higher than initialized Graph, can result in possible issues please migrate in editor. Controller "+p_controller.name);
             }
@@ -443,7 +443,7 @@ namespace Dash
         // public void ValidateSerialization()
         // {
         //     Nodes?.ForEach(n => n.ValidateSerialization());
-        //     version = DashRuntimeCore.GetVersionNumber();
+        //     version = DashCore.GetVersionNumber();
         //     if (IsBound)
         //     {
         //         Controller.ReserializeBound();

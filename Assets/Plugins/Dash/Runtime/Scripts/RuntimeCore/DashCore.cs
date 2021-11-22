@@ -12,15 +12,15 @@ using UnityEngine.Scripting;
 
 namespace Dash
 {
-    public class DashRuntimeCore
+    public class DashCore
     {
         public const string VERSION = "0.6.0RC";
         
         public DashRuntimeConfig Config { get; private set; }
         
-        private static DashRuntimeCore _instance = null;
+        private static DashCore _instance = null;
 
-        public static DashRuntimeCore Instance
+        public static DashCore Instance
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Dash
 #if UNITY_EDITOR
                     DashEditorDebug.Debug(new CoreDebugItem(CoreDebugItem.CoreDebugItemType.INITIALIZE));
 #endif
-                    _instance = new DashRuntimeCore();
+                    _instance = new DashCore();
                 }
                 
                 return _instance;
@@ -106,7 +106,7 @@ namespace Dash
             _globalVariables = p_globalVariables;
         }
 
-        public DashRuntimeCore()
+        public DashCore()
         {
             LoadConfig();
             Debug.Log("Config Loaded: "+Config);

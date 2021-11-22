@@ -46,7 +46,7 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Validation Scanner", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("Current version: "+DashRuntimeCore.VERSION, infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Current version: "+DashCore.VERSION, infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height-90));
