@@ -12,7 +12,7 @@ namespace Dash.Editor
 {
     public class DashEditorWindow : EditorWindow
     {
-        public static EditorWindow Instance { get; private set; }
+        public static DashEditorWindow Instance { get; private set; }
 
         protected static bool _isDirty = false;
         
@@ -48,11 +48,11 @@ namespace Dash.Editor
 
         protected List<ViewBase> _views;
 
-        public static EditorWindow InitEditorWindow(DashController p_dashController)
+        public static DashEditorWindow InitEditorWindow(DashController p_dashController)
         {
             DashEditorCore.EditController(p_dashController);
 
-            Instance = GetWindow<EditorWindow>();
+            Instance = GetWindow<DashEditorWindow>();
             Instance.titleContent = new GUIContent("Dash Editor");
             Instance.minSize = new Vector2(800, 400);
 
