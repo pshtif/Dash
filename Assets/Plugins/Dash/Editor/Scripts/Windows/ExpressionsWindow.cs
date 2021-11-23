@@ -121,6 +121,7 @@ namespace Dash.Editor
                     if (newValue != pair.Value)
                     {
                         DashEditorCore.RuntimeConfig.expressionMacros[pair.Key] = newValue;
+                        break;
                     }
 
                     if (GUILayout.Button("Remove", GUILayout.Width(120)))
