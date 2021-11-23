@@ -356,16 +356,9 @@ namespace Dash
             }
             
             #if UNITY_EDITOR
-            if (DashEditorCore.EditorConfig.editingController != null)
+            if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
             {
-                if (DashEditorCore.EditorConfig.editingGraph != this)
-                {
-                    Debug.LogWarning("Reserializing graph that we are not editing! Unless you are modifying Dash code directly please contact support with use case.");
-                }
-                else
-                {
-                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
-                }
+                DashEditorCore.EditorConfig.editingController.ReserializeBound();
             }
             #endif
         }

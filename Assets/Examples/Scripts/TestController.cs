@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TestController : MonoBehaviour
 {
+    public int test;
+    
     [Button()]
     public void ShowScreen1()
     {

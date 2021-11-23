@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -13,7 +12,6 @@ namespace Dash.Editor
     public class ValidationWindow : EditorWindow
     {
         private Vector2 _scrollPositionScanned;
-        private bool _isDirty = false;
 
         public static ValidationWindow Instance { get; private set; }
         
@@ -77,11 +75,11 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
 
-            if (_isDirty)
-            {
-                _isDirty = false;
-                Repaint();
-            }
+            // if (_isDirty)
+            // {
+            //     _isDirty = false;
+            //     Repaint();
+            // }
 
             if (scan)
             {

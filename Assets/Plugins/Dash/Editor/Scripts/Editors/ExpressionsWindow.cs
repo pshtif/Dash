@@ -16,9 +16,6 @@ namespace Dash.Editor
         private Vector2 _scrollPositionExplicit;
         private bool _isDirty = false;
 
-        private bool _generateLinkXml = true;
-        private bool _includeOdin = false;
-
         public static ExpressionsWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/Expressions")]

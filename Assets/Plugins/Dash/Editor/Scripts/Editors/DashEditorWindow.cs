@@ -10,11 +10,13 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class EditorWindow : UnityEditor.EditorWindow
+    public class DashEditorWindow : EditorWindow
     {
         public static EditorWindow Instance { get; private set; }
 
-        public static bool _isDirty = false;
+        protected static bool _isDirty = false;
+        
+        public static bool IsDirty => _isDirty;
 
         public static void SetDirty(bool p_dirty)
         {
@@ -43,8 +45,6 @@ namespace Dash.Editor
             //when exiting prefab state we are left with a floating graph instance which can creat confusion
             DashEditorCore.EditController(null);
         }
-
-        public static bool IsDirty => _isDirty;
 
         protected List<ViewBase> _views;
 

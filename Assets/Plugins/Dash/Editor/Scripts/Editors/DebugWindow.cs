@@ -16,10 +16,6 @@ namespace Dash.Editor
         private bool _isDirty = false;
 
         private bool _showTime = true;
-        private bool _showController = true;
-        private bool _showGraph = true;
-        private bool _showNode = true;
-        private bool _showTarget = true;
         private bool _forceLowerCase = true;
         
         public static DebugWindow Instance { get; private set; }
