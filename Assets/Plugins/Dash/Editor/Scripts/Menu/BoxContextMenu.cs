@@ -13,11 +13,12 @@ namespace Dash.Editor
         
         static public void Show(GraphBox p_region)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
             menu.AddItem(new GUIContent("Delete Box"), false, DeleteBox, p_region);
             
-            menu.ShowAsContext();
+            //menu.ShowAsContext();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 200, 300, false, false);
         }
         
         static void DeleteBox(object p_region)

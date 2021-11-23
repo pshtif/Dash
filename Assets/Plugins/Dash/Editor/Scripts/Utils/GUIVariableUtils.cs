@@ -63,7 +63,8 @@ namespace Dash.Editor
             EditorGUILayout.Space(2,false);
             if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
-                GetVariableMenu(p_variables, p_name, p_boundObject).ShowAsContext();
+                var menu = GetVariableMenu(p_variables, p_name, p_boundObject);
+                GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false, false);
             }
             EditorGUILayout.EndVertical();
 
@@ -72,9 +73,9 @@ namespace Dash.Editor
             EditorGUILayout.EndHorizontal();
         }
 
-        static GenericMenu GetVariableMenu(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static RuntimeGenericMenu GetVariableMenu(DashVariables p_variables, string p_name, GameObject p_boundObject)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
             var variable = p_variables.GetVariable(p_name);
             if (variable.IsBound)
