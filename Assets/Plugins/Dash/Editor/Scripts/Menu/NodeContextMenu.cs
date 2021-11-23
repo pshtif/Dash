@@ -14,7 +14,7 @@ namespace Dash.Editor
         
         public static void Show(NodeBase p_node)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             if (SelectionManager.SelectedCount > 1)
             {
@@ -67,7 +67,8 @@ namespace Dash.Editor
                 }
             }
 
-            menu.ShowAsContext();
+            //menu.ShowAsEditorMenu();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }
 
         static void SetAsStartInput(object p_node)

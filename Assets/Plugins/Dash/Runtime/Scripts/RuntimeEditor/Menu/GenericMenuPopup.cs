@@ -2,22 +2,15 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Dash.Editor
+namespace Dash
 {
     public class MenuItemNode
     {
-        public GUIContent content;
-        public GenericMenu.MenuFunction func;
-        public GenericMenu.MenuFunction2 func2;
-        public object userData;
-        public bool separator;
-        public bool on;
+        public RuntimeGenericMenuItem item;
 
         public string name { get; }
         public MenuItemNode parent { get; }
@@ -75,26 +68,26 @@ namespace Dash.Editor
 
         public void Execute()
         {
-            if (func != null)
+            if (item.callback1 != null)
             {
-                func?.Invoke();
+                item.callback1?.Invoke();
             }
             else
             {
-                func2?.Invoke(userData);
+                item.callback2?.Invoke(item.data);
             }
         }
     }
     
     public class GenericMenuPopup : PopupWindowContent
     {
-        public static GenericMenuPopup Get(GenericMenu p_menu, string p_title)
+        public static GenericMenuPopup Get(RuntimeGenericMenu p_menu, string p_title)
         {
             var popup = new GenericMenuPopup(p_menu, p_title);
             return popup;
         }
         
-        public static GenericMenuPopup Show(GenericMenu p_menu, string p_title, Vector2 p_position, int p_width = 200, int p_height = 200, bool p_showSearch = true, bool p_showTooltip = true) {
+        public static GenericMenuPopup Show(RuntimeGenericMenu p_menu, string p_title, Vector2 p_position, int p_width = 200, int p_height = 200, bool p_showSearch = true, bool p_showTooltip = true) {
             var popup = new GenericMenuPopup(p_menu, p_title);
             popup.width = p_width;
             popup.height = p_height;
@@ -151,14 +144,14 @@ namespace Dash.Editor
         public int width = 200;
         public int height = 200;
         public int maxHeight = 300;
-        public bool resizeToContent = false;
-        public bool showOnStatus = false;
+        public bool resizeToContent = true;
+        public bool showOnStatus = true;
         public bool showSearch = true;
         public bool showTooltip = false;
         public bool showTitle = false;
         
 
-        public GenericMenuPopup(GenericMenu p_menu, string p_title)
+        public GenericMenuPopup(RuntimeGenericMenu p_menu, string p_title)
         {
             _title = p_title;
             showTitle = !string.IsNullOrWhiteSpace(_title);
@@ -183,8 +176,10 @@ namespace Dash.Editor
         public override void OnGUI(Rect p_rect)
         {
             if (Event.current.type == EventType.Layout)
+            {
                 _useScroll = _contentHeight > maxHeight || (!resizeToContent && _contentHeight > height);
-            
+            }
+
             _contentHeight = 0;
             GUIStyle style = new GUIStyle();
             style.normal.background = Texture2D.whiteTexture;
@@ -237,14 +232,17 @@ namespace Dash.Editor
         private void DrawTooltip(Rect p_rect)
         {
             _contentHeight += 60;
-            if (_hoverNode == null || _hoverNode.content == null || string.IsNullOrWhiteSpace(_hoverNode.content.tooltip))
+            if (_hoverNode == null || _hoverNode.item == null || _hoverNode.item.content == null ||
+                string.IsNullOrWhiteSpace(_hoverNode.item.content.tooltip))
+            {
                 return;
+            }
 
             GUIStyle style = new GUIStyle();
             style.fontSize = 9;
             style.wordWrap = true;
             style.normal.textColor = Color.white;
-            GUI.Label(p_rect, _hoverNode.content.tooltip, style);
+            GUI.Label(p_rect, _hoverNode.item.content.tooltip, style);
         }
 
         private void DrawMenuItems(Rect p_rect)
@@ -309,7 +307,7 @@ namespace Dash.Editor
                 {
                     style = new GUIStyle("box");
                     style.normal.background = Texture2D.whiteTexture;
-                    GUI.color = node.on ? new Color(0, .6f, .8f) : new Color(.2f, .2f, .2f);
+                    GUI.color = node.item.state ? new Color(0, .6f, .8f) : new Color(.2f, .2f, .2f);
                     GUILayout.Box("", style, GUILayout.Width(14), GUILayout.Height(14));
                 }
 
@@ -319,7 +317,7 @@ namespace Dash.Editor
                 GUILayout.EndHorizontal();
                 
                 var nodeRect = GUILayoutUtility.GetLastRect();
-                if (Event.current.isMouse)
+                if (Event.current.type == EventType.Repaint || Event.current.isMouse)
                 {
                     if (nodeRect.Contains(Event.current.mousePosition))
                     {
@@ -363,8 +361,9 @@ namespace Dash.Editor
         {
             if (_currentNode != _rootNode)
             {
-                _contentHeight += 21;
-                if (GUILayout.Button(_currentNode.GetPath(), BackStyle))
+                _contentHeight += 22;
+                GUILayout.Space(2);
+                if (GUILayout.Button(_currentNode.GetPath(), BackStyle, GUILayout.Height(20)))
                 {
                     _currentNode = _currentNode.parent;
                 }
@@ -372,7 +371,7 @@ namespace Dash.Editor
             
             foreach (var node in _currentNode.Nodes)
             {
-                if (node.separator)
+                if (node.item != null && node.item.separator)
                 {
                     GUILayout.Space(4);
                     _contentHeight += 4;
@@ -389,7 +388,7 @@ namespace Dash.Editor
                 {
                     style = new GUIStyle("box");
                     style.normal.background = Texture2D.whiteTexture;
-                    GUI.color = node.on ? new Color(0, .6f, .8f, .5f) : new Color(.2f, .2f, .2f, .2f);
+                    GUI.color = (node.item != null && node.item.state) ? new Color(0, .6f, .8f, .5f) : new Color(.2f, .2f, .2f, .2f);
                     GUILayout.Box("", style, GUILayout.Width(14), GUILayout.Height(14));
                 }
 
@@ -401,7 +400,7 @@ namespace Dash.Editor
                 GUILayout.EndHorizontal();
                 
                 var nodeRect = GUILayoutUtility.GetLastRect();
-                if (Event.current.isMouse)
+                if (Event.current.type == EventType.Repaint || Event.current.isMouse)
                 {
                     if (nodeRect.Contains(Event.current.mousePosition))
                     {
@@ -451,31 +450,15 @@ namespace Dash.Editor
         }
 
         // TODO Possible type caching? 
-        public static MenuItemNode GenerateMenuItemNodeTree(GenericMenu p_menu)
+        public static MenuItemNode GenerateMenuItemNodeTree(RuntimeGenericMenu p_menu)
         {
             MenuItemNode rootNode = new MenuItemNode();
             if (p_menu == null)
                 return rootNode;
-            
-            var menuItemsField = p_menu.GetType().GetField("menuItems", BindingFlags.Instance | BindingFlags.NonPublic);
 
-            if (menuItemsField == null)
+            foreach (var menuItem in p_menu.Items)
             {
-                menuItemsField = p_menu.GetType().GetField("m_MenuItems", BindingFlags.Instance | BindingFlags.NonPublic);
-            }
-            
-            if (menuItemsField == null)
-                return rootNode;
-
-            var menuItems = menuItemsField.GetValue(p_menu) as IEnumerable;
-
-            foreach (var menuItem in menuItems)
-            {
-                var menuItemType = menuItem.GetType();
-                GUIContent content = (GUIContent)menuItemType.GetField("content").GetValue(menuItem);
-                
-                bool separator = (bool)menuItemType.GetField("separator").GetValue(menuItem);
-                string path = content.text;
+                string path = menuItem.content.text;
                 string[] splitPath = path.Split('/');
                 MenuItemNode currentNode = rootNode;
                 for (int i = 0; i < splitPath.Length; i++)
@@ -485,18 +468,20 @@ namespace Dash.Editor
                         : currentNode.CreateNode(splitPath[i]);
                 }
 
-                if (separator)
-                {
-                    currentNode.separator = true;
-                }
-                else
-                {
-                    currentNode.content = content;
-                    currentNode.func = (GenericMenu.MenuFunction) menuItemType.GetField("func").GetValue(menuItem);
-                    currentNode.func2 = (GenericMenu.MenuFunction2) menuItemType.GetField("func2").GetValue(menuItem);
-                    currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
-                    currentNode.on = (bool) menuItemType.GetField("on").GetValue(menuItem);
-                }
+                currentNode.item = menuItem;
+                //
+                // if (menuItem.separator)
+                // {
+                //     currentNode.item.separator = true;
+                // }
+                // else
+                // {
+                //     currentNode.content = content;
+                //     currentNode.func = (GenericMenu.MenuFunction) menuItemType.GetField("func").GetValue(menuItem);
+                //     currentNode.func2 = (GenericMenu.MenuFunction2) menuItemType.GetField("func2").GetValue(menuItem);
+                //     currentNode.userData = menuItemType.GetField("userData").GetValue(menuItem);
+                //     currentNode.on = (bool) menuItemType.GetField("on").GetValue(menuItem);
+                // }
             }
 
             return rootNode;

@@ -14,6 +14,7 @@ namespace Dash
         POSITION = 2,
     }
     
+    [Serializable]
     public class TransformStorageData
     {
         public TransformStorageOption storageOptionOptionFlag;

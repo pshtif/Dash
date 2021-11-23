@@ -11,7 +11,7 @@ namespace Dash.Editor
     {
         public static void Show(DashGraph p_graph)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.EditorConfig.showExperimental, () => DashEditorCore.EditorConfig.showExperimental = !DashEditorCore.EditorConfig.showExperimental);
             menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.EditorConfig.showNodeIds, () => DashEditorCore.EditorConfig.showNodeIds = !DashEditorCore.EditorConfig.showNodeIds);
@@ -25,7 +25,9 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
             
             menu.AddItem(new GUIContent("Reset Graph Position"), false, p_graph.ResetPosition);
-            menu.ShowAsContext();
+            
+            //menu.ShowAsEditorMenu();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }

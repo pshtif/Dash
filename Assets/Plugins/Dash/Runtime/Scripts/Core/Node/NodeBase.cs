@@ -531,9 +531,11 @@ namespace Dash
                 DrawId(offsetRect);
             }
 
-            if (DashEditorCore.DetailsVisible) 
+            if (DashEditorCore.DetailsVisible)
+            {
                 DrawCustomGUI(offsetRect);
-            
+            }
+
             DrawOutline(offsetRect);
 
             DrawConnectors(p_rect);
@@ -663,7 +665,9 @@ namespace Dash
             if (this is InputNode)
             {
                 InputNode node = this as InputNode;
-                if (Controller != null && Controller.autoStart && Controller.autoStartInput == node.Model.inputName)
+                if (DashEditorCore.EditorConfig.editingController != null &&
+                    DashEditorCore.EditorConfig.editingController.autoStart &&
+                    DashEditorCore.EditorConfig.editingController.autoStartInput == node.Model.inputName) 
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();
@@ -679,7 +683,9 @@ namespace Dash
             if (this is InputNode)
             {
                 InputNode node = this as InputNode;
-                if (Controller != null && Controller.autoOnEnable && Controller.autoOnEnableInput == node.Model.inputName)
+                if (DashEditorCore.EditorConfig.editingController != null &&
+                    DashEditorCore.EditorConfig.editingController.autoOnEnable &&
+                    DashEditorCore.EditorConfig.editingController.autoOnEnableInput == node.Model.inputName) 
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();

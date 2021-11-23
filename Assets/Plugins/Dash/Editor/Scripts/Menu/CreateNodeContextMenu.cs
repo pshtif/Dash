@@ -19,10 +19,7 @@ namespace Dash.Editor
         static private Vector2 _lastMousePosition;
         static public void Show()
         {
-            _lastMousePosition = Event.current.mousePosition;
-
-            //GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition);
-            Get().ShowAsContext();
+            Get().ShowAsEditorMenu();
         }
 
         static public void ShowAsPopup()
@@ -32,9 +29,9 @@ namespace Dash.Editor
             GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition, 240, 300);
         }
         
-        static public GenericMenu Get()
+        static public RuntimeGenericMenu Get()
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             if (DashEditorCore.EditorConfig.editingGraph != null)
             {

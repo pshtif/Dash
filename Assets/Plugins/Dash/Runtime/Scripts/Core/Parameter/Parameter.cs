@@ -28,6 +28,8 @@ namespace Dash
         [NonSerialized]
         public string errorMessage;
 
+        public abstract bool IsDefault();
+
         public abstract FieldInfo GetValueFieldInfo();
         
         static protected List<Parameter> _referenceChain = new List<Parameter>();
@@ -47,6 +49,11 @@ namespace Dash
         {
             _value = p_value;
         }
+
+        public override bool IsDefault()
+        {
+            return EqualityComparer<T>.Default.Equals(_value, default(T));
+        } 
 
         public override FieldInfo GetValueFieldInfo()
         {

@@ -18,23 +18,23 @@ namespace Dash.Editor
     {
         static private Vector2 _lastMousePosition;
         
-        static public void Show(GenericMenu.MenuFunction2 p_callback)
+        static public void Show(Action<object> p_callback)
         {
             _lastMousePosition = Event.current.mousePosition;
             
-            Get(p_callback).ShowAsContext();
+            Get(p_callback).ShowAsEditorMenu();
         }
 
-        static public void ShowAsPopup(GenericMenu.MenuFunction2 p_callback)
+        static public void ShowAsPopup(Action<object> p_callback)
         {
             _lastMousePosition = Event.current.mousePosition;
 
             GenericMenuPopup.Show(Get(p_callback), "Select Type",  _lastMousePosition, 300, 300, true, false);
         }
         
-        static public GenericMenu Get(GenericMenu.MenuFunction2 p_callback)
+        static public RuntimeGenericMenu Get(Action<object> p_callback)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
             Type[] loadedTypes = ReflectionUtils.GetAllTypes();
             foreach (Type type in loadedTypes)

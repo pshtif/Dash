@@ -360,7 +360,7 @@ namespace Dash
             {
                 if (DashEditorCore.EditorConfig.editingGraph != this)
                 {
-                    Debug.LogWarning("Reserializing graph that we are not editing! Contact support with use case.");
+                    Debug.LogWarning("Reserializing graph that we are not editing! Unless you are modifying Dash code directly please contact support with use case.");
                 }
                 else
                 {

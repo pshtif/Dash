@@ -123,7 +123,7 @@ namespace Dash
                         FieldInfo fi = Model.GetType().GetField("targetReference");
                         var exposedReference = fi.GetValue(Model);
                         Object exposedValue = (Object) exposedReference.GetType().GetMethod("Resolve")
-                            .Invoke(exposedReference, new object[] {Controller});
+                            .Invoke(exposedReference, new object[] {DashEditorCore.EditorConfig.editingController});
 
                         style.fontStyle = FontStyle.Bold;
                         style.normal.textColor = new Color(0.4f, .7f, 1);
