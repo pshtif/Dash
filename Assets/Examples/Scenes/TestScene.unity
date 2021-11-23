@@ -1807,7 +1807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &820719428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2568,7 +2568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &963002350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4509,7 +4509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1483110412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5784,7 +5784,7 @@ MonoBehaviour:
       Data: 1|System.Collections.Generic.List`1[[Dash.Variable, DashRuntime]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 7
       Data: 2|Dash.Variable`1[[System.Int32, mscorlib]], DashRuntime
@@ -5845,6 +5845,54 @@ MonoBehaviour:
     - Name: _value
       Entry: 6
       Data: 
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newBoolean
+    - Name: _value
+      Entry: 5
+      Data: false
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newBoolean1
+    - Name: _value
+      Entry: 5
+      Data: false
     - Name: _boundType
       Entry: 3
       Data: 0

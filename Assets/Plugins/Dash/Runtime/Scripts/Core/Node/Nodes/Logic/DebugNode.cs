@@ -23,16 +23,6 @@ namespace Dash
             {
                 var value = GetParameterValue(Model.debug, p_flowData);
                 Debug.Log(value);
-                
-                /*if (!string.IsNullOrEmpty(Model.text))
-                {
-                    Debug.Log(Model.text);
-                }
-
-                if (!string.IsNullOrEmpty(Model.variable))
-                {
-                    Debug.Log(ParameterResolver.Resolve(Model.variable, p_flowData, false));
-                }*/
             }
 
             OnExecuteEnd();

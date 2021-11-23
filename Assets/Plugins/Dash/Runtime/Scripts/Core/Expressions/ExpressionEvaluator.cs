@@ -71,7 +71,8 @@ namespace Dash
             Expression cachedExpression;
             if (!_cachedExpressions.ContainsKey(p_expression))
             {
-                cachedExpression = new Expression(p_expression);
+                // We cache before macro replacement so runtime macro changes are not possible for performance reasons
+                cachedExpression = new Expression(ReplaceMacros(p_expression));
                 _cachedExpressions.Add(p_expression, cachedExpression);
             }
             else
@@ -250,6 +251,16 @@ namespace Dash
             }
 
             return methodInfo;
+        }
+
+        static string ReplaceMacros(string p_expression)
+        {
+            foreach (var pair in DashCore.Instance.Config.expressionMacros)
+            {
+                p_expression = p_expression.Replace(pair.Key, pair.Value);
+            }
+
+            return p_expression;
         }
     }
 }

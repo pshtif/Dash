@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.6.0RC";
+        public const string VERSION = "0.6.1";
         
         public DashRuntimeConfig Config { get; private set; }
         
@@ -42,10 +42,6 @@ namespace Dash
         [NonSerialized] 
         private Dictionary<string,EventSequencer> _sequencers = new Dictionary<string, EventSequencer>();
         
-        // #if UNITY_EDITOR
-        // public Dictionary<string,EventSequencer> Sequencers => _sequencers;
-        // #endif
-
         [NonSerialized]
         private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
 

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -106,8 +107,22 @@ namespace Dash.Editor
                 foreach (var pair in DashEditorCore.RuntimeConfig.expressionMacros)
                 {
                     GUILayout.BeginHorizontal();
-                    GUILayout.TextField(pair.Key);
-                    GUILayout.TextField(pair.Value);
+                    string strippedName = pair.Key.Substring(1, pair.Key.Length - 2);
+
+                    string newName = GUILayout.TextField(strippedName, GUILayout.Width(160)).ToUpper();
+                    if (newName != strippedName) 
+                    {
+                        DashEditorCore.RuntimeConfig.expressionMacros.Remove(pair.Key);
+                        DashEditorCore.RuntimeConfig.expressionMacros.Add("{"+GetUniqueName(newName)+"}", pair.Value);
+                        break;
+                    }
+                    
+                    string newValue = GUILayout.TextField(pair.Value);
+                    if (newValue != pair.Value)
+                    {
+                        DashEditorCore.RuntimeConfig.expressionMacros[pair.Key] = newValue;
+                    }
+
                     if (GUILayout.Button("Remove", GUILayout.Width(120)))
                     {
                         RemoveExpressionMacro(pair.Key);
@@ -156,28 +171,26 @@ namespace Dash.Editor
 
         static void AddExpressionMacro()
         {
-            if (!DashEditorCore.RuntimeConfig.expressionMacros.ContainsKey("NewMacro"))
-            {
-                DashEditorCore.RuntimeConfig.expressionMacros.Add("NewMacro", "");
-            }
-            else
-            {
-                int index = 0;
-                while (DashEditorCore.RuntimeConfig.expressionMacros.ContainsKey("NewMacro" + index))
-                {
-                    index++;
-                }
-
-                DashEditorCore.RuntimeConfig.expressionMacros.Add("NewMacro" + index, "");
-            }
+            DashEditorCore.RuntimeConfig.expressionMacros.Add("{"+GetUniqueName("MACRO")+"}", "");
         }
         
         static void RemoveExpressionMacro(string p_name)
         {
-            if (DashEditorCore.RuntimeConfig.expressionClasses != null)
+            if (DashEditorCore.RuntimeConfig.expressionMacros != null)
             {
                 DashEditorCore.RuntimeConfig.expressionMacros.Remove(p_name);
             }
+        }
+        
+        static string GetUniqueName(string p_name)
+        {
+            while (DashEditorCore.RuntimeConfig.expressionMacros.ContainsKey("{"+p_name+"}")) 
+            {
+                string number = string.Concat(p_name.Reverse().TakeWhile(char.IsNumber).Reverse());
+                p_name = p_name.Substring(0,p_name.Length-number.Length) + (string.IsNullOrEmpty(number) ? 1 : (Int32.Parse(number)+1));
+            }
+
+            return p_name;
         }
     }
 }
