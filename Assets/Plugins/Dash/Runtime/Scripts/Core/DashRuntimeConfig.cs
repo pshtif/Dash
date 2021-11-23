@@ -22,7 +22,7 @@ namespace Dash
             
             if (config == null)
             {
-                config = ScriptableObject.CreateInstance<DashRuntimeConfig>();
+                config = CreateInstance<DashRuntimeConfig>();
                 if (config != null)
                 {
                     if (!AssetDatabase.IsValidFolder("Assets/Resources"))
@@ -40,11 +40,14 @@ namespace Dash
         #endif
         
         public bool enableCustomExpressionClasses = false;
-        
-        public List<Type> expressionClasses;
-        
+
+        public List<Type> expressionClasses = new List<Type>();
+
         [OdinSerialize]
-        public Dictionary<PrefabInfo, GameObject> prefabs;
+        public Dictionary<string, string> expressionMacros = new Dictionary<string, string>();
+
+        [OdinSerialize] 
+        public Dictionary<PrefabInfo, GameObject> prefabs = new Dictionary<PrefabInfo, GameObject>();
 
         #region SERIALIZATION
         

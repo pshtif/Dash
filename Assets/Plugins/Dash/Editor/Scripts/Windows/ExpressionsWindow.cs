@@ -58,7 +58,7 @@ namespace Dash.Editor
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height - 140));
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2 - 140));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.RuntimeConfig.expressionClasses != null)
@@ -91,6 +91,44 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
 
             GUI.enabled = true;
+            
+            GUILayout.Space(4);
+            GUILayout.Label("Expression macros", titleStyle, GUILayout.ExpandWidth(true));
+            //GUILayout.Label("You have "+(DashEditorCore.RuntimeConfig.expressionClasses == null ? 0 : DashEditorCore.RuntimeConfig.expressionClasses.Count)+" expression classes defined.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Space(2);
+
+            _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2 - 80));
+            GUILayout.BeginVertical();
+            
+            if (DashEditorCore.RuntimeConfig.expressionMacros != null)
+            {
+                foreach (var pair in DashEditorCore.RuntimeConfig.expressionMacros)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.TextField(pair.Key);
+                    GUILayout.TextField(pair.Value);
+                    if (GUILayout.Button("Remove", GUILayout.Width(120)))
+                    {
+                        RemoveExpressionMacro(pair.Key);
+                        break;
+                    }
+                    GUILayout.EndHorizontal();
+                }
+            }
+            
+            GUILayout.EndVertical();
+            GUILayout.EndScrollView();
+            
+            GUILayout.Space(4);
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Add Expression Macro", GUILayout.Height(40)))
+            {
+                AddExpressionMacro();
+            }
+
+            GUILayout.EndHorizontal();
         }
         
         static void AddExpressionClass(object p_type)
@@ -113,6 +151,32 @@ namespace Dash.Editor
             if (DashEditorCore.RuntimeConfig.expressionClasses != null)
             {
                 DashEditorCore.RuntimeConfig.expressionClasses.Remove(p_type);
+            }
+        }
+
+        static void AddExpressionMacro()
+        {
+            if (!DashEditorCore.RuntimeConfig.expressionMacros.ContainsKey("NewMacro"))
+            {
+                DashEditorCore.RuntimeConfig.expressionMacros.Add("NewMacro", "");
+            }
+            else
+            {
+                int index = 0;
+                while (DashEditorCore.RuntimeConfig.expressionMacros.ContainsKey("NewMacro" + index))
+                {
+                    index++;
+                }
+
+                DashEditorCore.RuntimeConfig.expressionMacros.Add("NewMacro" + index, "");
+            }
+        }
+        
+        static void RemoveExpressionMacro(string p_name)
+        {
+            if (DashEditorCore.RuntimeConfig.expressionClasses != null)
+            {
+                DashEditorCore.RuntimeConfig.expressionMacros.Remove(p_name);
             }
         }
     }

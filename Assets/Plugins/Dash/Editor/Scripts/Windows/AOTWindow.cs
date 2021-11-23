@@ -53,10 +53,16 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Scanned types", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("Last scan found "+(DashEditorCore.EditorConfig.scannedAOTTypes == null ? 0 : DashEditorCore.EditorConfig.scannedAOTTypes.Count)+" types", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(
+                "Last scan found " +
+                (DashEditorCore.EditorConfig.scannedAOTTypes == null
+                    ? 0
+                    : DashEditorCore.EditorConfig.scannedAOTTypes.Count) + " types", infoStyle,
+                GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
-            _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-100));
+            _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height / 2 - 100));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.EditorConfig.scannedAOTTypes != null)
@@ -81,10 +87,16 @@ namespace Dash.Editor
 
             GUILayout.Space(4);
             GUILayout.Label("Explicit Types", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("You have "+(DashEditorCore.EditorConfig.explicitAOTTypes == null ? 0 : DashEditorCore.EditorConfig.explicitAOTTypes.Count)+" explicitly defined types.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(
+                "You have " +
+                (DashEditorCore.EditorConfig.explicitAOTTypes == null
+                    ? 0
+                    : DashEditorCore.EditorConfig.explicitAOTTypes.Count) + " explicitly defined types.", infoStyle,
+                GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
-            
-            _scrollPositionExplicit = GUILayout.BeginScrollView(_scrollPositionExplicit, scrollViewStyle, GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2-100));
+
+            _scrollPositionExplicit = GUILayout.BeginScrollView(_scrollPositionExplicit, scrollViewStyle,
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height / 2 - 100));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.EditorConfig.explicitAOTTypes != null)
@@ -110,7 +122,8 @@ namespace Dash.Editor
             GUILayout.BeginVertical();
             
             GUILayout.BeginHorizontal();
-            _generateLinkXml = GUILayout.Toggle(_generateLinkXml, new GUIContent("Generate Link Xml"), GUILayout.Width(140));
+            _generateLinkXml =
+                GUILayout.Toggle(_generateLinkXml, new GUIContent("Generate Link Xml"), GUILayout.Width(140));
             _includeOdin = GUILayout.Toggle(_includeOdin, new GUIContent("Include Odin Assembly"));
 
             GUILayout.EndHorizontal();
