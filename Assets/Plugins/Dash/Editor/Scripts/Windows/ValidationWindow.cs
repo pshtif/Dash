@@ -75,12 +75,6 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
 
-            // if (_isDirty)
-            // {
-            //     _isDirty = false;
-            //     Repaint();
-            // }
-
             if (scan)
             {
                 DashValidationScanner.Scan();

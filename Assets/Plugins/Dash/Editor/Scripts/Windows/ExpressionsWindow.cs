@@ -10,11 +10,10 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class ExpressionsWindow : UnityEditor.EditorWindow
+    public class ExpressionsWindow : EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private Vector2 _scrollPositionExplicit;
-        private bool _isDirty = false;
 
         public static ExpressionsWindow Instance { get; private set; }
         
@@ -92,12 +91,6 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
 
             GUI.enabled = true;
-
-            if (_isDirty)
-            {
-                _isDirty = false;
-                Repaint();
-            }
         }
         
         static void AddExpressionClass(object p_type)

@@ -10,11 +10,10 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class AOTWindow : UnityEditor.EditorWindow
+    public class AOTWindow : EditorWindow
     {
         private Vector2 _scrollPositionScanned;
         private Vector2 _scrollPositionExplicit;
-        private bool _isDirty = false;
 
         private bool _generateLinkXml = true;
         private bool _includeOdin = false;
@@ -144,12 +143,6 @@ namespace Dash.Editor
             }
 
             GUILayout.EndVertical();
-
-            if (_isDirty)
-            {
-                _isDirty = false;
-                Repaint();
-            }
 
             if (scan)
             {

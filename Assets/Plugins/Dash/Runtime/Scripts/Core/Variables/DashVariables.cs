@@ -91,6 +91,20 @@ namespace Dash
             InvalidateLookup();
         }
 
+        public void SetVariable<T>(string p_name, [CanBeNull] T p_value)
+        {
+            if (HasVariable(p_name))
+            {
+                ((Variable<T>)_lookupDictionary[p_name]).value = p_value;
+            }
+            else
+            {
+                Variable<T> variable = new Variable<T>(p_name, p_value);
+                _variables.Add(variable);
+                InvalidateLookup();
+            }
+        }
+
         public void PasteVariable(Variable p_variable, GameObject p_target)
         {
             p_variable.Rename(GetUniqueName(p_variable.Name));
