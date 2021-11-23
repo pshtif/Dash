@@ -8,7 +8,7 @@ namespace Dash.Extensions
 {
     public static class ConversionUtils
     {
-        public static bool IsImplicitlyAssignableFrom(this Type p_source, Type p_target)
+        public static bool IsImplicitlyAssignableFrom(this Type p_target, Type p_source)
         {
             var sourceCode = Type.GetTypeCode( p_source );
             var targetCode = Type.GetTypeCode( p_target );
