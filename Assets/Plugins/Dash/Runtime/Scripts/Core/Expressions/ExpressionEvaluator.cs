@@ -15,6 +15,12 @@ namespace Dash
     public class ExpressionEvaluator
     {
         protected static Dictionary<string,Expression> _cachedExpressions;
+
+        static public void ClearCache()
+        {
+            _cachedExpressions = new Dictionary<string, Expression>();
+        }
+        
         static public bool hasErrorInEvaluation { get; protected set; } = false;
         static public string errorMessage;
 
@@ -105,12 +111,19 @@ namespace Dash
             
             if (obj != null)
             {
-                if (typeof(T).IsAssignableFrom(obj.GetType()))
+                Type returnType = obj.GetType();
+                if (typeof(T).IsAssignableFrom(returnType))
                 {
                     return (T) obj;    
                 }
+
+                // Explicit Double to Single casting (may add as option)
+                if (typeof(T) == typeof(float) && returnType == typeof(Double))
+                {
+                    return (T) Convert.ChangeType(obj, typeof(T));
+                }
                 
-                if (typeof(T).IsImplicitlyAssignableFrom(obj.GetType()))
+                if (typeof(T).IsImplicitlyAssignableFrom(returnType))
                 {
                     return (T) Convert.ChangeType(obj, typeof(T));
                 }
