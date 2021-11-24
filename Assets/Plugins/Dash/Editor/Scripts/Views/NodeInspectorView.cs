@@ -92,7 +92,7 @@ namespace Dash.Editor
         void DrawScriptButton(Rect p_rect, Type p_type)
         {
 
-            if (GUI.Button(new Rect(p_rect.x+242, p_rect.y+7, 16, 16),
+            if (GUI.Button(new Rect(p_rect.x+290, p_rect.y+7, 16, 16),
                 IconManager.GetIcon("Script_Icon"), GUIStyle.none))
             {
                 AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(p_type), 1);
