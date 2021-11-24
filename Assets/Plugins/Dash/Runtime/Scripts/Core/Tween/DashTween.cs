@@ -67,7 +67,7 @@ namespace Dash
                 tween.easeType = EaseType.LINEAR;
                 tween._updateCallback = null;
                 tween._completeCallback = null;
-                tween._justStarted = true;
+                //tween._justStarted = true;
                 tween._active = true;
             }
             
@@ -115,6 +115,7 @@ namespace Dash
             }
             else
             {
+                _updateCallback?.Invoke(from);
                 running = true;
             }
         }
@@ -136,12 +137,12 @@ namespace Dash
             if (!running)
                 return;
 
-            if (_justStarted)
-            {
-                _updateCallback?.Invoke(from);
-                _justStarted = false;
-                return;
-            }
+            // if (_justStarted)
+            // {
+            //     _updateCallback?.Invoke(from);
+            //     _justStarted = false;
+            //     return;
+            // }
             
             current += p_time;
             if (current >= duration + delay)
