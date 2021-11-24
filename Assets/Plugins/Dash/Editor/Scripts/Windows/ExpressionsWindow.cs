@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Dash.Editor
         private Vector2 _scrollPositionExplicit;
 
         public static ExpressionsWindow Instance { get; private set; }
-        
+
         [MenuItem ("Tools/Dash/Expressions")]
         public static ExpressionsWindow InitDebugWindow()
         {
@@ -95,7 +96,7 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Expression macros", titleStyle, GUILayout.ExpandWidth(true));
-            //GUILayout.Label("You have "+(DashEditorCore.RuntimeConfig.expressionClasses == null ? 0 : DashEditorCore.RuntimeConfig.expressionClasses.Count)+" expression classes defined.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("You have "+(DashEditorCore.RuntimeConfig.expressionMacros == null ? 0 : DashEditorCore.RuntimeConfig.expressionMacros.Count)+" expression macros defined.", infoStyle, GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
@@ -110,6 +111,8 @@ namespace Dash.Editor
                     string strippedName = pair.Key.Substring(1, pair.Key.Length - 2);
 
                     string newName = GUILayout.TextField(strippedName, GUILayout.Width(160)).ToUpper();
+                    newName = Regex.Replace(newName, @"[^a-zA-Z0-9 _]", "");
+                    
                     if (newName != strippedName) 
                     {
                         DashEditorCore.RuntimeConfig.expressionMacros.Remove(pair.Key);

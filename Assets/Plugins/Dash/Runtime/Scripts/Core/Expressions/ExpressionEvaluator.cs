@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Dash.Extensions;
 using NCalc;
 using UnityEngine;
@@ -271,6 +272,14 @@ namespace Dash
             foreach (var pair in DashCore.Instance.Config.expressionMacros)
             {
                 p_expression = p_expression.Replace(pair.Key, pair.Value);
+            }
+            
+            // Check for invalid macros
+            Match match = Regex.Match(p_expression, @"\{[A-Z0-9 _]+\}", RegexOptions.None);
+            if (match.Success)
+            {
+                hasErrorInEvaluation = true;
+                errorMessage = "Invalid macro found " + match.Value.Substring(1,match.Value.Length-2);
             }
 
             return p_expression;
