@@ -88,5 +88,42 @@ namespace Dash
             OnExecuteEnd();
             OnExecuteOutput(1, p_flowData);
         }
+        
+        #if UNITY_EDITOR
+        internal override Transform ResolveEditorTarget(string p_path = "", int p_outputIndex = 0)
+        {
+            // If we don't have controller no point in resolving
+            if (DashEditorCore.EditorConfig.editingController == null)
+                return null;
+
+            var connections = Graph.GetInputConnections(this);
+            if (p_outputIndex == 1)
+            {
+                return connections[0].outputNode
+                    .ResolveEditorTarget(p_path, connections[0].outputIndex);
+            }
+            
+            object target = ResolveRetargetedEditorTarget(p_path, p_outputIndex, false);
+            
+            if (target is string)
+            {
+                if (connections.Count > 0)
+                {
+                    return connections[0].outputNode
+                        .ResolveEditorTarget(target + "/{0}/" + p_path, connections[0].outputIndex);
+                }
+                
+                return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(
+                    target + "/{0}/" + p_path);
+            }
+
+            if (target != null)
+            {
+                return (target as Transform).GetChild(0).ResolvePathWithFind(p_path);
+            }
+
+            return null;
+        }
+        #endif
     }
 }

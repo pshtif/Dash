@@ -2,16 +2,56 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using OdinSerializer.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Dash
 {
     public static class TransformExtensions
     {
+        public static Transform ResolvePathWithFind(this Transform p_transform, string p_path)
+        {
+            if (p_transform == null || p_path.IsNullOrWhitespace())
+                return p_transform;
+
+            var split = p_path.Split('/');
+            for (int i = 0; i<split.Length; i++)
+            {
+                if (split[i].IsNullOrWhitespace())
+                    continue;
+                
+                Match match = Regex.Match(split[i], @"\{[0-9]+\}", RegexOptions.None);
+                if (match.Success)
+                {
+                    p_transform = p_transform.GetChild(Int32.Parse(split[i].Substring(1, split[i].Length - 2)));
+                }
+                else
+                {
+                    p_transform = p_transform.Find(split[i], true);
+                }
+            }
+
+            return p_transform;
+        }
+        
+        public static Transform GetChildByName(this Transform p_transform, string p_name)
+        {
+            foreach (Transform child in p_transform)
+            {
+                if (child.name == p_name)
+                    return child;
+            }
+
+            return null;
+        }
+        
         public static void GetAllChildren(this Transform p_transform, ref List<Transform> p_children)
         {
             foreach (Transform t in p_transform)
@@ -60,6 +100,10 @@ namespace Dash
 
         public static Transform Find(this Transform p_parent, string p_name, bool p_includeInactive = false)
         {
+            if (p_parent == null)
+                return null;
+            
+            Debug.Log(p_parent+" : "+p_name);
             string[] split = p_name.Split('/');
 
             if (split.Length > 1)

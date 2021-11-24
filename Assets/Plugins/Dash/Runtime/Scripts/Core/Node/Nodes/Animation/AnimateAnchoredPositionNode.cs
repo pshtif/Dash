@@ -69,5 +69,31 @@ namespace Dash
                     DashTween.EaseValue(p_startPosition.y, p_finalPosition.y, p_delta, p_easeType));
             }
         }
+        
+#if UNITY_EDITOR
+        protected override void GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
+        {
+            p_menu.AddSeparator("");
+
+            Transform target = ResolveEditorTarget();
+            if (target != null)
+            {
+                p_menu.AddItem(new GUIContent("Bind TO from target"), false, BindToFromTarget, target);
+                p_menu.AddItem(new GUIContent("Bind FROM from target"), false, BindFromFromTarget, target);
+            }
+        }
+
+        protected void BindToFromTarget(object p_target)
+        {
+            Model.toPosition.isExpression = false;
+            Model.toPosition.SetValue(((RectTransform)p_target).anchoredPosition);
+        }
+        
+        protected void BindFromFromTarget(object p_target)
+        {
+            Model.fromPosition.isExpression = false;
+            Model.fromPosition.SetValue(((RectTransform)p_target).anchoredPosition);
+        }
+#endif
     }
 }

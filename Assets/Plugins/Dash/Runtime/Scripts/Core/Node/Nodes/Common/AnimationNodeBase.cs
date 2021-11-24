@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Dash.Attributes;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -79,6 +80,16 @@ namespace Dash
 
             GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
                 text, DashEditorCore.Skin.GetStyle("NodeText"));
+        }
+
+        public override void SelectEditorTarget()
+        {
+            Transform target = ResolveEditorTarget();
+            if (target != null)
+            {
+                Selection.activeGameObject = target.gameObject;
+                Tools.current = Tool.Rect;
+            }
         }
 #endif
     }

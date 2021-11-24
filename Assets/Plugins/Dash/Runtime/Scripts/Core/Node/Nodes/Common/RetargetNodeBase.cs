@@ -2,9 +2,11 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using System.Reflection;
 using Dash.Attributes;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Dash
 {
@@ -174,6 +176,63 @@ namespace Dash
             result += split[split.Length - 1];
             
             return result;
+        }
+
+        internal override Transform ResolveEditorTarget(string p_path = "", int p_outputIndex = 0)
+        {
+            // If we don't have controller no point in resolving
+            if (DashEditorCore.EditorConfig.editingController == null)
+                return null;
+            
+            object target = ResolveRetargetedEditorTarget(p_path, p_outputIndex, true);
+            
+            if (target is string)
+            {
+                var connections = Graph.GetInputConnections(this);
+                if (connections.Count > 0)
+                {
+                    return connections[0].outputNode
+                        .ResolveEditorTarget(target + "/" + p_path, connections[0].outputIndex);
+                }
+
+                return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(
+                    target + "/" + p_path);
+            }
+
+            if (target != null)
+            {
+                return (target as Transform).ResolvePathWithFind(p_path);
+            }
+
+            return null;
+        }
+        
+        internal object ResolveRetargetedEditorTarget(string p_path, int p_outputIndex, bool p_local) 
+        {
+            // If we are at the end of path local retargeting is skipped
+            if (p_path != "" && p_local)
+            {
+                return "";
+            }
+
+            // If we use reference
+            if (Model.useReference)
+            {
+                if (!Model.useExpression)
+                {
+                    return Model.targetReference.Resolve(DashEditorCore.EditorConfig.editingController);
+                }
+            }
+            else
+            {
+                if (!Model.target.isExpression)
+                {
+                    return Model.target.GetValue(null);
+                }
+            }
+
+            // If we use expressions don't try to resolve it
+            return null;
         }
 #endif
     }

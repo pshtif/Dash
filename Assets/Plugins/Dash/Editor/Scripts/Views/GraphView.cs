@@ -449,11 +449,7 @@ namespace Dash.Editor
             {
                 SelectionManager.AddNodeToSelection(p_nodeIndex);
 
-                // If the controller is not null autoselect it in hierarchy TODO: maybe put this as setting
-                if (Graph.Controller != null)
-                {
-                    Selection.activeGameObject = Graph.Controller.gameObject;
-                }
+                Graph.Nodes[p_nodeIndex].SelectEditorTarget();
             }
         }
 

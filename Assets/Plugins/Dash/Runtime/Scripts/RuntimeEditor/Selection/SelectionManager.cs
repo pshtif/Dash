@@ -182,8 +182,9 @@ namespace Dash
 
             if (p_node == null || p_graph == null)
                 return;
-            
+
             selectedNodes.Add(p_node.Index);
+            p_node.SelectEditorTarget();
             p_graph.viewOffset = -p_node.rect.center + zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
         }
 
