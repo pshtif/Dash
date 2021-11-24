@@ -805,6 +805,13 @@ namespace Dash
         
         protected virtual void DrawCustomGUI(Rect p_rect) { }
 
+        void INodeAccess.GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
+        {
+            GetCustomContextMenu(ref p_menu);
+        }
+        
+        protected virtual void GetCustomContextMenu(ref RuntimeGenericMenu p_menu) { }
+
         public virtual void DrawInspector()
         {
             bool invalidate = _model.DrawInspector();
@@ -820,6 +827,23 @@ namespace Dash
         public List<string> GetModelExposedGUIDs()
         {
             return _model.GetExposedGUIDs();
+        }
+
+        public virtual void SelectEditorTarget() { }
+        
+        internal virtual Transform ResolveEditorTarget(string p_path = "", int p_output = 0)
+        {
+            if (DashEditorCore.EditorConfig.editingController == null)
+                return null;
+
+            var connections = Graph.GetInputConnections(this);
+            if (connections.Count > 0)
+            {
+                return connections[0].outputNode
+                    .ResolveEditorTarget(p_path, connections[0].outputIndex);
+            }
+            
+            return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(p_path);
         }
 
         public bool IsInsideRect(Rect p_rect)
