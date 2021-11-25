@@ -572,15 +572,17 @@ namespace Dash
 
                     return false;
                 case "UnityEngine.Color":
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(p_name, GUILayout.Width(160));
                     EditorGUI.BeginChangeCheck();
-                    var colorValue = EditorGUILayout.ColorField(p_name, (Color) p_fieldInfo.GetValue(p_object));
+                    var colorValue = EditorGUILayout.ColorField("", (Color) p_fieldInfo.GetValue(p_object));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, colorValue);
                         return true;
                     }
-
+                    GUILayout.EndHorizontal();
                     return false;
                 default:
                     Debug.Log(type + " type inspection not implemented. Field: " + p_fieldInfo.Name);
