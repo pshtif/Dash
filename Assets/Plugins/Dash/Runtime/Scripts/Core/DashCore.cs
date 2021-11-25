@@ -105,7 +105,7 @@ namespace Dash
         public DashCore()
         {
             LoadConfig();
-            Debug.Log("Config Loaded: "+Config);
+            //Debug.Log("Config Loaded: "+Config);
         }
 
         void LoadConfig()

@@ -49,6 +49,9 @@ namespace Dash
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+            
+            SceneView.duringSceneGui -= OnSceneGUI;
+            SceneView.duringSceneGui += OnSceneGUI;
         }
 
         static void CheckDashVersion()
@@ -127,6 +130,10 @@ namespace Dash
             EditorConfig.editingGraph = null;
         }
 
+        static void OnSceneGUI(SceneView p_view)
+        {
+        }
+        
         static void OnAfterAssemblyReload()
         {
             // Debug.Log("OnAfterAssemblyReload");

@@ -74,9 +74,61 @@ namespace Dash.Editor
                 {
                     menu.AddItem(new GUIContent("Paste Nodes"), false, PasteNodes);
                 }
+                
+                menu.AddSeparator("");
+                Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
+                if (selectedTransforms.Length > 0)
+                {
+                    menu.AddItem(new GUIContent("Create AnimationNodes From Selection"), false, ShowAnimationNodeTypesMenu);
+                }
+                
             }
 
             return menu;
+        }
+
+        static void CreateAnimationNodesFromSelection(object p_nodeType)
+        {
+            Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
+            int index = 0;
+            foreach (Transform transform in selectedTransforms)
+            {
+                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition + new Vector2(0, index * 80));
+                
+                if (node != null)
+                {
+                    RetargetNodeModelBase model = node.GetModel() as RetargetNodeModelBase;
+                    model.retarget = true;
+                    model.target.SetValue(transform.name);
+                    index++;
+                }
+            }
+        }
+
+        static void ShowAnimationNodeTypesMenu()
+        {
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
+            
+            if (DashEditorCore.EditorConfig.editingGraph != null)
+            {
+                Type[] nodeTypes = ReflectionUtils.GetAllTypes(typeof(NodeBase)).ToArray();
+                foreach (Type type in nodeTypes)
+                {
+                    CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
+                    if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
+                        continue;
+                    
+                    HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
+                    string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    
+                    string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
+                    node = node.Substring(0, node.Length-4);
+                    
+                    menu.AddItem(new GUIContent(node, tooltip), false, CreateAnimationNodesFromSelection, type);
+                }
+            }
+            
+            GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false);
         }
 
         static bool IsHidden(Type p_type)

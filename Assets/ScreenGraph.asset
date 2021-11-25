@@ -264,10 +264,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1478.5
+      Data: 1426.75
     - Name: 
       Entry: 4
-      Data: 506.75
+      Data: 633.75
     - Name: 
       Entry: 4
       Data: 160
@@ -385,10 +385,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1191.25
+      Data: 1138.5
     - Name: 
       Entry: 4
-      Data: 506.25
+      Data: 632.25
     - Name: 
       Entry: 4
       Data: 200
@@ -476,7 +476,7 @@ MonoBehaviour:
       Data: true
     - Name: expression
       Entry: 1
-      Data: '{MACRO}'
+      Data: 1
     - Name: _value
       Entry: 4
       Data: 2
@@ -620,10 +620,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1724
+      Data: 1672.25
     - Name: 
       Entry: 4
-      Data: 509.75
+      Data: 636.75
     - Name: 
       Entry: 4
       Data: 220
@@ -677,7 +677,7 @@ MonoBehaviour:
       Data: -178.5
     - Name: 
       Entry: 4
-      Data: 107
+      Data: 105.5
     - Name: 
       Entry: 4
       Data: 85
@@ -1459,13 +1459,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 236.25
+      Data: 184.5
     - Name: 
       Entry: 4
-      Data: 569.25
+      Data: 696.25
     - Name: 
       Entry: 4
-      Data: 116
+      Data: 114.5
     - Name: 
       Entry: 4
       Data: 85
@@ -1552,7 +1552,7 @@ MonoBehaviour:
       Data: 1486.75
     - Name: 
       Entry: 4
-      Data: 109
+      Data: 108.5
     - Name: 
       Entry: 4
       Data: 85
@@ -1863,10 +1863,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2022
+      Data: 1970.25
     - Name: 
       Entry: 4
-      Data: 510.5
+      Data: 637.5
     - Name: 
       Entry: 4
       Data: 150
@@ -1938,10 +1938,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 614
+      Data: 562.25
     - Name: 
       Entry: 4
-      Data: 569.25
+      Data: 696.25
     - Name: 
       Entry: 4
       Data: 150
@@ -2007,10 +2007,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 979.5
+      Data: 927.75
     - Name: 
       Entry: 4
-      Data: 370.5
+      Data: 497.5
     - Name: 
       Entry: 4
       Data: 150
@@ -2323,7 +2323,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 2000
+      Data: -225
     - Name: 
       Entry: 8
       Data: 
@@ -2332,7 +2332,7 @@ MonoBehaviour:
       Data: 
     - Name: isToRelative
       Entry: 5
-      Data: true
+      Data: false
     - Name: storeToAttribute
       Entry: 5
       Data: false
@@ -2368,10 +2368,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1508
+      Data: 1465.75
     - Name: 
       Entry: 4
-      Data: 350
+      Data: 480.5
     - Name: 
       Entry: 4
       Data: 220
@@ -2483,10 +2483,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1257
+      Data: 1205.25
     - Name: 
       Entry: 4
-      Data: 350.75
+      Data: 477.75
     - Name: 
       Entry: 4
       Data: 160
@@ -3403,7 +3403,7 @@ MonoBehaviour:
       Data: 
     - Name: _value
       Entry: 4
-      Data: 0.2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -3418,7 +3418,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: _value
       Entry: 4
-      Data: 0.1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -3463,17 +3463,17 @@ MonoBehaviour:
       Entry: 5
       Data: false
     - Name: expression
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: '[$AnimateAnchoredPosition5.isFromRelative]'
     - Name: _value
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 630
     - Name: 
       Entry: 4
-      Data: 500
+      Data: 1430
     - Name: 
       Entry: 8
       Data: 
@@ -3482,7 +3482,7 @@ MonoBehaviour:
       Data: 
     - Name: isFromRelative
       Entry: 5
-      Data: true
+      Data: false
     - Name: toPosition
       Entry: 7
       Data: 140|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]],
@@ -3498,10 +3498,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 6.1035E-05
     - Name: 
       Entry: 4
-      Data: -500
+      Data: 724
     - Name: 
       Entry: 8
       Data: 
@@ -3510,7 +3510,7 @@ MonoBehaviour:
       Data: 
     - Name: isToRelative
       Entry: 5
-      Data: true
+      Data: false
     - Name: storeToAttribute
       Entry: 5
       Data: false
@@ -3546,10 +3546,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1512
+      Data: 1500.25
     - Name: 
       Entry: 4
-      Data: 199.75
+      Data: 323.25
     - Name: 
       Entry: 4
       Data: 220
@@ -3661,10 +3661,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1257
+      Data: 1205.25
     - Name: 
       Entry: 4
-      Data: 199.5
+      Data: 326.5
     - Name: 
       Entry: 4
       Data: 160
@@ -4328,10 +4328,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2373.75
+      Data: 2322
     - Name: 
       Entry: 4
-      Data: 705.75
+      Data: 832.75
     - Name: 
       Entry: 4
       Data: 170
@@ -5188,10 +5188,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 191.25
+      Data: 139.5
     - Name: 
       Entry: 4
-      Data: 127.5
+      Data: 254.5
     - Name: 
       Entry: 4
       Data: 2455.5
@@ -5272,10 +5272,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -733.4144
+      Data: 6.08557129
     - Name: 
       Entry: 4
-      Data: 233.5774
+      Data: 602.3274
     - Name: 
       Entry: 8
       Data: 
@@ -5303,8 +5303,8 @@ MonoBehaviour:
     moveNodes: 1
     rect:
       serializedVersion: 2
-      x: 191.25
-      y: 127.5
+      x: 139.5
+      y: 254.5
       width: 2455.5
       height: 787.75
   - comment: Initialize
@@ -5317,6 +5317,6 @@ MonoBehaviour:
       width: 1353.5
       height: 209.75
   previewControlsViewMinimized: 0
-  viewOffset: {x: -733.4144, y: 233.5774}
+  viewOffset: {x: 6.0855713, y: 602.3274}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1

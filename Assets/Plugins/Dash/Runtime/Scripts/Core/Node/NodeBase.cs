@@ -824,6 +824,11 @@ namespace Dash
             }
         }
 
+        public virtual void DrawInspectorControls(Rect p_rect)
+        {
+            
+        }
+
         public List<string> GetModelExposedGUIDs()
         {
             return _model.GetExposedGUIDs();

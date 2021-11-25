@@ -554,10 +554,10 @@ namespace Dash
             _boxes.Add(box);
         }
         
-        public void CreateNode(Type p_nodeType, Vector2 mousePosition)
+        public NodeBase CreateNode(Type p_nodeType, Vector2 mousePosition)
         {
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
-                return;
+                return null;
             
             Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
             
@@ -572,6 +572,8 @@ namespace Dash
             }
             
             DashEditorCore.SetDirty();
+
+            return node;
         }
         
         public NodeBase DuplicateNode(NodeBase p_node)

@@ -103,7 +103,6 @@ namespace Dash
             if (p_parent == null)
                 return null;
             
-            Debug.Log(p_parent+" : "+p_name);
             string[] split = p_name.Split('/');
 
             if (split.Length > 1)

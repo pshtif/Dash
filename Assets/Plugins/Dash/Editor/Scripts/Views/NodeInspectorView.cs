@@ -30,18 +30,18 @@ namespace Dash.Editor
             
             if (selectedNode != null)
             {
-                DrawNodeGUI(p_rect);
+                DrawGraphNodeGUI(p_rect);
                 if (_previouslyInspected != selectedNode) GUI.FocusControl("");
                 _previouslyInspected = selectedNode;
             } else if (DashEditorCore.selectedBox != null)
             {
-                DrawBoxGUI(p_rect);
+                DrawGraphBoxGUI(p_rect);
                 if (_previouslyInspected != DashEditorCore.selectedBox) GUI.FocusControl("");
                 _previouslyInspected = DashEditorCore.selectedBox;
             }
         }
 
-        private void DrawBoxGUI(Rect p_rect)
+        private void DrawGraphBoxGUI(Rect p_rect)
         {
             Rect rect = new Rect(p_rect.width - 400, 30, 390, 340);
             
@@ -61,7 +61,7 @@ namespace Dash.Editor
             UseEvent(rect);
         }
 
-        private void DrawNodeGUI(Rect p_rect) 
+        private void DrawGraphNodeGUI(Rect p_rect) 
         {
             var selectedNode = SelectionManager.GetSelectedNode(Graph);
             
@@ -76,15 +76,17 @@ namespace Dash.Editor
             GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), nodeType, DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));
             
             DrawScriptButton(rect, selectedNode.GetType());
-
+            
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
-
+            
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
-
+            
             selectedNode.DrawInspector();
-
+            
             GUILayout.EndScrollView();
             GUILayout.EndArea();
+
+            selectedNode.DrawInspectorControls(rect);
             
             UseEvent(rect);
         }

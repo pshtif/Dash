@@ -31,7 +31,7 @@ namespace Dash
         private Action<float> _updateCallback;
         private Action _completeCallback;
 
-        private bool _justStarted = true;
+        //private bool _justStarted = true;
         private bool _active = true;
         public int Id { get; private set; } = 0;
 

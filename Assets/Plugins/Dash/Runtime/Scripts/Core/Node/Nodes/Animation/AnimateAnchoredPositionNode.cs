@@ -78,21 +78,67 @@ namespace Dash
             Transform target = ResolveEditorTarget();
             if (target != null)
             {
-                p_menu.AddItem(new GUIContent("Bind TO from target"), false, BindToFromTarget, target);
-                p_menu.AddItem(new GUIContent("Bind FROM from target"), false, BindFromFromTarget, target);
+                p_menu.AddItem(new GUIContent("Bind TO from target"), false, BindTargetTo, target);
+                p_menu.AddItem(new GUIContent("Bind FROM from target"), false, BindTargetFrom, target);
             }
         }
 
-        protected void BindToFromTarget(object p_target)
+        protected void BindTargetTo(object p_target)
         {
             Model.toPosition.isExpression = false;
+            Model.isToRelative = false;
             Model.toPosition.SetValue(((RectTransform)p_target).anchoredPosition);
         }
         
-        protected void BindFromFromTarget(object p_target)
+        protected void BindTargetFrom(object p_target)
         {
+            Model.useFrom = true;
             Model.fromPosition.isExpression = false;
+            Model.isFromRelative = false;
             Model.fromPosition.SetValue(((RectTransform)p_target).anchoredPosition);
+        }
+        
+        public override void DrawInspectorControls(Rect p_rect)
+        {
+            Transform target = ResolveEditorTarget();
+            
+            if (target == null)
+                return;
+            
+            GUIStyle style = new GUIStyle();
+            GUI.backgroundColor = new Color(0, 0, 0, 0.5f);
+            style.normal.background = Texture2D.whiteTexture;
+            GUI.Box(new Rect(p_rect.x, p_rect.y + p_rect.height + 4, 390, 36), "", style);
+            GUI.backgroundColor = Color.white;
+            
+            GUILayout.BeginArea(new Rect(p_rect.x, p_rect.y + p_rect.height + 8, p_rect.width, 28));
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("BIND TARGET FROM", GUILayout.Width(140), GUILayout.Height(28)))
+            {
+                BindTargetFrom(target);
+            }
+            
+            if (GUILayout.Button("BIND TARGET TO", GUILayout.Width(140), GUILayout.Height(28)))
+            {
+                BindTargetTo(target);
+            }
+
+            GUI.backgroundColor = new Color(1, .75f, .5f);
+            if (GUILayout.Button("PREVIEW", GUILayout.Width(80), GUILayout.Height(28)))
+            {
+                TransformStorageData data = new TransformStorageData(target, TransformStorageOption.POSITION);
+                AnimateOnTarget(target, NodeFlowDataFactory.Create()).OnComplete(() =>
+                {
+                    DashTweenCore.Uninitialize();
+                    data.Restore(target);
+                }).Start();
+            }
+
+            GUI.backgroundColor = Color.white;
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
         }
 #endif
     }
