@@ -131,10 +131,14 @@ namespace Dash
             }
 
             GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
-            _bindFrom = GUILayout.Toggle(_bindFrom, "Bind From", GUILayout.Height(30));
-            if (_bindFrom)
+            bool newFrom = GUILayout.Toggle(_bindFrom, "Bind From", GUILayout.Height(30));
+            if (newFrom && newFrom != _bindFrom)
+            {
+                ((IAnimationNodeBindable)this).SetTargetFrom(target);
+                _bindFrom = newFrom;
                 _bindTo = false;
-            
+            }
+
             GUILayout.EndHorizontal();
             
             GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
@@ -148,10 +152,14 @@ namespace Dash
                 ((IAnimationNodeBindable)this).BindTargetTo(target);
             }
             GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
-            _bindTo = GUILayout.Toggle(_bindTo, "Bind To", GUILayout.Height(30));
-            if (_bindTo)
+            bool newTo = GUILayout.Toggle(_bindTo, "Bind To", GUILayout.Height(30));
+            if (newTo && newTo != _bindTo)
+            {
+                ((IAnimationNodeBindable)this).SetTargetTo(target);
+                _bindTo = newTo;
                 _bindFrom = false;
-            
+            }
+
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
             GUILayout.Space(8);
