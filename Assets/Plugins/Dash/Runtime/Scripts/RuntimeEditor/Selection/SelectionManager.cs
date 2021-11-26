@@ -35,6 +35,11 @@ namespace Dash
 
         public static void ClearSelection()
         {
+            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
+            if (graph != null)
+            {
+                selectedNodes.ForEach(n => graph.Nodes[n].Unselect());
+            }
             selectedNodes.Clear();
         }
         

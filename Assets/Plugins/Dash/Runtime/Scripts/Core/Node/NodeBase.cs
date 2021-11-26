@@ -486,6 +486,8 @@ namespace Dash
         }
 
         protected virtual void Invalidate() { }
+        
+        internal virtual void Unselect() { }
 
         public void ValidateSerialization()
         {
@@ -872,6 +874,28 @@ namespace Dash
             _lastResolvedTarget = ResolveNodeRetarget(retarget, null);
             return _lastResolvedTarget;
         }
+
+        public void DrawSceneGUI()
+        {
+            Handles.BeginGUI();
+         
+            GUIStyle style = new GUIStyle(GUI.skin.box);
+            style.normal.background = Texture2D.whiteTexture; // must be white to tint properly
+            GUI.color = new Color(0,0,0,.8f);
+            GUI.Box(new Rect(0,0,Screen.width,30), "");
+            GUI.color = Color.white;
+
+            style = new GUIStyle(GUI.skin.label);
+            style.normal.textColor = new Color(1, .7f, .3f);
+            style.fontStyle = FontStyle.Bold;
+            GUI.Label(new Rect(16,0, 200, 30), "Dash Editing", style);
+
+            DrawCustomSceneGUI();
+            
+            Handles.EndGUI();
+        } 
+        
+        internal virtual void DrawCustomSceneGUI() { }
 
         public bool IsInsideRect(Rect p_rect)
         {
