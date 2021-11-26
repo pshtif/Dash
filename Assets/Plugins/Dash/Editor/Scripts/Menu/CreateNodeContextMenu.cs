@@ -79,7 +79,20 @@ namespace Dash.Editor
                 Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
                 if (selectedTransforms.Length > 0)
                 {
-                    menu.AddItem(new GUIContent("Create AnimationNodes From Selection"), false, ShowAnimationNodeTypesMenu);
+                    foreach (Type type in nodeTypes)
+                    {
+                        CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
+                        if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
+                            continue;
+                    
+                        HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
+                        string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    
+                        string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
+                        node = node.Substring(0, node.Length-4);
+                    
+                        menu.AddItem(new GUIContent("Create For Selected/"+node, tooltip), false, CreateAnimationNodesFromSelection, type);
+                    }
                 }
                 
             }
@@ -90,17 +103,18 @@ namespace Dash.Editor
         static void CreateAnimationNodesFromSelection(object p_nodeType)
         {
             Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
-            int index = 0;
+            Vector2 offset = Vector2.zero;
             foreach (Transform transform in selectedTransforms)
             {
-                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition + new Vector2(0, index * 80));
+                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition + offset);
                 
                 if (node != null)
                 {
                     RetargetNodeModelBase model = node.GetModel() as RetargetNodeModelBase;
                     model.retarget = true;
                     model.target.SetValue(transform.name);
-                    index++;
+
+                    offset.y += node.Size.y + 24;
                 }
             }
         }
