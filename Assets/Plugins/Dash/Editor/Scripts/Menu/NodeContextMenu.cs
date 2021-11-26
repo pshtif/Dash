@@ -67,10 +67,40 @@ namespace Dash.Editor
                 }
             }
             
+            menu.AddSeparator("");
+
+            if (!SelectionManager.selectedNodes.Contains(Graph.Nodes.IndexOf(p_node)))
+            {
+                menu.AddItem(new GUIContent("Connect Selection as Output"), false, ConnectSelectionAsOutput, p_node);
+                menu.AddItem(new GUIContent("Connect Selection as Input"), false, ConnectSelectionAsInput, p_node);
+            }
+
             ((INodeAccess)p_node).GetCustomContextMenu(ref menu);
 
             //menu.ShowAsEditorMenu();
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
+        }
+
+        static void ConnectSelectionAsInput(object p_node)
+        {
+            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            {
+                NodeBase node = Graph.Nodes[nodeIndex];
+                Graph.Connect((NodeBase)p_node, 0, node, 0);
+            }
+            
+            DashEditorCore.SetDirty();
+        }
+        
+        static void ConnectSelectionAsOutput(object p_node)
+        {
+            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            {
+                NodeBase node = Graph.Nodes[nodeIndex];
+                Graph.Connect(node, 0, (NodeBase)p_node, 0);
+            }
+            
+            DashEditorCore.SetDirty();
         }
 
         static void SetAsStartInput(object p_node)
