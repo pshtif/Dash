@@ -28,33 +28,10 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
-        internal override Transform ResolveEditorTarget(string p_path = "", int p_outputIndex = 0)
+        internal override Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
         {
-            // If we don't have controller no point in resolving
-            if (DashEditorCore.EditorConfig.editingController == null)
-                return null;
-            
-            object target = ResolveRetargetedEditorTarget(p_path, p_outputIndex, false);
-            
-            if (target is string)
-            {
-                var connections = Graph.GetInputConnections(this);
-                if (connections.Count > 0)
-                {
-                    return connections[0].outputNode
-                        .ResolveEditorTarget(target + "/" + p_path, connections[0].outputIndex);
-                }
-
-                return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(
-                    target + "/" + p_path);
-            }
-
-            if (target != null)
-            {
-                return (target as Transform).ResolvePathWithFind(p_path);
-            }
-
-            return null;
+            // Hack where we resend null connection to may it think it is the last one
+            return base.ResolveEditorRetarget(p_transform, null);
         }
         #endif
     }

@@ -178,42 +178,10 @@ namespace Dash
             return result;
         }
 
-        internal override Transform ResolveEditorTarget(string p_path = "", int p_outputIndex = 0)
+        internal override Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
         {
-            // If we don't have controller no point in resolving
-            if (DashEditorCore.EditorConfig.editingController == null)
-                return null;
-            
-            object target = ResolveRetargetedEditorTarget(p_path, p_outputIndex, true);
-            
-            if (target is string)
-            {
-                var connections = Graph.GetInputConnections(this);
-                if (connections.Count > 0)
-                {
-                    return connections[0].outputNode
-                        .ResolveEditorTarget(target + "/" + p_path, connections[0].outputIndex);
-                }
-
-                return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(
-                    target + "/" + p_path);
-            }
-
-            if (target != null)
-            {
-                return (target as Transform).ResolvePathWithFind(p_path);
-            }
-
-            return null;
-        }
-        
-        internal object ResolveRetargetedEditorTarget(string p_path, int p_outputIndex, bool p_local) 
-        {
-            // If we are at the end of path local retargeting is skipped
-            if (p_path != "" && p_local)
-            {
-                return "";
-            }
+            if (p_connection != null || !Model.retarget)
+                return p_transform;
 
             // If we use reference
             if (Model.useReference)
@@ -225,9 +193,9 @@ namespace Dash
             }
             else
             {
-                if (!Model.target.isExpression)
+                if (!Model.target.isExpression && p_transform != null)
                 {
-                    return Model.target.GetValue(null);
+                    return p_transform.Find(Model.target.GetValue(null), true);
                 }
             }
 

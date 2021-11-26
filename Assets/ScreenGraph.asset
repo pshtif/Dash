@@ -473,7 +473,7 @@ MonoBehaviour:
       Data: 18|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
-      Data: true
+      Data: false
     - Name: expression
       Entry: 1
       Data: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
       Data: -178.5
     - Name: 
       Entry: 4
-      Data: 105.5
+      Data: 106.75
     - Name: 
       Entry: 4
       Data: 85
@@ -1465,7 +1465,7 @@ MonoBehaviour:
       Data: 696.25
     - Name: 
       Entry: 4
-      Data: 114.5
+      Data: 115.5
     - Name: 
       Entry: 4
       Data: 85
@@ -1552,7 +1552,7 @@ MonoBehaviour:
       Data: 1486.75
     - Name: 
       Entry: 4
-      Data: 108.5
+      Data: 110.25
     - Name: 
       Entry: 4
       Data: 85
@@ -3470,10 +3470,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 630
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 1430
+      Data: 1098
     - Name: 
       Entry: 8
       Data: 
@@ -5272,10 +5272,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 6.08557129
+      Data: -20.4144287
     - Name: 
       Entry: 4
-      Data: 602.3274
+      Data: 1165.07739
     - Name: 
       Entry: 8
       Data: 
@@ -5317,6 +5317,6 @@ MonoBehaviour:
       width: 1353.5
       height: 209.75
   previewControlsViewMinimized: 0
-  viewOffset: {x: 6.0855713, y: 602.3274}
+  viewOffset: {x: -20.414429, y: 1165.0774}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1

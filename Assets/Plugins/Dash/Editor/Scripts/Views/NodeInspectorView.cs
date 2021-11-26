@@ -86,7 +86,7 @@ namespace Dash.Editor
             GUILayout.EndScrollView();
             GUILayout.EndArea();
 
-            selectedNode.DrawInspectorControls(rect);
+            //selectedNode.DrawInspectorControls(rect);
             
             UseEvent(rect);
         }

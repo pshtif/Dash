@@ -85,6 +85,7 @@ namespace Dash
         public override void SelectEditorTarget()
         {
             Transform target = ResolveEditorTarget();
+            
             if (target != null)
             {
                 Selection.activeGameObject = target.gameObject;

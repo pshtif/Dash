@@ -835,20 +835,36 @@ namespace Dash
         }
 
         public virtual void SelectEditorTarget() { }
-        
-        internal virtual Transform ResolveEditorTarget(string p_path = "", int p_output = 0)
-        {
-            if (DashEditorCore.EditorConfig.editingController == null)
-                return null;
 
+        public void ResolveInputNodeChain(ref List<NodeConnection> p_chain)
+        {
             var connections = Graph.GetInputConnections(this);
             if (connections.Count > 0)
             {
-                return connections[0].outputNode
-                    .ResolveEditorTarget(p_path, connections[0].outputIndex);
+                p_chain.Insert(0, connections[0]);
+                connections[0].outputNode.ResolveInputNodeChain(ref p_chain);
             }
+        }
+
+        internal virtual Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
+        {
+            return p_transform;
+        }
+
+        internal Transform ResolveEditorTarget()
+        {
+            List<NodeConnection> chain = new List<NodeConnection>();
+            Transform retarget = DashEditorCore.EditorConfig.editingController.transform;
+            if (retarget == null)
+                return null;
             
-            return DashEditorCore.EditorConfig.editingController.transform.ResolvePathWithFind(p_path);
+            ResolveInputNodeChain(ref chain);
+            foreach (var connection in chain)
+            {
+                retarget = connection.outputNode.ResolveEditorRetarget(retarget, connection);
+            }
+
+            return ResolveEditorRetarget(retarget, null);
         }
 
         public bool IsInsideRect(Rect p_rect)
