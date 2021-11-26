@@ -92,6 +92,9 @@ namespace Dash
                 Tools.current = Tool.Rect;
             }
         }
+
+        private bool _bindFrom = false;
+        private bool _bindTo = false;
         
         public override void DrawInspectorControls(Rect p_rect)
         {
@@ -115,29 +118,43 @@ namespace Dash
             GUILayout.BeginArea(new Rect(p_rect.x, p_rect.y + p_rect.height + 8, p_rect.width, 62));
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
+            GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled() && !_bindFrom && !_bindTo;
             GUILayout.BeginVertical();
-            if (GUILayout.Button("SET TARGET FROM", button, GUILayout.Width(140), GUILayout.ExpandHeight(true)))
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("SET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 ((IAnimationNodeBindable)this).SetTargetFrom(target);
             }
-            if (GUILayout.Button("GET TARGET FROM", button, GUILayout.Width(140), GUILayout.ExpandHeight(true)))
+            if (GUILayout.Button("GET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 ((IAnimationNodeBindable)this).BindTargetFrom(target);
             }
-            GUILayout.EndVertical();
+
+            GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
+            _bindFrom = GUILayout.Toggle(_bindFrom, "Bind From", GUILayout.Height(30));
+            if (_bindFrom)
+                _bindTo = false;
             
-            GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
-            GUILayout.BeginVertical();
-            if (GUILayout.Button("SET TARGET TO", button, GUILayout.Width(140), GUILayout.ExpandHeight(true)))
+            GUILayout.EndHorizontal();
+            
+            GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("SET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 ((IAnimationNodeBindable)this).SetTargetTo(target);
             }
-            if (GUILayout.Button("GET TARGET TO", button, GUILayout.Width(140), GUILayout.ExpandHeight(true)))
+            if (GUILayout.Button("GET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 ((IAnimationNodeBindable)this).BindTargetTo(target);
             }
+            GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
+            _bindTo = GUILayout.Toggle(_bindTo, "Bind To", GUILayout.Height(30));
+            if (_bindTo)
+                _bindFrom = false;
+            
+            GUILayout.EndHorizontal();
             GUILayout.EndVertical();
+            GUILayout.Space(8);
 
             GUI.backgroundColor = new Color(1, .75f, .5f);
             button.normal.textColor = GUI.backgroundColor;
@@ -159,6 +176,14 @@ namespace Dash
             GUILayout.EndArea();
 
             GUI.enabled = true;
+
+            if (_bindFrom)
+            {
+                ((IAnimationNodeBindable)this).BindTargetFrom(target);
+            } else if (_bindTo)
+            {
+                ((IAnimationNodeBindable)this).BindTargetTo(target);
+            }
         }
 #endif
     }
