@@ -132,6 +132,13 @@ namespace Dash
 
         static void OnSceneGUI(SceneView p_view)
         {
+            if (EditorConfig.editingController == null)
+                return;
+
+            if (SelectionManager.SelectedCount == 1)
+            {
+                EditorConfig.editingGraph.Nodes[SelectionManager.selectedNodes[0]].DrawSceneGUI();
+            }
         }
         
         static void OnAfterAssemblyReload()
