@@ -13,7 +13,7 @@ namespace Dash
         void Remove();
         void Stop();
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         void GetCustomContextMenu(ref RuntimeGenericMenu p_menu);
 #endif
     }

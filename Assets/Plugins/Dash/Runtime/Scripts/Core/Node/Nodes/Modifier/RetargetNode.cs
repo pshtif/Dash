@@ -28,10 +28,10 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
-        internal override Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
+        internal override Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {
             // Hack where we resend null connection to may it think it is the last one
-            return base.ResolveEditorRetarget(p_transform, null);
+            return base.ResolveNodeRetarget(p_transform, null);
         }
         #endif
     }

@@ -824,10 +824,7 @@ namespace Dash
             }
         }
 
-        public virtual void DrawInspectorControls(Rect p_rect)
-        {
-            
-        }
+        public virtual void DrawInspectorControls(Rect p_rect) { }
 
         public List<string> GetModelExposedGUIDs()
         {
@@ -846,25 +843,34 @@ namespace Dash
             }
         }
 
-        internal virtual Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
+        internal virtual Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {
             return p_transform;
         }
 
+        static private NodeBase _lastResolvedNode;
+        static private Transform _lastResolvedTarget;
+
         internal Transform ResolveEditorTarget()
         {
+            if (_lastResolvedNode == this)
+                return _lastResolvedTarget;
+            
+            _lastResolvedTarget = null;
+            _lastResolvedNode = this;
             List<NodeConnection> chain = new List<NodeConnection>();
             Transform retarget = DashEditorCore.EditorConfig.editingController.transform;
             if (retarget == null)
                 return null;
-            
+
             ResolveInputNodeChain(ref chain);
             foreach (var connection in chain)
             {
-                retarget = connection.outputNode.ResolveEditorRetarget(retarget, connection);
+                retarget = connection.outputNode.ResolveNodeRetarget(retarget, connection);
             }
 
-            return ResolveEditorRetarget(retarget, null);
+            _lastResolvedTarget = ResolveNodeRetarget(retarget, null);
+            return _lastResolvedTarget;
         }
 
         public bool IsInsideRect(Rect p_rect)

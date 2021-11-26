@@ -178,7 +178,7 @@ namespace Dash
             return result;
         }
 
-        internal override Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
+        internal override Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {
             if (p_connection != null || !Model.retarget)
                 return p_transform;

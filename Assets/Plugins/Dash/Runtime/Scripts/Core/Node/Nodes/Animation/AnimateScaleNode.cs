@@ -13,7 +13,7 @@ namespace Dash
     [OutputCount(1)]
     [InputCount(1)]
     [Serializable]
-    public class AnimateScaleNode : AnimationNodeBase<AnimateScaleNodeModel>
+    public class AnimateScaleNode : AnimationNodeBase<AnimateScaleNodeModel>, IAnimationNodeBindable
     {
         protected override DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
@@ -76,5 +76,40 @@ namespace Dash
                     DashTween.EaseValue(0, p_toScale.z, p_delta, p_easeType));
             }
         }
+        
+        #if UNITY_EDITOR
+        bool IAnimationNodeBindable.IsFromEnabled()
+        {
+            return !Model.fromScale.isExpression && Model.useFrom;
+        }
+        
+        void IAnimationNodeBindable.SetTargetTo(object p_target)
+        {
+            ((RectTransform)p_target).localScale = Model.toScale.GetValue(null);
+        }
+        
+        void IAnimationNodeBindable.BindTargetTo(object p_target)
+        {
+            Model.isToRelative = false;
+            Model.toScale.SetValue(((RectTransform)p_target).localScale);
+        }
+        
+        bool IAnimationNodeBindable.IsToEnabled()
+        {
+            return !Model.toScale.isExpression;
+        }
+        
+        void IAnimationNodeBindable.SetTargetFrom(object p_target)
+        {
+            ((RectTransform)p_target).localScale = Model.fromScale.GetValue(null);
+        }
+
+        void IAnimationNodeBindable.BindTargetFrom(object p_target)
+        {
+            Model.useFrom = true;
+            Model.isFromRelative = false;
+            Model.fromScale.SetValue(((RectTransform)p_target).anchoredPosition);
+        }
+        #endif
     }
 }

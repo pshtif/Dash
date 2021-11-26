@@ -90,7 +90,7 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
-        internal override Transform ResolveEditorRetarget(Transform p_transform, NodeConnection p_connection)
+        internal override Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {
             if (p_connection.outputIndex == 1)
             {
@@ -98,7 +98,7 @@ namespace Dash
             }
          
             Debug.Log("HTF "+p_transform);
-            Transform retarget = base.ResolveEditorRetarget(p_transform, null);
+            Transform retarget = base.ResolveNodeRetarget(p_transform, null);
             Debug.Log("WTF "+(retarget == null));
             if (retarget != null && retarget.childCount > 0)
             {
