@@ -97,9 +97,7 @@ namespace Dash
                 return p_transform;
             }
          
-            Debug.Log("HTF "+p_transform);
             Transform retarget = base.ResolveNodeRetarget(p_transform, null);
-            Debug.Log("WTF "+(retarget == null));
             if (retarget != null && retarget.childCount > 0)
             {
                 return retarget.GetChild(0);

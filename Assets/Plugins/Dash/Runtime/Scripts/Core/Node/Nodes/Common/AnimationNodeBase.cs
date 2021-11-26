@@ -95,6 +95,11 @@ namespace Dash
 
         private bool _bindFrom = false;
         private bool _bindTo = false;
+
+        internal override void Unselect()
+        {
+            _bindFrom = _bindTo = false;
+        }
         
         public override void DrawInspectorControls(Rect p_rect)
         {
@@ -109,66 +114,65 @@ namespace Dash
             GUIStyle style = new GUIStyle();
             GUI.backgroundColor = new Color(0, 0, 0, 0.5f);
             style.normal.background = Texture2D.whiteTexture;
-            GUI.Box(new Rect(p_rect.x, p_rect.y + p_rect.height + 4, 390, 70), "", style);
+            GUI.Box(new Rect(p_rect.x, p_rect.y + p_rect.height + 4, 390, 38), "", style);
             GUI.backgroundColor = Color.white;
             
-            GUIStyle button = new GUIStyle(GUI.skin.button);
-            button.fontStyle = FontStyle.Bold;
-            
-            GUILayout.BeginArea(new Rect(p_rect.x, p_rect.y + p_rect.height + 8, p_rect.width, 62));
+            GUILayout.BeginArea(new Rect(p_rect.x, p_rect.y + p_rect.height + 8, p_rect.width, 30));
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled() && !_bindFrom && !_bindTo;
-            GUILayout.BeginVertical();
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("SET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            {
-                ((IAnimationNodeBindable)this).SetTargetFrom(target);
-            }
-            if (GUILayout.Button("GET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            {
-                ((IAnimationNodeBindable)this).BindTargetFrom(target);
-            }
+            
+            //GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled() && !_bindFrom && !_bindTo;
+            // if (GUILayout.Button("SET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            // {
+            //     ((IAnimationNodeBindable)this).SetTargetFrom(target);
+            // }
+            // if (GUILayout.Button("GET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            // {
+            //     ((IAnimationNodeBindable)this).BindTargetFrom(target);
+            // }
+
+            style = new GUIStyle(GUI.skin.toggle);
+            style.fontStyle = FontStyle.Bold;
 
             GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
-            bool newFrom = GUILayout.Toggle(_bindFrom, "Bind From", GUILayout.Height(30));
+            bool newFrom = GUILayout.Toggle(_bindFrom, "Bind From", style, GUILayout.Height(30));
             if (newFrom && newFrom != _bindFrom)
             {
                 ((IAnimationNodeBindable)this).SetTargetFrom(target);
-                _bindFrom = newFrom;
                 _bindTo = false;
             }
+            _bindFrom = newFrom;
 
-            GUILayout.EndHorizontal();
             
-            GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("SET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            {
-                ((IAnimationNodeBindable)this).SetTargetTo(target);
-            }
-            if (GUILayout.Button("GET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            {
-                ((IAnimationNodeBindable)this).BindTargetTo(target);
-            }
+            // GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
+            // if (GUILayout.Button("SET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            // {
+            //     ((IAnimationNodeBindable)this).SetTargetTo(target);
+            // }
+            // if (GUILayout.Button("GET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            // {
+            //     ((IAnimationNodeBindable)this).BindTargetTo(target);
+            // }
+            GUILayout.FlexibleSpace();
+            
             GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
-            bool newTo = GUILayout.Toggle(_bindTo, "Bind To", GUILayout.Height(30));
+            bool newTo = GUILayout.Toggle(_bindTo, "Bind To", style, GUILayout.Height(30));
             if (newTo && newTo != _bindTo)
             {
                 ((IAnimationNodeBindable)this).SetTargetTo(target);
-                _bindTo = newTo;
                 _bindFrom = false;
             }
+            _bindTo = newTo;
 
-            GUILayout.EndHorizontal();
-            GUILayout.EndVertical();
-            GUILayout.Space(8);
+            GUILayout.FlexibleSpace();
 
             GUI.backgroundColor = new Color(1, .75f, .5f);
+            GUIStyle button = new GUIStyle(GUI.skin.button);
+            button.fontStyle = FontStyle.Bold;
             button.normal.textColor = GUI.backgroundColor;
             
             GUI.enabled = !Model.time.isExpression && !Model.delay.isExpression && !Model.easeType.isExpression; 
-            if (GUILayout.Button("PREVIEW", button, GUILayout.Width(80), GUILayout.ExpandHeight(true)))
+            if (GUILayout.Button("PREVIEW", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 TransformStorageData data = new TransformStorageData(target, TransformStorageOption.POSITION);
                 AnimateOnTarget(target, NodeFlowDataFactory.Create()).OnComplete(() =>
@@ -184,6 +188,11 @@ namespace Dash
             GUILayout.EndArea();
 
             GUI.enabled = true;
+            
+            GUI.color = Color.yellow;
+            GUI.DrawTexture(new Rect(p_rect.x + 10, p_rect.y + p_rect.height + 16, 16, 16),
+                IconManager.GetIcon("Experimental_Icon"));
+            GUI.color = Color.white;
 
             if (_bindFrom)
             {
@@ -192,6 +201,69 @@ namespace Dash
             {
                 ((IAnimationNodeBindable)this).BindTargetTo(target);
             }
+        }
+
+        internal override void DrawCustomSceneGUI()
+        {
+            if (!_bindFrom && !_bindTo)
+                return;
+            
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.alignment = TextAnchor.MiddleRight;
+            GUI.Label(new Rect(Screen.width-200,0,184,30), "Target bound!", style);
+            
+            // Transform target = ResolveEditorTarget();
+            //
+            // if (target == null)
+            //     return;
+            //
+            // GUILayout.BeginArea(new Rect(0, 6, Screen.width, 30));
+            // GUILayout.BeginHorizontal();
+            // GUILayout.FlexibleSpace();
+            // GUIStyle style = new GUIStyle(GUI.skin.toggle);
+            //
+            // GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
+            // bool newFrom = GUILayout.Toggle(_bindFrom, "Bind From", style);
+            // if (newFrom && newFrom != _bindFrom)
+            // {
+            //     ((IAnimationNodeBindable)this).SetTargetFrom(target);
+            //     _bindTo = false;
+            // }
+            // _bindFrom = newFrom;
+            //
+            //
+            // GUILayout.Space(16);
+            //
+            // GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
+            // bool newTo = GUILayout.Toggle(_bindTo, "Bind To", style);
+            // if (newTo && newTo != _bindTo)
+            // {
+            //     ((IAnimationNodeBindable)this).SetTargetTo(target);
+            //     _bindFrom = false;
+            // }
+            // _bindTo = newTo;
+            //
+            // GUI.backgroundColor = new Color(1, .75f, .5f);
+            // GUIStyle button = new GUIStyle(GUI.skin.button);
+            // button.fontStyle = FontStyle.Bold;
+            // button.normal.textColor = GUI.backgroundColor;
+            //
+            // GUI.enabled = !Model.time.isExpression && !Model.delay.isExpression && !Model.easeType.isExpression; 
+            // if (GUILayout.Button("PREVIEW", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            // {
+            //     TransformStorageData data = new TransformStorageData(target, TransformStorageOption.POSITION);
+            //     AnimateOnTarget(target, NodeFlowDataFactory.Create()).OnComplete(() =>
+            //     {
+            //         DashTweenCore.Uninitialize();
+            //         data.Restore(target);
+            //     }).Start();
+            // }
+            //
+            // GUI.backgroundColor = Color.white;
+            //
+            // GUILayout.FlexibleSpace();
+            // GUILayout.EndHorizontal();
+            // GUILayout.EndArea();
         }
 #endif
     }

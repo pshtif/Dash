@@ -85,7 +85,7 @@ namespace Dash
 
         bool IAnimationNodeBindable.IsFromEnabled()
         {
-            return !Model.fromPosition.isExpression && Model.useFrom;
+            return !Model.fromPosition.isExpression && Model.useFrom && !Model.isFromRelative;
         }
         
         void IAnimationNodeBindable.SetTargetTo(object p_target)
@@ -102,7 +102,7 @@ namespace Dash
         
         bool IAnimationNodeBindable.IsToEnabled()
         {
-            return !Model.toPosition.isExpression;
+            return !Model.toPosition.isExpression && !Model.isToRelative;
         }
         
         void IAnimationNodeBindable.SetTargetFrom(object p_target)

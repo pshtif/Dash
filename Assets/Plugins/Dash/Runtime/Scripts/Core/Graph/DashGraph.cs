@@ -246,12 +246,12 @@ namespace Dash
             bool exists = Connections.Exists(c =>
                 c.inputNode == p_inputNode && c.inputIndex == p_inputIndex && c.outputNode == p_outputNode &&
                 c.outputIndex == p_outputIndex);
-
-            if (exists)
+            
+            if (exists || p_inputNode.InputCount <= p_inputIndex || p_outputNode.OutputCount <= p_outputIndex) 
                 return;
-
+            
             NodeConnection connection = new NodeConnection(p_inputIndex, p_inputNode, p_outputIndex, p_outputNode);
-
+            
             _connections.Add(connection);
         }
 
