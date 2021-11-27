@@ -41,12 +41,14 @@ namespace Dash.Editor
                 menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, p_node);
                 menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, p_node);
-                
-                if (p_node is InputNode)
+
+                var controller = DashEditorCore.EditorConfig.editingController;
+                if (p_node is InputNode && controller != null)
                 {
+                    
                     InputNode node = p_node as InputNode;
                     menu.AddSeparator("");
-                    if (!node.Controller.autoStart || node.Controller.autoStartInput != node.Model.inputName)
+                    if (!controller.autoStart || controller.autoStartInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as Start Input"), false, SetAsStartInput, p_node);
                     }
@@ -55,7 +57,7 @@ namespace Dash.Editor
                         menu.AddItem(new GUIContent("Remove as Start Input"), false, RemoveAsStartInput, p_node);
                     }
 
-                    if (!node.Controller.autoOnEnable || node.Controller.autoOnEnableInput != node.Model.inputName)
+                    if (!controller.autoOnEnable || controller.autoOnEnableInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as OnEnable Input"), false, SetAsOnEnableInput, p_node);    
                     }
