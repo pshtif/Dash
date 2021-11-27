@@ -112,7 +112,31 @@ namespace Dash.Editor
                 {
                     RetargetNodeModelBase model = node.GetModel() as RetargetNodeModelBase;
                     model.retarget = true;
-                    model.target.SetValue(transform.name);
+                    //model.target.SetValue(transform.name);
+                    
+                    model.useReference = true;
+                    IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
+                    bool isDefault = PropertyName.IsNullOrEmpty(model.targetReference.exposedName);
+
+                    if (isDefault)
+                    {
+                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+                        model.targetReference.exposedName = newExposedName;
+                        
+                        propertyTable.SetReferenceValue(newExposedName, transform);
+                        //p_fieldInfo.SetValue(p_object, exposedReference);
+                    }
+                    else
+                    {
+                        propertyTable.SetReferenceValue(model.targetReference.exposedName, transform);
+                    }
+                    
+                    // If its bindable bind all values to current transform
+                    if (node is IAnimationNodeBindable)
+                    {
+                        ((IAnimationNodeBindable)node).GetTargetFrom(transform);
+                        ((IAnimationNodeBindable)node).GetTargetTo(transform);
+                    }
 
                     offset.y += node.Size.y + 24;
                 }
