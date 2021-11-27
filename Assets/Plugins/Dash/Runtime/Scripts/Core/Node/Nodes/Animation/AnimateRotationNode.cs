@@ -104,7 +104,7 @@ namespace Dash
             Model.useFrom = true;
             Model.fromRotation.isExpression = false;
             Model.isFromRelative = false;
-            Model.fromRotation.SetValue(((RectTransform)p_target).localRotation.ToEuler());
+            Model.fromRotation.SetValue(((RectTransform)p_target).localRotation.eulerAngles);
         }
         
         void IAnimationNodeBindable.SetTargetTo(object p_target)
