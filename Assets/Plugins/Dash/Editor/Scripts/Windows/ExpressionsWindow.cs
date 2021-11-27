@@ -35,7 +35,7 @@ namespace Dash.Editor
             
             GUICustomUtils.DrawTitle("Dash Expressions Editor");
             
-            DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = GUILayout.Toggle(DashEditorCore.RuntimeConfig.enableCustomExpressionClasses, new GUIContent("Enable Custom Expression Classes"));
+            DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = GUILayout.Toggle(DashEditorCore.RuntimeConfig.enableCustomExpressionClasses, new GUIContent("Enable Custom Expression Classes (has small runtime impact)"));
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;
