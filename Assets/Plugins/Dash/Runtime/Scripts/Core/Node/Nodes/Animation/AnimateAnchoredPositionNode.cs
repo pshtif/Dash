@@ -88,16 +88,16 @@ namespace Dash
             return !Model.fromPosition.isExpression && Model.useFrom && !Model.isFromRelative;
         }
         
-        void IAnimationNodeBindable.SetTargetTo(object p_target)
+        void IAnimationNodeBindable.SetTargetFrom(object p_target)
         {
-            ((RectTransform)p_target).anchoredPosition = Model.toPosition.GetValue(null);
+            ((RectTransform)p_target).anchoredPosition = Model.fromPosition.GetValue(null);
         }
-        
-        void IAnimationNodeBindable.BindTargetTo(object p_target)
+
+        void IAnimationNodeBindable.GetTargetFrom(object p_target)
         {
-            Model.toPosition.isExpression = false;
-            Model.isToRelative = false;
-            Model.toPosition.SetValue(((RectTransform)p_target).anchoredPosition);
+            Model.useFrom = true;
+            Model.fromPosition.isExpression = false;
+            Model.fromPosition.SetValue(((RectTransform)p_target).anchoredPosition);
         }
         
         bool IAnimationNodeBindable.IsToEnabled()
@@ -105,17 +105,15 @@ namespace Dash
             return !Model.toPosition.isExpression && !Model.isToRelative;
         }
         
-        void IAnimationNodeBindable.SetTargetFrom(object p_target)
+        void IAnimationNodeBindable.SetTargetTo(object p_target)
         {
-            ((RectTransform)p_target).anchoredPosition = Model.fromPosition.GetValue(null);
+            ((RectTransform)p_target).anchoredPosition = Model.toPosition.GetValue(null);
         }
-
-        void IAnimationNodeBindable.BindTargetFrom(object p_target)
+        
+        void IAnimationNodeBindable.GetTargetTo(object p_target)
         {
-            Model.useFrom = true;
-            Model.fromPosition.isExpression = false;
-            Model.isFromRelative = false;
-            Model.fromPosition.SetValue(((RectTransform)p_target).anchoredPosition);
+            Model.toPosition.isExpression = false;
+            Model.toPosition.SetValue(((RectTransform)p_target).anchoredPosition);
         }
 #endif
     }

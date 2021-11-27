@@ -88,7 +88,7 @@ namespace Dash
             ((RectTransform)p_target).localScale = Model.toScale.GetValue(null);
         }
         
-        void IAnimationNodeBindable.BindTargetTo(object p_target)
+        void IAnimationNodeBindable.GetTargetTo(object p_target)
         {
             Model.isToRelative = false;
             Model.toScale.SetValue(((RectTransform)p_target).localScale);
@@ -104,7 +104,7 @@ namespace Dash
             ((RectTransform)p_target).localScale = Model.fromScale.GetValue(null);
         }
 
-        void IAnimationNodeBindable.BindTargetFrom(object p_target)
+        void IAnimationNodeBindable.GetTargetFrom(object p_target)
         {
             Model.useFrom = true;
             Model.isFromRelative = false;

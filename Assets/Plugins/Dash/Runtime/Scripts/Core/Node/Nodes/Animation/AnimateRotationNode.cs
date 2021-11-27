@@ -94,16 +94,22 @@ namespace Dash
             return !Model.fromRotation.isExpression && Model.useFrom && !Model.isFromRelative;
         }
         
+        void IAnimationNodeBindable.SetTargetFrom(object p_target)
+        {
+            ((RectTransform)p_target).localRotation = Quaternion.Euler(Model.fromRotation.GetValue(null));
+        }
+        
+        void IAnimationNodeBindable.GetTargetFrom(object p_target)
+        {
+            Model.useFrom = true;
+            Model.fromRotation.isExpression = false;
+            Model.isFromRelative = false;
+            Model.fromRotation.SetValue(((RectTransform)p_target).localRotation.ToEuler());
+        }
+        
         void IAnimationNodeBindable.SetTargetTo(object p_target)
         {
             ((RectTransform)p_target).anchoredPosition = Model.toRotation.GetValue(null);
-        }
-        
-        void IAnimationNodeBindable.BindTargetTo(object p_target)
-        {
-            Model.toRotation.isExpression = false;
-            Model.isToRelative = false;
-            Model.toRotation.SetValue(((RectTransform)p_target).anchoredPosition);
         }
         
         bool IAnimationNodeBindable.IsToEnabled()
@@ -111,18 +117,12 @@ namespace Dash
             return !Model.toRotation.isExpression && !Model.isToRelative;
         }
         
-        void IAnimationNodeBindable.SetTargetFrom(object p_target)
+        void IAnimationNodeBindable.GetTargetTo(object p_target)
         {
-            ((RectTransform)p_target).anchoredPosition = Model.fromRotation.GetValue(null);
+            Model.toRotation.isExpression = false;
+            Model.isToRelative = false;
+            Model.toRotation.SetValue(((RectTransform)p_target).anchoredPosition);
         }
-
-        void IAnimationNodeBindable.BindTargetFrom(object p_target)
-        {
-            Model.useFrom = true;
-            Model.fromRotation.isExpression = false;
-            Model.isFromRelative = false;
-            Model.fromRotation.SetValue(((RectTransform)p_target).anchoredPosition);
-        }
-        #endif
+        #endif 
     }
 }

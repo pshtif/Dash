@@ -10,12 +10,12 @@ namespace Dash
 
         void SetTargetTo(object p_target);
 
-        void BindTargetTo(object p_target);
+        void GetTargetTo(object p_target);
         
         bool IsFromEnabled();
 
         void SetTargetFrom(object p_target);
 
-        void BindTargetFrom(object p_target);
+        void GetTargetFrom(object p_target);
     }
 }

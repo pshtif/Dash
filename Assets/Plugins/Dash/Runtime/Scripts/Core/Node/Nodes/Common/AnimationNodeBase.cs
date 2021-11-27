@@ -141,7 +141,7 @@ namespace Dash
                 ((IAnimationNodeBindable)this).SetTargetFrom(target);
                 _bindTo = false;
             }
-            _bindFrom = newFrom;
+            _bindFrom = GUI.enabled ? newFrom : false;
 
             
             // GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
@@ -162,7 +162,7 @@ namespace Dash
                 ((IAnimationNodeBindable)this).SetTargetTo(target);
                 _bindFrom = false;
             }
-            _bindTo = newTo;
+            _bindTo = GUI.enabled ? newTo : false;
 
             GUILayout.FlexibleSpace();
 
@@ -196,10 +196,10 @@ namespace Dash
 
             if (_bindFrom)
             {
-                ((IAnimationNodeBindable)this).BindTargetFrom(target);
+                ((IAnimationNodeBindable)this).GetTargetFrom(target);
             } else if (_bindTo)
             {
-                ((IAnimationNodeBindable)this).BindTargetTo(target);
+                ((IAnimationNodeBindable)this).GetTargetTo(target);
             }
         }
 
