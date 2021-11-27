@@ -6,6 +6,7 @@ namespace Dash
 {
     public interface IAnimationNodeBindable
     {
+        #if UNITY_EDITOR
         bool IsToEnabled();
 
         void SetTargetTo(object p_target);
@@ -17,5 +18,6 @@ namespace Dash
         void SetTargetFrom(object p_target);
 
         void GetTargetFrom(object p_target);
+        #endif
     }
 }

@@ -117,7 +117,7 @@ namespace Dash
             GUI.Box(new Rect(p_rect.x, p_rect.y + p_rect.height + 4, 390, 38), "", style);
             GUI.backgroundColor = Color.white;
             
-            GUILayout.BeginArea(new Rect(p_rect.x, p_rect.y + p_rect.height + 8, p_rect.width, 30));
+            GUILayout.BeginArea(new Rect(p_rect.x + 20, p_rect.y + p_rect.height + 8, p_rect.width-20, 30));
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             
@@ -131,19 +131,29 @@ namespace Dash
             //     ((IAnimationNodeBindable)this).BindTargetFrom(target);
             // }
 
-            style = new GUIStyle(GUI.skin.toggle);
+            style = new GUIStyle(GUI.skin.button);
             style.fontStyle = FontStyle.Bold;
 
             GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled();
-            bool newFrom = GUILayout.Toggle(_bindFrom, "Bind From", style, GUILayout.Height(30));
-            if (newFrom && newFrom != _bindFrom)
+            if (_bindFrom)
             {
-                ((IAnimationNodeBindable)this).SetTargetFrom(target);
-                _bindTo = false;
+                GUI.backgroundColor = new Color(1, 0, 0);
+                if (GUILayout.Button("UNBIND FROM", style, GUILayout.Width(110), GUILayout.ExpandHeight(true)))
+                {
+                    _bindFrom = false;
+                }
+                GUI.backgroundColor = Color.white;
             }
-            _bindFrom = GUI.enabled ? newFrom : false;
+            else
+            {
+                if (GUILayout.Button("BIND FROM", style, GUILayout.Width(110), GUILayout.ExpandHeight(true)))
+                {
+                    ((IAnimationNodeBindable)this).SetTargetFrom(target);
+                    _bindTo = false;
+                    _bindFrom = true;
+                }
+            }
 
-            
             // GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
             // if (GUILayout.Button("SET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             // {
@@ -156,23 +166,32 @@ namespace Dash
             GUILayout.FlexibleSpace();
             
             GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
-            bool newTo = GUILayout.Toggle(_bindTo, "Bind To", style, GUILayout.Height(30));
-            if (newTo && newTo != _bindTo)
+            if (_bindTo)
             {
-                ((IAnimationNodeBindable)this).SetTargetTo(target);
-                _bindFrom = false;
+                GUI.backgroundColor = new Color(1, 0, 0);
+                if (GUILayout.Button("UNBIND TO", style, GUILayout.Width(110), GUILayout.ExpandHeight(true)))
+                {
+                    _bindTo = false;
+                }
+                GUI.backgroundColor = Color.white;
             }
-            _bindTo = GUI.enabled ? newTo : false;
+            else
+            {
+                if (GUILayout.Button("BIND TO", style, GUILayout.Width(110), GUILayout.ExpandHeight(true)))
+                {
+                    ((IAnimationNodeBindable)this).SetTargetTo(target);
+                    _bindFrom = false;
+                    _bindTo = true;
+                }
+            }
 
             GUILayout.FlexibleSpace();
 
             GUI.backgroundColor = new Color(1, .75f, .5f);
-            GUIStyle button = new GUIStyle(GUI.skin.button);
-            button.fontStyle = FontStyle.Bold;
-            button.normal.textColor = GUI.backgroundColor;
+            style.fontSize = 16;
+            style.normal.textColor = GUI.backgroundColor;
             
-            GUI.enabled = !Model.time.isExpression && !Model.delay.isExpression && !Model.easeType.isExpression; 
-            if (GUILayout.Button("PREVIEW", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
+            if (GUILayout.Button("PREVIEW", style, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 TransformStorageData data = new TransformStorageData(target, TransformStorageOption.POSITION);
                 AnimateOnTarget(target, NodeFlowDataFactory.Create()).OnComplete(() =>
@@ -190,7 +209,7 @@ namespace Dash
             GUI.enabled = true;
             
             GUI.color = Color.yellow;
-            GUI.DrawTexture(new Rect(p_rect.x + 10, p_rect.y + p_rect.height + 16, 16, 16),
+            GUI.DrawTexture(new Rect(p_rect.x + 8, p_rect.y + p_rect.height + 16, 16, 16),
                 IconManager.GetIcon("Experimental_Icon"));
             GUI.color = Color.white;
 
