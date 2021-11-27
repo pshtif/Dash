@@ -56,7 +56,12 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Expression classes", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("You have "+(DashEditorCore.RuntimeConfig.expressionClasses == null ? 0 : DashEditorCore.RuntimeConfig.expressionClasses.Count)+" expression classes defined.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(
+                "You have " +
+                (DashEditorCore.RuntimeConfig.expressionClasses == null
+                    ? 0
+                    : DashEditorCore.RuntimeConfig.expressionClasses.Count) + " expression classes defined.", infoStyle,
+                GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
@@ -96,11 +101,16 @@ namespace Dash.Editor
             
             GUILayout.Space(4);
             GUILayout.Label("Expression macros", titleStyle, GUILayout.ExpandWidth(true));
-            GUILayout.Label("You have "+(DashEditorCore.RuntimeConfig.expressionMacros == null ? 0 : DashEditorCore.RuntimeConfig.expressionMacros.Count)+" expression macros defined.", infoStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(
+                "You have " +
+                (DashEditorCore.RuntimeConfig.expressionMacros == null
+                    ? 0
+                    : DashEditorCore.RuntimeConfig.expressionMacros.Count) + " expression macros defined.", infoStyle,
+                GUILayout.ExpandWidth(true));
             GUILayout.Space(2);
 
             _scrollPositionScanned = GUILayout.BeginScrollView(_scrollPositionScanned, scrollViewStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2 - 80));
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height/2 - 100));
             GUILayout.BeginVertical();
             
             if (DashEditorCore.RuntimeConfig.expressionMacros != null)
