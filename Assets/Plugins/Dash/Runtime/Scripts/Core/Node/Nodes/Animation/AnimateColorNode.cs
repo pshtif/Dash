@@ -66,6 +66,12 @@ namespace Dash
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
+            if (Model.storeToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeAttributeName, p_flowData);
+                p_flowData.SetAttribute<float>(attribute, p_target.alpha);
+            }
+            
             if (time == 0)
             {
                 UpdateTween(p_target, 1, p_flowData, startAlpha, toAlpha, easeType);

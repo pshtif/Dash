@@ -57,14 +57,10 @@ namespace Dash
         public Parameter<Color> toColor = new Parameter<Color>(Color.white);
         
         [Order(19)]
-        [DependencySingle("targetType", AlphaTargetType.IMAGE)]
-        [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
         public bool storeToAttribute = false;
         
         [Order(20)]
-        [DependencySingle("targetType", AlphaTargetType.IMAGE)]
-        [DependencySingle("targetType", AlphaTargetType.TEXTMESHPRO)]
         [TitledGroup("Properties")]
         [Dependency("storeToAttribute", true)]
         public Parameter<string> storeAttributeName = new Parameter<string>("color");
