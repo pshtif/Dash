@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.6.1RC - 01.12.2021
+
+#### Added
+
+- Added AnimatePositionNode
+- Added SetVariable method to make add/modify on variables easier
+- Added node input chain and retarget resolving for further tooling [EXPERIMENTAL]
+- Added macro support in expression evaluation
+- Added macro editing support to Expression editor window
+- Added ability to override custom context menus for node implementations
+- Added new custom UIs to work with AnimationNodes retargeting and from/to binding [EXPERIMENTAL]
+- Added UseNativeSize, IsMaskable and IsRaycastTarget to SpawnImageNode to modify default state
+- Added StoreToAttribute on AnimateColorNode now works for CANVASGROUP type as well
+
+#### Changed
+
+- Changed minor changes to GUI to unify inspector layouts (widths,spacing etc.)
+- Changed GenericMenu usage was completely reworked to use RuntimeGenericMenu in various aspects of the editor
+- Changed initial update for tween now called upon start [WARNING]
+
+#### Fixed
+
+- Fixed correct references asssigning/visualisation in editor due to different Controller injection introduced in 0.6.0
+- Fixed removed unused properties to fix editor warnings
+- Fixed custom implicit casting where source/target were reversed in number types
+
+
 ### Release 0.6.0RC - 16.11.2021
 
 #### Added
