@@ -14,6 +14,10 @@ namespace Dash
         public Parameter<Sprite> sprite = new Parameter<Sprite>(null);
 
         public Parameter<Vector2> position = new Parameter<Vector2>(Vector3.zero);
+        
+        public Parameter<bool> useNativeSize = new Parameter<bool>(false);
+        public Parameter<bool> isMaskable = new Parameter<bool>(true);
+        public Parameter<bool> isRaycastTarget = new Parameter<bool>(true);
 
         public bool setTargetAsParent = true;
         public bool retargetToSpawned = false;

@@ -30,6 +30,14 @@ namespace Dash
             RectTransform rectTransform = image.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
+            if (GetParameterValue(Model.useNativeSize, p_flowData))
+            {
+                image.SetNativeSize();
+            }
+
+            image.maskable = GetParameterValue(Model.isMaskable, p_flowData);
+            image.raycastTarget = GetParameterValue(Model.isRaycastTarget, p_flowData);
+
             if (Model.retargetToSpawned)
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
