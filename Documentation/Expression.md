@@ -92,6 +92,31 @@ RandomF(1,2)
 
 For documentation on implemented functions you can go to [Expression Functions documentation](ExpressionFunctions.md)
 
+## Custom Functions
+
+Starting from Dash 0.6.0 it is now possible to define custom classes and attach them to Dash so expressions can resolve functions inside them. This way you can create any custom function and add it to your palette of working tools with Dash.
+
+Following is an example of a custom function with single parameter and an integer as an output.
+
+```c#
+private static bool Test(FunctionArgs p_args)
+{
+    if (p_args.Parameters.Length != 0)
+    {
+        ExpressionFunctions.errorMessage = "Invalid parameters in Test function.";
+        return false;
+    }
+
+    p_args.HasResult = true;
+    p_args.Result = 0;
+    return true;
+}
+```
+
+Function always needs to have single parameter of type FunctionArgs all this is the way the expression evaluator sends the parameters in. You should always also check for the correct parameter amount as in the example above to let user know. To utilize error messages send to the Dash system you simply set the static errorMessage property on ExpressionFunctions directly. 
+
+Functions return false if it was not correctly evaluated or true if it was, at the same time it should set Result and HasResult on the FunctionArgs instance.
+
 ## Macros
 
 Starting from Dash 0.6.1 it is now possible to utilize macros inside expressions. Macros are nothing else than predefined expressions that you can define in Tools>Dash>Expression Editor Window which can be then used instead of an expression or inside a more complex expresion. The syntax is as follows.
