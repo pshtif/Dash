@@ -15,18 +15,6 @@ In following example the evaluator will try to resolve test as a variable and th
 
 For more detailed documentation on Dash parameters can go to [Expression Parameters documentation](ExpressionParameters.md)
 
-## Macros
-
-Starting from Dash 0.6.1 it is now possible to utilize macros inside expressions. Macros are nothing else than predefined expressions that you can define in Tools>Dash>Expression Editor Window which can be then used instead of an expression or inside a more complex expresion. The syntax is as follows.
-
-```c#
-{SOME_MACRO}+1
-```
-
-Macro name is always uppercase alphanumeric string with the only exception being the character _ which can be also used. Also macros when used inside expressions should always be wrapped inside curly braces {MACRO} even though the braces are not part of its name.
-
-Current limitation of macros is that macros inside macros are not supported (future support is considered).
-
 ## Operators
 
 Expressions support the standard operators as follows.
@@ -103,3 +91,15 @@ RandomF(1,2)
 ```
 
 For documentation on implemented functions you can go to [Expression Functions documentation](ExpressionFunctions.md)
+
+## Macros
+
+Starting from Dash 0.6.1 it is now possible to utilize macros inside expressions. Macros are nothing else than predefined expressions that you can define in Tools>Dash>Expression Editor Window which can be then used instead of an expression or inside a more complex expresion. The syntax is as follows.
+
+```c#
+{SOME_MACRO}+1
+```
+
+Macro name is always uppercase alphanumeric string with the only exception being the character _ which can be also used. Also macros when used inside expressions should always be wrapped inside curly braces {MACRO} even though the braces are not part of its name.
+
+Current limitation of macros is that macros inside macros are not supported (future support is considered).
