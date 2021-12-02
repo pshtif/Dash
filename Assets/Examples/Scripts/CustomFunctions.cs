@@ -20,7 +20,6 @@ namespace Examples.Scripts
 
             p_args.HasResult = true;
             p_args.Result = 0;
-            Debug.Log("HERE");
             return true;
         }
     }
