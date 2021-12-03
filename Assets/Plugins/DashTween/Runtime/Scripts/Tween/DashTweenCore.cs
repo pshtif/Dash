@@ -19,6 +19,8 @@ namespace Dash
         [NonSerialized]
         private static bool _initialized = false;
 
+        public bool useScaledTime = true;
+
         public static void Initialize()
         {
             if (!_initialized)
@@ -54,7 +56,7 @@ namespace Dash
 
         void Update()
         {
-            UpdateInternal(DashCore.Instance.useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
+            UpdateInternal(useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime);
         }
 
         static void UpdateInternal(float p_delta)

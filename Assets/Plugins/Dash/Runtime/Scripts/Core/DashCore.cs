@@ -95,8 +95,6 @@ namespace Dash
         
         public DashGlobalVariables globalVariables => _globalVariables;
 
-        public bool useScaledTime = true;
-
         public void SetGlobalVariables(DashGlobalVariables p_globalVariables)
         {
             _globalVariables = p_globalVariables;
