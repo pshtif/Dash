@@ -15,6 +15,7 @@
 	"editor"
   ],
   "dependencies": {
-	"com.teamsirenix.odinserializer": "2021.8.11"
+	"com.teamsirenix.odinserializer": "2021.8.11",
+	"com.shtif.dashtween": "0.1.0"
   }
 }
