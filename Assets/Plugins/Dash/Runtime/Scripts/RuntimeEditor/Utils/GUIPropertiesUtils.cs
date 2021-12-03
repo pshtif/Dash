@@ -140,7 +140,7 @@ namespace Dash
 
             GUILayout.BeginHorizontal();
             
-            GUILayout.Label(p_name, GUILayout.Width(120));
+            GUILayout.Label(p_name, GUILayout.Width(160));
             
             if (GUILayout.Button(value == null ? "NONE" : value.Name))
             {
@@ -173,7 +173,7 @@ namespace Dash
             EditorGUI.BeginChangeCheck();
             
             GUILayout.BeginHorizontal();
-            GUILayout.Label(p_name, GUILayout.Width(120));
+            GUILayout.Label(p_name, GUILayout.Width(160));
             var newValue = EditorGUILayout.EnumPopup((Enum) p_fieldInfo.GetValue(p_object));
             GUILayout.EndHorizontal();
 
@@ -199,7 +199,7 @@ namespace Dash
             EditorGUI.BeginChangeCheck();
             
             GUILayout.BeginHorizontal();
-            GUILayout.Label(p_name, GUILayout.Width(120));
+            GUILayout.Label(p_name, GUILayout.Width(160));
 
             var newValue = EditorGUILayout.ObjectField((UnityEngine.Object) p_fieldInfo.GetValue(p_object),
                 p_fieldInfo.FieldType, false);
@@ -225,8 +225,8 @@ namespace Dash
         {
             if (!IsExposedReferenceProperty(p_fieldInfo))
                 return false;
-            
-            IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingGraph.Controller;
+
+            IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
             var exposedReference = p_fieldInfo.GetValue(p_object);
             
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
@@ -234,7 +234,7 @@ namespace Dash
             
             
             GUILayout.BeginHorizontal();
-            GUILayout.Label(p_name, GUILayout.Width(120));
+            GUILayout.Label(p_name, GUILayout.Width(160));
             HandleReferencing(p_reference, p_fieldInfo);
             EditorGUI.BeginChangeCheck();
 
@@ -311,7 +311,7 @@ namespace Dash
                 {
                     GUILayout.BeginHorizontal();
                     GUI.color = DashEditorCore.EditorConfig.theme.ParameterColor;
-                    GUILayout.Label(p_name, GUILayout.Width(120));
+                    GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, p_fieldInfo, false, param);
                     param.expression = GUILayout.TextArea(param.expression, GUILayout.ExpandWidth(true));
                     GUI.color = Color.white;
@@ -319,7 +319,31 @@ namespace Dash
                 }
                 else
                 {
-                    PropertyField(param.GetValueFieldInfo(), param, p_reference, p_fieldInfo);
+                    ButtonAttribute button = p_fieldInfo.GetAttribute<ButtonAttribute>();
+                    if (button != null)
+                    {
+                        GUILayout.Label(p_name, GUILayout.Width(160));
+                        if (param.IsDefault())
+                        {
+                            GUI.color = Color.yellow;
+                            if (GUILayout.Button(button.NullLabel))
+                            {
+                                MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                                param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                            }
+                            GUI.color = Color.white;
+                        }
+                        else
+                        {
+                            if (GUILayout.Button(button.NonNullLabel))
+                            {
+                                MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                                param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                            }
+                        }
+                    } else {
+                        PropertyField(param.GetValueFieldInfo(), param, p_reference, p_fieldInfo);
+                    }
                 }
 
                 
@@ -382,7 +406,7 @@ namespace Dash
             {
                 GUILayout.BeginHorizontal();
                 GUI.color = DashEditorCore.EditorConfig.theme.ParameterColor;
-                GUILayout.Label(p_name, GUILayout.Width(120));
+                GUILayout.Label(p_name, GUILayout.Width(160));
                 HandleReferencing(p_reference, expressionField, true);
                 string expression = GUILayout.TextArea((string)expressionField.GetValue(p_object), GUILayout.ExpandWidth(true));
                 GUI.color = Color.white;
@@ -548,15 +572,17 @@ namespace Dash
 
                     return false;
                 case "UnityEngine.Color":
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(p_name, GUILayout.Width(160));
                     EditorGUI.BeginChangeCheck();
-                    var colorValue = EditorGUILayout.ColorField(p_name, (Color) p_fieldInfo.GetValue(p_object));
+                    var colorValue = EditorGUILayout.ColorField("", (Color) p_fieldInfo.GetValue(p_object));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, colorValue);
                         return true;
                     }
-
+                    GUILayout.EndHorizontal();
                     return false;
                 default:
                     Debug.Log(type + " type inspection not implemented. Field: " + p_fieldInfo.Name);
@@ -569,7 +595,7 @@ namespace Dash
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) &&
                 Event.current.button == 1 && Event.current.type == EventType.MouseDown)
             {
-                GenericMenu menu = new GenericMenu();
+                RuntimeGenericMenu menu = new RuntimeGenericMenu();
                 
                 menu.AddItem(new GUIContent("Copy reference"), false,
                     () =>
@@ -594,7 +620,8 @@ namespace Dash
                         () => { p_fieldInfo.SetValue(p_reference, DashEditorCore.propertyReference); });
                 }
 
-                menu.ShowAsContext();
+                //menu.ShowAsContext();
+                GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
             }
         }
         

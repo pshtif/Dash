@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using OdinSerializer.Utilities;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 
 namespace Dash.Editor
 {
@@ -26,7 +25,7 @@ namespace Dash.Editor
             {
                 VariableField(p_variables, variable.Name, p_boundObject,
                     EditorGUIUtility.currentViewWidth - 20);
-                EditorGUILayout.Space(4);
+                GUILayout.Space(4);
                 index++;
             });
 
@@ -48,7 +47,7 @@ namespace Dash.Editor
             var variable = p_variables.GetVariable(p_name);
             GUILayout.BeginHorizontal();
             string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(120));
-            EditorGUILayout.Space(2, false);
+            GUILayout.Space(2);
             if (newName != p_name) 
             {
                 p_variables.RenameVariable(p_name, newName);
@@ -59,22 +58,23 @@ namespace Dash.Editor
             var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             
-            EditorGUILayout.BeginVertical(GUILayout.Width(16));
-            EditorGUILayout.Space(2,false);
+            GUILayout.BeginVertical(GUILayout.Width(16));
+            GUILayout.Space(2);
             if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
-                GetVariableMenu(p_variables, p_name, p_boundObject).ShowAsContext();
+                var menu = GetVariableMenu(p_variables, p_name, p_boundObject);
+                GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false, false);
             }
-            EditorGUILayout.EndVertical();
+            GUILayout.EndVertical();
 
             GUI.color = oldColor;
 
-            EditorGUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
         }
 
-        static GenericMenu GetVariableMenu(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static RuntimeGenericMenu GetVariableMenu(DashVariables p_variables, string p_name, GameObject p_boundObject)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
             var variable = p_variables.GetVariable(p_name);
             if (variable.IsBound)

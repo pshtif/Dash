@@ -650,7 +650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &351217255
 RectTransform:
   m_ObjectHideFlags: 0
@@ -668,7 +668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000024438, y: 761}
+  m_AnchoredPosition: {x: 0, y: 1422.9999}
   m_SizeDelta: {x: 906.594, y: 153.24048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &351217256
@@ -744,7 +744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -420}
+  m_AnchoredPosition: {x: 0.00010679298, y: -415.00003}
   m_SizeDelta: {x: 576, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &435475073
@@ -1405,7 +1405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &710234222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,7 +1807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &820719428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2568,7 +2568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &963002350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3992,6 +3992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fa9df9d2d0b94096b97e29dc9309c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
 --- !u!4 &1314589815
 Transform:
   m_ObjectHideFlags: 0
@@ -5783,7 +5784,7 @@ MonoBehaviour:
       Data: 1|System.Collections.Generic.List`1[[Dash.Variable, DashRuntime]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 7
       Data: 2|Dash.Variable`1[[System.Int32, mscorlib]], DashRuntime
@@ -5844,6 +5845,54 @@ MonoBehaviour:
     - Name: _value
       Entry: 6
       Data: 
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newBoolean
+    - Name: _value
+      Entry: 5
+      Data: false
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newBoolean1
+    - Name: _value
+      Entry: 5
+      Data: false
     - Name: _boundType
       Entry: 3
       Data: 0

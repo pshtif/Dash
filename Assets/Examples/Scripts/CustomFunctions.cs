@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using Dash;
 using NCalc;
 using UnityEngine;
 
@@ -13,13 +14,12 @@ namespace Examples.Scripts
         {
             if (p_args.Parameters.Length != 0)
             {
-                //errorMessage = "Invalid parameters in Test function.";
+                ExpressionFunctions.errorMessage = "Invalid parameters in Test function.";
                 return false;
             }
 
             p_args.HasResult = true;
             p_args.Result = 0;
-            Debug.Log("HERE");
             return true;
         }
     }

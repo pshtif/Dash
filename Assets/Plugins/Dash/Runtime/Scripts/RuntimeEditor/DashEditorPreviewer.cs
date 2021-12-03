@@ -60,11 +60,15 @@ namespace Dash
             }
             else
             {
-                bool state = (bool)_stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
+                bool state = (bool)_stage.GetType()
+                    .GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(_stage, new object[] { });
             }
 
             _isPreviewing = true;
             _previewStarted = false;
+            
+            ExpressionEvaluator.ClearCache();
             
             // Debug.Log("Fetch Global Variables");
             VariableUtils.FetchGlobalVariables();

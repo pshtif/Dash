@@ -19,10 +19,7 @@ namespace Dash.Editor
         static private Vector2 _lastMousePosition;
         static public void Show()
         {
-            _lastMousePosition = Event.current.mousePosition;
-
-            //GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition);
-            Get().ShowAsContext();
+            Get().ShowAsEditorMenu();
         }
 
         static public void ShowAsPopup()
@@ -32,9 +29,9 @@ namespace Dash.Editor
             GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition, 240, 300);
         }
         
-        static public GenericMenu Get()
+        static public RuntimeGenericMenu Get()
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             if (DashEditorCore.EditorConfig.editingGraph != null)
             {
@@ -77,9 +74,99 @@ namespace Dash.Editor
                 {
                     menu.AddItem(new GUIContent("Paste Nodes"), false, PasteNodes);
                 }
+                
+                menu.AddSeparator("");
+                Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
+                if (selectedTransforms.Length > 0)
+                {
+                    foreach (Type type in nodeTypes)
+                    {
+                        CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
+                        if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
+                            continue;
+                    
+                        HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
+                        string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    
+                        string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
+                        node = node.Substring(0, node.Length-4);
+                    
+                        menu.AddItem(new GUIContent("Create For Selected/"+node, tooltip), false, CreateAnimationNodesFromSelection, type);
+                    }
+                }
+                
             }
 
             return menu;
+        }
+
+        static void CreateAnimationNodesFromSelection(object p_nodeType)
+        {
+            Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
+            Vector2 offset = Vector2.zero;
+            foreach (Transform transform in selectedTransforms)
+            {
+                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition + offset);
+                
+                if (node != null)
+                {
+                    RetargetNodeModelBase model = node.GetModel() as RetargetNodeModelBase;
+                    model.retarget = true;
+                    //model.target.SetValue(transform.name);
+                    
+                    model.useReference = true;
+                    IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
+                    bool isDefault = PropertyName.IsNullOrEmpty(model.targetReference.exposedName);
+
+                    if (isDefault)
+                    {
+                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+                        model.targetReference.exposedName = newExposedName;
+                        
+                        propertyTable.SetReferenceValue(newExposedName, transform);
+                        //p_fieldInfo.SetValue(p_object, exposedReference);
+                    }
+                    else
+                    {
+                        propertyTable.SetReferenceValue(model.targetReference.exposedName, transform);
+                    }
+                    
+                    // If its bindable bind all values to current transform
+                    if (node is IAnimationNodeBindable)
+                    {
+                        ((IAnimationNodeBindable)node).GetTargetFrom(transform);
+                        ((IAnimationNodeBindable)node).GetTargetTo(transform);
+                    }
+
+                    offset.y += node.Size.y + 24;
+                }
+            }
+        }
+
+        static void ShowAnimationNodeTypesMenu()
+        {
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
+            
+            if (DashEditorCore.EditorConfig.editingGraph != null)
+            {
+                Type[] nodeTypes = ReflectionUtils.GetAllTypes(typeof(NodeBase)).ToArray();
+                foreach (Type type in nodeTypes)
+                {
+                    CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
+                    if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
+                        continue;
+                    
+                    HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
+                    string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    
+                    string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
+                    node = node.Substring(0, node.Length-4);
+                    
+                    menu.AddItem(new GUIContent(node, tooltip), false, CreateAnimationNodesFromSelection, type);
+                }
+            }
+            
+            GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false);
         }
 
         static bool IsHidden(Type p_type)

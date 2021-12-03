@@ -14,7 +14,7 @@ namespace Dash.Editor
         
         public static void Show(NodeBase p_node)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             if (SelectionManager.SelectedCount > 1)
             {
@@ -41,12 +41,14 @@ namespace Dash.Editor
                 menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, p_node);
                 menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, p_node);
-                
-                if (p_node is InputNode)
+
+                var controller = DashEditorCore.EditorConfig.editingController;
+                if (p_node is InputNode && controller != null)
                 {
+                    
                     InputNode node = p_node as InputNode;
                     menu.AddSeparator("");
-                    if (!node.Controller.autoStart || node.Controller.autoStartInput != node.Model.inputName)
+                    if (!controller.autoStart || controller.autoStartInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as Start Input"), false, SetAsStartInput, p_node);
                     }
@@ -55,7 +57,7 @@ namespace Dash.Editor
                         menu.AddItem(new GUIContent("Remove as Start Input"), false, RemoveAsStartInput, p_node);
                     }
 
-                    if (!node.Controller.autoOnEnable || node.Controller.autoOnEnableInput != node.Model.inputName)
+                    if (!controller.autoOnEnable || controller.autoOnEnableInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as OnEnable Input"), false, SetAsOnEnableInput, p_node);    
                     }
@@ -66,8 +68,41 @@ namespace Dash.Editor
                     
                 }
             }
+            
+            menu.AddSeparator("");
 
-            menu.ShowAsContext();
+            if (!SelectionManager.selectedNodes.Contains(Graph.Nodes.IndexOf(p_node)))
+            {
+                menu.AddItem(new GUIContent("Connect Selection as Output"), false, ConnectSelectionAsOutput, p_node);
+                menu.AddItem(new GUIContent("Connect Selection as Input"), false, ConnectSelectionAsInput, p_node);
+            }
+
+            ((INodeAccess)p_node).GetCustomContextMenu(ref menu);
+
+            //menu.ShowAsEditorMenu();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
+        }
+
+        static void ConnectSelectionAsInput(object p_node)
+        {
+            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            {
+                NodeBase node = Graph.Nodes[nodeIndex];
+                Graph.Connect((NodeBase)p_node, 0, node, 0);
+            }
+            
+            DashEditorCore.SetDirty();
+        }
+        
+        static void ConnectSelectionAsOutput(object p_node)
+        {
+            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            {
+                NodeBase node = Graph.Nodes[nodeIndex];
+                Graph.Connect(node, 0, (NodeBase)p_node, 0);
+            }
+            
+            DashEditorCore.SetDirty();
         }
 
         static void SetAsStartInput(object p_node)

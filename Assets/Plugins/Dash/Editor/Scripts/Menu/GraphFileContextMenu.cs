@@ -11,12 +11,13 @@ namespace Dash.Editor
     {
         public static void Show(DashGraph p_graph)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             menu.AddItem(new GUIContent("Import JSON"), false, () => GraphUtils.ImportJSON(p_graph));
             menu.AddItem(new GUIContent("Export JSON"), false, () => GraphUtils.ExportJSON(p_graph));
             
-            menu.ShowAsContext();
+            //menu.ShowAsContext();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }

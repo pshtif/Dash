@@ -35,6 +35,11 @@ namespace Dash
 
         public static void ClearSelection()
         {
+            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
+            if (graph != null)
+            {
+                selectedNodes.ForEach(n => graph.Nodes[n].Unselect());
+            }
             selectedNodes.Clear();
         }
         
@@ -182,8 +187,9 @@ namespace Dash
 
             if (p_node == null || p_graph == null)
                 return;
-            
+
             selectedNodes.Add(p_node.Index);
+            p_node.SelectEditorTarget();
             p_graph.viewOffset = -p_node.rect.center + zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
         }
 

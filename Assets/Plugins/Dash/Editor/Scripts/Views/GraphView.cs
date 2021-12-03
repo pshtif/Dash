@@ -229,7 +229,7 @@ namespace Dash.Editor
             ProcessDragging(p_event, p_rect);
 
             if (Graph.connectingNode != null)
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
         }
         
         void ProcessZoom(Event p_event, Rect p_rect)
@@ -250,7 +250,7 @@ namespace Dash.Editor
             }
 
             DashEditorCore.EditorConfig.zoom = zoom;
-            EditorWindow.SetDirty(true);
+            DashEditorWindow.SetDirty(true);
         }
         
         void ProcessLeftClick(Event p_event, Rect p_rect)
@@ -266,7 +266,7 @@ namespace Dash.Editor
             // Select
             if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
             {
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
                 
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
@@ -336,7 +336,7 @@ namespace Dash.Editor
                         break;
                 }
 
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
             }
 
             if (p_event.type == EventType.MouseUp)
@@ -353,7 +353,7 @@ namespace Dash.Editor
 
                 dragging = DraggingType.NONE;
                 selectedRegion = Rect.zero;
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
             }
         }
 
@@ -404,7 +404,7 @@ namespace Dash.Editor
 
                 p_event.Use();
                 
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
             }
         }
 
@@ -417,7 +417,7 @@ namespace Dash.Editor
                 {
                     Graph.viewOffset += p_event.delta * Zoom;
                     
-                    EditorWindow.SetDirty(true);
+                    DashEditorWindow.SetDirty(true);
                 }
             }
             
@@ -439,7 +439,7 @@ namespace Dash.Editor
                     Graph.viewOffset += (p_event.mousePosition - _rightDragStart) * Zoom;
                 }
                 
-                EditorWindow.SetDirty(true);
+                DashEditorWindow.SetDirty(true);
             }
         }
 
@@ -449,11 +449,7 @@ namespace Dash.Editor
             {
                 SelectionManager.AddNodeToSelection(p_nodeIndex);
 
-                // If the controller is not null autoselect it in hierarchy TODO: maybe put this as setting
-                if (Graph.Controller != null)
-                {
-                    Selection.activeGameObject = Graph.Controller.gameObject;
-                }
+                Graph.Nodes[p_nodeIndex].SelectEditorTarget();
             }
         }
 

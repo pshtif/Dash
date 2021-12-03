@@ -13,7 +13,7 @@ namespace Dash.Editor
         
         static public void Show(NodeConnection p_connection)
         {
-            GenericMenu menu = new GenericMenu();
+            RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
             if (p_connection.active)
             {
@@ -27,7 +27,8 @@ namespace Dash.Editor
 
             menu.AddItem(new GUIContent("Delete Connection"), false, DeleteConnection, p_connection);
             
-            menu.ShowAsContext();
+            //menu.ShowAsContext();
+            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 200, 300, false, false);
         }
         
         static void DeleteConnection(object p_connection)

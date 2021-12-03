@@ -100,4 +100,20 @@ namespace Dash.Attributes
             FieldName = p_fieldName;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Field)]
+    public class ButtonAttribute : Attribute
+    {
+        public string NullLabel { get; }
+        public string NonNullLabel { get; }
+        public string MethodName { get; }
+        
+        public ButtonAttribute(string p_nullLabel, string p_nonNullLabel, string p_methodName)
+        {
+            NullLabel = p_nullLabel;
+            NonNullLabel = p_nonNullLabel;
+
+            MethodName = p_methodName;
+        }
+    }
 }

@@ -75,7 +75,7 @@ MonoBehaviour:
       Data: 1|System.Collections.Generic.List`1[[Dash.Variable, DashRuntime]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 6
     - Name: 
       Entry: 7
       Data: 2|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
@@ -101,6 +101,150 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 3|Dash.Variable`1[[System.Boolean, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newBoolean0
+    - Name: _value
+      Entry: 5
+      Data: false
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Dash.Variable`1[[System.String, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newString0
+    - Name: _value
+      Entry: 1
+      Data: 
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Dash.Variable`1[[System.Int32, mscorlib]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newInt320
+    - Name: _value
+      Entry: 3
+      Data: 0
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Dash.Variable`1[[UnityEngine.Vector4, UnityEngine.CoreModule]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newVector
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector4, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|Dash.Variable`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+    - Name: <Type>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: _name
+      Entry: 1
+      Data: newVector1
+    - Name: _value
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _boundType
+      Entry: 3
+      Data: 0
+    - Name: _boundName
+      Entry: 6
+      Data: 
+    - Name: _boundComponentName
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -111,14 +255,14 @@ MonoBehaviour:
       Data: 
     - Name: _extractedClipCache
       Entry: 7
-      Data: 3|Dash.ExtractedClipCache, DashRuntime
+      Data: 8|Dash.ExtractedClipCache, DashRuntime
     - Name: _clips
       Entry: 7
-      Data: 4|System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip,
+      Data: 9|System.Collections.Generic.Dictionary`2[[UnityEngine.AnimationClip,
         UnityEngine.AnimationModule],[Dash.ExtractedClip, DashRuntime]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 5|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
+      Data: 10|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.AnimationClip,
         UnityEngine.AnimationModule]], mscorlib
     - Name: 
       Entry: 8
@@ -137,16 +281,16 @@ MonoBehaviour:
       Data: 
     - Name: _nodes
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Dash.NodeBase, DashRuntime]], mscorlib
+      Data: 11|System.Collections.Generic.List`1[[Dash.NodeBase, DashRuntime]], mscorlib
     - Name: 
       Entry: 12
       Data: 21
     - Name: 
       Entry: 7
-      Data: 7|Dash.InputNode, DashRuntime
+      Data: 12|Dash.InputNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 8|Dash.InputNodeModel, DashRuntime
+      Data: 13|Dash.InputNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: Input2
@@ -176,13 +320,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 241
+      Data: 133
     - Name: 
       Entry: 4
-      Data: -132
+      Data: 57
     - Name: 
       Entry: 4
-      Data: 107
+      Data: 105.5
     - Name: 
       Entry: 4
       Data: 85
@@ -194,10 +338,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|Dash.SetActiveNode, DashRuntime
+      Data: 14|Dash.SetActiveNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 10|Dash.SetActiveNodeModel, DashRuntime
+      Data: 15|Dash.SetActiveNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetActive2
@@ -218,7 +362,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 11|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 16|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -261,7 +405,7 @@ MonoBehaviour:
       Data: 
     - Name: active
       Entry: 7
-      Data: 12|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 17|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -291,10 +435,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 514.75
+      Data: 406.75
     - Name: 
       Entry: 4
-      Data: -125.25
+      Data: 63.75
     - Name: 
       Entry: 4
       Data: 160
@@ -309,10 +453,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|Dash.OnCustomEventNode, DashRuntime
+      Data: 18|Dash.OnCustomEventNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 14|Dash.OnCustomEventNodeModel, DashRuntime
+      Data: 19|Dash.OnCustomEventNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: OnCustomEvent1
@@ -333,7 +477,7 @@ MonoBehaviour:
       Data: true
     - Name: sequencerId
       Entry: 7
-      Data: 15|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 20|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -348,7 +492,7 @@ MonoBehaviour:
       Data: 
     - Name: sequencerPriority
       Entry: 7
-      Data: 16|Dash.Parameter`1[[System.Int32, mscorlib]], DashRuntime
+      Data: 21|Dash.Parameter`1[[System.Int32, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -378,13 +522,13 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 229.5
+      Data: 117
     - Name: 
       Entry: 4
-      Data: 367.25
+      Data: 500
     - Name: 
       Entry: 4
-      Data: 123
+      Data: 122
     - Name: 
       Entry: 4
       Data: 85
@@ -396,10 +540,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 17|Dash.BranchNode, DashRuntime
+      Data: 22|Dash.BranchNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 18|Dash.BranchNodeModel, DashRuntime
+      Data: 23|Dash.BranchNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: Branch1
@@ -411,7 +555,7 @@ MonoBehaviour:
       Data: 0
     - Name: expression
       Entry: 7
-      Data: 19|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 24|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: true
@@ -441,10 +585,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 724
+      Data: 611.5
     - Name: 
       Entry: 4
-      Data: 273.75
+      Data: 406.5
     - Name: 
       Entry: 4
       Data: 150
@@ -459,10 +603,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 20|Dash.SetVariableNode, DashRuntime
+      Data: 25|Dash.SetVariableNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 21|Dash.SetVariableNodeModel, DashRuntime
+      Data: 26|Dash.SetVariableNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetVariable1
@@ -477,7 +621,7 @@ MonoBehaviour:
       Data: shown
     - Name: variableType
       Entry: 7
-      Data: 22|System.RuntimeType, mscorlib
+      Data: 27|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Boolean, mscorlib
@@ -510,10 +654,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1004
+      Data: 891.5
     - Name: 
       Entry: 4
-      Data: 386.25
+      Data: 519
     - Name: 
       Entry: 4
       Data: 150
@@ -528,10 +672,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 23|Dash.BranchNode, DashRuntime
+      Data: 28|Dash.BranchNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 24|Dash.BranchNodeModel, DashRuntime
+      Data: 29|Dash.BranchNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: Branch2
@@ -543,7 +687,7 @@ MonoBehaviour:
       Data: 2
     - Name: expression
       Entry: 7
-      Data: 25|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 30|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: true
@@ -591,10 +735,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 26|Dash.SetVariableNode, DashRuntime
+      Data: 31|Dash.SetVariableNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 27|Dash.SetVariableNodeModel, DashRuntime
+      Data: 32|Dash.SetVariableNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetVariable2
@@ -609,7 +753,7 @@ MonoBehaviour:
       Data: shown
     - Name: variableType
       Entry: 9
-      Data: 22
+      Data: 27
     - Name: expression
       Entry: 1
       Data: false
@@ -654,10 +798,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 28|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 33|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 29|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 34|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition4
@@ -678,7 +822,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 30|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 35|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -721,7 +865,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 31|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 36|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -736,7 +880,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 32|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 37|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -751,7 +895,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 33|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 38|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -766,7 +910,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 34|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 39|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -784,7 +928,7 @@ MonoBehaviour:
       Data: true
     - Name: fromPosition
       Entry: 7
-      Data: 35|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 40|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -811,7 +955,7 @@ MonoBehaviour:
       Data: true
     - Name: toPosition
       Entry: 7
-      Data: 36|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 41|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -841,7 +985,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 37|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 42|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -871,10 +1015,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1539.5
+      Data: 1427
     - Name: 
       Entry: 4
-      Data: 467.5
+      Data: 600.25
     - Name: 
       Entry: 4
       Data: 220
@@ -889,10 +1033,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 38|Dash.SetActiveNode, DashRuntime
+      Data: 43|Dash.SetActiveNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 39|Dash.SetActiveNodeModel, DashRuntime
+      Data: 44|Dash.SetActiveNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetActive6
@@ -913,7 +1057,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 40|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 45|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -956,7 +1100,7 @@ MonoBehaviour:
       Data: 
     - Name: active
       Entry: 7
-      Data: 41|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 46|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -986,10 +1130,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1288.5
+      Data: 1176
     - Name: 
       Entry: 4
-      Data: 468.25
+      Data: 601
     - Name: 
       Entry: 4
       Data: 160
@@ -1004,10 +1148,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 42|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 47|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 43|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 48|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition6
@@ -1028,7 +1172,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 44|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 49|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1071,7 +1215,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 45|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 50|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1086,7 +1230,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 46|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 51|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1101,7 +1245,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 47|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 52|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1116,7 +1260,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 48|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 53|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1134,7 +1278,7 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 49|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 54|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1161,7 +1305,7 @@ MonoBehaviour:
       Data: true
     - Name: toPosition
       Entry: 7
-      Data: 50|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 55|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1191,7 +1335,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 51|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 56|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1239,10 +1383,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 52|Dash.SetActiveNode, DashRuntime
+      Data: 57|Dash.SetActiveNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 53|Dash.SetActiveNodeModel, DashRuntime
+      Data: 58|Dash.SetActiveNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetActive7
@@ -1263,7 +1407,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 54|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 59|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1306,7 +1450,7 @@ MonoBehaviour:
       Data: 
     - Name: active
       Entry: 7
-      Data: 55|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 60|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1354,10 +1498,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 56|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 61|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 57|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 62|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition8
@@ -1378,7 +1522,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 58|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 63|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1421,7 +1565,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 59|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 64|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1436,7 +1580,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 60|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 65|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1451,7 +1595,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 61|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 66|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1466,7 +1610,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 62|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 67|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1484,7 +1628,7 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 63|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 68|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1511,7 +1655,7 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 64|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 69|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1541,7 +1685,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 65|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 70|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1589,10 +1733,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 66|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 71|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 67|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 72|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition5
@@ -1613,7 +1757,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 68|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 73|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1656,7 +1800,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 69|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 74|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1671,7 +1815,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 70|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 75|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1686,7 +1830,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 71|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 76|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1701,7 +1845,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 72|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 77|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1719,7 +1863,7 @@ MonoBehaviour:
       Data: true
     - Name: fromPosition
       Entry: 7
-      Data: 73|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 78|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1746,7 +1890,7 @@ MonoBehaviour:
       Data: true
     - Name: toPosition
       Entry: 7
-      Data: 74|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 79|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1776,7 +1920,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 75|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 80|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1806,10 +1950,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1543.5
+      Data: 1431
     - Name: 
       Entry: 4
-      Data: 317.25
+      Data: 450
     - Name: 
       Entry: 4
       Data: 220
@@ -1824,10 +1968,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 76|Dash.SetActiveNode, DashRuntime
+      Data: 81|Dash.SetActiveNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 77|Dash.SetActiveNodeModel, DashRuntime
+      Data: 82|Dash.SetActiveNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: SetActive8
@@ -1848,7 +1992,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 78|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 83|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1891,7 +2035,7 @@ MonoBehaviour:
       Data: 
     - Name: active
       Entry: 7
-      Data: 79|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 84|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -1921,10 +2065,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1288.5
+      Data: 1176
     - Name: 
       Entry: 4
-      Data: 317
+      Data: 449.75
     - Name: 
       Entry: 4
       Data: 160
@@ -1939,10 +2083,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 80|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 85|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 81|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 86|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition9
@@ -1963,7 +2107,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 82|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 87|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2006,7 +2150,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 83|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 88|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2021,7 +2165,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 84|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 89|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2036,7 +2180,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 85|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 90|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2051,7 +2195,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 86|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 91|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2069,7 +2213,7 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 87|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 92|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2096,7 +2240,7 @@ MonoBehaviour:
       Data: true
     - Name: toPosition
       Entry: 7
-      Data: 88|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 93|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2126,7 +2270,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 89|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 94|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2174,10 +2318,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 90|Dash.AnimateAnchoredPositionNode, DashRuntime
+      Data: 95|Dash.AnimateAnchoredPositionNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 91|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
+      Data: 96|Dash.AnimateAnchoredPositionNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: AnimateAnchoredPosition10
@@ -2198,7 +2342,7 @@ MonoBehaviour:
       Data: true
     - Name: target
       Entry: 7
-      Data: 92|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 97|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2241,7 +2385,7 @@ MonoBehaviour:
       Data: 
     - Name: time
       Entry: 7
-      Data: 93|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 98|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2256,7 +2400,7 @@ MonoBehaviour:
       Data: 
     - Name: delay
       Entry: 7
-      Data: 94|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
+      Data: 99|Dash.Parameter`1[[System.Single, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2271,7 +2415,7 @@ MonoBehaviour:
       Data: 
     - Name: easeType
       Entry: 7
-      Data: 95|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
+      Data: 100|Dash.Parameter`1[[Dash.EaseType, DashRuntime]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2286,7 +2430,7 @@ MonoBehaviour:
       Data: 
     - Name: killActive
       Entry: 7
-      Data: 96|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 101|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2304,7 +2448,8 @@ MonoBehaviour:
       Data: false
     - Name: fromPosition
       Entry: 7
-      Data: 97|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 102|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]],
+        DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2331,7 +2476,8 @@ MonoBehaviour:
       Data: false
     - Name: toPosition
       Entry: 7
-      Data: 98|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]], DashRuntime
+      Data: 103|Dash.Parameter`1[[UnityEngine.Vector2, UnityEngine.CoreModule]],
+        DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2361,7 +2507,7 @@ MonoBehaviour:
       Data: false
     - Name: storeAttributeName
       Entry: 7
-      Data: 99|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 104|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2409,10 +2555,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 100|Dash.BranchNode, DashRuntime
+      Data: 105|Dash.BranchNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 101|Dash.BranchNodeModel, DashRuntime
+      Data: 106|Dash.BranchNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: Branch3
@@ -2424,7 +2570,7 @@ MonoBehaviour:
       Data: 2
     - Name: expression
       Entry: 7
-      Data: 102|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 107|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: true
@@ -2454,10 +2600,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 471
+      Data: 358.5
     - Name: 
       Entry: 4
-      Data: 367.25
+      Data: 500
     - Name: 
       Entry: 4
       Data: 150
@@ -2472,10 +2618,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 103|Dash.OnButtonClickNode, DashRuntime
+      Data: 108|Dash.OnButtonClickNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 104|Dash.OnButtonClickNodeModel, DashRuntime
+      Data: 109|Dash.OnButtonClickNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: OnButtonClick1
@@ -2560,10 +2706,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 105|Dash.AccumulateNode, DashRuntime
+      Data: 110|Dash.AccumulateNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 106|Dash.AccumulateNodeModel, DashRuntime
+      Data: 111|Dash.AccumulateNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: Accumulate1
@@ -2578,7 +2724,7 @@ MonoBehaviour:
       Data: 3
     - Name: accumulationCount
       Entry: 7
-      Data: 107|Dash.Parameter`1[[System.Int32, mscorlib]], DashRuntime
+      Data: 112|Dash.Parameter`1[[System.Int32, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2593,7 +2739,7 @@ MonoBehaviour:
       Data: 
     - Name: repeatAccumulation
       Entry: 7
-      Data: 108|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
+      Data: 113|Dash.Parameter`1[[System.Boolean, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2653,10 +2799,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 109|Dash.EndEventNode, DashRuntime
+      Data: 114|Dash.EndEventNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 110|Dash.EndEventNodeModel, DashRuntime
+      Data: 115|Dash.EndEventNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: EndEvent1
@@ -2668,7 +2814,7 @@ MonoBehaviour:
       Data: 2
     - Name: eventName
       Entry: 7
-      Data: 111|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 116|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2683,7 +2829,7 @@ MonoBehaviour:
       Data: 
     - Name: sequencerId
       Entry: 7
-      Data: 112|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 117|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2731,10 +2877,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 113|Dash.EndEventNode, DashRuntime
+      Data: 118|Dash.EndEventNode, DashRuntime
     - Name: _model
       Entry: 7
-      Data: 114|Dash.EndEventNodeModel, DashRuntime
+      Data: 119|Dash.EndEventNodeModel, DashRuntime
     - Name: id
       Entry: 1
       Data: EndEvent2
@@ -2746,7 +2892,7 @@ MonoBehaviour:
       Data: 2
     - Name: eventName
       Entry: 7
-      Data: 115|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 120|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2761,7 +2907,7 @@ MonoBehaviour:
       Data: 
     - Name: sequencerId
       Entry: 7
-      Data: 116|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
+      Data: 121|Dash.Parameter`1[[System.String, mscorlib]], DashRuntime
     - Name: isExpression
       Entry: 5
       Data: false
@@ -2791,10 +2937,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 706.5
+      Data: 594
     - Name: 
       Entry: 4
-      Data: 481.5
+      Data: 614.25
     - Name: 
       Entry: 4
       Data: 170
@@ -2815,116 +2961,11 @@ MonoBehaviour:
       Data: 
     - Name: _connections
       Entry: 7
-      Data: 117|System.Collections.Generic.List`1[[Dash.NodeConnection, DashRuntime]],
+      Data: 122|System.Collections.Generic.List`1[[Dash.NodeConnection, DashRuntime]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 19
-    - Name: 
-      Entry: 7
-      Data: 118|Dash.NodeConnection, DashRuntime
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: inputIndex
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 38
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 119|Dash.NodeConnection, DashRuntime
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: inputIndex
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 28
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 38
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 120|Dash.NodeConnection, DashRuntime
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: inputIndex
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 42
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 26
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 121|Dash.NodeConnection, DashRuntime
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: inputIndex
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 66
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 76
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 122|Dash.NodeConnection, DashRuntime
-    - Name: active
-      Entry: 5
-      Data: true
-    - Name: inputIndex
-      Entry: 3
-      Data: 0
-    - Name: <outputIndex>k__BackingField
-      Entry: 3
-      Data: 0
-    - Name: <inputNode>k__BackingField
-      Entry: 9
-      Data: 76
-    - Name: <outputNode>k__BackingField
-      Entry: 9
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 7
       Data: 123|Dash.NodeConnection, DashRuntime
@@ -2939,10 +2980,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 80
+      Data: 43
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 26
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -2960,10 +3001,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 90
+      Data: 33
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 56
+      Data: 43
     - Name: 
       Entry: 8
       Data: 
@@ -2981,10 +3022,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 17
+      Data: 47
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 100
+      Data: 31
     - Name: 
       Entry: 8
       Data: 
@@ -3002,10 +3043,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 100
+      Data: 71
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 13
+      Data: 81
     - Name: 
       Entry: 8
       Data: 
@@ -3020,13 +3061,13 @@ MonoBehaviour:
       Data: 0
     - Name: <outputIndex>k__BackingField
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 20
+      Data: 81
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 17
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -3044,10 +3085,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 26
+      Data: 85
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 23
+      Data: 31
     - Name: 
       Entry: 8
       Data: 
@@ -3065,10 +3106,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 9
+      Data: 95
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 7
+      Data: 61
     - Name: 
       Entry: 8
       Data: 
@@ -3086,10 +3127,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 23
+      Data: 22
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 103
+      Data: 105
     - Name: 
       Entry: 8
       Data: 
@@ -3110,7 +3151,7 @@ MonoBehaviour:
       Data: 105
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 80
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
@@ -3122,16 +3163,16 @@ MonoBehaviour:
       Data: true
     - Name: inputIndex
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: <outputIndex>k__BackingField
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 105
+      Data: 25
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 42
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -3149,10 +3190,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 52
+      Data: 31
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 105
+      Data: 28
     - Name: 
       Entry: 8
       Data: 
@@ -3170,10 +3211,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 56
+      Data: 14
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 52
+      Data: 12
     - Name: 
       Entry: 8
       Data: 
@@ -3191,10 +3232,10 @@ MonoBehaviour:
       Data: 0
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 109
+      Data: 28
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 90
+      Data: 108
     - Name: 
       Entry: 8
       Data: 
@@ -3209,13 +3250,118 @@ MonoBehaviour:
       Data: 0
     - Name: <outputIndex>k__BackingField
       Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 110
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 85
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 137|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 1
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 110
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 47
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 138|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 57
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 139|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 61
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 57
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 140|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <inputNode>k__BackingField
+      Entry: 9
+      Data: 114
+    - Name: <outputNode>k__BackingField
+      Entry: 9
+      Data: 95
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 141|Dash.NodeConnection, DashRuntime
+    - Name: active
+      Entry: 5
+      Data: true
+    - Name: inputIndex
+      Entry: 3
+      Data: 0
+    - Name: <outputIndex>k__BackingField
+      Entry: 3
       Data: 1
     - Name: <inputNode>k__BackingField
       Entry: 9
-      Data: 113
+      Data: 118
     - Name: <outputNode>k__BackingField
       Entry: 9
-      Data: 100
+      Data: 105
     - Name: 
       Entry: 8
       Data: 
@@ -3233,14 +3379,14 @@ MonoBehaviour:
       Data: 
     - Name: _boxes
       Entry: 7
-      Data: 137|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
+      Data: 142|System.Collections.Generic.List`1[[Dash.GraphBox, DashRuntime]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 138|Dash.GraphBox, DashRuntime
+      Data: 143|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Close
@@ -3291,7 +3437,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 139|Dash.GraphBox, DashRuntime
+      Data: 144|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Open
@@ -3321,10 +3467,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 196.5
+      Data: 84
     - Name: 
       Entry: 4
-      Data: 166
+      Data: 298.75
     - Name: 
       Entry: 4
       Data: 1693.25
@@ -3342,7 +3488,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 140|Dash.GraphBox, DashRuntime
+      Data: 145|Dash.GraphBox, DashRuntime
     - Name: comment
       Entry: 1
       Data: Initialize
@@ -3372,10 +3518,10 @@ MonoBehaviour:
       Data: UnityEngine.Rect, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 189.5
+      Data: 81.5
     - Name: 
       Entry: 4
-      Data: -204
+      Data: -15
     - Name: 
       Entry: 4
       Data: 548
@@ -3405,10 +3551,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: -135.25
+      Data: -3
     - Name: 
       Entry: 4
-      Data: 146.25
+      Data: 114
     - Name: 
       Entry: 8
       Data: 
@@ -3420,7 +3566,7 @@ MonoBehaviour:
       Data: true
     - Name: previewNode
       Entry: 9
-      Data: 13
+      Data: 18
   _boxes:
   - comment: Close
     color: {r: 0, g: 0, b: 0, a: 1}
@@ -3436,8 +3582,8 @@ MonoBehaviour:
     moveNodes: 1
     rect:
       serializedVersion: 2
-      x: 196.5
-      y: 166
+      x: 84
+      y: 298.75
       width: 1693.25
       height: 488.75
   - comment: Initialize
@@ -3445,11 +3591,11 @@ MonoBehaviour:
     moveNodes: 1
     rect:
       serializedVersion: 2
-      x: 189.5
-      y: -204
+      x: 81.5
+      y: -15
       width: 548
       height: 217.25
   previewControlsViewMinimized: 0
-  viewOffset: {x: -135.25, y: 146.25}
+  viewOffset: {x: -3, y: 114}
   graphVariablesMinimized: 0
   globalVariablesMinimized: 1
