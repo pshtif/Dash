@@ -485,8 +485,8 @@ namespace Dash
 
             // Draw user interaction with connections
             NodeConnection.DrawConnectionToMouse(connectingNode, connectingOutputIndex, Event.current.mousePosition);
-
-            DashEditorCore.SetDirty();
+            
+            //DashEditorCore.SetDirty();
         }
 
         public void DrawComments(Rect p_rect, bool p_zoomed)
