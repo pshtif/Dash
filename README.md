@@ -14,6 +14,9 @@ Dash Animation System for Unity is a system that was designed to make animation 
 </p>
 <hr>
 
+## NOTE
+* This is no longer a full Unity project but just the Dash Animation System itself. For the Unity testbed project please visit this repository https://github.com/pshtif/DashTestbed
+
 ## Prerequisities
 
 * Unity 2019.4 LTS + (It may work on older versions but there are no guarantees and support.)
