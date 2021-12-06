@@ -1,4 +1,0 @@
-<linker>                    
-                         <assembly fullname="DashAOTAssembly" preserve="all"/>
-                         <assembly fullname="DashRuntime" preserve="all"/>
-                      </linker>
