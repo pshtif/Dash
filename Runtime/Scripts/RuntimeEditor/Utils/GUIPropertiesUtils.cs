@@ -232,7 +232,6 @@ namespace Dash
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
             bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
             
-            
             GUILayout.BeginHorizontal();
             GUILayout.Label(p_name, GUILayout.Width(160));
             HandleReferencing(p_reference, p_fieldInfo);

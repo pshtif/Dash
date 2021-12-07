@@ -130,6 +130,13 @@ namespace Dash.Editor
             {
                 GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
             }
+            
+            Controller.advancedInspector = EditorGUILayout.Toggle(new GUIContent("Show Advanced Inspector", ""), Controller.advancedInspector);
+
+            if (Controller.advancedInspector)
+            {
+                DrawExposedPropertiesInspector();
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -137,6 +144,33 @@ namespace Dash.Editor
             }
             
             serializedObject.ApplyModifiedProperties();
+        }
+
+        void DrawExposedPropertiesInspector()
+        {
+            var style = new GUIStyle();
+            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.alignment = TextAnchor.MiddleCenter;
+            style.fontStyle = FontStyle.Bold;
+            style.normal.background = Texture2D.whiteTexture;
+            style.fontSize = 16;
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Exposed Properties Table", style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+            
+            for (int i = 0; i < Controller.propertyNames.Count; i++)
+            {
+                string name = Controller.propertyNames[i].ToString();
+                EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object));
+            }
+            
+            if (GUILayout.Button("Clean Table", GUILayout.Height(40)))
+            {
+                if (Controller.Graph != null)
+                {
+                    Controller.CleanupReferences(Controller.Graph.GetExposedGUIDs());
+                }
+            }
         }
         
         void BindGraph(DashGraph p_graph)

@@ -22,7 +22,7 @@ namespace Dash.Editor
             menu.AddSeparator("");
             //menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
             menu.AddItem(new GUIContent("Advanced/Cleanup Null"), false, p_graph.RemoveNullReferences);
-            menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
+            //menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
             
             menu.AddItem(new GUIContent("Reset Graph Position"), false, p_graph.ResetPosition);
             

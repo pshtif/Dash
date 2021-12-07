@@ -216,6 +216,8 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
+        public bool advancedInspector = false;
+        
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
@@ -237,10 +239,16 @@ namespace Dash
         [HideInInspector] 
         [SerializeField]
         protected List<PropertyName> _propertyNames = new List<PropertyName>();
+        #if UNITY_EDITOR
+        public List<PropertyName> propertyNames => _propertyNames;
+        #endif
 
         [HideInInspector]
         [SerializeField]
         protected List<Object> _references = new List<Object>();
+        #if UNITY_EDITOR
+        public List<Object> references => _references;
+        #endif
 
         public void CleanupReferences(List<string> p_existingGUIDs)
         {

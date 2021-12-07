@@ -621,13 +621,12 @@ namespace Dash
             Connections.RemoveAll(c => c.inputNode == null || c.outputNode == null);
         }
 
-        public void CleanupExposedReferenceTable()
+        public List<string> GetExposedGUIDs()
         {
             List<string> exposedGUIDs = new List<string>();
             Nodes.ForEach(n => exposedGUIDs.AddRange(n.GetModelExposedGUIDs()));
-            
-            if (Controller)
-                Controller.CleanupReferences(exposedGUIDs);
+
+            return exposedGUIDs;
         }
 
         public void ResetPosition()
