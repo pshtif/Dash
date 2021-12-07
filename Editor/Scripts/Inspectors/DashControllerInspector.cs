@@ -161,7 +161,7 @@ namespace Dash.Editor
             for (int i = 0; i < Controller.propertyNames.Count; i++)
             {
                 string name = Controller.propertyNames[i].ToString();
-                EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object));
+                EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object), true);
             }
             
             if (GUILayout.Button("Clean Table", GUILayout.Height(40)))
