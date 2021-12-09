@@ -554,7 +554,7 @@ namespace Dash
             _boxes.Add(box);
         }
         
-        public NodeBase CreateNode(Type p_nodeType, Vector2 mousePosition)
+        public NodeBase CreateNode(Type p_nodeType, Vector2 p_position)
         {
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
                 return null;
@@ -566,8 +566,7 @@ namespace Dash
             if (node != null)
             {
                 float zoom = DashEditorCore.EditorConfig.zoom;
-                node.rect = new Rect(mousePosition.x * zoom - viewOffset.x,
-                    mousePosition.y * zoom - viewOffset.y, 0, 0);
+                node.rect = new Rect(p_position.x, p_position.y, 0, 0);
                 Nodes.Add(node);
             }
             
