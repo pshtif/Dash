@@ -50,7 +50,11 @@ namespace Dash
         protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startPosition, Vector3 p_finalPosition, EaseType p_easeType)
         {
             if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
                 return;
+            }
 
             if (Model.isToRelative)
             {

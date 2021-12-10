@@ -69,7 +69,11 @@ namespace Dash
         protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Quaternion p_startRotation, Vector3 p_toRotation, EaseType p_easeType)
         {
             if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
                 return;
+            }
 
             Quaternion rotation = Quaternion.Euler(p_toRotation);
             if (Model.isToRelative) rotation = rotation * p_startRotation;

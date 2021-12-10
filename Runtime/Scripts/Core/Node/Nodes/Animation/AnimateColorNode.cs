@@ -146,7 +146,15 @@ namespace Dash
         }
 
         protected void UpdateTween(CanvasGroup p_target, float p_delta, NodeFlowData p_flowData, float p_startAlpha, float p_toAlpha, EaseType p_easeType)
-        {
+        { ;
+            // Check if the target wasn't destroyed while the tween is running, correctly end user should also destroy all tweens explicitly 
+            if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
+                return;
+            }
+            
             if (Model.isToRelative)
             {
                 p_target.alpha = p_startAlpha + DashTween.EaseValue(0, p_toAlpha, p_delta, p_easeType);
@@ -159,11 +167,27 @@ namespace Dash
         
         protected void UpdateTween(Image p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor, Color p_toColor)
         {
+            // Check if the target wasn't destroyed while the tween is running, correctly end user should also destroy all tweens explicitly 
+            if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
+                return;
+            }
+            
             p_target.color = Color.Lerp(p_startColor, p_toColor, p_delta);
         }
         
         protected void UpdateTween(TMP_Text p_target, float p_delta, NodeFlowData p_flowData, Color p_startColor, Color p_toColor)
         {
+            // Check if the target wasn't destroyed while the tween is running, correctly end user should also destroy all tweens explicitly 
+            if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
+                return;
+            }
+            
             p_target.color = Color.Lerp(p_startColor, p_toColor, p_delta);
         }
     }

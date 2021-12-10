@@ -37,8 +37,12 @@ namespace Dash
         protected void UpdateTween(Transform p_target, float p_delta, NodeFlowData p_flowData, Vector3 p_startPosition, Vector3 p_finalPosition, EaseType p_easeType)
         {
             if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
                 return;
-            
+            }
+
             p_target.position = new Vector3(DashTween.EaseValue(p_startPosition.x, p_finalPosition.x, p_delta, p_easeType),
                 DashTween.EaseValue(p_startPosition.y, p_finalPosition.y, p_delta, p_easeType),
                 DashTween.EaseValue(p_startPosition.z, p_finalPosition.z, p_delta, p_easeType));

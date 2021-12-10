@@ -24,5 +24,9 @@ namespace Dash
         [Order(3)]
         [TitledGroup("Animation",2)]
         public Parameter<bool> killActive = new Parameter<bool>(false);
+        
+        [Order(4)]
+        [TitledGroup("Animation", 2)]
+        public bool killOnNullEncounter = false;
     }
 }
