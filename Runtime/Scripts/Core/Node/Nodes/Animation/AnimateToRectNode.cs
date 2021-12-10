@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Obsolete]
     [Help("Animate RectTransform towards another RectTransform.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
@@ -59,7 +60,11 @@ namespace Dash
         protected void UpdateTween(RectTransform p_target, float p_delta, NodeFlowData p_flowData, Vector2 p_startPosition, Quaternion p_startRotation, Vector3 p_startScale, RectTransform p_towards, EaseType p_easeType)
         {
             if (p_target == null)
+            {
+                if (Model.killOnNullEncounter)
+                    Stop_Internal();
                 return;
+            }
 
             if (Model.useToPosition)
             {
