@@ -103,10 +103,14 @@ namespace Dash.Editor
         static void CreateAnimationNodesFromSelection(object p_nodeType)
         {
             Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
+            float zoom = DashEditorCore.EditorConfig.zoom;
+            Vector2 viewOffset = DashEditorCore.EditorConfig.editingGraph.viewOffset;
+            Vector2 position = new Vector2(_lastMousePosition.x * zoom - viewOffset.x, _lastMousePosition.y * zoom - viewOffset.y);
             Vector2 offset = Vector2.zero;
+            
             foreach (Transform transform in selectedTransforms)
             {
-                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition + offset);
+                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, position + offset);
                 
                 if (node != null)
                 {
@@ -199,7 +203,11 @@ namespace Dash.Editor
 
         static void CreateNode(object p_nodeType)
         {
-            DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, _lastMousePosition);
+            float zoom = DashEditorCore.EditorConfig.zoom;
+            Vector2 offset = DashEditorCore.EditorConfig.editingGraph.viewOffset;
+            Vector2 position = new Vector2(_lastMousePosition.x * zoom - offset.x, _lastMousePosition.y * zoom - offset.y);
+            
+            DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, position);
         }
         
         static public int CategorySort(Type p_type1, Type p_type2)

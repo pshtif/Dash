@@ -20,7 +20,7 @@ namespace Dash
     {
         [NonSerialized]
         protected List<DashTween> _activeTweens;
-        
+
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
             if (_activeTweens == null) _activeTweens = new List<DashTween>();
@@ -74,8 +74,8 @@ namespace Dash
         {
             base.DrawCustomGUI(p_rect);
 
-            string text = Model.time.isExpression ? "Time: [Exp]" : "Time: " + Model.time.GetValue(null) + "s";
-            text = Model.delay.isExpression ? text + "   Delay: [Exp]" :
+            string text = Model.time.isExpression ? "Time: [EXP]" : "Time: " + Model.time.GetValue(null) + "s";
+            text = Model.delay.isExpression ? text + "   Delay: [EXP]" :
                 Model.delay.GetValue(null) > 0 ? text + "   Delay: " + Model.delay.GetValue(null) + "s" : text;
 
             GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
