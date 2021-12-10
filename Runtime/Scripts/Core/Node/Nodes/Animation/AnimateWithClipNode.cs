@@ -117,7 +117,7 @@ namespace Dash
             if (Model.time.isExpression && !Model.useAnimationTime)
             {
                 GUI.Label(new Rect(p_rect.x + p_rect.width / 2 - 50, p_rect.y + p_rect.height - 32, 100, 20),
-                    "Time: [Exp]", DashEditorCore.Skin.GetStyle("NodeText"));
+                    "Time: [EXP]", DashEditorCore.Skin.GetStyle("NodeText"));
             }
             else
             {
