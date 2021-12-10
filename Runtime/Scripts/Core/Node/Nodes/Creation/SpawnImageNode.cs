@@ -30,7 +30,7 @@ namespace Dash
             RectTransform rectTransform = image.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
-            if (GetParameterValue(Model.useNativeSize, p_flowData))
+            if (GetParameterValue(Model.setNativeSize, p_flowData))
             {
                 image.SetNativeSize();
             }
