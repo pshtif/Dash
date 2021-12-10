@@ -39,6 +39,9 @@ namespace Dash.Editor
                 Array.Sort(nodeTypes, CategorySort);
                 foreach (Type type in nodeTypes)
                 {
+                    if (IsObsolete(type) && !DashEditorCore.EditorConfig.showObsolete)
+                        continue;
+                    
                     if (IsExperimental(type) && !DashEditorCore.EditorConfig.showExperimental)
                         continue;
 
@@ -186,6 +189,11 @@ namespace Dash.Editor
         static bool IsExperimental(Type p_type)
         {
             return p_type.GetCustomAttribute<ExperimentalAttribute>() != null;
+        }
+        
+        static bool IsObsolete(Type p_type)
+        {
+            return p_type.GetCustomAttribute<ObsoleteAttribute>() != null;
         }
         
         static bool CheckMultiple(Type p_type)

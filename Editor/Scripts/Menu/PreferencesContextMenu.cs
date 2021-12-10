@@ -14,6 +14,7 @@ namespace Dash.Editor
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
             menu.AddItem(new GUIContent("Settings/Show Experimental"), DashEditorCore.EditorConfig.showExperimental, () => DashEditorCore.EditorConfig.showExperimental = !DashEditorCore.EditorConfig.showExperimental);
+            menu.AddItem(new GUIContent("Settings/Show Obsolete"), DashEditorCore.EditorConfig.showObsolete, () => DashEditorCore.EditorConfig.showObsolete = !DashEditorCore.EditorConfig.showObsolete);
             menu.AddItem(new GUIContent("Settings/Show Node Ids"), DashEditorCore.EditorConfig.showNodeIds, () => DashEditorCore.EditorConfig.showNodeIds = !DashEditorCore.EditorConfig.showNodeIds);
             menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.EditorConfig.showNodeSearch, () => DashEditorCore.EditorConfig.showNodeSearch = !DashEditorCore.EditorConfig.showNodeSearch);
             menu.AddItem(new GUIContent("Settings/Show Node Asynchronity"), DashEditorCore.EditorConfig.showNodeAsynchronity, () => DashEditorCore.EditorConfig.showNodeAsynchronity = !DashEditorCore.EditorConfig.showNodeAsynchronity);

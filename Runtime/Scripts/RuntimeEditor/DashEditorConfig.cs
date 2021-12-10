@@ -121,6 +121,8 @@ namespace Dash
 
         public bool showExperimental = false;
 
+        public bool showObsolete = false;
+
         public bool showNodeSearch = false;
         
         public bool enableSoundInPreview = false;
