@@ -30,6 +30,13 @@ namespace Dash
         }
 
         public static bool IsSelected(int p_nodeIndex) => selectedNodes.Contains(p_nodeIndex);
+
+        public static bool IsSelected(NodeBase p_node)
+        {
+            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
+            
+            return graph == null ? false : IsSelected(graph.Nodes.IndexOf(p_node)); 
+        }
         
         public static bool IsSelecting(int p_nodeIndex) => selectingNodes.Contains(p_nodeIndex);
 
@@ -180,8 +187,8 @@ namespace Dash
         {
             selectedNodes.Add(p_nodeIndex);
         }
-        
-        public static void SelectNode(NodeBase p_node, DashGraph p_graph)
+
+        public static void SelectNode(NodeBase p_node, DashGraph p_graph, bool p_forceView = false)
         {
             selectedNodes.Clear();
 
@@ -190,7 +197,11 @@ namespace Dash
 
             selectedNodes.Add(p_node.Index);
             p_node.SelectEditorTarget();
-            p_graph.viewOffset = -p_node.rect.center + zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
+
+            if (p_forceView)
+            {
+                p_graph.viewOffset = -p_node.rect.center + zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
+            }
         }
 
         public static void SelectingNodes(List<int> p_nodes)
