@@ -837,7 +837,7 @@ namespace Dash
         {
             if (this is INodeMigratable)
             {
-                p_menu.AddItem(new GUIContent("Migrate"), false, () => ((INodeMigratable)this).Migrate());
+                p_menu.AddItem(new GUIContent("Migrate to "+((INodeMigratable)this).GetMigrateType().Name), false, () => ((INodeMigratable)this).Migrate());
             }
             
             GetCustomContextMenu(ref p_menu);
