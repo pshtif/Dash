@@ -8,6 +8,7 @@ using System.Linq;
 using Dash.Attributes;
 using OdinSerializer.Utilities;
 using UnityEngine;
+using Attribute = System.Attribute;
 using Object = System.Object;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -103,6 +104,19 @@ namespace Dash
 
         [NonSerialized]
         private bool _attributesInitialized = false;
+        
+        [NonSerialized] 
+        private bool _isObsolete;
+        public bool IsObsolete
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _isObsolete;
+            }
+        }
         
         [NonSerialized] 
         private bool _isExperimental;
@@ -287,35 +301,39 @@ namespace Dash
         
         protected virtual void InitializeAttributes()
         {
-            _hasDebugOverride = Attribute.GetCustomAttribute(GetType(), typeof(DebugOverrideAttribute)) != null;
+            Type nodeType = GetType();
             
-            _isExperimental = Attribute.GetCustomAttribute(GetType(), typeof(ExperimentalAttribute)) != null;
+            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute)) != null;
+
+            _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
             
-            InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputCountAttribute));
+            _isExperimental = Attribute.GetCustomAttribute(nodeType, typeof(ExperimentalAttribute)) != null;
+            
+            InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
             
-            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(InputLabelsAttribute));
+            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputLabelsAttribute));
             _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
             
-            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputCountAttribute));
+            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputCountAttribute));
             _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
             
-            OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(GetType(), typeof(OutputLabelsAttribute));
+            OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputLabelsAttribute));
             _outputLabels = outputAttribute == null ? new string[0] : outputAttribute.labels;
             
             #if UNITY_EDITOR
             
-            SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SkinAttribute));
+            SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SkinAttribute));
             _backgroundSkinId = skinAttribute != null ? skinAttribute.backgroundSkinId : "NodeBodyBg";
             _titleSkinId = skinAttribute != null ? skinAttribute.titleSkinId : "NodeTitleBg";
             
-            SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(GetType(), typeof(SizeAttribute));
+            SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SizeAttribute));
             _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
             
-            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(GetType(), typeof(DisableBaseGUIAttribute));
+            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(nodeType, typeof(DisableBaseGUIAttribute));
             _baseGUIEnabled = disableBaseGuiAttribute == null;
             
-            CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(GetType(), typeof(CategoryAttribute));
+            CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(nodeType, typeof(CategoryAttribute));
             Category = categoryAttribute.type;
             
             //_iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
@@ -605,6 +623,14 @@ namespace Dash
                     IconManager.GetIcon("Experimental_Icon"));
                 GUI.color = Color.white;
             }
+            
+            if (IsObsolete)
+            {
+                GUI.color = Color.red;
+                GUI.Label(new Rect(p_rect.x + 4, p_rect.y - 20, 100, 20), "[OBSOLETE]",
+                    DashEditorCore.Skin.GetStyle("NodeTitle"));
+                GUI.color = Color.white;
+            }
 
             GUI.color = Color.white;
         }
@@ -809,6 +835,11 @@ namespace Dash
 
         void INodeAccess.GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
         {
+            if (this is INodeMigratable)
+            {
+                p_menu.AddItem(new GUIContent("Migrate"), false, () => ((INodeMigratable)this).Migrate());
+            }
+            
             GetCustomContextMenu(ref p_menu);
         }
         
