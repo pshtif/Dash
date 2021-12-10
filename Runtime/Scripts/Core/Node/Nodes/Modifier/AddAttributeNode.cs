@@ -49,6 +49,8 @@ namespace Dash
 #if UNITY_EDITOR
         public void Migrate()
         {
+            bool selected = SelectionManager.IsSelected(this);
+            
             SetAttributeNode newNode = DashEditorCore.EditorConfig.editingGraph.CreateNode(typeof(SetAttributeNode), rect.position) as SetAttributeNode;
             
             newNode.Model.attributeName.SetValue(Model.attributeName);
@@ -70,7 +72,17 @@ namespace Dash
                 Graph.Connections.Remove(c);
             });
             
-            Graph.DeleteNode(this);   
+            Graph.DeleteNode(this);
+
+            if (selected)
+            {
+                SelectionManager.SelectNode(newNode, Graph);
+            }
+        }
+
+        public Type GetMigrateType()
+        {
+            return typeof(SetAttributeNode);
         }
 
         protected override void DrawCustomGUI(Rect p_rect)
