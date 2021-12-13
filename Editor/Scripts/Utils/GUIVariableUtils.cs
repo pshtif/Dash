@@ -53,7 +53,7 @@ namespace Dash.Editor
                 p_variables.RenameVariable(p_name, newName);
             }
             
-            variable.ValueField(p_maxWidth-170);
+            variable.ValueField(p_maxWidth-170, p_boundObject);
 
             var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
