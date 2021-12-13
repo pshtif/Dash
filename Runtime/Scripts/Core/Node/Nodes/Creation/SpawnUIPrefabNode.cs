@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    [Help("Spawn GameObject with RectTransform from prefab.")]
+    [Attributes.Tooltip("Spawn GameObject with RectTransform from prefab.")]
     [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]

@@ -60,7 +60,7 @@ namespace Dash.Editor
             
             GUILayout.BeginVertical(GUILayout.Width(16));
             GUILayout.Space(2);
-            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
+            if (GUILayout.Button(IconManager.GetIcon("bind_icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
                 var menu = GetVariableMenu(p_variables, p_name, p_boundObject);
                 GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false, false);

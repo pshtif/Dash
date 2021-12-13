@@ -18,7 +18,7 @@ namespace Dash
         [Order(10)]
         [TitledGroup("Target")]
         [Expression("useToExpression", "targetToExpression")]
-        [Tooltip("Reference of transform to animate to.")]
+        [UnityEngine.Tooltip("Reference of transform to animate to.")]
         public ExposedReference<Transform> targetTransform;
         
         [HideInInspector]

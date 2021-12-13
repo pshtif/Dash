@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Dash
 {
     [Experimental]
-    [Help("Call a method using reflection on any component on DashController GameObject")]
+    [Attributes.Tooltip("Call a method using reflection on any component on DashController GameObject")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     [InputCount(1)]

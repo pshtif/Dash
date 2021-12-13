@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Animate transform towards another transform.")]
+    [Attributes.Tooltip("Animate transform towards another transform.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

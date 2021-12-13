@@ -15,7 +15,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    [Help("Animate Image or TextMeshPro color or CanvasGroup alpha.")]
+    [Attributes.Tooltip("Animate Image or TextMeshPro color or CanvasGroup alpha.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

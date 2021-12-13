@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Restore targets and children states.")]
+    [Attributes.Tooltip("Restore targets and children states.")]
     [Category(NodeCategoryType.OTHER)]
     [OutputCount(1)]
     [InputCount(1)]
@@ -61,7 +61,7 @@ namespace Dash
         protected override void DrawCustomGUI(Rect p_rect)
         {
             GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 24, p_rect.y + 28, 48, 48),
-                IconManager.GetIcon("RollIn_Icon"));
+                IconManager.GetIcon("rollin_icon"));
         }
 #endif
     }

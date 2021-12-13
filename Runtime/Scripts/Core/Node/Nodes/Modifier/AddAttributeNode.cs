@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Dash
 {
     [Obsolete]
-    [Help("Adds a custom attribute to NodeFlowData.")]
+    [Attributes.Tooltip("Adds a custom attribute to NodeFlowData.")]
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]

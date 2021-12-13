@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Stop all or specific target animations.")]
+    [Attributes.Tooltip("Stop all or specific target animations.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

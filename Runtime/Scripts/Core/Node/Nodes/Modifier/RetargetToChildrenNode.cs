@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Changes a current target within NodeFlowData to each child of target and executes on it.")]
+    [Attributes.Tooltip("Changes a current target within NodeFlowData to each child of target and executes on it.")]
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(2)]
     [InputCount(1)]

@@ -13,6 +13,7 @@ using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
 using Object = System.Object;
+using TooltipAttribute = UnityEngine.TooltipAttribute;
 
 namespace Dash
 {

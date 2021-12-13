@@ -17,7 +17,7 @@ namespace Dash
     {
         [TitledGroup("Animation",2)]
         [Order(1)]
-        [Tooltip("Use time from animation clip.")]
+        [UnityEngine.Tooltip("Use time from animation clip.")]
         public bool useAnimationTime = true;
 
         [TitledGroup("Animation",2)] 

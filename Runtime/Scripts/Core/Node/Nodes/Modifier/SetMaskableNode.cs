@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    [Help("Changes an active state of target.")]
+    [Attributes.Tooltip("Changes an active state of target.")]
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]

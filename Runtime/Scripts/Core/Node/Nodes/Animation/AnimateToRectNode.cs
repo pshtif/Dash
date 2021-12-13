@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Dash
 {
     [Obsolete]
-    [Help("Animate RectTransform towards another RectTransform.")]
+    [Attributes.Tooltip("Animate RectTransform towards another RectTransform.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

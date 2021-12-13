@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    [Help("Set properties of Image component on target.")]
+    [Attributes.Tooltip("Set properties of Image component on target.")]
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]

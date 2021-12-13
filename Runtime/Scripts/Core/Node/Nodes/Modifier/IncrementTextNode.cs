@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Tries to increment a number inside a TextMeshPro text.")]
+    [Attributes.Tooltip("Tries to increment a number inside a TextMeshPro text.")]
     [Category(NodeCategoryType.MODIFIER)]
     [InputCount(1)]
     [OutputCount(1)]

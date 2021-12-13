@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Debug message or NodeFlowData state.")]
+    [Attributes.Tooltip("Debug message or NodeFlowData state.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     [InputCount(1)]

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Send a custom event.")]
+    [Attributes.Tooltip("Send a custom event.")]
     [Category(NodeCategoryType.EVENT)]
     [InputCount(1)]
     [OutputCount(1)]

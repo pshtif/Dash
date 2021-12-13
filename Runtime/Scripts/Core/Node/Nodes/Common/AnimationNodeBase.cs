@@ -210,7 +210,7 @@ namespace Dash
             
             GUI.color = Color.yellow;
             GUI.DrawTexture(new Rect(p_rect.x + 8, p_rect.y + p_rect.height + 16, 16, 16),
-                IconManager.GetIcon("Experimental_Icon"));
+                IconManager.GetIcon("experimental_icon"));
             GUI.color = Color.white;
 
             if (_bindFrom)

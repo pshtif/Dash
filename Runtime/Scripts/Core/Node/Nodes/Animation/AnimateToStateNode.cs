@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Animate target (and children) to a specified state.")]
+    [Attributes.Tooltip("Animate target (and children) to a specified state.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]
