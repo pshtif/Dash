@@ -626,7 +626,7 @@ namespace Dash
             
             if (IsObsolete)
             {
-                GUI.color = Color.yellow;
+                GUI.color = new Color(1f, .5f, .25f);
                 GUI.DrawTexture(new Rect(p_rect.x + 4, p_rect.y - 20, 16, 16),
                     IconManager.GetIcon("prohibited_icon"));
                 GUI.color = Color.white;
