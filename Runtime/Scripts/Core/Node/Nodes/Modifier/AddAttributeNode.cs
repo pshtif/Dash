@@ -16,7 +16,10 @@ namespace Dash
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]
-    public class AddAttributeNode : NodeBase<AddAttributeNodeModel>, INodeMigratable
+    public class AddAttributeNode : NodeBase<AddAttributeNodeModel>
+        #if UNITY_EDITOR
+        , INodeMigratable
+        #endif
     {
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
