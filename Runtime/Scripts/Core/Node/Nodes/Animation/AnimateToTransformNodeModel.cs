@@ -17,15 +17,15 @@ namespace Dash
         
         [Order(10)]
         [TitledGroup("Target")]
-        [Expression("useExpression", "targetExpression")]
+        [Expression("useToExpression", "targetToExpression")]
         [Tooltip("Reference of transform to animate to.")]
         public ExposedReference<Transform> targetTransform;
         
         [HideInInspector]
-        public bool useExpression = false;
+        public bool useToExpression = false;
         
         [HideInInspector]
-        public string targetExpression = "";
+        public string targetToExpression = "";
         
         [Order(11)] 
         [TitledGroup("Target")]

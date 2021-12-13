@@ -21,9 +21,9 @@ namespace Dash
             bool useRectTransform = GetParameterValue(Model.useRectTransform, p_flowData);
             Transform targetTransform;
             
-            if (Model.useExpression)
+            if (Model.useToExpression)
             {
-                var value = ExpressionEvaluator.EvaluateUntypedExpression(Model.targetExpression,
+                var value = ExpressionEvaluator.EvaluateUntypedExpression(Model.targetToExpression,
                     ParameterResolver, p_flowData, false);
 
                 if (ExpressionEvaluator.hasErrorInEvaluation)
