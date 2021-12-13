@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.6.2RC - 13.12.2021
+
+#### Added
+
+- Added advancec inspector for DashController to view exposed reference tables.
+- Added option to cleanup DashController and DashGraph exposed references by gathering the GUIDs.
+- Added null checks for AnimateColorNode when update is called due to end user not killing tweens explicitly on destroyed object.
+- Added option for KillOnNullEncounter on AnimateNodeBase to force tween kill on any null encounter.
+- Added Obsolete attribute and UI for obsolete nodes handling.
+- Added INodeMigratable interface to specify and implement migration of Obsolete nodes when necessary.
+- Added AnimateToTransformNode
+- Added SetAttributeNode that should be used instead of AddAttributeNode as more robust solution.
+- Added updated documentation on Macros and Custom functions.
+
+#### Changed
+
+- Changed DashTween is not a separate package and used inside Dash as dependency. This way we can do updates on Tween library independently.
+- Changed a lot of GitHub repository changes and separation of sourcecode bases Testbed, Dash, DashTween.
+
+#### Fixed
+
+- Fixed after 0.6.0 change graph is no longer marked ditry on all GUI updates.
+
+
 ### Release 0.6.1RC - 01.12.2021
 
 #### Added
