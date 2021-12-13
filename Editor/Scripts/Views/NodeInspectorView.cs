@@ -95,10 +95,16 @@ namespace Dash.Editor
 
         void DrawDocumentationButton(Rect p_rect, Type p_type)
         {
-            if (GUI.Button(new Rect(p_rect.x+270, p_rect.y+7, 16, 16),
-                IconManager.GetIcon("help_icon"), GUIStyle.none))
+            DocumentationAttribute documentation = p_type.GetCustomAttribute<DocumentationAttribute>();
+
+            if (documentation != null)
             {
-                Application.OpenURL("https://github.com/pshtif/Dash/blob/main/Documentation/Nodes.md#animatetorect");
+                if (GUI.Button(new Rect(p_rect.x + 270, p_rect.y + 7, 16, 16),
+                    IconManager.GetIcon("help_icon"), GUIStyle.none))
+                {
+                    Application.OpenURL(
+                        "https://github.com/pshtif/Dash/blob/main/Documentation/" + documentation.url);
+                }
             }
         }
         

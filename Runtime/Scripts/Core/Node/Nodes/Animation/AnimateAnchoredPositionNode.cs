@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Documentation("Nodes.md#animateanchoredposition")]
     [Attributes.Tooltip("Animate RectTransform position on current target.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
