@@ -9,6 +9,7 @@ using UnityEngine;
 namespace Dash
 {
     [Obsolete]
+    [Documentation("Nodes.md#animatetorect")]
     [Attributes.Tooltip("Animate RectTransform towards another RectTransform.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]

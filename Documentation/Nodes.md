@@ -86,7 +86,8 @@ toSizeDelta - specifies the sizeDelta value where the sizeDelta should animate t
 isToRelative - specifies if the toSizeDelta is relate value
 ```
 
-#### *AnimateTextNode* *__[EXPERIMENTAL]__*
+#### *AnimateTextNode*
+*__[EXPERIMENTAL]__*
 
 This node animates text of TextMeshPro component on target. It animates text per character basis, there will be multiple types of per character animations available currently only supports scaling in experimental stage.
 

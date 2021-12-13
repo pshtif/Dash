@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Documentation("Nodes.md#animatetextnode")]
     [Attributes.Tooltip("Animate TextMeshPro text per character.")]
     [Experimental]
     [Category(NodeCategoryType.ANIMATION)]

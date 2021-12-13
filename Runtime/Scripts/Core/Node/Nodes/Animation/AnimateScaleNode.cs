@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Documentation("Nodes.md#animatescale")]
     [Attributes.Tooltip("Animate RectTransform scale.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]

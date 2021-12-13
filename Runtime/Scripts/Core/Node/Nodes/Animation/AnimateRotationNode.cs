@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Documentation("Nodes.md#animaterotation")]
     [Attributes.Tooltip("Animate RectTransform rotation.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]

@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
+    [Documentation("Nodes.md#animatewithclip")]
     [Attributes.Tooltip("Animate RectTransform using an AnimationClip or DashAnimationClip instead of tweening.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
