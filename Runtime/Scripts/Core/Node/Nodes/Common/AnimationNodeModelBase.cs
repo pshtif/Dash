@@ -10,7 +10,6 @@ namespace Dash
     {
         [Order(0)] 
         [TitledGroup("Animation",2)]
-        [Dependency("useAnimationTime", false)]
         public Parameter<float> time = new Parameter<float>(1);
         
         [Order(1)]

@@ -24,6 +24,7 @@ namespace Dash
             if (CheckException(targetTransform, "No RectTransform component found on target"))
                 return null;
 
+            // TODO skip this if not using from rotation
             Vector3 fromRotation = GetParameterValue(Model.fromRotation, p_flowData);
             fromRotation.x = fromRotation.x > 180 ? fromRotation.x - 360 : fromRotation.x; 
             fromRotation.y = fromRotation.y > 180 ? fromRotation.y - 360 : fromRotation.y; 
