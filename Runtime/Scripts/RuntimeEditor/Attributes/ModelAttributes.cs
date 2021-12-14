@@ -62,6 +62,17 @@ namespace Dash.Attributes
             Order = p_order;
         }
     }
+    
+    [AttributeUsage(AttributeTargets.Field)]
+    public class LabelAttribute : Attribute
+    {
+        public string Label { get; }
+
+        public LabelAttribute(string p_label)
+        {
+            Label = p_label;
+        }
+    }
 
     [AttributeUsage(AttributeTargets.Field)]
     public class ExpressionAttribute : Attribute
@@ -91,11 +102,11 @@ namespace Dash.Attributes
     }
     
     [AttributeUsage(AttributeTargets.Field)]
-    public class InitializeFromAttribute : Attribute
+    public class MigrateFromAttribute : Attribute
     {
         public string FieldName { get; }
 
-        public InitializeFromAttribute(string p_fieldName)
+        public MigrateFromAttribute(string p_fieldName)
         {
             FieldName = p_fieldName;
         }
