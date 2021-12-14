@@ -27,6 +27,11 @@ namespace Dash.Editor
             
             menu.AddItem(new GUIContent("Reset Graph Position"), false, p_graph.ResetPosition);
             
+            menu.AddItem(new GUIContent("Help"), false, () =>
+            {
+                Application.OpenURL("https://github.com/pshtif/Dash/tree/main/Documentation");
+            });
+            
             //menu.ShowAsEditorMenu();
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }

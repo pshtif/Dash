@@ -6,10 +6,10 @@ Dash Animation System for Unity is a system that was designed to make animation 
 <hr>
 <p align="center">	
 	<a href="https://twitter.com/sHTiF">
-		<img src="Documentation/images/Twitter_Button.png" alt="sHTiF Twitter">
+		<img src="./images/Twitter_Button.png" alt="sHTiF Twitter">
 	</a>
 	<a href="https://trello.com/b/TkNujmEq/dash">
-		<img src="Documentation/images/Trello_Button.png" alt="Dash Trello">
+		<img src="./images/Trello_Button.png" alt="Dash Trello">
 	</a>
 </p>
 <hr>
