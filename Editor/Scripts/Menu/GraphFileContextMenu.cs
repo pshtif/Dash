@@ -17,7 +17,7 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Export JSON"), false, () => GraphUtils.ExportJSON(p_graph));
             
             //menu.ShowAsContext();
-            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
+            GenericMenuPopup.Show(menu, "File",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }

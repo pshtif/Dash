@@ -33,7 +33,7 @@ namespace Dash.Editor
             });
             
             //menu.ShowAsEditorMenu();
-            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
+            GenericMenuPopup.Show(menu, "Preferences",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }
