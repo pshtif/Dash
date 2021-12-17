@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.6.4RC - 17.12.2021 
+
+#### Added
+
+- Added numeric types are now explicitly converted on expression evaluation so expression evaluating to double will be assignable to int etc.
+
+#### Fixed
+
+- Fixed AnimateToTransformNode now uses correct target transform
+
 ### Release 0.6.2RC - 13.12.2021
 
 #### Added
