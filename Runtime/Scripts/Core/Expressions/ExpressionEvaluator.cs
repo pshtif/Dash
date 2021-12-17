@@ -96,6 +96,7 @@ namespace Dash
             try
             {
                 obj = cachedExpression.Evaluate();
+                Debug.Log(obj);
             }
             catch (Exception e)
             {
@@ -118,8 +119,8 @@ namespace Dash
                     return (T) obj;    
                 }
 
-                // Explicit Double to Single casting (may add as option)
-                if (typeof(T) == typeof(float) && returnType == typeof(Double))
+                // Explicit numeric type casting at cost of precision/overflow 
+                if (typeof(T).IsNumericType() && returnType.IsNumericType())
                 {
                     return (T) Convert.ChangeType(obj, typeof(T));
                 }
