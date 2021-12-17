@@ -51,9 +51,9 @@ namespace Dash
             if (CheckException(targetTransform, "Target transform null."))
                 return null;
 
-            Vector2 startPosition = targetTransform.position; 
-            Quaternion startRotation = targetTransform.localRotation;
-            Vector3 startScale = targetTransform.localScale;
+            Vector2 startPosition = p_target.position; 
+            Quaternion startRotation = p_target.localRotation;
+            Vector3 startScale = p_target.localScale;
             
             if (useRectTransform)
             {
@@ -150,7 +150,7 @@ namespace Dash
 
             if (GetParameterValue(Model.useToPosition, p_flowData))
             {
-                Vector2 towardsPosition = p_target.position;
+                Vector2 towardsPosition = p_towards.position;
 
                 towardsPosition = new Vector2(DashTween.EaseValue(p_startPosition.x, towardsPosition.x, p_delta, p_easeType),
                     DashTween.EaseValue(p_startPosition.y, towardsPosition.y, p_delta, p_easeType));
