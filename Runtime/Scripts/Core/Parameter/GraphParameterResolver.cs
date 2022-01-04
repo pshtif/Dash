@@ -49,6 +49,19 @@ namespace Dash
             if (ResolveReference(name, p_collection, out result))
                 return ResolveNested(nameSplit, 0, result, p_collection, true);
 
+            DashController controller = _graph.Controller;
+            #if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                controller = DashEditorCore.EditorConfig.editingController;
+            }
+            #endif
+            if (controller != null && controller.Variables != null && controller.Variables.HasVariable(name))
+            {
+                Variable variable = controller.Variables.GetVariable(name);
+                return ResolveNested(nameSplit, 0, variable.value, p_collection, p_referenced);
+            }
+            
             if (_graph.variables.HasVariable(name))
             {
                 Variable variable = _graph.variables.GetVariable(name);

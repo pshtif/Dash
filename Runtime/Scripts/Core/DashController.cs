@@ -53,6 +53,25 @@ namespace Dash
             }
         }
 
+        private DashVariables _variables;
+        
+        #if UNITY_EDITOR
+        public DashVariables Variables
+        {
+            get
+            {
+                if (_variables == null)
+                {
+                    _variables = GetComponent<DashVariablesController>()?.Variables;
+                }
+
+                return _variables;
+            }
+        }
+        #else
+        public DashVariables Variables => _variables;
+        #endif
+
         [NonSerialized]
         private DashGraph _graphInstance;
 
