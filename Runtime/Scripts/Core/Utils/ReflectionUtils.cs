@@ -74,8 +74,8 @@ namespace Dash
 
             _typeCacheDictionary = new Dictionary<string, Type>();
             foreach (var type in result)
-                if (!_typeCacheDictionary.ContainsKey(type.Name))
-                    _typeCacheDictionary.Add(type.Name, type);
+                if (!_typeCacheDictionary.ContainsKey(type.FullName))
+                    _typeCacheDictionary.Add(type.FullName, type);
             
             return _typeCacheList = result.OrderBy(t => t.Namespace).ThenBy(t => t.Name).ToArray();
         }
