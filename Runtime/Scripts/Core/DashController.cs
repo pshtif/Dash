@@ -53,19 +53,27 @@ namespace Dash
             }
         }
 
-        private DashVariables _variables;
+        [NonSerialized]
+        private IVariables _variables;
         
         #if UNITY_EDITOR
-        public DashVariables Variables
+        public IVariables Variables
         {
             get
             {
-                if (_variables == null)
+                if (!Application.isPlaying)
                 {
-                    _variables = GetComponent<DashVariablesController>()?.Variables;
+                    GetComponent<IVariables>()?.Initialize(gameObject);
+                    return GetComponent<IVariables>();
                 }
-
-                return _variables;
+                else
+                {
+                    if (_variables == null)
+                    {
+                        _variables = GetComponent<IVariables>();
+                    }
+                    return _variables;
+                }
             }
         }
         #else
@@ -140,8 +148,10 @@ namespace Dash
 
         void Awake()
         {
-            if (Graph != null) 
+            if (Graph != null)
+            {
                 Graph.Initialize(this);
+            }
 
             Core.Bind(this);
         }
