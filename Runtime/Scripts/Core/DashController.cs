@@ -28,15 +28,15 @@ namespace Dash
         protected DashGraph _assetGraph;
 
         [HideInInspector]
-        [SerializeField]
+        [SerializeField] 
         private byte[] _boundGraphData;
 
-        [HideInInspector]
-        [SerializeField]
+        [HideInInspector] 
+        [SerializeField] 
         private int _selfReferenceIndex = -1;
 
-        [HideInInspector]
-        [SerializeField]
+        [HideInInspector] 
+        [SerializeField] 
         private List<Object> _boundGraphReferences;
 
         DashGraph IEditorControllerAccess.graphAsset
@@ -52,6 +52,23 @@ namespace Dash
                 }
             }
         }
+
+        private DashVariables _variables;
+#if UNITY_EDITOR
+        public DashVariables Variables {
+            get
+            {
+                if (_variables == null)
+                {
+                    _variables = GetComponent<DashVariablesController>()?.Variables;
+                }
+
+                return _variables;
+            }
+        }
+#else
+        public DashVariables Variables => _variables;
+#endif
 
         [NonSerialized]
         private DashGraph _graphInstance;
@@ -125,6 +142,8 @@ namespace Dash
                 Graph.Initialize(this);
 
             Core.Bind(this);
+
+            _variables = GetComponent<DashVariablesController>()?.Variables;
         }
 
         void Start()
