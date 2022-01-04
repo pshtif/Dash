@@ -21,6 +21,13 @@ namespace Dash
             if (CheckException(image, "Target doesn't contain Image component"))
                 return;
 
+            bool storeSpriteToAttribute = GetParameterValue(Model.storeSpriteToAttribute, p_flowData);
+            if (storeSpriteToAttribute)
+            {
+                string attribute = GetParameterValue(Model.storeSpriteAttributeName, p_flowData);
+                p_flowData.SetAttribute<Sprite>(attribute, image.sprite);
+            }
+            
             if (Model.setSprite)
             {
                 image.sprite = GetParameterValue(Model.sprite, p_flowData);

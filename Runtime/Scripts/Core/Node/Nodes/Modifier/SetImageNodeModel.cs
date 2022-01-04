@@ -32,9 +32,9 @@ namespace Dash
         [Order(16)]
         [Dependency("setIsRaycastTarget", true)]
         public Parameter<bool> isRaycastTarget = new Parameter<bool>(true);
-        
+
         [Order(17)]
-        public bool storeSpriteToAttribute = false;
+        public Parameter<bool> storeSpriteToAttribute = new Parameter<bool>(false);
         
         [Order(18)]
         [Dependency("storeSpriteToAttribute", true)]
