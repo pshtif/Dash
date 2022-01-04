@@ -102,9 +102,9 @@ namespace Dash
             {
                 Type exposedRefType = typeof(ExposedReference<>).MakeGenericType(f.FieldType.GenericTypeArguments[0]);
 
-                if (DashEditorCore.EditorConfig.editingGraph.Controller != null)
+                if (DashEditorCore.EditorConfig.editingController != null)
                 {
-                    IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingGraph.Controller;
+                    IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
                     var curExposedRef = f.GetValue(clone);
                     UnityEngine.Object exposedValue = (UnityEngine.Object) curExposedRef.GetType().GetMethod("Resolve")
                         .Invoke(curExposedRef, new object[] {propertyTable});
