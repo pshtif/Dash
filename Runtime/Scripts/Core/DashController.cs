@@ -250,6 +250,7 @@ namespace Dash
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
+        public bool showGraphVariables = false;
 
         public void ReserializeBound()
         {

@@ -9,6 +9,9 @@ namespace Dash
     public class DashVariablesController : MonoBehaviour
         , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables
     {
+        public bool makeGlobal = false;
+        
+        [HideInInspector]
         [SerializeField] 
         protected DashVariables _variables;
 
@@ -35,6 +38,11 @@ namespace Dash
             }
             
             Variables.Initialize(p_gameObject);
+
+            if (makeGlobal)
+            {
+                DashCore.Instance.AddGlobalVariables(Variables);
+            }
         }
 
         void FetchFieldsToVariables()

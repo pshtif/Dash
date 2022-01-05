@@ -91,13 +91,16 @@ namespace Dash
             new Dictionary<string, List<EventHandler>>();
 
         [NonSerialized]
-        private DashGlobalVariables _globalVariables;
-        
-        public DashGlobalVariables globalVariables => _globalVariables;
+        private DashVariables _globalVariables = new DashVariables();
 
-        public void SetGlobalVariables(DashGlobalVariables p_globalVariables)
+        public DashVariables GlobalVariables => _globalVariables;
+
+        public void AddGlobalVariables(DashVariables p_variables)
         {
-            _globalVariables = p_globalVariables;
+            foreach (var variable in p_variables)
+            {
+                GlobalVariables.AddVariableDirect(variable);
+            }
         }
 
         public DashCore()

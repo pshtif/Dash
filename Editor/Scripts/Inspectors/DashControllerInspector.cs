@@ -128,7 +128,25 @@ namespace Dash.Editor
 
             if (Controller.Graph != null)
             {
-                GUIVariableUtils.DrawVariablesInspector(Controller.Graph.variables, Controller.gameObject);
+                if (Controller.IsGraphBound)
+                {
+                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
+                }
+                else
+                {
+                    Controller.showGraphVariables =
+                        EditorGUILayout.Toggle("Show Graph Variables", Controller.showGraphVariables);
+
+                    if (Controller.showGraphVariables)
+                    {
+                        GUIStyle style = new GUIStyle();
+                        style.fontStyle = FontStyle.Italic;
+                        style.normal.textColor = Color.yellow;
+                        style.alignment = TextAnchor.MiddleCenter;
+                        EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
+                        GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
+                    }
+                }
             }
             
             Controller.advancedInspector = EditorGUILayout.Toggle(new GUIContent("Show Advanced Inspector", ""), Controller.advancedInspector);

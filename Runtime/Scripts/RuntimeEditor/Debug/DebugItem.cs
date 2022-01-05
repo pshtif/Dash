@@ -18,6 +18,7 @@ namespace Dash
         CONTROLLER,
         SEQUENCER,
         NODE,
+        CUSTOM,
         ERROR
     }
     
@@ -381,6 +382,36 @@ namespace Dash
             found = found || (p_forceLowerCase
                 ? _subType.ToString().ToLower().Contains(p_search)
                 : _subType.ToString().Contains(p_search));
+
+            return found;
+        }
+    }
+    
+    public class CustomDebugItem : DebugItemBase
+    {
+        private string _data;
+
+        public CustomDebugItem(string p_data = "")
+        {
+            _type = DebugItemType.CUSTOM;
+            _data = p_data;
+        }
+
+        public override void DrawCustom()
+        {
+            _style.normal.textColor = Color.white;
+            _style.fontStyle = FontStyle.Bold;
+            GUILayout.Label(_data, _style, GUILayout.ExpandWidth(false));
+            _style.fontStyle = FontStyle.Normal;
+        }
+        
+        public override bool Search(string p_search, bool p_forceLowerCase)
+        {
+            bool found = base.Search(p_search, p_forceLowerCase);
+
+            found = found || (p_forceLowerCase
+                ? _data.ToString().ToLower().Contains(p_search)
+                : _data.ToString().Contains(p_search));
 
             return found;
         }

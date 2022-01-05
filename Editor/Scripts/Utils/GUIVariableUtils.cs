@@ -8,7 +8,7 @@ namespace Dash.Editor
 {
     public class GUIVariableUtils
     {
-        public static void DrawVariablesInspector(DashVariables p_variables, GameObject p_boundObject)
+        public static void DrawVariablesInspector(string p_title, DashVariables p_variables, GameObject p_boundObject)
         {
             var style = new GUIStyle();
             style.normal.textColor = new Color(1, 0.7f, 0);
@@ -17,7 +17,7 @@ namespace Dash.Editor
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Variables", style, GUILayout.Height(28));
+            GUILayout.Label(p_title, style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
 
             int index = 0;

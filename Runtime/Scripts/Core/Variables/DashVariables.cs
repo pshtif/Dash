@@ -83,6 +83,15 @@ namespace Dash
             generic.Invoke(this, new object[] { p_name, p_value });
         }
 
+        public void AddVariableDirect(Variable p_variable)
+        {
+            if (HasVariable(p_variable.Name))
+                return;
+            
+            variables.Add(p_variable);
+            InvalidateLookup();
+        }
+
         public void AddVariable<T>(string p_name, [CanBeNull] T p_value)
         {
             if (HasVariable(p_name))

@@ -22,6 +22,11 @@ namespace Dash
             else
             {
                 var value = GetParameterValue(Model.debug, p_flowData);
+                
+#if UNITY_EDITOR
+                DashEditorDebug.Debug(new CustomDebugItem(value));
+#endif
+                
                 Debug.Log(value);
             }
 
@@ -36,6 +41,7 @@ namespace Dash
             {
                 debug += keyPair.Key + " : " + keyPair.Value + "\n";
             }
+            
             Debug.Log(debug);
         }
         

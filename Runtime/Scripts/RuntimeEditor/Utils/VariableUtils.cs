@@ -31,22 +31,22 @@ namespace Dash
             copiedVariables.ForEach(v => p_toVariables.PasteVariable(v.Clone(), p_target));
         }
         
-        public static void FetchGlobalVariables()
-        {
-            var components = GameObject.FindObjectsOfType<DashGlobalVariables>();
-            if (components.Length > 1)
-            {
-                Debug.LogWarning("Multiple global variables found, only first instance used.");
-            }
-            
-            if (components.Length > 0)
-            {
-                DashCore.Instance.SetGlobalVariables(components[0]);
-            }
-            else
-            {
-                DashCore.Instance.SetGlobalVariables(null);
-            }
-        }
+        // public static void FetchGlobalVariables()
+        // {
+        //     var components = GameObject.FindObjectsOfType<DashGlobalVariables>();
+        //     if (components.Length > 1)
+        //     {
+        //         Debug.LogWarning("Multiple global variables found, only first instance used.");
+        //     }
+        //     
+        //     if (components.Length > 0)
+        //     {
+        //         DashCore.Instance.SetGlobalVariables(components[0]);
+        //     }
+        //     else
+        //     {
+        //         DashCore.Instance.SetGlobalVariables(null);
+        //     }
+        // }
     }
 }

@@ -7,7 +7,7 @@ namespace Dash
     [CustomEditor(typeof(DashVariablesController))]
     public class DashVariablesControllerInspector : UnityEditor.Editor
     {
-        protected DashVariables variables => ((DashVariablesController) target).Variables;
+        protected DashVariablesController variablesController => (DashVariablesController) target;
 
         public override void OnInspectorGUI()
         {
@@ -23,7 +23,9 @@ namespace Dash
             else
             {
                 EditorGUI.BeginChangeCheck();
-                GUIVariableUtils.DrawVariablesInspector(variables, ((DashVariablesController) target).gameObject);
+                variablesController.makeGlobal = EditorGUILayout.Toggle("Make Global", variablesController.makeGlobal);
+                
+                GUIVariableUtils.DrawVariablesInspector("Controller Variables", variablesController.Variables,variablesController.gameObject);
                 
                 if (EditorGUI.EndChangeCheck())
                 {

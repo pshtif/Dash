@@ -125,7 +125,6 @@ namespace Dash.Editor
                 AddView(new GraphView());
                 AddView(new NodeInspectorView());
                 AddView(new GraphVariablesView());
-                AddView(new GlobalVariablesView());
                 AddView(new PreviewControlsView());
             }
         }
