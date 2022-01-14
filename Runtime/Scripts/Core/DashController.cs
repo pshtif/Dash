@@ -77,7 +77,7 @@ namespace Dash
             }
         }
         #else
-        public DashVariables Variables => _variables;
+        public IVariables Variables => _variables;
         #endif
 
         [NonSerialized]
