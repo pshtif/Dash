@@ -11,9 +11,14 @@ namespace Dash
 
         public override void OnInspectorGUI()
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true), GUILayout.Height(40));
-            GUILayout.EndHorizontal();
+            if (DashEditorCore.EditorConfig.settingsShowInspectorLogo)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true),
+                    GUILayout.Height(40));
+                GUILayout.EndHorizontal();
+            }
+
             EditorGUIUtility.labelWidth = 100;
 
             if (PrefabUtility.GetPrefabInstanceStatus(target) != PrefabInstanceStatus.NotAPrefab)
