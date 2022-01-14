@@ -33,14 +33,15 @@ All notable changes to this project will be documented in this file.
 - Fixed SubGraph open editor to correct bound controller
 - Fixed ExposedReferences cloning when duplicating nodes (Regression bug since 0.6.0)
 - Fixed execution error checking now correctly identifies UnityEngine.Object instances and tries to check against its overloaded null check as well
-- 
 
 ### Release 0.6.3RC - 17.12.2021
 
 #### Added
+
 - Added numeric types are now explicitly converted on expression evaluation so expression evaluating to double will be assignable to int etc.
 
 #### Fixed
+
 - Fixed AnimateToTransformNode now uses correct target transform
 
 ### Release 0.6.2RC - 13.12.2021
