@@ -144,12 +144,26 @@ namespace Dash
             GUI.color = new Color(1, 0.75f, 0.5f);
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                DashEditorCore.EditController(DashEditorCore.EditorConfig.editingGraph.Controller, GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController, GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
             }
 
             GUI.color = Color.white;
 
             base.DrawInspector();
+        }
+        
+        protected override void DrawCustomGUI(Rect p_rect)
+        {
+            base.DrawCustomGUI(p_rect);
+
+            if (Model.useAsset)
+            {
+                var style = new GUIStyle(DashEditorCore.Skin.GetStyle("NodeText"));
+                style.alignment = TextAnchor.MiddleCenter;
+                style.normal.textColor = Color.cyan;
+                GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height - 32, p_rect.width, 20), Model.graphAsset.name,
+                    style);
+            }
         }
 #endif
     }

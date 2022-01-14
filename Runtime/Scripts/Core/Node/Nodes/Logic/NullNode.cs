@@ -6,7 +6,7 @@ using Dash.Attributes;
 
 namespace Dash
 {
-    [Help("Null node without functionality helps with graph and connection management.")]
+    [Tooltip("Null node without functionality helps with graph and connection management.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     [InputCount(1)]

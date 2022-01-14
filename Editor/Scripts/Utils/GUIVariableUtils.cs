@@ -8,7 +8,7 @@ namespace Dash.Editor
 {
     public class GUIVariableUtils
     {
-        public static void DrawVariablesInspector(DashVariables p_variables, GameObject p_boundObject)
+        public static void DrawVariablesInspector(string p_title, DashVariables p_variables, GameObject p_boundObject)
         {
             var style = new GUIStyle();
             style.normal.textColor = new Color(1, 0.7f, 0);
@@ -17,7 +17,7 @@ namespace Dash.Editor
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Variables", style, GUILayout.Height(28));
+            GUILayout.Label(p_title, style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
 
             int index = 0;
@@ -53,15 +53,15 @@ namespace Dash.Editor
                 p_variables.RenameVariable(p_name, newName);
             }
             
-            variable.ValueField(p_maxWidth-150);
-            
+            variable.ValueField(p_maxWidth-150, p_boundObject);
+
             var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             
             GUILayout.FlexibleSpace();
             GUILayout.BeginVertical(GUILayout.Width(16));
             GUILayout.Space(2);
-            if (GUILayout.Button(IconManager.GetIcon("Bind_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
+            if (GUILayout.Button(IconManager.GetIcon("bind_icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
                 var menu = GetVariableMenu(p_variables, p_name, p_boundObject);
                 GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false, false);

@@ -4,7 +4,37 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.6.4RC - 17.12.2021 
+### Release 0.7.0RC - 14.1.2022
+
+#### Added
+
+- Added documentation handling, attribute, linkage. UI...
+- Added support for scene object referencing for variables on bound graphs in editor
+- Added Range attribute support for numeric types as well as numeric Parameters
+- Added UI for SubGraphNode to show used asset SubGraph where applicable
+- Added option to store sprite to attribute for SetImageNode
+- Added DashVariablesController to specify Controller as well as global variables
+- Added IVariables interface can now be used to implement custom variable containers
+- Added DashVariablesController supports field reflection binding to variables on start
+- Added AnimateNode interface for direct editing and preview of TO/FROM values (PREVIEW)
+- Added option to disable Dash logo in inspector
+
+#### Changed
+
+- Changed expression evaluation now explicitly casts return type to parameter type if both are numeric types
+- Changed internal graph structures are now initialized before awake call
+- Changed type cache now contains full type names for lookup among different namespaces to avoid collision
+- Changed DashGlobalVariablesController was removed in favor of more robust DashVariablesController
+
+
+#### Fixed
+
+- Fixed SetImageNode to correctly end execution
+- Fixed SubGraph open editor to correct bound controller
+- Fixed ExposedReferences cloning when duplicating nodes (Regression bug since 0.6.0)
+- Fixed execution error checking now correctly identifies UnityEngine.Object instances and tries to check against its overloaded null check as well
+
+### Release 0.6.3RC - 17.12.2021
 
 #### Added
 

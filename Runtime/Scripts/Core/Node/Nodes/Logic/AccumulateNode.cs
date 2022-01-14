@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Dash
 {
     [Experimental]
-    [Help("Accumulates inputs and executes after set of conditions.")]
+    [Attributes.Tooltip("Accumulates inputs and executes after set of conditions.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     public class AccumulateNode : NodeBase<AccumulateNodeModel>

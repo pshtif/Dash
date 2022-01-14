@@ -7,11 +7,22 @@ using System;
 namespace Dash.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class HelpAttribute : Attribute
+    public class DocumentationAttribute : Attribute
+    {
+        public string url { get; }
+
+        public DocumentationAttribute(string p_url)
+        {
+            url = p_url;
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class TooltipAttribute : Attribute
     {
         public string help { get; }
 
-        public HelpAttribute(string p_help)
+        public TooltipAttribute(string p_help)
         {
             help = p_help;
         }

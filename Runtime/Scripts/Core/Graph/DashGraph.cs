@@ -66,10 +66,11 @@ namespace Dash
         public List<NodeConnection> Connections => _connections;
 
         [NonSerialized]
-        private Dictionary<string, List<EventHandler>> _nodeListeners;
+        private Dictionary<string, List<EventHandler>> _nodeListeners = new Dictionary<string, List<EventHandler>>();
 
         [NonSerialized]
-        private Dictionary<string, List<EventHandler>> _callbackListeners;
+        private Dictionary<string, List<EventHandler>>
+            _callbackListeners = new Dictionary<string, List<EventHandler>>();
 
         public DashGraph ParentGraph { get; private set; }
         
@@ -103,12 +104,10 @@ namespace Dash
 
             Controller = p_controller;
 
-            _nodeListeners = new Dictionary<string, List<EventHandler>>();
-            _callbackListeners = new Dictionary<string, List<EventHandler>>();
-
-            _initialized = true;
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
             variables.Initialize(p_controller.gameObject);
+            
+            _initialized = true;
         }
 
         public void SendEvent(string p_name, Transform p_target)

@@ -103,7 +103,7 @@ namespace Dash
         
         public override void DrawInspectorControls(Rect p_rect)
         {
-            if (!(this is IAnimationNodeBindable))
+            if (!(this is IAnimationNodeBindable) || !DashEditorCore.EditorConfig.enableAnimateNodeInterface)
                 return;
             
             Transform target = ResolveEditorTarget();
@@ -120,16 +120,6 @@ namespace Dash
             GUILayout.BeginArea(new Rect(p_rect.x + 20, p_rect.y + p_rect.height + 8, p_rect.width-20, 30));
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            
-            //GUI.enabled = ((IAnimationNodeBindable)this).IsFromEnabled() && !_bindFrom && !_bindTo;
-            // if (GUILayout.Button("SET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            // {
-            //     ((IAnimationNodeBindable)this).SetTargetFrom(target);
-            // }
-            // if (GUILayout.Button("GET FROM", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            // {
-            //     ((IAnimationNodeBindable)this).BindTargetFrom(target);
-            // }
 
             style = new GUIStyle(GUI.skin.button);
             style.fontStyle = FontStyle.Bold;
@@ -153,16 +143,7 @@ namespace Dash
                     _bindFrom = true;
                 }
             }
-
-            // GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled() && !_bindFrom && !_bindTo;
-            // if (GUILayout.Button("SET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            // {
-            //     ((IAnimationNodeBindable)this).SetTargetTo(target);
-            // }
-            // if (GUILayout.Button("GET TO", button, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
-            // {
-            //     ((IAnimationNodeBindable)this).BindTargetTo(target);
-            // }
+            
             GUILayout.FlexibleSpace();
             
             GUI.enabled = ((IAnimationNodeBindable)this).IsToEnabled();
@@ -194,7 +175,7 @@ namespace Dash
             if (GUILayout.Button("PREVIEW", style, GUILayout.Width(100), GUILayout.ExpandHeight(true)))
             {
                 TransformStorageData data = new TransformStorageData(target, TransformStorageOption.POSITION);
-                AnimateOnTarget(target, NodeFlowDataFactory.Create()).OnComplete(() =>
+                AnimateOnTarget(target, NodeFlowDataFactory.Create())?.OnComplete(() =>
                 {
                     DashTweenCore.Uninitialize();
                     data.Restore(target);
@@ -210,7 +191,7 @@ namespace Dash
             
             GUI.color = Color.yellow;
             GUI.DrawTexture(new Rect(p_rect.x + 8, p_rect.y + p_rect.height + 16, 16, 16),
-                IconManager.GetIcon("Experimental_Icon"));
+                IconManager.GetIcon("experimental_icon"));
             GUI.color = Color.white;
 
             if (_bindFrom)

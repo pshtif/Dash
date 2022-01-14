@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Debug message or NodeFlowData state.")]
+    [Attributes.Tooltip("Debug message or NodeFlowData state.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
     [InputCount(1)]
@@ -22,6 +22,11 @@ namespace Dash
             else
             {
                 var value = GetParameterValue(Model.debug, p_flowData);
+                
+#if UNITY_EDITOR
+                DashEditorDebug.Debug(new CustomDebugItem(value));
+#endif
+                
                 Debug.Log(value);
             }
 
@@ -36,6 +41,7 @@ namespace Dash
             {
                 debug += keyPair.Key + " : " + keyPair.Value + "\n";
             }
+            
             Debug.Log(debug);
         }
         

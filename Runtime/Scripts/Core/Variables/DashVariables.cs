@@ -15,9 +15,9 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class DashVariables : IEnumerable<Variable>
+    public class DashVariables : IEnumerable<Variable>, IVariables
     {
-        public int Count => _variables.Count;
+        public int Count => variables.Count;
 
         [NonSerialized]
         protected Dictionary<string, Variable> _lookupDictionary;
@@ -30,7 +30,9 @@ namespace Dash
             get
             {
                 if (_variables == null)
+                {
                     _variables = new List<Variable>();
+                }
 
                 return _variables;
             }
@@ -78,7 +80,16 @@ namespace Dash
             
             MethodInfo method = this.GetType().GetMethod("AddVariable");
             MethodInfo generic = method.MakeGenericMethod(p_type);
-            generic.Invoke(this, new object[] { p_name, p_value});
+            generic.Invoke(this, new object[] { p_name, p_value });
+        }
+
+        public void AddVariableDirect(Variable p_variable)
+        {
+            if (HasVariable(p_variable.Name))
+                return;
+            
+            variables.Add(p_variable);
+            InvalidateLookup();
         }
 
         public void AddVariable<T>(string p_name, [CanBeNull] T p_value)
@@ -87,7 +98,7 @@ namespace Dash
                 return;
             
             Variable<T> variable = new Variable<T>(p_name, p_value);
-            _variables.Add(variable);
+            variables.Add(variable);
             InvalidateLookup();
         }
 
@@ -100,7 +111,7 @@ namespace Dash
             else
             {
                 Variable<T> variable = new Variable<T>(p_name, p_value);
-                _variables.Add(variable);
+                variables.Add(variable);
                 InvalidateLookup();
             }
         }
@@ -108,7 +119,7 @@ namespace Dash
         public void PasteVariable(Variable p_variable, GameObject p_target)
         {
             p_variable.Rename(GetUniqueName(p_variable.Name));
-            _variables.Add(p_variable);
+            variables.Add(p_variable);
             if (p_target != null)
             {
                 p_variable.InitializeBinding(p_target);
@@ -118,13 +129,13 @@ namespace Dash
 
         public void RemoveVariable(string p_name)
         {
-            _variables.RemoveAll(v => v.Name == p_name);
+            variables.RemoveAll(v => v.Name == p_name);
         }
 
         // Renaming in dictionary is tricky but still better than having list as renaming is sporadic
         public bool RenameVariable(string p_oldName, string p_newName)
         {
-            var variable = _variables.Find(v => v.Name == p_oldName);
+            var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
             InvalidateLookup();
 
@@ -134,7 +145,7 @@ namespace Dash
         private void InvalidateLookup()
         { 
             _lookupDictionary = new Dictionary<string, Variable>();
-            foreach (Variable variable in _variables)
+            foreach (Variable variable in variables)
             {
                 _lookupDictionary.Add(variable.Name, variable);
             }

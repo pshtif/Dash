@@ -71,7 +71,7 @@ namespace Dash
             ExpressionEvaluator.ClearCache();
             
             // Debug.Log("Fetch Global Variables");
-            VariableUtils.FetchGlobalVariables();
+            //VariableUtils.FetchGlobalVariables();
 
             // Debug.Log("Cloning preview graph");
             _previewGraph = DashEditorCore.EditorConfig.editingGraph.Clone();

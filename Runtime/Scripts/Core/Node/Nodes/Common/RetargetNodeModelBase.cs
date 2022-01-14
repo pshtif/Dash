@@ -18,27 +18,27 @@ namespace Dash
     {
         [Order(0)]
         [TitledGroup("Retargeting", -1)]
-        [Tooltip("Change current target.")]
+        [UnityEngine.Tooltip("Change current target.")]
         public bool retarget = false;
 
         [Order(1)]
         [TitledGroup("Retargeting", -1)]
         [Dependency("retarget", true)]
-        [Tooltip("Use scene reference as retarget.")]
+        [UnityEngine.Tooltip("Use scene reference as retarget.")]
         public bool useReference = false;
         
         [Order(2)]
         [TitledGroup("Retargeting", -1)]
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
-        [Tooltip("Retarget to child of current.")]
+        [UnityEngine.Tooltip("Retarget to child of current.")]
         public bool isChild = true;
         
         [Order(3)]
         [TitledGroup("Retargeting", -1)]
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
-        [Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
+        [UnityEngine.Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
         [CanBeNull]
         public Parameter<string> target = new Parameter<string>("");
 
@@ -47,7 +47,7 @@ namespace Dash
         [Expression("useExpression", "targetExpression")]
         [Dependency("retarget", true)]
         [Dependency("useReference", true)]
-        [Tooltip("Reference of transform to retarget to.")]
+        [UnityEngine.Tooltip("Reference of transform to retarget to.")]
         public ExposedReference<Transform> targetReference;
         
         [TitledGroup("Retargeting", -1)]

@@ -61,7 +61,7 @@ namespace Dash
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void ValueField(float p_maxWidth);
+        public abstract void ValueField(float p_maxWidth, GameObject p_boundObject);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -269,7 +269,7 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void ValueField(float p_maxWidth)
+        public override void ValueField(float p_maxWidth, GameObject p_boundObject)
         {
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
@@ -288,7 +288,7 @@ namespace Dash
                 } else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
-                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_boundObject != null);
                 } else {
                     string type = typeof(T).ToString();
                     switch (type)

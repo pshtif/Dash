@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Changes a current target within NodeFlowData with advanced option.")]
+    [Attributes.Tooltip("Changes a current target within NodeFlowData with advanced option.")]
     [Category(NodeCategoryType.MODIFIER)]
     [OutputCount(1)]
     [InputCount(1)]

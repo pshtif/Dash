@@ -126,6 +126,8 @@ namespace Dash
         public bool showNodeSearch = false;
         
         public bool enableSoundInPreview = false;
+        
+        public bool enableAnimateNodeInterface = false;
 
         public Rect editorPosition;
             
@@ -135,6 +137,9 @@ namespace Dash
         
         public List<Type> scannedAOTTypes;
         public List<Type> explicitAOTTypes;
+        
+        // SETTINGS
+        public bool settingsShowInspectorLogo = true;
 
 #region SERIALIZATION
         

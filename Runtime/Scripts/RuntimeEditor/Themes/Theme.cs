@@ -49,15 +49,15 @@ namespace Dash
         private void OnEnable()
         {
             if (EventNodeIcon == null)
-                EventNodeIcon = IconManager.GetIcon("Event_Icon");
+                EventNodeIcon = IconManager.GetIcon("event_icon");
             if (AnimationNodeIcon == null)
-                AnimationNodeIcon = IconManager.GetIcon("Animation_Icon");
+                AnimationNodeIcon = IconManager.GetIcon("animation_icon");
             if (ModifierNodeIcon == null)
-                ModifierNodeIcon = IconManager.GetIcon("Retargeting_Icon");
+                ModifierNodeIcon = IconManager.GetIcon("retargeting_icon");
             if (CreationNodeIcon == null)
-                CreationNodeIcon = IconManager.GetIcon("Spawn_Icon");
+                CreationNodeIcon = IconManager.GetIcon("spawn_icon");
             if (LogicNodeIcon == null)
-                LogicNodeIcon = IconManager.GetIcon("Settings_Icon");
+                LogicNodeIcon = IconManager.GetIcon("settings_icon");
         }
 
         public Texture GetNodeIconByCategory(NodeCategoryType p_category)

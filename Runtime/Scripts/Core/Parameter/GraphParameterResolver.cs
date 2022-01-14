@@ -50,13 +50,16 @@ namespace Dash
                 return ResolveNested(nameSplit, 0, result, p_collection, true);
 
             DashController controller = _graph.Controller;
-#if UNITY_EDITOR
+
+            #if UNITY_EDITOR
+
             if (!Application.isPlaying)
             {
                 controller = DashEditorCore.EditorConfig.editingController;
             }
-#endif
-            
+
+            #endif
+
             if (controller != null && controller.Variables != null && controller.Variables.HasVariable(name))
             {
                 Variable variable = controller.Variables.GetVariable(name);
@@ -69,9 +72,9 @@ namespace Dash
                 return ResolveNested(nameSplit, 0, variable.value, p_collection, p_referenced);
             }
 
-            if (DashCore.Instance.globalVariables != null && DashCore.Instance.globalVariables.variables.HasVariable(name))
+            if (DashCore.Instance.GlobalVariables != null && DashCore.Instance.GlobalVariables.HasVariable(name))
             {
-                Variable variable = DashCore.Instance.globalVariables.variables.GetVariable(name);
+                Variable variable = DashCore.Instance.GlobalVariables.GetVariable(name);
                 return ResolveNested(nameSplit, 0, variable.value, p_collection, p_referenced);
             }
 

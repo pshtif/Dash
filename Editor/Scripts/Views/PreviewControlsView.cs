@@ -22,7 +22,7 @@ namespace Dash.Editor
                 DrawBoxGUI(rect, "", TextAnchor.UpperLeft, Color.white);
 
                 if (GUI.Button(new Rect(rect.x + rect.width - 28, rect.y + 4, 24, 24),
-                    IconManager.GetIcon("RollIn_Icon"),
+                    IconManager.GetIcon("rollin_icon"),
                     GUIStyle.none))
                 {
                     Graph.previewControlsViewMinimized = false;
@@ -35,11 +35,11 @@ namespace Dash.Editor
                 DrawBoxGUI(rect, "Preview Controls", TextAnchor.UpperLeft, Color.white);
                 
                 GUI.color = Color.yellow;
-                GUI.DrawTexture(new Rect(rect.x + 132, rect.y + 7, 16, 16), IconManager.GetIcon("Experimental_Icon"));
+                GUI.DrawTexture(new Rect(rect.x + 132, rect.y + 7, 16, 16), IconManager.GetIcon("experimental_icon"));
                 GUI.color = Color.white;
 
                 if (GUI.Button(new Rect(rect.x + rect.width - 28, rect.y + 4, 24, 24),
-                    IconManager.GetIcon("RollOut_Icon"),
+                    IconManager.GetIcon("rollout_icon"),
                     GUIStyle.none))
                 {
                     Graph.previewControlsViewMinimized = true;

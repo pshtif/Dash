@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Sets text on a TextMeshPro component.")]
+    [Attributes.Tooltip("Sets text on a TextMeshPro component.")]
     [Category(NodeCategoryType.MODIFIER)]
     [InputCount(1)]
     [OutputCount(1)]

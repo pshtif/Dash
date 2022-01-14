@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
@@ -6,8 +7,11 @@ using UnityEngine;
 namespace Dash
 {
     public class DashVariablesController : MonoBehaviour
-        , ISerializationCallbackReceiver, ISupportsPrefabSerialization
+        , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables
     {
+        public bool makeGlobal = false;
+        
+        [HideInInspector]
         [SerializeField] 
         protected DashVariables _variables;
 
@@ -21,19 +25,51 @@ namespace Dash
             }
         }
 
-
-        private void Awake()
+        void Awake()
         {
-            Variables.Initialize(gameObject);
+            Initialize(gameObject);
+        }
+        
+        public void Initialize(GameObject p_gameObject)
+        {
+            if (GetType() != typeof(DashVariablesController))
+            {
+                FetchFieldsToVariables();
+            }
             
-            //MachinaCore.Instance.SetGlobalVariables(this);
+            Variables.Initialize(p_gameObject);
+
+            if (makeGlobal)
+            {
+                DashCore.Instance.AddGlobalVariables(Variables);
+            }
         }
 
-        private void OnDestroy()
+        void FetchFieldsToVariables()
         {
-            //MachinaCore.Instance.SetGlobalVariables(null);
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var field in fields)
+            {
+                Variables.AddVariableByType(field.FieldType, field.Name, field.GetValue(this));
+            }
         }
 
+        public bool HasVariable(string p_name)
+        {
+            return Variables != null && Variables.HasVariable(p_name);
+        }
+
+        public Variable GetVariable(string p_name)
+        {
+            return Variables?.GetVariable(p_name);
+        }
+
+        public Variable<T> GetVariable<T>(string p_name)
+        {
+            return Variables?.GetVariable<T>(p_name);
+        }
+        
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
         

@@ -75,6 +75,8 @@ namespace Dash.Editor
             string nodeType = NodeBase.GetNodeNameFromType(selectedNode.GetType());
             GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), nodeType, DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));
             
+            DrawDocumentationButton(rect, selectedNode.GetType());
+            
             DrawScriptButton(rect, selectedNode.GetType());
             
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
@@ -90,12 +92,26 @@ namespace Dash.Editor
             
             UseEvent(rect);
         }
+
+        void DrawDocumentationButton(Rect p_rect, Type p_type)
+        {
+            DocumentationAttribute documentation = p_type.GetCustomAttribute<DocumentationAttribute>();
+
+            if (documentation != null)
+            {
+                if (GUI.Button(new Rect(p_rect.x + 270, p_rect.y + 7, 16, 16),
+                    IconManager.GetIcon("help_icon"), GUIStyle.none))
+                {
+                    Application.OpenURL(
+                        "https://github.com/pshtif/Dash/blob/main/Documentation/" + documentation.url);
+                }
+            }
+        }
         
         void DrawScriptButton(Rect p_rect, Type p_type)
         {
-
             if (GUI.Button(new Rect(p_rect.x+290, p_rect.y+7, 16, 16),
-                IconManager.GetIcon("Script_Icon"), GUIStyle.none))
+                IconManager.GetIcon("script_icon"), GUIStyle.none))
             {
                 AssetDatabase.OpenAsset(EditorUtils.GetScriptFromType(p_type), 1);
             }

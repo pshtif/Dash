@@ -10,28 +10,28 @@ namespace Dash
 {
     public class OnButtonClickNodeModel : NodeModelBase
     {
-        [Tooltip("Use scene reference as retarget.")]
+        [UnityEngine.Tooltip("Use scene reference as retarget.")]
         public bool useReference = false;
         
         [Dependency("useReference", false)]
-        [Tooltip("Retarget to child of controller.")]
+        [UnityEngine.Tooltip("Retarget to child of controller.")]
         public bool isChild;
         
         [Dependency("useReference", false)]
-        [Tooltip("Lookup for name match instead of path.")]
+        [UnityEngine.Tooltip("Lookup for name match instead of path.")]
         public bool useFind;
         
         [Dependency("useReference", false)]
         [Dependency("useFind", true)]
-        [Tooltip("Look up for all instances.")]
+        [UnityEngine.Tooltip("Look up for all instances.")]
         public bool findAll;
         
         [Dependency("useReference", false)]
-        [Tooltip("Name of a button or child if relative, use / for hierachy.")]
+        [UnityEngine.Tooltip("Name of a button or child if relative, use / for hierachy.")]
         public string button;
         
         [Dependency("useReference", true)]
-        [Tooltip("Reference of a button.")]
+        [UnityEngine.Tooltip("Reference of a button.")]
         public ExposedReference<Button> buttonReference;
 
         public bool retargetToButton = true;

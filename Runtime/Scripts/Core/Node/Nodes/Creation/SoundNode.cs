@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Creates audio source and plays a sound on controller.")]
+    [Attributes.Tooltip("Creates audio source and plays a sound on controller.")]
     [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]

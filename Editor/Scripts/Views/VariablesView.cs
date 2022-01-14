@@ -61,7 +61,6 @@ namespace Dash.Editor
                 int index = 0;
                 foreach (var variable in p_variables)
                 {
-                    //var r = new Rect(0, 25 + 24 * index, rect.width, 30);
                     GUIVariableUtils.VariableField(p_variables, variable.Name, p_boundObject, rect.width - 10);
                     EditorGUILayout.Space(4);
                     index++;

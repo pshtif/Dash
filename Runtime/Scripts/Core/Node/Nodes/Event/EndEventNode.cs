@@ -7,7 +7,7 @@ using OdinSerializer.Utilities;
 
 namespace Dash
 {
-    [Help("End an event in sequencer.")]
+    [Tooltip("End an event in sequencer.")]
     [Category(NodeCategoryType.EVENT)]
     [InputCount(1)]
     [OutputCount(1)]

@@ -71,6 +71,33 @@ namespace Dash
 #endif
 
         [NonSerialized]
+        private IVariables _variables;
+        
+        #if UNITY_EDITOR
+        public IVariables Variables
+        {
+            get
+            {
+                if (!Application.isPlaying)
+                {
+                    GetComponent<IVariables>()?.Initialize(gameObject);
+                    return GetComponent<IVariables>();
+                }
+                else
+                {
+                    if (_variables == null)
+                    {
+                        _variables = GetComponent<IVariables>();
+                    }
+                    return _variables;
+                }
+            }
+        }
+        #else
+        public IVariables Variables => _variables;
+        #endif
+
+        [NonSerialized]
         private DashGraph _graphInstance;
 
         public DashGraph Graph => GetGraphInstance();
@@ -138,8 +165,10 @@ namespace Dash
 
         void Awake()
         {
-            if (Graph != null) 
+            if (Graph != null)
+            {
                 Graph.Initialize(this);
+            }
 
             Core.Bind(this);
 
@@ -240,6 +269,7 @@ namespace Dash
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
+        public bool showGraphVariables = false;
 
         public void ReserializeBound()
         {

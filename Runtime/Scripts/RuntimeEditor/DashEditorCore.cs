@@ -36,7 +36,7 @@ namespace Dash
 
         static DashEditorCore()
         {
-            SetExecutionOrder(typeof(DashGlobalVariables), -501);
+            SetExecutionOrder(typeof(DashVariablesController), -501);
             SetExecutionOrder(typeof(DashController), -500);
 
             EditorConfig = DashEditorConfig.Create();

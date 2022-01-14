@@ -6,7 +6,7 @@ using Dash.Attributes;
 
 namespace Dash
 {
-    [Help("Branches execution based on boolean expression.")]
+    [Tooltip("Branches execution based on boolean expression.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(2)]
     [InputCount(1)]

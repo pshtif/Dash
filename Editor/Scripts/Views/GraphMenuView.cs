@@ -23,14 +23,14 @@ namespace Dash.Editor
                     GraphFileContextMenu.Show(p_graph);
                 }
 
-                GUI.DrawTexture(new Rect(80, 6, 10, 10), IconManager.GetIcon("ArrowDown_Icon"));
+                GUI.DrawTexture(new Rect(80, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
 
                 if (GUI.Button(new Rect(102, 1, 120, 22), "Preferences"))
                 {
                     PreferencesContextMenu.Show(p_graph);
                 }
                 
-                GUI.DrawTexture(new Rect(202, 6, 10, 10), IconManager.GetIcon("ArrowDown_Icon"));
+                GUI.DrawTexture(new Rect(202, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
 
                 if (DashEditorCore.EditorConfig.showNodeSearch)
                 {

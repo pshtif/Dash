@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Animate RectTransform size delta.")]
+    [Documentation("Nodes.md#animatesizedelta")]
+    [Attributes.Tooltip("Animate RectTransform size delta.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Store targets and children states.")]
+    [Attributes.Tooltip("Store targets and children states.")]
     [Category(NodeCategoryType.OTHER)]
     [OutputCount(1)]
     [InputCount(1)]
@@ -86,7 +86,7 @@ namespace Dash
         protected override void DrawCustomGUI(Rect p_rect)
         {
             GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 24, p_rect.y + 28, 48, 48),
-                IconManager.GetIcon("RollOut_Icon"));
+                IconManager.GetIcon("rollout_icon"));
         }
 #endif
     }

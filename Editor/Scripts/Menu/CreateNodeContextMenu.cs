@@ -10,6 +10,7 @@ using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
+using TooltipAttribute = Dash.Attributes.TooltipAttribute;
 
 namespace Dash.Editor
 { 
@@ -51,8 +52,8 @@ namespace Dash.Editor
                     if (CheckMultiple(type))
                         continue;
                     
-                    HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
-                    string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    TooltipAttribute tooltipAttribute = type.GetCustomAttribute<TooltipAttribute>();
+                    string tooltip = tooltipAttribute != null ? tooltipAttribute.help : "";
                     
                     CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
                     NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
@@ -88,8 +89,8 @@ namespace Dash.Editor
                         if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
                             continue;
                     
-                        HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
-                        string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                        TooltipAttribute tooltipAttribute = type.GetCustomAttribute<TooltipAttribute>();
+                        string tooltip = tooltipAttribute != null ? tooltipAttribute.help : "";
                     
                         string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
                         node = node.Substring(0, node.Length-4);
@@ -163,8 +164,8 @@ namespace Dash.Editor
                     if (attribute == null || attribute.type != NodeCategoryType.ANIMATION)
                         continue;
                     
-                    HelpAttribute helpAttribute = type.GetCustomAttribute<HelpAttribute>();
-                    string tooltip = helpAttribute != null ? helpAttribute.help : "";
+                    TooltipAttribute tooltipAttribute = type.GetCustomAttribute<TooltipAttribute>();
+                    string tooltip = tooltipAttribute != null ? tooltipAttribute.help : "";
                     
                     string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
                     node = node.Substring(0, node.Length-4);

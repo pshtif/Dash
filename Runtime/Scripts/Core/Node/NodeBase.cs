@@ -262,7 +262,7 @@ namespace Dash
 
         protected bool CheckException(Object p_object, string p_warning = null)
         {
-            if (p_object == null)
+            if (p_object == null || (p_object is UnityEngine.Object && (UnityEngine.Object)p_object == null))
             {
                 SetError(p_warning);
                 
@@ -541,7 +541,7 @@ namespace Dash
                 {
                     GUI.DrawTexture(
                         new Rect(offsetRect.x + offsetRect.width - 24, offsetRect.y - 20, 20, 20),
-                        IconManager.GetIcon("Time_Icon"));
+                        IconManager.GetIcon("time_icon"));
                 }
 
                 GUI.Box(offsetRect, "", skin.GetStyle(BackgroundSkinId));
@@ -620,15 +620,15 @@ namespace Dash
             {
                 GUI.color = Color.yellow;
                 GUI.DrawTexture(new Rect(p_rect.x + rect.width - 21, p_rect.y + 4, 16, 16),
-                    IconManager.GetIcon("Experimental_Icon"));
+                    IconManager.GetIcon("experimental_icon"));
                 GUI.color = Color.white;
             }
             
             if (IsObsolete)
             {
-                GUI.color = Color.red;
-                GUI.Label(new Rect(p_rect.x + 4, p_rect.y - 20, 100, 20), "[OBSOLETE]",
-                    DashEditorCore.Skin.GetStyle("NodeTitle"));
+                GUI.color = new Color(1f, .5f, .25f);
+                GUI.DrawTexture(new Rect(p_rect.x + 4, p_rect.y - 20, 16, 16),
+                    IconManager.GetIcon("prohibited_icon"));
                 GUI.color = Color.white;
             }
 
@@ -686,7 +686,7 @@ namespace Dash
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
                 GUI.DrawTexture(new Rect(p_rect.x + 2, p_rect.y - 22, 16, 16),
-                    IconManager.GetIcon("Error_Icon"));
+                    IconManager.GetIcon("error_icon"));
             }
 
             int labelOffset = 0;

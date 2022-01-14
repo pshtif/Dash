@@ -13,6 +13,7 @@ using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
 using Object = System.Object;
+using TooltipAttribute = UnityEngine.TooltipAttribute;
 
 namespace Dash
 {
@@ -49,9 +50,12 @@ namespace Dash
 
             FieldInfo nameInfo = p_parentInfo != null ? p_parentInfo : p_fieldInfo;
             
+            LabelAttribute labelAttribute = nameInfo.GetCustomAttribute<LabelAttribute>();
             string nameString = ObjectNames.NicifyVariableName(nameInfo.Name);
-            nameString = nameString.Substring(0, 1).ToUpper() + nameString.Substring(1);
-
+            nameString = labelAttribute == null
+                ? nameString.Substring(0, 1).ToUpper() + nameString.Substring(1)
+                : labelAttribute.Label;
+            
             TooltipAttribute tooltipAttribute = nameInfo.GetCustomAttribute<TooltipAttribute>();
             var name = tooltipAttribute == null ? new GUIContent(nameString) : new GUIContent(nameString, tooltipAttribute.tooltip);
 
@@ -630,6 +634,19 @@ namespace Dash
             foreach (DependencyAttribute attribute in attributes)
             {
                 FieldInfo dependencyField = p_object.GetType().GetField(attribute.DependencyName);
+                if (dependencyField == null)
+                {
+                    Debug.LogWarning("Dependency upon nonexistent property: "+attribute.DependencyName+" on "+p_object.GetType());
+                    return false;
+                }
+
+                if (typeof(Parameter).IsAssignableFrom(dependencyField.FieldType))
+                {
+                    Parameter<bool> dependencyParameter = dependencyField.GetValue(p_object) as Parameter<bool>;
+                    if (dependencyParameter.isExpression || dependencyParameter.GetValue(null))
+                        return true;
+                }
+
                 if (dependencyField != null && attribute.Value.ToString() != dependencyField.GetValue(p_object).ToString())
                     return false;
             }

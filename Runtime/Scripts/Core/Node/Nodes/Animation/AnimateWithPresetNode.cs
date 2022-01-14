@@ -13,7 +13,8 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Help("Animate RectTransform using an IAnimationPreset implementation. Useful to write custom animation sequences in code for reuse.")]
+    [Documentation("Nodes.md#animatewithpreset")]
+    [Attributes.Tooltip("Animate RectTransform using an IAnimationPreset implementation. Useful to write custom animation sequences in code for reuse.")]
     [Category(NodeCategoryType.ANIMATION)]
     [OutputCount(1)]
     [InputCount(1)]
