@@ -19,7 +19,7 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Settings/Show Node Search"), DashEditorCore.EditorConfig.showNodeSearch, () => DashEditorCore.EditorConfig.showNodeSearch = !DashEditorCore.EditorConfig.showNodeSearch);
             menu.AddItem(new GUIContent("Settings/Show Node Asynchronity"), DashEditorCore.EditorConfig.showNodeAsynchronity, () => DashEditorCore.EditorConfig.showNodeAsynchronity = !DashEditorCore.EditorConfig.showNodeAsynchronity);
             menu.AddItem(new GUIContent("Settings/Enable Sound in Editor"), DashEditorCore.EditorConfig.enableSoundInPreview, () => DashEditorCore.EditorConfig.enableSoundInPreview = !DashEditorCore.EditorConfig.enableSoundInPreview);
-            menu.AddItem(new GUIContent("Settings/Enable AnimateNode Preview"), DashEditorCore.EditorConfig.enableAnimateNodePreview, () => DashEditorCore.EditorConfig.enableAnimateNodePreview = !DashEditorCore.EditorConfig.enableAnimateNodePreview);
+            menu.AddItem(new GUIContent("Settings/Enable AnimateNode Interface"), DashEditorCore.EditorConfig.enableAnimateNodeInterface, () => DashEditorCore.EditorConfig.enableAnimateNodeInterface = !DashEditorCore.EditorConfig.enableAnimateNodeInterface);
             
             menu.AddSeparator("");
             //menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);

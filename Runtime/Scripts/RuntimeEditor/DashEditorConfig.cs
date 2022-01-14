@@ -127,7 +127,7 @@ namespace Dash
         
         public bool enableSoundInPreview = false;
         
-        public bool enableAnimateNodePreview = false;
+        public bool enableAnimateNodeInterface = false;
 
         public Rect editorPosition;
             
