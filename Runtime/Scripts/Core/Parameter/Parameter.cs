@@ -93,6 +93,7 @@ namespace Dash
                 return value;
             }
             
+	        hasErrorInEvaluation = false;
             return _value;
         }
 
