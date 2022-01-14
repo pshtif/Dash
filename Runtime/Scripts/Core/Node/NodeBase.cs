@@ -262,7 +262,7 @@ namespace Dash
 
         protected bool CheckException(Object p_object, string p_warning = null)
         {
-            if (p_object == null)
+            if (p_object == null || (p_object is UnityEngine.Object && (UnityEngine.Object)p_object == null))
             {
                 SetError(p_warning);
                 
