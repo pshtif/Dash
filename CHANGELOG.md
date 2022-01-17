@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.7.1RC - 17.1.2022
+
+#### Fixed
+
+- Fixed SetImageNode execution
+- Fixed SubGraph nullcheck on empty asset
+
 ### Release 0.7.0RC - 14.1.2022
 
 #### Added

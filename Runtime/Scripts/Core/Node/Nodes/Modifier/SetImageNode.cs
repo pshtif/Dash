@@ -47,6 +47,9 @@ namespace Dash
             {
                 image.raycastTarget = GetParameterValue(Model.isRaycastTarget, p_flowData);
             }
+            
+            OnExecuteEnd();
+            OnExecuteOutput(0, p_flowData);
         }
     }
 }
