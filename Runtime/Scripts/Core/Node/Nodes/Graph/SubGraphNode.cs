@@ -161,8 +161,8 @@ namespace Dash
                 var style = new GUIStyle(DashEditorCore.Skin.GetStyle("NodeText"));
                 style.alignment = TextAnchor.MiddleCenter;
                 style.normal.textColor = Color.cyan;
-                GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height - 32, p_rect.width, 20), Model.graphAsset.name,
-                    style);
+                string name = Model.graphAsset != null ? Model.graphAsset.name : "NONE"; 
+                GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height - 32, p_rect.width, 20), name, style);
             }
         }
 #endif
