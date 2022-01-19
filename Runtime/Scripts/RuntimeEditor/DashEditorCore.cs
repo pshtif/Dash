@@ -104,8 +104,9 @@ namespace Dash
             
             if (p_controller != null)
             {
+                EditorConfig.editingRootGraph = p_controller.Graph;
                 EditorConfig.editingGraphPath = p_graphPath;
-                EditorConfig.editingGraph = p_controller.GetGraphAtPath(p_graphPath);
+                EditorConfig.editingGraph = GraphUtils.GetGraphAtPath(p_controller.Graph, p_graphPath);
                 EditorConfig.editingController = p_controller;
             }
             else
@@ -114,12 +115,14 @@ namespace Dash
             }
         }
 
-        public static void EditGraph(DashGraph p_graph)
+        public static void EditGraph(DashGraph p_graph, string p_graphPath = "")
         {
+            Debug.Log(p_graph+" : "+p_graphPath);
             SelectionManager.ClearSelection();
-            
-            EditorConfig.editingGraphPath = "";
-            EditorConfig.editingGraph = p_graph;
+
+            EditorConfig.editingRootGraph = p_graph;
+            EditorConfig.editingGraphPath = p_graphPath;
+            EditorConfig.editingGraph = GraphUtils.GetGraphAtPath(p_graph, p_graphPath);
             EditorConfig.editingController = null;
         }
         
@@ -135,7 +138,7 @@ namespace Dash
             if (EditorConfig.editingController == null)
                 return;
 
-            if (SelectionManager.SelectedCount == 1)
+            if (SelectionManager.SelectedCount == 1 && EditorConfig.editingGraph.Nodes.Count > SelectionManager.selectedNodes[0])
             {
                 EditorConfig.editingGraph.Nodes[SelectionManager.selectedNodes[0]].DrawSceneGUI();
             }

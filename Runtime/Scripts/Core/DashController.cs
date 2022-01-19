@@ -5,14 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
 using Object = UnityEngine.Object;
-
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace Dash
@@ -336,6 +333,7 @@ namespace Dash
         {
             _assetGraph = null;
             _graphInstance = null;
+            _selfReferenceIndex = -1;
             _boundGraphData = null;
             _boundGraphReferences = null;
 
@@ -345,28 +343,6 @@ namespace Dash
                 _boundGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == graph);
             }
-        }
-
-        public DashGraph GetGraphAtPath(string p_path)
-        {
-            if (string.IsNullOrWhiteSpace(p_path))
-                return Graph;
-
-            List<string> split = p_path.Split('/').ToList();
-            DashGraph currentGraph = Graph;
-            foreach (string id in split)
-            {
-                SubGraphNode node = currentGraph.GetNodeById(id) as SubGraphNode;
-                if (node == null)
-                {
-                    Debug.LogWarning("Cannot retrieve subgraph at invalid graph path " + p_path);
-                    return null;
-                }
-
-                currentGraph = node.GetSubGraphInstance();
-            }
-
-            return currentGraph;
         }
 
         #endregion

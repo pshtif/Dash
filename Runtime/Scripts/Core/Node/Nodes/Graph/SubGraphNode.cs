@@ -144,7 +144,51 @@ namespace Dash
             GUI.color = new Color(1, 0.75f, 0.5f);
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController, GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                if (DashEditorCore.EditorConfig.editingController != null)
+                {
+                    DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController,
+                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                }
+                else
+                {
+                    DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
+                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                }
+            }
+
+            GUI.color = Color.white;
+            
+            if (!Model.useAsset)
+            {
+                if (_boundSubGraphData != null)
+                {
+                    if (GUILayout.Button("Save to Asset"))
+                    {
+                        DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
+                        if (graph != null)
+                        {
+                            Model.useAsset = true;
+                            Model.graphAsset = graph;
+
+                            _subGraphInstance = null;
+                            _selfReferenceIndex = -1;
+                            _boundSubGraphData = null;
+                            _boundSubGraphReferences.Clear();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (GUILayout.Button("Bind Graph"))
+                {
+                    DashGraph graph = SubGraph.Clone();
+                    _boundSubGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
+                    _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == graph);
+
+                    Model.useAsset = false;
+                    Model.graphAsset = null;
+                }
             }
 
             GUI.color = Color.white;

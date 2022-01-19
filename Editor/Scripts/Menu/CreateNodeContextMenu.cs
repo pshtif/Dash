@@ -114,7 +114,7 @@ namespace Dash.Editor
             
             foreach (Transform transform in selectedTransforms)
             {
-                NodeBase node = DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, position + offset);
+                NodeBase node = NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, (Type)p_nodeType, position + offset);
                 
                 if (node != null)
                 {
@@ -216,7 +216,7 @@ namespace Dash.Editor
             Vector2 offset = DashEditorCore.EditorConfig.editingGraph.viewOffset;
             Vector2 position = new Vector2(_lastMousePosition.x * zoom - offset.x, _lastMousePosition.y * zoom - offset.y);
             
-            DashEditorCore.EditorConfig.editingGraph.CreateNode((Type)p_nodeType, position);
+            NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, (Type)p_nodeType, position);
         }
         
         static public int CategorySort(Type p_type1, Type p_type2)

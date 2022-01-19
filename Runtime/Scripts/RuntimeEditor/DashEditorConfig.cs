@@ -74,6 +74,15 @@ namespace Dash
                 _enteringPlayModeController = value == null ? -1 : value.GetInstanceID();
             }
         }
+        
+        [SerializeField]
+        private DashGraph _editingRootGraph;
+        
+        public DashGraph editingRootGraph
+        {
+            get { return _editingRootGraph; }
+            set { _editingRootGraph = value; }
+        }
 
         [SerializeField]
         private DashGraph _editingGraph;
@@ -81,14 +90,8 @@ namespace Dash
         // This clumsy looking get/set is here due to serialization issues on assembly reload
         public DashGraph editingGraph
         {
-            get
-            {
-                return _editingGraph;
-            }
-            set
-            {
-                _editingGraph = value;
-            }
+            get { return _editingGraph; }
+            set { _editingGraph = value; }
         }
         
         [SerializeField]
@@ -97,14 +100,8 @@ namespace Dash
         // This clumsy looking get/set is here due to serialization issues on assembly reload
         public DashController editingController
         {
-            get
-            {
-                return _editingController;
-            }
-            set
-            {
-                _editingController = value;
-            }
+            get { return _editingController; }
+            set { _editingController = value; }
         }
 
         public string editingGraphPath = "";

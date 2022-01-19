@@ -25,7 +25,7 @@ namespace Dash
                 return null;
 
             return (selectedNodes != null && selectedNodes.Count == 1)
-                ? p_graph.Nodes[selectedNodes[0]]
+                ? selectedNodes[0] < p_graph.Nodes.Count ? p_graph.Nodes[selectedNodes[0]] : null
                 : null;
         }
 
@@ -45,7 +45,7 @@ namespace Dash
             DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
             if (graph != null)
             {
-                selectedNodes.ForEach(n => graph.Nodes[n].Unselect());
+                selectedNodes.FindAll(i => i<graph.Nodes.Count).ForEach(n => graph.Nodes[n].Unselect());
             }
             selectedNodes.Clear();
         }
@@ -83,7 +83,7 @@ namespace Dash
             if (p_graph == null || copiedNodes.Count == 0)
                 return;
             
-            List<NodeBase> newNodes = p_graph.DuplicateNodes(copiedNodes);
+            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, copiedNodes);
             
             newNodes[0].rect = new Rect(p_mousePosition.x * zoom - p_graph.viewOffset.x,
                 p_mousePosition.y * zoom - p_graph.viewOffset.y, 0, 0);
@@ -100,6 +100,21 @@ namespace Dash
             DashEditorCore.SetDirty();
         }
 
+        public static void CreateSubGraphFromSelectedNodes(DashGraph p_graph)
+        {
+            if (p_graph == null || selectedNodes.Count == 0)
+                return;
+            
+            UndoUtils.RegisterCompleteObject(p_graph, "Create SubGraph");
+
+            List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            SubGraphNode subGraphNode = NodeUtils.PackNodesToSubGraph(p_graph, nodes);
+            selectedNodes.Clear();
+            selectedNodes.Add(subGraphNode.Index);
+            
+            DashEditorCore.SetDirty();
+        }
+        
         public static void DuplicateSelectedNodes(DashGraph p_graph)
         {
             if (p_graph == null || selectedNodes.Count == 0)
@@ -108,7 +123,7 @@ namespace Dash
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Nodes");
 
             List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
-            List<NodeBase> newNodes = p_graph.DuplicateNodes(nodes);
+            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, nodes);
             selectedNodes = newNodes.Select(n => n.Index).ToList();
             
             DashEditorCore.SetDirty();
@@ -121,7 +136,7 @@ namespace Dash
             
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Node");
 
-            NodeBase node = p_graph.DuplicateNode((NodeBase) p_node);
+            NodeBase node = NodeUtils.DuplicateNode(p_graph,(NodeBase) p_node);
             selectedNodes = new List<int> { node.Index };
             
             DashEditorCore.SetDirty();

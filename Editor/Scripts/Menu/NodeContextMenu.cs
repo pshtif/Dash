@@ -22,6 +22,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
                 menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
                 menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
+                menu.AddItem(new GUIContent("Create SubGraph"), false, CreateSubGraph, null);
             }
             else
             {
@@ -157,6 +158,14 @@ namespace Dash.Editor
             }
             
             DashEditorCore.SetDirty();
+        }
+        
+        static void CreateSubGraph(object p_node)
+        {
+            if (p_node == null)
+            {
+                SelectionManager.CreateSubGraphFromSelectedNodes(Graph);
+            }
         }
         
         static void DuplicateNode(object p_node)

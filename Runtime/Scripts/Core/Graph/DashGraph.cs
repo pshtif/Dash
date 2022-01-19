@@ -73,7 +73,18 @@ namespace Dash
             _callbackListeners = new Dictionary<string, List<EventHandler>>();
 
         public DashGraph ParentGraph { get; private set; }
-        
+
+        public DashGraph RootGraph
+        {
+            get
+            {
+                if (ParentGraph == null)
+                    return this;
+
+                return ParentGraph.RootGraph;
+            }
+        }
+
         public string GraphPath
         {
             get
@@ -169,17 +180,7 @@ namespace Dash
                 Debug.LogWarning("Invalid event name, cannot be null or whitespace.");
             }
         }
-
-        // public void RemoveListener(string p_name, NodeBase p_node)
-        // {
-        //     if (_nodeListeners.ContainsKey(p_name))
-        //     {
-        //         _nodeListeners[p_name].Remove(p_node);
-        //         if (_nodeListeners[p_name].Count == 0)
-        //             _nodeListeners.Remove(p_name);
-        //     }
-        // }
-
+        
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
         {
             if (_callbackListeners.ContainsKey(p_name))
@@ -240,18 +241,19 @@ namespace Dash
             return Nodes.FindAll(n => n is OutputNode).IndexOf(p_node);
         }
 
-        public void Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
+        public bool Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
         {
             bool exists = Connections.Exists(c =>
                 c.inputNode == p_inputNode && c.inputIndex == p_inputIndex && c.outputNode == p_outputNode &&
                 c.outputIndex == p_outputIndex);
             
             if (exists || p_inputNode.InputCount <= p_inputIndex || p_outputNode.OutputCount <= p_outputIndex) 
-                return;
+                return false;
             
             NodeConnection connection = new NodeConnection(p_inputIndex, p_inputNode, p_outputIndex, p_outputNode);
             
             _connections.Add(connection);
+            return true;
         }
 
         public void Disconnect(NodeConnection p_connection)
@@ -330,6 +332,8 @@ namespace Dash
         }
 
 #region SERIALIZATION
+
+        
 
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
@@ -508,11 +512,6 @@ namespace Dash
             return _boxes.AsEnumerable().Reverse().ToList().Find(b => b.resizeRect.Contains(p_position - viewOffset));
         }
 
-        public void DeleteBox(GraphBox p_box)
-        {
-            _boxes.Remove(p_box);
-        }
-
         public NodeConnection HitsConnection(Vector2 p_position, float p_distance)
         {
             foreach (NodeConnection connection in _connections)
@@ -553,63 +552,9 @@ namespace Dash
             _boxes.Add(box);
         }
         
-        public NodeBase CreateNode(Type p_nodeType, Vector2 p_position)
+        public void DeleteBox(GraphBox p_box)
         {
-            if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
-                return null;
-            
-            Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
-            
-            NodeBase node = NodeBase.Create(p_nodeType, this);
-
-            if (node != null)
-            {
-                float zoom = DashEditorCore.EditorConfig.zoom;
-                node.rect = new Rect(p_position.x, p_position.y, 0, 0);
-                Nodes.Add(node);
-            }
-            
-            DashEditorCore.SetDirty();
-
-            return node;
-        }
-        
-        public NodeBase DuplicateNode(NodeBase p_node)
-        {
-            NodeBase clone = p_node.Clone(this);
-            clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
-            Nodes.Add(clone);
-            return clone;
-        }
-        
-        public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
-        {
-            if (p_nodes == null || p_nodes.Count == 0)
-                return null;
-
-            List<NodeBase> newNodes = new List<NodeBase>();
-            foreach (NodeBase node in p_nodes)
-            {
-                NodeBase clone = node.Clone(this);
-                clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
-                Nodes.Add(clone);
-                newNodes.Add(clone);
-            }
-
-            DashGraph originalGraph = p_nodes[0].Graph;
-            // Recreate connections within duplicated part
-            foreach (NodeBase node in p_nodes)
-            {
-                List<NodeConnection> connections =
-                    originalGraph.Connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
-                foreach (NodeConnection connection in connections)
-                {
-                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,
-                        newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);
-                }
-            }
-
-            return newNodes;
+            _boxes.Remove(p_box);
         }
 
         public void RemoveNullReferences()
