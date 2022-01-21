@@ -105,7 +105,7 @@ namespace Dash
                 return;
             
             _subGraphInstance = Model.graphAsset.Clone();
-            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).SetParentGraph(Graph);
             _subGraphInstance.name = Model.id;
         }
         
@@ -120,12 +120,14 @@ namespace Dash
                 _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).SetParentGraph(Graph);
+            _subGraphInstance.isBound = true;
             _subGraphInstance.name = Model.id;
         }
         
         public void ReserializeBound()
         {
+            Debug.Log("SubGraphNode.ReserializeBound");
             if (_subGraphInstance != null)
             {
                 _boundSubGraphData = _subGraphInstance.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
@@ -160,21 +162,18 @@ namespace Dash
             
             if (!Model.useAsset)
             {
-                if (_boundSubGraphData != null)
+                if (GUILayout.Button("Save to Asset"))
                 {
-                    if (GUILayout.Button("Save to Asset"))
+                    DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
+                    if (graph != null)
                     {
-                        DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
-                        if (graph != null)
-                        {
-                            Model.useAsset = true;
-                            Model.graphAsset = graph;
+                        Model.useAsset = true;
+                        Model.graphAsset = graph;
 
-                            _subGraphInstance = null;
-                            _selfReferenceIndex = -1;
-                            _boundSubGraphData = null;
-                            _boundSubGraphReferences.Clear();
-                        }
+                        _subGraphInstance = null;
+                        _selfReferenceIndex = -1;
+                        _boundSubGraphData = null;
+                        _boundSubGraphReferences.Clear();
                     }
                 }
             }

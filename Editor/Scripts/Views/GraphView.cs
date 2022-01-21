@@ -114,7 +114,7 @@ namespace Dash.Editor
             style.fontSize = 24;
             style.fontStyle = FontStyle.Bold;
             GUI.color = new Color(1, 1, 1, 0.25f);
-            if (Controller != null && Controller.IsGraphBound)
+            if (Controller != null && Controller.HasBoundGraph)
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
             }
@@ -183,7 +183,7 @@ namespace Dash.Editor
                 style.normal.textColor = Color.white;
                 style.fontStyle = FontStyle.Bold;
                 style.alignment = TextAnchor.MiddleLeft;
-                if (Controller != null && Controller.IsGraphBound)
+                if (Controller != null && Controller.HasBoundGraph)
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
                         new GUIContent(Controller.name +

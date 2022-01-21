@@ -114,6 +114,19 @@ namespace Dash
             
             DashEditorCore.SetDirty();
         }
+
+        public static void UnpackSelectedSubGraphNode(DashGraph p_graph, SubGraphNode p_subGraphNode)
+        {
+            if (p_graph == null || selectedNodes.Count == 0)
+                return;
+            
+            UndoUtils.RegisterCompleteObject(p_graph, "Unpack SubGraph");
+            selectedNodes.Clear();
+            
+            NodeUtils.UnpackNodesFromSubGraph(p_graph, p_subGraphNode);
+            
+            DashEditorCore.SetDirty();
+        }
         
         public static void DuplicateSelectedNodes(DashGraph p_graph)
         {

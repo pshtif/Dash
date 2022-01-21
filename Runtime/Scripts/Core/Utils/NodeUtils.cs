@@ -40,7 +40,8 @@ namespace Dash
                 node.rect = new Rect(p_position.x, p_position.y, 0, 0);
                 p_graph.Nodes.Add(node);
             }
-            
+
+            //Debug.Log(EditorUtility.IsDirty(p_graph));
             DashEditorCore.SetDirty();
 
             return node;
@@ -154,6 +155,36 @@ namespace Dash
             p_nodes.ForEach(n => p_graph.DeleteNode(n));
             
             return subGraphNode;
+        }
+
+        public static void UnpackNodesFromSubGraph(DashGraph p_graph, SubGraphNode p_subGraphNode)
+        {
+            List<NodeConnection> oldInputConnections =
+                p_graph.Connections.FindAll(c => c.inputNode == p_subGraphNode);
+            List<NodeConnection> oldOutputConnections =
+                p_graph.Connections.FindAll(c => c.outputNode == p_subGraphNode);
+
+            List<NodeBase> newNodes = DuplicateNodes(p_graph, p_subGraphNode.SubGraph.Nodes);
+            List<NodeBase> inputNodes = newNodes.FindAll(n => n is InputNode);
+            List<NodeBase> outputNodes = newNodes.FindAll(n => n is OutputNode);
+
+            foreach (var connection in oldInputConnections)
+            {
+                var oldConnection = p_graph.Connections.Find(c => c.outputNode == inputNodes[connection.inputIndex]);
+                p_graph.Connect(oldConnection.inputNode, oldConnection.inputIndex, connection.outputNode,
+                        connection.outputIndex);
+            }
+            
+            foreach (var connection in oldOutputConnections)
+            {
+                var oldConnection = p_graph.Connections.Find(c => c.inputNode == outputNodes[connection.outputIndex]);
+                p_graph.Connect(connection.inputNode, connection.inputIndex, oldConnection.outputNode,
+                    oldConnection.outputIndex);
+            }
+            
+            inputNodes.ForEach(n => p_graph.DeleteNode(n));
+            outputNodes.ForEach(n => p_graph.DeleteNode(n));
+            p_graph.DeleteNode(p_subGraphNode);
         }
 #endif
     }

@@ -22,6 +22,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
                 menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
                 menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
+                menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Create SubGraph"), false, CreateSubGraph, null);
             }
             else
@@ -29,6 +30,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Copy Node"), false, CopyNode, p_node);
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
+                
                 menu.AddSeparator("");
                 if (p_node.HasComment())
                 {
@@ -37,6 +39,12 @@ namespace Dash.Editor
                 else
                 {
                     menu.AddItem(new GUIContent("Create Comment"), false, p_node.CreateComment);
+                }
+                
+                menu.AddSeparator("");
+                if (p_node is SubGraphNode)
+                {
+                    menu.AddItem(new GUIContent("Unpack SubGraph"), false, UnpackSubGraph, p_node);
                 }
 
                 menu.AddSeparator("");
@@ -156,8 +164,6 @@ namespace Dash.Editor
             {
                 SelectionManager.DeleteNode((NodeBase)p_node, Graph);
             }
-            
-            DashEditorCore.SetDirty();
         }
         
         static void CreateSubGraph(object p_node)
@@ -165,6 +171,14 @@ namespace Dash.Editor
             if (p_node == null)
             {
                 SelectionManager.CreateSubGraphFromSelectedNodes(Graph);
+            }
+        }
+        
+        static void UnpackSubGraph(object p_node)
+        {
+            if (p_node != null)
+            {
+                SelectionManager.UnpackSelectedSubGraphNode(Graph, (SubGraphNode)p_node);
             }
         }
         

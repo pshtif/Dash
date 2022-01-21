@@ -72,16 +72,22 @@ namespace Dash
         private Dictionary<string, List<EventHandler>>
             _callbackListeners = new Dictionary<string, List<EventHandler>>();
 
-        public DashGraph ParentGraph { get; private set; }
+        [NonSerialized]
+        private DashGraph _parentGraph;
+        
+        public DashGraph GetParentGraph()
+        {
+            return _parentGraph;
+        }
 
         public DashGraph RootGraph
         {
             get
             {
-                if (ParentGraph == null)
+                if (_parentGraph == null)
                     return this;
 
-                return ParentGraph.RootGraph;
+                return _parentGraph.RootGraph;
             }
         }
 
@@ -89,8 +95,8 @@ namespace Dash
         {
             get
             {
-                if (ParentGraph != null)
-                    return ParentGraph.GraphPath + "/"+ name;
+                if (_parentGraph != null)
+                    return _parentGraph.GraphPath + "/"+ name;
 
                 return name;
             }
@@ -349,19 +355,21 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
             //Debug.Log("OnBeforeSerialize");
-            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-            }
-            
             #if UNITY_EDITOR
             if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
             {
                 DashEditorCore.EditorConfig.editingController.ReserializeBound();
+            }
+            else
+            {
+                GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+            
+                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+                {
+                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
+                }
             }
             #endif
         }
@@ -398,12 +406,9 @@ namespace Dash
         [NonSerialized]
         private List<DashTween> _activeTweens;
 
-        DashGraph IInternalGraphAccess.ParentGraph
+        void IInternalGraphAccess.SetParentGraph(DashGraph p_graph)
         {
-             set
-             {
-                 ParentGraph = value;
-             }
+            _parentGraph = p_graph;
         }
         
         void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
@@ -436,21 +441,9 @@ namespace Dash
         [NonSerialized]
         public int connectingOutputIndex;
 
-        // public void ValidateSerialization()
-        // {
-        //     Nodes?.ForEach(n => n.ValidateSerialization());
-        //     version = DashCore.GetVersionNumber();
-        //     if (IsBound)
-        //     {
-        //         Controller.ReserializeBound();
-        //         EditorUtility.SetDirty(Controller);
-        //     }
-        //     else
-        //     {
-        //         EditorUtility.SetDirty(this);
-        //     }
-        // }
-        
+        [NonSerialized]
+        public bool isBound = false;
+
         public void Reconnect(NodeConnection p_connection)
         {
             connectingNode = p_connection.outputNode;

@@ -82,9 +82,7 @@ namespace Dash
 
         public DashGraph Graph => GetGraphInstance();
 
-        // public string Id = "DC";
-
-        public bool IsGraphBound => _boundGraphData?.Length > 0;
+        public bool HasBoundGraph => _boundGraphData?.Length > 0;
 
         private DashGraph GetGraphInstance()
         {
@@ -120,6 +118,7 @@ namespace Dash
             }
 
             _graphInstance.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
+            _graphInstance.isBound = true;
             _graphInstance.name = "Bound";
         }
 
@@ -255,6 +254,9 @@ namespace Dash
         {
             if (_graphInstance != null)
             {
+                //Debug.Log("Reserializing Graph Instance: "+_graphInstance);
+                _graphInstance.GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+                
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }

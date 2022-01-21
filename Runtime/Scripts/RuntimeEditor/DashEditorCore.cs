@@ -79,22 +79,21 @@ namespace Dash
 
         public static void SetDirty()
         {
+            //Debug.Log("SetDirty");
             if (EditorConfig.editingGraph == null)
                 return;
-
-            if (EditorConfig.editingController != null && EditorConfig.editingController.IsGraphBound)
+            
+            EditorUtility.SetDirty(EditorConfig.editingGraph);
+            
+            if (EditorConfig.editingGraph != EditorConfig.editingRootGraph)
+                EditorUtility.SetDirty(EditorConfig.editingRootGraph);
+            
+            if (EditorConfig.editingController != null)
             {
-                EditorConfig.editingController.ReserializeBound();
+                if (EditorConfig.editingController.HasBoundGraph)
+                    EditorConfig.editingController.ReserializeBound();
+                
                 EditorUtility.SetDirty(EditorConfig.editingController);
-            }
-            else
-            {
-                if (EditorConfig.editingController != null)
-                {
-                    EditorUtility.SetDirty(EditorConfig.editingController);
-                }
-
-                EditorUtility.SetDirty(EditorConfig.editingGraph);
             }
         }
 
@@ -117,7 +116,6 @@ namespace Dash
 
         public static void EditGraph(DashGraph p_graph, string p_graphPath = "")
         {
-            Debug.Log(p_graph+" : "+p_graphPath);
             SelectionManager.ClearSelection();
 
             EditorConfig.editingRootGraph = p_graph;

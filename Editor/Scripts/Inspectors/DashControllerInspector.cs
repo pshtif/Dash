@@ -30,7 +30,7 @@ namespace Dash.Editor
             
             EditorGUI.BeginChangeCheck();
             
-            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
+            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.HasBoundGraph)
             {
                 GUILayout.BeginVertical();
 
@@ -69,7 +69,7 @@ namespace Dash.Editor
 
                 GUI.color = oldColor;
 
-                if (!Controller.IsGraphBound)
+                if (!Controller.HasBoundGraph)
                 {
                     EditorGUI.BeginChangeCheck();
 
@@ -131,7 +131,7 @@ namespace Dash.Editor
 
             if (Controller.Graph != null)
             {
-                if (Controller.IsGraphBound)
+                if (Controller.HasBoundGraph)
                 {
                     GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
                 }
@@ -157,6 +157,12 @@ namespace Dash.Editor
             if (Controller.advancedInspector)
             {
                 DrawExposedPropertiesInspector();
+            }
+            
+            if (Controller.advancedInspector && Controller.Graph != null)
+            {
+                GUILayout.Space(16);
+                DrawGraphStructureInspector();
             }
 
             if (EditorGUI.EndChangeCheck())
@@ -191,6 +197,34 @@ namespace Dash.Editor
                 {
                     Controller.CleanupReferences(Controller.Graph.GetExposedGUIDs());
                 }
+            }
+        }
+        
+        void DrawGraphStructureInspector()
+        {
+            var style = new GUIStyle();
+            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.alignment = TextAnchor.MiddleCenter;
+            style.fontStyle = FontStyle.Bold;
+            style.normal.background = Texture2D.whiteTexture;
+            style.fontSize = 16;
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Nodes List", style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+            
+            for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
+            {
+                GUILayout.Label(Controller.Graph.Nodes[i].Id + " : " + Controller.Graph.Nodes[i].Name);
+            }
+            
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Connection List", style, GUILayout.Height(28));
+            
+            for (int i = 0; i < Controller.Graph.Connections.Count; i++)
+            {
+                var c = Controller.Graph.Connections[i];
+                GUILayout.Label(
+                    c.inputNode.Id + "[" + c.inputIndex + "] : "+c.outputNode.Id + "[" + c.outputIndex + "]");
             }
         }
         
