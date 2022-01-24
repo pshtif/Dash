@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.7.2RC - 24.1.2022
+
+#### Fixed
+
+- Fixed target to transform resolving in AnimateToTransformNode
+
 ### Release 0.7.1RC - 17.1.2022
 
 #### Fixed
