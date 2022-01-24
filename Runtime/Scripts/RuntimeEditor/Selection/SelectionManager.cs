@@ -117,7 +117,7 @@ namespace Dash
 
         public static void UnpackSelectedSubGraphNode(DashGraph p_graph, SubGraphNode p_subGraphNode)
         {
-            if (p_graph == null || selectedNodes.Count == 0)
+            if (p_graph == null || p_subGraphNode == null)
                 return;
             
             UndoUtils.RegisterCompleteObject(p_graph, "Unpack SubGraph");
