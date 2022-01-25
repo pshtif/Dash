@@ -142,6 +142,15 @@ namespace Dash
         
         private event Action UpdateCallback;
 
+        public bool useCustomTarget = false;
+        
+        public Transform customTarget;
+
+        public Transform GetTarget()
+        {
+            return customTarget != null ? customTarget : transform;
+        }
+
         void Awake()
         {
             if (Graph != null)
@@ -164,7 +173,7 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.START, this));
 #endif
-                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
                 Graph.ExecuteGraphInput(autoStartInput, data);
             }
         }
@@ -179,7 +188,7 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONENABLE, this));
 #endif
-                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
                 Graph.ExecuteGraphInput(autoOnEnableInput, data);
             }
         }
@@ -204,19 +213,19 @@ namespace Dash
             if (Graph == null)
                 return;
 
-            Graph.SendEvent(p_name, transform);
+            Graph.SendEvent(p_name, GetTarget());
         }
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            if (Graph == null || transform == null)
+            if (Graph == null || GetTarget() == null)
                 return;
 
-            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(transform) : p_flowData.Clone();
+            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(GetTarget()) : p_flowData.Clone();
 
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
-                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, transform);
+                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, GetTarget());
             }
             
             p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
