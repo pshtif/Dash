@@ -101,17 +101,28 @@ namespace Dash.Editor
             
             if (DashEditorCore.EditorConfig.explicitAOTTypes != null)
             {
+                int index = 0;
                 foreach (Type type in DashEditorCore.EditorConfig.explicitAOTTypes)
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label((string.IsNullOrEmpty(type.Namespace) ? "" : type.Namespace + ".") +
                                     type.GetReadableTypeName());
+
+                    if (type.IsGenericType && type.GetGenericArguments()[0].FullName == null) 
+                    {
+                        if (GUILayout.Button("Inflate", GUILayout.Width(120)))
+                        {
+                            AddTypeContextMenu.ShowAsPopup((p) => InflateType(p, type, index));
+                        }
+                    }
+                    
                     if (GUILayout.Button("Remove", GUILayout.Width(120)))
                     {
                         DashAOTScanner.RemoveExplicitAOTType(type);
                         break;
                     }
                     GUILayout.EndHorizontal();
+                    index++;
                 }
             }
             
@@ -164,6 +175,13 @@ namespace Dash.Editor
             {
                 DashAOTScanner.GenerateDLL(_generateLinkXml, _includeOdin);
             }
+        }
+
+        static void InflateType(object p_type, Type p_genericType, int p_index)
+        {
+            Type[] types = { (Type)p_type };
+            Type inflated = p_genericType.MakeGenericType(types);
+            DashEditorCore.EditorConfig.explicitAOTTypes[p_index] = inflated;
         }
         
         static void AddType(object p_type)
