@@ -547,13 +547,13 @@ namespace Dash
                 GUI.Box(offsetRect, "", skin.GetStyle(BackgroundSkinId));
 
                 DrawTitle(offsetRect);
-
-                DrawId(offsetRect);
             }
 
             if (DashEditorCore.DetailsVisible)
             {
                 DrawCustomGUI(offsetRect);
+                
+                DrawId(offsetRect);
             }
 
             DrawOutline(offsetRect);
@@ -645,10 +645,6 @@ namespace Dash
                     GUI.Label(
                         new Rect(new Vector2(p_rect.x, p_rect.y + p_rect.height - 4), new Vector2(rect.width - 5, 20)), _model.id);
                 }
-            }
-            else
-            {
-                ValidateUniqueId();
             }
             GUI.color = Color.white;
         }
@@ -866,14 +862,20 @@ namespace Dash
 
         public virtual void SelectEditorTarget() { }
 
-        public void ResolveInputNodeChain(ref List<NodeConnection> p_chain)
+        public bool ResolveInputNodeChain(ref List<NodeConnection> p_chain)
         {
+            _resolveCount++;
             var connections = Graph.GetInputConnections(this);
             if (connections.Count > 0)
             {
+                if (p_chain.Contains(connections[0]))
+                    return false;
+                
                 p_chain.Insert(0, connections[0]);
-                connections[0].outputNode.ResolveInputNodeChain(ref p_chain);
+                return connections[0].outputNode.ResolveInputNodeChain(ref p_chain);
             }
+
+            return true;
         }
 
         internal virtual Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
@@ -883,6 +885,7 @@ namespace Dash
 
         static private NodeBase _lastResolvedNode;
         static private Transform _lastResolvedTarget;
+        static private int _resolveCount;
 
         internal Transform ResolveEditorTarget()
         {
@@ -896,13 +899,21 @@ namespace Dash
             if (retarget == null)
                 return null;
 
-            ResolveInputNodeChain(ref chain);
-            foreach (var connection in chain)
+            _resolveCount = 0;
+            if (ResolveInputNodeChain(ref chain))
             {
-                retarget = connection.outputNode.ResolveNodeRetarget(retarget, connection);
+                foreach (var connection in chain)
+                {
+                    retarget = connection.outputNode.ResolveNodeRetarget(retarget, connection);
+                }
+
+                _lastResolvedTarget = ResolveNodeRetarget(retarget, null);
+            }
+            else
+            {
+                _lastResolvedTarget = null;
             }
 
-            _lastResolvedTarget = ResolveNodeRetarget(retarget, null);
             return _lastResolvedTarget;
         }
 
