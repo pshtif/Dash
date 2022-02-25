@@ -75,11 +75,15 @@ namespace Dash.Editor
         public static void RemoveScannedAOTType(Type p_type)
         {
             DashEditorCore.EditorConfig.scannedAOTTypes.Remove(p_type);
+            
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
         
         public static void RemoveExplicitAOTType(Type p_type)
         {
             DashEditorCore.EditorConfig.explicitAOTTypes.Remove(p_type);
+            
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
 
         private static readonly PropertyInfo Debug_Logger_Property =
