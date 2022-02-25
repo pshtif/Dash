@@ -218,13 +218,18 @@ namespace Dash
 
         public static void SelectNode(NodeBase p_node, DashGraph p_graph, bool p_forceView = false)
         {
+
             selectedNodes.Clear();
 
             if (p_node == null || p_graph == null)
                 return;
 
             selectedNodes.Add(p_node.Index);
-            p_node.SelectEditorTarget();
+
+            if (DashEditorCore.EditorConfig.editingController != null)
+            {
+                p_node.SelectEditorTarget();
+            }
 
             if (p_forceView)
             {
