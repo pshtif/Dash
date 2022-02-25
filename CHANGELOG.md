@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.8.0 - 25.2.2022
+
+#### Added
+
+- Added support for binding and unbinding of subgraphs
+- Added support for nested subgraph serialization
+- Added nested subgraph editing
+- Added custom target option for DashController
+- Added ability to pack selected nodes to subgraph
+- Added ability to unpack subgraph into a current graph
+- Added explicit type inflation for generics in AOT editor
+
+#### Changed
+
+- Changed node ids now don't render when you are zoomed out
+
+#### Fixed
+
+- Fixed DashEditorConfig now saved upon explicit or scanned AOT types change
+- Fixed nodes don't select retarget object in editor if there is no controller
+- Fixed nodes don't select retarget object if there is cyclic resolving involved
+
+
 ### Release 0.7.1RC - 17.1.2022
 
 #### Fixed
