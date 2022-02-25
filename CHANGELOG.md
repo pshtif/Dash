@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - Fixed DashEditorConfig now saved upon explicit or scanned AOT types change
 - Fixed nodes don't select retarget object in editor if there is no controller
 - Fixed nodes don't select retarget object if there is cyclic resolving involved
+- Fixed Color field in node inspector overflow width incorrectly
 
 
 ### Release 0.7.1RC - 17.1.2022

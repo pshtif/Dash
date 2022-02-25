@@ -578,7 +578,7 @@ namespace Dash
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(160));
                     EditorGUI.BeginChangeCheck();
-                    var colorValue = EditorGUILayout.ColorField("", (Color) p_fieldInfo.GetValue(p_object));
+                    var colorValue = EditorGUILayout.ColorField("", (Color) p_fieldInfo.GetValue(p_object), GUILayout.Width(60));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
