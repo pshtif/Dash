@@ -75,6 +75,9 @@ namespace Dash
         [NonSerialized]
         private DashGraph _parentGraph;
         
+        [NonSerialized]
+        public bool isBound = false;
+        
         public DashGraph GetParentGraph()
         {
             return _parentGraph;
@@ -440,9 +443,6 @@ namespace Dash
         public NodeBase connectingNode;
         [NonSerialized]
         public int connectingOutputIndex;
-
-        [NonSerialized]
-        public bool isBound = false;
 
         public void Reconnect(NodeConnection p_connection)
         {
