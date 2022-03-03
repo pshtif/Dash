@@ -111,7 +111,6 @@ namespace Dash
         }
 
         protected NodeDebugItemType _subType;
-        protected DashController _controller;
         protected string _controllerName;
         protected string _graphPath;
         protected string _relativeGraphPath;
@@ -125,8 +124,7 @@ namespace Dash
             _subType = p_subType;
             TimeSpan span = TimeSpan.FromSeconds(_time);
             _timeString = span.ToString(@"hh\:mm\:ss\:fff");
-            _controller = p_controller;
-            _controllerName = p_controller.name;
+            _controllerName = p_controller != null ? p_controller.name : "NULL";
             _graphPath = p_graphPath;
             _relativeGraphPath = _graphPath.IndexOf("/") >= 0 ? _graphPath.Substring(_graphPath.IndexOf("/")+1) : "";
             _targetName = p_target != null ? p_target.name : "NONE";
@@ -315,7 +313,7 @@ namespace Dash
             _type = DebugItemType.CONTROLLER;
             _subType = p_type;
             _controller = p_controller;
-            _controllerName = p_controller.name;
+            _controllerName = p_controller?.name;
         }
 
         public override void DrawCustom()
