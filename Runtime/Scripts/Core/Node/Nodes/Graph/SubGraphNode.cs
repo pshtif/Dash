@@ -53,7 +53,7 @@ namespace Dash
             if (SubGraph != null)
             {
                 SubGraph.Initialize(Graph.Controller);
-                SubGraph.OnOutput += (node, data) => ExecuteEnd(Graph.GetOutputIndex(node), data);
+                SubGraph.OnOutput += (node, data) => ExecuteEnd(SubGraph.GetOutputIndex(node), data);
             }
         }
 
@@ -67,13 +67,18 @@ namespace Dash
             if (CheckException(SubGraph, "There is no graph defined"))
                 return;
             
-            SubGraph.GetNodeByType<InputNode>()?.Execute(p_flowData);
+            var inputs = SubGraph.GetNodesByType<InputNode>();
+            if (inputs.Count > p_flowData.inputIndex)
+            {
+                inputs[p_flowData.inputIndex].Execute(p_flowData);
+            }
         }
 
         protected void ExecuteEnd(int p_outputIndex, NodeFlowData p_flowData)
         {
+            Debug.Log("EEND: "+p_outputIndex);
             OnExecuteEnd();
-            OnExecuteOutput(0, p_flowData);
+            OnExecuteOutput(p_outputIndex, p_flowData);
         }
         
         public DashGraph GetSubGraphInstance()
@@ -127,7 +132,6 @@ namespace Dash
         
         public void ReserializeBound()
         {
-            Debug.Log("SubGraphNode.ReserializeBound");
             if (_subGraphInstance != null)
             {
                 _boundSubGraphData = _subGraphInstance.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
@@ -136,10 +140,18 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
+        
+        public override string CustomName => Model.useAsset ? "SubGraph " + SubGraph.name : "SubGraph";
 
-        public override Vector2 Size => new Vector2(150, 85 + (InputCount > OutputCount
-                ? (InputCount > 2 ? (InputCount - 2) * 25 : 0)
-                : (OutputCount > 2 ? (OutputCount - 2) * 25 : 0)));
+        public float CustomNameSize => DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(CustomName)).x;
+
+        public override Vector2 Size => new Vector2(
+            CustomNameSize < 115
+                ? 150
+                : CustomNameSize + 35, 85 +
+            (InputCount > OutputCount
+                ? (InputCount > 2 ? (InputCount - 2) * 28 : 0)
+                : (OutputCount > 2 ? (OutputCount - 2) * 28 : 0)));
         
         public override void DrawInspector()
         {
@@ -199,13 +211,19 @@ namespace Dash
         {
             base.DrawCustomGUI(p_rect);
 
-            if (Model.useAsset)
+            var inputs = SubGraph.GetNodesByType<InputNode>();
+            for (int i = 0; i < inputs.Count; i++)
             {
-                var style = new GUIStyle(DashEditorCore.Skin.GetStyle("NodeText"));
-                style.alignment = TextAnchor.MiddleCenter;
-                style.normal.textColor = Color.cyan;
-                string name = Model.graphAsset != null ? Model.graphAsset.name : "NONE"; 
-                GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height - 32, p_rect.width, 20), name, style);
+                GUI.Label(new Rect(p_rect.x + 20, p_rect.y + 26 + 28 * i, p_rect.width-10, 20), inputs[i].Model.inputName);
+            }
+
+            var style = new GUIStyle("label");
+            style.alignment = TextAnchor.MiddleRight;
+            
+            var outputs = SubGraph.GetNodesByType<OutputNode>();
+            for (int i = 0; i < outputs.Count; i++)
+            {
+                GUI.Label(new Rect(p_rect.x + 20, p_rect.y + 26 + 28 * i, p_rect.width-40, 20), outputs[i].Model.outputName, style);
             }
         }
 #endif
