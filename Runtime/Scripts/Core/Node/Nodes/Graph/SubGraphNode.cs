@@ -34,7 +34,7 @@ namespace Dash
         {
             get
             {
-                return SubGraph != null ? SubGraph.GetAllNodesByType<InputNode>().Count : 0;
+                return SubGraph != null ? SubGraph.GetNodesByType<InputNode>().Count : 0;
             }
         }
         
@@ -42,7 +42,7 @@ namespace Dash
         {
             get
             {
-                return SubGraph != null ? SubGraph.GetAllNodesByType<OutputNode>().Count : 0;
+                return SubGraph != null ? SubGraph.GetNodesByType<OutputNode>().Count : 0;
             }
         }
         

@@ -240,7 +240,7 @@ namespace Dash
             return Nodes.Exists(n => p_nodeType.IsAssignableFrom(n.GetType()));
         }
 
-        public List<T> GetAllNodesByType<T>() where T : NodeBase
+        public List<T> GetNodesByType<T>() where T : NodeBase
         {
             return Nodes.FindAll(n => n is T).ConvertAll(n => (T)n);
         }
@@ -322,7 +322,7 @@ namespace Dash
 
         public bool ExecuteGraphInput(string p_inputName, NodeFlowData p_flowData)
         {
-            InputNode inputNode = GetAllNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
+            InputNode inputNode = GetNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
             if (inputNode != null)
             {
                 inputNode.Execute(p_flowData);
@@ -366,7 +366,7 @@ namespace Dash
             }
             else
             {
-                GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
             
                 using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
                 {

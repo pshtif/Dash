@@ -264,7 +264,7 @@ namespace Dash
             if (_graphInstance != null)
             {
                 //Debug.Log("Reserializing Graph Instance: "+_graphInstance);
-                _graphInstance.GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+                _graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
                 
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
