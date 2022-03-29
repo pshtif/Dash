@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.9.0 - 29.3.2022
+
+#### Added
+
+- Added support to change controller graph at runtime
+
+#### Changed
+
+- Changed subgraph node UI
+- A lot of various changes in subgraph implementation
+
+#### Fixed
+
+- Fixed subgraph output execution
+- Fixed subgraph input execution in multi input cases
+- Fixed node debugging trying to access already destroyed controller
+- Fixed ForLoop node Stop implementation
+
 ### Release 0.8.0 - 25.2.2022
 
 #### Added
