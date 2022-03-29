@@ -48,13 +48,13 @@ namespace Dash
                     float time = GetParameterValue(Model.OnIterationDelay, p_flowData) * i;
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                     
+                    _activeTweens.Add(tween);
                     tween.OnComplete(() =>
                     {
-                        OnExecuteOutput(0, data);
                         _activeTweens.Remove(tween);
+                        OnExecuteOutput(0, data);
                     });
                     
-                    _activeTweens.Add(tween);
                     tween.Start();
                 }
             }
@@ -68,17 +68,23 @@ namespace Dash
                 float time = Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length;
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                 
+                _activeTweens.Add(tween);
                 tween.OnComplete(() =>
                 {
-                    EndLoop(p_flowData);
                     _activeTweens.Remove(tween);
+                    EndLoop(p_flowData);
                 });
                 
-                _activeTweens.Add(tween);
                 tween.Start();
             }
         }
 
+        protected override void Stop_Internal()
+        {
+            _activeTweens?.ForEach(t => t.Kill(false));
+            _activeTweens = new List<DashTween>();
+        }
+        
         public override bool IsSynchronous()
         {
             return !Model.OnIterationDelay.isExpression && Model.OnIterationDelay.GetValue(null) == 0 &&
