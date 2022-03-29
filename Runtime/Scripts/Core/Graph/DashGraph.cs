@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -24,8 +25,7 @@ namespace Dash
         public int version { get; private set; } = 0;
 
         public event Action<OutputNode, NodeFlowData> OnOutput;
-
-        [FormerlySerializedAs("variables")]
+        
         [SerializeField]
         private DashVariables _variables;
 
@@ -157,7 +157,9 @@ namespace Dash
             if (!p_name.IsNullOrWhitespace())
             {
                 if (!_nodeListeners.ContainsKey(p_name))
+                {
                     _nodeListeners[p_name] = new List<EventHandler>();
+                }
 
                 if (!_nodeListeners[p_name].Exists(e => e.Callback == p_node.Execute))
                 {
@@ -176,7 +178,9 @@ namespace Dash
             if (!string.IsNullOrWhiteSpace(p_name))
             {
                 if (!_callbackListeners.ContainsKey(p_name))
+                {
                     _callbackListeners[p_name] = new List<EventHandler>();
+                }
 
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
@@ -336,8 +340,6 @@ namespace Dash
         public void Stop()
         {
             Nodes.ForEach(n => ((INodeAccess)n).Stop());
-            // ((IInternalGraphAccess)this).StopActiveTweens(null);
-            // Nodes.FindAll(n => n is SubGraphNode).ForEach(n => n.Graph.Stop());
         }
 
 #region SERIALIZATION
