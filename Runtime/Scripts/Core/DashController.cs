@@ -163,6 +163,22 @@ namespace Dash
             _variables = GetComponent<DashVariablesController>()?.Variables;
         }
 
+        public void ChangeGraph(DashGraph p_graph)
+        {
+            if (Graph != null)
+            {
+                Graph?.Stop();
+            }
+
+            _boundGraphData = new byte[0];
+            _assetGraph = p_graph;
+
+            if (Graph != null)
+            {
+                Graph.Initialize(this);
+            }
+        }
+
         void Start()
         {
             if (Graph == null)
