@@ -889,6 +889,9 @@ namespace Dash
 
         internal Transform ResolveEditorTarget()
         {
+            if (DashEditorCore.EditorConfig.editingController == null)
+                return null;
+        
             if (_lastResolvedNode == this)
                 return _lastResolvedTarget;
             
