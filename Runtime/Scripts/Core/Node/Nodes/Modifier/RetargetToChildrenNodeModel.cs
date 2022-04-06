@@ -23,5 +23,10 @@ namespace Dash
         [UnityEngine.Tooltip("Iterates child in reverse order.")]
         [TitledGroup("Properties")]
         public bool inReverse = false;
+        
+        [Order(13)]
+        [UnityEngine.Tooltip("Iterates child that are inactive.")]
+        [TitledGroup("Properties")]
+        public Parameter<bool> targetInactive = new Parameter<bool>(true);
     }
 }
