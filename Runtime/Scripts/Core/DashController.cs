@@ -5,14 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
 using Object = UnityEngine.Object;
-
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace Dash
@@ -85,9 +82,7 @@ namespace Dash
 
         public DashGraph Graph => GetGraphInstance();
 
-        // public string Id = "DC";
-
-        public bool IsGraphBound => _boundGraphData?.Length > 0;
+        public bool HasBoundGraph => _boundGraphData?.Length > 0;
 
         private DashGraph GetGraphInstance()
         {
@@ -123,6 +118,7 @@ namespace Dash
             }
 
             _graphInstance.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
+            _graphInstance.isBound = true;
             _graphInstance.name = "Bound";
         }
 
@@ -146,6 +142,15 @@ namespace Dash
         
         private event Action UpdateCallback;
 
+        public bool useCustomTarget = false;
+        
+        public Transform customTarget;
+
+        public Transform GetTarget()
+        {
+            return customTarget != null ? customTarget : transform;
+        }
+
         void Awake()
         {
             if (Graph != null)
@@ -158,6 +163,22 @@ namespace Dash
             _variables = GetComponent<DashVariablesController>()?.Variables;
         }
 
+        public void ChangeGraph(DashGraph p_graph)
+        {
+            if (Graph != null)
+            {
+                Graph?.Stop();
+            }
+
+            _boundGraphData = new byte[0];
+            _assetGraph = p_graph;
+
+            if (Graph != null)
+            {
+                Graph.Initialize(this);
+            }
+        }
+
         void Start()
         {
             if (Graph == null)
@@ -168,7 +189,7 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.START, this));
 #endif
-                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
                 Graph.ExecuteGraphInput(autoStartInput, data);
             }
         }
@@ -183,7 +204,7 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONENABLE, this));
 #endif
-                NodeFlowData data = NodeFlowDataFactory.Create(transform);
+                NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
                 Graph.ExecuteGraphInput(autoOnEnableInput, data);
             }
         }
@@ -208,19 +229,19 @@ namespace Dash
             if (Graph == null)
                 return;
 
-            Graph.SendEvent(p_name, transform);
+            Graph.SendEvent(p_name, GetTarget());
         }
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            if (Graph == null || transform == null)
+            if (Graph == null || GetTarget() == null)
                 return;
 
-            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(transform) : p_flowData.Clone();
+            p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(GetTarget()) : p_flowData.Clone();
 
             if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
             {
-                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, transform);
+                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, GetTarget());
             }
             
             p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
@@ -258,6 +279,9 @@ namespace Dash
         {
             if (_graphInstance != null)
             {
+                //Debug.Log("Reserializing Graph Instance: "+_graphInstance);
+                _graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+                
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
@@ -336,6 +360,7 @@ namespace Dash
         {
             _assetGraph = null;
             _graphInstance = null;
+            _selfReferenceIndex = -1;
             _boundGraphData = null;
             _boundGraphReferences = null;
 
@@ -345,28 +370,6 @@ namespace Dash
                 _boundGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == graph);
             }
-        }
-
-        public DashGraph GetGraphAtPath(string p_path)
-        {
-            if (string.IsNullOrWhiteSpace(p_path))
-                return Graph;
-
-            List<string> split = p_path.Split('/').ToList();
-            DashGraph currentGraph = Graph;
-            foreach (string id in split)
-            {
-                SubGraphNode node = currentGraph.GetNodeById(id) as SubGraphNode;
-                if (node == null)
-                {
-                    Debug.LogWarning("Cannot retrieve subgraph at invalid graph path " + p_path);
-                    return null;
-                }
-
-                currentGraph = node.GetSubGraphInstance();
-            }
-
-            return currentGraph;
         }
 
         #endregion

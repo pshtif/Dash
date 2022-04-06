@@ -30,7 +30,7 @@ namespace Dash.Editor
             
             EditorGUI.BeginChangeCheck();
             
-            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.IsGraphBound)
+            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.HasBoundGraph)
             {
                 GUILayout.BeginVertical();
 
@@ -69,7 +69,7 @@ namespace Dash.Editor
 
                 GUI.color = oldColor;
 
-                if (!Controller.IsGraphBound)
+                if (!Controller.HasBoundGraph)
                 {
                     EditorGUI.BeginChangeCheck();
 
@@ -111,15 +111,36 @@ namespace Dash.Editor
                 }
             }
 
-            Controller.autoStart = EditorGUILayout.Toggle(new GUIContent("Auto Start", "Automatically call an input on a graph when controller is started."), Controller.autoStart);
+            Controller.useCustomTarget = EditorGUILayout.Toggle(
+                new GUIContent("Use Custom Target", "Customize target which is this gameobject transform by default."),
+                Controller.useCustomTarget); 
+            
+            if (Controller.useCustomTarget == true)
+            {
+                Controller.customTarget =
+                    (Transform)EditorGUILayout.ObjectField("Custom Target", Controller.customTarget, typeof(Transform),
+                        true);
+            }
+            else
+            {
+                Controller.customTarget = null;
+            }
+
+            Controller.autoStart =
+                EditorGUILayout.Toggle(
+                    new GUIContent("Auto Start", "Automatically call an input on a graph when controller is started."),
+                    Controller.autoStart);
 
             if (Controller.autoStart)
             {
                 Controller.autoStartInput =
                     EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
             }
-            
-            Controller.autoOnEnable = EditorGUILayout.Toggle(new GUIContent("Auto OnEnable", "Automatically call an input on a graph when controller is enabled."), Controller.autoOnEnable);
+
+            Controller.autoOnEnable =
+                EditorGUILayout.Toggle(
+                    new GUIContent("Auto OnEnable",
+                        "Automatically call an input on a graph when controller is enabled."), Controller.autoOnEnable);
 
             if (Controller.autoOnEnable)
             {
@@ -131,7 +152,7 @@ namespace Dash.Editor
 
             if (Controller.Graph != null)
             {
-                if (Controller.IsGraphBound)
+                if (Controller.HasBoundGraph)
                 {
                     GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
                 }
@@ -157,6 +178,12 @@ namespace Dash.Editor
             if (Controller.advancedInspector)
             {
                 DrawExposedPropertiesInspector();
+            }
+            
+            if (Controller.advancedInspector && Controller.Graph != null)
+            {
+                GUILayout.Space(16);
+                DrawGraphStructureInspector();
             }
 
             if (EditorGUI.EndChangeCheck())
@@ -191,6 +218,34 @@ namespace Dash.Editor
                 {
                     Controller.CleanupReferences(Controller.Graph.GetExposedGUIDs());
                 }
+            }
+        }
+        
+        void DrawGraphStructureInspector()
+        {
+            var style = new GUIStyle();
+            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.alignment = TextAnchor.MiddleCenter;
+            style.fontStyle = FontStyle.Bold;
+            style.normal.background = Texture2D.whiteTexture;
+            style.fontSize = 16;
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Nodes List", style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+            
+            for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
+            {
+                GUILayout.Label(Controller.Graph.Nodes[i].Id + " : " + Controller.Graph.Nodes[i].Name);
+            }
+            
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Connection List", style, GUILayout.Height(28));
+            
+            for (int i = 0; i < Controller.Graph.Connections.Count; i++)
+            {
+                var c = Controller.Graph.Connections[i];
+                GUILayout.Label(
+                    c.inputNode.Id + "[" + c.inputIndex + "] : "+c.outputNode.Id + "[" + c.outputIndex + "]");
             }
         }
         

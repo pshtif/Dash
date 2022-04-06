@@ -114,7 +114,7 @@ namespace Dash.Editor
             style.fontSize = 24;
             style.fontStyle = FontStyle.Bold;
             GUI.color = new Color(1, 1, 1, 0.25f);
-            if (Controller != null && Controller.IsGraphBound)
+            if (Controller != null && Controller.HasBoundGraph)
             {
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
             }
@@ -130,11 +130,20 @@ namespace Dash.Editor
                 GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), Controller.name, style);
             }
             
-            if (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) && Controller != null)
+            if (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath))
             {
-                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - 98, 100, 32), "GO TO PARENT"))
+                if (GUI.Button(new Rect(p_rect.x + 16, p_rect.height - (Controller == null ? 80 : 98), 100, 32), "GO TO PARENT"))
                 {
-                    DashEditorCore.EditController(Controller, GraphUtils.GetParentPath(DashEditorCore.EditorConfig.editingGraphPath));
+                    if (Controller != null)
+                    {
+                        DashEditorCore.EditController(Controller,
+                            GraphUtils.GetParentPath(DashEditorCore.EditorConfig.editingGraphPath));
+                    }
+                    else
+                    {
+                        DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
+                            GraphUtils.GetParentPath(DashEditorCore.EditorConfig.editingGraphPath));
+                    }
                 }
             }
         }
@@ -174,15 +183,21 @@ namespace Dash.Editor
                 style.normal.textColor = Color.white;
                 style.fontStyle = FontStyle.Bold;
                 style.alignment = TextAnchor.MiddleLeft;
-                if (Controller != null && Controller.IsGraphBound)
+                if (Controller != null && Controller.HasBoundGraph)
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Controller.name + (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) ? "/"+DashEditorCore.EditorConfig.editingGraphPath : "")), style);
+                        new GUIContent(Controller.name +
+                                       (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
+                                           ? "/" + DashEditorCore.EditorConfig.editingGraphPath
+                                           : "")), style);
                 }
                 else
                 {
                     GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Graph.name + (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath) ? "/"+DashEditorCore.EditorConfig.editingGraphPath : "")), style);
+                        new GUIContent(DashEditorCore.EditorConfig.editingRootGraph.name + 
+                                       (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
+                                           ? "/" + DashEditorCore.EditorConfig.editingGraphPath
+                                           : "")), style);
                 }
             }
             else

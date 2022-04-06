@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -24,8 +25,7 @@ namespace Dash
         public int version { get; private set; } = 0;
 
         public event Action<OutputNode, NodeFlowData> OnOutput;
-
-        [FormerlySerializedAs("variables")]
+        
         [SerializeField]
         private DashVariables _variables;
 
@@ -72,14 +72,34 @@ namespace Dash
         private Dictionary<string, List<EventHandler>>
             _callbackListeners = new Dictionary<string, List<EventHandler>>();
 
-        public DashGraph ParentGraph { get; private set; }
+        [NonSerialized]
+        private DashGraph _parentGraph;
         
+        [NonSerialized]
+        public bool isBound = false;
+        
+        public DashGraph GetParentGraph()
+        {
+            return _parentGraph;
+        }
+
+        public DashGraph RootGraph
+        {
+            get
+            {
+                if (_parentGraph == null)
+                    return this;
+
+                return _parentGraph.RootGraph;
+            }
+        }
+
         public string GraphPath
         {
             get
             {
-                if (ParentGraph != null)
-                    return ParentGraph.GraphPath + "/"+ name;
+                if (_parentGraph != null)
+                    return _parentGraph.GraphPath + "/"+ name;
 
                 return name;
             }
@@ -137,7 +157,9 @@ namespace Dash
             if (!p_name.IsNullOrWhitespace())
             {
                 if (!_nodeListeners.ContainsKey(p_name))
+                {
                     _nodeListeners[p_name] = new List<EventHandler>();
+                }
 
                 if (!_nodeListeners[p_name].Exists(e => e.Callback == p_node.Execute))
                 {
@@ -156,7 +178,9 @@ namespace Dash
             if (!string.IsNullOrWhiteSpace(p_name))
             {
                 if (!_callbackListeners.ContainsKey(p_name))
+                {
                     _callbackListeners[p_name] = new List<EventHandler>();
+                }
 
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
@@ -169,17 +193,7 @@ namespace Dash
                 Debug.LogWarning("Invalid event name, cannot be null or whitespace.");
             }
         }
-
-        // public void RemoveListener(string p_name, NodeBase p_node)
-        // {
-        //     if (_nodeListeners.ContainsKey(p_name))
-        //     {
-        //         _nodeListeners[p_name].Remove(p_node);
-        //         if (_nodeListeners[p_name].Count == 0)
-        //             _nodeListeners.Remove(p_name);
-        //     }
-        // }
-
+        
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
         {
             if (_callbackListeners.ContainsKey(p_name))
@@ -230,7 +244,7 @@ namespace Dash
             return Nodes.Exists(n => p_nodeType.IsAssignableFrom(n.GetType()));
         }
 
-        public List<T> GetAllNodesByType<T>() where T : NodeBase
+        public List<T> GetNodesByType<T>() where T : NodeBase
         {
             return Nodes.FindAll(n => n is T).ConvertAll(n => (T)n);
         }
@@ -240,18 +254,19 @@ namespace Dash
             return Nodes.FindAll(n => n is OutputNode).IndexOf(p_node);
         }
 
-        public void Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
+        public bool Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
         {
             bool exists = Connections.Exists(c =>
                 c.inputNode == p_inputNode && c.inputIndex == p_inputIndex && c.outputNode == p_outputNode &&
                 c.outputIndex == p_outputIndex);
             
             if (exists || p_inputNode.InputCount <= p_inputIndex || p_outputNode.OutputCount <= p_outputIndex) 
-                return;
+                return false;
             
             NodeConnection connection = new NodeConnection(p_inputIndex, p_inputNode, p_outputIndex, p_outputNode);
             
             _connections.Add(connection);
+            return true;
         }
 
         public void Disconnect(NodeConnection p_connection)
@@ -311,7 +326,7 @@ namespace Dash
 
         public bool ExecuteGraphInput(string p_inputName, NodeFlowData p_flowData)
         {
-            InputNode inputNode = GetAllNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
+            InputNode inputNode = GetNodesByType<InputNode>().Find(n => n.Model.inputName == p_inputName);
             if (inputNode != null)
             {
                 inputNode.Execute(p_flowData);
@@ -325,11 +340,11 @@ namespace Dash
         public void Stop()
         {
             Nodes.ForEach(n => ((INodeAccess)n).Stop());
-            // ((IInternalGraphAccess)this).StopActiveTweens(null);
-            // Nodes.FindAll(n => n is SubGraphNode).ForEach(n => n.Graph.Stop());
         }
 
 #region SERIALIZATION
+
+        
 
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
@@ -345,19 +360,21 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            GetAllNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
             //Debug.Log("OnBeforeSerialize");
-            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-            }
-            
             #if UNITY_EDITOR
             if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
             {
                 DashEditorCore.EditorConfig.editingController.ReserializeBound();
+            }
+            else
+            {
+                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+            
+                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+                {
+                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
+                }
             }
             #endif
         }
@@ -394,12 +411,9 @@ namespace Dash
         [NonSerialized]
         private List<DashTween> _activeTweens;
 
-        DashGraph IInternalGraphAccess.ParentGraph
+        void IInternalGraphAccess.SetParentGraph(DashGraph p_graph)
         {
-             set
-             {
-                 ParentGraph = value;
-             }
+            _parentGraph = p_graph;
         }
         
         void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
@@ -432,21 +446,6 @@ namespace Dash
         [NonSerialized]
         public int connectingOutputIndex;
 
-        // public void ValidateSerialization()
-        // {
-        //     Nodes?.ForEach(n => n.ValidateSerialization());
-        //     version = DashCore.GetVersionNumber();
-        //     if (IsBound)
-        //     {
-        //         Controller.ReserializeBound();
-        //         EditorUtility.SetDirty(Controller);
-        //     }
-        //     else
-        //     {
-        //         EditorUtility.SetDirty(this);
-        //     }
-        // }
-        
         public void Reconnect(NodeConnection p_connection)
         {
             connectingNode = p_connection.outputNode;
@@ -508,11 +507,6 @@ namespace Dash
             return _boxes.AsEnumerable().Reverse().ToList().Find(b => b.resizeRect.Contains(p_position - viewOffset));
         }
 
-        public void DeleteBox(GraphBox p_box)
-        {
-            _boxes.Remove(p_box);
-        }
-
         public NodeConnection HitsConnection(Vector2 p_position, float p_distance)
         {
             foreach (NodeConnection connection in _connections)
@@ -553,63 +547,9 @@ namespace Dash
             _boxes.Add(box);
         }
         
-        public NodeBase CreateNode(Type p_nodeType, Vector2 p_position)
+        public void DeleteBox(GraphBox p_box)
         {
-            if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && GetNodeByType(p_nodeType) != null)
-                return null;
-            
-            Undo.RegisterCompleteObjectUndo(this, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
-            
-            NodeBase node = NodeBase.Create(p_nodeType, this);
-
-            if (node != null)
-            {
-                float zoom = DashEditorCore.EditorConfig.zoom;
-                node.rect = new Rect(p_position.x, p_position.y, 0, 0);
-                Nodes.Add(node);
-            }
-            
-            DashEditorCore.SetDirty();
-
-            return node;
-        }
-        
-        public NodeBase DuplicateNode(NodeBase p_node)
-        {
-            NodeBase clone = p_node.Clone(this);
-            clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
-            Nodes.Add(clone);
-            return clone;
-        }
-        
-        public List<NodeBase> DuplicateNodes(List<NodeBase> p_nodes)
-        {
-            if (p_nodes == null || p_nodes.Count == 0)
-                return null;
-
-            List<NodeBase> newNodes = new List<NodeBase>();
-            foreach (NodeBase node in p_nodes)
-            {
-                NodeBase clone = node.Clone(this);
-                clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
-                Nodes.Add(clone);
-                newNodes.Add(clone);
-            }
-
-            DashGraph originalGraph = p_nodes[0].Graph;
-            // Recreate connections within duplicated part
-            foreach (NodeBase node in p_nodes)
-            {
-                List<NodeConnection> connections =
-                    originalGraph.Connections.FindAll(c => c.inputNode == node && p_nodes.Contains(c.outputNode));
-                foreach (NodeConnection connection in connections)
-                {
-                    Connect(newNodes[p_nodes.IndexOf(connection.inputNode)], connection.inputIndex,
-                        newNodes[p_nodes.IndexOf(connection.outputNode)], connection.outputIndex);
-                }
-            }
-
-            return newNodes;
+            _boxes.Remove(p_box);
         }
 
         public void RemoveNullReferences()

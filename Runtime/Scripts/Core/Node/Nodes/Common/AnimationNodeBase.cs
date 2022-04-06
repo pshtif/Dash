@@ -40,20 +40,16 @@ namespace Dash
                 _activeTweens.Add(tween);
                 tween.OnComplete(() =>
                 {
-                    ExecuteEnd(p_flowData, tween);
+                    _activeTweens.Remove(tween);
+                    ExecuteEnd(p_flowData);
                 }).Start();
             }
         }
 
         protected abstract DashTween AnimateOnTarget(Transform p_target, NodeFlowData p_flowData);
         
-        protected void ExecuteEnd(NodeFlowData p_flowData, DashTween p_tween = null)
+        protected void ExecuteEnd(NodeFlowData p_flowData)
         {
-            if (p_tween != null)
-            {
-                _activeTweens.Remove(p_tween);
-            }
-
             OnExecuteEnd();
             OnExecuteOutput(0,p_flowData);
         }

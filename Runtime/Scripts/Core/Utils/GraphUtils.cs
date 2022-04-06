@@ -106,19 +106,27 @@ namespace Dash
             }
         }
         
-        // static List<DashGraph> GetAllGraphs()
-        // {
-        //     List<DashGraph> graphs = new List<DashGraph>();
-        //     string[] graphGuids = AssetDatabase.FindAssets("t:DashGraph");
-        //     foreach (string graphGuid in graphGuids)
-        //     {
-        //         string path = AssetDatabase.GUIDToAssetPath(graphGuid);
-        //         DashGraph graph = AssetDatabase.LoadAssetAtPath<DashGraph>(path);
-        //         graphs.Add(graph);
-        //     }
-        //
-        //     return graphs;
-        // }
+        public static DashGraph GetGraphAtPath(DashGraph p_graph, string p_path)
+        {
+            if (string.IsNullOrWhiteSpace(p_path))
+                return p_graph;
+
+            List<string> split = p_path.Split('/').ToList();
+            DashGraph currentGraph = p_graph;
+            foreach (string id in split)
+            {
+                SubGraphNode node = currentGraph.GetNodeById(id) as SubGraphNode;
+                if (node == null)
+                {
+                    Debug.LogWarning("Cannot retrieve subgraph at invalid graph path " + p_path);
+                    return null;
+                }
+
+                currentGraph = node.GetSubGraphInstance();
+            }
+
+            return currentGraph;
+        }
 #endif
     }
 }

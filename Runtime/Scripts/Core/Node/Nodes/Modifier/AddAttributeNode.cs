@@ -54,7 +54,7 @@ namespace Dash
         {
             bool selected = SelectionManager.IsSelected(this);
             
-            SetAttributeNode newNode = DashEditorCore.EditorConfig.editingGraph.CreateNode(typeof(SetAttributeNode), rect.position) as SetAttributeNode;
+            SetAttributeNode newNode = NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, typeof(SetAttributeNode), rect.position) as SetAttributeNode;
             
             newNode.Model.attributeName.SetValue(Model.attributeName);
             newNode.Model.expression = Model.expression;

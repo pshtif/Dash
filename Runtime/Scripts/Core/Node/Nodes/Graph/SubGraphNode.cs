@@ -34,7 +34,7 @@ namespace Dash
         {
             get
             {
-                return SubGraph != null ? SubGraph.GetAllNodesByType<InputNode>().Count : 0;
+                return SubGraph != null ? SubGraph.GetNodesByType<InputNode>().Count : 0;
             }
         }
         
@@ -42,7 +42,7 @@ namespace Dash
         {
             get
             {
-                return SubGraph != null ? SubGraph.GetAllNodesByType<OutputNode>().Count : 0;
+                return SubGraph != null ? SubGraph.GetNodesByType<OutputNode>().Count : 0;
             }
         }
         
@@ -53,7 +53,7 @@ namespace Dash
             if (SubGraph != null)
             {
                 SubGraph.Initialize(Graph.Controller);
-                SubGraph.OnOutput += (node, data) => ExecuteEnd(Graph.GetOutputIndex(node), data);
+                SubGraph.OnOutput += (node, data) => ExecuteEnd(SubGraph.GetOutputIndex(node), data);
             }
         }
 
@@ -67,13 +67,18 @@ namespace Dash
             if (CheckException(SubGraph, "There is no graph defined"))
                 return;
             
-            SubGraph.GetNodeByType<InputNode>()?.Execute(p_flowData);
+            var inputs = SubGraph.GetNodesByType<InputNode>();
+            if (inputs.Count > p_flowData.inputIndex)
+            {
+                inputs[p_flowData.inputIndex].Execute(p_flowData);
+            }
         }
 
         protected void ExecuteEnd(int p_outputIndex, NodeFlowData p_flowData)
         {
+            Debug.Log("EEND: "+p_outputIndex);
             OnExecuteEnd();
-            OnExecuteOutput(0, p_flowData);
+            OnExecuteOutput(p_outputIndex, p_flowData);
         }
         
         public DashGraph GetSubGraphInstance()
@@ -105,7 +110,7 @@ namespace Dash
                 return;
             
             _subGraphInstance = Model.graphAsset.Clone();
-            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).SetParentGraph(Graph);
             _subGraphInstance.name = Model.id;
         }
         
@@ -120,7 +125,8 @@ namespace Dash
                 _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
             }
 
-            ((IInternalGraphAccess)_subGraphInstance).ParentGraph = Graph;
+            ((IInternalGraphAccess)_subGraphInstance).SetParentGraph(Graph);
+            _subGraphInstance.isBound = true;
             _subGraphInstance.name = Model.id;
         }
         
@@ -134,17 +140,66 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
+        
+        public override string CustomName => Model.useAsset ? "SubGraph " + SubGraph.name : "SubGraph";
 
-        public override Vector2 Size => new Vector2(150, 85 + (InputCount > OutputCount
-                ? (InputCount > 2 ? (InputCount - 2) * 25 : 0)
-                : (OutputCount > 2 ? (OutputCount - 2) * 25 : 0)));
+        public float CustomNameSize => DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(CustomName)).x;
+
+        public override Vector2 Size => new Vector2(
+            CustomNameSize < 115
+                ? 150
+                : CustomNameSize + 35, 85 +
+            (InputCount > OutputCount
+                ? (InputCount > 2 ? (InputCount - 2) * 28 : 0)
+                : (OutputCount > 2 ? (OutputCount - 2) * 28 : 0)));
         
         public override void DrawInspector()
         {
             GUI.color = new Color(1, 0.75f, 0.5f);
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController, GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                if (DashEditorCore.EditorConfig.editingController != null)
+                {
+                    DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController,
+                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                }
+                else
+                {
+                    DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
+                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                }
+            }
+
+            GUI.color = Color.white;
+            
+            if (!Model.useAsset)
+            {
+                if (GUILayout.Button("Save to Asset"))
+                {
+                    DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
+                    if (graph != null)
+                    {
+                        Model.useAsset = true;
+                        Model.graphAsset = graph;
+
+                        _subGraphInstance = null;
+                        _selfReferenceIndex = -1;
+                        _boundSubGraphData = null;
+                        _boundSubGraphReferences.Clear();
+                    }
+                }
+            }
+            else
+            {
+                if (GUILayout.Button("Bind Graph"))
+                {
+                    DashGraph graph = SubGraph.Clone();
+                    _boundSubGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
+                    _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == graph);
+
+                    Model.useAsset = false;
+                    Model.graphAsset = null;
+                }
             }
 
             GUI.color = Color.white;
@@ -156,13 +211,19 @@ namespace Dash
         {
             base.DrawCustomGUI(p_rect);
 
-            if (Model.useAsset)
+            var inputs = SubGraph.GetNodesByType<InputNode>();
+            for (int i = 0; i < inputs.Count; i++)
             {
-                var style = new GUIStyle(DashEditorCore.Skin.GetStyle("NodeText"));
-                style.alignment = TextAnchor.MiddleCenter;
-                style.normal.textColor = Color.cyan;
-                string name = Model.graphAsset != null ? Model.graphAsset.name : "NONE"; 
-                GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height - 32, p_rect.width, 20), name, style);
+                GUI.Label(new Rect(p_rect.x + 20, p_rect.y + 26 + 28 * i, p_rect.width-10, 20), inputs[i].Model.inputName);
+            }
+
+            var style = new GUIStyle("label");
+            style.alignment = TextAnchor.MiddleRight;
+            
+            var outputs = SubGraph.GetNodesByType<OutputNode>();
+            for (int i = 0; i < outputs.Count; i++)
+            {
+                GUI.Label(new Rect(p_rect.x + 20, p_rect.y + 26 + 28 * i, p_rect.width-40, 20), outputs[i].Model.outputName, style);
             }
         }
 #endif

@@ -45,7 +45,7 @@ namespace Dash
             }
             else
             {
-                targetTransform = Model.targetReference.Resolve(Controller);
+                targetTransform = Model.targetTransform.Resolve(Controller);
             }
             
             if (CheckException(targetTransform, "Target transform null."))
