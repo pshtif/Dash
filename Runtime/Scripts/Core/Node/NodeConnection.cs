@@ -14,7 +14,7 @@ namespace Dash
         public bool active = true;
 
         public int inputIndex;
-        public int outputIndex { get; }
+        public int outputIndex;
         
         public NodeBase inputNode { get; private set; }
         public NodeBase outputNode { get; }
