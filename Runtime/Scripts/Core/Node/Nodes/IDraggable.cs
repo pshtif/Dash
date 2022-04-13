@@ -4,7 +4,8 @@
 
 namespace Dash
 {
-    public class NullNodeModel : NodeModelBase
+    public interface IDraggable
     {
+        
     }
 }

@@ -20,7 +20,7 @@ namespace Dash
     [Serializable]
     [Size(150,85)]
     [Category(NodeCategoryType.OTHER)]
-    public abstract class NodeBase : INodeAccess
+    public abstract class NodeBase : INodeAccess, IDraggable
     {
         static public NodeBase Create(Type p_nodeType, DashGraph p_graph)
         {
@@ -430,64 +430,6 @@ namespace Dash
                 return _baseGUIEnabled;
             }
         }
-
-        // [NonSerialized] 
-        // private Texture _iconTexture;
-        //
-        // protected Texture IconTexture
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _iconTexture;
-        //     }
-        // }
-
-        // [NonSerialized] 
-        // private Color _nodeBackgroundColor;
-        //
-        // // Using virtual getters so you can override it and avoid serialization at the same time and it is not
-        // // possible to use Attributes for this due to non constant initializer
-        // protected virtual Color NodeBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _nodeBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized]
-        // private Color _titleBackgroundColor;
-        //
-        // protected virtual Color TitleBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _titleBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized] 
-        // private Color _titleTextColor;
-        //
-        // protected virtual Color TitleTextColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //         
-        //         return _titleTextColor;
-        //     }
-        // }
 
         public Rect rect;
 

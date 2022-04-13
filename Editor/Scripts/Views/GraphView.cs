@@ -388,13 +388,14 @@ namespace Dash.Editor
                     }
                     else
                     {
+                        int hitIndex;
                         NodeConnection hitConnection = Graph.HitsConnection(
                             p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y),
-                            12);
+                            12, out hitIndex);
 
                         if (hitConnection != null)
                         {
-                            ConnectionContextMenu.Show(hitConnection);
+                            ConnectionContextMenu.Show(hitConnection, hitIndex);
                         }
                         else
                         {

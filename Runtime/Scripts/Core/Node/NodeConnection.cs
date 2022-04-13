@@ -3,7 +3,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash
@@ -11,6 +13,11 @@ namespace Dash
     [Serializable]
     public class NodeConnection
     {
+        public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
+        
+        [SerializeField]
+        public List<NodeConnectionPoint> points = new List<NodeConnectionPoint>();
+    
         public bool active = true;
 
         public int inputIndex;
@@ -72,31 +79,113 @@ namespace Dash
                 executeTime -= .2f;
                 connectionColor = Color.cyan;
             }
-            
-            DrawBezier(startPos, endPos, connectionColor, true);
 
-            DrawButton(startPos, endPos, connectionColor);
+            if (points == null || points.Count == 0)
+            {
+                DrawBezier(startPos, endPos, connectionColor, true);
+            }
+            else
+            {
+                foreach (var point in points)
+                {
+                    var pos = point.position + inputNode.Graph.viewOffset;
+                    DrawBezier(startPos, pos, connectionColor, true);
+                    startPos = pos;
+                }
+                DrawBezier(startPos, endPos, connectionColor, true);
+            }
+
+            DrawPointsButton(connectionColor);
+            //DrawReconnectButton(startPos, endPos, connectionColor);
 
             Handles.EndGUI();
         }
 
-        void DrawButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
+        public void AddPoint(Vector2 p_point, int p_index)
         {
-            var pos = (p_startPos + p_endPos) / 2;
-            var buttonRect = new Rect(pos.x - 6, pos.y - 6, 12, 12);
+            if (points == null)
+                points = new List<NodeConnectionPoint>();
             
-            //GUI.color = buttonRect.Contains(Event.current.mousePosition) ? Color.green : p_connectionColor;
-            GUI.color = p_connectionColor;
-            GUI.Box(buttonRect, "", DashEditorCore.Skin.GetStyle("NodeReconnect"));
+            points.Insert(p_index, new NodeConnectionPoint(this, p_point));
+        }
 
-            if (Event.current.button == 0)
+        public void DeletePoint(NodeConnectionPoint p_point)
+        {
+            points.Remove(p_point);
+        }
+
+        public int Hits(Vector2 p_position, float p_distance)
+        {
+            Rect inputOffsetRect = new Rect(inputNode.rect.x + Graph.viewOffset.x,
+                inputNode.rect.y + Graph.viewOffset.y, inputNode.Size.x, inputNode.Size.y);
+            Rect outputOffsetRect = new Rect(outputNode.rect.x + Graph.viewOffset.x,
+                outputNode.rect.y + Graph.viewOffset.y, outputNode.Size.x, outputNode.Size.y);
+
+            Vector2 startPos = new Vector2(outputOffsetRect.x + outputOffsetRect.width + 8,
+                outputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
+                outputIndex * 32);
+            Vector2 startTan = startPos + Vector2.right * 50;
+
+            var index = 0;
+            if (points != null)
             {
-                if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
+                foreach (var point in points)
                 {
-                    DashEditorCore.EditorConfig.editingGraph.Reconnect(this); 
+                    Vector2 pos = point.position + Graph.viewOffset;
+                    Vector2 tan = pos + Vector2.left * 50;
+
+                    bool hit = HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos,
+                        pos, startTan, tan) < p_distance;
+
+                    if (hit)
+                        return index;
+
+                    startPos = pos;
+                    startTan = pos + Vector2.right * 50;
+                    index++;
                 }
             }
+
+            Vector3 endPos = new Vector2(inputOffsetRect.x - 8,
+                inputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
+                inputIndex * 32);
+            Vector2 endTan = endPos + Vector3.left * 50;
+
+            if (HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos, endPos,
+                    startTan, endTan) < p_distance)
+                return index;
+
+            return -1;
         }
+        
+        void DrawPointsButton(Color p_connectionColor)
+        {
+            if (points == null)
+                return;
+            
+            foreach (var point in points)
+            {
+                point.DrawGUI(p_connectionColor);
+            }
+        }
+
+        // void DrawReconnectButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
+        // {
+        //     var pos = (p_startPos + p_endPos) / 2;
+        //     var buttonRect = new Rect(pos.x - 6, pos.y - 6, 12, 12);
+        //     
+        //     //GUI.color = buttonRect.Contains(Event.current.mousePosition) ? Color.green : p_connectionColor;
+        //     GUI.color = p_connectionColor;
+        //     GUI.Box(buttonRect, "", DashEditorCore.Skin.GetStyle("NodeReconnect"));
+        //
+        //     if (Event.current.button == 0)
+        //     {
+        //         if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
+        //         {
+        //             DashEditorCore.EditorConfig.editingGraph.Reconnect(this); 
+        //         }
+        //     }
+        // }
 
         static public void DrawBezier(Vector3 p_startPos, Vector3 p_endPos, Color p_color, bool p_shadow)
         {
