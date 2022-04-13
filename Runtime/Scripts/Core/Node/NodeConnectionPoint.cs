@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class NodeConnectionPoint : IDraggable
+    public class NodeConnectionPoint : ISelectable
     {
         public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
@@ -47,7 +47,7 @@ namespace Dash
 
                 if (Event.current.type == EventType.MouseDrag && _isDragging)
                 {
-                    position += Event.current.delta * DashEditorCore.EditorConfig.zoom;
+                    position += Event.current.delta;// * DashEditorCore.EditorConfig.zoom;
                     Event.current.Use();
                 }
 

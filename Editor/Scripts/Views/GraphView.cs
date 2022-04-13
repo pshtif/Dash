@@ -18,6 +18,7 @@ namespace Dash.Editor
 
         private float Zoom => DashEditorCore.EditorConfig.zoom;
 
+        public Vector2 MousePosition { get; private set; }
         private Rect zoomedRect;
 
         private DraggingType dragging = DraggingType.NONE;
@@ -41,7 +42,8 @@ namespace Dash.Editor
                 GUIScaleUtils.CheckInit();
                 _initialized = true;
             }
-            
+
+            MousePosition = Event.current.mousePosition;
             zoomedRect = new Rect(0, 0, p_rect.width, p_rect.height);
 
             GUI.color = DashEditorCore.Previewer.IsPreviewing ? new Color(0f, 1f, .2f, 1) :  new Color(0f, .1f, .2f, 1);
@@ -63,6 +65,9 @@ namespace Dash.Editor
                 //Graph.DrawComments(zoomedRect);
                 GUIScaleUtils.EndScale();
                 
+                // Draw popups outside of zoomed GUI to avoid scaling/offseting issues
+                GenericMenuPopup.LastPopupAction?.Invoke();
+
                 Graph.DrawComments(p_rect, false);
                 
                 DrawHelp(p_rect);
@@ -286,14 +291,14 @@ namespace Dash.Editor
                 NodeBase hitNode = Graph.HitsNode(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
                 int hitNodeIndex = Graph.Nodes.IndexOf(hitNode);
 
-                if (!SelectionManager.IsSelected(hitNodeIndex) && (!p_event.shift || hitNodeIndex == 0))
+                if (!SelectionManager.IsSelected(hitNode) && (!p_event.shift || hitNodeIndex == 0))
                 {
                     SelectionManager.ClearSelection();
                 }
 
                 if (hitNodeIndex >= 0)
                 {
-                    AddSelectedNode(hitNodeIndex);
+                    AddSelectedNode(hitNode);
 
                     dragging = DraggingType.NODE_DRAG;
                 }
@@ -347,7 +352,7 @@ namespace Dash.Editor
                         selectedRegion.width += p_event.delta.x;
                         selectedRegion.height += p_event.delta.y;
                         Rect fixedRect = FixRect(selectedRegion);
-                        SelectionManager.SelectingNodes(Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).Select(n => n.Index).ToList());
+                        SelectionManager.SelectingNodes(Graph.Nodes.FindAll(n => n.IsInsideRect(fixedRect)).ToList());
                         break;
                 }
 
@@ -459,13 +464,13 @@ namespace Dash.Editor
             }
         }
 
-        void AddSelectedNode(int p_nodeIndex)
+        void AddSelectedNode(NodeBase p_node)
         {
-            if (!SelectionManager.IsSelected(p_nodeIndex))
+            if (!SelectionManager.IsSelected(p_node))
             {
-                SelectionManager.AddNodeToSelection(p_nodeIndex);
+                SelectionManager.AddNodeToSelection(p_node);
 
-                Graph.Nodes[p_nodeIndex].SelectEditorTarget();
+                p_node.SelectEditorTarget();
             }
         }
 

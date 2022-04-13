@@ -16,6 +16,8 @@ namespace Dash.Editor
 
         protected static bool _isDirty = false;
         
+        public static GraphView GraphView { get; private set; }
+        
         public static bool IsDirty => _isDirty;
 
         public static void SetDirty(bool p_dirty)
@@ -122,7 +124,8 @@ namespace Dash.Editor
             if (Instance != null)
             {
                 _views = new List<ViewBase>();
-                AddView(new GraphView());
+                GraphView = new GraphView();
+                AddView(GraphView);
                 AddView(new NodeInspectorView());
                 AddView(new GraphVariablesView());
                 AddView(new PreviewControlsView());

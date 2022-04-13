@@ -20,7 +20,7 @@ namespace Dash
     [Serializable]
     [Size(150,85)]
     [Category(NodeCategoryType.OTHER)]
-    public abstract class NodeBase : INodeAccess, IDraggable
+    public abstract class NodeBase : INodeAccess, ISelectable
     {
         static public NodeBase Create(Type p_nodeType, DashGraph p_graph)
         {
@@ -593,7 +593,7 @@ namespace Dash
 
         void DrawOutline(Rect p_rect)
         {
-            if (SelectionManager.IsSelected(Graph.Nodes.IndexOf(this)))
+            if (SelectionManager.IsSelected(this))
             {
                 GUI.color = Color.green;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),
@@ -611,7 +611,7 @@ namespace Dash
                     "",  DashEditorCore.Skin.GetStyle("NodeSelected"));
             }
             
-            if (SelectionManager.IsSelecting(Graph.Nodes.IndexOf(this)))
+            if (SelectionManager.IsSelecting(this))
             {
                 GUI.color = Color.yellow;
                 GUI.Box(new Rect(p_rect.x - 2, p_rect.y - 2, p_rect.width + 4, p_rect.height + 4),

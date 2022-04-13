@@ -16,7 +16,7 @@ namespace Dash.Editor
 
         static public void Show(NodeConnection p_connection, int p_hitIndex, NodeConnectionPoint p_point = null)
         {
-            _lastMousePosition = Event.current.mousePosition;
+            _lastMousePosition = DashEditorWindow.GraphView.MousePosition;
             _lastHitIndex = p_hitIndex;
             _lastPoint = p_point;
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
@@ -32,7 +32,7 @@ namespace Dash.Editor
             }
 
             menu.AddItem(new GUIContent("Delete Connection"), false, DeleteConnection, p_connection);
-            
+
             if (p_point != null)
             {
                 menu.AddItem(new GUIContent("Delete Point"), false, DeleteConnectionPoint, p_connection);
@@ -43,7 +43,14 @@ namespace Dash.Editor
             }
 
             //menu.ShowAsContext();
-            GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 200, 300, false, false);
+            if (p_point == null)
+            {
+                GenericMenuPopup.Show(menu, "", _lastMousePosition, 200, 300, false, false);
+            }
+            else
+            {
+                GenericMenuPopup.ShowLater(menu, "", _lastMousePosition, 200, 300, false, false);
+            }
         }
 
         static void DeleteConnectionPoint(object p_connection)

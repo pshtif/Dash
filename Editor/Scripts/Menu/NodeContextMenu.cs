@@ -80,7 +80,7 @@ namespace Dash.Editor
             
             menu.AddSeparator("");
 
-            if (!SelectionManager.selectedNodes.Contains(Graph.Nodes.IndexOf(p_node)))
+            if (!SelectionManager.selectedNodes.Contains(p_node))
             {
                 menu.AddItem(new GUIContent("Connect Selection as Output"), false, ConnectSelectionAsOutput, p_node);
                 menu.AddItem(new GUIContent("Connect Selection as Input"), false, ConnectSelectionAsInput, p_node);
@@ -94,9 +94,8 @@ namespace Dash.Editor
 
         static void ConnectSelectionAsInput(object p_node)
         {
-            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            foreach (var node in SelectionManager.selectedNodes)
             {
-                NodeBase node = Graph.Nodes[nodeIndex];
                 Graph.Connect((NodeBase)p_node, 0, node, 0);
             }
             
@@ -105,9 +104,8 @@ namespace Dash.Editor
         
         static void ConnectSelectionAsOutput(object p_node)
         {
-            foreach (int nodeIndex in SelectionManager.selectedNodes)
+            foreach (var node in SelectionManager.selectedNodes)
             {
-                NodeBase node = Graph.Nodes[nodeIndex];
                 Graph.Connect(node, 0, (NodeBase)p_node, 0);
             }
             

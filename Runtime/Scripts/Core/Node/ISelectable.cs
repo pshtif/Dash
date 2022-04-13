@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public interface IDraggable
+    public interface ISelectable
     {
         
     }

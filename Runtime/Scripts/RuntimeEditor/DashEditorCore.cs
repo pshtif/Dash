@@ -136,9 +136,9 @@ namespace Dash
             if (EditorConfig.editingController == null)
                 return;
 
-            if (SelectionManager.SelectedCount == 1 && EditorConfig.editingGraph.Nodes.Count > SelectionManager.selectedNodes[0])
+            if (SelectionManager.SelectedCount == 1)
             {
-                EditorConfig.editingGraph.Nodes[SelectionManager.selectedNodes[0]].DrawSceneGUI();
+                SelectionManager.selectedNodes[0].DrawSceneGUI();
             }
         }
         

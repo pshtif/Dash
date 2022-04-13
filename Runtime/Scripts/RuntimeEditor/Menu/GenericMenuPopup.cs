@@ -4,6 +4,7 @@
 
 #if UNITY_EDITOR
 
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -83,6 +84,18 @@ namespace Dash
     
     public class GenericMenuPopup : PopupWindowContent
     {
+        private static Action _lastPopupAction;
+
+        public static Action LastPopupAction
+        {
+            get
+            {
+                var action = _lastPopupAction;
+                _lastPopupAction = null;
+                return action;
+            }
+        }
+        
         public static GenericMenuPopup Get(RuntimeGenericMenu p_menu, string p_title)
         {
             var popup = new GenericMenuPopup(p_menu, p_title);
@@ -98,6 +111,17 @@ namespace Dash
             popup.showTitle = !string.IsNullOrEmpty(p_title);
             PopupWindow.Show(new Rect(p_position.x, p_position.y, 0, 0), popup);
             return popup;
+        }
+
+        public static void ShowLater(RuntimeGenericMenu p_menu, string p_title, Vector2 p_position,
+            int p_width = 200, int p_height = 200, bool p_showSearch = true, bool p_showTooltip = true)
+        {
+            Action action = () =>
+            {
+                Show(p_menu, p_title, p_position, p_width, p_height, p_showSearch, p_showTooltip);
+            };
+
+            _lastPopupAction = action;
         }
 
         private GUIStyle _backStyle;

@@ -25,7 +25,7 @@ namespace Dash.Editor
 
         static public void ShowAsPopup()
         {
-            _lastMousePosition = Event.current.mousePosition;
+            _lastMousePosition = DashEditorWindow.GraphView.MousePosition;
 
             GenericMenuPopup.Show(Get(), "Create Node", _lastMousePosition, 240, 300);
         }

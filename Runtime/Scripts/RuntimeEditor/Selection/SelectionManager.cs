@@ -14,8 +14,8 @@ namespace Dash
         static public float zoom => DashEditorCore.EditorConfig.zoom;
         
         static public List<NodeBase> copiedNodes = new List<NodeBase>();
-        static public List<int> selectedNodes = new List<int>();
-        static public List<int> selectingNodes = new List<int>();
+        static public List<NodeBase> selectedNodes = new List<NodeBase>();
+        static public List<NodeBase> selectingNodes = new List<NodeBase>();
 
         static public int SelectedCount => selectedNodes == null ? 0 : selectedNodes.Count;
         
@@ -25,43 +25,36 @@ namespace Dash
                 return null;
 
             return (selectedNodes != null && selectedNodes.Count == 1)
-                ? selectedNodes[0] < p_graph.Nodes.Count ? p_graph.Nodes[selectedNodes[0]] : null
+                ? selectedNodes[0]
                 : null;
         }
 
-        public static bool IsSelected(int p_nodeIndex) => selectedNodes.Contains(p_nodeIndex);
+        public static bool IsSelected(NodeBase p_node) => selectedNodes.Contains(p_node);
 
-        public static bool IsSelected(NodeBase p_node)
-        {
-            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
-            
-            return graph == null ? false : IsSelected(graph.Nodes.IndexOf(p_node)); 
-        }
-        
-        public static bool IsSelecting(int p_nodeIndex) => selectingNodes.Contains(p_nodeIndex);
+        public static bool IsSelecting(NodeBase p_node) => selectingNodes.Contains(p_node);
 
         public static void ClearSelection()
         {
             DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
             if (graph != null)
             {
-                selectedNodes.FindAll(i => i<graph.Nodes.Count).ForEach(n => graph.Nodes[n].Unselect());
+                selectedNodes.ForEach(n => n.Unselect());
             }
             selectedNodes.Clear();
         }
         
-        public static void ReindexSelected(int p_index)
-        {
-            for (int i = 0; i < selectedNodes.Count; i++)
-            {
-                if (selectedNodes[i] > p_index)
-                    selectedNodes[i]--;
-            }
-        }
+        // public static void ReindexSelected(int p_index)
+        // {
+        //     for (int i = 0; i < selectedNodes.Count; i++)
+        //     {
+        //         if (selectedNodes[i] > p_index)
+        //             selectedNodes[i]--;
+        //     }
+        // }
 
         public static void DragSelectedNodes(Vector2 p_delta, DashGraph p_graph)
         {
-            selectedNodes.ForEach(n => p_graph.Nodes[n].rect.position += p_delta*zoom);
+            selectedNodes.ForEach(n => n.rect.position += p_delta*zoom);
         }
         
         public static void CopyNode(NodeBase p_node, DashGraph p_graph)
@@ -95,7 +88,7 @@ namespace Dash
                 node.rect.y = newNodes[0].rect.y + (node.rect.y - copiedNodes[0].rect.y);
             }
             
-            selectedNodes = newNodes.Select(n => n.Index).ToList();
+            selectedNodes = newNodes.ToList();
 
             DashEditorCore.SetDirty();
         }
@@ -107,10 +100,10 @@ namespace Dash
             
             UndoUtils.RegisterCompleteObject(p_graph, "Create SubGraph");
 
-            List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            List<NodeBase> nodes = selectedNodes.ToList();
             SubGraphNode subGraphNode = NodeUtils.PackNodesToSubGraph(p_graph, nodes);
             selectedNodes.Clear();
-            selectedNodes.Add(subGraphNode.Index);
+            selectedNodes.Add(subGraphNode);
             
             DashEditorCore.SetDirty();
         }
@@ -135,9 +128,9 @@ namespace Dash
             
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Nodes");
 
-            List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            List<NodeBase> nodes = selectedNodes.ToList();
             List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, nodes);
-            selectedNodes = newNodes.Select(n => n.Index).ToList();
+            selectedNodes = newNodes.ToList();
             
             DashEditorCore.SetDirty();
         }
@@ -150,7 +143,7 @@ namespace Dash
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Node");
 
             NodeBase node = NodeUtils.DuplicateNode(p_graph,(NodeBase) p_node);
-            selectedNodes = new List<int> { node.Index };
+            selectedNodes = new List<NodeBase> { node };
             
             DashEditorCore.SetDirty();
         }
@@ -160,12 +153,12 @@ namespace Dash
             if (p_graph == null || selectedNodes.Count == 0)
                 return;
 
-            copiedNodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            copiedNodes = selectedNodes.ToList();
         }
         
         public static void CreateBoxAroundSelectedNodes(DashGraph p_graph)
         {
-            List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            List<NodeBase> nodes = selectedNodes.ToList();
             Rect region = nodes[0].rect;
             
             nodes.ForEach(n =>
@@ -188,10 +181,10 @@ namespace Dash
             
             UndoUtils.RegisterCompleteObject(p_graph, "Delete Nodes");
 
-            var nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
+            var nodes = selectedNodes.ToList();
             nodes.ForEach(n => p_graph.DeleteNode(n));
 
-            selectedNodes = new List<int>();
+            selectedNodes = new List<NodeBase>();
             
             DashEditorCore.SetDirty();
         }
@@ -202,18 +195,17 @@ namespace Dash
                 return;
             
             UndoUtils.RegisterCompleteObject(p_graph, "Delete Node");
-
-            int index = p_node.Index;
+            
             p_graph.DeleteNode(p_node);
-            selectedNodes.Remove(index);
-            ReindexSelected(index);
+            selectedNodes.Remove(p_node);
+            //ReindexSelected(index);
             
             DashEditorCore.SetDirty();
         }
 
-        public static void AddNodeToSelection(int p_nodeIndex)
+        public static void AddNodeToSelection(NodeBase p_node)
         {
-            selectedNodes.Add(p_nodeIndex);
+            selectedNodes.Add(p_node);
         }
 
         public static void SelectNode(NodeBase p_node, DashGraph p_graph, bool p_forceView = false)
@@ -224,7 +216,7 @@ namespace Dash
             if (p_node == null || p_graph == null)
                 return;
 
-            selectedNodes.Add(p_node.Index);
+            selectedNodes.Add(p_node);
 
             if (DashEditorCore.EditorConfig.editingController != null)
             {
@@ -237,7 +229,7 @@ namespace Dash
             }
         }
 
-        public static void SelectingNodes(List<int> p_nodes)
+        public static void SelectingNodes(List<NodeBase> p_nodes)
         {
             selectingNodes = p_nodes;
         }
