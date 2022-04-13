@@ -14,6 +14,7 @@ namespace Dash
         static public float zoom => DashEditorCore.EditorConfig.zoom;
         
         static public List<NodeBase> copiedNodes = new List<NodeBase>();
+        
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
 

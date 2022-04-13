@@ -332,7 +332,7 @@ namespace Dash
             
             DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(nodeType, typeof(DisableBaseGUIAttribute));
             _baseGUIEnabled = disableBaseGuiAttribute == null;
-            
+
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(nodeType, typeof(CategoryAttribute));
             Category = categoryAttribute.type;
             
@@ -557,7 +557,7 @@ namespace Dash
             }
 
             DrawOutline(offsetRect);
-
+            
             DrawConnectors(p_rect);
         }
 
@@ -736,7 +736,7 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        public Rect GetConnectorRect(bool p_input, int p_index)
+        public virtual Rect GetConnectorRect(bool p_input, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,
                 Size.y);
@@ -760,7 +760,7 @@ namespace Dash
             return connectorRect;
         }
         
-        private void DrawConnectors(Rect p_rect)
+        protected virtual void DrawConnectors(Rect p_rect)
         {
             GUISkin skin = DashEditorCore.Skin;
 
@@ -819,8 +819,11 @@ namespace Dash
 
                 if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
                 {
-                    Graph.connectingOutputIndex = i;
-                    Graph.connectingNode = this;
+                    if (Event.current.button == 0)
+                    {
+                        Graph.connectingOutputIndex = i;
+                        Graph.connectingNode = this;
+                    }
                 }
             }
 

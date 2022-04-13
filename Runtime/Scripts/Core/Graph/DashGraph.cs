@@ -291,6 +291,11 @@ namespace Dash
             return _connections.Exists(c => c.inputNode == p_node && c.inputIndex == p_index);
         }
         
+        public bool HasAnyInputConnected(NodeBase p_node)
+        {
+            return _connections.Exists(c => c.inputNode == p_node);
+        }
+        
         public List<NodeConnection> GetInputConnections(NodeBase p_node)
         {
             return _connections.FindAll(c => c.inputNode == p_node);
@@ -511,25 +516,7 @@ namespace Dash
         {
             foreach (NodeConnection connection in _connections)
             {
-                NodeBase inputNode = connection.inputNode;
-                NodeBase outputNode = connection.outputNode;
-
-                Rect inputOffsetRect = new Rect(inputNode.rect.x + viewOffset.x,
-                    inputNode.rect.y + viewOffset.y, inputNode.Size.x, inputNode.Size.y);
-                Rect outputOffsetRect = new Rect(outputNode.rect.x + viewOffset.x,
-                    outputNode.rect.y + viewOffset.y, outputNode.Size.x, outputNode.Size.y);
-
-                Vector3 startPos = new Vector3(outputOffsetRect.x + outputOffsetRect.width + 8,
-                    outputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
-                    connection.outputIndex * 32);
-                Vector3 startTan = startPos + Vector3.right * 50;
-                Vector3 endPos = new Vector3(inputOffsetRect.x - 8,
-                    inputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
-                    connection.inputIndex * 32);
-                Vector3 endTan = endPos + Vector3.left * 50;
-
-                if (HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos, endPos,
-                    startTan, endTan) < p_distance)
+                if (connection.Hits(p_position, p_distance))
                 {
                     return connection; 
                 }

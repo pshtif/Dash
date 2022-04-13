@@ -52,6 +52,8 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
+        public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
+        
         public void DrawGUI()
         {
             if (!IsValid())
@@ -78,6 +80,27 @@ namespace Dash
             DrawButton(startPos, endPos, connectionColor);
 
             Handles.EndGUI();
+        }
+        
+        public bool Hits(Vector2 p_position, float p_distance)
+        {
+            Rect inputOffsetRect = new Rect(inputNode.rect.x + Graph.viewOffset.x,
+                inputNode.rect.y + Graph.viewOffset.y, inputNode.Size.x, inputNode.Size.y);
+            Rect outputOffsetRect = new Rect(outputNode.rect.x + Graph.viewOffset.x,
+                outputNode.rect.y + Graph.viewOffset.y, outputNode.Size.x, outputNode.Size.y);
+
+            Vector2 startPos = new Vector2(outputOffsetRect.x + outputOffsetRect.width + 8,
+                outputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
+                outputIndex * 32);
+            Vector2 startTan = startPos + Vector2.right * 50;
+
+            Vector3 endPos = new Vector2(inputOffsetRect.x - 8,
+                inputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
+                inputIndex * 32);
+            Vector2 endTan = endPos + Vector3.left * 50;
+
+            return HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos, endPos,
+                startTan, endTan) < p_distance;
         }
 
         void DrawButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
