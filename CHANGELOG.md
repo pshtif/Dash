@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.10.1 - 2.5.2022
+
+#### Changed
+
+- Changed NCalc is now in Dash.NCalc namespace to avoid global namespace conflict with other packages using NCalc
+
+#### Fixed
+
+- Fixed input/output indices serialization bug from 0.10.0
+- Fixed Theme class not added as scanned AOT type, you can now specify classes explicitly by DashEditorOnly attribute
+- Fixed when duplicating Input/Output nodes they automatically generate unique input/output names now
+- Fixed when packing nodes to SubGraph it automatically generates input/output naming based on index
+
+### Release 0.10.0 - 29.4.2022
+
+#### Added
+
+- Added AddListeners can now be added with once flag so they will be removed after first invocation
+- Added support for 2021 Unity and their namespace changes
+- Added new type of nodes called Connector which can be used for connection/graph management
+
+#### Changed
+
+- Changed increment property on IncrementText node to be parametrized
+- Updated Odin Serializer to the latest version
+
+#### Fixed
+
+- Fixed subgraph node now gets correctly duplicated with its bound graph
+
 ### Release 0.9.0 - 29.3.2022
 
 #### Added

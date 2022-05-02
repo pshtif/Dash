@@ -53,6 +53,13 @@ namespace Dash
 
             Model.outputName = name;
         }
+        
+        public override NodeBase Clone(DashGraph p_graph)
+        {
+            OutputNode node = base.Clone(p_graph) as OutputNode;
+            node.ValidateUniqueOutputName();
+            return node;
+        }
 #endif
     }
 }

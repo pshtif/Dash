@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Dash;
+using Dash.Attributes;
 using OdinSerializer;
 using OdinSerializer.Editor;
 using OdinSerializer.Utilities;
@@ -150,6 +151,7 @@ namespace Dash.Editor
         {
             if (registeredTypes.Contains(type)) return;
             if (type.IsGenericType && (type.IsGenericTypeDefinition || !type.IsFullyConstructedGenericType())) return;
+            if (type.GetCustomAttribute<DashEditorOnlyAttribute>() != null) return;
 
             registeredTypes.Add(type);
 

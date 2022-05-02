@@ -14,25 +14,6 @@ namespace Dash
     [InputCount(1)]
     public class SequenceNode : NodeBase<SequenceNodeModel>
     {
-        protected override void InitializeAttributes()
-        {
-            ((INodeAccess) this).OnConnectionRemoved -= OnConnectionRemovedHandler;
-            ((INodeAccess) this).OnConnectionRemoved += OnConnectionRemovedHandler;
-            
-            base.InitializeAttributes();
-        }
-
-        void OnConnectionRemovedHandler(NodeConnection p_connection)
-        {
-            if (Graph.Connections.Exists(nc =>
-                nc.outputNode == p_connection.outputNode && nc.outputIndex == p_connection.outputIndex))
-                return;
-            
-            var otherConnections = Graph.Connections.FindAll(nc => nc.outputNode == this && nc.outputIndex > p_connection.outputIndex);
-            otherConnections.Sort((nc1, nc2) => nc1.outputIndex.CompareTo(nc2.outputIndex));
-            otherConnections.ForEach(nc => nc.outputIndex--);
-        }
-        
         public override int OutputCount
         {
             get
@@ -65,6 +46,25 @@ namespace Dash
         protected override void DrawCustomGUI(Rect p_rect)
         {
             base.DrawCustomGUI(p_rect);
+        }
+        
+        protected override void InitializeAttributes()
+        {
+            ((INodeAccess) this).OnConnectionRemoved -= OnConnectionRemovedHandler;
+            ((INodeAccess) this).OnConnectionRemoved += OnConnectionRemovedHandler;
+            
+            base.InitializeAttributes();
+        }
+
+        void OnConnectionRemovedHandler(NodeConnection p_connection)
+        {
+            if (Graph.Connections.Exists(nc =>
+                nc.outputNode == p_connection.outputNode && nc.outputIndex == p_connection.outputIndex))
+                return;
+            
+            var otherConnections = Graph.Connections.FindAll(nc => nc.outputNode == this && nc.outputIndex > p_connection.outputIndex);
+            otherConnections.Sort((nc1, nc2) => nc1.outputIndex.CompareTo(nc2.outputIndex));
+            otherConnections.ForEach(nc => nc.outputIndex--);
         }
 #endif
     }

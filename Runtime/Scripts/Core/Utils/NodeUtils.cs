@@ -122,6 +122,7 @@ namespace Dash
                 {
                     InputNode inputNode = (InputNode)CreateNode(subGraphNode.SubGraph, typeof(InputNode),
                         connection.inputNode.rect.position - new Vector2(200, index * 100));
+                    inputNode.Model.inputName = "Input" + (index + 1);
                     subGraphNode.SubGraph.Connect(newNodes[p_nodes.IndexOf(connection.inputNode)],
                         connection.inputIndex, inputNode, 0);
                     p_graph.Connect(subGraphNode, index++, connection.outputNode, connection.outputIndex);
@@ -141,6 +142,7 @@ namespace Dash
                 {
                     OutputNode outputNode = (OutputNode)CreateNode(subGraphNode.SubGraph, typeof(OutputNode),
                         connection.outputNode.rect.position + new Vector2(300, index * 100));
+                    outputNode.Model.outputName = "Output" + (index + 1);
                     subGraphNode.SubGraph.Connect(outputNode, 0, newNodes[p_nodes.IndexOf(connection.outputNode)],
                         connection.outputIndex);
                     p_graph.Connect(connection.inputNode, connection.inputIndex, subGraphNode, index++);

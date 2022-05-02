@@ -2,11 +2,13 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using Dash.Attributes;
 using UnityEngine;
 
 #if UNITY_EDITOR
 namespace Dash
 {
+    [DashEditorOnly]
     [CreateAssetMenu(fileName = "Theme", menuName = "Dash/Create Theme", order = 1)]
     public class Theme : ScriptableObject
     {

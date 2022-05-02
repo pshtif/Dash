@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Dash.Extensions;
-using NCalc;
+using Dash.NCalc;
 using UnityEngine;
 
 namespace Dash

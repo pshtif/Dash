@@ -26,8 +26,6 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new CustomDebugItem(value));
 #endif
-                
-                Debug.Log(value);
             }
 
             OnExecuteEnd();

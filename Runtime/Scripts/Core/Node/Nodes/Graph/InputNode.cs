@@ -65,6 +65,13 @@ namespace Dash
 
             Model.inputName = name;
         }
+        
+        public override NodeBase Clone(DashGraph p_graph)
+        {
+            InputNode node = base.Clone(p_graph) as InputNode;
+            node.ValidateUniqueInputName();
+            return node;
+        }
 #endif
     }
 }

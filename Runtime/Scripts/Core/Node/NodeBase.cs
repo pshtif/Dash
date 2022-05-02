@@ -512,7 +512,7 @@ namespace Dash
             _model.ValidateSerialization();
         }
         
-        public NodeBase Clone(DashGraph p_graph)
+        public virtual NodeBase Clone(DashGraph p_graph)
         {
             NodeBase node = Create(GetType(), p_graph);
             node._model = _model.Clone();

@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Runtime.Serialization;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,8 +15,11 @@ namespace Dash
         public bool active = true;
 
         public int inputIndex;
-        public int outputIndex;
-        
+        public int outputIndex { get; set; }
+
+        private int _inputIndex;
+        private int _outputIndex;
+
         public NodeBase inputNode { get; private set; }
         public NodeBase outputNode { get; }
         
@@ -42,6 +46,20 @@ namespace Dash
             outputNode = p_outputNode;
         }
 
+        [OnSerializing]
+        void OnSerializing()
+        {
+            _inputIndex = inputIndex;
+            _outputIndex = outputIndex; 
+        }
+        
+        [OnDeserialized]
+        void OnDeserialize()
+        {
+            _inputIndex = inputIndex;
+            _outputIndex = outputIndex;
+        }
+
         public void Execute(NodeFlowData p_flowData)
         {
 #if UNITY_EDITOR
@@ -52,6 +70,7 @@ namespace Dash
         }
         
         #if UNITY_EDITOR
+
         public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         public void DrawGUI()
