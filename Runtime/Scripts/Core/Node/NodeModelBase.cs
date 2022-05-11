@@ -15,7 +15,7 @@ namespace Dash
 {
     public class NodeModelBase : IReferencable, ISerializationCallbackReceiver
     {
-        public int version = 1;
+        private int _version = 1;
         
         public string Id => id;
 
@@ -31,8 +31,8 @@ namespace Dash
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            var v = OnMigrateSerializedData(version);
-            version = v;
+            var v = OnMigrateSerializedData(_version);
+            _version = v;
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
