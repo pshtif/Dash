@@ -100,7 +100,7 @@ namespace Dash.Editor
             int index = 0;
             while (p_variables.HasVariable(name + index)) index++;
             
-            p_variables.AddVariableByType((Type)p_type, name+index, null);
+            p_variables.AddVariableByType((Type)p_type, name+index, p_type.GetDefaultValue());
             
             DashEditorCore.SetDirty();
         }
