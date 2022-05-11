@@ -580,12 +580,12 @@ namespace Dash
                     EditorGUI.BeginChangeCheck();
                     var colorValue = EditorGUILayout.ColorField("", (Color) p_fieldInfo.GetValue(p_object), GUILayout.Width(60));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
+                    GUILayout.EndHorizontal();
                     if (EditorGUI.EndChangeCheck())
                     {
                         p_fieldInfo.SetValue(p_object, colorValue);
                         return true;
                     }
-                    GUILayout.EndHorizontal();
                     return false;
                 default:
                     Debug.Log(type + " type inspection not implemented. Field: " + p_fieldInfo.Name);
