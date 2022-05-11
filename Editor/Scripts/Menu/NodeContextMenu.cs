@@ -20,9 +20,9 @@ namespace Dash.Editor
             {
                 menu.AddItem(new GUIContent("Copy Nodes"), false, CopyNode, null);
                 menu.AddItem(new GUIContent("Delete Nodes"), false, DeleteNode, null);
-                menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNode, null);
-                menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
+                menu.AddItem(new GUIContent("Duplicate Nodes"), false, DuplicateNodes);
                 menu.AddSeparator("");
+                menu.AddItem(new GUIContent("Create Box"), false, CreateBox);
                 menu.AddItem(new GUIContent("Create SubGraph"), false, CreateSubGraph, null);
             }
             else
@@ -30,6 +30,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Copy Node"), false, CopyNode, p_node);
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
+                menu.AddItem(new GUIContent("Arrange Nodes"), false, ArrangeNodes, p_node);
                 
                 menu.AddSeparator("");
                 if (p_node.HasComment())
@@ -184,14 +185,17 @@ namespace Dash.Editor
         
         static void DuplicateNode(object p_node)
         {
-            if (p_node == null)
-            {
-                SelectionManager.DuplicateSelectedNodes(Graph);
-            }
-            else
-            {
-                SelectionManager.DuplicateNode((NodeBase)p_node, Graph);
-            }
+            SelectionManager.DuplicateNode((NodeBase)p_node, Graph);
+        }
+        
+        static void DuplicateNodes()
+        {
+            SelectionManager.DuplicateSelectedNodes(Graph);
+        }
+
+        static void ArrangeNodes(object p_node)
+        {
+            SelectionManager.ArrangeNodes(Graph, (NodeBase)p_node);
         }
 
         static void CreateBox()

@@ -265,7 +265,19 @@ namespace Dash
             SelectNode(node, p_graph);
             return node;
         }
+
+        public static void ArrangeNodes(DashGraph p_graph, NodeBase p_node)
+        {
+            if (p_graph == null)
+                return;
+            
+            UndoUtils.RegisterCompleteObject(p_graph, "Arrange Nodes");
+
+            NodeUtils.ArrangeNodes(p_graph, p_node);
         
+            DashEditorCore.SetDirty();
+        }
+
         // public static bool GoToNode(DashController p_controller, string p_graphPath, string p_nodeId)
         // {
         //     if (p_controller == null)
