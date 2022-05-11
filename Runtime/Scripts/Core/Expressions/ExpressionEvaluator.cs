@@ -97,19 +97,19 @@ namespace Dash
             cachedExpression.EvaluateParameter += evalParam;
             
             object obj = null;
-            //try
+            try
             {
                 obj = cachedExpression.Evaluate();
             }
-            // catch (Exception e)
-            // {
-            //     // Only set if we didn't already encounter error in evaluation otherwise this may be unspecified exception as a result of the already logged error so we don't want to overwrite it
-            //     if (!hasErrorInEvaluation)
-            //     {
-            //         errorMessage = e.Message;
-            //         hasErrorInEvaluation = true;-+
-            //     }
-            // }
+            catch (Exception e)
+            {
+                // Only set if we didn't already encounter error in evaluation otherwise this may be unspecified exception as a result of the already logged error so we don't want to overwrite it
+                if (!hasErrorInEvaluation)
+                {
+                    errorMessage = e.Message;
+                    hasErrorInEvaluation = true;
+                }
+            }
 
             cachedExpression.EvaluateFunction -= evalFunction;
             cachedExpression.EvaluateParameter -= evalParam;
