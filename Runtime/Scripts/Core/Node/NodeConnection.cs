@@ -17,19 +17,13 @@ namespace Dash
         public int inputIndex;
         public int outputIndex { get; set; }
 
-        private int _inputIndex;
-        private int _outputIndex;
-
         public NodeBase inputNode { get; private set; }
         public NodeBase outputNode { get; }
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         [NonSerialized] 
         public float executeTime = 0;
-
-        [NonSerialized] 
-        public bool buttonDown = false;
-        #endif
+#endif
 
         public bool IsValid()
         {
@@ -44,20 +38,6 @@ namespace Dash
 
             outputIndex = p_outputIndex;
             outputNode = p_outputNode;
-        }
-
-        [OnSerializing]
-        void OnSerializing()
-        {
-            _inputIndex = inputIndex;
-            _outputIndex = outputIndex; 
-        }
-        
-        [OnDeserialized]
-        void OnDeserialize()
-        {
-            _inputIndex = inputIndex;
-            _outputIndex = outputIndex;
         }
 
         public void Execute(NodeFlowData p_flowData)
