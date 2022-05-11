@@ -24,7 +24,7 @@ namespace Dash.Editor
 
         public static ChecksumWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Checksum")]
+        [MenuItem ("Tools/Dash/Scan/Checksum")]
         public static ChecksumWindow InitChecksumWindow()
         {
             Instance = GetWindow<ChecksumWindow>();
@@ -79,6 +79,7 @@ namespace Dash.Editor
                     GUILayout.BeginHorizontal();
                     var checksum = JSONHashUtils.GetJSONHash(Encoding.Default.GetString(graphJson));
                     GUILayout.Label(graph);
+                    GUILayout.FlexibleSpace();
                     GUILayout.Label(checksum);
                     _currentChecksums.Add(graph, checksum);
                     if (GUILayout.Button("ViewJSON", GUILayout.Width(120)))
@@ -123,6 +124,7 @@ namespace Dash.Editor
                     GUI.color = (_highlightNonMatchingChecksums && _currentChecksums.ContainsKey(graph) && _currentChecksums[graph] != checksum)
                         ? Color.red
                         : Color.white;
+                    GUILayout.FlexibleSpace();
                     GUILayout.Label(checksum);
                     GUI.color = Color.white;
                     if (GUILayout.Button("ViewJSON", GUILayout.Width(120)))

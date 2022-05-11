@@ -20,7 +20,7 @@ namespace Dash.Editor
 
         public static AOTWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/AOT")]
+        [MenuItem ("Tools/Dash/Scan/AOT")]
         public static AOTWindow InitAOTWindow()
         {
             Instance = GetWindow<AOTWindow>();
