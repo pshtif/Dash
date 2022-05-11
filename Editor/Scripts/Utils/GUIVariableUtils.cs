@@ -136,6 +136,10 @@ namespace Dash.Editor
                 Component[] components = p_boundObject.GetComponents<Component>();
                 foreach (Component component in components)
                 {
+                    // Can happen if script on gameobject component is missing
+                    if (component == null)
+                        continue;
+                    
                     Type componentType = component.GetType();
                     PropertyInfo[] properties = componentType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
                     foreach (PropertyInfo property in properties)
