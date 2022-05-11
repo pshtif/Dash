@@ -25,11 +25,16 @@ using Object = UnityEngine.Object;
 namespace Dash.Editor
 {
 
-    public static class DashAOTScanner
+    public static class DashScanner
     {
-        public static void Scan()
+        public static Dictionary<string, byte[]> ScanForJson()
         {
-            List<Type> scannedTypes = StartScan();
+            return StartJsonScan();
+        }
+        
+        public static void ScanForAOT()
+        {
+            List<Type> scannedTypes = StartAOTScan();
 
             scannedTypes.Sort((n1, n2) =>
             {
@@ -37,40 +42,6 @@ namespace Dash.Editor
             });
             
             DashEditorCore.EditorConfig.scannedAOTTypes = scannedTypes;
-        }
-
-        public static void GenerateDLL(bool p_generateLinkXml = true, bool p_includeOdin = false)
-        {
-            if (DashEditorCore.EditorConfig.scannedAOTTypes == null) DashEditorCore.EditorConfig.scannedAOTTypes = new List<Type>();
-            if (DashEditorCore.EditorConfig.explicitAOTTypes == null) DashEditorCore.EditorConfig.explicitAOTTypes = new List<Type>();
-
-            DashEditorCore.EditorConfig.AOTAssemblyGeneratedTime = DateTime.Now;
-            
-            if (p_generateLinkXml)
-            {
-                if (p_includeOdin)
-                {
-                    File.WriteAllText(DashEditorCore.EditorConfig.AOTAssemblyPath + "/link.xml",
-                        @"<linker>                    
-                         <assembly fullname=""" + DashEditorCore.EditorConfig.AOTAssemblyName + @""" preserve=""all""/>
-                         <assembly fullname=""DashRuntime"" preserve=""all""/>
-                         <assembly fullname=""OdinSerializer"" preserve=""all""/>
-                      </linker>");
-                }
-                else
-                {
-                    File.WriteAllText(DashEditorCore.EditorConfig.AOTAssemblyPath + "/link.xml",
-                        @"<linker>                    
-                         <assembly fullname=""" + DashEditorCore.EditorConfig.AOTAssemblyName + @""" preserve=""all""/>
-                         <assembly fullname=""DashRuntime"" preserve=""all""/>
-                      </linker>");
-                }
-            }
-            
-            List<Type> aotTypes = DashEditorCore.EditorConfig.scannedAOTTypes.Concat(DashEditorCore.EditorConfig.explicitAOTTypes)
-                .ToList();
-            AOTSupportUtilities.GenerateDLL(DashEditorCore.EditorConfig.AOTAssemblyPath,
-                DashEditorCore.EditorConfig.AOTAssemblyName, aotTypes, false);
         }
 
         public static void RemoveScannedAOTType(Type p_type)
@@ -90,55 +61,71 @@ namespace Dash.Editor
         private static readonly PropertyInfo Debug_Logger_Property =
             typeof(Debug).GetProperty("unityLogger") ?? typeof(Debug).GetProperty("logger");
 
-        private static List<Type> registeredTypes;
+        private static Dictionary<string,byte[]> _graphJsons;
+        
+        private static List<Type> _registeredTypes;
 
-        private static List<Object> unityRefs;
+        private static List<Object> _unityRefs;
 
-        private static List<Type> StartScan()
+        private static List<string> _scannedScenes;
+        private static List<string> _scannedAssets;
+
+        private static List<Type> StartAOTScan()
         {
-            registeredTypes = new List<Type>();
-            unityRefs = new List<Object>();
+            _registeredTypes = new List<Type>();
+            _unityRefs = new List<Object>();
 
             FormatterLocator.OnLocatedEmittableFormatterForType += OnLocatedEmitType;
             FormatterLocator.OnLocatedFormatter += OnLocatedFormatter;
             Serializer.OnSerializedType += OnSerializedType;
 
             ScanBuildScenes(true, false);
+            ScanAssets(false);
 
-            return registeredTypes;
+            return _registeredTypes;
         }
 
-        private static void OnLocatedEmitType(Type type)
+        private static Dictionary<string,byte[]> StartJsonScan()
         {
-            if (!AllowRegisterType(type)) return;
+            _graphJsons = new Dictionary<string, byte[]>();
+            
+            ScanBuildScenes(true, true);
+            ScanAssets(true);
 
-            RegisterType(type);
+            return _graphJsons;
         }
 
-        private static void OnSerializedType(Type type)
+        private static void OnLocatedEmitType(Type p_type)
         {
-            if (!AllowRegisterType(type)) return;
+            if (!AllowRegisterType(p_type)) return;
 
-            RegisterType(type);
+            RegisterType(p_type);
         }
 
-        private static void OnLocatedFormatter(IFormatter formatter)
+        private static void OnSerializedType(Type p_type)
         {
-            var type = formatter.SerializedType;
+            if (!AllowRegisterType(p_type)) return;
+
+            RegisterType(p_type);
+        }
+
+        private static void OnLocatedFormatter(IFormatter p_formatter)
+        {
+            var type = p_formatter.SerializedType;
 
             if (type == null) return;
             if (!AllowRegisterType(type)) return;
             RegisterType(type);
         }
 
-        private static bool AllowRegisterType(Type type)
+        private static bool AllowRegisterType(Type p_type)
         {
-            if (IsEditorOnlyAssembly(type.Assembly))
+            if (IsEditorOnlyAssembly(p_type.Assembly))
                 return false;
 
-            if (type.IsGenericType)
+            if (p_type.IsGenericType)
             {
-                foreach (var parameter in type.GetGenericArguments())
+                foreach (var parameter in p_type.GetGenericArguments())
                 {
                     if (!AllowRegisterType(parameter)) return false;
                 }
@@ -147,17 +134,17 @@ namespace Dash.Editor
             return true;
         }
 
-        private static void RegisterType(Type type)
+        private static void RegisterType(Type p_type)
         {
-            if (registeredTypes.Contains(type)) return;
-            if (type.IsGenericType && (type.IsGenericTypeDefinition || !type.IsFullyConstructedGenericType())) return;
-            if (type.GetCustomAttribute<DashEditorOnlyAttribute>() != null) return;
+            if (_registeredTypes.Contains(p_type)) return;
+            if (p_type.IsGenericType && (p_type.IsGenericTypeDefinition || !p_type.IsFullyConstructedGenericType())) return;
+            if (p_type.GetCustomAttribute<DashEditorOnlyAttribute>() != null) return;
 
-            registeredTypes.Add(type);
+            _registeredTypes.Add(p_type);
 
-            if (type.IsGenericType)
+            if (p_type.IsGenericType)
             {
-                foreach (var arg in type.GetGenericArguments())
+                foreach (var arg in p_type.GetGenericArguments())
                 {
                     RegisterType(arg);
                 }
@@ -181,19 +168,33 @@ namespace Dash.Editor
             typeof(UnityEditor.Editor).Assembly.GetName().Name
         };
 
-        private static bool ScanBuildScenes(bool includeSceneDependencies, bool showProgressBar)
+        private static bool ScanBuildScenes(bool p_includeSceneDependencies, bool p_jsonScan)
         {
             var scenePaths = EditorBuildSettings.scenes
                 .Where(n => n.enabled)
                 .Select(n => n.path)
                 .ToArray();
 
-            return ScanScenes(scenePaths, includeSceneDependencies, showProgressBar);
+            _scannedScenes = new List<string>();
+            return ScanScenes(scenePaths, p_includeSceneDependencies, p_jsonScan);
         }
 
-        private static bool ScanScenes(string[] scenePaths, bool includeSceneDependencies, bool showProgressBar)
+        private static bool ScanAssets(bool p_jsonScan)
         {
-            if (scenePaths.Length == 0) return true;
+            _scannedAssets = new List<string>();
+            var graphs = AssetsUtils.FindAssetsByType<DashGraph>();
+
+            foreach (var graph in graphs)
+            {
+                ScanAsset(AssetDatabase.GetAssetPath(graph), false, p_jsonScan);
+            }
+
+            return true;
+        }
+
+        private static bool ScanScenes(string[] p_scenePaths, bool p_includeSceneDependencies, bool p_jsonScan)
+        {
+            if (p_scenePaths.Length == 0) return true;
 
             bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
 
@@ -221,18 +222,18 @@ namespace Dash.Editor
 
                 try
                 {
-                    for (int i = 0; i < scenePaths.Length; i++)
+                    for (int i = 0; i < p_scenePaths.Length; i++)
                     {
-                        var scenePath = scenePaths[i];
+                        var scenePath = p_scenePaths[i];
 
-                        // if (showProgressBar && DisplaySmartUpdatingCancellableProgressBar("Scanning scenes for AOT support", "Scene " + (i + 1) + "/" + scenePaths.Length + " - " + scenePath, (float)i / scenePaths.Length))
-                        // {
-                        //     return false;
-                        // }
+                        if (_scannedScenes.Contains(scenePath))
+                            continue;
+                        
+                        _scannedScenes.Add(scenePath);
 
                         if (!System.IO.File.Exists(scenePath))
                         {
-                            Debug.LogWarning("Skipped AOT scanning scene at " + scenePath + " doesn't exist.");
+                            Debug.LogWarning("Skipped scanning scene at " + scenePath + " doesn't exist.");
                             continue;
                         }
 
@@ -244,26 +245,42 @@ namespace Dash.Editor
                         }
                         catch
                         {
-                            Debug.LogWarning("Skipped AOT scanning scene '" + scenePath +
+                            Debug.LogWarning("Skipped scanning scene '" + scenePath +
                                              "' for throwing exceptions when trying to load it.");
                             continue;
                         }
 
                         var sceneGOs = Resources.FindObjectsOfTypeAll<DashController>();
-
+                        
                         foreach (var dashController in sceneGOs)
                         {
-                            if (dashController.gameObject.scene != openScene || dashController.Graph == null) continue;
+                            if (dashController.gameObject.scene != openScene || dashController.Graph == null || !dashController.Graph.isBound) continue;
 
                             if ((dashController.gameObject.hideFlags & HideFlags.DontSaveInBuild) == 0)
                             {
                                 try
                                 {
-                                    dashController.Graph.SerializeToBytes(DataFormat.Binary, ref unityRefs);
+                                    if (p_jsonScan)
+                                    {
+                                        string scene = scenePath.Substring(0, scenePath.LastIndexOf("."));
+                                        string path = string.Join("/",
+                                            dashController.gameObject.GetComponentsInParent<Transform>()
+                                                .Select(t => t.name).Reverse().ToArray());
+                                        byte[] data =
+                                            dashController.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
+                                        _graphJsons.Add(scene+"/"+path, data);
+                                    }
+                                    else
+                                    {
+                                        dashController.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
+                                    }
                                 }
-                                finally
+                                catch (Exception e)
                                 {
-
+                                    Debug.LogWarning("Scanning issue "+e);   
+                                }
+                                finally 
+                                {
                                 }
                             }
                         }
@@ -309,32 +326,22 @@ namespace Dash.Editor
                 {
                     if (oldSceneSetup != null && oldSceneSetup.Length > 0)
                     {
-                        if (showProgressBar)
-                        {
-                            EditorUtility.DisplayProgressBar("Restoring scene setup", "", 1.0f);
-                        }
-
                         EditorSceneManager.RestoreSceneManagerSetup(oldSceneSetup);
                     }
                 }
 
-                if (includeSceneDependencies)
+                if (p_includeSceneDependencies)
                 {
-                    for (int i = 0; i < scenePaths.Length; i++)
+                    for (int i = 0; i < p_scenePaths.Length; i++)
                     {
-                        var scenePath = scenePaths[i];
-                        // if (showProgressBar && DisplaySmartUpdatingCancellableProgressBar("Scanning scene dependencies for AOT support", "Scene " + (i + 1) + "/" + scenePaths.Length + " - " + scenePath, (float)i / scenePaths.Length))
-                        // {
-                        //     return false;
-                        // }
+                        var scenePath = p_scenePaths[i];
 
                         string[] dependencies = AssetDatabase.GetDependencies(scenePath, recursive: true);
 
                         foreach (var dependency in dependencies)
                         {
-                            ScanAsset(dependency,
-                                includeAssetDependencies:
-                                false); // All dependencies of this asset were already included recursively by Unity
+                            // All dependencies of this asset were already included recursively by Unity
+                            ScanAsset(dependency, false, p_jsonScan); 
                         }
                     }
                 }
@@ -343,34 +350,34 @@ namespace Dash.Editor
             }
             finally
             {
-                if (showProgressBar)
-                {
-                    EditorUtility.ClearProgressBar();
-                }
-
                 UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
             }
         }
 
-        private static bool ScanAsset(string assetPath, bool includeAssetDependencies)
+        private static bool ScanAsset(string p_assetPath, bool p_includeAssetDependencies, bool p_jsonScan)
         {
-            if (assetPath.EndsWith(".unity"))
+            if (_scannedScenes.Contains(p_assetPath))
+                return false;
+                        
+            _scannedScenes.Add(p_assetPath);
+            
+            if (p_assetPath.EndsWith(".unity"))
             {
-                return ScanScenes(new string[] {assetPath}, includeAssetDependencies, false);
+                return ScanScenes(new string[] {p_assetPath}, p_includeAssetDependencies, p_jsonScan);
             }
 
-            if (!(assetPath.EndsWith(".asset") || assetPath.EndsWith(".prefab")))
+            if (!(p_assetPath.EndsWith(".asset") || p_assetPath.EndsWith(".prefab")))
             {
                 return false;
             }
-
+            
             bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
 
             try
             {
                 UnitySerializationUtility.ForceEditorModeSerialization = true;
 
-                var assets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
+                var assets = AssetDatabase.LoadAllAssetsAtPath(p_assetPath);
 
                 if (assets == null || assets.Length == 0)
                 {
@@ -381,18 +388,17 @@ namespace Dash.Editor
                 {
                     if (asset == null) continue;
 
-                    ScanObject(asset);
+                    ScanObject(asset, p_jsonScan);
                 }
 
-                if (includeAssetDependencies)
+                if (p_includeAssetDependencies)
                 {
-                    string[] dependencies = AssetDatabase.GetDependencies(assetPath, recursive: true);
+                    string[] dependencies = AssetDatabase.GetDependencies(p_assetPath, recursive: true);
 
                     foreach (var dependency in dependencies)
                     {
-                        ScanAsset(dependency,
-                            includeAssetDependencies:
-                            false); // All dependencies were already included recursively by Unity
+                        // All dependencies were already included recursively by Unity
+                        ScanAsset(dependency, false, p_jsonScan); 
                     }
                 }
 
@@ -404,16 +410,63 @@ namespace Dash.Editor
             }
         }
 
-        private static void ScanObject(UnityEngine.Object obj)
+        private static void ScanObject(UnityEngine.Object p_object, bool p_jsonScan)
         {
-            if (obj is DashController)
+            string path = AssetDatabase.GetAssetPath(p_object);
+            
+            if (p_object is DashController)
             {
+                DashController controller = (DashController)p_object;
+
+                if (controller.Graph == null || !controller.Graph.isBound)
+                    return;
+                
                 bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
 
                 try
                 {
                     UnitySerializationUtility.ForceEditorModeSerialization = true;
-                    ((DashController) obj).Graph.SerializeToBytes(DataFormat.Binary, ref unityRefs);
+                    
+                    if (p_jsonScan)
+                    {
+                        byte[] data = controller.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
+                        _graphJsons.Add(path, data);
+                    }
+                    else
+                    {
+                        controller.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
+                    }
+                }
+                finally
+                {
+                    UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
+                }
+            }
+
+            if (p_object is DashGraph)
+            {
+                DashGraph graph = ((DashGraph)p_object);
+                if (graph.isBound)
+                {
+                    Debug.LogWarning("Scanning issue bound graph in separate asset.");
+                    return;
+                }
+
+                bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
+
+                try
+                {
+                    UnitySerializationUtility.ForceEditorModeSerialization = true;
+                    
+                    if (p_jsonScan)
+                    {
+                        byte[] data = graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
+                        _graphJsons.Add(path, data);
+                    }
+                    else
+                    {
+                        graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
+                    }
                 }
                 finally
                 {
