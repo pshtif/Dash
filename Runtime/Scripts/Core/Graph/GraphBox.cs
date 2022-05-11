@@ -61,7 +61,7 @@ namespace Dash
                 _lastClickTime = EditorApplication.timeSinceStartup;
             }
 
-            GUI.DrawTexture(new Rect(offsetRect.x + offsetRect.width - 32, offsetRect.y + offsetRect.height - 32, 32, 32), IconManager.GetIcon("Resize_Icon"));
+            GUI.DrawTexture(new Rect(offsetRect.x + offsetRect.width - 20, offsetRect.y + offsetRect.height - 21, 16, 16), IconManager.GetIcon("Resize_Icon"));
             GUI.color = Color.white;
             GUIStyle style = new GUIStyle();
             style.fontStyle = FontStyle.Bold;
