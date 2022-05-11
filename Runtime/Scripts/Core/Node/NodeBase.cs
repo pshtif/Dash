@@ -507,11 +507,6 @@ namespace Dash
         
         internal virtual void Unselect() { }
 
-        public void ValidateSerialization()
-        {
-            _model.ValidateSerialization();
-        }
-        
         public virtual NodeBase Clone(DashGraph p_graph)
         {
             NodeBase node = Create(GetType(), p_graph);

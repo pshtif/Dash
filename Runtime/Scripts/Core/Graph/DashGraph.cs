@@ -23,7 +23,8 @@ namespace Dash
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IInternalGraphAccess
     {
         public int version { get; private set; } = 0;
-
+        
+        [field: NonSerialized]
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
         [SerializeField]
@@ -108,6 +109,7 @@ namespace Dash
         [NonSerialized]
         protected bool _initialized = false;
 
+        [field: NonSerialized]
         public DashController Controller { get; private set; }
 
         public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
@@ -349,8 +351,6 @@ namespace Dash
 
 #region SERIALIZATION
 
-        
-
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
         
@@ -361,6 +361,8 @@ namespace Dash
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
+            
+            ((IInternalGraphAccess)this).SetVersion(DashCore.GetVersionNumber());
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
