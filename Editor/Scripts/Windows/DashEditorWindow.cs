@@ -130,6 +130,7 @@ namespace Dash.Editor
                 _views = new List<ViewBase>();
                 AddView(new GraphView());
                 AddView(new NodeInspectorView());
+                AddView(new GraphPropertiesView());
                 AddView(new GraphVariablesView());
                 AddView(new PreviewControlsView());
             }
