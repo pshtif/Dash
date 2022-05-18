@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEditor;
@@ -64,6 +65,8 @@ namespace Dash
             AssetDatabase.CreateAsset(p_graph, p_path);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+            
+            DashEditorCore.ScanGraphAssets();
 
             return p_graph;
         }
@@ -126,6 +129,23 @@ namespace Dash
             }
 
             return currentGraph;
+        }
+        
+        [MenuItem("Assets/Dash/Create Graph", false, 1)]
+        private static void CreateNewAsset()
+        {
+            MethodInfo getPath = typeof(ProjectWindowUtil).GetMethod("GetActiveFolderPath",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            string path = (string)getPath.Invoke(null, null) + "/DashGraph.asset";
+
+            //ProjectWindowUtil.CreateAsset(CreateEmptyGraph(), AssetDatabase.GenerateUniqueAssetPath(path));
+            CreateGraphAsAssetFromPath(AssetDatabase.GenerateUniqueAssetPath(path), null);
+            
+            // AssetDatabase.SaveAssets();
+            // AssetDatabase.Refresh();
+            
+            DashEditorCore.ScanGraphAssets();
         }
 #endif
     }

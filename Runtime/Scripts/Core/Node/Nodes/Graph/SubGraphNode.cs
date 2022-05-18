@@ -140,7 +140,7 @@ namespace Dash
 
 #if UNITY_EDITOR
         
-        public override string CustomName => Model.useAsset ? "SubGraph " + SubGraph.name : "SubGraph";
+        public override string CustomName => Model.useAsset && Model.graphAsset != null ? SubGraph.name : "SubGraph";
 
         public float CustomNameSize => DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(CustomName)).x;
 
@@ -155,17 +155,20 @@ namespace Dash
         public override void DrawInspector()
         {
             GUI.color = new Color(1, 0.75f, 0.5f);
-            if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
+            if (!Model.useAsset || Model.graphAsset != null)
             {
-                if (DashEditorCore.EditorConfig.editingController != null)
+                if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                 {
-                    DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController,
-                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
-                }
-                else
-                {
-                    DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
-                        GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                    if (DashEditorCore.EditorConfig.editingController != null)
+                    {
+                        DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController,
+                            GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                    }
+                    else
+                    {
+                        DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
+                            GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                    }
                 }
             }
 
@@ -187,17 +190,33 @@ namespace Dash
                         _boundSubGraphReferences.Clear();
                     }
                 }
+
+                if (Model.graphAsset != null)
+                {
+                    Model.graphAsset = null;
+                }
             }
             else
             {
-                if (GUILayout.Button("Bind Graph"))
+                if (Model.graphAsset != null)
                 {
-                    DashGraph graph = SubGraph.Clone();
-                    _boundSubGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
-                    _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == graph);
+                    if (GUILayout.Button("Bind Graph"))
+                    {
+                        DashGraph graph = SubGraph.Clone();
+                        _boundSubGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
+                        _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == graph);
 
-                    Model.useAsset = false;
-                    Model.graphAsset = null;
+                        Model.useAsset = false;
+                        Model.graphAsset = null;
+                    }
+                }
+
+                if (_boundSubGraphData != null)
+                {
+                    _subGraphInstance = null;
+                    _selfReferenceIndex = -1;
+                    _boundSubGraphData = null;
+                    _boundSubGraphReferences.Clear();
                 }
             }
 

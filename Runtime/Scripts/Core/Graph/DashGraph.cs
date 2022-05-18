@@ -18,12 +18,11 @@ using UnityEditor;
 
 namespace Dash
 {
-    [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IInternalGraphAccess
     {
         public int version { get; private set; } = 0;
-        
+
         [field: NonSerialized]
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
@@ -368,22 +367,20 @@ namespace Dash
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             //Debug.Log("OnBeforeSerialize");
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
+            GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+            
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            {
+                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
+            }
+            
             if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
             {
                 DashEditorCore.EditorConfig.editingController.ReserializeBound();
             }
-            else
-            {
-                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
-                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-                {
-                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-                }
-            }
-            #endif
+#endif
         }
         
         public byte[] SerializeToBytes(DataFormat p_format, ref List<Object> p_references)
