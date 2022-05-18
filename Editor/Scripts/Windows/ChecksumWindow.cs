@@ -97,7 +97,7 @@ namespace Dash.Editor
             
             GUILayout.Space(8);
             _previousChecksumObject = (DashChecksumObject)EditorGUILayout.ObjectField(
-                new GUIContent("Previous Checksum Object"), _previousChecksumObject, typeof(DashChecksumObject));
+                new GUIContent("Previous Checksum Object"), _previousChecksumObject, typeof(DashChecksumObject), false);
             
             GUILayout.Label("Previously scanned graphs", titleStyle, GUILayout.ExpandWidth(true));
             GUILayout.Label(
