@@ -92,6 +92,7 @@ namespace Dash
                 return _assetGraph;
             }
 #endif
+
             if (_graphInstance == null)
             {
                 if (_boundGraphData?.Length > 0)
@@ -279,8 +280,7 @@ namespace Dash
         {
             if (_graphInstance != null)
             {
-                //Debug.Log("Reserializing Graph Instance: "+_graphInstance);
-                _graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+                //_graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
                 
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
