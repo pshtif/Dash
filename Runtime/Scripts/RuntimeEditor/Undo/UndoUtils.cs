@@ -21,8 +21,9 @@ namespace Dash
 #if UNITY_EDITOR
             if ( Application.isPlaying || p_object == null ) 
                 return;
-            
+
             UnityEditor.Undo.RegisterCompleteObjectUndo(p_object, p_name);
+            UnityEditor.Undo.FlushUndoRecordObjects();
 #endif
         }
         
