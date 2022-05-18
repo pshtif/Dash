@@ -982,6 +982,7 @@ namespace Dash
         {
             _model = new T();
             ValidateUniqueId();
+            Invalidate();
         }
     }
 }
