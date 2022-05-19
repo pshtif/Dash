@@ -176,6 +176,11 @@ namespace Dash
             
             if (!Model.useAsset)
             {
+                if (Model.graphAsset != null)
+                {
+                    Model.graphAsset = null;
+                }
+                
                 if (GUILayout.Button("Save to Asset"))
                 {
                     DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
@@ -190,14 +195,17 @@ namespace Dash
                         _boundSubGraphReferences.Clear();
                     }
                 }
-
-                if (Model.graphAsset != null)
-                {
-                    Model.graphAsset = null;
-                }
             }
             else
             {
+                if (_boundSubGraphData != null)
+                {
+                    _subGraphInstance = null;
+                    _selfReferenceIndex = -1;
+                    _boundSubGraphData = null;
+                    _boundSubGraphReferences.Clear();
+                }
+                
                 if (Model.graphAsset != null)
                 {
                     if (GUILayout.Button("Bind Graph"))
@@ -208,15 +216,9 @@ namespace Dash
 
                         Model.useAsset = false;
                         Model.graphAsset = null;
+                        
+                        InstanceBoundGraph();
                     }
-                }
-
-                if (_boundSubGraphData != null)
-                {
-                    _subGraphInstance = null;
-                    _selfReferenceIndex = -1;
-                    _boundSubGraphData = null;
-                    _boundSubGraphReferences.Clear();
                 }
             }
 
