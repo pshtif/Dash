@@ -355,13 +355,14 @@ namespace Dash
             if (string.IsNullOrEmpty(id))
             {
                 string type = GetType().ToString();
-                id = type.Substring(5, type.Length-9) + "1";
+                int dotIndex = type.IndexOf(".");
+                id = type.Substring(dotIndex + 1, type.Length - (dotIndex + 5)) + "1";
             }
 
             while (Graph.Nodes.Exists(n => n != this && n.Id == id))
             {
                 string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
-                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
+                id = id.Substring(0, id.Length - number.Length) + (Int32.Parse(number) + 1);
             }
             
             _model.id = id;
@@ -500,7 +501,8 @@ namespace Dash
         public static string GetNodeNameFromType(Type p_nodeType)
         {
             string typeString = p_nodeType.ToString();
-            return typeString.ToString().Substring(5, typeString.ToString().Length - 9);
+            int dotIndex = typeString.IndexOf(".");
+            return typeString.Substring(dotIndex + 1, typeString.Length - (dotIndex + 5));
         }
 
         protected virtual void Invalidate() { }
