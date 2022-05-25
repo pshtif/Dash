@@ -367,6 +367,8 @@ namespace Dash
             
             _model.id = id;
         }
+        
+        protected virtual void Invalidate() { }
 
         #region EDITOR_CODE
 #if UNITY_EDITOR
@@ -432,64 +434,6 @@ namespace Dash
             }
         }
 
-        // [NonSerialized] 
-        // private Texture _iconTexture;
-        //
-        // protected Texture IconTexture
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _iconTexture;
-        //     }
-        // }
-
-        // [NonSerialized] 
-        // private Color _nodeBackgroundColor;
-        //
-        // // Using virtual getters so you can override it and avoid serialization at the same time and it is not
-        // // possible to use Attributes for this due to non constant initializer
-        // protected virtual Color NodeBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _nodeBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized]
-        // private Color _titleBackgroundColor;
-        //
-        // protected virtual Color TitleBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _titleBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized] 
-        // private Color _titleTextColor;
-        //
-        // protected virtual Color TitleTextColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //         
-        //         return _titleTextColor;
-        //     }
-        // }
-
         public Rect rect;
 
         public virtual string CustomName => String.Empty;
@@ -505,8 +449,6 @@ namespace Dash
             return typeString.Substring(dotIndex + 1, typeString.Length - (dotIndex + 5));
         }
 
-        protected virtual void Invalidate() { }
-        
         internal virtual void Unselect() { }
 
         public virtual NodeBase Clone(DashGraph p_graph)

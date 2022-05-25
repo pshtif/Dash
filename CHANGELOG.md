@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.11.0 - 26.5.2022
+
+#### Added
+
+- Added arrange nodes functionality to arrange nodes down the stream from a specific node
+- Added checksum window/scanner for checksum backups to solve/spot serialization issue 
+- Added ability to create SubGraphNodes from asset graphs directly in node creation context menu
+
+#### Changed
+
+- Changed on new variable creation it is assigned default value instead of null
+- Changed id and name generation to work with any namespace, needed for custom node creation outside of Dash namespace
+- Changed minor node ui changes
+- Changed various serialization/handling of subgraph nodes and their UI especially when switching from/to asset/bound graphs
+- Changed ValidationWindow was removed as it was obsolete in last couple of versions
+
+#### Fixed
+
+- Fixed AnimateToTransform tween to Transform when not using RectTransform
+- Fixed skipping enumeration of missing component scripts for bindables
+- Fixed creating input/output node will automatically invalidate its name to unique names
+- Fixed undo/redo performing and serialization on bound graphs
+
 ### Release 0.10.1 - 2.5.2022
 
 #### Changed

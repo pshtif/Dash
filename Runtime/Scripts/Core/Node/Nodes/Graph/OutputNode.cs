@@ -19,22 +19,11 @@ namespace Dash
             OnExecuteEnd();
             ((IInternalGraphAccess) Graph).OutputExecuted(this, p_flowData);
         }
-
-#if UNITY_EDITOR
-        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
-        public override string CustomName => "Output " + Model.outputName;
-
+        
         protected override void Invalidate()
         {
             base.Invalidate();
             ValidateUniqueOutputName();
-        }
-        
-        protected override void DrawCustomGUI(Rect p_rect)
-        {
-            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
-            
-            GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.outputName , DashEditorCore.Skin.GetStyle("NodeText"));
         }
         
         protected void ValidateUniqueOutputName()
@@ -53,7 +42,18 @@ namespace Dash
 
             Model.outputName = name;
         }
-        
+
+#if UNITY_EDITOR
+        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
+        public override string CustomName => "Output " + Model.outputName;
+
+        protected override void DrawCustomGUI(Rect p_rect)
+        {
+            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
+            
+            GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.outputName , DashEditorCore.Skin.GetStyle("NodeText"));
+        }
+
         public override NodeBase Clone(DashGraph p_graph)
         {
             OutputNode node = base.Clone(p_graph) as OutputNode;
