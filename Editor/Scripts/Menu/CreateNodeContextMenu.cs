@@ -36,6 +36,15 @@ namespace Dash.Editor
             
             if (DashEditorCore.EditorConfig.editingGraph != null)
             {
+                foreach (var graph in DashEditorCore.GraphAssets)
+                {
+                    if (graph == null)
+                        continue;
+                    
+                    menu.AddItem(new GUIContent("Graphs/" + graph.name, ""), false, CreateGraphNode,
+                        graph);
+                }
+                
                 Type[] nodeTypes = ReflectionUtils.GetAllTypes(typeof(NodeBase)).ToArray();
                 Array.Sort(nodeTypes, CategorySort);
                 foreach (Type type in nodeTypes)
@@ -217,6 +226,26 @@ namespace Dash.Editor
             Vector2 position = new Vector2(_lastMousePosition.x * zoom - offset.x, _lastMousePosition.y * zoom - offset.y);
             
             NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, (Type)p_nodeType, position);
+        }
+        
+        static void CreateGraphNode(object p_graph)
+        {
+            float zoom = DashEditorCore.EditorConfig.zoom;
+            Vector2 offset = DashEditorCore.EditorConfig.editingGraph.viewOffset;
+            Vector2 position = new Vector2(_lastMousePosition.x * zoom - offset.x, _lastMousePosition.y * zoom - offset.y);
+            
+            SubGraphNode node = (SubGraphNode)NodeBase.Create(typeof(SubGraphNode), DashEditorCore.EditorConfig.editingGraph);
+
+            if (node != null)
+            {
+                node.rect = new Rect(position.x, position.y, 0, 0);
+                DashEditorCore.EditorConfig.editingGraph.Nodes.Add(node);
+            }
+
+            node.Model.useAsset = true;
+            node.Model.graphAsset = (DashGraph)p_graph;
+
+            DashEditorCore.SetDirty();
         }
         
         static public int CategorySort(Type p_type1, Type p_type2)

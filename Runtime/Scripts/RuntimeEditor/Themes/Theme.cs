@@ -2,11 +2,13 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
+using Dash.Attributes;
 using UnityEngine;
+
 #if UNITY_EDITOR
 namespace Dash
 {
+    [DashEditorOnly]
     [CreateAssetMenu(fileName = "Theme", menuName = "Dash/Create Theme", order = 1)]
     public class Theme : ScriptableObject
     {
@@ -48,6 +50,11 @@ namespace Dash
 
         private void OnEnable()
         {
+            GetDefaultIcons();
+        }
+
+        void GetDefaultIcons()
+        {
             if (EventNodeIcon == null)
                 EventNodeIcon = IconManager.GetIcon("event_icon");
             if (AnimationNodeIcon == null)
@@ -62,6 +69,8 @@ namespace Dash
 
         public Texture GetNodeIconByCategory(NodeCategoryType p_category)
         {
+            GetDefaultIcons();
+            
             switch (p_category)
             {
                 case NodeCategoryType.EVENT:

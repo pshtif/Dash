@@ -126,6 +126,8 @@ namespace Dash
         
         public bool enableAnimateNodeInterface = false;
 
+        public DashChecksumObject lastChecksumObject;
+
         public Rect editorPosition;
             
         public string AOTAssemblyPath = "Assets/Plugins";
@@ -134,7 +136,7 @@ namespace Dash
         
         public List<Type> scannedAOTTypes;
         public List<Type> explicitAOTTypes;
-        
+
         // SETTINGS
         public bool settingsShowInspectorLogo = true;
 

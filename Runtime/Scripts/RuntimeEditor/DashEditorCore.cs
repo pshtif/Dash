@@ -8,6 +8,7 @@
 
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -34,6 +35,8 @@ namespace Dash
 
         static public string propertyReference;
 
+        static public List<DashGraph> GraphAssets { get; private set; }
+
         static DashEditorCore()
         {
             SetExecutionOrder(typeof(DashVariablesController), -501);
@@ -46,12 +49,19 @@ namespace Dash
             
             CheckDashVersion();
 
+            ScanGraphAssets();
+
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
-            
+
             SceneView.duringSceneGui -= OnSceneGUI;
             SceneView.duringSceneGui += OnSceneGUI;
+        }
+
+        public static void ScanGraphAssets()
+        {
+            GraphAssets = AssetUtils.FindAllAssetsByType<DashGraph>();
         }
 
         static void CheckDashVersion()
@@ -79,7 +89,6 @@ namespace Dash
 
         public static void SetDirty()
         {
-            //Debug.Log("SetDirty");
             if (EditorConfig.editingGraph == null)
                 return;
             
@@ -100,7 +109,7 @@ namespace Dash
         public static void EditController(DashController p_controller, string p_graphPath = "")
         {
             SelectionManager.ClearSelection();
-            
+
             if (p_controller != null)
             {
                 EditorConfig.editingRootGraph = p_controller.Graph;

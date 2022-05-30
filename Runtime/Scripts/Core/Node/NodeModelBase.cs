@@ -15,6 +15,8 @@ namespace Dash
 {
     public class NodeModelBase : IReferencable, ISerializationCallbackReceiver
     {
+        private int _version = 1;
+        
         public string Id => id;
 
         [TitledGroup("Advanced", 1000, true)]
@@ -23,68 +25,24 @@ namespace Dash
         [TitledGroup("Advanced", 1000, true)]
         public string comment;
 
+        [NonSerialized]
         [HideInInspector] 
         private List<string> migrationList = new List<string>();
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            if (migrationList == null)
-                migrationList = new List<string>();
-            
-            var fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public).ToList();
-            fields = fields.FindAll(f => f.GetCustomAttribute<MigrateFromAttribute>() != null);
-            
-            foreach (var field in fields)
-            {
-                if (migrationList.IndexOf(field.Name) >= 0)
-                    continue;
-                
-                var migrateFrom = field.GetCustomAttribute<MigrateFromAttribute>();
-                var migrateField = GetType().GetField(migrateFrom.FieldName);
-
-                if (migrateField == null)
-                {
-                    Debug.Log("Specified invalid migration for property "+field.Name+" from nonexisting property "+migrateFrom);
-                    continue;
-                }
-
-                if (typeof(Parameter).IsAssignableFrom(field.FieldType))
-                {
-                    field.SetValue(this, Activator.CreateInstance(field.FieldType,
-                        new object[] { migrateField.GetValue(this) }));
-                    
-                    migrationList.Add(field.Name);
-                }
-            }
-            //     fields = fields.FindAll(fi => fi.FieldType.IsGenericType && fi.FieldType.GetGenericTypeDefinition() == typeof(Parameter<>));
-            //
-            //     if (fields.Count == 0)
-            //         return;
-            //     
-            //     foreach (var field in fields)
-            //     {
-            //         if (field.GetValue(this) != null)
-            //             continue;
-            //
-            //         var initializeFrom = field.GetCustomAttribute<InitializeFromAttribute>();
-            //         if (initializeFrom != null)
-            //         {
-            //             var initializationField = GetType().GetField(initializeFrom.FieldName);
-            //             
-            //             field.SetValue(this,
-            //                 Activator.CreateInstance(field.FieldType,
-            //                     new object[] {initializationField == null ? true : initializationField.GetValue(this)}));
-            //         }
-            //         else
-            //         {
-            //             field.SetValue(this, Activator.CreateInstance(field.FieldType, new object[] {field.FieldType.GenericTypeArguments[0].GetDefaultValue()}));
-            //         }
-            //     }
+            var v = OnMigrateSerializedData(_version);
+            _version = v;
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-             
+            
+        }
+
+        int OnMigrateSerializedData(int p_version)
+        {
+            return 1;
         }
 
 #if UNITY_EDITOR
@@ -209,20 +167,20 @@ namespace Dash
                 .ToList();
         }
         
-        public void ValidateSerialization()
-        {
-            var fields = this.GetType().GetFields();
-            foreach (var field in fields)
-            {
-                if (!GUIPropertiesUtils.IsParameterProperty(field))
-                    continue;
-                
-                if ((Parameter)field.GetValue(this) == null)
-                {
-                    RecreateParameter(field);
-                }
-            }
-        }
+        // public void ValidateSerialization()
+        // {
+        //     var fields = this.GetType().GetFields();
+        //     foreach (var field in fields)
+        //     {
+        //         if (!GUIPropertiesUtils.IsParameterProperty(field))
+        //             continue;
+        //         
+        //         if ((Parameter)field.GetValue(this) == null)
+        //         {
+        //             RecreateParameter(field);
+        //         }
+        //     }
+        // }
         
         bool RecreateParameter(FieldInfo p_fieldInfo)
         {

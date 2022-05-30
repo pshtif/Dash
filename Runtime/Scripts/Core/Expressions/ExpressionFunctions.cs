@@ -4,7 +4,7 @@
 
 using System;
 using System.Reflection;
-using NCalc;
+using Dash.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
 

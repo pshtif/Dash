@@ -9,6 +9,8 @@ namespace Dash
     public class DebugNodeModel : NodeModelBase
     {
         public bool debugFlowData = false;
+        
+        public int test2 { get; set; }
 
         [Dependency("debugFlowData", false)]
         public Parameter<string> debug;

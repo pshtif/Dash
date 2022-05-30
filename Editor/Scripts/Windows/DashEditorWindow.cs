@@ -8,6 +8,12 @@ using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
 
+#if UNITY_2021_2_OR_NEWER
+using UnityEditor.SceneManagement;
+#else
+using UnityEditor.Experimental.SceneManagement;
+#endif
+
 namespace Dash.Editor
 {
     public class DashEditorWindow : EditorWindow
@@ -25,23 +31,23 @@ namespace Dash.Editor
 
         private void OnEnable()
         {
-            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageOpened -= OnPrefabStageOpened;
-            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageOpened += OnPrefabStageOpened;
-            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
-            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing += OnPrefabStageClosing;
+            PrefabStage.prefabStageOpened -= OnPrefabStageOpened;
+            PrefabStage.prefabStageOpened += OnPrefabStageOpened;
+            PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
+            PrefabStage.prefabStageClosing += OnPrefabStageClosing;
         }
 
         private void OnDisable()
         {
-            UnityEditor.Experimental.SceneManagement.PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
+            PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
         }
         
-        void OnPrefabStageClosing(UnityEditor.Experimental.SceneManagement.PrefabStage p_stage) {
+        void OnPrefabStageClosing(PrefabStage p_stage) {
             //when exiting prefab state we are left with a floating graph instance which can creat confusion
             DashEditorCore.EditController(null);
         }
         
-        void OnPrefabStageOpened(UnityEditor.Experimental.SceneManagement.PrefabStage p_stage) {
+        void OnPrefabStageOpened(PrefabStage p_stage) {
             //when exiting prefab state we are left with a floating graph instance which can creat confusion
             DashEditorCore.EditController(null);
         }
@@ -124,6 +130,7 @@ namespace Dash.Editor
                 _views = new List<ViewBase>();
                 AddView(new GraphView());
                 AddView(new NodeInspectorView());
+                AddView(new GraphPropertiesView());
                 AddView(new GraphVariablesView());
                 AddView(new PreviewControlsView());
             }

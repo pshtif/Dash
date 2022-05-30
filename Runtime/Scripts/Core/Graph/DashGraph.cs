@@ -18,12 +18,12 @@ using UnityEditor;
 
 namespace Dash
 {
-    [CreateAssetMenuAttribute(fileName = "DashGraph", menuName = "Dash/Create Graph", order = 0)]
     [Serializable]
     public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IInternalGraphAccess
     {
         public int version { get; private set; } = 0;
 
+        [field: NonSerialized]
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
         [SerializeField]
@@ -108,6 +108,7 @@ namespace Dash
         [NonSerialized]
         protected bool _initialized = false;
 
+        [field: NonSerialized]
         public DashController Controller { get; private set; }
 
         public int CurrentExecutionCount => Nodes.Sum(n => n.ExecutionCount);
@@ -291,6 +292,11 @@ namespace Dash
             return _connections.Exists(c => c.inputNode == p_node && c.inputIndex == p_index);
         }
         
+        public bool HasAnyInputConnected(NodeBase p_node)
+        {
+            return _connections.Exists(c => c.inputNode == p_node);
+        }
+        
         public List<NodeConnection> GetInputConnections(NodeBase p_node)
         {
             return _connections.FindAll(c => c.inputNode == p_node);
@@ -344,8 +350,6 @@ namespace Dash
 
 #region SERIALIZATION
 
-        
-
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
         
@@ -356,27 +360,27 @@ namespace Dash
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
+            
+            ((IInternalGraphAccess)this).SetVersion(DashCore.GetVersionNumber());
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             //Debug.Log("OnBeforeSerialize");
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
+            GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+            
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            {
+                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
+            }
+            
             if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
             {
                 DashEditorCore.EditorConfig.editingController.ReserializeBound();
             }
-            else
-            {
-                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
-                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-                {
-                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-                }
-            }
-            #endif
+#endif
         }
         
         public byte[] SerializeToBytes(DataFormat p_format, ref List<Object> p_references)
@@ -511,25 +515,7 @@ namespace Dash
         {
             foreach (NodeConnection connection in _connections)
             {
-                NodeBase inputNode = connection.inputNode;
-                NodeBase outputNode = connection.outputNode;
-
-                Rect inputOffsetRect = new Rect(inputNode.rect.x + viewOffset.x,
-                    inputNode.rect.y + viewOffset.y, inputNode.Size.x, inputNode.Size.y);
-                Rect outputOffsetRect = new Rect(outputNode.rect.x + viewOffset.x,
-                    outputNode.rect.y + viewOffset.y, outputNode.Size.x, outputNode.Size.y);
-
-                Vector3 startPos = new Vector3(outputOffsetRect.x + outputOffsetRect.width + 8,
-                    outputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
-                    connection.outputIndex * 32);
-                Vector3 startTan = startPos + Vector3.right * 50;
-                Vector3 endPos = new Vector3(inputOffsetRect.x - 8,
-                    inputOffsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + DashEditorCore.EditorConfig.theme.ConnectorHeight / 2 +
-                    connection.inputIndex * 32);
-                Vector3 endTan = endPos + Vector3.left * 50;
-
-                if (HandleUtility.DistancePointBezier(new Vector3(p_position.x, p_position.y, 0), startPos, endPos,
-                    startTan, endTan) < p_distance)
+                if (connection.Hits(p_position, p_distance))
                 {
                     return connection; 
                 }

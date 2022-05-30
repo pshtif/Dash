@@ -100,7 +100,7 @@ namespace Dash
                 }
                 else
                 {
-                    return DashTween.To((RectTransform)p_target, 0, 1, time)
+                    return DashTween.To(p_target, 0, 1, time)
                         .OnUpdate(f => UpdateTransformTween(p_target, f, p_flowData, startPosition, startRotation,
                             startScale, targetTransform, easeType))
                         .SetDelay(delay);

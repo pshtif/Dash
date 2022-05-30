@@ -30,7 +30,7 @@ namespace Dash
             if (!NodeUtils.CanHaveMultipleInstances(p_nodeType) && p_graph.GetNodeByType(p_nodeType) != null)
                 return null;
             
-            Undo.RegisterCompleteObjectUndo(p_graph, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
+            UndoUtils.RegisterCompleteObject(p_graph, "Create "+NodeBase.GetNodeNameFromType(p_nodeType));
             
             NodeBase node = NodeBase.Create(p_nodeType, p_graph);
 
@@ -122,6 +122,7 @@ namespace Dash
                 {
                     InputNode inputNode = (InputNode)CreateNode(subGraphNode.SubGraph, typeof(InputNode),
                         connection.inputNode.rect.position - new Vector2(200, index * 100));
+                    inputNode.Model.inputName = "Input" + (index + 1);
                     subGraphNode.SubGraph.Connect(newNodes[p_nodes.IndexOf(connection.inputNode)],
                         connection.inputIndex, inputNode, 0);
                     p_graph.Connect(subGraphNode, index++, connection.outputNode, connection.outputIndex);
@@ -141,6 +142,7 @@ namespace Dash
                 {
                     OutputNode outputNode = (OutputNode)CreateNode(subGraphNode.SubGraph, typeof(OutputNode),
                         connection.outputNode.rect.position + new Vector2(300, index * 100));
+                    outputNode.Model.outputName = "Output" + (index + 1);
                     subGraphNode.SubGraph.Connect(outputNode, 0, newNodes[p_nodes.IndexOf(connection.outputNode)],
                         connection.outputIndex);
                     p_graph.Connect(connection.inputNode, connection.inputIndex, subGraphNode, index++);
@@ -185,6 +187,50 @@ namespace Dash
             inputNodes.ForEach(n => p_graph.DeleteNode(n));
             outputNodes.ForEach(n => p_graph.DeleteNode(n));
             p_graph.DeleteNode(p_subGraphNode);
+        }
+
+        public static bool IsNodeOutput(DashGraph p_graph, NodeBase p_outputNode, NodeBase p_node)
+        {
+            return p_graph.Connections.Exists(c => c.outputNode == p_outputNode && c.inputNode == p_node);
+        }
+
+        public static NodeConnection GetConnection(DashGraph p_graph, NodeBase p_inputNode, NodeBase p_outputNode)
+        {
+            var connection = p_graph.Connections.Find(c => c.outputNode == p_outputNode && c.inputNode == p_inputNode);
+            return connection;
+        }
+
+        private static List<NodeBase> _arrangedNodes;
+        public static void ArrangeNodes(DashGraph p_graph, NodeBase p_node)
+        {
+            _arrangedNodes = new List<NodeBase>();
+            
+            ArrangeNodeInternal(p_graph, p_node, null, 0);
+        }
+
+        private static void ArrangeNodeInternal(DashGraph p_graph, NodeBase p_node, NodeBase p_byNode, int p_index)
+        {
+            if (_arrangedNodes.Contains(p_node))
+                return;
+            
+            _arrangedNodes.Add(p_node);
+            
+            if (p_byNode != null)
+            {
+                p_node.rect.position = p_byNode.rect.position + new Vector2(p_byNode.rect.width + 40, p_index * 120);
+            }
+
+            var connections = p_graph.Connections.FindAll(c => c.outputNode == p_node);
+            connections.Sort((c1, c2) =>
+            {
+                return c1.outputIndex.CompareTo(c2.outputIndex);
+            });
+
+            int index = 0;
+            foreach (var connection in connections)
+            {
+                ArrangeNodeInternal(p_graph, connection.inputNode, p_node, index++);   
+            }
         }
 #endif
     }

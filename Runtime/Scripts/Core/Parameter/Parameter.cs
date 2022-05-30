@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using NCalc;
+using Dash.NCalc;
 using Random = UnityEngine.Random;
 using Dash.Extensions;
 

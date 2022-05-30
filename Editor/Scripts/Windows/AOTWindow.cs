@@ -20,8 +20,8 @@ namespace Dash.Editor
 
         public static AOTWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/AOT")]
-        public static AOTWindow InitDebugWindow()
+        [MenuItem ("Tools/Dash/Scan/AOT")]
+        public static AOTWindow InitAOTWindow()
         {
             Instance = GetWindow<AOTWindow>();
             Instance.titleContent = new GUIContent("Dash AOT Editor");
@@ -72,12 +72,18 @@ namespace Dash.Editor
                     GUILayout.BeginHorizontal();
                     GUILayout.Label((string.IsNullOrEmpty(type.Namespace) ? "" : type.Namespace + ".") +
                                     type.GetReadableTypeName());
-                    if (GUILayout.Button("Remove", GUILayout.Width(120)))
+                    bool removed = GUILayout.Button("Remove", GUILayout.Width(120));
+                    
+                    if (removed) {
+                        DashScanner.RemoveScannedAOTType(type);
+                    }
+                    
+                    GUILayout.EndHorizontal();
+
+                    if (removed)
                     {
-                        DashAOTScanner.RemoveScannedAOTType(type);
                         break;
                     }
-                    GUILayout.EndHorizontal();
                 }
             }
             
@@ -118,7 +124,7 @@ namespace Dash.Editor
                     
                     if (GUILayout.Button("Remove", GUILayout.Width(120)))
                     {
-                        DashAOTScanner.RemoveExplicitAOTType(type);
+                        DashScanner.RemoveExplicitAOTType(type);
                         break;
                     }
                     GUILayout.EndHorizontal();
@@ -170,10 +176,10 @@ namespace Dash.Editor
 
             if (scan)
             {
-                DashAOTScanner.Scan();
+                DashScanner.ScanForAOT();
             } else if (generate)
             {
-                DashAOTScanner.GenerateDLL(_generateLinkXml, _includeOdin);
+                DashAOTGenerator.GenerateDLL(_generateLinkXml, _includeOdin);
             }
         }
 

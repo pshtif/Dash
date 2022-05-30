@@ -4,6 +4,59 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.11.0 - 26.5.2022
+
+#### Added
+
+- Added arrange nodes functionality to arrange nodes down the stream from a specific node
+- Added checksum window/scanner for checksum backups to solve/spot serialization issue 
+- Added ability to create SubGraphNodes from asset graphs directly in node creation context menu
+
+#### Changed
+
+- Changed on new variable creation it is assigned default value instead of null
+- Changed id and name generation to work with any namespace, needed for custom node creation outside of Dash namespace
+- Changed minor node ui changes
+- Changed various serialization/handling of subgraph nodes and their UI especially when switching from/to asset/bound graphs
+- Changed ValidationWindow was removed as it was obsolete in last couple of versions
+
+#### Fixed
+
+- Fixed AnimateToTransform tween to Transform when not using RectTransform
+- Fixed skipping enumeration of missing component scripts for bindables
+- Fixed creating input/output node will automatically invalidate its name to unique names
+- Fixed undo/redo performing and serialization on bound graphs
+
+### Release 0.10.1 - 2.5.2022
+
+#### Changed
+
+- Changed NCalc is now in Dash.NCalc namespace to avoid global namespace conflict with other packages using NCalc
+
+#### Fixed
+
+- Fixed input/output indices serialization bug from 0.10.0
+- Fixed Theme class not added as scanned AOT type, you can now specify classes explicitly by DashEditorOnly attribute
+- Fixed when duplicating Input/Output nodes they automatically generate unique input/output names now
+- Fixed when packing nodes to SubGraph it automatically generates input/output naming based on index
+
+### Release 0.10.0 - 29.4.2022
+
+#### Added
+
+- Added AddListeners can now be added with once flag so they will be removed after first invocation
+- Added support for 2021 Unity and their namespace changes
+- Added new type of nodes called Connector which can be used for connection/graph management
+
+#### Changed
+
+- Changed increment property on IncrementText node to be parametrized
+- Updated Odin Serializer to the latest version
+
+#### Fixed
+
+- Fixed subgraph node now gets correctly duplicated with its bound graph
+
 ### Release 0.9.0 - 29.3.2022
 
 #### Added

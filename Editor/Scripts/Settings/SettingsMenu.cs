@@ -13,12 +13,13 @@ namespace Dash.Editor
         public static void ShowInspectorLogo()
         {
             DashEditorCore.EditorConfig.settingsShowInspectorLogo = !DashEditorCore.EditorConfig.settingsShowInspectorLogo;
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
         
         [MenuItem("Tools/Dash/Settings/Show Inspector Logo", true)]
         private static bool SettingsMenuValidator()
         {
-            Menu.SetChecked("Tools/Settings/Show Inspector Logo", DashEditorCore.EditorConfig.settingsShowInspectorLogo);
+            Menu.SetChecked("Tools/Dash/Settings/Show Inspector Logo", DashEditorCore.EditorConfig.settingsShowInspectorLogo);
             return true;
         }
     }

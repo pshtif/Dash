@@ -28,25 +28,11 @@ namespace Dash
             OnExecuteEnd();
             OnExecuteOutput(0, p_flowData);
         }
-
-#if UNITY_EDITOR
-        // protected override Color NodeBackgroundColor => new Color(0.8f, 0.6f, 0f);
-        // protected override Color TitleBackgroundColor => new Color(0.8f, 0.5f, 0f);
-        // protected override Color TitleTextColor => new Color(1f, 0.8f, 0);
-        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
-        public override string CustomName => "Input " + Model.inputName;
-
+        
         protected override void Invalidate()
         {
             base.Invalidate();
             ValidateUniqueInputName();
-        }
-        
-        protected override void DrawCustomGUI(Rect p_rect)
-        {
-            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
-            
-            GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.inputName , DashEditorCore.Skin.GetStyle("NodeText"));
         }
         
         protected void ValidateUniqueInputName()
@@ -64,6 +50,28 @@ namespace Dash
             }
 
             Model.inputName = name;
+        }
+
+#if UNITY_EDITOR
+        // protected override Color NodeBackgroundColor => new Color(0.8f, 0.6f, 0f);
+        // protected override Color TitleBackgroundColor => new Color(0.8f, 0.5f, 0f);
+        // protected override Color TitleTextColor => new Color(1f, 0.8f, 0);
+        public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
+        public override string CustomName => "Input " + Model.inputName;
+
+        protected override void DrawCustomGUI(Rect p_rect)
+        {
+            Rect offsetRect = new Rect(rect.x + _graph.viewOffset.x, rect.y + _graph.viewOffset.y, rect.width, rect.height);
+            
+            GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.inputName , DashEditorCore.Skin.GetStyle("NodeText"));
+        }
+       
+        
+        public override NodeBase Clone(DashGraph p_graph)
+        {
+            InputNode node = base.Clone(p_graph) as InputNode;
+            node.ValidateUniqueInputName();
+            return node;
         }
 #endif
     }

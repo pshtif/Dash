@@ -332,7 +332,7 @@ namespace Dash
             
             DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(nodeType, typeof(DisableBaseGUIAttribute));
             _baseGUIEnabled = disableBaseGuiAttribute == null;
-            
+
             CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(nodeType, typeof(CategoryAttribute));
             Category = categoryAttribute.type;
             
@@ -355,17 +355,20 @@ namespace Dash
             if (string.IsNullOrEmpty(id))
             {
                 string type = GetType().ToString();
-                id = type.Substring(5, type.Length-9) + "1";
+                int dotIndex = type.IndexOf(".");
+                id = type.Substring(dotIndex + 1, type.Length - (dotIndex + 5)) + "1";
             }
 
             while (Graph.Nodes.Exists(n => n != this && n.Id == id))
             {
                 string number = string.Concat(id.Reverse().TakeWhile(char.IsNumber).Reverse());
-                id = id.Substring(0,id.Length-number.Length) + (Int32.Parse(number)+1);
+                id = id.Substring(0, id.Length - number.Length) + (Int32.Parse(number) + 1);
             }
             
             _model.id = id;
         }
+        
+        protected virtual void Invalidate() { }
 
         #region EDITOR_CODE
 #if UNITY_EDITOR
@@ -431,64 +434,6 @@ namespace Dash
             }
         }
 
-        // [NonSerialized] 
-        // private Texture _iconTexture;
-        //
-        // protected Texture IconTexture
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _iconTexture;
-        //     }
-        // }
-
-        // [NonSerialized] 
-        // private Color _nodeBackgroundColor;
-        //
-        // // Using virtual getters so you can override it and avoid serialization at the same time and it is not
-        // // possible to use Attributes for this due to non constant initializer
-        // protected virtual Color NodeBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _nodeBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized]
-        // private Color _titleBackgroundColor;
-        //
-        // protected virtual Color TitleBackgroundColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //
-        //         return _titleBackgroundColor;
-        //     }
-        // }
-        //
-        // [NonSerialized] 
-        // private Color _titleTextColor;
-        //
-        // protected virtual Color TitleTextColor
-        // {
-        //     get
-        //     {
-        //         if (!_attributesInitialized)
-        //             InitializeAttributes();
-        //         
-        //         return _titleTextColor;
-        //     }
-        // }
-
         public Rect rect;
 
         public virtual string CustomName => String.Empty;
@@ -500,19 +445,13 @@ namespace Dash
         public static string GetNodeNameFromType(Type p_nodeType)
         {
             string typeString = p_nodeType.ToString();
-            return typeString.ToString().Substring(5, typeString.ToString().Length - 9);
+            int dotIndex = typeString.IndexOf(".");
+            return typeString.Substring(dotIndex + 1, typeString.Length - (dotIndex + 5));
         }
 
-        protected virtual void Invalidate() { }
-        
         internal virtual void Unselect() { }
 
-        public void ValidateSerialization()
-        {
-            _model.ValidateSerialization();
-        }
-        
-        public NodeBase Clone(DashGraph p_graph)
+        public virtual NodeBase Clone(DashGraph p_graph)
         {
             NodeBase node = Create(GetType(), p_graph);
             node._model = _model.Clone();
@@ -557,7 +496,7 @@ namespace Dash
             }
 
             DrawOutline(offsetRect);
-
+            
             DrawConnectors(p_rect);
         }
 
@@ -736,7 +675,7 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        public Rect GetConnectorRect(bool p_input, int p_index)
+        public virtual Rect GetConnectorRect(bool p_input, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,
                 Size.y);
@@ -760,7 +699,7 @@ namespace Dash
             return connectorRect;
         }
         
-        private void DrawConnectors(Rect p_rect)
+        protected virtual void DrawConnectors(Rect p_rect)
         {
             GUISkin skin = DashEditorCore.Skin;
 
@@ -819,8 +758,11 @@ namespace Dash
 
                 if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
                 {
-                    Graph.connectingOutputIndex = i;
-                    Graph.connectingNode = this;
+                    if (Event.current.button == 0)
+                    {
+                        Graph.connectingOutputIndex = i;
+                        Graph.connectingNode = this;
+                    }
                 }
             }
 
@@ -984,6 +926,7 @@ namespace Dash
         {
             _model = new T();
             ValidateUniqueId();
+            Invalidate();
         }
     }
 }

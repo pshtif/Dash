@@ -37,7 +37,7 @@ namespace Dash
                 return;
             }
 
-            value += Model.increment;
+            value += GetParameterValue(Model.incrementP, p_flowData);
             tmp.text = Model.useDotFormating ? StringUtils.GetDotFormat(value) : value.ToString();
             
             OnExecuteOutput(0, p_flowData);
