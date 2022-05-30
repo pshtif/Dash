@@ -41,8 +41,6 @@ namespace Dash
         
         public bool enableCustomExpressionClasses = false;
 
-        public List<Type> expressionClasses = new List<Type>();
-
         [OdinSerialize]
         public Dictionary<string, string> expressionMacros = new Dictionary<string, string>();
 
