@@ -38,10 +38,10 @@ namespace Dash
             }
         }
 
-        public void Initialize(GameObject p_target)
+        public void Initialize(IVariableBindable p_bindable)
         {
-            variables.ForEach(v => v.InitializeBinding(p_target));
-            variables.ForEach(v => v.InitializeLookup(p_target));
+            variables.ForEach(v => v.InitializeBinding(p_bindable));
+            variables.ForEach(v => v.InitializeLookup(p_bindable));
         }
 
         public void ClearVariables()
@@ -133,13 +133,13 @@ namespace Dash
             }
         }
 
-        public void PasteVariable(Variable p_variable, IVariableBindable p_target)
+        public void PasteVariable(Variable p_variable, IVariableBindable p_bindable)
         {
             p_variable.Rename(GetUniqueName(p_variable.Name));
             variables.Add(p_variable);
-            if (p_target != null)
+            if (p_bindable != null)
             {
-                p_variable.InitializeBinding(p_target.gameObject);
+                p_variable.InitializeBinding(p_bindable);
             }
             InvalidateLookup();
         }

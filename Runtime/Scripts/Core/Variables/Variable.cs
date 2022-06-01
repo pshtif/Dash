@@ -43,20 +43,20 @@ namespace Dash
             _name = p_newName;
         }
         
-        abstract public void BindProperty(PropertyInfo p_property, Component p_component);
+        abstract public void BindProperty(PropertyInfo p_property, Component p_component, IVariableBindable p_bindable);
         
-        abstract public void BindField(FieldInfo p_field, Component p_component);
+        abstract public void BindField(FieldInfo p_field, Component p_component, IVariableBindable p_bindable);
 
         abstract public void UnbindProperty();
 
-        abstract public bool InitializeBinding(GameObject p_target);
+        abstract public bool InitializeBinding(IVariableBindable p_bindable);
 
         public void SetAsLookup(bool p_lookup)
         {
             Type = p_lookup ? VariableType.LOOKUP : VariableType.VALUE;
         }
 
-        abstract public void InitializeLookup(GameObject p_target);
+        abstract public void InitializeLookup(IVariableBindable p_bindable);
 
         public abstract Variable Clone();
 
@@ -147,31 +147,31 @@ namespace Dash
             return v;
         }
         
-        public override void BindProperty(PropertyInfo p_property, Component p_component)
+        public override void BindProperty(PropertyInfo p_property, Component p_component, IVariableBindable p_bindable)
         {
             Type = VariableType.BOUND;
             _boundType = VariableBindType.PROPERTY;
             _boundName = p_property.Name;
             _boundComponentName = p_component.GetType().FullName;
 
-            InitializeBinding(p_component.gameObject);
+            InitializeBinding(p_bindable);
         }
         
-        public override void BindField(FieldInfo p_field, Component p_component)
+        public override void BindField(FieldInfo p_field, Component p_component, IVariableBindable p_bindable)
         {
             Type = VariableType.BOUND;
             _boundType = VariableBindType.FIELD;
             _boundName = p_field.Name;
             _boundComponentName = p_component.GetType().FullName;
 
-            InitializeBinding(p_component.gameObject);
+            InitializeBinding(p_bindable);
         }
 
-        public void RebindProperty(GameObject p_gameObject)
+        public void RebindProperty(IVariableBindable p_bindable)
         {
             if (Type == VariableType.BOUND)
             {
-                InitializeBinding(p_gameObject);
+                InitializeBinding(p_bindable);
             }
         }
 
@@ -184,13 +184,13 @@ namespace Dash
             Type = VariableType.VALUE;
         }
 
-        public override bool InitializeBinding(GameObject p_target)
+        public override bool InitializeBinding(IVariableBindable p_bindable)
         {
             if (!IsBound)
                 return false;
             
             Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
-            Component component = p_target.GetComponent(componentType);
+            Component component = p_bindable.gameObject.GetComponent(componentType);
             if (component == null)
             {
                 Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);
@@ -237,24 +237,24 @@ namespace Dash
             return true;
         }
         
-        public override void InitializeLookup(GameObject p_target)
+        public override void InitializeLookup(IVariableBindable p_bindable)
         {
             if (!IsLookup)
                 return;
             
-            var rect = p_target.transform.DeepFind(Name);
+            var transform = p_bindable.gameObject.transform.DeepFind(Name);
 
             bool found = false;
-            if (rect != null)
+            if (transform != null)
             {
-                if (typeof(T).IsAssignableFrom(rect.GetType()))
+                if (typeof(T).IsAssignableFrom(transform.GetType()))
                 {
-                    objectValue = rect;
+                    objectValue = transform;
                     found = true;
                 }
                 else
                 {
-                    var component = rect.GetComponent<T>();
+                    var component = transform.GetComponent<T>();
                     if (component == null)
                     {
                         objectValue = component;

@@ -60,7 +60,7 @@ namespace Dash
             {
                 if (!Application.isPlaying)
                 {
-                    GetComponent<IVariables>()?.Initialize(gameObject);
+                    GetComponent<IVariables>()?.Initialize(this);
                     return GetComponent<IVariables>();
                 }
                 else

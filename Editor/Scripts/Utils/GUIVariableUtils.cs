@@ -94,7 +94,7 @@ namespace Dash.Editor
                         {
                             menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key.name + "/" + property.Name),
                                 false,
-                                () => OnBindVariable(variable, property, infoKeys.Key));
+                                () => OnBindVariable(variable, property, infoKeys.Key, p_bindable));
                         }
                     }
                     
@@ -106,7 +106,7 @@ namespace Dash.Editor
                         {
                             menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key.name + "/" + field.Name),
                                 false, 
-                                () => OnBindVariable(variable, field, infoKeys.Key));
+                                () => OnBindVariable(variable, field, infoKeys.Key, p_bindable));
                         }
                     }
                 }
@@ -203,14 +203,14 @@ namespace Dash.Editor
             return false;
         }
         
-        static void OnBindVariable(Variable p_variable, PropertyInfo p_property, Component p_boundComponent)
+        static void OnBindVariable(Variable p_variable, PropertyInfo p_property, Component p_boundComponent, IVariableBindable p_bindable)
         {
-            p_variable.BindProperty(p_property, p_boundComponent);
+            p_variable.BindProperty(p_property, p_boundComponent, p_bindable);
         }
         
-        static void OnBindVariable(Variable p_variable, FieldInfo p_field, Component p_boundComponent)
+        static void OnBindVariable(Variable p_variable, FieldInfo p_field, Component p_boundComponent, IVariableBindable p_bindable)
         {
-            p_variable.BindField(p_field, p_boundComponent);
+            p_variable.BindField(p_field, p_boundComponent, p_bindable);
         }
         
         static void OnDeleteVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)

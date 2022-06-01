@@ -29,17 +29,17 @@ namespace Dash
 
         void Awake()
         {
-            Initialize(gameObject);
+            Initialize(this);
         }
         
-        public void Initialize(GameObject p_gameObject)
+        public void Initialize(IVariableBindable p_bindable)
         {
             if (GetType() != typeof(DashVariablesController))
             {
                 FetchFieldsToVariables();
             }
             
-            Variables.Initialize(p_gameObject);
+            Variables.Initialize(p_bindable);
 
             if (makeGlobal)
             {

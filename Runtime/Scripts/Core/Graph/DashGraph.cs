@@ -126,7 +126,7 @@ namespace Dash
             Controller = p_controller;
 
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
-            variables.Initialize(p_controller.gameObject);
+            variables.Initialize(p_controller);
             
             _initialized = true;
         }
