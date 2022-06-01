@@ -11,6 +11,7 @@ using UnityEngine;
 using Attribute = System.Attribute;
 using Object = System.Object;
 #if UNITY_EDITOR
+using OdinSerializer;
 using UnityEditor;
 
 #endif
@@ -900,6 +901,20 @@ namespace Dash
 
             return false;
         }
+        
+        public byte[] SerializeToBytes(DataFormat p_format, ref List<UnityEngine.Object> p_references)
+        {
+            byte[] bytes = null;
+            
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            {
+                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                bytes = SerializationUtility.SerializeValue(this, p_format, out p_references, cachedContext.Value);
+            }
+            
+            return bytes;
+        }
+        
 #endif
 
         #endregion
