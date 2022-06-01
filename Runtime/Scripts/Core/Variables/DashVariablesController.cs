@@ -11,6 +11,8 @@ namespace Dash
     public class DashVariablesController : MonoBehaviour
         , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables, IVariableBindable
     {
+        public DashGraph Graph => null;
+        
         public bool makeGlobal = false;
         
         [HideInInspector]

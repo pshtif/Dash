@@ -8,6 +8,8 @@ namespace Dash
 {
     public interface IVariableBindable : IExposedPropertyTable
     {
+        DashGraph Graph { get; }
+        
         GameObject gameObject { get; }
     }
 }

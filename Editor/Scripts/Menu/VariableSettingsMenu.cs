@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Dash
+namespace Dash.Editor
 {
     public class VariableSettingsMenu
     {
@@ -65,6 +65,8 @@ namespace Dash
             
             menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_bindable));
             menu.AddItem(new GUIContent("Copy Variable"), false, () => OnCopyVariable(p_variables, p_name));
+            
+            menu.AddItem(new GUIContent("Refactor Variable"), false, () => OnRefactorVariable(p_variables, p_name, p_bindable));
 
             return menu;
         }
@@ -171,6 +173,11 @@ namespace Dash
         static void OnCopyVariable(DashVariables p_variables, string p_name)
         {
             VariableUtils.CopyVariable(p_variables.GetVariable(p_name));
+        }
+        
+        static void OnRefactorVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        {
+            RefactorWindow.RefactorVariable(p_variables.GetVariable(p_name), p_bindable != null ? p_bindable.Graph : DashEditorCore.EditorConfig.editingGraph);
         }
 #endif
     }
