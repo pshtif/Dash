@@ -160,15 +160,14 @@ namespace Dash
         {
             variables.RemoveAll(v => v.Name == p_name);
         }
-
-        // Renaming in dictionary is tricky but still better than having list as renaming is sporadic
-        public bool RenameVariable(string p_oldName, string p_newName)
+        
+        public Variable RenameVariable(string p_oldName, string p_newName)
         {
             var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
             InvalidateLookup();
 
-            return true;
+            return variable;
         }
 
         private void InvalidateLookup()

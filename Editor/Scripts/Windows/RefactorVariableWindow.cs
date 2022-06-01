@@ -10,39 +10,41 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class RefactorWindow : EditorWindow
+    public class RefactorVariableWindow : EditorWindow
     {
         private static Vector2 _scrollPosition;
 
-        public static RefactorWindow Instance { get; private set; }
+        public static RefactorVariableWindow Instance { get; private set; }
 
-        private static Variable _variable;
+        private static DashVariables _variables;
+        private static string _variableName;
         private static DashGraph _graph;
         private static string _refactoredName;
 
         private static Dictionary<NodeBase, List<FieldInfo>> _refactoringLookup;
 
-        public static void RefactorVariable(Variable p_variable, DashGraph p_graph)
+        public static void RefactorVariable(DashVariables p_variables, string p_variableName, DashGraph p_graph)
         {
-            Instance = GetWindow<RefactorWindow>();
+            Instance = GetWindow<RefactorVariableWindow>();
             Instance.Initialize();
             
-            _variable = p_variable;
+            _variables = p_variables;
+            _variableName = p_variableName;
             _graph = p_graph;
-            _refactoredName = _variable.Name;
+            _refactoredName = p_variableName;
             
             Instance.ShowModal();
         }
 
         private void Initialize()
         {
-            titleContent = new GUIContent("Dash Refactoring");
+            titleContent = new GUIContent("Dash Variable Refactoring");
             minSize = new Vector2(800, 400);
         }
 
         private void OnGUI()
         {
-            if (_variable == null)
+            if (_variables == null)
             {
                 Close();
                 return;
@@ -50,7 +52,7 @@ namespace Dash.Editor
 
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Console");
+            GUICustomUtils.DrawTitle("Dash Variable Refactoring");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;
@@ -71,7 +73,7 @@ namespace Dash.Editor
             
             GUILayout.BeginHorizontal();
             GUILayout.Label("Old Name: ");
-            GUILayout.Label(_variable.Name);
+            GUILayout.Label(_variableName);
             GUILayout.FlexibleSpace();
             GUILayout.Label("New Name: ");
             _refactoredName = GUILayout.TextField(_refactoredName, GUILayout.Width(160));
@@ -79,13 +81,13 @@ namespace Dash.Editor
 
             if (GUILayout.Button("FIND", GUILayout.Height(32)))
             {
-                FindVariable(_variable, _graph);
+                FindVariable(_variableName, _graph);
             }
             
             GUILayout.Space(4);
 
             _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, scrollViewStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height - 80));
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height - 140));
             GUILayout.BeginVertical();
 
             if (_refactoringLookup != null)
@@ -95,13 +97,31 @@ namespace Dash.Editor
                     foreach (var field in pair.Value)
                     {
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("[Node]" + pair.Key.Id);
-                        GUILayout.Label("[Field]"+field.Name);
+                        GUI.color = Color.gray;
+                        GUILayout.Label("[Node]");
+                        GUI.color = Color.white;
+                        GUILayout.Label(pair.Key.Id);
+                        GUI.color = Color.gray;
+                        GUILayout.Label("[Field]");
+                        GUI.color = Color.white;
+                        GUILayout.Label(field.Name);
+
                         GUILayout.FlexibleSpace();
+                        
                         var expression = (field.GetValue(pair.Key.GetModel()) as Parameter).expression;
-                        GUILayout.Label("[Current]" + expression);
-                        expression = expression.Replace(_variable.Name, _refactoredName);
-                        GUILayout.Label("[Refactored]"+expression);
+                        GUI.color = Color.yellow;
+                        GUILayout.Label(expression);
+                        
+                        GUILayout.FlexibleSpace();
+                        GUI.color = Color.white;
+                        GUILayout.Label("=>");
+                        GUILayout.FlexibleSpace();
+                        
+                        
+                        expression = expression.Replace(_variableName, _refactoredName);
+                        GUI.color = Color.green;
+                        GUILayout.Label(expression);
+                        GUI.color = Color.white;
                         GUILayout.EndHorizontal();
                     }
                 }
@@ -111,13 +131,17 @@ namespace Dash.Editor
             GUILayout.EndScrollView();
 
             GUILayout.Space(4);
-            if (GUILayout.Button("Refactor", GUILayout.Height(30)))
+
+            GUI.enabled = _refactoringLookup != null && _variableName != _refactoredName;
+            if (GUILayout.Button("Refactor", GUILayout.Height(32)))
             {
-                
+                RefactorVariable();   
             }
+
+            GUI.enabled = true;
         }
 
-        private static void FindVariable(Variable p_variable, DashGraph p_graph)
+        private static void FindVariable(string p_variableName, DashGraph p_graph)
         {
             _refactoringLookup = new Dictionary<NodeBase, List<FieldInfo>>();
 
@@ -130,7 +154,7 @@ namespace Dash.Editor
                         field.FieldType.GetGenericTypeDefinition() == typeof(Parameter<>))
                     {
                         Parameter parameter = field.GetValue(node.GetModel()) as Parameter;
-                        if (parameter.expression.Contains(p_variable.Name))
+                        if (parameter.expression.Contains(p_variableName))
                         {
                             if (!_refactoringLookup.ContainsKey(node))
                             {
@@ -142,6 +166,28 @@ namespace Dash.Editor
                     }
                 }
             }
+        }
+        
+        private static void RefactorVariable()
+        {
+            var variable = _variables.RenameVariable(_variableName, _refactoredName);
+            
+            // Refactored may not be unchanged due to variable name duplicity
+            _refactoredName = variable.Name;
+            
+            foreach (var pair in _refactoringLookup)
+            {
+                foreach (var field in pair.Value)
+                {
+                    var parameter = (field.GetValue(pair.Key.GetModel()) as Parameter);
+                    var newExpression = parameter.expression.Replace(_variableName, _refactoredName);
+                    parameter.expression = newExpression;
+                }
+            }
+
+            _variableName = _refactoredName;
+            
+            DashEditorCore.SetDirty();
         }
     }
 }
