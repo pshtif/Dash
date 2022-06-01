@@ -72,6 +72,16 @@ namespace Dash
             
             return (Variable<T>) _lookupDictionary[p_name];
         }
+
+        public Variable<T>[] GetAllVariablesOfType<T>()
+        {
+            return _variables.FindAll(v => v.GetVariableType() == typeof(T)).Select(v => v as Variable<T>).ToArray();
+        }
+        
+        public Variable[] GetAllVariablesOfType(Type p_type)
+        {
+            return _variables.FindAll(v => v.GetVariableType() == p_type).ToArray();
+        }
         
         public void AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
         {
@@ -116,13 +126,13 @@ namespace Dash
             }
         }
 
-        public void PasteVariable(Variable p_variable, GameObject p_target)
+        public void PasteVariable(Variable p_variable, IVariableBindable p_target)
         {
             p_variable.Rename(GetUniqueName(p_variable.Name));
             variables.Add(p_variable);
             if (p_target != null)
             {
-                p_variable.InitializeBinding(p_target);
+                p_variable.InitializeBinding(p_target.gameObject);
             }
             InvalidateLookup();
         }

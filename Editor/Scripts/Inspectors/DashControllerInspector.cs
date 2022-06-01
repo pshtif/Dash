@@ -154,7 +154,7 @@ namespace Dash.Editor
             {
                 if (Controller.HasBoundGraph)
                 {
-                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
+                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Dash.Editor
                         style.normal.textColor = Color.yellow;
                         style.alignment = TextAnchor.MiddleCenter;
                         EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
-                        GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller.gameObject);
+                        GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller);
                     }
                 }
             }

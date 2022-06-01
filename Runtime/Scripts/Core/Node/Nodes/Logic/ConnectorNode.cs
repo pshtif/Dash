@@ -11,7 +11,7 @@ using UnityEditor;
 namespace Dash
 {
     [Attributes.Tooltip("Connector node without functionality helps with graph and connection management.")]
-    [Category(NodeCategoryType.LOGIC)]
+    [Category(NodeCategoryType.GRAPH)]
     [OutputCount(1)]
     [InputCount(1)]
     [DisableBaseGUI]

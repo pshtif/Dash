@@ -317,6 +317,7 @@ namespace Dash
                     GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, p_fieldInfo, false, param);
                     param.expression = GUILayout.TextArea(param.expression, GUILayout.ExpandWidth(true));
+
                     GUI.color = Color.white;
                     GUILayout.EndHorizontal();
                 }
@@ -353,9 +354,8 @@ namespace Dash
                 GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
-                    param.isExpression = !param.isExpression;
+                    ParameterMenu.Show(param);
                 }
-                //param.isExpression = GUILayout.Toggle(param.isExpression, "", GUILayout.MaxWidth(14));
                 GUI.color = Color.white;
                 
                 EditorGUILayout.EndHorizontal();

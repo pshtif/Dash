@@ -31,7 +31,9 @@ namespace Dash
         public abstract bool IsDefault();
 
         public abstract FieldInfo GetValueFieldInfo();
-        
+
+        public abstract Type GetValueType();
+
         static protected List<Parameter> _referenceChain = new List<Parameter>();
         
         public bool IsInReferenceChain(Parameter p_parameter)
@@ -60,6 +62,11 @@ namespace Dash
             return GetType().GetField("_value", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
+        public override Type GetValueType()
+        {
+            return typeof(T);
+        }
+        
         public T GetValue(IParameterResolver p_resolver, IAttributeDataCollection p_collection = null, bool p_referenced = false)
         {
             if (!p_referenced)

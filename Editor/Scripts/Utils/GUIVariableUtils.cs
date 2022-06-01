@@ -8,7 +8,7 @@ namespace Dash.Editor
 {
     public class GUIVariableUtils
     {
-        public static void DrawVariablesInspector(string p_title, DashVariables p_variables, GameObject p_boundObject)
+        public static void DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable)
         {
             var style = new GUIStyle();
             style.normal.textColor = new Color(1, 0.7f, 0);
@@ -23,7 +23,7 @@ namespace Dash.Editor
             int index = 0;
             p_variables.variables?.ForEach(variable =>
             {
-                VariableField(p_variables, variable.Name, p_boundObject,
+                VariableField(p_variables, variable.Name, p_bindable,
                     EditorGUIUtility.currentViewWidth - 20);
                 GUILayout.Space(4);
                 index++;
@@ -42,7 +42,7 @@ namespace Dash.Editor
             // PrefabUtility.RecordPrefabInstancePropertyModifications(target);
         }
         
-        public static void VariableField(DashVariables p_variables, string p_name, GameObject p_boundObject, float p_maxWidth)
+        public static void VariableField(DashVariables p_variables, string p_name, IVariableBindable p_bindable, float p_maxWidth)
         {
             var variable = p_variables.GetVariable(p_name);
             GUILayout.BeginHorizontal();
@@ -53,7 +53,7 @@ namespace Dash.Editor
                 p_variables.RenameVariable(p_name, newName);
             }
             
-            variable.ValueField(p_maxWidth-150, p_boundObject);
+            variable.ValueField(p_maxWidth-150, p_bindable);
 
             var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
@@ -63,7 +63,7 @@ namespace Dash.Editor
             GUILayout.Space(2);
             if (GUILayout.Button(IconManager.GetIcon("bind_icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.Width(16)))
             {
-                var menu = GetVariableMenu(p_variables, p_name, p_boundObject);
+                var menu = GetVariableMenu(p_variables, p_name, p_bindable);
                 GenericMenuPopup.Show(menu, "", Event.current.mousePosition, 240, 300, false, false);
             }
             GUILayout.EndVertical();
@@ -73,7 +73,7 @@ namespace Dash.Editor
             GUILayout.EndHorizontal();
         }
 
-        static RuntimeGenericMenu GetVariableMenu(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static RuntimeGenericMenu GetVariableMenu(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
@@ -84,10 +84,10 @@ namespace Dash.Editor
             } 
             else
             {
-                if (p_boundObject != null && !variable.IsLookup)
+                if (p_bindable != null && !variable.IsLookup)
                 {
                     Dictionary<Component, List<PropertyInfo>> bindableProperties =
-                        GetBindableProperties(p_variables, p_name, p_boundObject);
+                        GetBindableProperties(p_variables, p_name, p_bindable);
                     foreach (var infoKeys in bindableProperties)
                     {
                         foreach (PropertyInfo property in infoKeys.Value)
@@ -99,7 +99,7 @@ namespace Dash.Editor
                     }
                     
                     Dictionary<Component, List<FieldInfo>> bindableFields =
-                        GetBindableFields(p_variables, p_name, p_boundObject);
+                        GetBindableFields(p_variables, p_name, p_bindable);
                     foreach (var infoKeys in bindableFields)
                     {
                         foreach (FieldInfo field in infoKeys.Value)
@@ -121,19 +121,19 @@ namespace Dash.Editor
                 }
             }
             
-            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_boundObject));
+            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_bindable));
             menu.AddItem(new GUIContent("Copy Variable"), false, () => OnCopyVariable(p_variables, p_name));
 
             return menu;
         }
         
-        static Dictionary<Component, List<PropertyInfo>> GetBindableProperties(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static Dictionary<Component, List<PropertyInfo>> GetBindableProperties(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             Dictionary<Component, List<PropertyInfo>> bindableProperties = new Dictionary<Component, List<PropertyInfo>>();
             var variable = p_variables.GetVariable(p_name);
-            if (p_boundObject != null)
+            if (p_bindable != null)
             {
-                Component[] components = p_boundObject.GetComponents<Component>();
+                Component[] components = p_bindable.gameObject.GetComponents<Component>();
                 foreach (Component component in components)
                 {
                     // Can happen if script on gameobject component is missing
@@ -167,13 +167,13 @@ namespace Dash.Editor
             return false;
         }
 
-        static Dictionary<Component, List<FieldInfo>> GetBindableFields(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static Dictionary<Component, List<FieldInfo>> GetBindableFields(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             Dictionary<Component, List<FieldInfo>> bindableFields = new Dictionary<Component, List<FieldInfo>>();
             var variable = p_variables.GetVariable(p_name);
-            if (p_boundObject != null)
+            if (p_bindable != null)
             {
-                Component[] components = p_boundObject.GetComponents<Component>();
+                Component[] components = p_bindable.gameObject.GetComponents<Component>();
                 foreach (Component component in components)
                 {
                     Type componentType = component.GetType();
@@ -213,10 +213,10 @@ namespace Dash.Editor
             p_variable.BindField(p_field, p_boundComponent);
         }
         
-        static void OnDeleteVariable(DashVariables p_variables, string p_name, GameObject p_boundObject)
+        static void OnDeleteVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             p_variables.RemoveVariable(p_name);
-            EditorUtility.SetDirty(p_boundObject);
+            EditorUtility.SetDirty(p_bindable.gameObject);
         }
         
         static void OnLookupVariable(DashVariables p_variables, string p_name)

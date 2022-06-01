@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable
     {
 
         public DashCore Core => DashCore.Instance;
@@ -355,7 +355,7 @@ namespace Dash
                 _references.Add(value);
             }
         }
-
+#endregion
         public void BindGraph(DashGraph p_graph)
         {
             _assetGraph = null;
@@ -371,7 +371,5 @@ namespace Dash
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == graph);
             }
         }
-
-        #endregion
     }
 }
