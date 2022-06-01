@@ -53,9 +53,6 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
-        // protected override Color NodeBackgroundColor => new Color(0.8f, 0.6f, 0f);
-        // protected override Color TitleBackgroundColor => new Color(0.8f, 0.5f, 0f);
-        // protected override Color TitleTextColor => new Color(1f, 0.8f, 0);
         public override Vector2 Size => new Vector2(DashEditorCore.Skin.GetStyle("NodeTitle").CalcSize(new GUIContent(Name)).x + 35, 85);
         public override string CustomName => "Input " + Model.inputName;
 
