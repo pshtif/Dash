@@ -89,34 +89,46 @@ namespace Dash
                     : p_type.IsAssignableFrom(v.GetVariableType());
             }).ToArray();
         }
-        
-        public void AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
+
+        public Variable AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
         {
             if (HasVariable(p_name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_name+" already exists.");
+                return null;
+            }
+
             MethodInfo method = this.GetType().GetMethod("AddVariable");
             MethodInfo generic = method.MakeGenericMethod(p_type);
-            generic.Invoke(this, new object[] { p_name, p_value });
+            return generic.Invoke(this, new object[] { p_name, p_value }) as Variable;
         }
 
-        public void AddVariableDirect(Variable p_variable)
+        public Variable AddVariableDirect(Variable p_variable)
         {
             if (HasVariable(p_variable.Name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_variable.Name+" already exists.");
+                return null;
+            }
+
             variables.Add(p_variable);
             InvalidateLookup();
+            return p_variable;
         }
 
-        public void AddVariable<T>(string p_name, [CanBeNull] T p_value)
+        public Variable<T> AddVariable<T>(string p_name, [CanBeNull] T p_value)
         {
             if (HasVariable(p_name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_name+" already exists.");
+                return null;
+            }
+
             Variable<T> variable = new Variable<T>(p_name, p_value);
             variables.Add(variable);
             InvalidateLookup();
+
+            return variable;
         }
 
         public void SetVariable<T>(string p_name, [CanBeNull] T p_value)
@@ -195,9 +207,9 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
-        public void AddNewVariable(Type p_type)
+        public Variable AddNewVariable(Type p_type)
         {
-            AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
+            return AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
         }
 #endif
     }
