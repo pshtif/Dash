@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    public class TypesMenu
+    public class VariableTypesMenu
     {
         static private Type[] SupportedBasicTypes =
         {

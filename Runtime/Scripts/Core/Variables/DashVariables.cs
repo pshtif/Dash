@@ -80,7 +80,14 @@ namespace Dash
         
         public Variable[] GetAllVariablesOfType(Type p_type)
         {
-            return _variables.FindAll(v => v.GetVariableType() == p_type).ToArray();
+            return _variables.FindAll(v =>
+            {
+                return p_type.IsGenericType && p_type.GetGenericTypeDefinition() == typeof(ExposedReference<>) &&
+                       v.GetVariableType().IsGenericType && v.GetVariableType().GetGenericTypeDefinition() ==
+                       typeof(ExposedReference<>)
+                    ? p_type.GetGenericArguments()[0].IsAssignableFrom(v.GetVariableType().GetGenericArguments()[0])
+                    : p_type.IsAssignableFrom(v.GetVariableType());
+            }).ToArray();
         }
         
         public void AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
@@ -190,9 +197,7 @@ namespace Dash
 #if UNITY_EDITOR
         public void AddNewVariable(Type p_type)
         {
-            string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
-
-            AddVariableByType((Type)p_type, GetUniqueName(name), null);
+            AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
         }
 #endif
     }

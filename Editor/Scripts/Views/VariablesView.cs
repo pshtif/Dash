@@ -72,7 +72,7 @@ namespace Dash.Editor
 
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 48, rect.width - 8, 20), "Add Variable"))
             {
-                TypesMenu.Show((type) => OnAddVariable(p_variables, type));
+                VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));
             }
             
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width/2-6, 20), "Copy Variables"))
@@ -95,12 +95,7 @@ namespace Dash.Editor
 
         void OnAddVariable(DashVariables p_variables, Type p_type)
         {
-            string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
-
-            int index = 0;
-            while (p_variables.HasVariable(name + index)) index++;
-            
-            p_variables.AddVariableByType((Type)p_type, name+index, p_type.GetDefaultValue());
+            p_variables.AddNewVariable(p_type);
             
             DashEditorCore.SetDirty();
         }

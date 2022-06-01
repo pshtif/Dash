@@ -31,7 +31,7 @@ namespace Dash.Editor
 
             if (GUILayout.Button("Add Variable"))
             {
-                TypesMenu.Show((type) => OnAddNewVariable(p_variables, type));
+                VariableTypesMenu.Show((type) => OnAddNewVariable(p_variables, type));
             }
         }
         
@@ -216,7 +216,8 @@ namespace Dash.Editor
         static void OnDeleteVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             p_variables.RemoveVariable(p_name);
-            EditorUtility.SetDirty(p_bindable.gameObject);
+
+            DashEditorCore.SetDirty();
         }
         
         static void OnLookupVariable(DashVariables p_variables, string p_name)

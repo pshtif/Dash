@@ -148,7 +148,7 @@ namespace Dash
             
             if (GUILayout.Button(value == null ? "NONE" : value.Name))
             {
-                TypesMenu.Show((type) =>
+                VariableTypesMenu.Show((type) =>
                 {
                     if (type != value)
                     {
@@ -425,7 +425,7 @@ namespace Dash
             GUI.color = useExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
-                useExpressionField.SetValue(p_object, !useExpression);
+                ParameterMenu.Show(useExpressionField, expressionField, p_object, p_fieldInfo.GetReturnType());
             }
             GUI.color = Color.white;
             
