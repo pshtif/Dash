@@ -138,10 +138,13 @@ namespace Dash.Attributes
     public class CategoryAttribute : Attribute
     {
         public NodeCategoryType type { get; }
+        
+        public string label { get; }
 
-        public CategoryAttribute(NodeCategoryType p_type)
+        public CategoryAttribute(NodeCategoryType p_type, string p_label = "")
         {
             type = p_type;
+            label = p_label;
         }
     }
 

@@ -66,10 +66,14 @@ namespace Dash.Editor
                     
                     CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
                     NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
-                    string categoryString = category.ToString();
-                    categoryString = categoryString.Substring(0, 1) + categoryString.Substring(1).ToLower();
+                    string categoryLabel = attribute.label;
+                    if (categoryLabel.IsNullOrWhitespace())
+                    {
+                        categoryLabel = category.ToString();
+                        categoryLabel = categoryLabel.Substring(0, 1) + categoryLabel.Substring(1).ToLower();
+                    }
 
-                    string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
+                    string node = type.ToString().Substring(type.ToString().LastIndexOf(".") + 1);
                     node = node.Substring(0, node.Length-4);
                     
                     if (category == NodeCategoryType.GRAPH)
@@ -78,7 +82,7 @@ namespace Dash.Editor
                     }
                     else
                     {
-                        menu.AddItem(new GUIContent(categoryString + "/" + node, tooltip), false, CreateNode,
+                        menu.AddItem(new GUIContent(categoryLabel + "/" + node, tooltip), false, CreateNode,
                             type);
                     }
                 }
