@@ -46,6 +46,13 @@ namespace Dash
                     p_parameter.expression = variable.Name;
                 });
             }
+            
+            menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
+            {
+                p_parameter.isExpression = true;
+                var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(type);
+                p_parameter.expression = variable.Name;
+            });
 
             menu.ShowAsContext();
         }
@@ -79,6 +86,13 @@ namespace Dash
                     p_expressionField.SetValue(p_object, variable.Name);
                 });
             }
+            
+            menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
+            {
+                p_useExpressionField.SetValue(p_object, true);
+                var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(p_type);
+                p_expressionField.SetValue(p_object, variable.Name);
+            });
 
             menu.ShowAsContext();
         }
