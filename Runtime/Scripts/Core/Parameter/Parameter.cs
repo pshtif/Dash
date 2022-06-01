@@ -34,6 +34,8 @@ namespace Dash
 
         public abstract Type GetValueType();
 
+        public abstract void ClearValue();
+
         static protected List<Parameter> _referenceChain = new List<Parameter>();
         
         public bool IsInReferenceChain(Parameter p_parameter)
@@ -107,6 +109,11 @@ namespace Dash
         public void SetValue(T p_value)
         {
             _value = p_value;
+        }
+
+        public override void ClearValue()
+        {
+            _value = default(T);
         }
         
         public override string ToString()
