@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System.Runtime.Serialization;
 using Dash.Attributes;
 using UnityEngine;
 
@@ -28,5 +29,16 @@ namespace Dash
         [UnityEngine.Tooltip("Iterates child that are inactive.")]
         [TitledGroup("Properties")]
         public Parameter<bool> targetInactive = new Parameter<bool>(true);
+        
+        [OnDeserialized]
+        void OnDeserialized()
+        {
+#pragma warning disable 612, 618
+            if (targetInactive == null)
+            {
+                targetInactive = new Parameter<bool>(true);
+            }
+#pragma warning restore 612, 618 
+        }
     }
 }
