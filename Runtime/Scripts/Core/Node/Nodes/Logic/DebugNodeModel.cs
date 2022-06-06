@@ -12,9 +12,9 @@ namespace Dash
         
         public int test2 { get; set; }
 
-        [Dependency("debugFlowData", false)]
-        public Parameter<string> debug;
-        
+        [Dependency("debugFlowData", false)] 
+        public Parameter<string> debug = new Parameter<string>("");
+
         /*[Dependency("debugFlowData", false)]
         public string text;
 

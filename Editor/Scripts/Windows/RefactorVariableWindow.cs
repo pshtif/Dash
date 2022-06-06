@@ -3,7 +3,10 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEditor.Graphs;
 using UnityEngine;
@@ -107,8 +110,11 @@ namespace Dash.Editor
                         GUILayout.Label(field.Name);
 
                         GUILayout.FlexibleSpace();
+
+                        var expression = field.GetReturnType() == typeof(Parameter)
+                            ? (field.GetValue(pair.Key.GetModel()) as Parameter).expression
+                            : (field.GetValue(pair.Key.GetModel()) as string);
                         
-                        var expression = (field.GetValue(pair.Key.GetModel()) as Parameter).expression;
                         GUI.color = Color.yellow;
                         GUILayout.Label(expression);
                         
@@ -150,11 +156,32 @@ namespace Dash.Editor
                 var fields = node.GetModel().GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
                 foreach (var field in fields)
                 {
+                    ExpressionAttribute expression = field.GetAttribute<ExpressionAttribute>();
+                    if (expression != null)
+                    {
+                        //[Expression("useExpression", "targetExpression")]
+                        var expressionField = fields.ToList().Find(f => f.Name == expression.expression);
+                        var expressionString = expressionField.GetValue(node.GetModel()) as string;
+                        
+                        if (!expressionString.IsNullOrWhitespace() &&
+                            expressionString.Contains(p_variableName)) 
+                        {
+                            if (!_refactoringLookup.ContainsKey(node))
+                            {
+                                _refactoringLookup.Add(node, new List<FieldInfo>());
+                            }
+
+                            _refactoringLookup[node].Add(expressionField);
+                        }
+                    }
+                    
                     if (field.FieldType.IsGenericType &&
                         field.FieldType.GetGenericTypeDefinition() == typeof(Parameter<>))
                     {
                         Parameter parameter = field.GetValue(node.GetModel()) as Parameter;
-                        if (parameter.expression.Contains(p_variableName))
+
+                        if (parameter != null && !parameter.expression.IsNullOrWhitespace() &&
+                            parameter.expression.Contains(p_variableName)) 
                         {
                             if (!_refactoringLookup.ContainsKey(node))
                             {
@@ -179,9 +206,18 @@ namespace Dash.Editor
             {
                 foreach (var field in pair.Value)
                 {
-                    var parameter = (field.GetValue(pair.Key.GetModel()) as Parameter);
-                    var newExpression = parameter.expression.Replace(_variableName, _refactoredName);
-                    parameter.expression = newExpression;
+                    if (field.GetReturnType() == typeof(Parameter)) 
+                    {
+                        var parameter = (field.GetValue(pair.Key.GetModel()) as Parameter);
+                        var newExpression = parameter.expression.Replace(_variableName, _refactoredName);
+                        parameter.expression = newExpression;
+                    }
+                    else
+                    {
+                        var expression = (field.GetValue(pair.Key.GetModel()) as string);
+                        var newExpression = expression.Replace(_variableName, _refactoredName);
+                        field.SetValue(pair.Key.GetModel(), newExpression);
+                    }
                 }
             }
 
