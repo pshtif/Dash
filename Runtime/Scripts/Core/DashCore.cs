@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.11.0";
+        public const string VERSION = "0.12.0";
         
         public DashRuntimeConfig Config { get; private set; }
         
@@ -150,11 +150,16 @@ namespace Dash
             
             if (_listeners.ContainsKey(p_name))
             {
-                _listeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
+                _listeners[p_name].ToList().ForEach(c =>
+                {
+                    if (c.Once) _listeners[p_name].Remove(c);
+                    
+                    c.Invoke(p_flowData);
+                });
             }
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false)
         {
             if (!string.IsNullOrWhiteSpace(p_name))
             {
@@ -163,7 +168,7 @@ namespace Dash
 
                 if (!_listeners[p_name].Exists(e => e.Callback == p_callback))
                 {
-                    _listeners[p_name].Add(new EventHandler(p_callback, p_priority));
+                    _listeners[p_name].Add(new EventHandler(p_callback, p_priority, p_once));
                     _listeners[p_name] = _listeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }

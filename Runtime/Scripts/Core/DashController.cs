@@ -250,14 +250,14 @@ namespace Dash
             Graph.SendEvent(p_name, p_flowData);
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback) =>
-            Graph?.AddListener(p_name, p_callback);
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+            Graph?.AddListener(p_name, p_callback, p_priority, p_once);
 
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback) =>
             Graph?.RemoveListener(p_name, p_callback);
 
-        public void SetListener(string p_name, Action<NodeFlowData> p_callback) =>
-            Graph?.SetListener(p_name, p_callback);
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+            Graph?.SetListener(p_name, p_callback, p_priority, p_once);
 
         private void OnDestroy()
         {
