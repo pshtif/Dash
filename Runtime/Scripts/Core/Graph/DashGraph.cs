@@ -436,7 +436,8 @@ namespace Dash
 
         void IInternalGraphAccess.SetVersion(int p_version)
         {
-            version = p_version;
+            // Disabled for now to avoid checksum changes
+            //version = p_version;
         }
 
 #endregion

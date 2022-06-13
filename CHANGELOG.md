@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.0 - 13.6.2022
+
+#### Added
+
+- Added support for custom node category label
+- Added new UI for Parameter properties to directly assign compatible variables
+- Added node checksums as well as matching
+- Added support for ExposedReference types in variables
+- Added If function for expressions
+
+#### Changed
+
+- Changed custom expression classes are now defined implicitly by ExpressionFunctions attribute instead of adding them to config explicitly
+- Changed expression editor no longer holds definitions of expression classes [BREAKING]
+- Changed checksum timestamp/filenames are now readble date time
+- Changed clear expression/value when changing paramter from expression to value and vice versa
+- Changed node model properties without group/order attribute are sorted as if group/order was 0
+
+#### Fixed
+
+- Fixed scene references now not allowed for non exposed sypes
+
 ### Release 0.11.0 - 26.5.2022
 
 #### Added

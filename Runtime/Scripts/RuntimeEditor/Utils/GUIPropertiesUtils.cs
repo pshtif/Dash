@@ -682,10 +682,10 @@ namespace Dash
                 return OrderSort(p_field1, p_field2);
 
             if (attribute1 != null && attribute2 == null)
-                return 1;
+                return attribute1.Order > 0 ? 1 : -1;
 
             if (attribute1 == null && attribute2 != null)
-                return -1;
+                return attribute2.Order > 0 ? -1 : 1;
 
             if (attribute1.Group == attribute2.Group)
                 return OrderSort(p_field1, p_field2);
@@ -705,10 +705,10 @@ namespace Dash
                 return 0;
 
             if (attribute1 != null && attribute2 == null)
-                return -1;
+                return attribute1.Order > 0 ? 1 : -1;
             
             if (attribute1 == null && attribute2 != null)
-                return 1;
+                return attribute2.Order > 0 ? -1 : 1;
 
             return attribute1.Order.CompareTo(attribute2.Order);
         }
