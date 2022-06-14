@@ -631,6 +631,7 @@ namespace Dash
         static public bool MeetsDependencies(FieldInfo p_fieldInfo, Object p_object)
         {
             IEnumerable<DependencyAttribute> attributes = p_fieldInfo.GetCustomAttributes<DependencyAttribute>();
+            bool meetsAllDependencies = true;
             foreach (DependencyAttribute attribute in attributes)
             {
                 FieldInfo dependencyField = p_object.GetType().GetField(attribute.DependencyName);
@@ -643,8 +644,7 @@ namespace Dash
                 if (typeof(Parameter).IsAssignableFrom(dependencyField.FieldType))
                 {
                     Parameter<bool> dependencyParameter = dependencyField.GetValue(p_object) as Parameter<bool>;
-                    if (dependencyParameter.isExpression || dependencyParameter.GetValue(null))
-                        return true;
+                    meetsAllDependencies = meetsAllDependencies && (dependencyParameter.isExpression || dependencyParameter.GetValue(null));
                 }
 
                 if (dependencyField != null && attribute.Value.ToString() != dependencyField.GetValue(p_object).ToString())
@@ -665,7 +665,7 @@ namespace Dash
             if (!single && singleAttributes.Count() > 0)
                 return false;
 
-            return true;
+            return meetsAllDependencies;
         }
 
         static public bool IsHidden(FieldInfo p_fieldInfo)
