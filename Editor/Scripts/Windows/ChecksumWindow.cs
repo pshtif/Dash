@@ -187,8 +187,15 @@ namespace Dash.Editor
         void ViewNodeChecksums(DashChecksumObject p_checksum, string p_graph, DashChecksumObject p_previousChecksum = null)
         {
             ConsoleWindow.InitConsoleWindow();
-
+            
+            if (p_checksum.nodeChecksums == null || !p_checksum.nodeChecksums.ContainsKey(p_graph))
+            {
+                Console.Add("Node checksums for graph at "+p_graph+" missing.");
+                return;
+            }
+            
             Console.Add("Node checksums for graph at " + p_graph);
+            
             foreach (var pair in p_checksum.nodeChecksums[p_graph])
             {
                 if (p_previousChecksum != null && p_previousChecksum.nodeChecksums.ContainsKey(p_graph))
@@ -255,7 +262,14 @@ namespace Dash.Editor
                 foreach (var node in pair.Value.Nodes)
                 {
                     var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
-                    nodes.Add(node.Id, GetChecksum(bytes));
+                    if (nodes.ContainsKey(node.Id))
+                    {
+                        Debug.LogWarning("Duplicate node id found "+node.Id+" in "+pair.Value.name+" Node checksum will be incomplete.");
+                    }
+                    else
+                    {
+                        nodes.Add(node.Id, GetChecksum(bytes));
+                    }
                 }
             }
 
