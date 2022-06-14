@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.2 - 15.6.2022
+
+#### Fixed
+
+- Fixed multiple Dependency attributes for properties now work correctly
+- Fixed various property dependencies in Node inspector
+
+### Release 0.12.1 - 14.6.2022
+
+#### Fixed
+
+- Fixed various warnings for node checksum workflow
+
 ### Release 0.12.0 - 13.6.2022
 
 #### Added
