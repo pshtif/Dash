@@ -155,7 +155,7 @@ namespace Dash
             {
                 _callbackListeners[p_name].ToList().ForEach(c =>
                 {
-                    if (c.Once) _nodeListeners[p_name].Remove(c);
+                    if (c.Once) _callbackListeners[p_name].Remove(c);
                     c.Invoke(p_flowData);
                 });
             }
