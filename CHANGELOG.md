@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.4 - 25.6.2022
+
+#### Changed
+
+- Changed dependency on DashTween to 0.1.4
+
+#### Fixed
+
+- Fixed correct once removal for callback listeners
+
+### Release 0.12.3 - 22.6.2022
+
+#### Fixed
+
+- Fixed SerializationUtility ambiguity in latest Unity
+
 ### Release 0.12.2 - 15.6.2022
 
 #### Fixed
