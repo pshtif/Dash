@@ -80,7 +80,8 @@ namespace Dash
             Quaternion rotation = Quaternion.Euler(p_toRotation);
             if (Model.isToRelative) rotation = rotation * p_startRotation;
             //p_target.localRotation = Quaternion.Lerp(p_startRotation, rotation, DOVirtual.EasedValue(0,1, p_delta, p_easing));
-            p_target.localRotation = Quaternion.Lerp(p_startRotation, rotation, DashTween.EaseValue(0,1, p_delta, p_easeType));
+            p_target.localRotation =
+                Quaternion.Lerp(p_startRotation, rotation, DashTween.EaseValue(0, 1, p_delta, p_easeType));
 
             /*
             Debug.Log(rotation.eulerAngles + " : " + p_toRotation + " : " + p_startRotation.eulerAngles);
