@@ -909,7 +909,7 @@ namespace Dash
             using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                bytes = SerializationUtility.SerializeValue(this, p_format, out p_references, cachedContext.Value);
+                bytes = OdinSerializer.SerializationUtility.SerializeValue(this, p_format, out p_references, cachedContext.Value);
             }
             
             return bytes;

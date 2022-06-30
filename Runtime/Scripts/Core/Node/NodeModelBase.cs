@@ -52,7 +52,7 @@ namespace Dash
         public NodeModelBase Clone()
         {
             // Doing a shallow copy
-            var clone = (NodeModelBase)SerializationUtility.CreateCopy(this);
+            var clone = (NodeModelBase)OdinSerializer.SerializationUtility.CreateCopy(this);
 
             // Exposed references are not copied in serialization as they are external Unity references so they will refer to the same exposed reference instance not just the unity object reference, we need to copy them additionally
             FieldInfo[] fields = clone.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
