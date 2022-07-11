@@ -118,29 +118,30 @@ namespace Dash.Editor
         static void SetAsStartInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoStart = true;
-            node.Controller.autoStartInput = node.Model.inputName;
+
+            DashEditorCore.EditorConfig.editingController.autoStart = true;
+            DashEditorCore.EditorConfig.editingController.autoStartInput = node.Model.inputName;
         }
         
         static void RemoveAsStartInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoStart = false;
-            node.Controller.autoStartInput = "";
+            DashEditorCore.EditorConfig.editingController.autoStart = false;
+            DashEditorCore.EditorConfig.editingController.autoStartInput = "";
         }
 
         static void SetAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoOnEnable = true;
-            node.Controller.autoOnEnableInput = node.Model.inputName;
+            DashEditorCore.EditorConfig.editingController.autoOnEnable = true;
+            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = node.Model.inputName;
         }
         
         static void RemoveAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoOnEnable = false;
-            node.Controller.autoOnEnableInput = "";
+            DashEditorCore.EditorConfig.editingController.autoOnEnable = false;
+            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = "";
         }
 
         static void CopyNode(object p_node)
