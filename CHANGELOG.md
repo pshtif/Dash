@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 #### Changed
 
 - Changed some iterations for better performance
+- Changed checksums now use tuples to allow checking multiple graphs in single prefab
 
 #### Fixed
 
