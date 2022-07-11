@@ -241,36 +241,33 @@ namespace Dash.Editor
             var now = DateTime.Now;
             var timestamp = now.ToString("dd'_'MM'_'yyyy'_'HH'_'mm'_'ss");
 
-            Dictionary<string,DashGraph> scannedGraphs;
-            Dictionary<string,byte[]> scannedGraphJsons;
-            DashScanner.ScanForJson(out scannedGraphs, out scannedGraphJsons);
+            List<(string,DashGraph,byte[])> scannedGraphs;
+            DashScanner.ScanForJson(out scannedGraphs);
             
             DashChecksumObject checksumObject = ScriptableObject.CreateInstance<DashChecksumObject>();
             checksumObject.scannedGraphs = new List<string>();
             checksumObject.scannedGraphJsons = new List<byte[]>();
             List<Object> references = new List<Object>();
-            foreach (var pair in scannedGraphJsons)
+
+            foreach (var data in scannedGraphs)
             {
-                checksumObject.scannedGraphs.Add(pair.Key);
-                checksumObject.scannedGraphJsons.Add(pair.Value);
-            }
-            
-            foreach (var pair in scannedGraphs)
-            {
-                Dictionary<string, string> nodes = new Dictionary<string, string>();
-                checksumObject.nodeChecksums.Add(pair.Key, nodes);
-                foreach (var node in pair.Value.Nodes)
-                {
-                    var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
-                    if (nodes.ContainsKey(node.Id))
-                    {
-                        Debug.LogWarning("Duplicate node id found "+node.Id+" in "+pair.Value.name+" Node checksum will be incomplete.");
-                    }
-                    else
-                    {
-                        nodes.Add(node.Id, GetChecksum(bytes));
-                    }
-                }
+                checksumObject.scannedGraphs.Add(data.Item1);
+                checksumObject.scannedGraphJsons.Add(data.Item3);
+                
+                // Dictionary<string, string> nodes = new Dictionary<string, string>();
+                // checksumObject.nodeChecksums.Add(pair.Key, nodes);
+                // foreach (var node in pair.Value.Nodes)
+                // {
+                //     var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
+                //     if (nodes.ContainsKey(node.Id))
+                //     {
+                //         Debug.LogWarning("Duplicate node id found "+node.Id+" in "+pair.Value.name+" Node checksum will be incomplete.");
+                //     }
+                //     else
+                //     {
+                //         nodes.Add(node.Id, GetChecksum(bytes));
+                //     }
+                // }
             }
 
             AssetDatabase.CreateAsset(checksumObject,
