@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.5 - X.7.2022
+
+#### Changed
+
+- Changed some iterations for better performance
+
+#### Fixed
+
+- Fixed setting/removing start/enable input nodes through context menu
+- Fixed debug override initialization, node execution is now debugged once per overriden node in debug window
+
 ### Release 0.12.4 - 25.6.2022
 
 #### Changed
