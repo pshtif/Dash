@@ -210,7 +210,7 @@ namespace Dash
             ExecutionCount++;
             
 #if UNITY_EDITOR
-            if (!_hasDebugOverride)
+            if (!HasDebugOverride)
             {
                 DashEditorDebug.Debug(new NodeDebugItem(NodeDebugItem.NodeDebugItemType.EXECUTE, Graph.Controller, Graph.GraphPath, _model.id,
                     p_flowData.GetAttribute<Transform>("target")));
@@ -230,8 +230,6 @@ namespace Dash
             {
                 Graph.ExecuteNodeOutputs(this, p_index, p_flowData);
             }
-
-            //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
         }
         
         protected void OnExecuteEnd()
@@ -304,7 +302,7 @@ namespace Dash
         {
             Type nodeType = GetType();
             
-            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute)) != null;
+            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
 
             _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
             
