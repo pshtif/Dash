@@ -15,8 +15,8 @@ namespace Dash
         public List<string> scannedGraphs;
         public List<byte[]> scannedGraphJsons;
 
-        public Dictionary<string, Dictionary<string, string>> nodeChecksums =
-            new Dictionary<string, Dictionary<string, string>>();
+        public List<(string, string, string)> nodeChecksums =
+            new List<(string, string, string)>();
 
 
         [SerializeField, HideInInspector]

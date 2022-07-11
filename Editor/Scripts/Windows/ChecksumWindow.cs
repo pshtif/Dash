@@ -188,42 +188,42 @@ namespace Dash.Editor
         {
             ConsoleWindow.InitConsoleWindow();
             
-            if (p_checksum.nodeChecksums == null || !p_checksum.nodeChecksums.ContainsKey(p_graph))
-            {
-                Console.Add("Node checksums for graph at "+p_graph+" missing.");
-                return;
-            }
+            // if (p_checksum.nodeChecksums == null || !p_checksum.nodeChecksums.ContainsKey(p_graph))
+            // {
+            //     Console.Add("Node checksums for graph at "+p_graph+" missing.");
+            //     return;
+            // }
+            //
+            // Console.Add("Node checksums for graph at " + p_graph);
             
-            Console.Add("Node checksums for graph at " + p_graph);
-            
-            foreach (var pair in p_checksum.nodeChecksums[p_graph])
-            {
-                if (p_previousChecksum != null && p_previousChecksum.nodeChecksums.ContainsKey(p_graph))
-                {
-                    if (!p_previousChecksum.nodeChecksums[p_graph].ContainsKey(pair.Key))
-                    {
-                        Console.Add("Node "+pair.Key+" not found in previous checksum.");   
-                    }
-                    else
-                    {
-                        if (pair.Value != p_previousChecksum.nodeChecksums[p_graph][pair.Key])
-                        {
-                            Console.Add(
-                                pair.Key + ": " + pair.Value + " - " +
-                                p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " DIFFERENT", Color.red);
-                        }
-                        else
-                        {
-                            Console.Add(pair.Key + ": " + pair.Value + " - " +
-                                        p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " MATCH");
-                        }
-                    }
-                }
-                else
-                {
-                    Console.Add(pair.Key + " : " + pair.Value);
-                }
-            }
+            // foreach (var pair in p_checksum.nodeChecksums[p_graph])
+            // {
+            //     if (p_previousChecksum != null && p_previousChecksum.nodeChecksums.ContainsKey(p_graph))
+            //     {
+            //         if (!p_previousChecksum.nodeChecksums[p_graph].ContainsKey(pair.Key))
+            //         {
+            //             Console.Add("Node "+pair.Key+" not found in previous checksum.");   
+            //         }
+            //         else
+            //         {
+            //             if (pair.Value != p_previousChecksum.nodeChecksums[p_graph][pair.Key])
+            //             {
+            //                 Console.Add(
+            //                     pair.Key + ": " + pair.Value + " - " +
+            //                     p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " DIFFERENT", Color.red);
+            //             }
+            //             else
+            //             {
+            //                 Console.Add(pair.Key + ": " + pair.Value + " - " +
+            //                             p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " MATCH");
+            //             }
+            //         }
+            //     }
+            //     else
+            //     {
+            //         Console.Add(pair.Key + " : " + pair.Value);
+            //     }
+            // }
         }
 
         string GetChecksum(byte[] p_bytes)
@@ -256,18 +256,16 @@ namespace Dash.Editor
                 
                 // Dictionary<string, string> nodes = new Dictionary<string, string>();
                 // checksumObject.nodeChecksums.Add(pair.Key, nodes);
-                // foreach (var node in pair.Value.Nodes)
-                // {
-                //     var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
-                //     if (nodes.ContainsKey(node.Id))
-                //     {
-                //         Debug.LogWarning("Duplicate node id found "+node.Id+" in "+pair.Value.name+" Node checksum will be incomplete.");
-                //     }
-                //     else
-                //     {
-                //         nodes.Add(node.Id, GetChecksum(bytes));
-                //     }
-                // }
+                foreach (var node in data.Item2.Nodes)
+                {
+                    var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
+                    if (checksumObject.nodeChecksums.Exists(d => d.Item2 == node.Id))
+                    {
+                        Debug.LogWarning("Duplicate node id found "+node.Id+" in "+data.Item2.name);
+                    }
+
+                    checksumObject.nodeChecksums.Add((data.Item1, node.Id, GetChecksum(bytes)));
+                }
             }
 
             AssetDatabase.CreateAsset(checksumObject,
