@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,87 +27,108 @@ namespace Dash.Editor
                 GUILayout.EndHorizontal();
             }
 
-            if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
-            
+            //if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
+
+            // var modifications = PrefabUtility.GetPropertyModifications(target);
+            //
+            // if (modifications != null)
+            // {
+            //     Debug.Log(modifications.Length);
+            //     modifications.ForEach(m =>
+            //     {
+            //         Debug.Log(m.propertyPath+" : "+m.target+" : "+m.objectReference);
+            //     });
+            // }
+
             EditorGUI.BeginChangeCheck();
-            
-            if (((IEditorControllerAccess) Controller).graphAsset == null && !Controller.HasBoundGraph)
+            GUILayout.BeginVertical();
+
+            if (PrefabUtility.IsPartOfAnyPrefab(target))
             {
-                GUILayout.BeginVertical();
-
-                var oldColor = GUI.color;
-                GUI.color = new Color(1, 0.75f, 0.5f);
-                if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
-                {
-                    if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
-                        "Bound", "Asset"))
-                    {
-
-                        BindGraph(GraphUtils.CreateEmptyGraph());
-                    }
-                    else
-                    {
-                        ((IEditorControllerAccess) Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
-                    }
-                }
-
-                GUI.color = oldColor;
-
-                ((IEditorControllerAccess) Controller).graphAsset =
-                    (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
-                        typeof(DashGraph), true);
+                GUIStyle style = new GUIStyle("label");
+                style.alignment = TextAnchor.MiddleCenter;
+                style.fontSize = 14;
+                style.wordWrap = true;
+                style.fontStyle = FontStyle.Bold;
+                style.normal.textColor = new Color(1, .5f, 0);
+                EditorGUILayout.LabelField("Graph overrides on prefab instances are not supported.", style);
             }
             else
             {
-                GUILayout.BeginVertical();
-
-                var oldColor = GUI.color;
-                GUI.color = new Color(1, 0.75f, 0.5f);
-                if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
+                if (((IEditorControllerAccess)Controller).graphAsset == null && !Controller.HasBoundGraph)
                 {
-                    OpenEditor();
-                }
+                    var oldColor = GUI.color;
+                    GUI.color = new Color(1, 0.75f, 0.5f);
+                    if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
+                    {
+                        if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
+                            "Bound", "Asset"))
+                        {
 
-                GUI.color = oldColor;
+                            BindGraph(GraphUtils.CreateEmptyGraph());
+                        }
+                        else
+                        {
+                            ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
+                        }
+                    }
 
-                if (!Controller.HasBoundGraph)
-                {
-                    EditorGUI.BeginChangeCheck();
+                    GUI.color = oldColor;
 
-                    ((IEditorControllerAccess) Controller).graphAsset =
-                        (DashGraph) EditorGUILayout.ObjectField(((IEditorControllerAccess) Controller).graphAsset,
+                    ((IEditorControllerAccess)Controller).graphAsset =
+                        (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset,
                             typeof(DashGraph), true);
-
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        DashEditorCore.EditController(Controller);
-                    }
-
-                    if (GUILayout.Button("Bind Graph"))
-                    {
-                        BindGraph(Controller.Graph);
-                    }
                 }
                 else
                 {
-                    if (GUILayout.Button("Save to Asset"))
+                    var oldColor = GUI.color;
+                    GUI.color = new Color(1, 0.75f, 0.5f);
+                    if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                     {
-                        DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
-                        if (graph != null)
-                        {
-                            Controller.BindGraph(null);
-                            ((IEditorControllerAccess) Controller).graphAsset = graph;
-                        }
+                        OpenEditor();
                     }
 
-                    if (GUILayout.Button("Remove Graph"))
+                    GUI.color = oldColor;
+
+                    if (!Controller.HasBoundGraph)
                     {
-                        if (DashEditorCore.EditorConfig.editingGraph == Controller.Graph)
+                        EditorGUI.BeginChangeCheck();
+
+                        ((IEditorControllerAccess)Controller).graphAsset =
+                            (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset,
+                                typeof(DashGraph), true);
+
+                        if (EditorGUI.EndChangeCheck())
                         {
-                            DashEditorCore.UnloadGraph();
+                            DashEditorCore.EditController(Controller);
                         }
 
-                        Controller.BindGraph(null);
+                        if (GUILayout.Button("Bind Graph"))
+                        {
+                            BindGraph(Controller.Graph);
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("Save to Asset"))
+                        {
+                            DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
+                            if (graph != null)
+                            {
+                                Controller.BindGraph(null);
+                                ((IEditorControllerAccess)Controller).graphAsset = graph;
+                            }
+                        }
+
+                        if (GUILayout.Button("Remove Graph"))
+                        {
+                            if (DashEditorCore.EditorConfig.editingGraph == Controller.Graph)
+                            {
+                                DashEditorCore.UnloadGraph();
+                            }
+
+                            Controller.BindGraph(null);
+                        }
                     }
                 }
             }
@@ -150,7 +172,7 @@ namespace Dash.Editor
             
             GUILayout.EndVertical();
 
-            if (Controller.Graph != null)
+            if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
             {
                 if (Controller.HasBoundGraph)
                 {
