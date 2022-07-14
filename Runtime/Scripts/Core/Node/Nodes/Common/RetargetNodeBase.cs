@@ -44,13 +44,19 @@ namespace Dash
                         //     ParameterResolver, p_flowData);
                         var value = ExpressionEvaluator.EvaluateUntypedExpression(Model.targetExpression,
                             ParameterResolver, p_flowData, false);
-
+                        
                         if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
                             SetError(ExpressionEvaluator.errorMessage);
                             return;
                         }
-
+                        
+                        if (value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                        {
+                            value = (Object) value.GetType().GetMethod("Resolve")
+                                .Invoke(value, new object[] {DashEditorCore.EditorConfig.editingController});
+                        }
+                        
                         target = value as Transform;
 
                         if (target == null && value.GetType() == typeof(GameObject))
