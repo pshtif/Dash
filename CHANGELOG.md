@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.12.5 - X.7.2022
+### Release 0.12.5 - 14.7.2022
+
+#### Added
+
+- Added support to retarget to exposed references
 
 #### Changed
 

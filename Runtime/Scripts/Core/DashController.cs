@@ -280,8 +280,6 @@ namespace Dash
         {
             if (_graphInstance != null)
             {
-                //_graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-                
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
