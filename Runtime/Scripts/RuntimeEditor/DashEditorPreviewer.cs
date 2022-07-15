@@ -20,6 +20,7 @@ namespace Dash
     {
         private bool _isPreviewing = false;
         private bool _previewStarted = false;
+        private bool _previewStopScheduled = false;
 
         public bool IsPreviewing => _isPreviewing;
 
@@ -90,10 +91,13 @@ namespace Dash
                 _previewGraph.Nodes[_previewNodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
             }
             
-            if (_isPreviewing)
+            if (_isPreviewing && !_previewStopScheduled)
             {
                 if (_previewGraph.CurrentExecutionCount == 0)
+                {
+                    _previewStopScheduled = true;
                     DashTween.DelayedCall(1f, StopPreview);
+                }
             }
         }
 
@@ -110,6 +114,7 @@ namespace Dash
                 return;
             
             _isPreviewing = false;
+            _previewStopScheduled = false;
 
             if (_stage == null)
             {
