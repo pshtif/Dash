@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.8 - 15.7.2022
+
+#### Added
+
+- Added select connected to select all nodes from this one down the output tree
+- Added AnimateImageFillNode to animate fill of filled image type.
+
+#### Fixed
+
+- Fixed generics for exposed reference reflection
+
 ### Release 0.12.5 - 14.7.2022
 
 #### Added
