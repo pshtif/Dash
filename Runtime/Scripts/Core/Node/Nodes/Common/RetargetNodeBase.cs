@@ -51,12 +51,12 @@ namespace Dash
                             return;
                         }
                         
-                        if (value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                        if (value != null && value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(ExposedReference<>))
                         {
                             value = (Object) value.GetType().GetMethod("Resolve")
-                                .Invoke(value, new object[] {DashEditorCore.EditorConfig.editingController});
+                                .Invoke(value, new object[] {Controller});
                         }
-                        
+                    
                         target = value as Transform;
 
                         if (target == null && value.GetType() == typeof(GameObject))
