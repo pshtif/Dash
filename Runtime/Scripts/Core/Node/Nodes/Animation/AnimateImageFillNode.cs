@@ -81,6 +81,14 @@ namespace Dash
             {
                 p_image.fillAmount = DashTween.EaseValue(p_startFillAmount, p_toFillAmount, p_delta, p_easeType);
             }
+            
+#if UNITY_EDITOR
+            // Unity doesn't update filled images in editor time unless explicitly marked dirty
+            if (DashEditorCore.Previewer.IsPreviewing)
+            {
+                UnityEditor.EditorUtility.SetDirty(p_image);
+            }
+#endif
         }
     }
 }
