@@ -31,6 +31,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
                 menu.AddItem(new GUIContent("Arrange Nodes"), false, ArrangeNodes, p_node);
+                menu.AddItem(new GUIContent("Select Connected"), false, SelectConnectedNodes, p_node);
                 
                 menu.AddSeparator("");
                 if (p_node.HasComment())
@@ -197,6 +198,11 @@ namespace Dash.Editor
         static void ArrangeNodes(object p_node)
         {
             SelectionManager.ArrangeNodes(Graph, (NodeBase)p_node);
+        }
+        
+        static void SelectConnectedNodes(object p_node)
+        {
+            SelectionManager.SelectConnectedNodes(Graph, (NodeBase)p_node);
         }
 
         static void CreateBox()

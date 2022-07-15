@@ -217,9 +217,8 @@ namespace Dash
             selectedNodes.Add(p_nodeIndex);
         }
 
-        public static void SelectNode(NodeBase p_node, DashGraph p_graph, bool p_forceView = false)
+        public static void SelectNode(DashGraph p_graph, NodeBase p_node, bool p_forceView = false)
         {
-
             selectedNodes.Clear();
 
             if (p_node == null || p_graph == null)
@@ -262,7 +261,7 @@ namespace Dash
             if (p_index >= searchNodes.Count) p_index = p_index%searchNodes.Count;
 
             var node = searchNodes[p_index];
-            SelectNode(node, p_graph);
+            SelectNode(p_graph, node);
             return node;
         }
 
@@ -276,6 +275,29 @@ namespace Dash
             NodeUtils.ArrangeNodes(p_graph, p_node);
         
             DashEditorCore.SetDirty();
+        }
+        
+        public static void SelectConnectedNodes(DashGraph p_graph, NodeBase p_node)
+        {
+            if (p_graph == null)
+                return;
+
+            SelectNode(p_graph, p_node);
+
+            SelectOutputs(p_graph, p_node);
+        }
+
+        public static void SelectOutputs(DashGraph p_graph, NodeBase p_node)
+        {
+            var connections = p_graph.Connections.FindAll(c => c.outputNode == p_node);
+            connections.ForEach(c =>
+            {
+                if (!IsSelected(c.inputNode))
+                {
+                    AddNodeToSelection(c.inputNode.Index);
+                    SelectOutputs(p_graph, c.inputNode);
+                }
+            });
         }
 
         // public static bool GoToNode(DashController p_controller, string p_graphPath, string p_nodeId)
