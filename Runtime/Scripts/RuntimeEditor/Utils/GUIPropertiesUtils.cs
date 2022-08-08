@@ -231,8 +231,18 @@ namespace Dash
                 return false;
 
             IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
+
+            if (propertyTable == null)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(p_name, GUILayout.Width(160));
+                GUILayout.Label("Assets can't store references.");
+                GUILayout.EndHorizontal();
+                return false;
+            }
+
             var exposedReference = p_fieldInfo.GetValue(p_object);
-            
+
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
             bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
             
