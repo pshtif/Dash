@@ -26,6 +26,11 @@ namespace Dash
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new CustomDebugItem(value));
 #endif
+                
+                if (GetParameterValue(Model.outputToUnityConsole, p_flowData))
+                {
+                    Debug.Log(value);
+                }
             }
 
             OnExecuteEnd();
@@ -40,7 +45,14 @@ namespace Dash
                 debug += keyPair.Key + " : " + keyPair.Value + "\n";
             }
             
-            Debug.Log(debug);
+#if UNITY_EDITOR
+            DashEditorDebug.Debug(new CustomDebugItem(debug));
+#endif
+
+            if (GetParameterValue(Model.outputToUnityConsole, p_flowData))
+            {
+                Debug.Log(debug);
+            }
         }
         
 // #if UNITY_EDITOR
