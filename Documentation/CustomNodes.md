@@ -140,6 +140,16 @@ public class CustomNodeModel : NodeModelBase
 ```
 This attribute specifies if Dash will use default debug of node execution for its internal console or you want to implement your own (or skip it).
 
+#### DocumentationAttribute
+```c#
+[Documentation("http://somedocumentation.com/customnode")]
+public class CustomNodeModel : NodeModelBase
+...
+```
+This attribute specifies url that will be opened upon clicking documentation icon on a node inspector in the editor.
+
+*Internal nodes use a different documentation string to link to Github repo directly*
+
 
 #### SingleInstanceAttribute *OBSOLETE*
 ```c#
