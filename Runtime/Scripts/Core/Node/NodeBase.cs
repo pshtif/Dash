@@ -444,7 +444,7 @@ namespace Dash
         public static string GetNodeNameFromType(Type p_nodeType)
         {
             string typeString = p_nodeType.ToString();
-            int dotIndex = typeString.IndexOf(".");
+            int dotIndex = typeString.LastIndexOf(".");
             return typeString.Substring(dotIndex + 1, typeString.Length - (dotIndex + 5));
         }
 
