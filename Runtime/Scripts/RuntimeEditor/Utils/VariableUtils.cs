@@ -26,7 +26,7 @@ namespace Dash
             copiedVariables.Add(p_variable);
         }
 
-        public static void PasteVariables(DashVariables p_toVariables, GameObject p_target)
+        public static void PasteVariables(DashVariables p_toVariables, IVariableBindable p_target)
         {
             copiedVariables.ForEach(v => p_toVariables.PasteVariable(v.Clone(), p_target));
         }

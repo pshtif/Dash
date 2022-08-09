@@ -4,6 +4,85 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.8 - 15.7.2022
+
+#### Added
+
+- Added select connected to select all nodes from this one down the output tree
+- Added AnimateImageFillNode to animate fill of filled image type.
+
+#### Fixed
+
+- Fixed generics for exposed reference reflection
+
+### Release 0.12.5 - 14.7.2022
+
+#### Added
+
+- Added support to retarget to exposed references
+
+#### Changed
+
+- Changed some iterations for better performance
+- Changed checksums now use tuples to allow checking multiple graphs in single prefab
+
+#### Fixed
+
+- Fixed setting/removing start/enable input nodes through context menu
+- Fixed debug override initialization, node execution is now debugged once per overriden node in debug window
+- Fixed DashController inspector should be disabled correctly on any prefab instances
+
+### Release 0.12.4 - 25.6.2022
+
+#### Changed
+
+- Changed dependency on DashTween to 0.1.4
+
+#### Fixed
+
+- Fixed correct once removal for callback listeners
+
+### Release 0.12.3 - 22.6.2022
+
+#### Fixed
+
+- Fixed SerializationUtility ambiguity in latest Unity
+
+### Release 0.12.2 - 15.6.2022
+
+#### Fixed
+
+- Fixed multiple Dependency attributes for properties now work correctly
+- Fixed various property dependencies in Node inspector
+
+### Release 0.12.1 - 14.6.2022
+
+#### Fixed
+
+- Fixed various warnings for node checksum workflow
+
+### Release 0.12.0 - 13.6.2022
+
+#### Added
+
+- Added support for custom node category label
+- Added new UI for Parameter properties to directly assign compatible variables
+- Added node checksums as well as matching
+- Added support for ExposedReference types in variables
+- Added If function for expressions
+
+#### Changed
+
+- Changed custom expression classes are now defined implicitly by ExpressionFunctions attribute instead of adding them to config explicitly
+- Changed expression editor no longer holds definitions of expression classes [BREAKING]
+- Changed checksum timestamp/filenames are now readble date time
+- Changed clear expression/value when changing paramter from expression to value and vice versa
+- Changed node model properties without group/order attribute are sorted as if group/order was 0
+
+#### Fixed
+
+- Fixed scene references now not allowed for non exposed sypes
+
 ### Release 0.11.0 - 26.5.2022
 
 #### Added

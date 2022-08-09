@@ -31,6 +31,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
                 menu.AddItem(new GUIContent("Arrange Nodes"), false, ArrangeNodes, p_node);
+                menu.AddItem(new GUIContent("Select Connected"), false, SelectConnectedNodes, p_node);
                 
                 menu.AddSeparator("");
                 if (p_node.HasComment())
@@ -118,29 +119,30 @@ namespace Dash.Editor
         static void SetAsStartInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoStart = true;
-            node.Controller.autoStartInput = node.Model.inputName;
+
+            DashEditorCore.EditorConfig.editingController.autoStart = true;
+            DashEditorCore.EditorConfig.editingController.autoStartInput = node.Model.inputName;
         }
         
         static void RemoveAsStartInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoStart = false;
-            node.Controller.autoStartInput = "";
+            DashEditorCore.EditorConfig.editingController.autoStart = false;
+            DashEditorCore.EditorConfig.editingController.autoStartInput = "";
         }
 
         static void SetAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoOnEnable = true;
-            node.Controller.autoOnEnableInput = node.Model.inputName;
+            DashEditorCore.EditorConfig.editingController.autoOnEnable = true;
+            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = node.Model.inputName;
         }
         
         static void RemoveAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            node.Controller.autoOnEnable = false;
-            node.Controller.autoOnEnableInput = "";
+            DashEditorCore.EditorConfig.editingController.autoOnEnable = false;
+            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = "";
         }
 
         static void CopyNode(object p_node)
@@ -196,6 +198,11 @@ namespace Dash.Editor
         static void ArrangeNodes(object p_node)
         {
             SelectionManager.ArrangeNodes(Graph, (NodeBase)p_node);
+        }
+        
+        static void SelectConnectedNodes(object p_node)
+        {
+            SelectionManager.SelectConnectedNodes(Graph, (NodeBase)p_node);
         }
 
         static void CreateBox()

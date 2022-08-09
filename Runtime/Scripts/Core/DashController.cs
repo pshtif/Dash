@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IExposedPropertyTable
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable
     {
 
         public DashCore Core => DashCore.Instance;
@@ -60,7 +60,7 @@ namespace Dash
             {
                 if (!Application.isPlaying)
                 {
-                    GetComponent<IVariables>()?.Initialize(gameObject);
+                    GetComponent<IVariables>()?.Initialize(this);
                     return GetComponent<IVariables>();
                 }
                 else
@@ -250,14 +250,14 @@ namespace Dash
             Graph.SendEvent(p_name, p_flowData);
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback) =>
-            Graph?.AddListener(p_name, p_callback);
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+            Graph?.AddListener(p_name, p_callback, p_priority, p_once);
 
         public void RemoveListener(string p_name, Action<NodeFlowData> p_callback) =>
             Graph?.RemoveListener(p_name, p_callback);
 
-        public void SetListener(string p_name, Action<NodeFlowData> p_callback) =>
-            Graph?.SetListener(p_name, p_callback);
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+            Graph?.SetListener(p_name, p_callback, p_priority, p_once);
 
         private void OnDestroy()
         {
@@ -280,8 +280,6 @@ namespace Dash
         {
             if (_graphInstance != null)
             {
-                //_graphInstance.GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-                
                 _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
             }
@@ -355,7 +353,7 @@ namespace Dash
                 _references.Add(value);
             }
         }
-
+#endregion
         public void BindGraph(DashGraph p_graph)
         {
             _assetGraph = null;
@@ -371,7 +369,5 @@ namespace Dash
                 _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == graph);
             }
         }
-
-        #endregion
     }
 }

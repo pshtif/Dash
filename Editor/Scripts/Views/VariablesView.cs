@@ -22,7 +22,7 @@ namespace Dash.Editor
             
         }
         
-        protected void DrawVariablesGUI(Vector2 p_position, bool p_global, Color p_color, DashVariables p_variables, ref bool p_minimized, GameObject p_boundObject) 
+        protected void DrawVariablesGUI(Vector2 p_position, bool p_global, Color p_color, DashVariables p_variables, ref bool p_minimized, IVariableBindable p_bindable) 
         {
             Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : 200);
             DrawBoxGUI(rect, p_global ? "Global Variables" : "Graph Variables", TextAnchor.UpperCenter, p_color);
@@ -40,7 +40,7 @@ namespace Dash.Editor
             if (p_minimized)
                 return;
 
-            if (p_global && PrefabUtility.GetPrefabInstanceStatus(p_boundObject) != PrefabInstanceStatus.NotAPrefab)
+            if (p_global && PrefabUtility.GetPrefabInstanceStatus(p_bindable.gameObject) != PrefabInstanceStatus.NotAPrefab)
             {
                 var style = new GUIStyle();
                 style.alignment = TextAnchor.MiddleCenter;
@@ -61,7 +61,7 @@ namespace Dash.Editor
                 int index = 0;
                 foreach (var variable in p_variables)
                 {
-                    GUIVariableUtils.VariableField(p_variables, variable.Name, p_boundObject, rect.width - 10);
+                    GUIVariableUtils.VariableField(p_variables, variable.Name, p_bindable, rect.width - 10);
                     EditorGUILayout.Space(4);
                     index++;
                 }
@@ -72,7 +72,7 @@ namespace Dash.Editor
 
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 48, rect.width - 8, 20), "Add Variable"))
             {
-                TypesMenu.Show((type) => OnAddVariable(p_variables, type));
+                VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));
             }
             
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width/2-6, 20), "Copy Variables"))
@@ -82,7 +82,7 @@ namespace Dash.Editor
             
             if (GUI.Button(new Rect(rect.x + rect.width/2 + 2, rect.y + rect.height - 24, rect.width/2-6, 20), "Paste Variables"))
             {
-                VariableUtils.PasteVariables(p_variables, p_boundObject);
+                VariableUtils.PasteVariables(p_variables, p_bindable);
             }
             
             if (EditorGUI.EndChangeCheck())
@@ -95,12 +95,7 @@ namespace Dash.Editor
 
         void OnAddVariable(DashVariables p_variables, Type p_type)
         {
-            string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
-
-            int index = 0;
-            while (p_variables.HasVariable(name + index)) index++;
-            
-            p_variables.AddVariableByType((Type)p_type, name+index, p_type.GetDefaultValue());
+            p_variables.AddNewVariable(p_type);
             
             DashEditorCore.SetDirty();
         }

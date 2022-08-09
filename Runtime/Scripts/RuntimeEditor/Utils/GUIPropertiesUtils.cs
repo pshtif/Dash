@@ -148,7 +148,7 @@ namespace Dash
             
             if (GUILayout.Button(value == null ? "NONE" : value.Name))
             {
-                TypesMenu.Show((type) =>
+                VariableTypesMenu.Show((type) =>
                 {
                     if (type != value)
                     {
@@ -231,8 +231,18 @@ namespace Dash
                 return false;
 
             IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
+
+            if (propertyTable == null)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(p_name, GUILayout.Width(160));
+                GUILayout.Label("Assets can't store references.");
+                GUILayout.EndHorizontal();
+                return false;
+            }
+
             var exposedReference = p_fieldInfo.GetValue(p_object);
-            
+
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
             bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
             
@@ -317,6 +327,7 @@ namespace Dash
                     GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, p_fieldInfo, false, param);
                     param.expression = GUILayout.TextArea(param.expression, GUILayout.ExpandWidth(true));
+
                     GUI.color = Color.white;
                     GUILayout.EndHorizontal();
                 }
@@ -353,9 +364,8 @@ namespace Dash
                 GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
-                    param.isExpression = !param.isExpression;
+                    ParameterMenu.Show(param);
                 }
-                //param.isExpression = GUILayout.Toggle(param.isExpression, "", GUILayout.MaxWidth(14));
                 GUI.color = Color.white;
                 
                 EditorGUILayout.EndHorizontal();
@@ -425,7 +435,7 @@ namespace Dash
             GUI.color = useExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
-                useExpressionField.SetValue(p_object, !useExpression);
+                ParameterMenu.Show(useExpressionField, expressionField, p_object, p_fieldInfo.GetReturnType());
             }
             GUI.color = Color.white;
             
@@ -631,6 +641,7 @@ namespace Dash
         static public bool MeetsDependencies(FieldInfo p_fieldInfo, Object p_object)
         {
             IEnumerable<DependencyAttribute> attributes = p_fieldInfo.GetCustomAttributes<DependencyAttribute>();
+            bool meetsAllDependencies = true;
             foreach (DependencyAttribute attribute in attributes)
             {
                 FieldInfo dependencyField = p_object.GetType().GetField(attribute.DependencyName);
@@ -643,8 +654,7 @@ namespace Dash
                 if (typeof(Parameter).IsAssignableFrom(dependencyField.FieldType))
                 {
                     Parameter<bool> dependencyParameter = dependencyField.GetValue(p_object) as Parameter<bool>;
-                    if (dependencyParameter.isExpression || dependencyParameter.GetValue(null))
-                        return true;
+                    meetsAllDependencies = meetsAllDependencies && (dependencyParameter.isExpression || dependencyParameter.GetValue(null));
                 }
 
                 if (dependencyField != null && attribute.Value.ToString() != dependencyField.GetValue(p_object).ToString())
@@ -665,7 +675,7 @@ namespace Dash
             if (!single && singleAttributes.Count() > 0)
                 return false;
 
-            return true;
+            return meetsAllDependencies;
         }
 
         static public bool IsHidden(FieldInfo p_fieldInfo)
@@ -682,10 +692,10 @@ namespace Dash
                 return OrderSort(p_field1, p_field2);
 
             if (attribute1 != null && attribute2 == null)
-                return 1;
+                return attribute1.Order > 0 ? 1 : -1;
 
             if (attribute1 == null && attribute2 != null)
-                return -1;
+                return attribute2.Order > 0 ? -1 : 1;
 
             if (attribute1.Group == attribute2.Group)
                 return OrderSort(p_field1, p_field2);
@@ -705,10 +715,10 @@ namespace Dash
                 return 0;
 
             if (attribute1 != null && attribute2 == null)
-                return -1;
+                return attribute1.Order > 0 ? 1 : -1;
             
             if (attribute1 == null && attribute2 != null)
-                return 1;
+                return attribute2.Order > 0 ? -1 : 1;
 
             return attribute1.Order.CompareTo(attribute2.Order);
         }

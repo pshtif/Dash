@@ -31,6 +31,7 @@ namespace Dash
             }
 
             var includeInactive = GetParameterValue(Model.targetInactive, p_flowData);
+            float childDelay = GetParameterValue(Model.onChildDelay, p_flowData);
             int offset = 0;
             for (int i = 0; i < p_target.childCount; i++)
             {
@@ -45,13 +46,13 @@ namespace Dash
                 NodeFlowData childData = p_flowData.Clone();
                 childData.SetAttribute("target", child);
 
-                if (GetParameterValue(Model.onChildDelay,p_flowData) == 0)
+                if (childDelay == 0)
                 {
                     OnExecuteOutput(0, childData);
                 }
                 else
                 {
-                    float time = GetParameterValue(Model.onChildDelay, p_flowData) * (i - offset);
+                    float time = childDelay * (i - offset);
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                     tween.OnComplete(() =>
                     {
@@ -63,13 +64,13 @@ namespace Dash
                 }
             }
 
-            if (Model.onFinishDelay == 0 && GetParameterValue(Model.onChildDelay,p_flowData) == 0)
+            if (Model.onFinishDelay == 0 && childDelay == 0)
             {
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                float time = Model.onFinishDelay + GetParameterValue(Model.onChildDelay, p_flowData) * (p_target.childCount - offset);
+                float time = Model.onFinishDelay + childDelay * (p_target.childCount - offset);
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                 tween.OnComplete(() =>
                 {

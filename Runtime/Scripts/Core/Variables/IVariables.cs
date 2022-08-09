@@ -4,7 +4,7 @@ namespace Dash
 {
     public interface IVariables
     {
-        void Initialize(GameObject p_gameObject);
+        void Initialize(IVariableBindable p_bindable);
         
         bool HasVariable(string p_name);
 

@@ -126,7 +126,7 @@ namespace Dash
             Controller = p_controller;
 
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
-            variables.Initialize(p_controller.gameObject);
+            variables.Initialize(p_controller);
             
             _initialized = true;
         }
@@ -144,16 +144,24 @@ namespace Dash
             
             if (_nodeListeners.ContainsKey(p_name))
             {
-                _nodeListeners[p_name].ToList().ForEach(e => e.Invoke(p_flowData));
+                _nodeListeners[p_name].ToList().ForEach(e =>
+                {
+                    if (e.Once) _nodeListeners[p_name].Remove(e);
+                    e.Invoke(p_flowData);
+                });
             }
 
             if (_callbackListeners.ContainsKey(p_name))
             {
-                _callbackListeners[p_name].ToList().ForEach(c => c.Invoke(p_flowData));
+                _callbackListeners[p_name].ToList().ForEach(c =>
+                {
+                    if (c.Once) _callbackListeners[p_name].Remove(c);
+                    c.Invoke(p_flowData);
+                });
             }
         }
 
-        public void AddListener(string p_name, NodeBase p_node, int p_priority = 0)
+        public void AddListener(string p_name, NodeBase p_node, int p_priority = 0, bool p_once = false)
         {
             if (!p_name.IsNullOrWhitespace())
             {
@@ -164,7 +172,7 @@ namespace Dash
 
                 if (!_nodeListeners[p_name].Exists(e => e.Callback == p_node.Execute))
                 {
-                    _nodeListeners[p_name].Add(new EventHandler(p_node.Execute, p_priority));
+                    _nodeListeners[p_name].Add(new EventHandler(p_node.Execute, p_priority, p_once));
                     _nodeListeners[p_name] = _nodeListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }
@@ -174,7 +182,8 @@ namespace Dash
             }
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0,
+            bool p_once = false)
         {
             if (!string.IsNullOrWhiteSpace(p_name))
             {
@@ -185,7 +194,7 @@ namespace Dash
 
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
-                    _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority));
+                    _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority, p_once));
                     _callbackListeners[p_name] = _callbackListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
             }
@@ -206,7 +215,7 @@ namespace Dash
             }
         }
 
-        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0)
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false)
         {
             if (_callbackListeners.ContainsKey(p_name))
             {
@@ -217,7 +226,7 @@ namespace Dash
                 _callbackListeners[p_name] = new List<EventHandler>();
             }
             
-            _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority));
+            _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority, p_once));
         }
 
         public NodeBase GetNodeById(string p_id)
@@ -427,7 +436,8 @@ namespace Dash
 
         void IInternalGraphAccess.SetVersion(int p_version)
         {
-            version = p_version;
+            // Disabled for now to avoid checksum changes
+            //version = p_version;
         }
 
 #endregion

@@ -1,14 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Dash
 {
     public class DashVariablesController : MonoBehaviour
-        , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables
+        , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables, IVariableBindable
     {
+        public DashGraph Graph => null;
+        
         public bool makeGlobal = false;
         
         [HideInInspector]
@@ -27,17 +31,17 @@ namespace Dash
 
         void Awake()
         {
-            Initialize(gameObject);
+            Initialize(this);
         }
         
-        public void Initialize(GameObject p_gameObject)
+        public void Initialize(IVariableBindable p_bindable)
         {
             if (GetType() != typeof(DashVariablesController))
             {
                 FetchFieldsToVariables();
             }
             
-            Variables.Initialize(p_gameObject);
+            Variables.Initialize(p_bindable);
 
             if (makeGlobal)
             {
@@ -94,5 +98,73 @@ namespace Dash
                 UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
             }
         }
+        
+        #region EXPOSE_TABLE
+
+        [HideInInspector] 
+        [SerializeField]
+        protected List<PropertyName> _propertyNames = new List<PropertyName>();
+#if UNITY_EDITOR
+        public List<PropertyName> propertyNames => _propertyNames;
+#endif
+
+        [HideInInspector]
+        [SerializeField]
+        protected List<Object> _references = new List<Object>();
+#if UNITY_EDITOR
+        public List<Object> references => _references;
+#endif
+
+        public void CleanupReferences(List<string> p_existingGUIDs)
+        {
+            for (int i = 0; i < _propertyNames.Count; i++)
+            {
+                if (p_existingGUIDs.Contains(_propertyNames[i].ToString()))
+                    continue;
+
+                _propertyNames.RemoveAt(i);
+                _references.RemoveAt(i);
+                i--;
+            }
+        }
+
+        public void ClearReferenceValue(PropertyName id)
+        {
+            int index = _propertyNames.IndexOf(id);
+            if (index != -1)
+            {
+                _references.RemoveAt(index);
+                _propertyNames.RemoveAt(index);
+            }
+        }
+
+        public Object GetReferenceValue(PropertyName id, out bool idValid)
+        {
+            int index = _propertyNames.IndexOf(id);
+            if (index != -1)
+            {
+                idValid = true;
+                return _references[index];
+            }
+
+            idValid = false;
+            return null;
+        }
+
+        public void SetReferenceValue(PropertyName id, Object value)
+        {
+            int index = _propertyNames.IndexOf(id);
+            if (index != -1)
+            {
+                _references[index] = value;
+            }
+            else
+            {
+                _propertyNames.Add(id);
+                _references.Add(value);
+            }
+        }
+        
+        #endregion
     }
 }

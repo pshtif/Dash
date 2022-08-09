@@ -27,9 +27,9 @@ namespace Dash.Editor
 
     public static class DashScanner
     {
-        public static Dictionary<string, byte[]> ScanForJson()
+        public static void ScanForJson(out List<(string,DashGraph, byte[])> p_graphs)
         {
-            return StartJsonScan();
+            StartJsonScan(out p_graphs);
         }
         
         public static void ScanForAOT()
@@ -61,8 +61,8 @@ namespace Dash.Editor
         private static readonly PropertyInfo Debug_Logger_Property =
             typeof(Debug).GetProperty("unityLogger") ?? typeof(Debug).GetProperty("logger");
 
-        private static Dictionary<string,byte[]> _graphJsons;
-        
+        private static List<(string,DashGraph, byte[])> _graphs;
+
         private static List<Type> _registeredTypes;
 
         private static List<Object> _unityRefs;
@@ -85,14 +85,14 @@ namespace Dash.Editor
             return _registeredTypes;
         }
 
-        private static Dictionary<string,byte[]> StartJsonScan()
+        private static void StartJsonScan(out List<(string,DashGraph, byte[])> p_graphs)
         {
-            _graphJsons = new Dictionary<string, byte[]>();
-            
+            _graphs = new List<(string,DashGraph, byte[])>();
+
             ScanBuildScenes(true, true);
             ScanAssets(true);
 
-            return _graphJsons;
+            p_graphs = _graphs;
         }
 
         private static void OnLocatedEmitType(Type p_type)
@@ -268,7 +268,7 @@ namespace Dash.Editor
                                                 .Select(t => t.name).Reverse().ToArray());
                                         byte[] data =
                                             dashController.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
-                                        _graphJsons.Add(scene+"/"+path, data);
+                                        _graphs.Add((scene+"/"+path, dashController.Graph, data));
                                     }
                                     else
                                     {
@@ -430,7 +430,7 @@ namespace Dash.Editor
                     if (p_jsonScan)
                     {
                         byte[] data = controller.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
-                        _graphJsons.Add(path, data);
+                        _graphs.Add((path, controller.Graph, data));
                     }
                     else
                     {
@@ -461,7 +461,7 @@ namespace Dash.Editor
                     if (p_jsonScan)
                     {
                         byte[] data = graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
-                        _graphJsons.Add(path, data);
+                        _graphs.Add((path, graph, data));
                     }
                     else
                     {

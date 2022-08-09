@@ -14,7 +14,11 @@ namespace Dash
     {
         public List<string> scannedGraphs;
         public List<byte[]> scannedGraphJsons;
-        
+
+        public List<(string, string, string)> nodeChecksums =
+            new List<(string, string, string)>();
+
+
         [SerializeField, HideInInspector]
         private SerializationData _serializationData;
         

@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using OdinSerializer;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Dash.Editor
 {
@@ -22,16 +24,25 @@ namespace Dash.Editor
         private bool _highlightNonMatchingChecksums = false;
         private Dictionary<string, string> _currentChecksums;
 
+        private int _previousScanIndex = -1;
+        private DashChecksumObject[] _previousScans;
+
         public static ChecksumWindow Instance { get; private set; }
         
         [MenuItem ("Tools/Dash/Scan/Checksum")]
         public static ChecksumWindow InitChecksumWindow()
         {
             Instance = GetWindow<ChecksumWindow>();
-            Instance.titleContent = new GUIContent("Dash Checksum Editor");
-            Instance.minSize = new Vector2(800, 400);
+            Instance.Initialize();
 
             return Instance;
+        }
+
+        private void Initialize()
+        {
+            titleContent = new GUIContent("Dash Checksum Editor");
+            minSize = new Vector2(800, 400);
+            _previousScans = LoadAllScans();
         }
 
         private void OnGUI()
@@ -86,6 +97,11 @@ namespace Dash.Editor
                     {
                         ViewJSON(DashEditorCore.EditorConfig.lastChecksumObject, graph, graphJson);
                     }
+                    
+                    if (GUILayout.Button("Nodes Checksums", GUILayout.Width(120)))
+                    {
+                       ViewNodeChecksums(DashEditorCore.EditorConfig.lastChecksumObject, graph);
+                    }
                     GUILayout.EndHorizontal();
                 }
             }
@@ -96,8 +112,8 @@ namespace Dash.Editor
             bool scan = GUILayout.Button("Scan Graphs", GUILayout.Height(40));
             
             GUILayout.Space(8);
-            _previousChecksumObject = (DashChecksumObject)EditorGUILayout.ObjectField(
-                new GUIContent("Previous Checksum Object"), _previousChecksumObject, typeof(DashChecksumObject), false);
+            _previousScanIndex = EditorGUILayout.Popup("Previous scans", _previousScanIndex, _previousScans.Select(s => s.name).ToArray());
+            _previousChecksumObject = _previousScanIndex == -1 ? null : _previousScans[_previousScanIndex];
             
             GUILayout.Label("Previously scanned graphs", titleStyle, GUILayout.ExpandWidth(true));
             GUILayout.Label(
@@ -119,7 +135,7 @@ namespace Dash.Editor
                     var graph = _previousChecksumObject.scannedGraphs[i];
                     var graphJson = _previousChecksumObject.scannedGraphJsons[i];
                     GUILayout.BeginHorizontal();
-                    var checksum = JSONHashUtils.GetJSONHash(Encoding.Default.GetString(graphJson));
+                    var checksum = GetChecksum(graphJson);
                     GUILayout.Label(graph);
                     GUI.color = (_highlightNonMatchingChecksums && _currentChecksums.ContainsKey(graph) && _currentChecksums[graph] != checksum)
                         ? Color.red
@@ -130,6 +146,11 @@ namespace Dash.Editor
                     if (GUILayout.Button("ViewJSON", GUILayout.Width(120)))
                     {
                         ViewJSON(_previousChecksumObject, graph, graphJson);
+                    }
+                    
+                    if (GUILayout.Button("Nodes Checksums", GUILayout.Width(120)))
+                    {
+                        ViewNodeChecksums(_previousChecksumObject, graph, DashEditorCore.EditorConfig.lastChecksumObject);
                     }
                     GUILayout.EndHorizontal();
                 }
@@ -163,6 +184,53 @@ namespace Dash.Editor
             AssetDatabase.OpenAsset(jsonAsset);
         }
 
+        void ViewNodeChecksums(DashChecksumObject p_checksum, string p_graph, DashChecksumObject p_previousChecksum = null)
+        {
+            ConsoleWindow.InitConsoleWindow();
+            
+            // if (p_checksum.nodeChecksums == null || !p_checksum.nodeChecksums.ContainsKey(p_graph))
+            // {
+            //     Console.Add("Node checksums for graph at "+p_graph+" missing.");
+            //     return;
+            // }
+            //
+            // Console.Add("Node checksums for graph at " + p_graph);
+            
+            // foreach (var pair in p_checksum.nodeChecksums[p_graph])
+            // {
+            //     if (p_previousChecksum != null && p_previousChecksum.nodeChecksums.ContainsKey(p_graph))
+            //     {
+            //         if (!p_previousChecksum.nodeChecksums[p_graph].ContainsKey(pair.Key))
+            //         {
+            //             Console.Add("Node "+pair.Key+" not found in previous checksum.");   
+            //         }
+            //         else
+            //         {
+            //             if (pair.Value != p_previousChecksum.nodeChecksums[p_graph][pair.Key])
+            //             {
+            //                 Console.Add(
+            //                     pair.Key + ": " + pair.Value + " - " +
+            //                     p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " DIFFERENT", Color.red);
+            //             }
+            //             else
+            //             {
+            //                 Console.Add(pair.Key + ": " + pair.Value + " - " +
+            //                             p_previousChecksum.nodeChecksums[p_graph][pair.Key] + " MATCH");
+            //             }
+            //         }
+            //     }
+            //     else
+            //     {
+            //         Console.Add(pair.Key + " : " + pair.Value);
+            //     }
+            // }
+        }
+
+        string GetChecksum(byte[] p_bytes)
+        {
+            return JSONHashUtils.GetJSONHash(Encoding.Default.GetString(p_bytes));
+        }
+
         void Scan()
         {
             if (!AssetDatabase.IsValidFolder("Assets/Resources/Editor/Scans"))
@@ -170,26 +238,57 @@ namespace Dash.Editor
                 AssetDatabase.CreateFolder("Assets/Resources/Editor", "Scans");
             }
 
-            var timestamp = DateTime.Now.ToFileTime();
-            AssetDatabase.CreateFolder("Assets/Resources/Editor/Scans", "SCAN_"+timestamp);
-            
-            Dictionary<string,byte[]> scannedGraphs = DashScanner.ScanForJson();
+            var now = DateTime.Now;
+            var timestamp = now.ToString("dd'_'MM'_'yyyy'_'HH'_'mm'_'ss");
+
+            List<(string,DashGraph,byte[])> scannedGraphs;
+            DashScanner.ScanForJson(out scannedGraphs);
             
             DashChecksumObject checksumObject = ScriptableObject.CreateInstance<DashChecksumObject>();
             checksumObject.scannedGraphs = new List<string>();
             checksumObject.scannedGraphJsons = new List<byte[]>();
-            foreach (var pair in scannedGraphs)
+            List<Object> references = new List<Object>();
+
+            foreach (var data in scannedGraphs)
             {
-                checksumObject.scannedGraphs.Add(pair.Key);
-                checksumObject.scannedGraphJsons.Add(pair.Value);
+                checksumObject.scannedGraphs.Add(data.Item1);
+                checksumObject.scannedGraphJsons.Add(data.Item3);
+                
+                // Dictionary<string, string> nodes = new Dictionary<string, string>();
+                // checksumObject.nodeChecksums.Add(pair.Key, nodes);
+                foreach (var node in data.Item2.Nodes)
+                {
+                    var bytes = node.SerializeToBytes(DataFormat.JSON, ref references);
+                    if (checksumObject.nodeChecksums.Exists(d => d.Item2 == node.Id))
+                    {
+                        Debug.LogWarning("Duplicate node id found "+node.Id+" in "+data.Item2.name);
+                    }
+
+                    checksumObject.nodeChecksums.Add((data.Item1, node.Id, GetChecksum(bytes)));
+                }
             }
-            
-            AssetDatabase.CreateAsset(checksumObject, "Assets/Resources/Editor/Scans/SCAN_"+timestamp+"/Checksum.asset");
+
+            AssetDatabase.CreateAsset(checksumObject,
+                "Assets/Resources/Editor/Scans/Scan_" + timestamp + ".asset");
 
             DashEditorCore.EditorConfig.lastChecksumObject = checksumObject;
             
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+        }
+
+        private DashChecksumObject[] LoadAllScans()
+        {
+            string[] assetGUIDs = UnityEditor.AssetDatabase.FindAssets("t:" + nameof(DashChecksumObject),
+                new[] { "Assets/Resources/Editor/Scans/" });
+            List<DashChecksumObject> scans = new List<DashChecksumObject>();
+            foreach (string guid in assetGUIDs)
+            {
+                string assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+                DashChecksumObject scan = AssetDatabase.LoadAssetAtPath<DashChecksumObject>(assetPath);
+                scans.Add(scan);
+            }
+            return scans.ToArray();
         }
     }
 }

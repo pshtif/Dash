@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Dash
 {
-    public class TypesMenu
+    public class VariableTypesMenu
     {
         static private Type[] SupportedBasicTypes =
         {
@@ -32,7 +32,13 @@ namespace Dash
             typeof(GameObject),
             typeof(Button),
             typeof(Color),
-            typeof(Canvas)
+            typeof(Canvas),
+        };
+
+        static private Type[] SupportedExposedTypes =
+        {
+            typeof(ExposedReference<RectTransform>),
+            typeof(ExposedReference<Transform>)
         };
             
         #if UNITY_EDITOR
@@ -48,6 +54,11 @@ namespace Dash
             foreach (Type type in SupportedUnityTypes)
             {
                 menu.AddItem(new GUIContent("Unity/" + Variable.ConvertToTypeName(type)), false, () => p_callback(type));
+            }
+            
+            foreach (Type type in SupportedExposedTypes)
+            {
+                menu.AddItem(new GUIContent("Exposed/" + Variable.ConvertToTypeName(type)), false, () => p_callback(type));
             }
 
             menu.ShowAsContext();

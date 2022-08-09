@@ -79,7 +79,7 @@ namespace Dash
 
             if (selected)
             {
-                SelectionManager.SelectNode(newNode, Graph);
+                SelectionManager.SelectNode(Graph, newNode);
             }
         }
 

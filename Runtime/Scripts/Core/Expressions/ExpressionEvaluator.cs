@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Dash.Extensions;
 using Dash.NCalc;
+using Machina.Attributes;
 using UnityEngine;
 
 namespace Dash
@@ -82,7 +83,7 @@ namespace Dash
             Expression cachedExpression;
             if (!_cachedExpressions.ContainsKey(p_expression))
             {
-                // We cache before macro replacement so runtime macro changes are not possible for performance reasons
+                // We cache after macro replacement so runtime macro changes are not possible for performance reasons
                 cachedExpression = new Expression(ReplaceMacros(p_expression));
                 _cachedExpressions.Add(p_expression, cachedExpression);
             }
@@ -249,14 +250,8 @@ namespace Dash
 
         static MethodInfo GetCustomFunction(string p_name)
         {
-            #if UNITY_EDITOR
-            List<Type> classes = DashEditorCore.RuntimeConfig.expressionClasses; 
-            #else
-            List<Type> classes = DashCore.Instance.Config.expressionClasses;
-            #endif
-            
-            if (classes == null)
-                return null;
+            List<Type> classes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
+                a.GetTypes().Where(t => t.IsDefined(typeof(ClassAttributes.ExpressionFunctionsAttribute)))).ToList();
 
             MethodInfo methodInfo = null;
             foreach (Type type in classes)

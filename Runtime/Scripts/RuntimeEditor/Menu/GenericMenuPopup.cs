@@ -332,8 +332,8 @@ namespace Dash
                             }
                             else
                             {
-                                node.Execute();
                                 base.editorWindow.Close();
+                                node.Execute();
                             }
 
                             break;
@@ -415,8 +415,8 @@ namespace Dash
                             }
                             else
                             {
-                                node.Execute();
                                 base.editorWindow.Close();
+                                node.Execute();
                             }
 
                             break;

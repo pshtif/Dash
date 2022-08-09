@@ -38,10 +38,10 @@ namespace Dash
             }
         }
 
-        public void Initialize(GameObject p_target)
+        public void Initialize(IVariableBindable p_bindable)
         {
-            variables.ForEach(v => v.InitializeBinding(p_target));
-            variables.ForEach(v => v.InitializeLookup(p_target));
+            variables.ForEach(v => v.InitializeBinding(p_bindable));
+            variables.ForEach(v => v.InitializeLookup(p_bindable));
         }
 
         public void ClearVariables()
@@ -72,34 +72,63 @@ namespace Dash
             
             return (Variable<T>) _lookupDictionary[p_name];
         }
+
+        public Variable<T>[] GetAllVariablesOfType<T>()
+        {
+            return variables.FindAll(v => v.GetVariableType() == typeof(T)).Select(v => v as Variable<T>).ToArray();
+        }
         
-        public void AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
+        public Variable[] GetAllVariablesOfType(Type p_type)
+        {
+            return variables.FindAll(v =>
+            {
+                return p_type.IsGenericType && p_type.GetGenericTypeDefinition() == typeof(ExposedReference<>) &&
+                       v.GetVariableType().IsGenericType && v.GetVariableType().GetGenericTypeDefinition() ==
+                       typeof(ExposedReference<>)
+                    ? p_type.GetGenericArguments()[0].IsAssignableFrom(v.GetVariableType().GetGenericArguments()[0])
+                    : p_type.IsAssignableFrom(v.GetVariableType());
+            }).ToArray();
+        }
+
+        public Variable AddVariableByType(Type p_type, string p_name, [CanBeNull] object p_value)
         {
             if (HasVariable(p_name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_name+" already exists.");
+                return null;
+            }
+
             MethodInfo method = this.GetType().GetMethod("AddVariable");
             MethodInfo generic = method.MakeGenericMethod(p_type);
-            generic.Invoke(this, new object[] { p_name, p_value });
+            return generic.Invoke(this, new object[] { p_name, p_value }) as Variable;
         }
 
-        public void AddVariableDirect(Variable p_variable)
+        public Variable AddVariableDirect(Variable p_variable)
         {
             if (HasVariable(p_variable.Name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_variable.Name+" already exists.");
+                return null;
+            }
+
             variables.Add(p_variable);
             InvalidateLookup();
+            return p_variable;
         }
 
-        public void AddVariable<T>(string p_name, [CanBeNull] T p_value)
+        public Variable<T> AddVariable<T>(string p_name, [CanBeNull] T p_value)
         {
             if (HasVariable(p_name))
-                return;
-            
+            {
+                Debug.LogWarning("Variable "+p_name+" already exists.");
+                return null;
+            }
+
             Variable<T> variable = new Variable<T>(p_name, p_value);
             variables.Add(variable);
             InvalidateLookup();
+
+            return variable;
         }
 
         public void SetVariable<T>(string p_name, [CanBeNull] T p_value)
@@ -116,13 +145,13 @@ namespace Dash
             }
         }
 
-        public void PasteVariable(Variable p_variable, GameObject p_target)
+        public void PasteVariable(Variable p_variable, IVariableBindable p_bindable)
         {
             p_variable.Rename(GetUniqueName(p_variable.Name));
             variables.Add(p_variable);
-            if (p_target != null)
+            if (p_bindable != null)
             {
-                p_variable.InitializeBinding(p_target);
+                p_variable.InitializeBinding(p_bindable);
             }
             InvalidateLookup();
         }
@@ -131,15 +160,14 @@ namespace Dash
         {
             variables.RemoveAll(v => v.Name == p_name);
         }
-
-        // Renaming in dictionary is tricky but still better than having list as renaming is sporadic
-        public bool RenameVariable(string p_oldName, string p_newName)
+        
+        public Variable RenameVariable(string p_oldName, string p_newName)
         {
             var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
             InvalidateLookup();
 
-            return true;
+            return variable;
         }
 
         private void InvalidateLookup()
@@ -178,11 +206,9 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
-        public void AddNewVariable(Type p_type)
+        public Variable AddNewVariable(Type p_type)
         {
-            string name = "new"+p_type.ToString().Substring(p_type.ToString().LastIndexOf(".")+1);
-
-            AddVariableByType((Type)p_type, GetUniqueName(name), null);
+            return AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
         }
 #endif
     }

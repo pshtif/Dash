@@ -43,25 +43,25 @@ namespace Dash
             _name = p_newName;
         }
         
-        abstract public void BindProperty(PropertyInfo p_property, Component p_component);
+        abstract public void BindProperty(PropertyInfo p_property, Component p_component, IVariableBindable p_bindable);
         
-        abstract public void BindField(FieldInfo p_field, Component p_component);
+        abstract public void BindField(FieldInfo p_field, Component p_component, IVariableBindable p_bindable);
 
         abstract public void UnbindProperty();
 
-        abstract public bool InitializeBinding(GameObject p_target);
+        abstract public bool InitializeBinding(IVariableBindable p_bindable);
 
         public void SetAsLookup(bool p_lookup)
         {
             Type = p_lookup ? VariableType.LOOKUP : VariableType.VALUE;
         }
 
-        abstract public void InitializeLookup(GameObject p_target);
+        abstract public void InitializeLookup(IVariableBindable p_bindable);
 
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void ValueField(float p_maxWidth, GameObject p_boundObject);
+        public abstract void ValueField(float p_maxWidth, IVariableBindable p_bindable);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -74,7 +74,14 @@ namespace Dash
                     return "int";
             }
 
-            return typeString.Substring(typeString.LastIndexOf(".") + 1);
+            typeString = typeString.Substring(typeString.LastIndexOf(".") + 1);
+            
+            if (p_type.IsGenericType && p_type.GetGenericTypeDefinition() == typeof(ExposedReference<>))
+            {
+                return typeString.Substring(0, typeString.Length - 1);
+            }
+
+            return typeString;
         }
         
 #endif
@@ -140,31 +147,31 @@ namespace Dash
             return v;
         }
         
-        public override void BindProperty(PropertyInfo p_property, Component p_component)
+        public override void BindProperty(PropertyInfo p_property, Component p_component, IVariableBindable p_bindable)
         {
             Type = VariableType.BOUND;
             _boundType = VariableBindType.PROPERTY;
             _boundName = p_property.Name;
             _boundComponentName = p_component.GetType().FullName;
 
-            InitializeBinding(p_component.gameObject);
+            InitializeBinding(p_bindable);
         }
         
-        public override void BindField(FieldInfo p_field, Component p_component)
+        public override void BindField(FieldInfo p_field, Component p_component, IVariableBindable p_bindable)
         {
             Type = VariableType.BOUND;
             _boundType = VariableBindType.FIELD;
             _boundName = p_field.Name;
             _boundComponentName = p_component.GetType().FullName;
 
-            InitializeBinding(p_component.gameObject);
+            InitializeBinding(p_bindable);
         }
 
-        public void RebindProperty(GameObject p_gameObject)
+        public void RebindProperty(IVariableBindable p_bindable)
         {
             if (Type == VariableType.BOUND)
             {
-                InitializeBinding(p_gameObject);
+                InitializeBinding(p_bindable);
             }
         }
 
@@ -177,13 +184,13 @@ namespace Dash
             Type = VariableType.VALUE;
         }
 
-        public override bool InitializeBinding(GameObject p_target)
+        public override bool InitializeBinding(IVariableBindable p_bindable)
         {
             if (!IsBound)
                 return false;
             
             Type componentType = ReflectionUtils.GetTypeByName(_boundComponentName);
-            Component component = p_target.GetComponent(componentType);
+            Component component = p_bindable.gameObject.GetComponent(componentType);
             if (component == null)
             {
                 Debug.LogWarning("Cannot find component " + _boundComponentName + " for variable " + Name);
@@ -230,24 +237,24 @@ namespace Dash
             return true;
         }
         
-        public override void InitializeLookup(GameObject p_target)
+        public override void InitializeLookup(IVariableBindable p_bindable)
         {
             if (!IsLookup)
                 return;
             
-            var rect = p_target.transform.DeepFind(Name);
+            var transform = p_bindable.gameObject.transform.DeepFind(Name);
 
             bool found = false;
-            if (rect != null)
+            if (transform != null)
             {
-                if (typeof(T).IsAssignableFrom(rect.GetType()))
+                if (typeof(T).IsAssignableFrom(transform.GetType()))
                 {
-                    objectValue = rect;
+                    objectValue = transform;
                     found = true;
                 }
                 else
                 {
-                    var component = rect.GetComponent<T>();
+                    var component = transform.GetComponent<T>();
                     if (component == null)
                     {
                         objectValue = component;
@@ -269,7 +276,7 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void ValueField(float p_maxWidth, GameObject p_boundObject)
+        public override void ValueField(float p_maxWidth, IVariableBindable p_bindable)
         {
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
@@ -285,11 +292,25 @@ namespace Dash
                 if (IsEnumProperty(valueField))
                 {
                     EnumProperty(valueField);
-                } else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
+                } 
+                else if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                {
+                    if (p_bindable != null)
+                    {
+                        ExposedProperty(valueField, p_bindable);
+                    }
+                    else
+                    {
+                        GUILayout.Label("NOT ASSIGNALBE ON ASSET");
+                    }
+                }
+                else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
-                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_boundObject != null);
-                } else {
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
+                } 
+                else
+                {
                     string type = typeof(T).ToString();
                     switch (type)
                     {
@@ -399,6 +420,58 @@ namespace Dash
             if (EditorGUI.EndChangeCheck())
             {
                 p_fieldInfo.SetValue(this, newValue);
+                return true;
+            }
+
+            return false;
+        }
+        
+        bool ExposedProperty(FieldInfo p_fieldInfo, IVariableBindable p_bindable)
+        {
+            IExposedPropertyTable propertyTable = p_bindable;
+            var exposedReference = p_fieldInfo.GetValue(this);
+            
+            PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
+            bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+            
+            EditorGUI.BeginChangeCheck();
+
+            UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
+                .Invoke(exposedReference, new object[] {propertyTable});
+            var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (propertyTable != null)
+                {
+                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
+                }
+
+                if (!isDefault)
+                {
+                    if (newValue == null)
+                    {
+                        propertyTable.ClearReferenceValue(exposedName);   
+                        exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
+                        p_fieldInfo.SetValue(this, exposedReference);
+                    }
+                    else
+                    {
+                        propertyTable.SetReferenceValue(exposedName, newValue);
+                    }
+                }
+                else
+                {
+                    if (newValue != null)
+                    {
+                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+                        exposedReference.GetType().GetField("exposedName")
+                            .SetValue(exposedReference, newExposedName);
+                        propertyTable.SetReferenceValue(newExposedName, newValue);
+                        p_fieldInfo.SetValue(this, exposedReference);
+                    }
+                }
+
                 return true;
             }
 

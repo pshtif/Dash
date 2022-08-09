@@ -808,5 +808,20 @@ namespace Dash
             p_args.Result = evalParams[0].ToString();
             return true;
         }
+
+        private static bool If(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 3)
+            {
+                errorMessage = "Invalid number of parameters in If function "+p_args.Parameters.Length;
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+            
+            p_args.HasResult = true;
+            p_args.Result = (bool)evalParams[0] ? evalParams[1] : evalParams[2];  
+            return true;
+        }
     }
 }

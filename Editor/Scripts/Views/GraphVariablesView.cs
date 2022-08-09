@@ -24,7 +24,7 @@ namespace Dash.Editor
                 return;
 
             DrawVariablesGUI(new Vector2(20,30), false, Color.white, Graph.variables, ref Graph.graphVariablesMinimized,
-                DashEditorCore.EditorConfig.editingController == null ? null : DashEditorCore.EditorConfig.editingController.gameObject);
+                DashEditorCore.EditorConfig.editingController == null ? null : DashEditorCore.EditorConfig.editingController);
         }
     }
 }

@@ -11,6 +11,7 @@ using UnityEngine;
 using Attribute = System.Attribute;
 using Object = System.Object;
 #if UNITY_EDITOR
+using OdinSerializer;
 using UnityEditor;
 
 #endif
@@ -209,7 +210,7 @@ namespace Dash
             ExecutionCount++;
             
 #if UNITY_EDITOR
-            if (!_hasDebugOverride)
+            if (!HasDebugOverride)
             {
                 DashEditorDebug.Debug(new NodeDebugItem(NodeDebugItem.NodeDebugItemType.EXECUTE, Graph.Controller, Graph.GraphPath, _model.id,
                     p_flowData.GetAttribute<Transform>("target")));
@@ -229,8 +230,6 @@ namespace Dash
             {
                 Graph.ExecuteNodeOutputs(this, p_index, p_flowData);
             }
-
-            //_outputConnections[p_index].ForEach(c => c.inputNode.Execute(p_flowData));
         }
         
         protected void OnExecuteEnd()
@@ -303,7 +302,7 @@ namespace Dash
         {
             Type nodeType = GetType();
             
-            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute)) != null;
+            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
 
             _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
             
@@ -445,7 +444,7 @@ namespace Dash
         public static string GetNodeNameFromType(Type p_nodeType)
         {
             string typeString = p_nodeType.ToString();
-            int dotIndex = typeString.IndexOf(".");
+            int dotIndex = typeString.LastIndexOf(".");
             return typeString.Substring(dotIndex + 1, typeString.Length - (dotIndex + 5));
         }
 
@@ -900,6 +899,20 @@ namespace Dash
 
             return false;
         }
+        
+        public byte[] SerializeToBytes(DataFormat p_format, ref List<UnityEngine.Object> p_references)
+        {
+            byte[] bytes = null;
+            
+            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            {
+                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                bytes = OdinSerializer.SerializationUtility.SerializeValue(this, p_format, out p_references, cachedContext.Value);
+            }
+            
+            return bytes;
+        }
+        
 #endif
 
         #endregion
