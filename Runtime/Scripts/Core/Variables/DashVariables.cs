@@ -75,12 +75,12 @@ namespace Dash
 
         public Variable<T>[] GetAllVariablesOfType<T>()
         {
-            return _variables.FindAll(v => v.GetVariableType() == typeof(T)).Select(v => v as Variable<T>).ToArray();
+            return variables.FindAll(v => v.GetVariableType() == typeof(T)).Select(v => v as Variable<T>).ToArray();
         }
         
         public Variable[] GetAllVariablesOfType(Type p_type)
         {
-            return _variables.FindAll(v =>
+            return variables.FindAll(v =>
             {
                 return p_type.IsGenericType && p_type.GetGenericTypeDefinition() == typeof(ExposedReference<>) &&
                        v.GetVariableType().IsGenericType && v.GetVariableType().GetGenericTypeDefinition() ==
