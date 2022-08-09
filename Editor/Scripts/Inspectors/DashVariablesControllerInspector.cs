@@ -30,7 +30,7 @@ namespace Dash
                 EditorGUI.BeginChangeCheck();
                 variablesController.makeGlobal = EditorGUILayout.Toggle("Make Global", variablesController.makeGlobal);
                 
-                GUIVariableUtils.DrawVariablesInspector("Controller Variables", variablesController.Variables, variablesController);
+                GUIVariableUtils.DrawVariablesInspector("Variables", variablesController.Variables, variablesController);
                 
                 if (EditorGUI.EndChangeCheck())
                 {
