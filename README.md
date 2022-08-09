@@ -14,13 +14,17 @@ Dash Animation System for Unity is a system that was designed to make animation 
 </p>
 <hr>
 
-## NOTE
-* This is no longer a full Unity project but just the Dash Animation System itself. For the Unity testbed project please visit this repository https://github.com/pshtif/DashTestbed
-
 ## Prerequisities
 
 * Unity 2019.4 LTS + (It may work on older versions but there are no guarantees and support.)
 * NET 4.X API Compatibility Level
+
+## TUTORIALS / DEVLOG
+* Tutorials and devlog videos for Dash framework can be found on YouTube
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/drWaAsldVeM/0.jpg)](https://www.youtube.com/watch?v=drWaAsldVeM&list=PLI2aUZL_-RsVMCgXTy4mdcWNMxXvROBpJ&index=1 "Dash Playlist")
+
+
 
 ## Installation
 
@@ -40,11 +44,7 @@ Dash Registry
 URL:  
 ```
 http://package.binaryego.com:4873
-```  
-OPTIONAL URL2 if first SERVER is OUT 
 ```
-https://binaryego.jfrog.io/ui/repos/tree/General/binaryego
-```  
 Scopes:  
 ```
 com.shtif
@@ -105,6 +105,10 @@ Various properties in many node models are parameters rather than direct values.
 There is a data flowing through nodes when graph is executing, this data consist of attributes and may get modified by nodes as it passes through them. Each node clones the data when it is forwarding it rather than change being done on a single instance. So for example retargeting happening in a node down the graph will not retarget the data handled before this point in graph.
 
 Attributes are properties on the node flow data instance. There can be reserved and predefined attributes or user defined attributes, it is possible to add attributes to the node flow data in the middle of graph as needed.
+
+## Additional documentation
+
+- [Creating Custom Nodes](./Documentation/CustomNodes.md)
 
 ## Licensing
 
