@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.12.9 - 10.8.2022
+
+#### Added
+
+- added multiple documentation topics
+- added DebugNode option to output to Unity console
+- added various properties as Parameters this will be a continued effort to parametrize existing legacy properties
+
+#### Changed
+
+- changed various optimizations on property fetching
+- changed to Documentation attribute to allow external documentation for custom nodes
+
+#### Fixed
+
+- fixed multiple UI/UX issues on editing asset graphs like disabling scene referencing etc.
+- fixed null exceptions on uninitialized data in specific cases
+- fixed UI issues for custom nodes
+
 ### Release 0.12.8 - 15.7.2022
 
 #### Added
