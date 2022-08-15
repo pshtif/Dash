@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.0
+
+#### Added
+
+- added pooling to SpawnImageNode
+
+#### Changed
+
+- changed various legacy properties accross multiple nodes are being promoted to Parameters
+
+#### Fixed
+
+- fixed now when parameter is switched to expression inspector shows all dependent properties as it cannot predict the value of dependency and user needs to be able to set dependent values
+
 ### Release 0.12.9 - 10.8.2022
 
 #### Added
