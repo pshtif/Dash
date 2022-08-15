@@ -656,9 +656,11 @@ namespace Dash
                     Parameter<bool> dependencyParameter = dependencyField.GetValue(p_object) as Parameter<bool>;
                     meetsAllDependencies = meetsAllDependencies && (dependencyParameter.isExpression || dependencyParameter.GetValue(null));
                 }
-
-                if (dependencyField != null && attribute.Value.ToString() != dependencyField.GetValue(p_object).ToString())
+                else if (dependencyField != null &&
+                         attribute.Value.ToString() != dependencyField.GetValue(p_object).ToString())
+                {
                     return false;
+                }
             }
 
             bool single = false;
