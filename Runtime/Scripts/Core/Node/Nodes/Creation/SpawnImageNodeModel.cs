@@ -18,11 +18,12 @@ namespace Dash
         
         [TitledGroup("Pooling")]
         [Dependency("usePooling", true)]
-        public bool createPoolIdAttribute = true;
-        
-        [TitledGroup("Pooling")]
+        public Parameter<bool> createPoolIdAttribute = new Parameter<bool>(true);
+
+        [TitledGroup("Pooling")] 
         [Dependency("usePooling", true)]
-        public string poolIdAttributeName = "pool";
+        [Dependency("createPoolIdAttribute", true)]
+        public Parameter<string> poolIdAttributeName = new Parameter<string>("pool");
         
         public string spawnedName = "image";
         
