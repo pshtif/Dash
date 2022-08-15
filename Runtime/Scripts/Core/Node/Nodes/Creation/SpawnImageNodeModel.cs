@@ -9,6 +9,21 @@ namespace Dash
 {
     public class SpawnImageNodeModel : NodeModelBase
     {
+        [TitledGroup("Pooling")] 
+        public Parameter<bool> usePooling = new Parameter<bool>(false);
+        
+        [TitledGroup("Pooling")]
+        [Dependency("usePooling", true)]
+        public Parameter<string> poolId = new Parameter<string>("");
+        
+        [TitledGroup("Pooling")]
+        [Dependency("usePooling", true)]
+        public bool createPoolIdAttribute = true;
+        
+        [TitledGroup("Pooling")]
+        [Dependency("usePooling", true)]
+        public string poolIdAttributeName = "pool";
+        
         public string spawnedName = "image";
         
         public Parameter<Sprite> sprite = new Parameter<Sprite>(null);

@@ -14,21 +14,55 @@ namespace Dash
     [InputCount(1)]
     public class SpawnImageNode : NodeBase<SpawnImageNodeModel>
     {
+        private RectTransform _imagePrefab;
+
+        public RectTransform ImagePrefab
+        {
+            get
+            {
+                if (_imagePrefab == null)
+                {
+                    var go = new GameObject();
+                    Image image = go.AddComponent<Image>();
+                    _imagePrefab = go.transform as RectTransform;
+                }
+
+                return _imagePrefab;
+            }
+        }
+        
+        private PrefabPool _prefabPool;
+        
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
+
+            RectTransform spawned = null;
+            bool usePooling = GetParameterValue(Model.usePooling, p_flowData);
+            if (usePooling)
+            {
+                if (_prefabPool == null) _prefabPool = DashCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), ImagePrefab);
+                spawned = _prefabPool.Get() as RectTransform;
+                
+                if (spawned == null)
+                {
+                    SetError("Prefab instance is not a RectTransform");
+                }
+            }
+            else
+            {
+                spawned = GameObject.Instantiate(ImagePrefab);
+            }
             
-            GameObject spawned = new GameObject();
             spawned.name = Model.spawnedName;
             if (Model.setTargetAsParent)
             {
                 spawned.transform.SetParent(target, false);
             }
             
-            Image image = spawned.AddComponent<Image>();
+            Image image = spawned.GetComponent<Image>();
             image.sprite = GetParameterValue(Model.sprite, p_flowData);
-            RectTransform rectTransform = image.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = GetParameterValue(Model.position, p_flowData);
+            spawned.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
             if (GetParameterValue(Model.setNativeSize, p_flowData))
             {
@@ -49,7 +83,7 @@ namespace Dash
                     SetError("Attribute name cannot be empty");
                 }
                 
-                p_flowData.SetAttribute<Transform>(Model.spawnedAttributeName, rectTransform);
+                p_flowData.SetAttribute<RectTransform>(Model.spawnedAttributeName, spawned);
             }
             
             OnExecuteEnd();
