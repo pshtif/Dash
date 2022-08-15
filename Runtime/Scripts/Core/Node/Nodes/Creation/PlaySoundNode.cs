@@ -2,7 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
+using System.Runtime.InteropServices;
 using Dash.Attributes;
 using UnityEngine;
 
@@ -12,8 +12,7 @@ namespace Dash
     [Category(NodeCategoryType.CREATION)]
     [OutputCount(1)]
     [InputCount(1)]
-    [Obsolete]
-    public class SoundNode : NodeBase<SoundNodeModel>
+    public class PlaySoundNode : NodeBase<PlaySoundNodeModel>
     {
         private AudioSource _audioSource;
 

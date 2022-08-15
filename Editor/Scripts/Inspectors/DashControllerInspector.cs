@@ -61,16 +61,16 @@ namespace Dash.Editor
                     GUI.color = new Color(1, 0.75f, 0.5f);
                     if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                     {
-                        if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
-                            "Bound", "Asset"))
-                        {
-
-                            BindGraph(GraphUtils.CreateEmptyGraph());
-                        }
-                        else
-                        {
+                        // if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
+                        //     "Bound", "Asset"))
+                        // {
+                        //
+                        //     BindGraph(GraphUtils.CreateEmptyGraph());
+                        // }
+                        // else
+                        // {
                             ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
-                        }
+                        // }
                     }
 
                     GUI.color = oldColor;
@@ -103,10 +103,11 @@ namespace Dash.Editor
                             DashEditorCore.EditController(Controller);
                         }
 
-                        if (GUILayout.Button("Bind Graph"))
-                        {
-                            BindGraph(Controller.Graph);
-                        }
+                        // Bound graphs will be deprecated
+                        // if (GUILayout.Button("Bind Graph"))
+                        // {
+                        //     BindGraph(Controller.Graph);
+                        // }
                     }
                     else
                     {
