@@ -111,6 +111,11 @@ namespace Dash.Editor
                     }
                     else
                     {
+                        var style = new GUIStyle("label");
+                        style.normal.textColor = new Color(1, .4f, 0);
+                        style.alignment = TextAnchor.MiddleCenter;
+                        style.fontStyle = FontStyle.Bold;
+                        GUILayout.Label("!!! Save graph to asset, bound graphs will be deprecated !!!", style);
                         if (GUILayout.Button("Save to Asset"))
                         {
                             DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
