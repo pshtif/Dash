@@ -4,15 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.0
+### Release 0.13.0 - 16.8.2022
 
 #### Added
 
 - added pooling to SpawnImageNode
+- added warnings that bound graphs are going to be obsolete
 
 #### Changed
 
 - changed various legacy properties accross multiple nodes are being promoted to Parameters
+- changed graphs now cannot be created as bound anymore
 
 #### Fixed
 
