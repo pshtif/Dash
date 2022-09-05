@@ -4,8 +4,10 @@
 
 namespace Dash
 {
-    public interface ISoundManager
+    public interface IAudioManager
     {
-        void PlaySound(int p_soundIndex);
+        void PlayAudio(string p_audioName, float p_volume);
+
+        bool HasAudio(string p_audioName);
     }
 }
