@@ -8,6 +8,18 @@ All notable changes to this project will be documented in this file.
 
 #### Added
 
+- added IAudioManager and Get/SetAudioManager on DashCore
+- added PlayAudioNode to use SoundManager implementation
+- added ability to define node subcategories
+
+#### Changed
+
+#### Fixed
+
+### Release 0.13.0 - 16.8.2022
+
+#### Added
+
 - added pooling to SpawnImageNode
 - added warnings that bound graphs are going to be obsolete
 
