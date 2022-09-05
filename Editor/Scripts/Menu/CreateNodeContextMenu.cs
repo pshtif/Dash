@@ -64,14 +64,8 @@ namespace Dash.Editor
                     TooltipAttribute tooltipAttribute = type.GetCustomAttribute<TooltipAttribute>();
                     string tooltip = tooltipAttribute != null ? tooltipAttribute.help : "";
                     
-                    CategoryAttribute attribute = type.GetCustomAttribute<CategoryAttribute>();
-                    NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
-                    string categoryLabel = attribute.label;
-                    if (categoryLabel.IsNullOrWhitespace())
-                    {
-                        categoryLabel = category.ToString();
-                        categoryLabel = categoryLabel.Substring(0, 1) + categoryLabel.Substring(1).ToLower();
-                    }
+                    NodeCategoryType category = NodeUtils.GetNodeCategory(type);
+                    string categoryLabel = NodeUtils.GetCategoryLabel(type);
 
                     string node = type.ToString().Substring(type.ToString().LastIndexOf(".") + 1);
                     node = node.Substring(0, node.Length-4);
@@ -254,23 +248,35 @@ namespace Dash.Editor
         
         static public int CategorySort(Type p_type1, Type p_type2)
         {
-            CategoryAttribute attribute1 = p_type1.GetCustomAttribute<CategoryAttribute>();
-            CategoryAttribute attribute2 = p_type2.GetCustomAttribute<CategoryAttribute>();
-            string categoryString1 = attribute1 == null ? "Other" : NodeUtils.CategoryToString(attribute1.type);
-            string categoryString2 = attribute2 == null ? "Other" : NodeUtils.CategoryToString(attribute2.type);
-            string nodeString1 = p_type1.ToString().Substring(p_type1.ToString().IndexOf(".") + 1);
-            string nodeString2 = p_type2.ToString().Substring(p_type2.ToString().IndexOf(".") + 1);
+            string categoryString1 = NodeUtils.GetCategoryLabel(p_type1);
+            string categoryString2 = NodeUtils.GetCategoryLabel(p_type2);
 
             if (categoryString1 == categoryString2)
-                return nodeString1.CompareTo(nodeString2);
-
+            {
+                return NodeUtils.GetNodeLabel(p_type1).CompareTo(NodeUtils.GetNodeLabel(p_type2));
+            }
+            
             if (categoryString1 == "Graph")
                 return 1;
             
             if (categoryString2 == "Graph")
                 return -1;
 
-            return categoryString1.CompareTo(categoryString2);
+            return CompareCategoryLabel(categoryString1, categoryString2);
+        }
+
+        static private int CompareCategoryLabel(string p_categoryLabel1, string p_categoryLabel2)
+        {
+            int index1 = p_categoryLabel1.IndexOf("/");
+            int index2 = p_categoryLabel2.IndexOf("/");
+            
+            if (index1 == -1 && index2 == -1)
+            {
+                return p_categoryLabel1.CompareTo(p_categoryLabel2);
+            }
+            
+            return CompareCategoryLabel(p_categoryLabel1.Substring(index1 + 1),
+                p_categoryLabel2.Substring(index2 + 1));
         }
         
     }
