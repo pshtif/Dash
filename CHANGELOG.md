@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - added IAudioManager and Get/SetAudioManager on DashCore
 - added PlayAudioNode to use SoundManager implementation
 - added ability to define node subcategories
+- added custom inspectors can now also force invalidation
+- added custom inspectors can now customize group
 
 #### Changed
 
