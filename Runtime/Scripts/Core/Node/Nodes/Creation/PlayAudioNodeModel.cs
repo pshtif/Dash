@@ -3,13 +3,13 @@
  */
 
 using System;
-using System.Linq;
 using Dash.Attributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace Dash
 {
-    [CustomInspector]
+    [CustomInspector("AudioManager")]
     public class PlayAudioNodeModel : NodeModelBase
     {
         public Parameter<float> audioVolume = new Parameter<float>(1);
@@ -25,12 +25,65 @@ namespace Dash
         private IAudioManager _soundManager;
 
 #if UNITY_EDITOR
-        protected override void DrawCustomInspector()
+
+        [NonSerialized] 
+        private IAudioManager audioManager;
+
+        protected override bool IsCustomInspectorActive()
         {
-            var style = new GUIStyle();
-            style.alignment = TextAnchor.UpperCenter;
-            style.normal.textColor = Color.white;
-            GUILayout.Label("Method");
+            return (useSoundManager && !audioName.isExpression);
+        }
+        
+        protected override bool DrawCustomInspector()
+        {
+            if (useSoundManager && !audioName.isExpression)
+            {
+                if (audioManager == null)
+                {
+                    Type[] audioManagers = ReflectionUtils.GetAllTypesImplementingInterface(typeof(IAudioManager));
+
+                    if (audioManagers.Length == 0)
+                    {
+                        EditorGUILayout.HelpBox("No audio manager implementation found.", MessageType.Warning);
+                        return false;
+                    }
+
+                    if (audioManagers.Length > 1)
+                    {
+                        Debug.Log("Multiple audio managers found using first.");
+                    }
+
+                    audioManager = (IAudioManager)Activator.CreateInstance(audioManagers[0]);
+                }
+
+                if (audioManager == null)
+                {
+                    EditorGUILayout.HelpBox("Could not instantiate audio manager.", MessageType.Warning);
+                    return false;
+                }
+
+                var audioNameList = audioManager.GetAudioNames();
+                int index = Array.IndexOf(audioNameList, audioName.GetValue(null));
+
+                EditorGUI.BeginChangeCheck();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Audio Name", GUILayout.Width(160));
+                var newIndex = EditorGUILayout.Popup(index, audioNameList);
+                GUILayout.EndHorizontal();
+
+                if (index == -1)
+                {
+                    EditorGUILayout.HelpBox("Current value is not a valid audio name", MessageType.Warning);
+                }
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    audioName.SetValue(audioNameList[newIndex]);
+                    return true;
+                }
+            }
+
+            return false;
         }
 #endif
     }
