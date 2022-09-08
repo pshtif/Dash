@@ -102,18 +102,23 @@ namespace Dash
             bool invalidate = false;
             int groupIndex = 0;
 
-            if (GetType().GetCustomAttribute<CustomInspectorAttribute>() != null)
+            CustomInspectorAttribute customInspector = GetType().GetCustomAttribute<CustomInspectorAttribute>();
+            if (customInspector != null && IsCustomInspectorActive())
             {
-                lastGroupMinimized = DrawGroupTitle(null, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
-                if (!lastGroupMinimized) DrawCustomInspector();
+                lastGroupMinimized = DrawGroupTitle(customInspector.name, false, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
+                if (!lastGroupMinimized)
+                {
+                    invalidate = invalidate || DrawCustomInspector();
+                }
             }
-
+            
             foreach (var field in fields)
             {
                 if (field.IsConstant() || !GUIPropertiesUtils.MeetsDependencies(field, this) || GUIPropertiesUtils.IsHidden(field)) 
                     continue;
                 
-                lastGroupMinimized = DrawGroupTitle(field, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
+                TitledGroupAttribute ga = field?.GetCustomAttribute<TitledGroupAttribute>();
+                lastGroupMinimized = DrawGroupTitle(ga != null ? ga.Group : "Properties", ga != null ? ga.Minimized : false, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
 
                 if (lastGroupMinimized)
                     continue;
@@ -124,21 +129,19 @@ namespace Dash
             return invalidate;
         }
 
-        protected bool DrawGroupTitle(FieldInfo p_fieldInfo, ref int p_groupIndex, ref string p_lastGroup, bool p_initializeMinimized, GUIStyle p_style)
+        protected bool DrawGroupTitle(string p_title, bool p_minimizedDefault, ref int p_groupIndex, ref string p_lastGroup, bool p_initializeMinimized, GUIStyle p_style)
         {
-            TitledGroupAttribute ga = p_fieldInfo?.GetCustomAttribute<TitledGroupAttribute>();
-            string currentGroup = ga != null ? ga.Group : "Properties";
-            if (currentGroup != p_lastGroup)
+            if (p_title != p_lastGroup)
             {
                 int groupMask = 1 << p_groupIndex;
                 p_groupIndex++;
-                if (p_initializeMinimized && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
+                if (p_initializeMinimized && p_minimizedDefault && (groupsMinized & groupMask) == 0)
                 {
                     groupsMinized += groupMask;
                 }
 
                 GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
-                GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"));
+                GUILayout.Label(p_title, DashEditorCore.Skin.GetStyle("PropertyGroup"));
                     
                 Rect lastRect = GUILayoutUtility.GetLastRect();
 
@@ -150,13 +153,21 @@ namespace Dash
                     
                 GUI.Label(new Rect(lastRect.x + 356 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
             
-                p_lastGroup = currentGroup;
+                p_lastGroup = p_title;
             }
             
             return (groupsMinized & (1 << (p_groupIndex - 1))) != 0;
         }
 
-        protected virtual void DrawCustomInspector() { }
+        protected virtual bool DrawCustomInspector()
+        {
+            return false;
+        }
+
+        protected virtual bool IsCustomInspectorActive()
+        {
+            return true;
+        }
 
         public List<string> GetExposedGUIDs()
         {
