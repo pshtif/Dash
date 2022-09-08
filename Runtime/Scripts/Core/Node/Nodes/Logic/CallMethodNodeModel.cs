@@ -15,7 +15,7 @@ using UnityEditor;
 
 namespace Dash
 {
-    [CustomInspector]
+    [CustomInspector("CallMethod")]
     public class CallMethodNodeModel : NodeModelBase
     {
         [HideInInspector]
@@ -35,13 +35,12 @@ namespace Dash
         
 #if UNITY_EDITOR
 
-        protected override void DrawCustomInspector()
+        protected override bool DrawCustomInspector()
         {
             var style = new GUIStyle();
             style.alignment = TextAnchor.UpperCenter;
             style.normal.textColor = Color.white;
-            //GUILayout.Label("Method");
-            //GUILayout.BeginHorizontal();
+            
             if (componentName.IsNullOrWhitespace())
             {
                 GUILayout.Label("No Method Bound", style);
@@ -49,6 +48,7 @@ namespace Dash
                 if (GUILayout.Button("Bind Method"))
                 {
                     GetMethodMenu(DashEditorCore.EditorConfig.editingController.gameObject).ShowAsContext();
+                    return true;
                 }
             }
             else
@@ -58,10 +58,11 @@ namespace Dash
                 if (GUILayout.Button("Unbind Method"))
                 {
                     OnUnbind();
+                    return true;
                 }
             }
 
-            //GUILayout.EndHorizontal();
+            return false;
         }
 
         void OnBindMethod(MethodInfo p_method, Component p_component)
