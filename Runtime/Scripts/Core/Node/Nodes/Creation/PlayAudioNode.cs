@@ -30,7 +30,7 @@ namespace Dash
         
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            if (Model.useSoundManager)
+            if (Model.useAudioManager)
             {
                 PlayUsingSoundManager(p_flowData);
             }
@@ -70,6 +70,7 @@ namespace Dash
 #endif
                     audioManager.PlayAudio(audioName, volume);
             }
+            // TODO debug in editor time fail
         }
     }
 }

@@ -14,12 +14,12 @@ namespace Dash
     {
         public Parameter<float> audioVolume = new Parameter<float>(1);
         
-        public bool useSoundManager = false;
+        public bool useAudioManager = false;
         
-        [Dependency("useSoundManager", false)]
+        [Dependency("useAudioManager", false)]
         public AudioClip audioClip;
 
-        [Dependency("useSoundManager", true)] 
+        [Dependency("useAudioManager", true)] 
         public Parameter<string> audioName = new Parameter<string>("");
 
         private IAudioManager _soundManager;
@@ -31,12 +31,12 @@ namespace Dash
 
         protected override bool IsCustomInspectorActive()
         {
-            return (useSoundManager && !audioName.isExpression);
+            return (useAudioManager && !audioName.isExpression);
         }
         
         protected override bool DrawCustomInspector()
         {
-            if (useSoundManager && !audioName.isExpression)
+            if (useAudioManager && !audioName.isExpression)
             {
                 if (audioManager == null)
                 {
@@ -50,7 +50,7 @@ namespace Dash
 
                     if (audioManagers.Length > 1)
                     {
-                        Debug.Log("Multiple audio managers found using first.");
+                        EditorGUILayout.HelpBox("Multiple audio managers implementatiuons.", MessageType.Warning);
                     }
 
                     audioManager = (IAudioManager)Activator.CreateInstance(audioManagers[0]);
