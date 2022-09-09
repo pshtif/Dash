@@ -6,9 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dash.Attributes;
-using UnityEditor;
 using UnityEngine;
-using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
+using OdinSerializer.Utilities;
 
 namespace Dash
 {
@@ -18,6 +17,33 @@ namespace Dash
         {
             SingleInstanceAttribute attribute = (SingleInstanceAttribute) Attribute.GetCustomAttribute(p_nodeType, typeof(SingleInstanceAttribute));
             return attribute == null;
+        }
+
+        public static string GetCategoryLabel(Type p_type)
+        {
+            CategoryAttribute attribute = p_type.GetCustomAttribute<CategoryAttribute>();
+            NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
+            string categoryLabel = attribute == null ? string.Empty : attribute.label;
+            if (OdinSerializer.Utilities.StringExtensions.IsNullOrWhitespace(categoryLabel))
+            {
+                categoryLabel = category.ToString();
+                categoryLabel = categoryLabel.Substring(0, 1) + categoryLabel.Substring(1).ToLower();
+            }
+
+            return categoryLabel;
+        }
+
+        public static string GetNodeLabel(Type p_nodeType)
+        {
+            return p_nodeType.ToString().Substring(p_nodeType.ToString().IndexOf(".") + 1);
+        }
+
+        public static NodeCategoryType GetNodeCategory(Type p_type)
+        {
+            CategoryAttribute attribute = p_type.GetCustomAttribute<CategoryAttribute>();
+            NodeCategoryType category = attribute == null ? NodeCategoryType.OTHER : attribute.type;
+
+            return category;
         }
 
         public static string CategoryToString(NodeCategoryType p_type)

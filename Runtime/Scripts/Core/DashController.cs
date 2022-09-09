@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using Dash.Attributes;
 using OdinSerializer;
@@ -288,7 +289,7 @@ namespace Dash
 
         // Handle Unity property exposing - may be removed later to avoid external references
 
-        #region EXPOSE_TABLE
+#region EXPOSE_TABLE
 
         [HideInInspector] 
         [SerializeField]
@@ -306,6 +307,10 @@ namespace Dash
 
         public void CleanupReferences(List<string> p_existingGUIDs)
         {
+            // Can happen in some cases during domain reload/rebuild
+            if (_propertyNames == null)
+                return;
+            
             for (int i = 0; i < _propertyNames.Count; i++)
             {
                 if (p_existingGUIDs.Contains(_propertyNames[i].ToString()))
@@ -317,9 +322,13 @@ namespace Dash
             }
         }
 
-        public void ClearReferenceValue(PropertyName id)
+        public void ClearReferenceValue(PropertyName p_id)
         {
-            int index = _propertyNames.IndexOf(id);
+            // Can happen in some cases during domain reload/rebuild
+            if (_propertyNames == null)
+                return;
+
+            int index = _propertyNames.IndexOf(p_id);
             if (index != -1)
             {
                 _references.RemoveAt(index);
@@ -327,33 +336,45 @@ namespace Dash
             }
         }
 
-        public Object GetReferenceValue(PropertyName id, out bool idValid)
+        public Object GetReferenceValue(PropertyName p_id, out bool p_idValid)
         {
-            int index = _propertyNames.IndexOf(id);
+            // Can happen in some cases during domain reload/rebuild
+            if (_propertyNames == null)
+            {
+                p_idValid = false;
+                return null;
+            }
+
+            int index = _propertyNames.IndexOf(p_id);
             if (index != -1)
             {
-                idValid = true;
+                p_idValid = true;
                 return _references[index];
             }
 
-            idValid = false;
+            p_idValid = false;
             return null;
         }
 
-        public void SetReferenceValue(PropertyName id, Object value)
+        public void SetReferenceValue(PropertyName p_id, Object p_value)
         {
-            int index = _propertyNames.IndexOf(id);
+            // Can happen in some cases during domain reload/rebuild
+            if (_propertyNames == null)
+                return;
+            
+            int index = _propertyNames.IndexOf(p_id);
             if (index != -1)
             {
-                _references[index] = value;
+                _references[index] = p_value;
             }
             else
             {
-                _propertyNames.Add(id);
-                _references.Add(value);
+                _propertyNames.Add(p_id);
+                _references.Add(p_value);
             }
         }
 #endregion
+
         public void BindGraph(DashGraph p_graph)
         {
             _assetGraph = null;

@@ -83,5 +83,11 @@ namespace Dash
 
             return _typeCacheList = result.OrderBy(t => t.Namespace).ThenBy(t => t.Name).ToArray();
         }
+
+        public static Type[] GetAllTypesImplementingInterface(Type p_interface)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).Where(t =>
+                p_interface.IsAssignableFrom(t) && t.GetInterfaces().Contains(p_interface)).ToArray();
+        }
     }
 }

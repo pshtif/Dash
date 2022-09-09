@@ -55,7 +55,8 @@ namespace Dash
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
             }
-            else if (Model.createSpawnedAttribute)
+            
+            if (Model.createSpawnedAttribute)
             {
                 if (string.IsNullOrEmpty(Model.spawnedAttributeName))
                 {

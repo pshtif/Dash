@@ -45,6 +45,8 @@ namespace Dash
         [NonSerialized]
         private Dictionary<string, PrefabPool> _prefabPools = new Dictionary<string, PrefabPool>();
 
+        private IAudioManager _audioManager;
+
         public EventSequencer GetOrCreateSequencer(string p_id)
         {
             if (!_sequencers.ContainsKey(p_id))
@@ -187,6 +189,16 @@ namespace Dash
                 if (_listeners[p_name].Count == 0)
                     _listeners.Remove(p_name);
             }
+        }
+
+        public void SetAudioManager(IAudioManager p_soundManager)
+        {
+            _audioManager = p_soundManager;
+        }
+
+        public IAudioManager GetAudioManager()
+        {
+            return _audioManager;
         }
         
         public static int GetVersionNumber() 
