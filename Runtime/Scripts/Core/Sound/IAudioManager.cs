@@ -11,5 +11,9 @@ namespace Dash
         bool HasAudio(string p_audioName);
 
         string[] GetAudioNames();
+        
+#if UNITY_EDITOR
+        void PlayAudioPreview(string p_audioName, float p_volume);
+#endif
     }
 }

@@ -65,10 +65,16 @@ namespace Dash
             IAudioManager audioManager = DashCore.Instance.GetAudioManager();
             if (audioManager != null)
             {
+                audioManager.PlayAudio(audioName, volume);
+            }
+            else
+            {
 #if UNITY_EDITOR
-                if (DashEditorCore.EditorConfig.enableSoundInPreview || !Application.isEditor || Application.isPlaying)
+                if (DashEditorCore.EditorConfig.enableSoundInPreview && !Application.isPlaying)
+                {
+                    Model.GetAudioManagerEditorInstance().PlayAudioPreview(audioName, volume);
+                }
 #endif
-                    audioManager.PlayAudio(audioName, volume);
             }
             // TODO debug in editor time fail
         }

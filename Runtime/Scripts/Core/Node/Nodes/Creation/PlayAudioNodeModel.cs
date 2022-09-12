@@ -27,7 +27,7 @@ namespace Dash
 #if UNITY_EDITOR
 
         [NonSerialized] 
-        private IAudioManager audioManager;
+        private IAudioManager _audioManager;
 
         protected override bool IsCustomInspectorActive()
         {
@@ -38,7 +38,7 @@ namespace Dash
         {
             if (useAudioManager && !audioName.isExpression)
             {
-                if (audioManager == null)
+                if (_audioManager == null)
                 {
                     Type[] audioManagers = ReflectionUtils.GetAllTypesImplementingInterface(typeof(IAudioManager));
 
@@ -53,16 +53,16 @@ namespace Dash
                         EditorGUILayout.HelpBox("Multiple audio managers implementatiuons.", MessageType.Warning);
                     }
 
-                    audioManager = (IAudioManager)Activator.CreateInstance(audioManagers[0]);
+                    _audioManager = (IAudioManager)Activator.CreateInstance(audioManagers[0]);
                 }
 
-                if (audioManager == null)
+                if (_audioManager == null)
                 {
                     EditorGUILayout.HelpBox("Could not instantiate audio manager.", MessageType.Warning);
                     return false;
                 }
 
-                var audioNameList = audioManager.GetAudioNames();
+                var audioNameList = _audioManager.GetAudioNames();
                 int index = Array.IndexOf(audioNameList, audioName.GetValue(null));
 
                 EditorGUI.BeginChangeCheck();
@@ -84,6 +84,21 @@ namespace Dash
             }
 
             return false;
+        }
+
+        public IAudioManager GetAudioManagerEditorInstance()
+        {
+            if (_audioManager == null)
+            {
+                Type[] audioManagers = ReflectionUtils.GetAllTypesImplementingInterface(typeof(IAudioManager));
+
+                if (audioManagers.Length != 1)
+                    return null;
+
+                _audioManager = (IAudioManager)Activator.CreateInstance(audioManagers[0]);
+            }
+
+            return _audioManager;
         }
 #endif
     }

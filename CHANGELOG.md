@@ -4,12 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.1 - X.9.2022
+### Release 0.13.2 - *.9.2022
+
+#### Added
+
+- added PlayAudioPreview for preview mode using IAudioManager
+
+### Release 0.13.1 - 9.9.2022
 
 #### Added
 
 - added IAudioManager and Get/SetAudioManager on DashCore
-- added PlayAudioNode to use SoundManager implementation
+- added PlayAudioNode to use AudioManager implementation
 - added ability to define node subcategories
 - added custom inspectors can now also force invalidation
 - added custom inspectors can now customize group
