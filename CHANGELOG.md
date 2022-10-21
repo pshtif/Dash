@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.2 - *.9.2022
+### Release 0.13.2 - 21.10.2022
 
 #### Added
 
