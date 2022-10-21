@@ -124,7 +124,7 @@ namespace Dash
                     if (Model.useExpression)
                     {
                         style.normal.textColor = Color.cyan;
-                        GUI.Label(labelRect, "Expression", style);
+                        GUI.Label(labelRect, ShortenExpression(style, Model.targetExpression), style);
                     }
                     else
                     {
@@ -152,7 +152,8 @@ namespace Dash
                         if (Model.target.isExpression)
                         {
                             style.normal.textColor = Color.cyan;
-                            GUI.Label(labelRect, "Expression", style);
+
+                            GUI.Label(labelRect, ShortenExpression(style, Model.target.expression), style);
                         }
                         else
                         {
@@ -166,6 +167,13 @@ namespace Dash
                     }
                 }
             }
+        }
+
+        string ShortenExpression(GUIStyle p_style, string p_expression)
+        {
+            var label = GUIUtils.GetMaxLabelForStyleAndWidth(p_style, 85, p_expression);
+
+            return label == p_expression ? label : label + "...";
         }
 
         string ShortenPath(string p_path)

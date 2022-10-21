@@ -287,8 +287,13 @@ namespace Dash
 
         public void ExecuteNodeOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
         {
-            _connections.FindAll(c => c.active && c.outputNode == p_node && c.outputIndex == p_index) 
-                .ForEach(c => c.Execute(p_flowData));
+            foreach (var connection in _connections)
+            {
+                if (connection.active && connection.outputNode == p_node && connection.outputIndex == p_index)
+                {
+                    connection.Execute(p_flowData);
+                }
+            }
         }
 
         public bool HasOutputConnected(NodeBase p_node, int p_index)

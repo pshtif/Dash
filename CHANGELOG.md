@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.2 - *.9.2022
+### Release 0.13.2 - 21.10.2022
 
 #### Added
 
 - added PlayAudioPreview for preview mode using IAudioManager
+
+#### Changed
+
+- changed linq optimizations on execution
+- changed retarget expressions now show on node UI as actual expression
 
 ### Release 0.13.1 - 9.9.2022
 
