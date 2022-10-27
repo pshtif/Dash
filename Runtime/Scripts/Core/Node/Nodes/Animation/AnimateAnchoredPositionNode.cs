@@ -42,6 +42,11 @@ namespace Dash
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             
             float time = GetParameterValue(Model.time, p_flowData);
+            bool useSpeed = GetParameterValue(Model.useSpeed, p_flowData);
+            if (useSpeed && time != 0)
+            {
+                time = (finalPosition - startPosition).magnitude / time;
+            }
             float delay = GetParameterValue(Model.delay, p_flowData);
             if (time == 0)
             {

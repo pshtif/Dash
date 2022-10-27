@@ -14,17 +14,21 @@ namespace Dash
         
         [Order(1)]
         [TitledGroup("Animation",2)]
-        public Parameter<float> delay = new Parameter<float>(0);
-
+        public Parameter<bool> useSpeed = new Parameter<bool>(false);
+        
         [Order(2)]
         [TitledGroup("Animation",2)]
-        public Parameter<EaseType> easeType = new Parameter<EaseType>(EaseType.LINEAR);
+        public Parameter<float> delay = new Parameter<float>(0);
 
         [Order(3)]
         [TitledGroup("Animation",2)]
+        public Parameter<EaseType> easeType = new Parameter<EaseType>(EaseType.LINEAR);
+
+        [Order(4)]
+        [TitledGroup("Animation",2)]
         public Parameter<bool> killActive = new Parameter<bool>(false);
         
-        [Order(4)]
+        [Order(5)]
         [TitledGroup("Animation", 2)]
         public bool killOnNullEncounter = false;
     }
