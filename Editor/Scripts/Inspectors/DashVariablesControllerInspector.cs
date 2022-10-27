@@ -11,7 +11,7 @@ namespace Dash
 
         public override void OnInspectorGUI()
         {
-            if (DashEditorCore.EditorConfig.settingsShowInspectorLogo)
+            if (DashEditorCore.EditorConfig.showInspectorLogo)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true),
