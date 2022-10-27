@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.3 - 27.10.2022
+
+#### Added
+
+- added DashSettingsWindow to have single settings window for various Dash settings
+- added more UI for retarget nodes to show invalid/empty references
+- added speed based tweens support for AnimateAnchoredPositionNode, AnimatePositionNode, AnimateScaleNode, AnimateSizeDeltaNode
+
+#### Changed
+
+- changed minor settings refactors
+
+
 ### Release 0.13.2 - 21.10.2022
 
 #### Added
