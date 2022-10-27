@@ -19,6 +19,6 @@
   ],
   "dependencies": {
 	"com.teamsirenix.odinserializer": "2022.4.7",
-	"com.shtif.dashtween": "0.1.4"
+	"com.shtif.dashtween": "0.1.7"
   }
 }
