@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - changed removed support for ExposedReference variables [BREAKING]
 - changed ExposedReferences in node properties now cache initial exposedName
 - changed minor UI changes for variables
+- changed custom expression fields now reset their previous value when switching from direct to expression or back
 
 #### Fixed
 
