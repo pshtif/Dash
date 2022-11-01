@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class GUIUtils
+    public class GUIEditorUtils
     {
         public static void DrawTitle(string p_title)
         {
@@ -32,14 +32,16 @@ namespace Dash.Editor
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 16;
+            style.fontSize = 14;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-
             GUILayout.Label(p_title, style, GUILayout.Height(26));
+            GUI.backgroundColor = Color.white;
+            
             var rect = GUILayoutUtility.GetLastRect();
 
             style = new GUIStyle();
             style.fontSize = 20;
+            style.normal.textColor = Color.white;
             
             GUI.Label(new Rect(rect.x+rect.width- (p_minimized ? 24 : 21), rect.y, 24, 24), p_minimized ? "+" : "-", style);
             
