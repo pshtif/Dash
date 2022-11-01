@@ -9,6 +9,14 @@ All notable changes to this project will be documented in this file.
 #### Changed
 
 - changed DashController initialization now initializes on demand when using Send/Add methods not just on Awake
+- changed DashControllerVariables direct reference type variables now support scene referencing
+- changed removed support for ExposedReference variables [BREAKING]
+- changed ExposedReferences in node properties now cache initial exposedName
+- changed minor UI changes for variables
+
+#### Fixed
+
+- fixed setting exposed reference to null not reset its values on all graph usages
 
 ### Release 0.13.3 - 27.10.2022
 
