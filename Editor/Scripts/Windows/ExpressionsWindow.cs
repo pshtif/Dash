@@ -33,7 +33,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Expressions Editor");
+            GUIEditorUtils.DrawTitle("Dash Expressions Editor");
             
             DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = GUILayout.Toggle(DashEditorCore.RuntimeConfig.enableCustomExpressionClasses, new GUIContent("Enable Custom Expression Classes (has small runtime impact)"));
 

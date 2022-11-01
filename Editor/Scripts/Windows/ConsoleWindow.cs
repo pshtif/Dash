@@ -50,7 +50,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Console");
+            GUIEditorUtils.DrawTitle("Dash Console");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;

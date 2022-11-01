@@ -49,7 +49,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Checksum Scanner");
+            GUIEditorUtils.DrawTitle("Dash Checksum Scanner");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;
