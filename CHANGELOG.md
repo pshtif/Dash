@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.4
+
+#### Changed
+
+- changed DashController initialization now initializes on demand when using Send/Add methods not just on Awake
+
 ### Release 0.13.3 - 27.10.2022
 
 #### Added
