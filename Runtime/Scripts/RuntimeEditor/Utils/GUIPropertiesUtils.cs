@@ -426,7 +426,7 @@ namespace Dash
             GUI.color = useExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
-                ParameterMenu.Show(useExpressionField, expressionField, p_object, p_fieldInfo.GetReturnType());
+                ParameterMenu.Show(useExpressionField, expressionField, p_fieldInfo, p_object, p_fieldInfo.GetReturnType());
             }
             GUI.color = Color.white;
             
