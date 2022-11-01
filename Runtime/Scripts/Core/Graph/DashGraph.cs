@@ -564,6 +564,7 @@ namespace Dash
         {
             List<string> exposedGUIDs = new List<string>();
             Nodes.ForEach(n => exposedGUIDs.AddRange(n.GetModelExposedGUIDs()));
+            exposedGUIDs.AddRange(variables.GetExposedGUIDs());
 
             return exposedGUIDs;
         }

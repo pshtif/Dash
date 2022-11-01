@@ -210,6 +210,19 @@ namespace Dash
         {
             return AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
         }
+
+        public List<string> GetExposedGUIDs()
+        {
+            List<string> exposedGUIDs = new List<string>();
+            
+            exposedGUIDs = _variables.FindAll(v => v.GetVariableType().IsGenericType &&
+                                    v.GetVariableType().GetGenericTypeDefinition() == typeof(ExposedReference<>)).Select(
+                                            (v, i) => v.value.GetType().GetField("exposedName")
+                                                .GetValue(v.value).ToString())
+                                        .ToList();
+
+            return exposedGUIDs;
+        }
 #endif
     }
 }
