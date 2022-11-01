@@ -8,22 +8,17 @@ namespace Dash.Editor
 {
     public class GUIVariableUtils
     {
-        public static void DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable)
+        public static bool DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable, ref bool p_minimized)
         {
-            var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
-            style.alignment = TextAnchor.MiddleCenter;
-            style.fontStyle = FontStyle.Bold;
-            style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 16;
-            GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label(p_title, style, GUILayout.Height(28));
-            GUI.backgroundColor = Color.white;
+            if (!GUIEditorUtils.DrawMinimizableSectionTitle(p_title,
+                    ref p_minimized))
+                return false;
 
             int index = 0;
+            bool invalidate = false;
             p_variables.variables?.ForEach(variable =>
             {
-                VariableField(p_variables, variable.Name, p_bindable,
+                invalidate = invalidate || VariableField(p_variables, variable.Name, p_bindable,
                     EditorGUIUtility.currentViewWidth - 20);
                 GUILayout.Space(4);
                 index++;
@@ -33,6 +28,8 @@ namespace Dash.Editor
             {
                 VariableTypesMenu.Show((type) => OnAddNewVariable(p_variables, type));
             }
+
+            return invalidate;
         }
         
         static void OnAddNewVariable(DashVariables p_variables, Type p_type)
@@ -42,18 +39,20 @@ namespace Dash.Editor
             // PrefabUtility.RecordPrefabInstancePropertyModifications(target);
         }
         
-        public static void VariableField(DashVariables p_variables, string p_name, IVariableBindable p_bindable, float p_maxWidth)
+        public static bool VariableField(DashVariables p_variables, string p_name, IVariableBindable p_bindable, float p_maxWidth)
         {
+            bool invalidate = false;
             var variable = p_variables.GetVariable(p_name);
             GUILayout.BeginHorizontal();
             string newName = EditorGUILayout.TextField(p_name, GUILayout.Width(120));
             GUILayout.Space(2);
-            if (newName != p_name) 
+            if (newName != p_name)
             {
+                invalidate = true;   
                 p_variables.RenameVariable(p_name, newName);
             }
             
-            variable.ValueField(p_maxWidth-150, p_bindable);
+            invalidate = invalidate || variable.ValueField(p_maxWidth-150, p_bindable);
 
             var oldColor = GUI.color;
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
@@ -71,6 +70,8 @@ namespace Dash.Editor
             GUI.color = oldColor;
 
             GUILayout.EndHorizontal();
+
+            return invalidate;
         }
     }
 }

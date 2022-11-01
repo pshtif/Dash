@@ -40,7 +40,6 @@ namespace Dash.Editor
             //     });
             // }
 
-            EditorGUI.BeginChangeCheck();
             GUILayout.BeginVertical();
 
             if (PrefabUtility.IsPartOfAnyPrefab(target))
@@ -176,71 +175,66 @@ namespace Dash.Editor
                     EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
             }
             
+            Controller.advancedInspector = EditorGUILayout.Toggle(new GUIContent("Show Advanced Inspector", ""), Controller.advancedInspector);
+            // Controller.showGraphVariables = EditorGUILayout.Toggle(new GUIContent("Show Graph Variables", ""), Controller.showGraphVariables);
+            
             GUILayout.EndVertical();
 
             if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
             {
+                // Obsolete will be removed
                 if (Controller.HasBoundGraph)
                 {
-                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller);
+                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller, ref Controller.variablesSectionMinimzed);
+                    GUILayout.Space(2);
                 }
                 else
                 {
-                    Controller.showGraphVariables =
-                        EditorGUILayout.Toggle("Show Graph Variables", Controller.showGraphVariables);
-
-                    if (Controller.showGraphVariables)
-                    {
-                        GUIStyle style = new GUIStyle();
-                        style.fontStyle = FontStyle.Italic;
-                        style.normal.textColor = Color.yellow;
-                        style.alignment = TextAnchor.MiddleCenter;
-                        EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
-                        GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller);
-                    }
+                    // if (Controller.showGraphVariables)
+                    // {
+                    //     GUIStyle style = new GUIStyle();
+                    //     style.fontStyle = FontStyle.Italic;
+                    //     style.normal.textColor = Color.yellow;
+                    //     style.alignment = TextAnchor.MiddleCenter;
+                    //     EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
+                    //     if (GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables,
+                    //             Controller, ref Controller.variablesSectionMinimzed))
+                    //     {
+                    //         EditorUtility.SetDirty(Controller.Graph);
+                    //     }
+                    //     GUILayout.Space(2);
+                    // }
                 }
             }
-            
-            Controller.advancedInspector = EditorGUILayout.Toggle(new GUIContent("Show Advanced Inspector", ""), Controller.advancedInspector);
 
             if (Controller.advancedInspector)
             {
                 DrawExposedPropertiesInspector();
+                GUILayout.Space(2);
             }
             
             if (Controller.advancedInspector && Controller.Graph != null)
             {
-                GUILayout.Space(16);
                 DrawGraphStructureInspector();
+                GUILayout.Space(2);
             }
 
-            if (EditorGUI.EndChangeCheck())
-            {
-                EditorUtility.SetDirty(target);
-            }
-            
             serializedObject.ApplyModifiedProperties();
         }
 
         void DrawExposedPropertiesInspector()
         {
-            var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
-            style.alignment = TextAnchor.MiddleCenter;
-            style.fontStyle = FontStyle.Bold;
-            style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 16;
-            GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Exposed Properties Table", style, GUILayout.Height(28));
-            GUI.backgroundColor = Color.white;
-            
+            if (!GUIEditorUtils.DrawMinimizableSectionTitle("Exposed Properties Table",
+                    ref Controller.exposedPropertiesSectionMinimized))
+                return;
+
             for (int i = 0; i < Controller.propertyNames.Count; i++)
             {
                 string name = Controller.propertyNames[i].ToString();
                 EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object), true);
             }
             
-            if (GUILayout.Button("Clean Table", GUILayout.Height(40)))
+            if (GUILayout.Button("Clean Unused Items", GUILayout.Height(40)))
             {
                 if (Controller.Graph != null)
                 {
@@ -251,29 +245,26 @@ namespace Dash.Editor
         
         void DrawGraphStructureInspector()
         {
-            var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
-            style.alignment = TextAnchor.MiddleCenter;
-            style.fontStyle = FontStyle.Bold;
-            style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 16;
-            GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Nodes List", style, GUILayout.Height(28));
-            GUI.backgroundColor = Color.white;
-            
-            for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
+            if (GUIEditorUtils.DrawMinimizableSectionTitle("Nodes",
+                    ref Controller.nodesSectionMinimized))
             {
-                GUILayout.Label(Controller.Graph.Nodes[i].Id + " : " + Controller.Graph.Nodes[i].Name);
+                for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
+                {
+                    GUILayout.Label(Controller.Graph.Nodes[i].Id + " : " + Controller.Graph.Nodes[i].Name);
+                }
             }
             
-            GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Connection List", style, GUILayout.Height(28));
-            
-            for (int i = 0; i < Controller.Graph.Connections.Count; i++)
+            GUILayout.Space(2);
+
+            if (GUIEditorUtils.DrawMinimizableSectionTitle("Connections",
+                    ref Controller.connectionsSectionMinimized))
             {
-                var c = Controller.Graph.Connections[i];
-                GUILayout.Label(
-                    c.inputNode.Id + "[" + c.inputIndex + "] : "+c.outputNode.Id + "[" + c.outputIndex + "]");
+                for (int i = 0; i < Controller.Graph.Connections.Count; i++)
+                {
+                    var c = Controller.Graph.Connections[i];
+                    GUILayout.Label(
+                        c.inputNode.Id + "[" + c.inputIndex + "] : " + c.outputNode.Id + "[" + c.outputIndex + "]");
+                }
             }
         }
         
