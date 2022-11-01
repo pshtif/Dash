@@ -59,7 +59,7 @@ namespace Dash
                         }
                     
                         target = value as Transform;
-
+                        
                         if (target == null && value.GetType() == typeof(GameObject))
                         {
                             target = (value as GameObject).transform;

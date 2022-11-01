@@ -35,11 +35,11 @@ namespace Dash
             typeof(Canvas),
         };
 
-        static private Type[] SupportedExposedTypes =
-        {
-            typeof(ExposedReference<RectTransform>),
-            typeof(ExposedReference<Transform>)
-        };
+        // static private Type[] SupportedExposedTypes =
+        // {
+        //     typeof(ExposedReference<RectTransform>),
+        //     typeof(ExposedReference<Transform>)
+        // };
             
         #if UNITY_EDITOR
         public static void Show(Action<Type> p_callback)
@@ -56,10 +56,10 @@ namespace Dash
                 menu.AddItem(new GUIContent("Unity/" + Variable.ConvertToTypeName(type)), false, () => p_callback(type));
             }
             
-            foreach (Type type in SupportedExposedTypes)
-            {
-                menu.AddItem(new GUIContent("Exposed/" + Variable.ConvertToTypeName(type)), false, () => p_callback(type));
-            }
+            // foreach (Type type in SupportedExposedTypes)
+            // {
+            //     menu.AddItem(new GUIContent("Exposed/" + Variable.ConvertToTypeName(type)), false, () => p_callback(type));
+            // }
 
             menu.ShowAsContext();
         }

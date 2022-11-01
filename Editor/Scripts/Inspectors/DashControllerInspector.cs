@@ -176,36 +176,36 @@ namespace Dash.Editor
             }
             
             Controller.advancedInspector = EditorGUILayout.Toggle(new GUIContent("Show Advanced Inspector", ""), Controller.advancedInspector);
-            // Controller.showGraphVariables = EditorGUILayout.Toggle(new GUIContent("Show Graph Variables", ""), Controller.showGraphVariables);
+            //Controller.showGraphVariables = EditorGUILayout.Toggle(new GUIContent("Show Graph Variables", ""), Controller.showGraphVariables);
             
             GUILayout.EndVertical();
 
-            if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
-            {
-                // Obsolete will be removed
-                if (Controller.HasBoundGraph)
-                {
-                    GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller, ref Controller.variablesSectionMinimzed);
-                    GUILayout.Space(2);
-                }
-                else
-                {
-                    // if (Controller.showGraphVariables)
-                    // {
-                    //     GUIStyle style = new GUIStyle();
-                    //     style.fontStyle = FontStyle.Italic;
-                    //     style.normal.textColor = Color.yellow;
-                    //     style.alignment = TextAnchor.MiddleCenter;
-                    //     EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
-                    //     if (GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables,
-                    //             Controller, ref Controller.variablesSectionMinimzed))
-                    //     {
-                    //         EditorUtility.SetDirty(Controller.Graph);
-                    //     }
-                    //     GUILayout.Space(2);
-                    // }
-                }
-            }
+            // if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
+            // {
+            //     // Obsolete will be removed
+            //     if (Controller.HasBoundGraph)
+            //     {
+            //         GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller, ref Controller.variablesSectionMinimzed);
+            //         GUILayout.Space(2);
+            //     }
+            //     else
+            //     {
+            //         if (Controller.showGraphVariables)
+            //         {
+            //             GUIStyle style = new GUIStyle();
+            //             style.fontStyle = FontStyle.Italic;
+            //             style.normal.textColor = Color.yellow;
+            //             style.alignment = TextAnchor.MiddleCenter;
+            //             EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
+            //             if (GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables,
+            //                     Controller, ref Controller.variablesSectionMinimzed))
+            //             {
+            //                 EditorUtility.SetDirty(Controller.Graph);
+            //             }
+            //             GUILayout.Space(2);
+            //         }
+            //     }
+            // }
 
             if (Controller.advancedInspector)
             {

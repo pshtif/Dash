@@ -16,7 +16,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable, IExposedPropertyTable
     {
 
         public DashCore Core => DashCore.Instance;

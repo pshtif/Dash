@@ -244,7 +244,11 @@ namespace Dash
             var exposedReference = p_fieldInfo.GetValue(p_object);
 
             PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
-            bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+            if (PropertyName.IsNullOrEmpty(exposedName))
+            {
+                exposedName = new PropertyName(GUID.Generate().ToString());
+                exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, exposedName);
+            }
             
             GUILayout.BeginHorizontal();
             GUILayout.Label(p_name, GUILayout.Width(160));
@@ -254,7 +258,7 @@ namespace Dash
             UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
                 .Invoke(exposedReference, new object[] {propertyTable});
             var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
-            
+
             GUILayout.EndHorizontal();
 
             if (EditorGUI.EndChangeCheck())
@@ -263,30 +267,17 @@ namespace Dash
                 {
                     Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
                 }
-
-                if (!isDefault)
+                
+                if (newValue == null)
                 {
-                    if (newValue == null)
-                    {
-                        propertyTable.ClearReferenceValue(exposedName);   
-                        exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
-                        p_fieldInfo.SetValue(p_object, exposedReference);
-                    }
-                    else
-                    {
-                        propertyTable.SetReferenceValue(exposedName, newValue);
-                    }
+                    propertyTable.ClearReferenceValue(exposedName);   
+                    //exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
+                    p_fieldInfo.SetValue(p_object, exposedReference);
                 }
                 else
                 {
-                    if (newValue != null)
-                    {
-                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
-                        exposedReference.GetType().GetField("exposedName")
-                            .SetValue(exposedReference, newExposedName);
-                        propertyTable.SetReferenceValue(newExposedName, newValue);
-                        p_fieldInfo.SetValue(p_object, exposedReference);
-                    }
+                    propertyTable.SetReferenceValue(exposedName, newValue);
+                    p_fieldInfo.SetValue(p_object, exposedReference);
                 }
 
                 return true;

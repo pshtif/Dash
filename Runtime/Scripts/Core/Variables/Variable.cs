@@ -294,22 +294,22 @@ namespace Dash
                 {
                     invalidate = EnumProperty(valueField);
                 } 
-                else if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(ExposedReference<>))
-                {
-                    if (p_bindable != null)
-                    {
-                        invalidate = ExposedProperty(valueField, p_bindable);
-                    }
-                    else
-                    {
-                        GUILayout.Label("NOT ASSIGNALBE ON ASSET");
-                    }
-                }
+                // else if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                // {
+                //     if (p_bindable != null)
+                //     {
+                //         invalidate = ExposedProperty(valueField, p_bindable);
+                //     }
+                //     else
+                //     {
+                //         GUILayout.Label("NOT ASSIGNALBE ON ASSET");
+                //     }
+                // }
                 else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
                     EditorGUI.BeginChangeCheck();
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
-                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_bindable != null, GUILayout.Width(p_maxWidth));
                     if (EditorGUI.EndChangeCheck())
                     {
                         invalidate = true;
@@ -442,57 +442,57 @@ namespace Dash
             return false;
         }
         
-        bool ExposedProperty(FieldInfo p_fieldInfo, IVariableBindable p_bindable)
-        {
-            IExposedPropertyTable propertyTable = p_bindable;
-            var exposedReference = p_fieldInfo.GetValue(this);
-            
-            PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
-            bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
-            
-            EditorGUI.BeginChangeCheck();
-            
-            UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
-                .Invoke(exposedReference, new object[] {propertyTable});
-            var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (propertyTable != null)
-                {
-                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
-                }
-
-                if (!isDefault)
-                {
-                    if (newValue == null)
-                    {
-                        propertyTable.ClearReferenceValue(exposedName);   
-                        exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
-                        p_fieldInfo.SetValue(this, exposedReference);
-                    }
-                    else
-                    {
-                        propertyTable.SetReferenceValue(exposedName, newValue);
-                    }
-                }
-                else
-                {
-                    if (newValue != null)
-                    {
-                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
-                        exposedReference.GetType().GetField("exposedName")
-                            .SetValue(exposedReference, newExposedName);
-                        propertyTable.SetReferenceValue(newExposedName, newValue);
-                        p_fieldInfo.SetValue(this, exposedReference);
-                    }
-                }
-
-                return true;
-            }
-
-            return false;
-        }
+        // bool ExposedProperty(FieldInfo p_fieldInfo, IVariableBindable p_bindable)
+        // {
+        //     IExposedPropertyTable propertyTable = p_bindable;
+        //     var exposedReference = p_fieldInfo.GetValue(this);
+        //     
+        //     PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
+        //     bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+        //     
+        //     EditorGUI.BeginChangeCheck();
+        //     
+        //     UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
+        //         .Invoke(exposedReference, new object[] {propertyTable});
+        //     var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
+        //
+        //     if (EditorGUI.EndChangeCheck())
+        //     {
+        //         if (propertyTable != null)
+        //         {
+        //             Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
+        //         }
+        //
+        //         if (!isDefault)
+        //         {
+        //             if (newValue == null)
+        //             {
+        //                 propertyTable.ClearReferenceValue(exposedName);   
+        //                 exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
+        //                 p_fieldInfo.SetValue(this, exposedReference);
+        //             }
+        //             else
+        //             {
+        //                 propertyTable.SetReferenceValue(exposedName, newValue);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if (newValue != null)
+        //             {
+        //                 PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+        //                 exposedReference.GetType().GetField("exposedName")
+        //                     .SetValue(exposedReference, newExposedName);
+        //                 propertyTable.SetReferenceValue(newExposedName, newValue);
+        //                 p_fieldInfo.SetValue(this, exposedReference);
+        //             }
+        //         }
+        //
+        //         return true;
+        //     }
+        //
+        //     return false;
+        // }
 #endif
     }
 }
