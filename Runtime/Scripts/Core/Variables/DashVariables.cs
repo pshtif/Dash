@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using OdinSerializer;
 using UnityEngine;
 
 namespace Dash
@@ -20,7 +19,7 @@ namespace Dash
         public int Count => variables.Count;
 
         [NonSerialized]
-        protected Dictionary<string, Variable> _lookupDictionary;
+        protected Dictionary<string, Variable> _lookupCache;
 
         [SerializeField]
         protected List<Variable> _variables;
@@ -46,15 +45,15 @@ namespace Dash
 
         public void ClearVariables()
         {
-            _lookupDictionary = new Dictionary<string, Variable>();
+            _lookupCache = new Dictionary<string, Variable>();
             _variables = new List<Variable>();
         }
 
         public bool HasVariable(string p_name)
         {
-            if (_lookupDictionary == null) InvalidateLookup();
+            if (_lookupCache == null) InvalidateLookup();
             
-            return _lookupDictionary.ContainsKey(p_name);
+            return _lookupCache.ContainsKey(p_name);
         }
 
         public Variable GetVariable(string p_name)
@@ -62,7 +61,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return _lookupDictionary[p_name];
+            return _lookupCache[p_name];
         }
 
         public Variable<T> GetVariable<T>(string p_name)
@@ -70,7 +69,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return (Variable<T>) _lookupDictionary[p_name];
+            return (Variable<T>) _lookupCache[p_name];
         }
 
         public Variable<T>[] GetAllVariablesOfType<T>()
@@ -135,7 +134,7 @@ namespace Dash
         {
             if (HasVariable(p_name))
             {
-                ((Variable<T>)_lookupDictionary[p_name]).value = p_value;
+                ((Variable<T>)_lookupCache[p_name]).value = p_value;
             }
             else
             {
@@ -172,10 +171,10 @@ namespace Dash
 
         private void InvalidateLookup()
         { 
-            _lookupDictionary = new Dictionary<string, Variable>();
+            _lookupCache = new Dictionary<string, Variable>();
             foreach (Variable variable in variables)
             {
-                _lookupDictionary.Add(variable.Name, variable);
+                _lookupCache.Add(variable.Name, variable);
             }
         }
 
@@ -191,7 +190,7 @@ namespace Dash
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)_lookupDictionary.Values).GetEnumerator();
+            return ((IEnumerable)_lookupCache.Values).GetEnumerator();
         }
 
         private string GetUniqueName(string p_name)
