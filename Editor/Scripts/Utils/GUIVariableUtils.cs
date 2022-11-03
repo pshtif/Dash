@@ -14,6 +14,13 @@ namespace Dash.Editor
                     ref p_minimized))
                 return false;
 
+            return DrawVariablesInspector("", p_variables, p_bindable);
+        }
+        
+        public static bool DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable)
+        {
+            if (p_title != "") GUIEditorUtils.DrawSectionTitle(p_title);
+
             int index = 0;
             bool invalidate = false;
             p_variables.variables?.ForEach(variable =>
