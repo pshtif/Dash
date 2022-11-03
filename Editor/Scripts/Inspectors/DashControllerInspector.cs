@@ -137,6 +137,8 @@ namespace Dash.Editor
                     }
                 }
             }
+            
+            EditorGUI.BeginChangeCheck();
 
             Controller.useCustomTarget = EditorGUILayout.Toggle(
                 new GUIContent("Use Custom Target", "Customize target which is this gameobject transform by default."),
@@ -219,7 +221,10 @@ namespace Dash.Editor
                 GUILayout.Space(2);
             }
 
-            serializedObject.ApplyModifiedProperties();
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);
+            }
         }
 
         void DrawExposedPropertiesInspector()
