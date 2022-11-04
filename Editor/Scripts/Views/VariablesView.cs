@@ -32,7 +32,9 @@ namespace Dash.Editor
             minStyle.normal.textColor = Color.white;
             minStyle.fontStyle = FontStyle.Bold;
             minStyle.fontSize = 20;
-            GUI.Label(new Rect(rect.x + rect.width - 20 + (p_minimized ? 0 : 2), rect.y + 2, 20, 20), p_minimized ? "+" : "-", minStyle);
+            GUI.color = new Color(.6f, .4f, 0f);
+            GUI.Label(new Rect(rect.x + 6 + (p_minimized ? 0 : 2), rect.y + 2, 20, 20), p_minimized ? "+" : "-", minStyle);
+            GUI.color = Color.white;
             
             if (GUI.Button(new Rect(p_position.x, p_position.y, 380, 20), "", GUIStyle.none))
             {
@@ -50,8 +52,8 @@ namespace Dash.Editor
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
-            
-            GUI.color = new Color(1, 0.75f, 0.5f);
+
+            GUI.color = new Color(1, 0.7f, 0);//new Color(1, 0.75f, 0.5f);
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 30, rect.width - 8, 24), "Add Variable"))
             {
                 VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));

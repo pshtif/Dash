@@ -123,7 +123,7 @@ namespace Dash
                 if (lastGroupMinimized)
                     continue;
 
-                GUILayout.Space(2);
+                GUILayout.Space(3);
                 invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, this);
             }
 
@@ -143,15 +143,18 @@ namespace Dash
                 bool isMinimized = (groupsMinized & groupMask) != 0;
                 
                 GUIPropertiesUtils.Separator(20, 2, 2, new Color(0.1f, 0.1f, 0.1f));
-                GUILayout.Label(p_title, DashEditorCore.Skin.GetStyle("PropertyGroup"));
+                GUILayout.Label("   "+p_title, DashEditorCore.Skin.GetStyle("PropertyGroup"));
                 Rect lastRect = GUILayoutUtility.GetLastRect();
 
                 if (GUI.Button(new Rect(lastRect.x, lastRect.y - 25, lastRect.width, 20), "", p_style))
                 {
                     groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
                 }
-                    
-                GUI.Label(new Rect(lastRect.x + 356 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
+
+                GUI.color = new Color(.6f, .4f, 0f);
+                GUI.Label(new Rect(lastRect.x + 5 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
+                GUI.color = Color.white;
+                    //GUI.Label(new Rect(lastRect.x + 356 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
             
                 p_lastGroup = p_title;
             }
