@@ -22,16 +22,19 @@ namespace Dash.Editor
             
         }
         
-        protected void DrawVariablesGUI(Vector2 p_position, bool p_global, Color p_color, DashVariables p_variables, ref bool p_minimized, IVariableBindable p_bindable) 
+        protected void DrawVariablesGUI(Vector2 p_position, Color p_color, DashVariables p_variables, ref bool p_minimized, IVariableBindable p_bindable)
         {
-            Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : 200);
-            DrawBoxGUI(rect, p_global ? "Global Variables" : "Graph Variables", TextAnchor.UpperCenter, p_color);
+            int height = p_variables.Count <= 10 ? 64 + p_variables.Count * 22 : 64 + 220; 
+            Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : height);
+            DrawBoxGUI(rect, "Graph Variables", TextAnchor.UpperCenter, p_color);
 
             var minStyle = new GUIStyle();
             minStyle.normal.textColor = Color.white;
             minStyle.fontStyle = FontStyle.Bold;
             minStyle.fontSize = 20;
-            if (GUI.Button(new Rect(rect.x + rect.width - 20 + (p_minimized ? 0 : 2), rect.y + 2, 20, 20), p_minimized ? "+" : "-", minStyle))
+            GUI.Label(new Rect(rect.x + rect.width - 20 + (p_minimized ? 0 : 2), rect.y + 2, 20, 20), p_minimized ? "+" : "-", minStyle);
+            
+            if (GUI.Button(new Rect(p_position.x, p_position.y, 380, 20), "", GUIStyle.none))
             {
                 p_minimized = !p_minimized;
                 GUI.FocusControl("");
@@ -40,55 +43,57 @@ namespace Dash.Editor
             if (p_minimized)
                 return;
 
-            if (p_global && PrefabUtility.GetPrefabInstanceStatus(p_bindable.gameObject) != PrefabInstanceStatus.NotAPrefab)
-            {
-                var style = new GUIStyle();
-                style.alignment = TextAnchor.MiddleCenter;
-                style.normal.textColor = Color.white;
-                style.fontSize = 20;
-                style.wordWrap = true;
-                EditorGUI.TextArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-30),"Global variables on prefab instances are not supported!", style);
-                return;
-            }
-
-            GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-79));
+            GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-64));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
-
-            EditorGUI.BeginChangeCheck();
-
-            if (p_variables != null)
-            {
-                int index = 0;
-                foreach (var variable in p_variables)
-                {
-                    GUIVariableUtils.VariableField(p_variables, variable.Name, p_bindable, rect.width - 10);
-                    EditorGUILayout.Space(4);
-                    index++;
-                }
-            }
+            
+            GUIVariableUtils.DrawVariablesInspector("", p_variables, p_bindable, rect.width-20);
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
-
-            if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 48, rect.width - 8, 20), "Add Variable"))
+            
+            GUI.color = new Color(1, 0.75f, 0.5f);
+            if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 30, rect.width - 8, 24), "Add Variable"))
             {
                 VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));
             }
+            GUI.color = Color.white;
             
-            if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width/2-6, 20), "Copy Variables"))
-            {
-                VariableUtils.CopyVariables(p_variables);
-            }
-            
-            if (GUI.Button(new Rect(rect.x + rect.width/2 + 2, rect.y + rect.height - 24, rect.width/2-6, 20), "Paste Variables"))
-            {
-                VariableUtils.PasteVariables(p_variables, p_bindable);
-            }
-            
-            if (EditorGUI.EndChangeCheck())
-            {
-                DashEditorCore.SetDirty();
-            }
+            //
+            // EditorGUI.BeginChangeCheck();
+            //
+            // if (p_variables != null)
+            // {
+            //     int index = 0;
+            //     foreach (var variable in p_variables)
+            //     {
+            //         GUIVariableUtils.VariableField(p_variables, variable.Name, p_bindable, rect.width - 10);
+            //         EditorGUILayout.Space(4);
+            //         index++;
+            //     }
+            // }
+            //
+            // GUILayout.EndScrollView();
+            // GUILayout.EndArea();
+            //
+            // if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 48, rect.width - 8, 20), "Add Variable"))
+            // {
+            //     VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));
+            // }
+            //
+            // // if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 24, rect.width/2-6, 20), "Copy Variables"))
+            // // {
+            // //     VariableUtils.CopyVariables(p_variables);
+            // // }
+            // //
+            // // if (GUI.Button(new Rect(rect.x + rect.width/2 + 2, rect.y + rect.height - 24, rect.width/2-6, 20), "Paste Variables"))
+            // // {
+            // //     VariableUtils.PasteVariables(p_variables, p_bindable);
+            // // }
+            //
+            // if (EditorGUI.EndChangeCheck())
+            // {
+            //     DashEditorCore.SetDirty();
+            // }
 
             UseEvent(new Rect(rect.x, rect.y, rect.width, rect.height));
         }
