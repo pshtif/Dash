@@ -6,13 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Release 0.13.4
 
+#### Added
+
+- added support and serialization for prefab modifications on DashVariablesController
+
 #### Changed
 
 - changed DashController initialization now initializes on demand when using Send/Add methods not just on Awake
 - changed DashControllerVariables direct reference type variables now support scene referencing
 - changed removed support for ExposedReference variables [BREAKING]
 - changed ExposedReferences in node properties now cache initial exposedName
-- changed minor UI changes for variables
+- changed UI cleanup and changes for variables and inspector
 - changed custom expression fields now reset their previous value when switching from direct to expression or back
 
 #### Fixed
