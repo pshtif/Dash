@@ -17,6 +17,7 @@ namespace Dash
         
         [HideInInspector]
         [SerializeField] 
+        [OdinSerialize]
         protected DashVariables _variables;
 
         public DashVariables Variables
@@ -78,24 +79,61 @@ namespace Dash
         private SerializationData _serializationData;
         
         SerializationData ISupportsPrefabSerialization.SerializationData { get { return this._serializationData; } set { this._serializationData = value; } }
+
+        [SerializeField]
+        private SerializedValue[] _serializedVariables;
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            //Debug.Log("OnAfterDeserialize");
+            // Debug.Log("OnAfterDeserialize: "+_serializedVariables);
             using (var cachedContext = Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
+            
+            if (_serializedVariables != null)
+            {
+                Variables.ClearVariables();
+                for (int i = 0; i < _serializedVariables.Length; i++)
+                {
+                    Variable variable = SerializationUtility.DeserializeValue<Variable>(_serializedVariables[i].bytes,
+                        DataFormat.Binary, _serializedVariables[i].references);
+                    if (variable != null)
+                    {
+                        (Variables as IInternalVariablesAccess).AddVariable(variable);
+                    }
+            
+                    // Debug.Log(variable+" : "+variable.Name+" , "+variable.value);
+                }
+                (Variables as IInternalVariablesAccess).InvalidateLookup();
+            }
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            //Debug.Log("OnBeforeSerialize");
+            // Debug.Log("OnBeforeSerialize");
+            
             using (var cachedContext = Cache<SerializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
+                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, context: cachedContext.Value);
+            }
+
+            if (_variables == null)
+                return;
+            
+            _serializedVariables = new SerializedValue[_variables.Count];
+            int index = 0;
+            foreach (var variable in _variables)
+            {
+                SerializedValue serializedValue = new SerializedValue();
+                serializedValue.bytes = SerializationUtility.SerializeValue(variable, DataFormat.Binary, out serializedValue.references);
+                
+                //Variable vars = SerializationUtility.DeserializeValue<Variable>(serializedValue.bytes, DataFormat.JSON, serializedValue.references);
+                // Debug.Log(variable+" : "+vars.Name+" , "+vars.value);
+                // Debug.Log(System.Text.Encoding.UTF8.GetString(serializedValue.bytes));
+                _serializedVariables[index++] = serializedValue;
             }
         }
         

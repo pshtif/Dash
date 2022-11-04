@@ -90,6 +90,7 @@ namespace Dash
     [Serializable]
     public class Variable<T> : Variable
     {
+        [SerializeField]
         protected T _value;
 
         [NonSerialized]
