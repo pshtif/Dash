@@ -2,15 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Dash.Extensions;
-using UnityEditor;
-using UnityEditor.Graphs;
-using UnityEditor.UIElements;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Dash.Editor
 {
