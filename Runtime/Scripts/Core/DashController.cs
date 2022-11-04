@@ -290,8 +290,8 @@ namespace Dash
         }
 
 #if UNITY_EDITOR
-        public bool advancedInspector = false;
-        public bool variablesSectionMinimzed = false;
+        public bool advancedSectionMinimized = false;
+        public bool settingsSectionMinimized = false;
         public bool exposedPropertiesSectionMinimized = false;
         public bool nodesSectionMinimized = false;
         public bool connectionsSectionMinimized = false;

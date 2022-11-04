@@ -353,10 +353,13 @@ namespace Dash
 
                 
                 GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
+                GUILayout.BeginVertical(GUILayout.Width(16));
+                GUILayout.Space(2);
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
                     ParameterMenu.Show(param);
                 }
+                GUILayout.EndVertical();
                 GUI.color = Color.white;
                 
                 EditorGUILayout.EndHorizontal();
@@ -422,6 +425,8 @@ namespace Dash
                 PropertyField(p_fieldInfo, p_object, p_reference, p_fieldInfo);
             }
 
+            GUILayout.BeginVertical(GUILayout.Width(16));
+            GUILayout.Space(2);
             bool useExpression = (bool)useExpressionField.GetValue(p_object);
             GUI.color = useExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
@@ -429,6 +434,7 @@ namespace Dash
                 ParameterMenu.Show(useExpressionField, expressionField, p_fieldInfo, p_object, p_fieldInfo.GetReturnType());
             }
             GUI.color = Color.white;
+            GUILayout.EndVertical();
             
             EditorGUILayout.EndHorizontal();
             

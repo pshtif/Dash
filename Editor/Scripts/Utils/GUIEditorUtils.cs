@@ -38,14 +38,15 @@ namespace Dash.Editor
             GUI.backgroundColor = Color.white;
         }
         
-        public static bool DrawMinimizableSectionTitle(string p_title, ref bool p_minimized)
+        public static bool DrawMinimizableSectionTitle(string p_title, ref bool p_minimized, int? p_size = null, Color? p_color = null, TextAnchor? p_alignment = null)
         {
+            
             var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
-            style.alignment = TextAnchor.MiddleCenter;
+            style.normal.textColor = p_color.HasValue ? p_color.Value : new Color(1, 0.7f, 0);
+            style.alignment = p_alignment.HasValue ? p_alignment.Value : TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 14;
+            style.fontSize = p_size.HasValue ? p_size.Value : 14;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
             GUILayout.Label(p_title, style, GUILayout.Height(26));
             GUI.backgroundColor = Color.white;
@@ -53,10 +54,11 @@ namespace Dash.Editor
             var rect = GUILayoutUtility.GetLastRect();
 
             style = new GUIStyle();
-            style.fontSize = 20;
-            style.normal.textColor = Color.white;
-            
-            GUI.Label(new Rect(rect.x+rect.width- (p_minimized ? 24 : 21), rect.y, 24, 24), p_minimized ? "+" : "-", style);
+            style.fontSize = p_size.HasValue ? p_size.Value + 6 : 20;
+            style.normal.textColor = p_color.HasValue ? p_color.Value*2/3 : new Color(.6f, 0.4f, 0);
+            //style.normal.textColor = Color.white;
+
+            GUI.Label(new Rect(rect.x + 6 + (p_minimized ? 0 : 2), rect.y + (p_size.HasValue ? 14 - p_size.Value : 0), 24, 24), p_minimized ? "+" : "-", style);
             
             if (GUI.Button(new Rect(rect.x, rect.y, rect.width, rect.height), "", GUIStyle.none))
             {

@@ -90,10 +90,12 @@ namespace Dash.Editor
                 GUILayout.EndScrollView();
                 GUILayout.EndArea();
                 var lastHeight = lastRect.y + lastRect.height;
+                lastHeight = lastHeight > 380 ? 380 : lastHeight;
 
                 if (lastHeight != _lastHeight)
                 {
-                    _lastHeight = lastHeight > 380 ? 380 : lastHeight;
+                    _lastHeight = lastHeight;
+                    // Hack for faster repaint correction
                     DashEditorWindow.Instance.Repaint();
                 }
             }
