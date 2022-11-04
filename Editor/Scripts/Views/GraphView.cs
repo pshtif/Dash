@@ -107,27 +107,18 @@ namespace Dash.Editor
         {
             if (Graph == null)
                 return;
-            
-            GUI.color = Color.white;
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.white;
-            style.fontSize = 24;
-            style.fontStyle = FontStyle.Bold;
-            GUI.color = new Color(1, 1, 1, 0.25f);
-            if (Controller != null && Controller.HasBoundGraph)
-            {
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Bound", style);
-            }
-            else
-            {
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), "Asset", style);
-            }
 
             if (Controller != null)
             {
-                style.normal.textColor = Color.yellow;
+                GUIStyle style = new GUIStyle();
+                style.normal.textColor = new Color(.5f, .5f, .5f);
+                style.fontSize = 16;
+                style.fontStyle = FontStyle.Bold;
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), "Controller", style);
+                
+                style.normal.textColor =  new Color(1, 0.7f, 0);
                 style.fontSize = 18;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), Controller.name, style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), Controller.name, style);
             }
             
             if (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath))
