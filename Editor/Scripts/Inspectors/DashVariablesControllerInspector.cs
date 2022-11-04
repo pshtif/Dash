@@ -19,8 +19,8 @@ namespace Dash
             
 
             invalidate = invalidate || GUIVariableUtils.DrawVariablesInspector("Variables", variablesController.Variables, variablesController, EditorGUIUtility.currentViewWidth-20);
-            
-            GUI.color = new Color(1, 0.75f, 0.5f);
+
+            GUI.color = new Color(1, 0.7f, 0);
             if (GUILayout.Button("Add Variable", GUILayout.Height(24)))
             {
                 VariableTypesMenu.Show((type) => variablesController.Variables.AddNewVariable(type));
