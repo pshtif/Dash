@@ -277,9 +277,9 @@ namespace Dash.Editor
             {
                 GUI.FocusControl("");
             }
-
+            
             // Select
-            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null && !p_event.control)
+            if (p_event.type == EventType.MouseDown && !p_event.alt && Graph != null)
             {
                 DashEditorWindow.SetDirty(true);
                 
@@ -327,7 +327,7 @@ namespace Dash.Editor
                     }
                 }
             }
-
+            
             // Dragging
             if (p_event.type == EventType.MouseDrag)
             {
@@ -338,6 +338,7 @@ namespace Dash.Editor
                         SelectionManager.DragSelectedNodes(delta, Graph);
                         break;
                     case DraggingType.BOX_DRAG:
+                        DashEditorCore.selectedBox.moveNodes = !p_event.control;
                         DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
                         break;
                     case DraggingType.BOX_RESIZE:
