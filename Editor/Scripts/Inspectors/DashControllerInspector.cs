@@ -121,11 +121,6 @@ namespace Dash.Editor
             // }
 
             DrawAdvancedInspector();
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                EditorUtility.SetDirty(target);
-            }
         }
 
         void DrawAssetGraphInspector()
@@ -185,6 +180,11 @@ namespace Dash.Editor
             {
                 Controller.autoOnEnableInput =
                     EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
+            }
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);
             }
         }
 
