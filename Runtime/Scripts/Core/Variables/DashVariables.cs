@@ -15,12 +15,12 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class DashVariables : IEnumerable<Variable>, IVariables
+    public class DashVariables : IEnumerable<Variable>, IVariables, IInternalVariablesAccess
     {
         public int Count => variables.Count;
 
         [NonSerialized]
-        protected Dictionary<string, Variable> _lookupDictionary;
+        protected Dictionary<string, Variable> _lookupCache;
 
         [SerializeField]
         protected List<Variable> _variables;
@@ -46,15 +46,15 @@ namespace Dash
 
         public void ClearVariables()
         {
-            _lookupDictionary = new Dictionary<string, Variable>();
+            _lookupCache = new Dictionary<string, Variable>();
             _variables = new List<Variable>();
         }
 
         public bool HasVariable(string p_name)
         {
-            if (_lookupDictionary == null) InvalidateLookup();
+            if (_lookupCache == null) (this as IInternalVariablesAccess).InvalidateLookup();
             
-            return _lookupDictionary.ContainsKey(p_name);
+            return _lookupCache.ContainsKey(p_name);
         }
 
         public Variable GetVariable(string p_name)
@@ -62,7 +62,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return _lookupDictionary[p_name];
+            return _lookupCache[p_name];
         }
 
         public Variable<T> GetVariable<T>(string p_name)
@@ -70,7 +70,7 @@ namespace Dash
             if (!HasVariable(p_name))
                 return null;
             
-            return (Variable<T>) _lookupDictionary[p_name];
+            return (Variable<T>) _lookupCache[p_name];
         }
 
         public Variable<T>[] GetAllVariablesOfType<T>()
@@ -112,7 +112,7 @@ namespace Dash
             }
 
             variables.Add(p_variable);
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
             return p_variable;
         }
 
@@ -126,22 +126,27 @@ namespace Dash
 
             Variable<T> variable = new Variable<T>(p_name, p_value);
             variables.Add(variable);
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
 
             return variable;
+        }
+
+        void IInternalVariablesAccess.AddVariable(Variable p_variable)
+        {
+            _variables.Add(p_variable);
         }
 
         public void SetVariable<T>(string p_name, [CanBeNull] T p_value)
         {
             if (HasVariable(p_name))
             {
-                ((Variable<T>)_lookupDictionary[p_name]).value = p_value;
+                ((Variable<T>)_lookupCache[p_name]).value = p_value;
             }
             else
             {
                 Variable<T> variable = new Variable<T>(p_name, p_value);
                 variables.Add(variable);
-                InvalidateLookup();
+                (this as IInternalVariablesAccess).InvalidateLookup();
             }
         }
 
@@ -153,7 +158,7 @@ namespace Dash
             {
                 p_variable.InitializeBinding(p_bindable);
             }
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
         }
 
         public void RemoveVariable(string p_name)
@@ -165,17 +170,17 @@ namespace Dash
         {
             var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
 
             return variable;
         }
 
-        private void InvalidateLookup()
+        void IInternalVariablesAccess.InvalidateLookup()
         { 
-            _lookupDictionary = new Dictionary<string, Variable>();
+            _lookupCache = new Dictionary<string, Variable>();
             foreach (Variable variable in variables)
             {
-                _lookupDictionary.Add(variable.Name, variable);
+                _lookupCache.Add(variable.Name, variable);
             }
         }
 
@@ -191,7 +196,7 @@ namespace Dash
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)_lookupDictionary.Values).GetEnumerator();
+            return ((IEnumerable)_lookupCache.Values).GetEnumerator();
         }
 
         private string GetUniqueName(string p_name)
@@ -209,6 +214,19 @@ namespace Dash
         public Variable AddNewVariable(Type p_type)
         {
             return AddVariableByType((Type)p_type, GetUniqueName("variable"), p_type.GetDefaultValue());
+        }
+
+        public List<string> GetExposedGUIDs()
+        {
+            List<string> exposedGUIDs = new List<string>();
+            
+            exposedGUIDs = _variables.FindAll(v => v.GetVariableType().IsGenericType &&
+                                    v.GetVariableType().GetGenericTypeDefinition() == typeof(ExposedReference<>)).Select(
+                                            (v, i) => v.value.GetType().GetField("exposedName")
+                                                .GetValue(v.value).ToString())
+                                        .ToList();
+
+            return exposedGUIDs;
         }
 #endif
     }

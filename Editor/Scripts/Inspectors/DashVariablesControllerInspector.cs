@@ -11,32 +11,26 @@ namespace Dash
 
         public override void OnInspectorGUI()
         {
-            if (DashEditorCore.EditorConfig.settingsShowInspectorLogo)
-            {
-                GUILayout.BeginHorizontal();
-                GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true),
-                    GUILayout.Height(40));
-                GUILayout.EndHorizontal();
-            }
-
             EditorGUIUtility.labelWidth = 100;
 
-            if (PrefabUtility.GetPrefabInstanceStatus(target) != PrefabInstanceStatus.NotAPrefab)
+            EditorGUI.BeginChangeCheck();
+            variablesController.makeGlobal = EditorGUILayout.Toggle("Make Global", variablesController.makeGlobal);
+            bool invalidate = EditorGUI.EndChangeCheck();
+            
+
+            invalidate = invalidate || GUIVariableUtils.DrawVariablesInspector("Variables", variablesController.Variables, variablesController, EditorGUIUtility.currentViewWidth-20);
+            
+            GUI.color = new Color(1, 0.75f, 0.5f);
+            if (GUILayout.Button("Add Variable", GUILayout.Height(24)))
             {
-                EditorGUILayout.LabelField("Prefab overrides are not supported.");
+                VariableTypesMenu.Show((type) => variablesController.Variables.AddNewVariable(type));
             }
-            else
+            GUI.color = Color.white;
+            
+            if (invalidate)
             {
-                EditorGUI.BeginChangeCheck();
-                variablesController.makeGlobal = EditorGUILayout.Toggle("Make Global", variablesController.makeGlobal);
-                
-                GUIVariableUtils.DrawVariablesInspector("Variables", variablesController.Variables, variablesController);
-                
-                if (EditorGUI.EndChangeCheck())
-                {
-                    EditorUtility.SetDirty(target);
-                    PrefabUtility.RecordPrefabInstancePropertyModifications(target);
-                }
+                PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+                EditorUtility.SetDirty(target);
             }
         }
     }

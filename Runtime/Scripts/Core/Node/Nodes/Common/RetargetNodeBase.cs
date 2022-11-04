@@ -5,6 +5,7 @@
 using System;
 using System.Reflection;
 using Dash.Attributes;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -58,7 +59,7 @@ namespace Dash
                         }
                     
                         target = value as Transform;
-
+                        
                         if (target == null && value.GetType() == typeof(GameObject))
                         {
                             target = (value as GameObject).transform;
@@ -124,7 +125,10 @@ namespace Dash
                     if (Model.useExpression)
                     {
                         style.normal.textColor = Color.cyan;
-                        GUI.Label(labelRect, ShortenExpression(style, Model.targetExpression), style);
+                        style.normal.textColor = Model.targetExpression.IsNullOrWhitespace()
+                            ? new Color(1f, .4f, 0)
+                            : new Color(1f, 1f, 1f);
+                        GUI.Label(labelRect, ShortenExpression(style, Model.targetExpression.IsNullOrWhitespace() ? "Empty" : Model.targetExpression), style);
                     }
                     else
                     {
@@ -134,8 +138,8 @@ namespace Dash
                             .Invoke(exposedReference, new object[] {DashEditorCore.EditorConfig.editingController});
 
                         style.fontStyle = FontStyle.Bold;
-                        style.normal.textColor = new Color(0.4f, .7f, 1);
                         string exposedLabel = exposedValue != null ? exposedValue.name : "None";
+                        style.normal.textColor = exposedValue != null ? new Color(0.4f, .7f, 1) : new Color(1f, .4f, 0);
                         GUI.Label(labelRect, "[" + exposedLabel + "]", style);
 
                         // PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
@@ -151,9 +155,11 @@ namespace Dash
                     {
                         if (Model.target.isExpression)
                         {
-                            style.normal.textColor = Color.cyan;
+                            style.normal.textColor = Model.target.expression.IsNullOrWhitespace()
+                                ? new Color(1f, .4f, 0)
+                                : Color.cyan;
 
-                            GUI.Label(labelRect, ShortenExpression(style, Model.target.expression), style);
+                            GUI.Label(labelRect, ShortenExpression(style, Model.target.expression.IsNullOrWhitespace() ? "Empty" : Model.target.expression), style);
                         }
                         else
                         {

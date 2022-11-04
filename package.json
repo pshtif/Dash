@@ -1,7 +1,7 @@
 {
   "name": "com.shtif.dash",
   "displayName": "Dash Animation System",
-  "version": "0.13.2",
+  "version": "0.13.3",
   "unity": "2019.4",
   "description": "Dash Animation System targeted to animate UI but can be used as needed.",
   "author": {
@@ -19,6 +19,6 @@
   ],
   "dependencies": {
 	"com.teamsirenix.odinserializer": "2022.4.7",
-	"com.shtif.dashtween": "0.1.4"
+	"com.shtif.dashtween": "0.1.7"
   }
 }

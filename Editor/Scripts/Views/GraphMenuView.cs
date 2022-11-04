@@ -25,12 +25,19 @@ namespace Dash.Editor
 
                 GUI.DrawTexture(new Rect(80, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
 
-                if (GUI.Button(new Rect(102, 1, 120, 22), "Preferences"))
+                if (GUI.Button(new Rect(102, 1, 100, 22), "Edit"))
                 {
-                    PreferencesContextMenu.Show(p_graph);
+                    GraphEditContextMenu.Show(p_graph);
                 }
                 
-                GUI.DrawTexture(new Rect(202, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
+                GUI.DrawTexture(new Rect(180, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
+                
+                if (GUI.Button(new Rect(204, 1, 120, 22), "Preferences"))
+                {
+                    GraphPreferencesContextMenu.Show(p_graph);
+                }
+                
+                GUI.DrawTexture(new Rect(304, 6, 10, 10), IconManager.GetIcon("arrowdown_icon"));
 
                 if (DashEditorCore.EditorConfig.showNodeSearch)
                 {

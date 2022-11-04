@@ -61,7 +61,7 @@ namespace Dash
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract void ValueField(float p_maxWidth, IVariableBindable p_bindable);
+        public abstract bool ValueField(float p_maxWidth, IVariableBindable p_bindable);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -90,6 +90,7 @@ namespace Dash
     [Serializable]
     public class Variable<T> : Variable
     {
+        [SerializeField]
         protected T _value;
 
         [NonSerialized]
@@ -276,8 +277,9 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override void ValueField(float p_maxWidth, IVariableBindable p_bindable)
+        public override bool ValueField(float p_maxWidth, IVariableBindable p_bindable)
         {
+            bool invalidate = false;
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
             if (IsBound)
             {
@@ -291,23 +293,28 @@ namespace Dash
             {
                 if (IsEnumProperty(valueField))
                 {
-                    EnumProperty(valueField);
+                    invalidate = EnumProperty(valueField);
                 } 
-                else if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(ExposedReference<>))
-                {
-                    if (p_bindable != null)
-                    {
-                        ExposedProperty(valueField, p_bindable);
-                    }
-                    else
-                    {
-                        GUILayout.Label("NOT ASSIGNALBE ON ASSET");
-                    }
-                }
+                // else if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(ExposedReference<>))
+                // {
+                //     if (p_bindable != null)
+                //     {
+                //         invalidate = ExposedProperty(valueField, p_bindable);
+                //     }
+                //     else
+                //     {
+                //         GUILayout.Label("NOT ASSIGNALBE ON ASSET");
+                //     }
+                // }
                 else if (typeof(UnityEngine.Object).IsAssignableFrom(typeof(T)))
                 {
+                    EditorGUI.BeginChangeCheck();
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
-                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), false);
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_bindable != null, GUILayout.Width(p_maxWidth));
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        invalidate = true;
+                    }
                 } 
                 else
                 {
@@ -319,6 +326,7 @@ namespace Dash
                             var stringValue = EditorGUILayout.TextField((string)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, stringValue);
                             }
                             break;
@@ -328,6 +336,7 @@ namespace Dash
                             var boolValue = EditorGUILayout.Toggle((bool)valueField.GetValue(this), GUILayout.Width(16));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, boolValue);
                             }
                             break;
@@ -336,6 +345,7 @@ namespace Dash
                             var intValue = EditorGUILayout.IntField((int)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, intValue);
                             }
                             break;
@@ -346,6 +356,7 @@ namespace Dash
                             var floatValue = EditorGUILayout.FloatField((float)valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, floatValue);
                             }
                             break;
@@ -358,6 +369,7 @@ namespace Dash
                             var vector2Value = EditorGUILayout.Vector2Field("", (Vector2) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, vector2Value);
                             }
                             break;
@@ -366,6 +378,7 @@ namespace Dash
                             var vector3Value = EditorGUILayout.Vector3Field("", (Vector3) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, vector3Value);
                             }
                             break;
@@ -374,6 +387,7 @@ namespace Dash
                             var vector4Value = EditorGUILayout.Vector4Field("", (Vector4) valueField.GetValue(this), GUILayout.Width(p_maxWidth), GUILayout.ExpandWidth(true));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, vector4Value);
                             }
                             break;
@@ -392,6 +406,7 @@ namespace Dash
                             var colorValue = EditorGUILayout.ColorField((Color)valueField.GetValue(this));
                             if (EditorGUI.EndChangeCheck())
                             {
+                                invalidate = true;
                                 valueField.SetValue(this, colorValue);
                             }
                             break;
@@ -401,6 +416,8 @@ namespace Dash
                     }
                 }
             }
+
+            return invalidate;
         }
         
         bool IsEnumProperty(FieldInfo p_fieldInfo)
@@ -426,57 +443,57 @@ namespace Dash
             return false;
         }
         
-        bool ExposedProperty(FieldInfo p_fieldInfo, IVariableBindable p_bindable)
-        {
-            IExposedPropertyTable propertyTable = p_bindable;
-            var exposedReference = p_fieldInfo.GetValue(this);
-            
-            PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
-            bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
-            
-            EditorGUI.BeginChangeCheck();
-
-            UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
-                .Invoke(exposedReference, new object[] {propertyTable});
-            var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (propertyTable != null)
-                {
-                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
-                }
-
-                if (!isDefault)
-                {
-                    if (newValue == null)
-                    {
-                        propertyTable.ClearReferenceValue(exposedName);   
-                        exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
-                        p_fieldInfo.SetValue(this, exposedReference);
-                    }
-                    else
-                    {
-                        propertyTable.SetReferenceValue(exposedName, newValue);
-                    }
-                }
-                else
-                {
-                    if (newValue != null)
-                    {
-                        PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
-                        exposedReference.GetType().GetField("exposedName")
-                            .SetValue(exposedReference, newExposedName);
-                        propertyTable.SetReferenceValue(newExposedName, newValue);
-                        p_fieldInfo.SetValue(this, exposedReference);
-                    }
-                }
-
-                return true;
-            }
-
-            return false;
-        }
+        // bool ExposedProperty(FieldInfo p_fieldInfo, IVariableBindable p_bindable)
+        // {
+        //     IExposedPropertyTable propertyTable = p_bindable;
+        //     var exposedReference = p_fieldInfo.GetValue(this);
+        //     
+        //     PropertyName exposedName = (PropertyName)exposedReference.GetType().GetField("exposedName").GetValue(exposedReference);
+        //     bool isDefault = PropertyName.IsNullOrEmpty(exposedName);
+        //     
+        //     EditorGUI.BeginChangeCheck();
+        //     
+        //     UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
+        //         .Invoke(exposedReference, new object[] {propertyTable});
+        //     var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
+        //
+        //     if (EditorGUI.EndChangeCheck())
+        //     {
+        //         if (propertyTable != null)
+        //         {
+        //             Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
+        //         }
+        //
+        //         if (!isDefault)
+        //         {
+        //             if (newValue == null)
+        //             {
+        //                 propertyTable.ClearReferenceValue(exposedName);   
+        //                 exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
+        //                 p_fieldInfo.SetValue(this, exposedReference);
+        //             }
+        //             else
+        //             {
+        //                 propertyTable.SetReferenceValue(exposedName, newValue);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if (newValue != null)
+        //             {
+        //                 PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+        //                 exposedReference.GetType().GetField("exposedName")
+        //                     .SetValue(exposedReference, newExposedName);
+        //                 propertyTable.SetReferenceValue(newExposedName, newValue);
+        //                 p_fieldInfo.SetValue(this, exposedReference);
+        //             }
+        //         }
+        //
+        //         return true;
+        //     }
+        //
+        //     return false;
+        // }
 #endif
     }
 }

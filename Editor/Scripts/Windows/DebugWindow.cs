@@ -50,7 +50,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Debug Console");
+            GUIEditorUtils.DrawTitle("Dash Debug Console");
 
             GUI.backgroundColor = Color.white;
             

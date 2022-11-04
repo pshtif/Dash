@@ -55,7 +55,7 @@ namespace Dash.Editor
 
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUICustomUtils.DrawTitle("Dash Variable Refactoring");
+            GUIEditorUtils.DrawTitle("Dash Variable Refactoring");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;

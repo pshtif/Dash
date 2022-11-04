@@ -136,9 +136,8 @@ namespace Dash
         
         public List<Type> scannedAOTTypes;
         public List<Type> explicitAOTTypes;
-
-        // SETTINGS
-        public bool settingsShowInspectorLogo = true;
+        
+        public bool showInspectorLogo = true;
 
 #region SERIALIZATION
         

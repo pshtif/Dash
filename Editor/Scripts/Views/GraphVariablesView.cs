@@ -2,15 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Dash.Extensions;
-using UnityEditor;
-using UnityEditor.Graphs;
-using UnityEditor.UIElements;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Dash.Editor
 {
@@ -23,8 +15,7 @@ namespace Dash.Editor
             if (Graph == null)
                 return;
 
-            DrawVariablesGUI(new Vector2(20,30), false, Color.white, Graph.variables, ref Graph.graphVariablesMinimized,
-                DashEditorCore.EditorConfig.editingController == null ? null : DashEditorCore.EditorConfig.editingController);
+            DrawVariablesGUI(new Vector2(20,30), Color.white, Graph.variables, ref Graph.graphVariablesMinimized, null);
         }
     }
 }

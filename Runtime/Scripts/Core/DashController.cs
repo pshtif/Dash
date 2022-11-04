@@ -16,7 +16,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable
+    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable, IExposedPropertyTable
     {
 
         public DashCore Core => DashCore.Instance;
@@ -148,6 +148,9 @@ namespace Dash
         
         public Transform customTarget;
 
+        [NonSerialized]
+        private bool _initialized = false;
+
         public Transform GetTarget()
         {
             return customTarget != null ? customTarget : transform;
@@ -155,22 +158,26 @@ namespace Dash
 
         void Awake()
         {
-            if (Graph != null)
-            {
-                Graph.Initialize(this);
-            }
+            Initialize();
+        }
+
+        void Initialize()
+        {
+            if (_initialized)
+                return;
+            
+            if (Graph != null) Graph.Initialize(this);
 
             Core.Bind(this);
 
             _variables = GetComponent<DashVariablesController>()?.Variables;
+
+            _initialized = true;
         }
 
         public void ChangeGraph(DashGraph p_graph)
         {
-            if (Graph != null)
-            {
-                Graph?.Stop();
-            }
+            if (Graph != null) Graph.Stop();
 
             _boundGraphData = new byte[0];
             _assetGraph = p_graph;
@@ -228,14 +235,15 @@ namespace Dash
 
         public void SendEvent(string p_name)
         {
-            if (Graph == null)
-                return;
-
-            Graph.SendEvent(p_name, GetTarget());
+            Initialize();
+            
+            if (Graph != null) Graph.SendEvent(p_name, GetTarget());
         }
 
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
+            Initialize();
+            
             if (Graph == null || GetTarget() == null)
                 return;
 
@@ -251,14 +259,26 @@ namespace Dash
             Graph.SendEvent(p_name, p_flowData);
         }
 
-        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+        public void AddListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false)
+        {
+            Initialize();
+            
             Graph?.AddListener(p_name, p_callback, p_priority, p_once);
+        }
 
-        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback) =>
+        public void RemoveListener(string p_name, Action<NodeFlowData> p_callback)
+        {
+            Initialize();
+            
             Graph?.RemoveListener(p_name, p_callback);
+        }
 
-        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false) =>
+        public void SetListener(string p_name, Action<NodeFlowData> p_callback, int p_priority = 0, bool p_once = false)
+        {
+            Initialize();
+            
             Graph?.SetListener(p_name, p_callback, p_priority, p_once);
+        }
 
         private void OnDestroy()
         {
@@ -271,11 +291,15 @@ namespace Dash
 
 #if UNITY_EDITOR
         public bool advancedInspector = false;
-        
+        public bool variablesSectionMinimzed = false;
+        public bool exposedPropertiesSectionMinimized = false;
+        public bool nodesSectionMinimized = false;
+        public bool connectionsSectionMinimized = false;
+
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
-        public bool showGraphVariables = false;
+        //public bool showGraphVariables = false;
 
         public void ReserializeBound()
         {

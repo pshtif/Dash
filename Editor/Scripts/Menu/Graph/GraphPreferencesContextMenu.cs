@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class PreferencesContextMenu
+    public class GraphPreferencesContextMenu
     {
         public static void Show(DashGraph p_graph)
         {

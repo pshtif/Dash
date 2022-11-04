@@ -41,6 +41,11 @@ namespace Dash
             Vector2 toSizeDelta = GetParameterValue(Model.toSizeDelta, p_flowData);
 
             float time = GetParameterValue(Model.time, p_flowData);
+            bool useSpeed = GetParameterValue(Model.useSpeed, p_flowData);
+            if (useSpeed && time != 0)
+            {
+                time = (toSizeDelta - startSizeDelta).magnitude / time;
+            }
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             

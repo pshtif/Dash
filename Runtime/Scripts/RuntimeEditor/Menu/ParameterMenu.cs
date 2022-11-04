@@ -57,7 +57,7 @@ namespace Dash
             menu.ShowAsContext();
         }
         
-        public static void Show(FieldInfo p_useExpressionField, FieldInfo p_expressionField, Object p_object, Type p_type)
+        public static void Show(FieldInfo p_useExpressionField, FieldInfo p_expressionField, FieldInfo p_directField, Object p_object, Type p_type)
         {
             GenericMenu menu = new GenericMenu();
 
@@ -65,6 +65,7 @@ namespace Dash
             {
                 menu.AddItem(new GUIContent("Direct Value"), false, () =>
                 {
+                    p_expressionField.SetValue(p_object, "");
                     p_useExpressionField.SetValue(p_object, false);
                 });   
             }
@@ -72,6 +73,7 @@ namespace Dash
             {
                 menu.AddItem(new GUIContent("Custom Expression"), false, () =>
                 {
+                    p_directField.SetValue(p_object, p_type.GetDefaultValue());
                     p_useExpressionField.SetValue(p_object, true);
                 });
             }

@@ -40,6 +40,11 @@ namespace Dash
             Vector3 toScale = GetParameterValue(Model.toScale, p_flowData);
             
             float time = GetParameterValue(Model.time, p_flowData);
+            bool useSpeed = GetParameterValue(Model.useSpeed, p_flowData);
+            if (useSpeed && time != 0)
+            {
+                time = (toScale - startScale).magnitude / time;
+            }
             float delay = GetParameterValue(Model.delay, p_flowData);
             EaseType easeType = GetParameterValue(Model.easeType, p_flowData);
             

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Dash
 {
-    public interface IVariableBindable : IExposedPropertyTable
+    public interface IVariableBindable 
     {
         DashGraph Graph { get; }
         
