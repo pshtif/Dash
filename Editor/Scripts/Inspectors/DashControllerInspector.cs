@@ -60,16 +60,7 @@ namespace Dash.Editor
                     GUI.color = new Color(1, 0.75f, 0.5f);
                     if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                     {
-                        // if (EditorUtility.DisplayDialog("Create Graph", "Create Bound or Asset Graph?",
-                        //     "Bound", "Asset"))
-                        // {
-                        //
-                        //     BindGraph(GraphUtils.CreateEmptyGraph());
-                        // }
-                        // else
-                        // {
-                            ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
-                        // }
+                        ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
 
                     GUI.color = oldColor;
@@ -81,7 +72,7 @@ namespace Dash.Editor
                 else
                 {
                     var oldColor = GUI.color;
-                    GUI.color = new Color(1, 0.75f, 0.5f);
+                    GUI.color = new Color(1, 0.7f, 0);
                     if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                     {
                         OpenEditor();
@@ -101,12 +92,6 @@ namespace Dash.Editor
                         {
                             DashEditorCore.EditController(Controller);
                         }
-
-                        // Bound graphs will be deprecated
-                        // if (GUILayout.Button("Bind Graph"))
-                        // {
-                        //     BindGraph(Controller.Graph);
-                        // }
                     }
                     else
                     {
@@ -114,7 +99,7 @@ namespace Dash.Editor
                         style.normal.textColor = new Color(1, .4f, 0);
                         style.alignment = TextAnchor.MiddleCenter;
                         style.fontStyle = FontStyle.Bold;
-                        GUILayout.Label("!!! Save graph to asset, bound graphs will be deprecated !!!", style);
+                        EditorGUILayout.HelpBox("Save graph to asset, bound graphs will be deprecated!", MessageType.Warning);
                         if (GUILayout.Button("Save to Asset"))
                         {
                             DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
