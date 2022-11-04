@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - changed DashControllerVariables direct reference type variables now support scene referencing
 - changed removed support for ExposedReference variables [BREAKING]
 - changed ExposedReferences in node properties now cache initial exposedName
-- changed UI cleanup and changes for variables and inspector
+- changed a lot of UI cleanup and changes for variables and node inspector
 - changed custom expression fields now reset their previous value when switching from direct to expression or back
 
 #### Fixed
