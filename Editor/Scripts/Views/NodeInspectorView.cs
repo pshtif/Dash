@@ -15,6 +15,7 @@ namespace Dash.Editor
         private Vector2 scrollPosition;
 
         protected object _previouslyInspected;
+        private float _lastHeight = -1;
 
         public NodeInspectorView()
         {
@@ -43,12 +44,10 @@ namespace Dash.Editor
 
         private void DrawGraphBoxGUI(Rect p_rect)
         {
-            Rect rect = new Rect(p_rect.width - 400, 30, 390, 340);
+            Rect rect = new Rect(p_rect.width - 400, 30, 390, 80);
             
-            DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
-            
-            // GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), "Properties", DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));
-            
+            DrawBoxGUI(rect, "Box Properties", TextAnchor.UpperRight, Color.white);
+
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
@@ -66,9 +65,9 @@ namespace Dash.Editor
             var selectedNode = SelectionManager.GetSelectedNode(Graph);
             
             InspectorHeightAttribute heightAttibute = selectedNode.GetType().GetCustomAttribute<InspectorHeightAttribute>();
-            float height = heightAttibute != null ? heightAttibute.height : 340;
-
-            Rect rect = new Rect(p_rect.width - 400, 30, 390, height);
+            //float height = heightAttibute != null ? heightAttibute.height : _lastHeight;
+            
+            Rect rect = new Rect(p_rect.width - 400, 30, 390, _lastHeight + 40);
             
             DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
 
@@ -84,9 +83,25 @@ namespace Dash.Editor
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
             
             selectedNode.DrawInspector();
-            
-            GUILayout.EndScrollView();
-            GUILayout.EndArea();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                var lastRect = GUILayoutUtility.GetLastRect();
+                GUILayout.EndScrollView();
+                GUILayout.EndArea();
+                var lastHeight = lastRect.y + lastRect.height;
+
+                if (lastHeight != _lastHeight)
+                {
+                    _lastHeight = lastHeight > 380 ? 380 : lastHeight;
+                    DashEditorWindow.Instance.Repaint();
+                }
+            }
+            else
+            {
+                GUILayout.EndScrollView();
+                GUILayout.EndArea();
+            }
 
             selectedNode.DrawInspectorControls(rect);
             

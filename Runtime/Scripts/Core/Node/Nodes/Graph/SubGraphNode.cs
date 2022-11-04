@@ -181,7 +181,7 @@ namespace Dash
                     Model.graphAsset = null;
                 }
                 
-                if (GUILayout.Button("Save to Asset"))
+                if (GUILayout.Button("Save to Asset", GUILayout.Height(24)))
                 {
                     DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
                     if (graph != null)

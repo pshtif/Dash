@@ -35,8 +35,6 @@ namespace Dash
         [NonSerialized]
         private double _lastClickTime = 0;
 
-        private int groupsMinized = -1;
-
         public GraphBox(string p_comment, Rect p_rect)
         {
             comment = p_comment;
@@ -96,7 +94,9 @@ namespace Dash
         public void Drag(Vector2 p_offset)
         {
             if (moveNodes)
+            {
                 _draggedNodes.ForEach(n => n.rect.position += p_offset);
+            }
 
             rect.position += p_offset;
         }
@@ -111,71 +111,67 @@ namespace Dash
             rect.yMax += p_offset.y;
         }
 
-        public virtual bool DrawInspector()
+        public virtual void DrawInspector()
         {
-            bool initializeMinimization = false;
-            if (groupsMinized == -1)
-            {
-                initializeMinimization = true;
-                groupsMinized = 0;
-            }
-            
             GUILayout.Space(5);
-            
-            GUIStyle minStyle = GUIStyle.none;
-            minStyle.normal.textColor = Color.white;
-            minStyle.fontSize = 16;
-            
-            var fields = this.GetType().GetFields();
-            Array.Sort(fields, GUIPropertiesUtils.GroupSort);
-            string lastGroup = "";
-            bool lastGroupMinimized = false;
-            bool invalidate = false;
-            int groupIndex = 0;
-            foreach (var field in fields)
+
+            EditorGUI.BeginChangeCheck();
+
+            //EditorGUIUtility.labelWidth = 120;
+            color = EditorGUILayout.ColorField("Color", color);
+            comment = EditorGUILayout.TextField("Comment", comment);
+
+            if (EditorGUI.EndChangeCheck())
             {
-                if (field.IsConstant()) continue;
-
-                TitledGroupAttribute ga = field.GetCustomAttribute<TitledGroupAttribute>();
-                string currentGroup = ga != null ? ga.Group : "Properties";
-                if (currentGroup != lastGroup)
-                {
-                    int groupMask = (int)Math.Pow(2, groupIndex);
-                    groupIndex++;
-                    if (initializeMinimization && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
-                    {
-                        groupsMinized += groupMask;
-                    }
-
-                    GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
-                    GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"),
-                        GUILayout.Width(120));
-                    Rect lastRect = GUILayoutUtility.GetLastRect();
-
-
-                    if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
-                        minStyle))
-                    {
-                        groupsMinized = (groupsMinized & groupMask) == 0
-                            ? groupsMinized + groupMask
-                            : groupsMinized - groupMask;
-                    }
-
-                    lastGroup = currentGroup;
-                    lastGroupMinimized = (groupsMinized & groupMask) != 0;
-                }
-
-                if (lastGroupMinimized)
-                    continue;
-
-                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, null);
-            }
-
-            if (invalidate) {
                 DashEditorCore.SetDirty();
             }
-
-            return invalidate;
+            
+            // var fields = this.GetType().GetFields();
+            // Array.Sort(fields, GUIPropertiesUtils.GroupSort);
+            // string lastGroup = "";
+            // bool lastGroupMinimized = false;
+            // bool invalidate = false;
+            // int groupIndex = 0;
+            // foreach (var field in fields)
+            // {
+            //     if (field.IsConstant()) continue;
+            //
+            //     TitledGroupAttribute ga = field.GetCustomAttribute<TitledGroupAttribute>();
+            //     string currentGroup = ga != null ? ga.Group : "Properties";
+            //     if (currentGroup != lastGroup)
+            //     {
+            //         int groupMask = (int)Math.Pow(2, groupIndex);
+            //         groupIndex++;
+            //         if (initializeMinimization && ga != null && ga.Minimized && (groupsMinized & groupMask) == 0)
+            //         {
+            //             groupsMinized += groupMask;
+            //         }
+            //
+            //         GUIPropertiesUtils.Separator(16, 2, 4, new Color(0.1f, 0.1f, 0.1f));
+            //         GUILayout.Label(currentGroup, DashEditorCore.Skin.GetStyle("PropertyGroup"),
+            //             GUILayout.Width(120));
+            //         Rect lastRect = GUILayoutUtility.GetLastRect();
+            //
+            //
+            //         if (GUI.Button(new Rect(lastRect.x + 302, lastRect.y - 25, 20, 20), (groupsMinized & groupMask) != 0 ? "+" : "-",
+            //             minStyle))
+            //         {
+            //             groupsMinized = (groupsMinized & groupMask) == 0
+            //                 ? groupsMinized + groupMask
+            //                 : groupsMinized - groupMask;
+            //         }
+            //
+            //         lastGroup = currentGroup;
+            //         lastGroupMinimized = (groupsMinized & groupMask) != 0;
+            //     }
+            //
+            //     if (lastGroupMinimized)
+            //         continue;
+            //
+            //     invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, null);
+            // }
+            
+            DashEditorCore.SetDirty();
         }
         #endif
     }
