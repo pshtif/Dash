@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using OdinSerializer;
 using UnityEngine;
 
 namespace Dash
 {
     [Serializable]
-    public class DashVariables : IEnumerable<Variable>, IVariables
+    public class DashVariables : IEnumerable<Variable>, IVariables, IInternalVariablesAccess
     {
         public int Count => variables.Count;
 
@@ -51,7 +52,7 @@ namespace Dash
 
         public bool HasVariable(string p_name)
         {
-            if (_lookupCache == null) InvalidateLookup();
+            if (_lookupCache == null) (this as IInternalVariablesAccess).InvalidateLookup();
             
             return _lookupCache.ContainsKey(p_name);
         }
@@ -111,7 +112,7 @@ namespace Dash
             }
 
             variables.Add(p_variable);
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
             return p_variable;
         }
 
@@ -125,9 +126,14 @@ namespace Dash
 
             Variable<T> variable = new Variable<T>(p_name, p_value);
             variables.Add(variable);
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
 
             return variable;
+        }
+
+        void IInternalVariablesAccess.AddVariable(Variable p_variable)
+        {
+            _variables.Add(p_variable);
         }
 
         public void SetVariable<T>(string p_name, [CanBeNull] T p_value)
@@ -140,7 +146,7 @@ namespace Dash
             {
                 Variable<T> variable = new Variable<T>(p_name, p_value);
                 variables.Add(variable);
-                InvalidateLookup();
+                (this as IInternalVariablesAccess).InvalidateLookup();
             }
         }
 
@@ -152,7 +158,7 @@ namespace Dash
             {
                 p_variable.InitializeBinding(p_bindable);
             }
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
         }
 
         public void RemoveVariable(string p_name)
@@ -164,12 +170,12 @@ namespace Dash
         {
             var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
-            InvalidateLookup();
+            (this as IInternalVariablesAccess).InvalidateLookup();
 
             return variable;
         }
 
-        private void InvalidateLookup()
+        void IInternalVariablesAccess.InvalidateLookup()
         { 
             _lookupCache = new Dictionary<string, Variable>();
             foreach (Variable variable in variables)
