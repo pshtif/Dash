@@ -2,7 +2,6 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
