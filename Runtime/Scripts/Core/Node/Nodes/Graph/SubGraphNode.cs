@@ -125,7 +125,7 @@ namespace Dash
             }
 
             ((IInternalGraphAccess)_subGraphInstance).SetParentGraph(Graph);
-            _subGraphInstance.isBound = true;
+            //_subGraphInstance.isBound = true;
             _subGraphInstance.name = Model.id;
         }
         
@@ -154,7 +154,8 @@ namespace Dash
         
         public override void DrawInspector()
         {
-            GUI.color = new Color(1, 0.75f, 0.5f);
+            GUILayout.Space(6);
+            GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
             if (!Model.useAsset || Model.graphAsset != null)
             {
                 if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
