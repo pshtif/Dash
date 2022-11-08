@@ -23,6 +23,7 @@ namespace Dash
         public Color ConnectorInputDisconnectedColor = new Color(0.4f, 0.3f, 0f);
         public Color ConnectorOutputConnectedColor = new Color(1f, 0.7f, 0f);
         public Color ConnectorOutputDisconnectedColor = new Color(1, 1, 1);
+        public Color ConnectionShadowColor = new Color(0, 0, 0, .06f);
         
         public Color EventNodeBackgroundColor = new Color(1f, 0.7f, 0.7f);
         public Color AnimationNodeBackgroundColor = new Color(0.7f, 0.7f, 1f);
@@ -47,6 +48,14 @@ namespace Dash
         public int TitleTabHeight = 26;
         public int ConnectorHeight = 24;
         public int ConnectorPadding = 4;
+
+        public Color InspectorButtonColor = new Color(1, 0.6f, 0f);
+        public Color InspectorSectionTitleColor = new Color(1, 0.5f, 0f);
+        public Color InspectorSectionSubtitleColor = Color.white;
+        
+        public Color CommentColor = new Color(1,1,1,.6f);
+        public Color ObsoleteColor = new Color(1f, .5f, .25f);
+        public Color ExperimentalColor = Color.yellow;
 
         private void OnEnable()
         {
