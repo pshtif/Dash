@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
 - changed ExposedReferences in node properties now cache initial exposedName
 - changed a lot of UI cleanup and changes for variables and node inspector
 - changed custom expression fields now reset their previous value when switching from direct to expression or back
+- changed unified color scheme and moved to Theme
+- changed removed default SceneGUI as it was obsolete
 
 #### Fixed
 
