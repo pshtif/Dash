@@ -32,7 +32,7 @@ namespace Dash.Editor
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = 14;
+            style.fontSize = 13;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
             GUILayout.Label(p_title, style, GUILayout.Height(26));
             GUI.backgroundColor = Color.white;
@@ -46,7 +46,7 @@ namespace Dash.Editor
             style.alignment = p_alignment.HasValue ? p_alignment.Value : TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
-            style.fontSize = p_size.HasValue ? p_size.Value : 14;
+            style.fontSize = p_size.HasValue ? p_size.Value : 13;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
             GUILayout.Label(p_title, style, GUILayout.Height(26));
             GUI.backgroundColor = Color.white;
