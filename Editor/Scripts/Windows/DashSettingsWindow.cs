@@ -30,13 +30,13 @@ namespace Dash.Editor
                 return;
             
             var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.normal.textColor = DashEditorCore.EditorConfig.theme.InspectorSectionTitleColor;
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("SETTINGS", style, GUILayout.Height(28));
+            GUILayout.Label("Settings", style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
             
             EditorGUI.BeginChangeCheck();

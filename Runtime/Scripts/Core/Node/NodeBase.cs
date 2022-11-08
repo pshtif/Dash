@@ -530,8 +530,8 @@ namespace Dash
 
             string commentText = _model.comment;
             Vector2 size = commentStyle.CalcSize( new GUIContent( commentText ) );
-            
-            GUI.color = new Color(1,1,1,.6f);
+
+            GUI.color = DashEditorCore.EditorConfig.theme.CommentColor;
             GUI.Box(new Rect(offsetRect.x - 10, offsetRect.y - size.y - 26, size.x < 34 ? 50 : size.x + 16, size.y + 26), "", DashEditorCore.Skin.GetStyle("NodeComment"));
             GUI.color = Color.white;
             string text = GUI.TextArea(new Rect(offsetRect.x - 2, offsetRect.y - size.y - 21, size.x, size.y), commentText, commentStyle);
@@ -556,7 +556,7 @@ namespace Dash
 
             if (IsExperimental)
             {
-                GUI.color = Color.yellow;
+                GUI.color = DashEditorCore.EditorConfig.theme.ExperimentalColor;
                 GUI.DrawTexture(new Rect(p_rect.x + rect.width - 21, p_rect.y + 4, 16, 16),
                     IconManager.GetIcon("experimental_icon"));
                 GUI.color = Color.white;
@@ -564,7 +564,7 @@ namespace Dash
             
             if (IsObsolete)
             {
-                GUI.color = new Color(1f, .5f, .25f);
+                GUI.color = DashEditorCore.EditorConfig.theme.ObsoleteColor;
                 GUI.DrawTexture(new Rect(p_rect.x + 4, p_rect.y - 20, 16, 16),
                     IconManager.GetIcon("prohibited_icon"));
                 GUI.color = Color.white;
@@ -864,17 +864,6 @@ namespace Dash
         public void DrawSceneGUI()
         {
             Handles.BeginGUI();
-         
-            GUIStyle style = new GUIStyle(GUI.skin.box);
-            style.normal.background = Texture2D.whiteTexture; // must be white to tint properly
-            GUI.color = new Color(0,0,0,.8f);
-            GUI.Box(new Rect(0,0,Screen.width,30), "");
-            GUI.color = Color.white;
-
-            style = new GUIStyle(GUI.skin.label);
-            style.normal.textColor = new Color(1, .7f, .3f);
-            style.fontStyle = FontStyle.Bold;
-            GUI.Label(new Rect(16,0, 200, 30), "Dash Editing", style);
 
             DrawCustomSceneGUI();
             

@@ -12,7 +12,7 @@ namespace Dash.Editor
     {
         public override void OnInspectorGUI()
         {
-            GUI.color = new Color(1, 0.75f, 0.5f);
+            GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
                 DashEditorWindow.InitEditorWindow(null);

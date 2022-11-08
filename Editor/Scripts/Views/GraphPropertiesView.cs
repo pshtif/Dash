@@ -33,7 +33,7 @@ namespace Dash.Editor
         {
             Rect rect = new Rect(p_rect.width - 400, 30, 390, 140);
             
-            DrawBoxGUI(rect, "Graph Properties", TextAnchor.UpperRight, Color.white);
+            DrawBoxGUI(rect, "Graph Properties", TextAnchor.MiddleRight, Color.white, Color.white, Color.white);
 
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
 

@@ -21,6 +21,7 @@ namespace Dash.Editor
         {
             if (p_title != "") GUIEditorUtils.DrawSectionTitle(p_title);
 
+            GUILayout.Space(2);
             int index = 0;
             bool invalidate = false;
             p_variables.variables?.ForEach(variable =>

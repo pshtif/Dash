@@ -49,7 +49,7 @@ namespace Dash
             inputNode.Execute(p_flowData);
         }
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
@@ -126,7 +126,7 @@ namespace Dash
             
             Vector3 startTan = p_startPos + Vector3.right * 50;
             Vector3 mouseTan = p_endPos + Vector3.left * 50;
-            Color shadowColor = new Color(0, 0, 0, .06f);
+            Color shadowColor = DashEditorCore.EditorConfig.theme.ConnectionShadowColor;
 
             if (p_shadow)
             {

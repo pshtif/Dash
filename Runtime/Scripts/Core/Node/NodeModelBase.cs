@@ -151,7 +151,7 @@ namespace Dash
                     groupsMinized = isMinimized ? groupsMinized - groupMask : groupsMinized + groupMask;
                 }
 
-                GUI.color = new Color(.6f, .4f, 0f);
+                GUI.color = DashEditorCore.EditorConfig.theme.InspectorSectionTitleColor * 2f / 3;
                 GUI.Label(new Rect(lastRect.x + 5 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);
                 GUI.color = Color.white;
                     //GUI.Label(new Rect(lastRect.x + 356 + (isMinimized ? 0 : 2), lastRect.y - 25, 20, 20), isMinimized ? "+" : "-", p_style);

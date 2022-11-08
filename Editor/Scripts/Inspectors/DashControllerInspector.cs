@@ -42,13 +42,7 @@ namespace Dash.Editor
 
             if (PrefabUtility.IsPartOfAnyPrefab(target))
             {
-                GUIStyle style = new GUIStyle("label");
-                style.alignment = TextAnchor.MiddleCenter;
-                style.fontSize = 14;
-                style.wordWrap = true;
-                style.fontStyle = FontStyle.Bold;
-                style.normal.textColor = new Color(1, .5f, 0);
-                EditorGUILayout.LabelField("Graph overrides on prefab instances are not supported.", style);
+                EditorGUILayout.HelpBox("Graph overrides on prefab instances are not supported.", MessageType.Info);
             }
             else
             {
@@ -67,7 +61,7 @@ namespace Dash.Editor
                 }
                 else
                 {
-                    GUI.color = new Color(1, 0.7f, 0);
+                    GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
                     if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                     {
                         OpenEditor();
@@ -196,7 +190,7 @@ namespace Dash.Editor
             GUILayout.Space(2);
             
             if (GUIEditorUtils.DrawMinimizableSectionTitle("        Exposed Properties Table",
-                    ref Controller.exposedPropertiesSectionMinimized, 12, Color.white, TextAnchor.MiddleLeft))
+                    ref Controller.exposedPropertiesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.propertyNames.Count; i++)
                 {
@@ -219,7 +213,7 @@ namespace Dash.Editor
                 return;
             
             if (GUIEditorUtils.DrawMinimizableSectionTitle("        Nodes",
-                    ref Controller.nodesSectionMinimized, 12, Color.white, TextAnchor.MiddleLeft))
+                    ref Controller.nodesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
                 {
@@ -230,7 +224,7 @@ namespace Dash.Editor
             GUILayout.Space(2);
 
             if (GUIEditorUtils.DrawMinimizableSectionTitle("        Connections",
-                    ref Controller.connectionsSectionMinimized, 12, Color.white, TextAnchor.MiddleLeft))
+                    ref Controller.connectionsSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Connections.Count; i++)
                 {
@@ -243,11 +237,8 @@ namespace Dash.Editor
 
         void DrawBoundGraphInspector()
         {
-            var style = new GUIStyle("label");
-            style.normal.textColor = new Color(1, .4f, 0);
-            style.alignment = TextAnchor.MiddleCenter;
-            style.fontStyle = FontStyle.Bold;
             EditorGUILayout.HelpBox("Save graph to asset, bound graphs will be deprecated!", MessageType.Warning);
+            
             if (GUILayout.Button("Save to Asset"))
             {
                 DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
