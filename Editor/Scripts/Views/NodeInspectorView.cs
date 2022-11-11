@@ -46,7 +46,8 @@ namespace Dash.Editor
         {
             Rect rect = new Rect(p_rect.width - 400, 30, 390, 80);
             
-            DrawBoxGUI(rect, "Box Properties", TextAnchor.UpperRight, Color.white);
+            DrawBoxGUI(rect, "Properties", TextAnchor.MiddleRight, Color.white, new Color(.8f,.6f,.4f), Color.gray);
+            GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), "Group", DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));
 
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-35));
 
@@ -69,7 +70,7 @@ namespace Dash.Editor
             
             Rect rect = new Rect(p_rect.width - 400, 30, 390, _lastHeight + 40);
             
-            DrawBoxGUI(rect, "Properties", TextAnchor.UpperRight, Color.white);
+            DrawBoxGUI(rect, "Properties", TextAnchor.MiddleRight, Color.white, new Color(.8f,.6f,.4f), Color.gray);
 
             string nodeType = NodeBase.GetNodeNameFromType(selectedNode.GetType());
             GUI.Label(new Rect(rect.x + 5, rect.y, 100, 100), nodeType, DashEditorCore.Skin.GetStyle("NodePropertiesTitle"));

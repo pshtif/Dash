@@ -7,15 +7,15 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashSettingsWindow : EditorWindow
+    public class SettingsWindow : EditorWindow
     {
-        public static DashSettingsWindow Instance { get; private set; }
+        public static SettingsWindow Instance { get; private set; }
 
         static public GUISkin Skin => DashEditorCore.Skin;
         
-        public static DashSettingsWindow InitEditorWindow()
+        public static SettingsWindow InitEditorWindow()
         {
-            Instance = GetWindow<DashSettingsWindow>();
+            Instance = GetWindow<SettingsWindow>();
             Instance.titleContent = new GUIContent("Dash Settings");
             Instance.minSize = new Vector2(200, 400);
 
@@ -24,19 +24,19 @@ namespace Dash.Editor
 
         public void OnGUI()
         {
-            GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true));
+            GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_settings"), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false));
         
             if (EditorApplication.isCompiling || BuildPipeline.isBuildingPlayer)
                 return;
             
             var style = new GUIStyle();
-            style.normal.textColor = new Color(1, 0.7f, 0);
+            style.normal.textColor = DashEditorCore.EditorConfig.theme.InspectorSectionTitleColor;
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("SETTINGS", style, GUILayout.Height(28));
+            GUILayout.Label("Settings", style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
             
             EditorGUI.BeginChangeCheck();

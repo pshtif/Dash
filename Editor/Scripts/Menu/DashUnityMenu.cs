@@ -12,7 +12,7 @@ namespace Dash.Editor
         [MenuItem("Tools/Dash/Settings")]
         public static void ShowInspectorLogo()
         {
-            DashSettingsWindow.InitEditorWindow();
+            SettingsWindow.InitEditorWindow();
             // DashEditorCore.EditorConfig.settingsShowInspectorLogo = !DashEditorCore.EditorConfig.settingsShowInspectorLogo;
             // EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }

@@ -3,13 +3,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Dash.Extensions;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Dash.Editor
 {
@@ -26,13 +20,13 @@ namespace Dash.Editor
         {
             int height = p_variables.Count <= 10 ? 64 + p_variables.Count * 22 : 64 + 220; 
             Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : height);
-            DrawBoxGUI(rect, "Graph Variables", TextAnchor.UpperCenter, p_color);
+            DrawBoxGUI(rect, "Graph Variables", TextAnchor.MiddleCenter, p_color, new Color(0.8f,.6f,.4f), Color.white);
 
             var minStyle = new GUIStyle();
             minStyle.normal.textColor = Color.white;
             minStyle.fontStyle = FontStyle.Bold;
             minStyle.fontSize = 20;
-            GUI.color = new Color(.6f, .4f, 0f);
+            GUI.color = new Color(.4f, .4f, .4f);
             GUI.Label(new Rect(rect.x + 6 + (p_minimized ? 0 : 2), rect.y + 2, 20, 20), p_minimized ? "+" : "-", minStyle);
             GUI.color = Color.white;
             
@@ -45,7 +39,7 @@ namespace Dash.Editor
             if (p_minimized)
                 return;
 
-            GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-64));
+            GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-62));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
             
             GUIVariableUtils.DrawVariablesInspector("", p_variables, p_bindable, rect.width-20);
@@ -53,7 +47,7 @@ namespace Dash.Editor
             GUILayout.EndScrollView();
             GUILayout.EndArea();
 
-            GUI.color = new Color(1, 0.7f, 0);//new Color(1, 0.75f, 0.5f);
+            GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
             if (GUI.Button(new Rect(rect.x + 4, rect.y + rect.height - 30, rect.width - 8, 24), "Add Variable"))
             {
                 VariableTypesMenu.Show((type) => OnAddVariable(p_variables, type));
