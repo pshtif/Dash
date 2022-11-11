@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 #### Added
 
 - added support and serialization for prefab modifications on DashVariablesController
+- added support for graph override in prefab
 
 #### Changed
 
