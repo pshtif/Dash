@@ -22,9 +22,9 @@ namespace Dash.Editor
             //var oldColor = GUI.color;
             if (DashEditorCore.EditorConfig.showInspectorLogo)
             {
-                GUILayout.BeginHorizontal();
-                GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true));
-                GUILayout.EndHorizontal();
+                GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_inspector"), GUILayout.ExpandWidth(true));
+                var rect = GUILayoutUtility.GetLastRect();
+                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("VersionText"));
             }
 
             //if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
@@ -40,11 +40,11 @@ namespace Dash.Editor
             //     });
             // }
 
-            if (PrefabUtility.IsPartOfAnyPrefab(target))
-            {
-                EditorGUILayout.HelpBox("Graph overrides on prefab instances are not supported.", MessageType.Info);
-            }
-            else
+            // if (PrefabUtility.IsPartOfAnyPrefab(target))
+            // {
+            //     EditorGUILayout.HelpBox("Graph overrides on prefab instances are not supported.", MessageType.Info);
+            // }
+            // else
             {
                 if (((IEditorControllerAccess)Controller).graphAsset == null && !Controller.HasBoundGraph)
                 {
@@ -54,10 +54,18 @@ namespace Dash.Editor
                         ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
 
+                    EditorGUI.BeginChangeCheck();
+                    
                     GUI.color = Color.white;
                     ((IEditorControllerAccess)Controller).graphAsset =
                         (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset,
                             typeof(DashGraph), true);
+                    
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        EditorUtility.SetDirty(target);
+                        DashEditorCore.EditController(Controller);
+                    }
                 }
                 else
                 {
@@ -126,6 +134,7 @@ namespace Dash.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
+                EditorUtility.SetDirty(target);
                 DashEditorCore.EditController(Controller);
             }
         }

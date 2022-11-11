@@ -7,15 +7,15 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DashSettingsWindow : EditorWindow
+    public class SettingsWindow : EditorWindow
     {
-        public static DashSettingsWindow Instance { get; private set; }
+        public static SettingsWindow Instance { get; private set; }
 
         static public GUISkin Skin => DashEditorCore.Skin;
         
-        public static DashSettingsWindow InitEditorWindow()
+        public static SettingsWindow InitEditorWindow()
         {
-            Instance = GetWindow<DashSettingsWindow>();
+            Instance = GetWindow<SettingsWindow>();
             Instance.titleContent = new GUIContent("Dash Settings");
             Instance.minSize = new Vector2(200, 400);
 
@@ -24,7 +24,7 @@ namespace Dash.Editor
 
         public void OnGUI()
         {
-            GUILayout.Box(Resources.Load<Texture>("Textures/dash"), GUILayout.ExpandWidth(true));
+            GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_settings"), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false));
         
             if (EditorApplication.isCompiling || BuildPipeline.isBuildingPlayer)
                 return;
