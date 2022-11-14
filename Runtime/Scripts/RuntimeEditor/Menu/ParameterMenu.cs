@@ -4,6 +4,7 @@
 
 using System;
 using System.Reflection;
+using Dash.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ namespace Dash
     public class ParameterMenu
     {
 #if UNITY_EDITOR
-        public static void Show(Parameter p_parameter)
+        public static void Show(Parameter p_parameter, string p_name, object p_object)
         {
             GenericMenu menu = new GenericMenu();
 
@@ -53,6 +54,27 @@ namespace Dash
                 var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(type);
                 p_parameter.expression = variable.Name;
             });
+            
+            menu.AddItem(new GUIContent("Expression Editor"), false, () =>
+            {
+                ExpressionEditorWindow.InitExpressionEditorWindow(p_parameter);
+            });
+
+            menu.AddSeparator("");
+            
+            if (p_parameter.isExpression)
+            {
+                if (p_parameter.IsDebug())
+                {
+                    menu.AddItem(new GUIContent("Disable Debug"), false,
+                        () => { p_parameter.SetDebug(false); });
+                }
+                else
+                {
+                    NodeModelBase model = p_object as NodeModelBase;
+                    menu.AddItem(new GUIContent("Enable Debug"), false, () => { p_parameter.SetDebug(true, p_name, model?.id); });
+                }
+            }
 
             menu.ShowAsContext();
         }

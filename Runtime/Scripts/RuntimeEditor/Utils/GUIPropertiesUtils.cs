@@ -10,7 +10,6 @@ using System.Reflection;
 using Dash.Attributes;
 using OdinSerializer.Utilities;
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEngine;
 using Object = System.Object;
 using TooltipAttribute = UnityEngine.TooltipAttribute;
@@ -317,7 +316,17 @@ namespace Dash
                     GUI.color = DashEditorCore.EditorConfig.theme.ParameterColor;
                     GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, p_fieldInfo, false, param);
-                    param.expression = GUILayout.TextArea(param.expression, GUILayout.ExpandWidth(true));
+                    string areaName = "Expression" + p_name.text;
+                    GUI.SetNextControlName(areaName);
+                    if (GUI.GetNameOfFocusedControl() == areaName)
+                    {
+                        param.expression = GUILayout.TextArea(param.expression, GUILayout.Width(180));
+                    }
+                    else
+                    {
+                        var expr = GUIUtils.GetMaxTextForStyleAndWidth(GUI.skin.textArea, param.IsDebug() ? 152 : 170, param.expression, "...");
+                        GUILayout.TextArea(expr, GUILayout.Width(param.IsDebug() ? 162 : 180));
+                    }
 
                     GUI.color = Color.white;
                     GUILayout.EndHorizontal();
@@ -352,13 +361,22 @@ namespace Dash
                 }
 
                 
-                GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
                 GUILayout.BeginVertical(GUILayout.Width(16));
                 GUILayout.Space(2);
+                GUILayout.BeginHorizontal();
+                GUI.color = Color.red;
+                if (param.IsDebug())
+                {
+                    GUILayout.Button(IconManager.GetIcon("debug_icon"), GUIStyle.none, GUILayout.Height(16),
+                        GUILayout.MaxWidth(16));
+                    GUILayout.Space(2);
+                }
+                GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
                 if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
                 {
-                    ParameterMenu.Show(param);
+                    ParameterMenu.Show(param, p_fieldInfo.Name, p_object);
                 }
+                GUILayout.EndHorizontal();
                 GUILayout.EndVertical();
                 GUI.color = Color.white;
                 
