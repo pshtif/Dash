@@ -680,6 +680,59 @@ namespace Dash
         }
         
         /**
+         * Inverse value
+         */
+        private static bool Inverse(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            {
+                errorMessage = "Invalid parameters in Inverse function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+            
+            Type paramType = evalParams[0].GetType();
+            if (paramType == typeof(int))
+            {
+                p_args.HasResult = true;
+                p_args.Result = -(int)evalParams[0];
+                return true;
+            }
+            
+            if (paramType == typeof(float))
+            {
+                p_args.HasResult = true;
+                p_args.Result = -(float)evalParams[0];
+                return true;
+            }
+            
+            if (paramType == typeof(double))
+            {
+                p_args.HasResult = true;
+                p_args.Result = -(float)evalParams[0];
+                return true;
+            }
+            
+            if (paramType == typeof(Vector2))
+            {
+                p_args.HasResult = true;
+                p_args.Result = -(Vector2)evalParams[0];
+                return true;
+            }
+            
+            if (paramType == typeof(Vector3))
+            {
+                p_args.HasResult = true;
+                p_args.Result = -(Vector3) evalParams[0];
+                return true;
+            }
+            
+            errorMessage = "Normalize function for type " + paramType + " is not implemented";
+            return false;
+        }
+        
+        /**
          * Ceiling function for number types
          */
         private static bool Ceil(FunctionArgs p_args)
