@@ -4,7 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.4
+### Release 0.13.5 
+
+#### Added
+
+- added new expression editor with highlighting
+- added expression debug so you can mark expressions for debug output
+
+#### Changed
+
+- changed expression UI to shortened version when out of focus
+
+#### Fixed
+
+- fixed null checks on retarget empty expressions
+
+### Release 0.13.4 - 11.11.2022
 
 #### Added
 
