@@ -2,6 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using OdinSerializer.Utilities;
 using UnityEngine;
 
 namespace Dash
@@ -10,6 +11,9 @@ namespace Dash
     {
         public static string GetMaxTextForStyleAndWidth(GUIStyle p_style, float p_width, string p_label, string p_suffix = "")
         {
+            if (p_label.IsNullOrWhitespace())
+                return p_label;
+            
             var maxLabel = p_label;
             Vector2 size = p_style.CalcSize(new GUIContent(maxLabel));
             while (maxLabel.Length > 0 && size.x > p_width)
