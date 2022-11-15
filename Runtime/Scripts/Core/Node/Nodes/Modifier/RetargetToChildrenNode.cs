@@ -32,11 +32,12 @@ namespace Dash
 
             var includeInactive = GetParameterValue(Model.targetInactive, p_flowData);
             float childDelay = GetParameterValue(Model.onChildDelay, p_flowData);
+            bool inReverse = GetParameterValue(Model.inReverse, p_flowData);
             int offset = 0;
             for (int i = 0; i < p_target.childCount; i++)
             {
-                Transform child = p_target.GetChild(Model.inReverse ? p_target.childCount - 1 - i : i);
-
+                Transform child = p_target.GetChild(inReverse ? p_target.childCount - 1 - i : i);
+                
                 if (!includeInactive && !child.gameObject.activeSelf)
                 {
                     offset++;
@@ -64,13 +65,14 @@ namespace Dash
                 }
             }
 
-            if (Model.onFinishDelay == 0 && childDelay == 0)
+            float onFinishDelay = GetParameterValue(Model.onFinishDelay, p_flowData);
+            if (onFinishDelay == 0 && childDelay == 0)
             {
                 ExecuteEnd(p_flowData);
             }
             else
             {
-                float time = Model.onFinishDelay + childDelay * (p_target.childCount - offset);
+                float time = onFinishDelay + childDelay * (p_target.childCount - offset);
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                 tween.OnComplete(() =>
                 {
@@ -91,7 +93,7 @@ namespace Dash
         public override bool IsSynchronous()
         {
             return !Model.onChildDelay.isExpression && Model.onChildDelay.GetValue(null) == 0 &&
-                   Model.onFinishDelay == 0;
+                   !Model.onFinishDelay.isExpression && Model.onFinishDelay.GetValue(null) == 0;
         }
         
         void ExecuteEnd(NodeFlowData p_flowData)
