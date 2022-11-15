@@ -26,11 +26,14 @@ namespace Dash.Editor
 
         private void OnGUI()
         {
-            if (_parameter == null || _parameter.expression == null)
+            if (_parameter == null)
             {
                 Close();
                 return;
             }
+
+            if (_parameter.expression == null)
+                _parameter.expression = "";
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleCenter;
@@ -74,6 +77,7 @@ namespace Dash.Editor
             int previousCursorIndex = editor.cursorIndex;
             int previousSelectionIndex = editor.selectIndex;
 
+            Color previousColor = Color.white;
             editor.MoveTextStart();
             while (editor.cursorIndex != editor.text.Length)
             {
@@ -82,6 +86,10 @@ namespace Dash.Editor
                 //Debug.Log(editor.selectIndex+", "+editor.cursorIndex+" : "+editor.SelectedText+" : "+color);
 
                 GUI.contentColor = color; 
+                if (color == Color.white && previousColor == new Color(0.2f, 1f, .2f))
+                {
+                    GUI.contentColor = new Color(0.2f, 1f, .2f);
+                }
              
                 Vector2 pixelselpos = style.GetCursorPixelPosition(editor.position, new GUIContent(editor.text), editor.selectIndex);
                 Vector2 pixelpos = style.GetCursorPixelPosition(editor.position, new GUIContent(editor.text), editor.cursorIndex);
@@ -93,6 +101,7 @@ namespace Dash.Editor
                 }
 
                 editor.selectIndex = editor.cursorIndex;
+                previousColor = color;
             }
             
             Vector2 bkpixelselpos = style.GetCursorPixelPosition(editor.position, new GUIContent(editor.text), previousSelectionIndex);    
