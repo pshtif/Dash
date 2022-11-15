@@ -43,9 +43,9 @@ namespace Dash.Editor
                     menu.AddItem(new GUIContent("Create Comment"), false, p_node.CreateComment);
                 }
                 
-                menu.AddSeparator("");
                 if (p_node is SubGraphNode)
                 {
+                    menu.AddSeparator("");
                     menu.AddItem(new GUIContent("Unpack SubGraph"), false, UnpackSubGraph, p_node);
                 }
 
