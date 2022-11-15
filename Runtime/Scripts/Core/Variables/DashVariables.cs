@@ -164,6 +164,7 @@ namespace Dash
         public void RemoveVariable(string p_name)
         {
             variables.RemoveAll(v => v.Name == p_name);
+            (this as IInternalVariablesAccess).InvalidateLookup();
         }
         
         public Variable RenameVariable(string p_oldName, string p_newName)
