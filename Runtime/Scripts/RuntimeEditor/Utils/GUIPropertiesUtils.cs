@@ -325,7 +325,7 @@ namespace Dash
                     else
                     {
                         var expr = GUIUtils.GetMaxTextForStyleAndWidth(GUI.skin.textArea, param.IsDebug() ? 152 : 170, param.expression, "...");
-                        GUILayout.TextArea(expr, GUILayout.Width(param.IsDebug() ? 162 : 180));
+                        GUILayout.TextArea(expr, GUILayout.ExpandWidth(true));//Width(param.IsDebug() ? 162 : 180));
                     }
 
                     GUI.color = Color.white;
