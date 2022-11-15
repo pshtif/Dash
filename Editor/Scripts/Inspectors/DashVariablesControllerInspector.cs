@@ -23,7 +23,7 @@ namespace Dash
             GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
             if (GUILayout.Button("Add Variable", GUILayout.Height(24)))
             {
-                VariableTypesMenu.Show((type) => variablesController.Variables.AddNewVariable(type));
+                VariableTypesMenu.Show(variablesController.Variables, GetGraphOnGameObject());
             }
             GUI.color = Color.white;
             
@@ -32,6 +32,12 @@ namespace Dash
                 PrefabUtility.RecordPrefabInstancePropertyModifications(target);
                 EditorUtility.SetDirty(target);
             }
+        }
+
+        public DashGraph GetGraphOnGameObject()
+        {
+            var controller = variablesController.GetComponent<DashController>();
+            return controller != null ? controller.Graph : null;
         }
     }
 }

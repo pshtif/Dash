@@ -14,7 +14,7 @@ namespace Dash
 {
     public class DashCore
     {
-        public const string VERSION = "0.13.4";
+        public const string VERSION = "0.13.5";
         
         public DashRuntimeConfig Config { get; private set; }
         

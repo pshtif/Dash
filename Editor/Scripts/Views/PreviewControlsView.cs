@@ -32,7 +32,7 @@ namespace Dash.Editor
             {
                 Rect rect = new Rect(p_rect.width / 2 - 220, p_rect.height - 80, 440, 70);
 
-                DrawBoxGUI(rect, "Preview Controls", TextAnchor.MiddleLeft, Color.white, Color.white, Color.white);
+                DrawBoxGUI(rect, "  Preview Controls", TextAnchor.MiddleLeft, Color.white, Color.white, Color.white);
                 
                 GUI.color = Color.yellow;
                 GUI.DrawTexture(new Rect(rect.x + 132, rect.y + 7, 16, 16), IconManager.GetIcon("experimental_icon"));

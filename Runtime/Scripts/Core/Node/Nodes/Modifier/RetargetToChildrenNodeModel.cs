@@ -18,25 +18,23 @@ namespace Dash
         [Order(11)]
         [UnityEngine.Tooltip("Delay in execution after last child executed.")]
         [TitledGroup("Properties")]
-        [HideInInspector]
-        public float onFinishDelay = 0;
+        public Parameter<float> onFinishDelay = new Parameter<float>(0);
 
         [Order(11)]
         [UnityEngine.Tooltip("Delay in execution after last child executed.")]
         [TitledGroup("Properties")]
-        [Label("onFinishDelay")]
+        [HideInInspector]
         public Parameter<float> onFinishDelayP = new Parameter<float>(0);
+
+        [Order(12)] 
+        [UnityEngine.Tooltip("Iterates child in reverse order.")]
+        [TitledGroup("Properties")]
+        public Parameter<bool> inReverse = new Parameter<bool>(false);
 
         [Order(12)]
         [UnityEngine.Tooltip("Iterates child in reverse order.")]
         [TitledGroup("Properties")]
         [HideInInspector]
-        public bool inReverse = false;
-
-        [Order(12)]
-        [UnityEngine.Tooltip("Iterates child in reverse order.")]
-        [TitledGroup("Properties")]
-        [Label("inReverse")]
         public Parameter<bool> inReverseP = new Parameter<bool>(false);
         
         [Order(13)]
@@ -53,14 +51,37 @@ namespace Dash
                 targetInactive = new Parameter<bool>(true);
             }
             
-            if (onFinishDelayP == null)
+            if (onFinishDelay == null)
             {
-                onFinishDelayP = new Parameter<float>(onFinishDelay);
+                onFinishDelay = new Parameter<float>(0);
+
+                if (onFinishDelayP != null)
+                {
+                    if (onFinishDelayP.isExpression)
+                    {
+                        onFinishDelay.expression = onFinishDelayP.expression;
+                    }
+                    else
+                    {
+                        onFinishDelay.SetValue(onFinishDelayP.GetValue(null));
+                    }
+                }
             }
             
-            if (inReverseP == null)
+            if (inReverse == null)
             {
-                inReverseP = new Parameter<bool>(inReverse);
+                inReverse = new Parameter<bool>(false);
+                if (inReverseP != null)
+                {
+                    if (inReverseP.isExpression)
+                    {
+                        inReverse.expression = inReverseP.expression;
+                    }
+                    else
+                    {
+                        inReverse.SetValue(inReverseP.GetValue(null));
+                    }
+                }
             }
 #pragma warning restore 612, 618 
         }

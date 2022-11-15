@@ -177,7 +177,7 @@ namespace Dash
 
         string ShortenExpression(GUIStyle p_style, string p_expression)
         {
-            var label = GUIUtils.GetMaxLabelForStyleAndWidth(p_style, 85, p_expression);
+            var label = GUIUtils.GetMaxTextForStyleAndWidth(p_style, 85, p_expression);
 
             return label == p_expression ? label : label + "...";
         }

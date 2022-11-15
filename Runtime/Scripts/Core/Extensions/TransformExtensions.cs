@@ -100,7 +100,7 @@ namespace Dash
 
         public static Transform Find(this Transform p_parent, string p_name, bool p_includeInactive = false)
         {
-            if (p_parent == null)
+            if (p_parent == null || p_name.IsNullOrWhitespace())
                 return null;
             
             string[] split = p_name.Split('/');
