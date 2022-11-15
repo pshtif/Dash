@@ -21,7 +21,7 @@ namespace Dash
 
             if (p_parameter.isExpression)
             {
-                menu.AddItem(new GUIContent("Direct Value"), false, () =>
+                menu.AddItem(new GUIContent("Value"), false, () =>
                 {
                     p_parameter.isExpression = false;
                     p_parameter.expression = "";
@@ -29,7 +29,7 @@ namespace Dash
             }
             else
             {
-                menu.AddItem(new GUIContent("Custom Expression"), false, () =>
+                menu.AddItem(new GUIContent("Expression"), false, () =>
                 {
                     p_parameter.ClearValue();
                     p_parameter.isExpression = true;
@@ -54,16 +54,16 @@ namespace Dash
                 var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(type);
                 p_parameter.expression = variable.Name;
             });
-            
-            menu.AddItem(new GUIContent("Expression Editor"), false, () =>
-            {
-                ExpressionEditorWindow.InitExpressionEditorWindow(p_parameter);
-            });
 
-            menu.AddSeparator("");
-            
             if (p_parameter.isExpression)
             {
+                menu.AddItem(new GUIContent("Expression Editor"), false, () =>
+                {
+                    ExpressionEditorWindow.InitExpressionEditorWindow(p_parameter);
+                });
+
+                menu.AddSeparator("");
+                
                 if (p_parameter.IsDebug())
                 {
                     menu.AddItem(new GUIContent("Disable Debug"), false,
