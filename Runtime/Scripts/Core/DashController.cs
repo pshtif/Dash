@@ -9,6 +9,7 @@ using System.Linq;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
+using UnityEngine.Profiling;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 #endif
@@ -24,6 +25,8 @@ namespace Dash
         [HideInInspector]
         [SerializeField]
         protected DashGraph _assetGraph;
+
+        public bool createGraphCopy = true;
 
         [HideInInspector]
         [SerializeField] 
@@ -102,7 +105,9 @@ namespace Dash
                 }
                 else
                 {
+                    Profiler.BeginSample("InstantiateGraph");
                     InstanceAssetGraph();
+                    Profiler.EndSample();
                 }
             }
 
@@ -128,8 +133,8 @@ namespace Dash
         {
             if (_assetGraph == null)
                 return;
-
-            _graphInstance = _assetGraph.Clone();
+            
+            _graphInstance = createGraphCopy ? _assetGraph.Clone() : _assetGraph;
         }
         
         public bool autoStart = false;
@@ -190,11 +195,11 @@ namespace Dash
 
         void Start()
         {
-            if (Graph == null)
-                return;
-
             if (autoStart)
             {
+                if (Graph == null)
+                    return;
+                
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.START, this));
 #endif
@@ -205,11 +210,10 @@ namespace Dash
 
         private void OnEnable()
         {
-            if (Graph == null)
-                return;
-            
             if (autoOnEnable)
             {
+                if (Graph == null)
+                    return;
 #if UNITY_EDITOR
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONENABLE, this));
 #endif
