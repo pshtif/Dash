@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 #### Fixed
 
 - fixed null checks on retarget empty expressions
+- fixed parametrization of RetargetToChildrenNode
 
 ### Release 0.13.4 - 11.11.2022
 
