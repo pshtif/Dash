@@ -4,16 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.5 
+### Release 0.13.5 - 25.11.2022
 
 #### Added
 
+- added CreateGraphCopy to DashController to have an option to disable cloning graph asset instances (95% performance boost when copying not needed)
 - added new expression editor with highlighting
 - added expression debug so you can mark expressions for debug output
 
 #### Changed
 
 - changed expression UI to shortened version when out of focus
+- changed minor optimizations to avoid graph initialization on OnEnable/Start when inputs are not enabled
+- changed obsolete unreachable code cleanup
 
 #### Fixed
 
