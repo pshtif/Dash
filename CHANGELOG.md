@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 #### Changed
 
+- changed primary support Unity version from 2019.3 to 2020.3 version
 - changed expression UI to shortened version when out of focus
 - changed minor optimizations to avoid graph initialization on OnEnable/Start when inputs are not enabled
 - changed obsolete unreachable code cleanup
