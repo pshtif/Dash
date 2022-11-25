@@ -4,11 +4,12 @@
 
 using System;
 using System.Reflection;
-using Dash.Editor;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 using Object = System.Object;
+#if UNITY_EDITOR
+using Dash.Editor;
+#endif
 
 namespace Dash
 {

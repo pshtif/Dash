@@ -304,97 +304,87 @@ namespace Dash
             }
             
             // Can happen due to serialization/migration error
-            if (param != null)
+            EditorGUI.BeginChangeCheck();
+                
+            EditorGUILayout.BeginHorizontal();
+            
+            if (param.isExpression)
             {
-                EditorGUI.BeginChangeCheck();
-                
-                EditorGUILayout.BeginHorizontal();
-                
-                if (param.isExpression)
+                GUILayout.BeginHorizontal();
+                GUI.color = DashEditorCore.EditorConfig.theme.ParameterColor;
+                GUILayout.Label(p_name, GUILayout.Width(160));
+                HandleReferencing(p_reference, p_fieldInfo, false, param);
+                string areaName = "Expression" + p_name.text;
+                GUI.SetNextControlName(areaName);
+                if (GUI.GetNameOfFocusedControl() == areaName)
                 {
-                    GUILayout.BeginHorizontal();
-                    GUI.color = DashEditorCore.EditorConfig.theme.ParameterColor;
-                    GUILayout.Label(p_name, GUILayout.Width(160));
-                    HandleReferencing(p_reference, p_fieldInfo, false, param);
-                    string areaName = "Expression" + p_name.text;
-                    GUI.SetNextControlName(areaName);
-                    if (GUI.GetNameOfFocusedControl() == areaName)
-                    {
-                        param.expression = GUILayout.TextArea(param.expression, GUILayout.Width(180));
-                    }
-                    else
-                    {
-                        var expr = GUIUtils.GetMaxTextForStyleAndWidth(GUI.skin.textArea, param.IsDebug() ? 152 : 170, param.expression, "...");
-                        GUILayout.TextArea(expr, GUILayout.ExpandWidth(true));//Width(param.IsDebug() ? 162 : 180));
-                    }
-
-                    GUI.color = Color.white;
-                    GUILayout.EndHorizontal();
+                    param.expression = GUILayout.TextArea(param.expression, GUILayout.Width(180));
                 }
                 else
                 {
-                    ButtonAttribute button = p_fieldInfo.GetAttribute<ButtonAttribute>();
-                    if (button != null)
-                    {
-                        GUILayout.Label(p_name, GUILayout.Width(160));
-                        if (param.IsDefault())
-                        {
-                            GUI.color = Color.yellow;
-                            if (GUILayout.Button(button.NullLabel))
-                            {
-                                MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
-                                param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
-                            }
-                            GUI.color = Color.white;
-                        }
-                        else
-                        {
-                            if (GUILayout.Button(button.NonNullLabel))
-                            {
-                                MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
-                                param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
-                            }
-                        }
-                    } else {
-                        PropertyField(param.GetValueFieldInfo(), param, p_reference, p_fieldInfo);
-                    }
+                    var expr = GUIUtils.GetMaxTextForStyleAndWidth(GUI.skin.textArea, param.IsDebug() ? 152 : 170, param.expression, "...");
+                    GUILayout.TextArea(expr, GUILayout.ExpandWidth(true));//Width(param.IsDebug() ? 162 : 180));
                 }
 
-                
-                GUILayout.BeginVertical(GUILayout.Width(16));
-                GUILayout.Space(2);
-                GUILayout.BeginHorizontal();
-                GUI.color = Color.red;
-                if (param.IsDebug())
-                {
-                    GUILayout.Button(IconManager.GetIcon("debug_icon"), GUIStyle.none, GUILayout.Height(16),
-                        GUILayout.MaxWidth(16));
-                    GUILayout.Space(2);
-                }
-                GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
-                if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
-                {
-                    ParameterMenu.Show(param, p_fieldInfo.Name, p_object);
-                }
-                GUILayout.EndHorizontal();
-                GUILayout.EndVertical();
                 GUI.color = Color.white;
-                
-                EditorGUILayout.EndHorizontal();
-                
-                EditorGUILayout.Space(4);
-
-                if (EditorGUI.EndChangeCheck())
-                {
-                    return true;
-                }
+                GUILayout.EndHorizontal();
             }
             else
             {
-                GUI.color = Color.red;
-                GUILayout.Label("Serialization error on " + p_fieldInfo.Name+"\nYou can use SerializationInvalidation in menu to try fix this.");
-                EditorGUILayout.Space(2);
-                GUI.color = Color.white;
+                ButtonAttribute button = p_fieldInfo.GetAttribute<ButtonAttribute>();
+                if (button != null)
+                {
+                    GUILayout.Label(p_name, GUILayout.Width(160));
+                    if (param.IsDefault())
+                    {
+                        GUI.color = Color.yellow;
+                        if (GUILayout.Button(button.NullLabel))
+                        {
+                            MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                        }
+                        GUI.color = Color.white;
+                    }
+                    else
+                    {
+                        if (GUILayout.Button(button.NonNullLabel))
+                        {
+                            MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                        }
+                    }
+                } else {
+                    PropertyField(param.GetValueFieldInfo(), param, p_reference, p_fieldInfo);
+                }
+            }
+
+            
+            GUILayout.BeginVertical(GUILayout.Width(16));
+            GUILayout.Space(2);
+            GUILayout.BeginHorizontal();
+            GUI.color = Color.red;
+            if (param.IsDebug())
+            {
+                GUILayout.Button(IconManager.GetIcon("debug_icon"), GUIStyle.none, GUILayout.Height(16),
+                    GUILayout.MaxWidth(16));
+                GUILayout.Space(2);
+            }
+            GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
+            if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
+            {
+                ParameterMenu.Show(param, p_fieldInfo.Name, p_object);
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+            GUI.color = Color.white;
+            
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.Space(4);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                return true;
             }
 
             return false;

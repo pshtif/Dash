@@ -4,4 +4,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Dash.Editor")]
+[assembly: InternalsVisibleTo("DashEditor")]
