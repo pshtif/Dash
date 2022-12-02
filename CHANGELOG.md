@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 #### Changed
 
+- changed connection handling now changed to industry standard drag+drop
 - changed AnimateWithPresetNode is made obsolete will be removed [BREAKING]
 - changed AccumulationNode is no longer experimental
 - changed windows/tools cleanup refactor
