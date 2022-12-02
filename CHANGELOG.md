@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.6 - 30.11.2022
+### Release 0.13.6 - 2.12.2022
 
 #### Added
 
