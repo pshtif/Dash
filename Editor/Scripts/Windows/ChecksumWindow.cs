@@ -242,7 +242,7 @@ namespace Dash.Editor
             var timestamp = now.ToString("dd'_'MM'_'yyyy'_'HH'_'mm'_'ss");
 
             List<(string,DashGraph,byte[])> scannedGraphs;
-            DashScanner.ScanForJson(out scannedGraphs);
+            DashScanner.ScanForChecksum(out scannedGraphs);
             
             DashChecksumObject checksumObject = ScriptableObject.CreateInstance<DashChecksumObject>();
             checksumObject.scannedGraphs = new List<string>();

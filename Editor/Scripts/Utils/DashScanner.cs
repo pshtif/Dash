@@ -27,9 +27,9 @@ namespace Dash.Editor
 
     public static class DashScanner
     {
-        public static void ScanForJson(out List<(string,DashGraph, byte[])> p_graphs)
+        public static void ScanForChecksum(out List<(string,DashGraph, byte[])> p_graphs)
         {
-            StartJsonScan(out p_graphs);
+            StartChecksumScan(out p_graphs);
         }
         
         public static void ScanForAOT()
@@ -85,7 +85,7 @@ namespace Dash.Editor
             return _registeredTypes;
         }
 
-        private static void StartJsonScan(out List<(string,DashGraph, byte[])> p_graphs)
+        private static void StartChecksumScan(out List<(string,DashGraph, byte[])> p_graphs)
         {
             _graphs = new List<(string,DashGraph, byte[])>();
 
@@ -93,6 +93,11 @@ namespace Dash.Editor
             ScanAssets(true);
 
             p_graphs = _graphs;
+        }
+
+        private static void StartUpdateScan()
+        {
+            ScanAssets(true);
         }
 
         private static void OnLocatedEmitType(Type p_type)
@@ -179,14 +184,14 @@ namespace Dash.Editor
             return ScanScenes(scenePaths, p_includeSceneDependencies, p_jsonScan);
         }
 
-        private static bool ScanAssets(bool p_jsonScan)
+        private static bool ScanAssets(bool p_checksumScan)
         {
             _scannedAssets = new List<string>();
             var graphs = AssetsUtils.FindAssetsByType<DashGraph>();
 
             foreach (var graph in graphs)
             {
-                ScanAsset(AssetDatabase.GetAssetPath(graph), false, p_jsonScan);
+                ScanAsset(AssetDatabase.GetAssetPath(graph), false, p_checksumScan);
             }
 
             return true;
@@ -354,7 +359,7 @@ namespace Dash.Editor
             }
         }
 
-        private static bool ScanAsset(string p_assetPath, bool p_includeAssetDependencies, bool p_jsonScan)
+        private static bool ScanAsset(string p_assetPath, bool p_includeAssetDependencies, bool p_checksumScan)
         {
             if (_scannedScenes.Contains(p_assetPath))
                 return false;
@@ -363,7 +368,7 @@ namespace Dash.Editor
             
             if (p_assetPath.EndsWith(".unity"))
             {
-                return ScanScenes(new string[] {p_assetPath}, p_includeAssetDependencies, p_jsonScan);
+                return ScanScenes(new string[] {p_assetPath}, p_includeAssetDependencies, p_checksumScan);
             }
 
             if (!(p_assetPath.EndsWith(".asset") || p_assetPath.EndsWith(".prefab")))
@@ -388,7 +393,7 @@ namespace Dash.Editor
                 {
                     if (asset == null) continue;
 
-                    ScanObject(asset, p_jsonScan);
+                    ScanObject(asset, p_checksumScan);
                 }
 
                 if (p_includeAssetDependencies)
@@ -398,7 +403,7 @@ namespace Dash.Editor
                     foreach (var dependency in dependencies)
                     {
                         // All dependencies were already included recursively by Unity
-                        ScanAsset(dependency, false, p_jsonScan); 
+                        ScanAsset(dependency, false, p_checksumScan); 
                     }
                 }
 
