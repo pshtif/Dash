@@ -28,7 +28,7 @@ namespace Dash.Editor
 
         public static List<(string,Color)> messages = new List<(string,Color)>();
         
-        [MenuItem ("Tools/Dash/Console")]
+        [MenuItem ("Tools/Dash/Debug/Console")]
         public static ConsoleWindow InitConsoleWindow()
         {
             Instance = GetWindow<ConsoleWindow>();

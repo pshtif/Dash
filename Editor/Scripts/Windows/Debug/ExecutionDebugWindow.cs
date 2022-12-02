@@ -20,7 +20,7 @@ namespace Dash.Editor
         
         public static ExecutionDebugWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Execution Debug")]
+        [MenuItem ("Tools/Dash/Debug/Execution")]
         public static ExecutionDebugWindow InitDebugWindow()
         {
             Instance = GetWindow<ExecutionDebugWindow>();
