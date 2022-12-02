@@ -58,10 +58,10 @@ namespace Dash
             if (!IsValid())
                 return;
 
-            Rect outputRect = outputNode.GetConnectorRect(false, outputIndex);
+            Rect outputRect = outputNode.GetConnectorRect(ConnectorType.OUTPUT, outputIndex);
             Vector3 startPos = new Vector3(outputRect.x + outputRect.width / 2, outputRect.y + outputRect.height / 2);
 
-            Rect inputRect = inputNode.GetConnectorRect(true, inputIndex);
+            Rect inputRect = inputNode.GetConnectorRect(ConnectorType.INPUT, inputIndex);
             Vector3 endPos = new Vector3(inputRect.x + inputRect.width / 2, inputRect.y + inputRect.height / 2);
 
             Color connectionColor = active
@@ -76,7 +76,7 @@ namespace Dash
             
             DrawBezier(startPos, endPos, connectionColor, true);
 
-            DrawButton(startPos, endPos, connectionColor);
+            //DrawButton(startPos, endPos, connectionColor);
 
             Handles.EndGUI();
         }
@@ -102,23 +102,23 @@ namespace Dash
                 startTan, endTan) < p_distance;
         }
 
-        void DrawButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
-        {
-            var pos = (p_startPos + p_endPos) / 2;
-            var buttonRect = new Rect(pos.x - 6, pos.y - 6, 12, 12);
-            
-            //GUI.color = buttonRect.Contains(Event.current.mousePosition) ? Color.green : p_connectionColor;
-            GUI.color = p_connectionColor;
-            GUI.Box(buttonRect, "", DashEditorCore.Skin.GetStyle("NodeReconnect"));
-
-            if (Event.current.button == 0)
-            {
-                if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
-                {
-                    DashEditorCore.EditorConfig.editingGraph.Reconnect(this); 
-                }
-            }
-        }
+        // void DrawButton(Vector2 p_startPos, Vector2 p_endPos, Color p_connectionColor)
+        // {
+        //     var pos = (p_startPos + p_endPos) / 2;
+        //     var buttonRect = new Rect(pos.x - 6, pos.y - 6, 12, 12);
+        //     
+        //     //GUI.color = buttonRect.Contains(Event.current.mousePosition) ? Color.green : p_connectionColor;
+        //     GUI.color = p_connectionColor;
+        //     GUI.Box(buttonRect, "", DashEditorCore.Skin.GetStyle("NodeReconnect"));
+        //
+        //     if (Event.current.button == 0)
+        //     {
+        //         if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition))
+        //         {
+        //             DashEditorCore.EditorConfig.editingGraph.Reconnect(this); 
+        //         }
+        //     }
+        // }
 
         static public void DrawBezier(Vector3 p_startPos, Vector3 p_endPos, Color p_color, bool p_shadow)
         {
@@ -141,15 +141,24 @@ namespace Dash
             Handles.EndGUI();
         }
         
-        static public void DrawConnectionToMouse(NodeBase p_outputNode, int p_outputIndex, Vector2 p_mousePosition)
+        static public void DrawConnectionToMouse(NodeBase p_node, int p_connectorIndex, ConnectorType p_connectorType, Vector2 p_mousePosition)
         {
-            if (p_outputNode == null)
+            if (p_node == null)
                 return;
             
-            Rect outputRect = p_outputNode.GetConnectorRect(false, p_outputIndex);
-            Vector3 startPos = new Vector3(outputRect.x + outputRect.width / 2, outputRect.y + outputRect.height / 2);
+            Rect connectorRect = p_node.GetConnectorRect(p_connectorType, p_connectorIndex);
+            Vector3 connectorPos = new Vector3(connectorRect.x + connectorRect.width / 2,
+                connectorRect.y + connectorRect.height / 2);
 
-            DrawBezier(startPos, p_mousePosition, Color.green, false);
+            switch (p_connectorType)
+            {
+                case ConnectorType.INPUT:
+                    DrawBezier(p_mousePosition, connectorPos, Color.green, false);
+                    break;
+                case ConnectorType.OUTPUT:
+                    DrawBezier(connectorPos, p_mousePosition, Color.green, false);
+                    break;
+            }
         }
         #endif
     }

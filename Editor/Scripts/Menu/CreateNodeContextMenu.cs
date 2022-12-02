@@ -38,7 +38,7 @@ namespace Dash.Editor
             {
                 foreach (var graph in DashEditorCore.GraphAssets)
                 {
-                    if (graph == null)
+                    if (graph == null || graph == DashEditorCore.EditorConfig.editingGraph)
                         continue;
                     
                     menu.AddItem(new GUIContent("Graphs/" + graph.name, ""), false, CreateGraphNode,
@@ -219,11 +219,17 @@ namespace Dash.Editor
 
         static void CreateNode(object p_nodeType)
         {
+            var graph = DashEditorCore.EditorConfig.editingGraph;
             float zoom = DashEditorCore.EditorConfig.zoom;
-            Vector2 offset = DashEditorCore.EditorConfig.editingGraph.viewOffset;
+            Vector2 offset = graph.viewOffset;
             Vector2 position = new Vector2(_lastMousePosition.x * zoom - offset.x, _lastMousePosition.y * zoom - offset.y);
             
-            NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, (Type)p_nodeType, position);
+            var node = NodeUtils.CreateNode(graph, (Type)p_nodeType, position);
+
+            if (SelectionManager.connectingNode != null)
+            {
+                SelectionManager.EndConnection(node, 0);
+            }
         }
         
         static void CreateGraphNode(object p_graph)
@@ -244,6 +250,11 @@ namespace Dash.Editor
             node.Model.graphAsset = (DashGraph)p_graph;
 
             DashEditorCore.SetDirty();
+            
+            if (SelectionManager.connectingNode != null)
+            {
+                SelectionManager.EndConnection(node, 0);
+            }
         }
         
         static public int CategorySort(Type p_type1, Type p_type2)
@@ -274,6 +285,12 @@ namespace Dash.Editor
             {
                 return p_categoryLabel1.CompareTo(p_categoryLabel2);
             }
+
+            if (index1 == -1)
+                return 1;
+
+            if (index2 == -1)
+                return -1;
             
             return CompareCategoryLabel(p_categoryLabel1.Substring(index1 + 1),
                 p_categoryLabel2.Substring(index2 + 1));
