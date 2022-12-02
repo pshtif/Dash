@@ -28,7 +28,7 @@ namespace Dash
         
         private static string[] names = { "controller", "mousePosition" };
 
-        public static bool IsGlobalVariable(string p_name)
+        public static bool IsReservedParameter(string p_name)
         {
             return names.Contains(p_name);
         }

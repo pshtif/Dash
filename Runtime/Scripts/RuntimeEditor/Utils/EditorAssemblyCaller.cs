@@ -12,7 +12,6 @@ namespace Dash
 {
     public class EditorAssemblyCaller
     {
-        // I did this hack since Unity's Editor stuff is obviously in a different assembly and can't be directly called from within non-editor assembly
         public static void Call(string p_className, string p_methodName, [CanBeNull] object[] p_parameters)
         {
             // Debug.Log("Call: "+p_className+", "+p_methodName+", "+p_parameters.Length);
