@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Experimental]
     [Attributes.Tooltip("Accumulates inputs and executes after set of conditions.")]
     [Category(NodeCategoryType.LOGIC)]
     [OutputCount(1)]
