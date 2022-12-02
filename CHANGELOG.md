@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.6 - 30.11.2022
+
+#### Added
+
+- added new experimental nodes CustomExecute and CustomExecuteAsync for custom execution without node override
+- added new graph scanning that will replace checksum/aot scanning in final version once Bound removed
+
+#### Changed
+
+- changed AnimateWithPresetNode is made obsolete will be removed [BREAKING]
+- changed AccumulationNode is no longer experimental
+- changed windows/tools cleanup refactor
+- changed GetParent expression function was put back
+
+#### Fixed
+
+- fix node creation now correctly doesn't offer creation of subgraph node inside the same graph
+
 ### Release 0.13.5 - 25.11.2022
 
 #### Added
