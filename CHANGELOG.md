@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.7 - 4.12.2022
+
+#### Fixed
+
+- fixed annoying bug with graph scanning upon Unity startup and stuck windows
+
 ### Release 0.13.6 - 2.12.2022
 
 #### Added
