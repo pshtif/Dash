@@ -31,16 +31,24 @@ namespace Dash.Editor
         [MenuItem ("Tools/Dash/Debug/Console")]
         public static ConsoleWindow InitConsoleWindow()
         {
-            Instance = GetWindow<ConsoleWindow>();
-            Instance.Initialize();
+            if (Instance == null)
+            {
+                Instance = GetWindow<ConsoleWindow>();
+                Instance.Initialize();
+            }
+            Instance.Show();
 
             return Instance;
         }
 
         public static void RunInitialGraphScan()
         {
-            Instance = GetWindow<ConsoleWindow>();
-            Instance.Initialize();
+            if (Instance == null)
+            {
+                Instance = GetWindow<ConsoleWindow>();
+                Instance.Initialize();
+            }
+            Instance.Show();
             
             AddMessage(("Version upgraded from "+DashCore.GetVersionString(DashEditorCore.EditorConfig.lastUsedVersion)+" to "+DashCore.GetVersionString(DashCore.GetVersionNumber()), Color.white));
             AddMessage(("Performing graph scanning...", Color.white));
