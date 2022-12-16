@@ -266,7 +266,7 @@ namespace Dash.Editor
 
             if (p_event.type == EventType.MouseDown)
             {
-                SelectionManager.EndConnection();
+                SelectionManager.EndConnectionDrag();
                 GUI.FocusControl("");
             }
             
@@ -284,7 +284,7 @@ namespace Dash.Editor
 
                     if (connectorIndex >= 0)
                     {
-                        SelectionManager.StartConnection(hitNode, connectorIndex, ConnectorType.OUTPUT, mousePosition);
+                        SelectionManager.StartConnectionDrag(hitNode, connectorIndex, ConnectorType.OUTPUT, mousePosition);
                     }
                     else
                     {
@@ -292,7 +292,7 @@ namespace Dash.Editor
 
                         if (connectorIndex >= 0)
                         {
-                            SelectionManager.StartConnection(hitNode, connectorIndex, ConnectorType.INPUT, mousePosition);
+                            SelectionManager.StartConnectionDrag(hitNode, connectorIndex, ConnectorType.INPUT, mousePosition);
                         }
                         else
                         {
@@ -388,7 +388,7 @@ namespace Dash.Editor
                                 : ConnectorType.INPUT;
                         }
                         
-                        SelectionManager.EndConnection(hitNode, connectorIndex);
+                        SelectionManager.EndConnectionDrag(hitNode, connectorIndex);
                     }
                     else
                     {
@@ -464,7 +464,7 @@ namespace Dash.Editor
             }
             else
             {
-                SelectionManager.EndConnection();
+                SelectionManager.EndConnectionDrag();
             }
         }
 

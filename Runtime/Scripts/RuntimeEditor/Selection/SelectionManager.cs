@@ -31,7 +31,7 @@ namespace Dash
             return connectingNode != null;
         }
         
-        public static void StartConnection(NodeBase p_node, int p_connectorIndex, ConnectorType p_connectorType, Vector2 p_mousePosition)
+        public static void StartConnectionDrag(NodeBase p_node, int p_connectorIndex, ConnectorType p_connectorType, Vector2 p_mousePosition)
         {
             connectingNode = p_node;
             connectingIndex = p_connectorIndex;
@@ -39,7 +39,7 @@ namespace Dash
             connectingPosition = p_mousePosition;
         }
 
-        public static void EndConnection(NodeBase p_node = null, int p_index = -1)
+        public static void EndConnectionDrag(NodeBase p_node = null, int p_index = -1)
         {
             if (p_node != null && p_index >= 0)
             {
