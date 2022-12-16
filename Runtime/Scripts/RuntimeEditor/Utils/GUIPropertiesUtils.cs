@@ -38,8 +38,7 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, IReferencable p_reference, FieldInfo p_parentInfo = null) 
-            //string p_name = null, bool p_drawLabel = true)
+        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, IReferencable p_reference, FieldInfo p_parentInfo = null)
         {
             if (IsHidden(p_fieldInfo))
                 return false;
