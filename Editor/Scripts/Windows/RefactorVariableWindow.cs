@@ -110,8 +110,8 @@ namespace Dash.Editor
                         GUILayout.Label(field.Name);
 
                         GUILayout.FlexibleSpace();
-
-                        var expression = field.GetReturnType() == typeof(Parameter)
+                        
+                        var expression = typeof(Parameter).IsAssignableFrom(field.GetReturnType())
                             ? (field.GetValue(pair.Key.GetModel()) as Parameter).expression
                             : (field.GetValue(pair.Key.GetModel()) as string);
                         
@@ -122,7 +122,6 @@ namespace Dash.Editor
                         GUI.color = Color.white;
                         GUILayout.Label("=>");
                         GUILayout.FlexibleSpace();
-                        
                         
                         expression = expression.Replace(_variableName, _refactoredName);
                         GUI.color = Color.green;
@@ -206,7 +205,7 @@ namespace Dash.Editor
             {
                 foreach (var field in pair.Value)
                 {
-                    if (field.GetReturnType() == typeof(Parameter)) 
+                    if (typeof(Parameter).IsAssignableFrom(field.GetReturnType())) 
                     {
                         var parameter = (field.GetValue(pair.Key.GetModel()) as Parameter);
                         var newExpression = parameter.expression.Replace(_variableName, _refactoredName);
