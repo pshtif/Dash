@@ -13,31 +13,17 @@ namespace Dash.Editor
     public class PrefabWindow : UnityEditor.EditorWindow
     {
         public static PrefabWindow Instance { get; private set; }
-
-        [MenuItem ("Tools/Dash/Prefabs")]
-        public static PrefabWindow InitDebugWindow()
+        
+        public static void Init()
         {
             Instance = GetWindow<PrefabWindow>();
             Instance.titleContent = new GUIContent("Dash Prefab Editor (Preview)");
             Instance.minSize = new Vector2(800, 400);
-
-            return Instance;
         }
 
         private Vector2 _scrollPositionPrefabs;
         private Vector2 _scrollPositionProperties;
         private PrefabInfo _selectedPrefabInfo;
-        
-        private void OnEnable()
-        {
-          
-        }
-        
-        private void OnDisable()
-        {
-            
-        }
-        
 
         private void OnGUI()
         {

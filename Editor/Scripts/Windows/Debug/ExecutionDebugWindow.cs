@@ -20,14 +20,11 @@ namespace Dash.Editor
         
         public static ExecutionDebugWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Debug/Execution")]
-        public static ExecutionDebugWindow InitDebugWindow()
+        public static void Init()
         {
             Instance = GetWindow<ExecutionDebugWindow>();
             Instance.titleContent = new GUIContent("Dash Execution Debug");
             Instance.minSize = new Vector2(800, 400);
-
-            return Instance;
         }
         
         private void OnEnable()

@@ -20,14 +20,11 @@ namespace Dash.Editor
 
         public static AOTWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Scan/AOT")]
-        public static AOTWindow InitAOTWindow()
+        public static void Init()
         {
             Instance = GetWindow<AOTWindow>();
             Instance.titleContent = new GUIContent("Dash AOT Editor");
             Instance.minSize = new Vector2(800, 400);
-
-            return Instance;
         }
 
         private void OnGUI()

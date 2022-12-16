@@ -28,17 +28,10 @@ namespace Dash.Editor
 
         public static List<(string,Color)> messages = new List<(string,Color)>();
         
-        [MenuItem ("Tools/Dash/Debug/Console")]
-        public static ConsoleWindow InitConsoleWindow()
+        public static void Init()
         {
-            if (Instance == null)
-            {
-                Instance = GetWindow<ConsoleWindow>();
-                Instance.Initialize();
-            }
-            Instance.Show();
-
-            return Instance;
+            Instance = GetWindow<ConsoleWindow>();
+            Instance.Initialize();
         }
 
         public static void RunInitialGraphScan()
