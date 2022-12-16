@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.8 - 15.12.2022
+
+#### Added
+
+- added Disconnect Node in node context menu for quick node disconnection from all
+- added Create Dash Controller in unity create object menu
+- added option to allow attribute type changes in data flow
+
+#### Changed
+
+- changed creation of graph copies for asset graphs with 5-6x performance boost
+- changed all Dash menu items refactored from individual windows to single class for readability
+- changed default time value for all animation nodes to 0
+- changed default useExpression value for all retargeting nodes to true
+- changed renamed target property to targetName property in Retargeting nodes
+
+#### Fixed
+
+- fixed refactoring of variables now correctly handles Parameter types
+- fixed SetAttribute now evaluates expression as untyped if specific type is not set
+- fixed now editor correctly doesn't allow connection of node to itself (still possible through reroutes)
+
 ### Release 0.13.7 - 4.12.2022
 
 #### Fixed
