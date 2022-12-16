@@ -4,8 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Linq;
 using Dash.Attributes;
 using OdinSerializer;
 using UnityEngine;
@@ -105,9 +103,9 @@ namespace Dash
                 }
                 else
                 {
-                    Profiler.BeginSample("InstantiateGraph");
+                    //Profiler.BeginSample("InstantiateGraph");
                     InstanceAssetGraph();
-                    Profiler.EndSample();
+                    //Profiler.EndSample();
                 }
             }
 
@@ -134,7 +132,8 @@ namespace Dash
             if (_assetGraph == null)
                 return;
             
-            _graphInstance = createGraphCopy ? _assetGraph.Clone() : _assetGraph;
+            //_graphInstance = createGraphCopy ? _assetGraph.Clone() : _assetGraph;
+            _graphInstance = createGraphCopy ? Instantiate(_assetGraph) : _assetGraph;
         }
         
         public bool autoStart = false;
