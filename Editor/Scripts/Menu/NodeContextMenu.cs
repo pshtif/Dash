@@ -30,6 +30,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Copy Node"), false, CopyNode, p_node);
                 menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode, p_node);   
                 menu.AddItem(new GUIContent("Duplicate Node"), false, DuplicateNode, p_node);
+                menu.AddItem(new GUIContent("Disconnect Node"), false, DisconnectNode, p_node);
                 menu.AddItem(new GUIContent("Arrange Nodes"), false, ArrangeNodes, p_node);
                 menu.AddItem(new GUIContent("Select Connected"), false, SelectConnectedNodes, p_node);
                 
@@ -166,6 +167,14 @@ namespace Dash.Editor
             else
             {
                 SelectionManager.DeleteNode((NodeBase)p_node, Graph);
+            }
+        }
+
+        static void DisconnectNode(object p_node)
+        {
+            if (p_node != null)
+            {
+                Graph.DisconnectNode((NodeBase) p_node);
             }
         }
         

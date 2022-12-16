@@ -66,9 +66,9 @@ namespace Dash
 
         static void CheckDashVersion()
         {
-            if (EditorConfig.lastUsedVersion == 0 || DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
+            if (EditorConfig.lastUsedVersion != 0 && DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
             {
-                // TODO let user know?
+                EditorAssemblyCaller.Call("ConsoleWindow", "RunInitialGraphScan", null);
             }
 
             EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();

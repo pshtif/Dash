@@ -118,11 +118,6 @@ namespace Dash
             if (_initialized)
                 return;
 
-            if (version < DashCore.GetVersionNumber())
-            {
-                //Debug.LogWarning("Current Dash version is higher than initialized Graph, can result in possible issues please migrate in editor. Controller "+p_controller.name);
-            }
-
             Controller = p_controller;
 
             _nodes.ForEach(n => ((INodeAccess) n).Initialize());
@@ -266,6 +261,9 @@ namespace Dash
 
         public bool Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
         {
+            if (p_inputNode == p_outputNode)
+                return false;
+            
             bool exists = Connections.Exists(c =>
                 c.inputNode == p_inputNode && c.inputIndex == p_inputIndex && c.outputNode == p_outputNode &&
                 c.outputIndex == p_outputIndex);
@@ -283,6 +281,20 @@ namespace Dash
         {
             _connections.Remove(p_connection);
             ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
+        }
+
+        public void DisconnectNode(NodeBase p_node)
+        {
+            List<NodeConnection> connections =
+                Connections.FindAll(c => c.inputNode == p_node || c.outputNode == p_node);
+
+            foreach (var connection in connections)
+            {
+                if (Connections.Contains(connection))
+                {
+                    Disconnect(connection);
+                }
+            }
         }
 
         public void ExecuteNodeOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
@@ -380,19 +392,23 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            //Debug.Log("OnBeforeSerialize");
 #if UNITY_EDITOR
-            GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
-            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            if (!Application.isPlaying)
             {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-            }
-            
-            if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
-            {
-                DashEditorCore.EditorConfig.editingController.ReserializeBound();
+                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+
+                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+                {
+                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData,
+                        serializeUnityFields: true, context: cachedContext.Value);
+                }
+
+                if (DashEditorCore.EditorConfig.editingController != null &&
+                    DashEditorCore.EditorConfig.editingGraph == this)
+                {
+                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
+                }
             }
 #endif
         }
@@ -460,18 +476,18 @@ namespace Dash
 
         public NodeBase previewNode;
 
-        [NonSerialized]
-        public NodeBase connectingNode;
-        [NonSerialized]
-        public int connectingOutputIndex;
+        // [NonSerialized]
+        // public NodeBase connectingNode;
+        // [NonSerialized]
+        // public int connectingOutputIndex;
 
-        public void Reconnect(NodeConnection p_connection)
-        {
-            connectingNode = p_connection.outputNode;
-            connectingOutputIndex = p_connection.outputIndex;
-
-            _connections.Remove(p_connection);
-        }
+        // public void Reconnect(NodeConnection p_connection)
+        // {
+        //     connectingNode = p_connection.outputNode;
+        //     connectingOutputIndex = p_connection.outputIndex;
+        //
+        //     _connections.Remove(p_connection);
+        // }
         
         public void DeleteNode(NodeBase p_node)
         {
@@ -501,7 +517,7 @@ namespace Dash
             LinqExtensions.ForEach(_nodes.Where(n => n != null), n => n.DrawGUI(p_rect));
 
             // Draw user interaction with connections
-            NodeConnection.DrawConnectionToMouse(connectingNode, connectingOutputIndex, Event.current.mousePosition);
+            NodeConnection.DrawConnectionToMouse(SelectionManager.connectingNode, SelectionManager.connectingIndex, SelectionManager.connectingType, SelectionManager.connectingPosition);
             
             //DashEditorCore.SetDirty();
         }
@@ -573,6 +589,37 @@ namespace Dash
         public void ResetPosition()
         {
             viewOffset = new Vector2();
+        }
+
+        public (string, Color)[] CheckValidity()
+        {
+            List<(string, Color)> messages = new List<(string, Color)>();
+
+            string path = AssetDatabase.GetAssetPath(this);
+
+            messages.Add(("Checking validity of graph " + name + " at "+path, Color.white));
+            List<NodeBase> nodes = Nodes.FindAll(n1 => Nodes.Exists(n2 => n1 != n2 && n1.Id == n2.Id));
+            nodes?.ForEach(n =>
+            {
+                messages.Add(("Duplicate node id found on node: " + n.Id, Color.red));
+            });
+            
+            nodes = Nodes.FindAll(n => n.GetType().GetAttribute<ObsoleteAttribute>() != null);
+            nodes?.ForEach(n =>
+            {
+                messages.Add((
+                    "Obsolete node type found: " + n.Id +
+                    " [Should remove before updating to new version]", Color.yellow));
+            });
+            
+            nodes = Nodes.FindAll(n => n == null);
+            nodes?.ForEach(n =>
+            {
+                messages.Add(("Invalid null node found in graph " + name + " [Possible serialization malfunction]",
+                    Color.red));
+            });
+            
+            return messages.ToArray();
         }
 #endif
 #endregion

@@ -29,13 +29,10 @@ namespace Dash.Editor
 
         public static ChecksumWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Scan/Checksum")]
-        public static ChecksumWindow InitChecksumWindow()
+        public static void Init()
         {
             Instance = GetWindow<ChecksumWindow>();
             Instance.Initialize();
-
-            return Instance;
         }
 
         private void Initialize()
@@ -186,7 +183,7 @@ namespace Dash.Editor
 
         void ViewNodeChecksums(DashChecksumObject p_checksum, string p_graph, DashChecksumObject p_previousChecksum = null)
         {
-            ConsoleWindow.InitConsoleWindow();
+            ConsoleWindow.Init();
             
             // if (p_checksum.nodeChecksums == null || !p_checksum.nodeChecksums.ContainsKey(p_graph))
             // {
@@ -242,7 +239,7 @@ namespace Dash.Editor
             var timestamp = now.ToString("dd'_'MM'_'yyyy'_'HH'_'mm'_'ss");
 
             List<(string,DashGraph,byte[])> scannedGraphs;
-            DashScanner.ScanForJson(out scannedGraphs);
+            DashScanner.ScanForChecksum(out scannedGraphs);
             
             DashChecksumObject checksumObject = ScriptableObject.CreateInstance<DashChecksumObject>();
             checksumObject.scannedGraphs = new List<string>();

@@ -13,13 +13,11 @@ namespace Dash.Editor
 
         static public GUISkin Skin => DashEditorCore.Skin;
         
-        public static SettingsWindow InitEditorWindow()
+        public static void Init()
         {
             Instance = GetWindow<SettingsWindow>();
             Instance.titleContent = new GUIContent("Dash Settings");
             Instance.minSize = new Vector2(200, 400);
-
-            return Instance;
         }
 
         public void OnGUI()
@@ -36,7 +34,7 @@ namespace Dash.Editor
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Settings", style, GUILayout.Height(28));
+            GUILayout.Label("Editor Settings", style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
             
             EditorGUI.BeginChangeCheck();
@@ -63,9 +61,19 @@ namespace Dash.Editor
 
             DashEditorCore.EditorConfig.enableAnimateNodeInterface = EditorGUILayout.Toggle(
                 "Enable AnimateNode Interface", DashEditorCore.EditorConfig.enableAnimateNodeInterface);
-
+            
             DashEditorCore.EditorConfig.maxLog =
                 EditorGUILayout.IntField("Max Log", DashEditorCore.EditorConfig.maxLog);
+            
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Runtime Settings", style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+
+            DashEditorCore.RuntimeConfig.allowAttributeTypeChange = EditorGUILayout.Toggle(
+                "Allow Attribute Type Change", DashEditorCore.RuntimeConfig.allowAttributeTypeChange);
+            
+            DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = EditorGUILayout.Toggle(
+                "Enable Custom Expression Classes", DashEditorCore.RuntimeConfig.enableCustomExpressionClasses);
 
             if (EditorGUI.EndChangeCheck())
             {

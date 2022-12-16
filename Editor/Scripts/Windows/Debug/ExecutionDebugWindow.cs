@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Dash.Editor
 {
-    public class DebugWindow : UnityEditor.EditorWindow
+    public class ExecutionDebugWindow : UnityEditor.EditorWindow
     {
         private String _search = "";
         private Vector2 _scrollPosition;
@@ -18,16 +18,13 @@ namespace Dash.Editor
         private bool _showTime = true;
         private bool _forceLowerCase = true;
         
-        public static DebugWindow Instance { get; private set; }
+        public static ExecutionDebugWindow Instance { get; private set; }
         
-        [MenuItem ("Tools/Dash/Debug")]
-        public static DebugWindow InitDebugWindow()
+        public static void Init()
         {
-            Instance = GetWindow<DebugWindow>();
-            Instance.titleContent = new GUIContent("Dash Debug Console");
+            Instance = GetWindow<ExecutionDebugWindow>();
+            Instance.titleContent = new GUIContent("Dash Execution Debug");
             Instance.minSize = new Vector2(800, 400);
-
-            return Instance;
         }
         
         private void OnEnable()
@@ -50,7 +47,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Debug Console");
+            GUIEditorUtils.DrawTitle("Dash Execution Debug");
 
             GUI.backgroundColor = Color.white;
             

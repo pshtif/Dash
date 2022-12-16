@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -17,8 +18,53 @@ namespace Dash
         
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
-
+        
+        static public int connectingIndex = -1;
+        static public NodeBase connectingNode = null;
+        static public ConnectorType connectingType = ConnectorType.INPUT;
+        static public Vector2 connectingPosition;
+        
         static public int SelectedCount => selectedNodes == null ? 0 : selectedNodes.Count;
+
+        public static bool IsConnecting()
+        {
+            return connectingNode != null;
+        }
+        
+        public static void StartConnectionDrag(NodeBase p_node, int p_connectorIndex, ConnectorType p_connectorType, Vector2 p_mousePosition)
+        {
+            connectingNode = p_node;
+            connectingIndex = p_connectorIndex;
+            connectingType = p_connectorType;
+            connectingPosition = p_mousePosition;
+        }
+
+        public static void EndConnectionDrag(NodeBase p_node = null, int p_index = -1)
+        {
+            if (p_node != null && p_index >= 0)
+            {
+                if (p_node != connectingNode)
+                {
+                    DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
+                    Undo.RegisterCompleteObjectUndo(graph, "Connect node");
+
+                    switch (connectingType)
+                    {
+                        case ConnectorType.INPUT:
+                            graph.Connect(connectingNode, SelectionManager.connectingIndex, p_node, p_index);
+                            break;
+                        case ConnectorType.OUTPUT:
+                            graph.Connect(p_node, p_index, connectingNode, connectingIndex);
+                            break;
+                    }
+
+                    DashEditorCore.SetDirty();
+                }
+            }
+
+            connectingNode = null;
+            connectingIndex = -1;
+        }
         
         public static NodeBase GetSelectedNode(DashGraph p_graph)
         {

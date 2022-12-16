@@ -674,13 +674,13 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        public virtual Rect GetConnectorRect(bool p_input, int p_index)
+        public virtual Rect GetConnectorRect(ConnectorType p_connectorType, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,
                 Size.y);
 
             Rect connectorRect;
-            if (p_input)
+            if (p_connectorType == ConnectorType.INPUT)
             {
                 connectorRect = new Rect(offsetRect.x,
                     offsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight +
@@ -697,7 +697,22 @@ namespace Dash
 
             return connectorRect;
         }
-        
+
+        internal int HitsConnector(ConnectorType p_connectorType, Vector2 p_position)
+        {
+            int count = p_connectorType == ConnectorType.INPUT ? InputCount : OutputCount;
+            for (int i = 0; i < count; i++)
+            {
+                var connectorRect = GetConnectorRect(p_connectorType, i);
+                if (connectorRect.Contains(p_position))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         protected virtual void DrawConnectors(Rect p_rect)
         {
             GUISkin skin = DashEditorCore.Skin;
@@ -714,21 +729,9 @@ namespace Dash
                 if (IsExecuting)
                     GUI.color = Color.cyan;
 
-                var connectorRect = GetConnectorRect(true, i);
+                var connectorRect = GetConnectorRect(ConnectorType.INPUT, i);
                 
-                if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
-                {
-                    if (Event.current.button == 0)
-                    {
-                        if (Graph.connectingNode != null && Graph.connectingNode != this)
-                        {
-                            Undo.RegisterCompleteObjectUndo(_graph, "Connect node");
-                            Graph.Connect(this, i, Graph.connectingNode, Graph.connectingOutputIndex);
-                            DashEditorCore.SetDirty();
-                            Graph.connectingNode = null;
-                        }
-                    }
-                }
+                GUI.Label(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff"));
             }
             
             // Outputs
@@ -739,10 +742,10 @@ namespace Dash
                     ? DashEditorCore.EditorConfig.theme.ConnectorOutputConnectedColor
                     : DashEditorCore.EditorConfig.theme.ConnectorOutputDisconnectedColor;
 
-                if (Graph.connectingNode == this && Graph.connectingOutputIndex == i)
+                if (SelectionManager.connectingNode == this && SelectionManager.connectingType == ConnectorType.OUTPUT && SelectionManager.connectingIndex == i)
                     GUI.color = Color.green;
 
-                var connectorRect = GetConnectorRect(false, i);
+                var connectorRect = GetConnectorRect(ConnectorType.OUTPUT, i);
                 
                 if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
@@ -755,14 +758,7 @@ namespace Dash
                     GUI.Label(new Rect(connectorRect.x - 100, connectorRect.y, 100, 20), OutputLabels[i], style);
                 }
 
-                if (GUI.Button(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff")))
-                {
-                    if (Event.current.button == 0)
-                    {
-                        Graph.connectingOutputIndex = i;
-                        Graph.connectingNode = this;
-                    }
-                }
+                GUI.Label(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff"));
             }
 
             GUI.color = Color.white;

@@ -18,15 +18,12 @@ namespace Dash.Editor
         private Vector2 _scrollPositionExplicit;
 
         public static ExpressionsWindow Instance { get; private set; }
-
-        [MenuItem ("Tools/Dash/Expressions")]
-        public static ExpressionsWindow InitDebugWindow()
+        
+        public static void Init()
         {
             Instance = GetWindow<ExpressionsWindow>();
             Instance.titleContent = new GUIContent("Dash Expressions Editor");
             Instance.minSize = new Vector2(800, 400);
-
-            return Instance;
         }
 
         private void OnGUI()

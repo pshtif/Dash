@@ -3,9 +3,12 @@
  */
 
 using System;
+using System.Runtime.Serialization;
 using Dash.Attributes;
 using JetBrains.Annotations;
+using OdinSerializer;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 
@@ -25,7 +28,7 @@ namespace Dash
         [TitledGroup("Retargeting", -1)]
         [Dependency("retarget", true)]
         [UnityEngine.Tooltip("Use scene reference as retarget.")]
-        public bool useReference = false;
+        public bool useReference = true;
         
         [Order(2)]
         [TitledGroup("Retargeting", -1)]
@@ -39,8 +42,15 @@ namespace Dash
         [Dependency("retarget", true)]
         [Dependency("useReference", false)]
         [UnityEngine.Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
-        [CanBeNull]
+        [HideInInspector]
         public Parameter<string> target = new Parameter<string>("");
+        
+        [Order(3)]
+        [TitledGroup("Retargeting", -1)]
+        [Dependency("retarget", true)]
+        [Dependency("useReference", false)]
+        [UnityEngine.Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
+        public Parameter<string> targetName = new Parameter<string>("");
 
         [Order(4)]
         [TitledGroup("Retargeting", -1)]
@@ -57,5 +67,15 @@ namespace Dash
         [TitledGroup("Retargeting", -1)]
         [HideInInspector]
         public string targetExpression = "";
+        
+        [OnDeserialized]
+        protected virtual void OnDeserialized()
+        {
+#pragma warning disable 612, 618
+            
+            ParameterUtils.MigrateParameter(ref target, ref targetName);
+            
+#pragma warning restore 612, 618
+        }
     }
 }

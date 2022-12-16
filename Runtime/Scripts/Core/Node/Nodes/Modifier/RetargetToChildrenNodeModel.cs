@@ -43,7 +43,7 @@ namespace Dash
         public Parameter<bool> targetInactive = new Parameter<bool>(true);
         
         [OnDeserialized]
-        void OnDeserialized()
+        protected override void OnDeserialized()
         {
 #pragma warning disable 612, 618
             if (targetInactive == null)
@@ -51,38 +51,8 @@ namespace Dash
                 targetInactive = new Parameter<bool>(true);
             }
             
-            if (onFinishDelay == null)
-            {
-                onFinishDelay = new Parameter<float>(0);
-
-                if (onFinishDelayP != null)
-                {
-                    if (onFinishDelayP.isExpression)
-                    {
-                        onFinishDelay.expression = onFinishDelayP.expression;
-                    }
-                    else
-                    {
-                        onFinishDelay.SetValue(onFinishDelayP.GetValue(null));
-                    }
-                }
-            }
-            
-            if (inReverse == null)
-            {
-                inReverse = new Parameter<bool>(false);
-                if (inReverseP != null)
-                {
-                    if (inReverseP.isExpression)
-                    {
-                        inReverse.expression = inReverseP.expression;
-                    }
-                    else
-                    {
-                        inReverse.SetValue(inReverseP.GetValue(null));
-                    }
-                }
-            }
+            ParameterUtils.MigrateParameter(ref onFinishDelayP, ref onFinishDelay);
+            ParameterUtils.MigrateParameter(ref inReverseP, ref inReverse);
 #pragma warning restore 612, 618 
         }
     }

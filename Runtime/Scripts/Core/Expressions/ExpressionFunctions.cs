@@ -88,29 +88,29 @@ namespace Dash
             return false;
         }
         
-        // /**
-        //  *  Get parent of a transform
-        //  */
-        // private static bool GetParent(FunctionArgs p_args)
-        // {
-        //     if (p_args.Parameters.Length != 1)
-        //     { 
-        //         errorMessage = "Invalid parameters in GetParent function.";
-        //         return false;
-        //     }
-        //     
-        //     object[] evalParams = p_args.EvaluateParameters();
-        //
-        //     if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
-        //     {
-        //         p_args.HasResult = true;
-        //         p_args.Result = ((Transform) evalParams[0]).parent;
-        //         return true;
-        //     }
-        //     
-        //     errorMessage = "Invalid parameters in GetParent function.";
-        //     return false;
-        // }
+        /**
+         *  Get parent of a transform
+         */
+        private static bool GetParent(FunctionArgs p_args)
+        {
+            if (p_args.Parameters.Length != 1)
+            { 
+                errorMessage = "Invalid parameters in GetParent function.";
+                return false;
+            }
+            
+            object[] evalParams = p_args.EvaluateParameters();
+        
+            if (typeof(Transform).IsAssignableFrom(evalParams[0].GetType()))
+            {
+                p_args.HasResult = true;
+                p_args.Result = ((Transform) evalParams[0]).parent;
+                return true;
+            }
+            
+            errorMessage = "Invalid parameters in GetParent function.";
+            return false;
+        }
         
         /**
          *  Get child of transform at index

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dash
 {
     [Attributes.Tooltip("Changes a current target within NodeFlowData.")]
-    [Category(NodeCategoryType.MODIFIER)]
+    [Category(NodeCategoryType.MODIFIER, "Modifier/Retarget")]
     [Size(180,85)]
     [OutputCount(1)]
     [InputCount(1)]

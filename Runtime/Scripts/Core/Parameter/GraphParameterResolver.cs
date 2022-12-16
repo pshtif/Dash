@@ -51,14 +51,12 @@ namespace Dash
 
             DashController controller = _graph.Controller;
 
-            #if UNITY_EDITOR
-
+#if UNITY_EDITOR
             if (!Application.isPlaying)
             {
                 controller = DashEditorCore.EditorConfig.editingController;
             }
-
-            #endif
+#endif
 
             if (controller != null && controller.Variables != null && controller.Variables.HasVariable(name))
             {

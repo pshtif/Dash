@@ -80,12 +80,12 @@ namespace Dash
                     {
                         if (Model.isChild)
                         {
-                            string find = GetParameterValue(Model.target, p_flowData);
+                            string find = GetParameterValue(Model.targetName, p_flowData);
                             target = target.Find(find, true);
                         }
                         else
                         {
-                            string find = GetParameterValue(Model.target, p_flowData);
+                            string find = GetParameterValue(Model.targetName, p_flowData);
                             GameObject go = GameObject.Find(find);
                             target = go == null ? null : go.transform;
                         }
@@ -151,25 +151,21 @@ namespace Dash
                 }
                 else
                 {
-                    if (Model.target != null)
+                    if (Model.targetName != null)
                     {
-                        if (Model.target.isExpression)
+                        if (Model.targetName.isExpression)
                         {
-                            style.normal.textColor = Model.target.expression.IsNullOrWhitespace()
+                            style.normal.textColor = Model.targetName.expression.IsNullOrWhitespace()
                                 ? new Color(1f, .4f, 0)
                                 : Color.cyan;
 
-                            GUI.Label(labelRect, ShortenExpression(style, Model.target.expression.IsNullOrWhitespace() ? "Empty" : Model.target.expression), style);
+                            GUI.Label(labelRect, ShortenExpression(style, Model.targetName.expression.IsNullOrWhitespace() ? "Empty" : Model.targetName.expression), style);
                         }
                         else
                         {
                             style.normal.textColor = Color.white;
-                            GUI.Label(labelRect, ShortenPath(Model.target.GetValue(ParameterResolver)), style);
+                            GUI.Label(labelRect, ShortenPath(Model.targetName.GetValue(ParameterResolver)), style);
                         }
-                    }
-                    else
-                    {
-                        Model.target = new Parameter<string>("");
                     }
                 }
             }
@@ -213,9 +209,9 @@ namespace Dash
             }
             else
             {
-                if (!Model.target.isExpression && p_transform != null)
+                if (!Model.targetName.isExpression && p_transform != null)
                 {
-                    return p_transform.Find(Model.target.GetValue(null), true);
+                    return p_transform.Find(Model.targetName.GetValue(null), true);
                 }
             }
 

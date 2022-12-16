@@ -10,7 +10,7 @@ namespace Dash
     {
         [Order(0)] 
         [TitledGroup("Animation",2)]
-        public Parameter<float> time = new Parameter<float>(1);
+        public Parameter<float> time = new Parameter<float>(0);
         
         [Order(1)]
         [TitledGroup("Animation",2)]

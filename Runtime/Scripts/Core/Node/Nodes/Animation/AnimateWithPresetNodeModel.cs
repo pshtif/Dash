@@ -14,7 +14,7 @@ namespace Dash
         [ClassPopup(typeof(IAnimationPreset), true)]
         public IAnimationPreset preset;
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         private bool _presetGroupMinimzed = false;
         public override bool DrawInspector()

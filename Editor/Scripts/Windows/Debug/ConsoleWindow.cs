@@ -3,8 +3,10 @@
  */
 
 using System.Collections.Generic;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Dash.Editor
 {
@@ -20,18 +22,30 @@ namespace Dash.Editor
     public class ConsoleWindow : EditorWindow
     {
         private static Vector2 _scrollPosition;
+        private static string _command;
 
         public static ConsoleWindow Instance { get; private set; }
 
         public static List<(string,Color)> messages = new List<(string,Color)>();
         
-        [MenuItem ("Tools/Dash/Console")]
-        public static ConsoleWindow InitConsoleWindow()
+        public static void Init()
         {
             Instance = GetWindow<ConsoleWindow>();
             Instance.Initialize();
+        }
 
-            return Instance;
+        public static void RunInitialGraphScan()
+        {
+            if (Instance == null)
+            {
+                Instance = GetWindow<ConsoleWindow>();
+                Instance.Initialize();
+            }
+            Instance.Show();
+            
+            AddMessage(("Version upgraded from "+DashCore.GetVersionString(DashEditorCore.EditorConfig.lastUsedVersion)+" to "+DashCore.GetVersionString(DashCore.GetVersionNumber()), Color.white));
+            AddMessage(("Performing graph scanning...", Color.white));
+            ScanGraphs();
         }
 
         private void Initialize()
@@ -70,7 +84,7 @@ namespace Dash.Editor
             GUILayout.Space(4);
 
             _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, scrollViewStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height - 80));
+                GUILayout.ExpandWidth(true), GUILayout.Height(rect.height - 100));
             GUILayout.BeginVertical();
             
             foreach (var message in messages)
@@ -83,11 +97,53 @@ namespace Dash.Editor
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
 
+            _command = GUILayout.TextField(_command);
+            if (Event.current.keyCode == KeyCode.Return && !_command.IsNullOrWhitespace())
+            {
+                ExecuteCommand();
+            }
+
             GUILayout.Space(4);
             if (GUILayout.Button("CLEAR", GUILayout.Height(30)))
             {
                 messages = new List<(string, Color)>();
             }
+        }
+
+        static void ExecuteCommand()
+        {
+            // Lazy implementation for now
+            switch (_command)
+            {
+                case "/version":
+                    AddMessage(("Dash Version "+DashCore.VERSION,Color.white));
+                    break;
+                case "/scan":
+                    ScanGraphs();
+                    break;
+                default:
+                    AddMessage(("Unknown command "+_command,Color.red));
+                    break;
+            }
+
+            _command = "";
+        }
+        
+        // Move to Scanner when bound scanning will be removed
+        private static bool ScanGraphs()
+        {
+            var graphs = AssetsUtils.FindAssetsByType<DashGraph>();
+
+            foreach (var graph in graphs)
+            {
+                var info = graph.CheckValidity();
+                for (int i = 0; i < info.Length; i++)
+                {
+                    AddMessage(info[i]);
+                }
+            }
+
+            return true;
         }
     }
 }
