@@ -21,12 +21,23 @@ namespace Dash
             
             if (!attributeName.IsNullOrWhitespace() && !Model.expression.IsNullOrWhitespace())
             {
-                if (!p_flowData.HasAttribute(attributeName) || (!Model.specifyType || 
-                    p_flowData.GetAttributeType(attributeName) == Model.attributeType))
+                if (!p_flowData.HasAttribute(attributeName) || 
+                    !Model.specifyType ||
+                    p_flowData.GetAttributeType(attributeName) == Model.attributeType ||
+                    DashCore.Instance.Config.allowAttributeTypeChange)
                 {
-                    var value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.attributeType,
-                        ParameterResolver, p_flowData);
-                    
+                    object value;
+                    if (Model.specifyType)
+                    {
+                        value = ExpressionEvaluator.EvaluateTypedExpression(Model.expression, Model.attributeType,
+                            ParameterResolver, p_flowData);
+                    }
+                    else
+                    {
+                        value = ExpressionEvaluator.EvaluateUntypedExpression(Model.expression, ParameterResolver,
+                            p_flowData, false);
+                    }
+
                     if (ExpressionEvaluator.hasErrorInEvaluation)
                     {
                         SetError(ExpressionEvaluator.errorMessage);
@@ -37,7 +48,7 @@ namespace Dash
                 }
                 else
                 {
-                    Debug.LogWarning("Changing flow data attribute type at runtime not allowed.");
+                    Debug.LogWarning("Changing flow data attribute type at runtime not allowed for attribute: "+attributeName);
                 }
             }
 
