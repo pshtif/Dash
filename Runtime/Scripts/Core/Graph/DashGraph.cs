@@ -261,6 +261,9 @@ namespace Dash
 
         public bool Connect(NodeBase p_inputNode, int p_inputIndex, NodeBase p_outputNode, int p_outputIndex)
         {
+            if (p_inputNode == p_outputNode)
+                return false;
+            
             bool exists = Connections.Exists(c =>
                 c.inputNode == p_inputNode && c.inputIndex == p_inputIndex && c.outputNode == p_outputNode &&
                 c.outputIndex == p_outputIndex);
@@ -278,6 +281,20 @@ namespace Dash
         {
             _connections.Remove(p_connection);
             ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
+        }
+
+        public void DisconnectNode(NodeBase p_node)
+        {
+            List<NodeConnection> connections =
+                Connections.FindAll(c => c.inputNode == p_node || c.outputNode == p_node);
+
+            foreach (var connection in connections)
+            {
+                if (Connections.Contains(connection))
+                {
+                    Disconnect(connection);
+                }
+            }
         }
 
         public void ExecuteNodeOutputs(NodeBase p_node, int p_index, NodeFlowData p_flowData)
@@ -376,17 +393,22 @@ namespace Dash
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
 #if UNITY_EDITOR
-            GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-            
-            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+            if (!Application.isPlaying)
             {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData, serializeUnityFields: true, context: cachedContext.Value);
-            }
-            
-            if (DashEditorCore.EditorConfig.editingController != null && DashEditorCore.EditorConfig.editingGraph == this) 
-            {
-                DashEditorCore.EditorConfig.editingController.ReserializeBound();
+                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+
+                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+                {
+                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData,
+                        serializeUnityFields: true, context: cachedContext.Value);
+                }
+
+                if (DashEditorCore.EditorConfig.editingController != null &&
+                    DashEditorCore.EditorConfig.editingGraph == this)
+                {
+                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
+                }
             }
 #endif
         }
