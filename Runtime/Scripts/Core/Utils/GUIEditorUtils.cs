@@ -2,9 +2,12 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System;
 using UnityEngine;
 
-namespace Dash.Editor
+#if UNITY_EDITOR
+
+namespace Dash
 {
     public class GUIEditorUtils
     {
@@ -71,3 +74,5 @@ namespace Dash.Editor
         }
     }
 }
+
+#endif
