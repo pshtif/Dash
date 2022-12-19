@@ -39,7 +39,7 @@ namespace Dash
                             value = ExpressionEvaluator.EvaluateUntypedExpression(expression, ParameterResolver,
                                 p_flowData, false);
                         }
-                        Debug.Log(attributeName+" : "+value);
+
                         if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
                             Debug.LogError(ExpressionEvaluator.errorMessage);
