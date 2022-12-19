@@ -21,6 +21,7 @@ namespace Dash
         [HideInInspector]
         public List<AttributeDefinition> attributes;
 
+#if UNITY_EDITOR
         protected override bool DrawCustomInspector()
         {
             GUILayout.Space(4);
@@ -92,5 +93,6 @@ namespace Dash
             Debug.Log("Delete attribute");
             attributes.Remove(p_attribute);
         }
+#endif
     }
 }
