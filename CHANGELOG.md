@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 #### Fixed
 
 - fixed refactoring of variables now correctly handles Parameter types
+- fixed delayed call on migration window to avoid update window focus before Unity start
 - fixed SetAttribute now evaluates expression as untyped if specific type is not set
 - fixed now editor correctly doesn't allow connection of node to itself (still possible through reroutes)
 
