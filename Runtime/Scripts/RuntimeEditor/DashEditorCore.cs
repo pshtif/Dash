@@ -68,10 +68,11 @@ namespace Dash
         {
             if (EditorConfig.lastUsedVersion != 0 && DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
             {
-                EditorAssemblyCaller.Call("ConsoleWindow", "RunInitialGraphScan", null);
+                EditorApplication.delayCall += () =>
+                {
+                    EditorAssemblyCaller.Call("ConsoleWindow", "RunInitialGraphScan", null);
+                };
             }
-
-            EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
         }
 
         static void SetExecutionOrder(Type p_classType, int p_order)

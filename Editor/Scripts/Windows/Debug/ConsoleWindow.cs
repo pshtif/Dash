@@ -46,6 +46,9 @@ namespace Dash.Editor
             AddMessage(("Version upgraded from "+DashCore.GetVersionString(DashEditorCore.EditorConfig.lastUsedVersion)+" to "+DashCore.GetVersionString(DashCore.GetVersionNumber()), Color.white));
             AddMessage(("Performing graph scanning...", Color.white));
             ScanGraphs();
+            
+            DashEditorCore.EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
 
         private void Initialize()
