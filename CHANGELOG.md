@@ -4,13 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.13.8 - 15.12.2022
+### Release 0.13.8 - 27.12.2022
 
 #### Added
 
 - added Disconnect Node in node context menu for quick node disconnection from all
 - added Create Dash Controller in unity create object menu
 - added option to allow attribute type changes in data flow
+- added CreateAttributeNode that has more robust attribute creation and will sunset SetAttributeNode
+- added option for direct attribute creation for SubGraphNode
+- added SetVariable<T> for DashVariablesController
 
 #### Changed
 
@@ -19,6 +22,9 @@ All notable changes to this project will be documented in this file.
 - changed default time value for all animation nodes to 0
 - changed default useExpression value for all retargeting nodes to true
 - changed renamed target property to targetName property in Retargeting nodes
+- changed DashTween dependency upped to 0.1.8
+- changed removed IInternalVariableAccess, IInternalGraphAccess and refactored to internal
+- changed removed IEditorControllerAccess and refactored to internal
 
 #### Fixed
 
