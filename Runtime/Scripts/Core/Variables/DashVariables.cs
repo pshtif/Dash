@@ -15,7 +15,7 @@ using UnityEngine;
 namespace Dash
 {
     [Serializable]
-    public class DashVariables : IEnumerable<Variable>, IVariables, IInternalVariablesAccess
+    public class DashVariables : IEnumerable<Variable>, IVariables
     {
         public int Count => variables.Count;
 
@@ -52,7 +52,7 @@ namespace Dash
 
         public bool HasVariable(string p_name)
         {
-            if (_lookupCache == null) (this as IInternalVariablesAccess).InvalidateLookup();
+            if (_lookupCache == null) InvalidateLookup();
             
             return _lookupCache.ContainsKey(p_name);
         }
@@ -112,7 +112,7 @@ namespace Dash
             }
 
             variables.Add(p_variable);
-            (this as IInternalVariablesAccess).InvalidateLookup();
+            InvalidateLookup();
             return p_variable;
         }
 
@@ -126,12 +126,12 @@ namespace Dash
 
             Variable<T> variable = new Variable<T>(p_name, p_value);
             variables.Add(variable);
-            (this as IInternalVariablesAccess).InvalidateLookup();
+            InvalidateLookup();
 
             return variable;
         }
 
-        void IInternalVariablesAccess.AddVariable(Variable p_variable)
+        internal void AddVariable(Variable p_variable)
         {
             _variables.Add(p_variable);
         }
@@ -146,7 +146,7 @@ namespace Dash
             {
                 Variable<T> variable = new Variable<T>(p_name, p_value);
                 variables.Add(variable);
-                (this as IInternalVariablesAccess).InvalidateLookup();
+                InvalidateLookup();
             }
         }
 
@@ -158,25 +158,25 @@ namespace Dash
             {
                 p_variable.InitializeBinding(p_bindable);
             }
-            (this as IInternalVariablesAccess).InvalidateLookup();
+            InvalidateLookup();
         }
 
         public void RemoveVariable(string p_name)
         {
             variables.RemoveAll(v => v.Name == p_name);
-            (this as IInternalVariablesAccess).InvalidateLookup();
+            InvalidateLookup();
         }
         
         public Variable RenameVariable(string p_oldName, string p_newName)
         {
             var variable = variables.Find(v => v.Name == p_oldName);
             variable.Rename(GetUniqueName(p_newName));
-            (this as IInternalVariablesAccess).InvalidateLookup();
+            InvalidateLookup();
 
             return variable;
         }
 
-        void IInternalVariablesAccess.InvalidateLookup()
+        internal void InvalidateLookup()
         { 
             _lookupCache = new Dictionary<string, Variable>();
             foreach (Variable variable in variables)

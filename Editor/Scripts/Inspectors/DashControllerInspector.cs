@@ -46,19 +46,19 @@ namespace Dash.Editor
             // }
             // else
             {
-                if (((IEditorControllerAccess)Controller).graphAsset == null && !Controller.HasBoundGraph)
+                if (Controller.graphAsset == null && !Controller.HasBoundGraph)
                 {
                     GUI.color = new Color(1, 0.75f, 0.5f);
                     if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                     {
-                        ((IEditorControllerAccess)Controller).graphAsset = GraphUtils.CreateGraphAsAssetFile();
+                        Controller.graphAsset = GraphUtils.CreateGraphAsAssetFile();
                     }
 
                     EditorGUI.BeginChangeCheck();
                     
                     GUI.color = Color.white;
-                    ((IEditorControllerAccess)Controller).graphAsset =
-                        (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset,
+                    Controller.graphAsset =
+                        (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
                             typeof(DashGraph), true);
                     
                     if (EditorGUI.EndChangeCheck())
@@ -128,8 +128,8 @@ namespace Dash.Editor
         {
             EditorGUI.BeginChangeCheck();
                         
-            ((IEditorControllerAccess)Controller).graphAsset =
-                (DashGraph)EditorGUILayout.ObjectField(((IEditorControllerAccess)Controller).graphAsset,
+            Controller.graphAsset =
+                (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
                     typeof(DashGraph), true);
 
             if (EditorGUI.EndChangeCheck())
@@ -259,7 +259,7 @@ namespace Dash.Editor
                 if (graph != null)
                 {
                     Controller.BindGraph(null);
-                    ((IEditorControllerAccess)Controller).graphAsset = graph;
+                    Controller.graphAsset = graph;
                 }
             }
 

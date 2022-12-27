@@ -19,7 +19,7 @@ using UnityEditor;
 namespace Dash
 {
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IInternalGraphAccess
+    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver
     {
         public int version { get; private set; } = 0;
 
@@ -387,7 +387,7 @@ namespace Dash
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
             
-            ((IInternalGraphAccess)this).SetVersion(DashCore.GetVersionNumber());
+            SetVersion(DashCore.GetVersionNumber());
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
@@ -445,17 +445,17 @@ namespace Dash
         [NonSerialized]
         private List<DashTween> _activeTweens;
 
-        void IInternalGraphAccess.SetParentGraph(DashGraph p_graph)
+        internal void SetParentGraph(DashGraph p_graph)
         {
             _parentGraph = p_graph;
         }
         
-        void IInternalGraphAccess.OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
+        internal void OutputExecuted(OutputNode p_node, NodeFlowData p_flowData)
         {
             OnOutput?.Invoke(p_node, p_flowData);
         }
 
-        void IInternalGraphAccess.SetVersion(int p_version)
+        internal void SetVersion(int p_version)
         {
             // Disabled for now to avoid checksum changes
             //version = p_version;

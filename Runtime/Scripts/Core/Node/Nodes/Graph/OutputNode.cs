@@ -17,7 +17,7 @@ namespace Dash
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             OnExecuteEnd();
-            ((IInternalGraphAccess) Graph).OutputExecuted(this, p_flowData);
+            Graph.OutputExecuted(this, p_flowData);
         }
         
         protected override void Invalidate()
