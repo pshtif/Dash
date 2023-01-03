@@ -100,102 +100,6 @@ namespace Dash
         
 
         public virtual bool IsExecuting => ExecutionCount > 0;
-        
-        
-
-        [NonSerialized]
-        private bool _attributesInitialized = false;
-        
-        [NonSerialized] 
-        private bool _isObsolete;
-        public bool IsObsolete
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _isObsolete;
-            }
-        }
-        
-        [NonSerialized] 
-        private bool _isExperimental;
-        public bool IsExperimental
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _isExperimental;
-            }
-        }
-        
-        [NonSerialized] 
-        private bool _hasDebugOverride;
-        public bool HasDebugOverride
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _hasDebugOverride;
-            }
-        }
-        
-        [NonSerialized] 
-        private int _inputCount;
-        public virtual int InputCount
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _inputCount;
-            }
-        }
-        
-        [NonSerialized] 
-        private string[] _inputLabels;
-        public virtual string[] InputLabels
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-        
-                return _inputLabels;
-            }
-        }
-        
-        [NonSerialized] 
-        private int _outputCount;
-        public virtual int OutputCount
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-
-                return _outputCount;
-            }
-        }
-
-        [NonSerialized] 
-        private string[] _outputLabels;
-        public virtual string[] OutputLabels
-        {
-            get
-            {
-                if (!_attributesInitialized)
-                    InitializeAttributes();
-        
-                return _outputLabels;
-            }
-        }
 
         protected virtual void Initialize() { }
         
@@ -283,71 +187,6 @@ namespace Dash
             hasErrorsInExecution = true;
         }
         
-        public T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
-        {
-            if (p_parameter == null)
-                return default(T);
-
-            T value = p_parameter.GetValue(ParameterResolver, p_flowData);
-            if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
-            {
-                SetError(p_parameter.errorMessage);
-            }
-            
-            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
-            return value;
-        }
-        
-        protected virtual void InitializeAttributes()
-        {
-            Type nodeType = GetType();
-            
-            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
-
-            _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
-            
-            _isExperimental = Attribute.GetCustomAttribute(nodeType, typeof(ExperimentalAttribute)) != null;
-            
-            InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputCountAttribute));
-            _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
-            
-            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputLabelsAttribute));
-            _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
-            
-            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputCountAttribute));
-            _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
-            
-            OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputLabelsAttribute));
-            _outputLabels = outputAttribute == null ? new string[0] : outputAttribute.labels;
-            
-            #if UNITY_EDITOR
-            
-            SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SkinAttribute));
-            _backgroundSkinId = skinAttribute != null ? skinAttribute.backgroundSkinId : "NodeBodyBg";
-            _titleSkinId = skinAttribute != null ? skinAttribute.titleSkinId : "NodeTitleBg";
-            
-            SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SizeAttribute));
-            _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
-            
-            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(nodeType, typeof(DisableBaseGUIAttribute));
-            _baseGUIEnabled = disableBaseGuiAttribute == null;
-
-            CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(nodeType, typeof(CategoryAttribute));
-            Category = categoryAttribute.type;
-            
-            //_iconTexture = iconAttribute != null ? IconManager.GetIcon(iconAttribute.iconId) : DashEditorCore.EditorConfig.theme.GetNodeIconByCategory(categoryAttribute.type);
-            
-            // _nodeBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(categoryAttribute.type);
-            //
-            // _titleBackgroundColor = DashEditorCore.EditorConfig.theme.GetNodeTitleBackgroundColorByCategory(categoryAttribute.type);
-            //
-            // _titleTextColor = DashEditorCore.EditorConfig.theme.GetNodeTitleTextColorByCategory(categoryAttribute.type);
-
-            #endif
-
-            _attributesInitialized = true;
-        }
-
         protected void ValidateUniqueId()
         {
             string id = _model.id;
@@ -368,15 +207,124 @@ namespace Dash
         }
         
         protected virtual void Invalidate() { }
+        
+        public T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
+        {
+            if (p_parameter == null)
+                return default(T);
 
-        #region EDITOR_CODE
+            T value = p_parameter.GetValue(ParameterResolver, p_flowData);
+            if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
+            {
+                SetError(p_parameter.errorMessage);
+            }
+            
+            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
+            return value;
+        }
+        
+        /// <summary>
+        /// Attributes section
+        /// </summary>
+
+        #region ATTRIBUTES
+
+        [NonSerialized]
+        private bool _attributesInitialized = false;
+        
+        [NonSerialized] 
+        private bool _isObsolete;
+        public bool IsObsolete
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _isObsolete;
+            }
+        }
+        
+        [NonSerialized] 
+        private bool _isExperimental;
+        public bool IsExperimental
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _isExperimental;
+            }
+        }
+
+        [NonSerialized] 
+        private int _inputCount;
+        public virtual int InputCount
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _inputCount;
+            }
+        }
+
+        [NonSerialized] 
+        private int _outputCount;
+        public virtual int OutputCount
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+
+                return _outputCount;
+            }
+        }
+        
 #if UNITY_EDITOR
         
-        public NodeCategoryType Category { get; private set; } 
-        
-        [NonSerialized]
-        public float executeTime = 0;
+        [NonSerialized] 
+        private bool _hasDebugOverride;
+        public bool HasDebugOverride
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
 
+                return _hasDebugOverride;
+            }
+        }
+        
+        [NonSerialized] 
+        private string[] _inputLabels;
+        public virtual string[] InputLabels
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+        
+                return _inputLabels;
+            }
+        }
+
+        [NonSerialized] 
+        private string[] _outputLabels;
+        public virtual string[] OutputLabels
+        {
+            get
+            {
+                if (!_attributesInitialized)
+                    InitializeAttributes();
+        
+                return _outputLabels;
+            }
+        }
+        
         [NonSerialized]
         private string _titleSkinId;
         
@@ -432,6 +380,57 @@ namespace Dash
                 return _baseGUIEnabled;
             }
         }
+#endif
+        
+        protected virtual void InitializeAttributes()
+        {
+            Type nodeType = GetType();
+            
+            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
+
+            _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
+            
+            _isExperimental = Attribute.GetCustomAttribute(nodeType, typeof(ExperimentalAttribute)) != null;
+            
+            InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputCountAttribute));
+            _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
+            
+            InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputLabelsAttribute));
+            _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
+            
+            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputCountAttribute));
+            _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
+            
+            OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputLabelsAttribute));
+            _outputLabels = outputAttribute == null ? new string[0] : outputAttribute.labels;
+            
+#if UNITY_EDITOR
+            
+            SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SkinAttribute));
+            _backgroundSkinId = skinAttribute != null ? skinAttribute.backgroundSkinId : "NodeBodyBg";
+            _titleSkinId = skinAttribute != null ? skinAttribute.titleSkinId : "NodeTitleBg";
+            
+            SizeAttribute sizeAttribute = (SizeAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SizeAttribute));
+            _size = sizeAttribute != null ? new Vector2(sizeAttribute.width, sizeAttribute.height) : Vector2.one;
+            
+            DisableBaseGUIAttribute disableBaseGuiAttribute = (DisableBaseGUIAttribute) Attribute.GetCustomAttribute(nodeType, typeof(DisableBaseGUIAttribute));
+            _baseGUIEnabled = disableBaseGuiAttribute == null;
+
+            CategoryAttribute categoryAttribute = (CategoryAttribute) Attribute.GetCustomAttribute(nodeType, typeof(CategoryAttribute));
+            Category = categoryAttribute.type;
+            
+#endif
+
+            _attributesInitialized = true;
+        }
+        #endregion
+
+        #region EDITOR_CODE
+#if UNITY_EDITOR
+        
+        public NodeCategoryType Category { get; private set; } 
+        
+        [NonSerialized] public float executeTime = 0;
 
         public Rect rect;
 
@@ -799,62 +798,9 @@ namespace Dash
 
         public virtual void SelectEditorTarget() { }
 
-        public bool ResolveInputNodeChain(ref List<NodeConnection> p_chain)
-        {
-            _resolveCount++;
-            var connections = Graph.GetInputConnections(this);
-            if (connections.Count > 0)
-            {
-                if (p_chain.Contains(connections[0]))
-                    return false;
-                
-                p_chain.Insert(0, connections[0]);
-                return connections[0].outputNode.ResolveInputNodeChain(ref p_chain);
-            }
-
-            return true;
-        }
-
         internal virtual Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {
             return p_transform;
-        }
-
-        static private NodeBase _lastResolvedNode;
-        static private Transform _lastResolvedTarget;
-        static private int _resolveCount;
-
-        internal Transform ResolveEditorTarget()
-        {
-            if (DashEditorCore.EditorConfig.editingController == null)
-                return null;
-        
-            if (_lastResolvedNode == this)
-                return _lastResolvedTarget;
-            
-            _lastResolvedTarget = null;
-            _lastResolvedNode = this;
-            List<NodeConnection> chain = new List<NodeConnection>();
-            Transform retarget = DashEditorCore.EditorConfig.editingController.transform;
-            if (retarget == null)
-                return null;
-
-            _resolveCount = 0;
-            if (ResolveInputNodeChain(ref chain))
-            {
-                foreach (var connection in chain)
-                {
-                    retarget = connection.outputNode.ResolveNodeRetarget(retarget, connection);
-                }
-
-                _lastResolvedTarget = ResolveNodeRetarget(retarget, null);
-            }
-            else
-            {
-                _lastResolvedTarget = null;
-            }
-
-            return _lastResolvedTarget;
         }
 
         public void DrawSceneGUI()
@@ -868,23 +814,6 @@ namespace Dash
         
         internal virtual void DrawCustomSceneGUI() { }
 
-        public bool IsInsideRect(Rect p_rect)
-        {
-            if (p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
-                    (rect.y + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
-                    (rect.y + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
-                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)) ||
-                p_rect.Contains(new Vector2((rect.x + rect.width + Graph.viewOffset.x)/DashEditorCore.EditorConfig.zoom,
-                    (rect.y + rect.height + Graph.viewOffset.y)/DashEditorCore.EditorConfig.zoom)))
-            {
-                return true;
-            }
-
-            return false;
-        }
-        
         public byte[] SerializeToBytes(DataFormat p_format, ref List<UnityEngine.Object> p_references)
         {
             byte[] bytes = null;

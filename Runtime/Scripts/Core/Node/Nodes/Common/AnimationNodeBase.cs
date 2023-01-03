@@ -80,7 +80,7 @@ namespace Dash
 
         public override void SelectEditorTarget()
         {
-            Transform target = ResolveEditorTarget();
+            Transform target = NodeTargetResolver.ResolveEditorTarget(this);
             
             if (target != null)
             {
@@ -102,7 +102,7 @@ namespace Dash
             if (!(this is IAnimationNodeBindable) || !DashEditorCore.EditorConfig.enableAnimateNodeInterface)
                 return;
             
-            Transform target = ResolveEditorTarget();
+            Transform target = NodeTargetResolver.ResolveEditorTarget(this);
             
             if (target == null)
                 return;
