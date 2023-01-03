@@ -501,6 +501,7 @@ namespace Dash.Editor
 
         bool HandleBoxMouse(Event p_event, Rect p_rect)
         {
+            var mousePosition = p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y);
             GraphBox box = Graph.HitsBoxDrag(mousePosition);
 
             if (box != null)
@@ -526,6 +527,8 @@ namespace Dash.Editor
                     selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
                 }
             }
+
+            return true;
         }
 
         void AddSelectedNode(int p_nodeIndex)
