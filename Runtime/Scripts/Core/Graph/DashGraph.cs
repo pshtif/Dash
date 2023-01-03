@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer;
 using OdinSerializer.Utilities;
+using Plugins.Dash.Runtime.Scripts.Common;
 using UnityEngine;
 using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
@@ -19,7 +20,7 @@ using UnityEditor;
 namespace Dash
 {
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver
+    public class DashGraph : EditableGraph
     {
         public int version { get; private set; } = 0;
 
@@ -27,7 +28,7 @@ namespace Dash
         public event Action<OutputNode, NodeFlowData> OnOutput;
         
         [SerializeField]
-        private DashVariables _variables;
+        protected DashVariables _variables;
 
         public DashVariables variables
         {
@@ -54,16 +55,16 @@ namespace Dash
                 return _extractedClipCache;
             } 
         }
-        
-        [SerializeField]
-        private List<NodeBase> _nodes = new List<NodeBase>();
-
-        public List<NodeBase> Nodes => _nodes;
-
-        [SerializeField]
-        private List<NodeConnection> _connections = new List<NodeConnection>();
-        
-        public List<NodeConnection> Connections => _connections;
+        //
+        // [SerializeField]
+        // protected List<NodeBase> _nodes = new List<NodeBase>();
+        //
+        // public List<NodeBase> Nodes => _nodes;
+        //
+        // [SerializeField]
+        // protected List<NodeConnection> _connections = new List<NodeConnection>();
+        //
+        // public List<NodeConnection> Connections => _connections;
 
         [NonSerialized]
         private Dictionary<string, List<EventHandler>> _nodeListeners = new Dictionary<string, List<EventHandler>>();
@@ -374,73 +375,71 @@ namespace Dash
             Nodes.ForEach(n => ((INodeAccess)n).Stop());
         }
 
-#region SERIALIZATION
-
-        [SerializeField, HideInInspector]
-        private SerializationData _serializationData;
-        
-        void ISerializationCallbackReceiver.OnAfterDeserialize()
-        {
-            using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
-            }
-            
-            SetVersion(DashCore.GetVersionNumber());
-        }
-        
-        void ISerializationCallbackReceiver.OnBeforeSerialize()
-        {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
-
-                using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-                {
-                    cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                    UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData,
-                        serializeUnityFields: true, context: cachedContext.Value);
-                }
-
-                if (DashEditorCore.EditorConfig.editingController != null &&
-                    DashEditorCore.EditorConfig.editingGraph == this)
-                {
-                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
-                }
-            }
-#endif
-        }
-        
-        public byte[] SerializeToBytes(DataFormat p_format, ref List<Object> p_references)
-        {
-            //Debug.Log("SerializeToBytes "+this);
-            byte[] bytes = null;
-
-            using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.SerializeUnityObject(this, ref bytes, ref p_references, p_format, true,
-                    cachedContext.Value);
-            }
-
-            return bytes;
-        }
-
-        public void DeserializeFromBytes(byte[] p_bytes, DataFormat p_format, ref List<Object> p_references)
-        {
-            //Debug.Log("DeserializeToBytes "+this);
-            using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
-            {
-                cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
-                UnitySerializationUtility.DeserializeUnityObject(this, ref p_bytes, ref p_references, p_format,
-                    cachedContext.Value);
-            }
-        }
-#endregion
-
-#region INTERNAL_ACCESS
+// #region SERIALIZATION
+//
+//         [SerializeField, HideInInspector]
+//         private SerializationData _serializationData;
+//         
+//         void ISerializationCallbackReceiver.OnAfterDeserialize()
+//         {
+//             using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
+//             {
+//                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+//                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
+//             }
+//             
+//             SetVersion(DashCore.GetVersionNumber());
+//         }
+//         
+//         void ISerializationCallbackReceiver.OnBeforeSerialize()
+//         {
+// #if UNITY_EDITOR
+//             if (!Application.isPlaying)
+//             {
+//                 GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
+//
+//                 using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+//                 {
+//                     cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+//                     UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData,
+//                         serializeUnityFields: true, context: cachedContext.Value);
+//                 }
+//
+//                 if (DashEditorCore.EditorConfig.editingController != null &&
+//                     DashEditorCore.EditorConfig.editingGraph == this)
+//                 {
+//                     DashEditorCore.EditorConfig.editingController.ReserializeBound();
+//                 }
+//             }
+// #endif
+//         }
+//         
+//         public byte[] SerializeToBytes(DataFormat p_format, ref List<Object> p_references)
+//         {
+//             //Debug.Log("SerializeToBytes "+this);
+//             byte[] bytes = null;
+//
+//             using (var cachedContext = OdinSerializer.Utilities.Cache<SerializationContext>.Claim())
+//             {
+//                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+//                 UnitySerializationUtility.SerializeUnityObject(this, ref bytes, ref p_references, p_format, true,
+//                     cachedContext.Value);
+//             }
+//
+//             return bytes;
+//         }
+//
+//         public void DeserializeFromBytes(byte[] p_bytes, DataFormat p_format, ref List<Object> p_references)
+//         {
+//             //Debug.Log("DeserializeToBytes "+this);
+//             using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
+//             {
+//                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
+//                 UnitySerializationUtility.DeserializeUnityObject(this, ref p_bytes, ref p_references, p_format,
+//                     cachedContext.Value);
+//             }
+//         }
+// #endregion
 
         [NonSerialized]
         private List<DashTween> _activeTweens;
@@ -455,14 +454,6 @@ namespace Dash
             OnOutput?.Invoke(p_node, p_flowData);
         }
 
-        internal void SetVersion(int p_version)
-        {
-            // Disabled for now to avoid checksum changes
-            //version = p_version;
-        }
-
-#endregion
-
 #region EDITOR_CODE
 #if UNITY_EDITOR
 
@@ -476,19 +467,6 @@ namespace Dash
 
         public NodeBase previewNode;
 
-        // [NonSerialized]
-        // public NodeBase connectingNode;
-        // [NonSerialized]
-        // public int connectingOutputIndex;
-
-        // public void Reconnect(NodeConnection p_connection)
-        // {
-        //     connectingNode = p_connection.outputNode;
-        //     connectingOutputIndex = p_connection.outputIndex;
-        //
-        //     _connections.Remove(p_connection);
-        // }
-        
         public void DeleteNode(NodeBase p_node)
         {
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
