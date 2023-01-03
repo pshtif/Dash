@@ -26,29 +26,15 @@ namespace Dash
 
         public bool createGraphCopy = true;
 
-        [HideInInspector]
-        [SerializeField] 
-        private byte[] _boundGraphData;
-
-        [HideInInspector] 
-        [SerializeField] 
-        private int _selfReferenceIndex = -1;
-
-        [HideInInspector] 
-        [SerializeField] 
-        private List<Object> _boundGraphReferences;
-
         internal DashGraph graphAsset
         {
-            get { return _assetGraph; }
+            get
+            {
+                return _assetGraph;
+            }
             set
             {
                 _assetGraph = value;
-                if (_assetGraph != null)
-                {
-                    _boundGraphData = null;
-                    _boundGraphReferences = null;
-                }
             }
         }
 
@@ -84,8 +70,6 @@ namespace Dash
 
         public DashGraph Graph => GetGraphInstance();
 
-        public bool HasBoundGraph => _boundGraphData?.Length > 0;
-
         private DashGraph GetGraphInstance()
         {
 #if UNITY_EDITOR
@@ -97,34 +81,10 @@ namespace Dash
 
             if (_graphInstance == null)
             {
-                if (_boundGraphData?.Length > 0)
-                {
-                    InstanceBoundGraph();
-                }
-                else
-                {
-                    //Profiler.BeginSample("InstantiateGraph");
-                    InstanceAssetGraph();
-                    //Profiler.EndSample();
-                }
+                InstanceAssetGraph();
             }
 
             return _graphInstance;
-        }
-
-        void InstanceBoundGraph()
-        {
-            _graphInstance = ScriptableObject.CreateInstance<DashGraph>();
-
-            // Empty graphs don't self reference
-            if (_selfReferenceIndex != -1)
-            {
-                _boundGraphReferences[_selfReferenceIndex] = _graphInstance;
-            }
-
-            _graphInstance.DeserializeFromBytes(_boundGraphData, DataFormat.Binary, ref _boundGraphReferences);
-            _graphInstance.isBound = true;
-            _graphInstance.name = "Bound";
         }
 
         void InstanceAssetGraph()
@@ -182,8 +142,7 @@ namespace Dash
         public void ChangeGraph(DashGraph p_graph)
         {
             if (Graph != null) Graph.Stop();
-
-            _boundGraphData = new byte[0];
+            
             _assetGraph = p_graph;
 
             if (Graph != null)
@@ -302,16 +261,6 @@ namespace Dash
         [HideInInspector]
         public bool previewing = false;
         public string graphPath = "";
-        //public bool showGraphVariables = false;
-
-        public void ReserializeBound()
-        {
-            if (_graphInstance != null)
-            {
-                _boundGraphData = _graphInstance.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
-                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == _graphInstance);
-            }
-        }
 #endif
 
         // Handle Unity property exposing - may be removed later to avoid external references
@@ -401,21 +350,5 @@ namespace Dash
             }
         }
 #endregion
-
-        public void BindGraph(DashGraph p_graph)
-        {
-            _assetGraph = null;
-            _graphInstance = null;
-            _selfReferenceIndex = -1;
-            _boundGraphData = null;
-            _boundGraphReferences = null;
-
-            if (p_graph != null)
-            {
-                DashGraph graph = p_graph.Clone();
-                _boundGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundGraphReferences);
-                _selfReferenceIndex = _boundGraphReferences.FindIndex(r => r == graph);
-            }
-        }
     }
 }

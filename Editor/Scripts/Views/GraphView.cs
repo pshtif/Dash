@@ -174,22 +174,12 @@ namespace Dash.Editor
                 style.normal.textColor = Color.white;
                 style.fontStyle = FontStyle.Bold;
                 style.alignment = TextAnchor.MiddleLeft;
-                if (Controller != null && Controller.HasBoundGraph)
-                {
-                    GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(Controller.name +
-                                       (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
-                                           ? "/" + DashEditorCore.EditorConfig.editingGraphPath
-                                           : "")), style);
-                }
-                else
-                {
-                    GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
-                        new GUIContent(DashEditorCore.EditorConfig.editingRootGraph.name + 
-                                       (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
-                                           ? "/" + DashEditorCore.EditorConfig.editingGraphPath
-                                           : "")), style);
-                }
+
+                GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
+                    new GUIContent(DashEditorCore.EditorConfig.editingRootGraph.name + 
+                                   (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
+                                       ? "/" + DashEditorCore.EditorConfig.editingGraphPath
+                                       : "")), style);
             }
             else
             {

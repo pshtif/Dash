@@ -79,7 +79,7 @@ namespace Dash.Editor
             FormatterLocator.OnLocatedFormatter += OnLocatedFormatter;
             Serializer.OnSerializedType += OnSerializedType;
 
-            ScanBuildScenes(true, false);
+            //ScanBuildScenes(true, false);
             ScanAssets(false);
 
             return _registeredTypes;
@@ -89,7 +89,7 @@ namespace Dash.Editor
         {
             _graphs = new List<(string,DashGraph, byte[])>();
 
-            ScanBuildScenes(true, true);
+            //ScanBuildScenes(true, true);
             ScanAssets(true);
 
             p_graphs = _graphs;
@@ -173,16 +173,16 @@ namespace Dash.Editor
             typeof(UnityEditor.Editor).Assembly.GetName().Name
         };
 
-        private static bool ScanBuildScenes(bool p_includeSceneDependencies, bool p_jsonScan)
-        {
-            var scenePaths = EditorBuildSettings.scenes
-                .Where(n => n.enabled)
-                .Select(n => n.path)
-                .ToArray();
-
-            _scannedScenes = new List<string>();
-            return ScanScenes(scenePaths, p_includeSceneDependencies, p_jsonScan);
-        }
+        // private static bool ScanBuildScenes(bool p_includeSceneDependencies, bool p_jsonScan)
+        // {
+        //     var scenePaths = EditorBuildSettings.scenes
+        //         .Where(n => n.enabled)
+        //         .Select(n => n.path)
+        //         .ToArray();
+        //
+        //     _scannedScenes = new List<string>();
+        //     return ScanScenes(scenePaths, p_includeSceneDependencies, p_jsonScan);
+        // }
 
         private static bool ScanAssets(bool p_checksumScan)
         {
@@ -197,167 +197,167 @@ namespace Dash.Editor
             return true;
         }
 
-        private static bool ScanScenes(string[] p_scenePaths, bool p_includeSceneDependencies, bool p_jsonScan)
-        {
-            if (p_scenePaths.Length == 0) return true;
-
-            bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
-
-            try
-            {
-                UnitySerializationUtility.ForceEditorModeSerialization = true;
-
-                bool hasDirtyScenes = false;
-
-                for (int i = 0; i < EditorSceneManager.sceneCount; i++)
-                {
-                    if (EditorSceneManager.GetSceneAt(i).isDirty)
-                    {
-                        hasDirtyScenes = true;
-                        break;
-                    }
-                }
-
-                if (hasDirtyScenes && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                {
-                    return false;
-                }
-
-                var oldSceneSetup = EditorSceneManager.GetSceneManagerSetup();
-
-                try
-                {
-                    for (int i = 0; i < p_scenePaths.Length; i++)
-                    {
-                        var scenePath = p_scenePaths[i];
-
-                        if (_scannedScenes.Contains(scenePath))
-                            continue;
-                        
-                        _scannedScenes.Add(scenePath);
-
-                        if (!System.IO.File.Exists(scenePath))
-                        {
-                            Debug.LogWarning("Skipped scanning scene at " + scenePath + " doesn't exist.");
-                            continue;
-                        }
-
-                        Scene openScene = default(Scene);
-
-                        try
-                        {
-                            openScene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-                        }
-                        catch
-                        {
-                            Debug.LogWarning("Skipped scanning scene '" + scenePath +
-                                             "' for throwing exceptions when trying to load it.");
-                            continue;
-                        }
-
-                        var sceneGOs = Resources.FindObjectsOfTypeAll<DashController>();
-                        
-                        foreach (var dashController in sceneGOs)
-                        {
-                            if (dashController.gameObject.scene != openScene || dashController.Graph == null || !dashController.Graph.isBound) continue;
-
-                            if ((dashController.gameObject.hideFlags & HideFlags.DontSaveInBuild) == 0)
-                            {
-                                try
-                                {
-                                    if (p_jsonScan)
-                                    {
-                                        string scene = scenePath.Substring(0, scenePath.LastIndexOf("."));
-                                        string path = string.Join("/",
-                                            dashController.gameObject.GetComponentsInParent<Transform>()
-                                                .Select(t => t.name).Reverse().ToArray());
-                                        byte[] data =
-                                            dashController.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
-                                        _graphs.Add((scene+"/"+path, dashController.Graph, data));
-                                    }
-                                    else
-                                    {
-                                        dashController.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.LogWarning("Scanning issue "+e);   
-                                }
-                                finally 
-                                {
-                                }
-                            }
-                        }
-                    }
-
-                    // Load a new empty scene that will be unloaded immediately, just to be sure we completely clear all changes made by the scan
-                    // Sometimes this fails for unknown reasons. In that case, swallow any exceptions, and just soldier on and hope for the best!
-                    // Additionally, also eat any debug logs that happen here, because logged errors can stop the build process, and we don't want
-                    // that to happen.
-
-                    UnityEngine.ILogger logger = null;
-
-                    if (Debug_Logger_Property != null)
-                    {
-                        logger = (UnityEngine.ILogger) Debug_Logger_Property.GetValue(null, null);
-                    }
-
-                    bool previous = true;
-
-                    try
-                    {
-                        if (logger != null)
-                        {
-                            previous = logger.logEnabled;
-                            logger.logEnabled = false;
-                        }
-
-                        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-                    }
-                    catch
-                    {
-                    }
-                    finally
-                    {
-                        if (logger != null)
-                        {
-                            logger.logEnabled = previous;
-                        }
-                    }
-
-                }
-                finally
-                {
-                    if (oldSceneSetup != null && oldSceneSetup.Length > 0)
-                    {
-                        EditorSceneManager.RestoreSceneManagerSetup(oldSceneSetup);
-                    }
-                }
-
-                if (p_includeSceneDependencies)
-                {
-                    for (int i = 0; i < p_scenePaths.Length; i++)
-                    {
-                        var scenePath = p_scenePaths[i];
-
-                        string[] dependencies = AssetDatabase.GetDependencies(scenePath, recursive: true);
-
-                        foreach (var dependency in dependencies)
-                        {
-                            // All dependencies of this asset were already included recursively by Unity
-                            ScanAsset(dependency, false, p_jsonScan); 
-                        }
-                    }
-                }
-
-                return true;
-            }
-            finally
-            {
-                UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
-            }
-        }
+        // private static bool ScanScenes(string[] p_scenePaths, bool p_includeSceneDependencies, bool p_jsonScan)
+        // {
+        //     if (p_scenePaths.Length == 0) return true;
+        //
+        //     bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
+        //
+        //     try
+        //     {
+        //         UnitySerializationUtility.ForceEditorModeSerialization = true;
+        //
+        //         bool hasDirtyScenes = false;
+        //
+        //         for (int i = 0; i < EditorSceneManager.sceneCount; i++)
+        //         {
+        //             if (EditorSceneManager.GetSceneAt(i).isDirty)
+        //             {
+        //                 hasDirtyScenes = true;
+        //                 break;
+        //             }
+        //         }
+        //
+        //         if (hasDirtyScenes && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+        //         {
+        //             return false;
+        //         }
+        //
+        //         var oldSceneSetup = EditorSceneManager.GetSceneManagerSetup();
+        //
+        //         try
+        //         {
+        //             for (int i = 0; i < p_scenePaths.Length; i++)
+        //             {
+        //                 var scenePath = p_scenePaths[i];
+        //
+        //                 if (_scannedScenes.Contains(scenePath))
+        //                     continue;
+        //                 
+        //                 _scannedScenes.Add(scenePath);
+        //
+        //                 if (!System.IO.File.Exists(scenePath))
+        //                 {
+        //                     Debug.LogWarning("Skipped scanning scene at " + scenePath + " doesn't exist.");
+        //                     continue;
+        //                 }
+        //
+        //                 Scene openScene = default(Scene);
+        //
+        //                 try
+        //                 {
+        //                     openScene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+        //                 }
+        //                 catch
+        //                 {
+        //                     Debug.LogWarning("Skipped scanning scene '" + scenePath +
+        //                                      "' for throwing exceptions when trying to load it.");
+        //                     continue;
+        //                 }
+        //
+        //                 var sceneGOs = Resources.FindObjectsOfTypeAll<DashController>();
+        //                 
+        //                 foreach (var dashController in sceneGOs)
+        //                 {
+        //                     if (dashController.gameObject.scene != openScene || dashController.Graph == null || !dashController.Graph.isBound) continue;
+        //
+        //                     if ((dashController.gameObject.hideFlags & HideFlags.DontSaveInBuild) == 0)
+        //                     {
+        //                         try
+        //                         {
+        //                             if (p_jsonScan)
+        //                             {
+        //                                 string scene = scenePath.Substring(0, scenePath.LastIndexOf("."));
+        //                                 string path = string.Join("/",
+        //                                     dashController.gameObject.GetComponentsInParent<Transform>()
+        //                                         .Select(t => t.name).Reverse().ToArray());
+        //                                 byte[] data =
+        //                                     dashController.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
+        //                                 _graphs.Add((scene+"/"+path, dashController.Graph, data));
+        //                             }
+        //                             else
+        //                             {
+        //                                 dashController.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
+        //                             }
+        //                         }
+        //                         catch (Exception e)
+        //                         {
+        //                             Debug.LogWarning("Scanning issue "+e);   
+        //                         }
+        //                         finally 
+        //                         {
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //
+        //             // Load a new empty scene that will be unloaded immediately, just to be sure we completely clear all changes made by the scan
+        //             // Sometimes this fails for unknown reasons. In that case, swallow any exceptions, and just soldier on and hope for the best!
+        //             // Additionally, also eat any debug logs that happen here, because logged errors can stop the build process, and we don't want
+        //             // that to happen.
+        //
+        //             UnityEngine.ILogger logger = null;
+        //
+        //             if (Debug_Logger_Property != null)
+        //             {
+        //                 logger = (UnityEngine.ILogger) Debug_Logger_Property.GetValue(null, null);
+        //             }
+        //
+        //             bool previous = true;
+        //
+        //             try
+        //             {
+        //                 if (logger != null)
+        //                 {
+        //                     previous = logger.logEnabled;
+        //                     logger.logEnabled = false;
+        //                 }
+        //
+        //                 EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        //             }
+        //             catch
+        //             {
+        //             }
+        //             finally
+        //             {
+        //                 if (logger != null)
+        //                 {
+        //                     logger.logEnabled = previous;
+        //                 }
+        //             }
+        //
+        //         }
+        //         finally
+        //         {
+        //             if (oldSceneSetup != null && oldSceneSetup.Length > 0)
+        //             {
+        //                 EditorSceneManager.RestoreSceneManagerSetup(oldSceneSetup);
+        //             }
+        //         }
+        //
+        //         if (p_includeSceneDependencies)
+        //         {
+        //             for (int i = 0; i < p_scenePaths.Length; i++)
+        //             {
+        //                 var scenePath = p_scenePaths[i];
+        //
+        //                 string[] dependencies = AssetDatabase.GetDependencies(scenePath, recursive: true);
+        //
+        //                 foreach (var dependency in dependencies)
+        //                 {
+        //                     // All dependencies of this asset were already included recursively by Unity
+        //                     ScanAsset(dependency, false, p_jsonScan); 
+        //                 }
+        //             }
+        //         }
+        //
+        //         return true;
+        //     }
+        //     finally
+        //     {
+        //         UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
+        //     }
+        // }
 
         private static bool ScanAsset(string p_assetPath, bool p_includeAssetDependencies, bool p_checksumScan)
         {
@@ -366,10 +366,10 @@ namespace Dash.Editor
                         
             _scannedScenes.Add(p_assetPath);
             
-            if (p_assetPath.EndsWith(".unity"))
-            {
-                return ScanScenes(new string[] {p_assetPath}, p_includeAssetDependencies, p_checksumScan);
-            }
+            // if (p_assetPath.EndsWith(".unity"))
+            // {
+            //     return ScanScenes(new string[] {p_assetPath}, p_includeAssetDependencies, p_checksumScan);
+            // }
 
             if (!(p_assetPath.EndsWith(".asset") || p_assetPath.EndsWith(".prefab")))
             {
@@ -419,43 +419,38 @@ namespace Dash.Editor
         {
             string path = AssetDatabase.GetAssetPath(p_object);
             
-            if (p_object is DashController)
-            {
-                DashController controller = (DashController)p_object;
-
-                if (controller.Graph == null || !controller.Graph.isBound)
-                    return;
-                
-                bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
-
-                try
-                {
-                    UnitySerializationUtility.ForceEditorModeSerialization = true;
-                    
-                    if (p_jsonScan)
-                    {
-                        byte[] data = controller.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
-                        _graphs.Add((path, controller.Graph, data));
-                    }
-                    else
-                    {
-                        controller.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
-                    }
-                }
-                finally
-                {
-                    UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
-                }
-            }
+            // if (p_object is DashController)
+            // {
+            //     DashController controller = (DashController)p_object;
+            //
+            //     if (controller.Graph == null || !controller.Graph.isBound)
+            //         return;
+            //     
+            //     bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
+            //
+            //     try
+            //     {
+            //         UnitySerializationUtility.ForceEditorModeSerialization = true;
+            //         
+            //         if (p_jsonScan)
+            //         {
+            //             byte[] data = controller.Graph.SerializeToBytes(DataFormat.JSON, ref _unityRefs);
+            //             _graphs.Add((path, controller.Graph, data));
+            //         }
+            //         else
+            //         {
+            //             controller.Graph.SerializeToBytes(DataFormat.Binary, ref _unityRefs);
+            //         }
+            //     }
+            //     finally
+            //     {
+            //         UnitySerializationUtility.ForceEditorModeSerialization = formerForceEditorModeSerialization;
+            //     }
+            // }
 
             if (p_object is DashGraph)
             {
                 DashGraph graph = ((DashGraph)p_object);
-                if (graph.isBound)
-                {
-                    Debug.LogWarning("Scanning issue bound graph in separate asset.");
-                    return;
-                }
 
                 bool formerForceEditorModeSerialization = UnitySerializationUtility.ForceEditorModeSerialization;
 

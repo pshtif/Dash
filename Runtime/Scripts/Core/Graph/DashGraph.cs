@@ -8,7 +8,6 @@ using System.Linq;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 using UnityEngine;
-using UnityEngine.Serialization;
 using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
 
@@ -74,10 +73,7 @@ namespace Dash
 
         [NonSerialized]
         private DashGraph _parentGraph;
-        
-        [NonSerialized]
-        public bool isBound = false;
-        
+
         public DashGraph GetParentGraph()
         {
             return _parentGraph;
@@ -402,12 +398,6 @@ namespace Dash
                     cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                     UnitySerializationUtility.SerializeUnityObject(this, ref _serializationData,
                         serializeUnityFields: true, context: cachedContext.Value);
-                }
-
-                if (DashEditorCore.EditorConfig.editingController != null &&
-                    DashEditorCore.EditorConfig.editingGraph == this)
-                {
-                    DashEditorCore.EditorConfig.editingController.ReserializeBound();
                 }
             }
 #endif

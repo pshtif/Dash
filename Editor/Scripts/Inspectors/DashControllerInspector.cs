@@ -46,7 +46,7 @@ namespace Dash.Editor
             // }
             // else
             {
-                if (Controller.graphAsset == null && !Controller.HasBoundGraph)
+                if (Controller.graphAsset == null)
                 {
                     GUI.color = new Color(1, 0.75f, 0.5f);
                     if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
@@ -75,15 +75,8 @@ namespace Dash.Editor
                         OpenEditor();
                     }
                     GUI.color = Color.white;
-
-                    if (!Controller.HasBoundGraph)
-                    {
-                        DrawAssetGraphInspector();
-                    }
-                    else
-                    {
-                        DrawBoundGraphInspector();
-                    }
+                    
+                    DrawAssetGraphInspector();
                 }
             }
 
@@ -248,42 +241,5 @@ namespace Dash.Editor
                 }
             }
         }
-
-        void DrawBoundGraphInspector()
-        {
-            EditorGUILayout.HelpBox("Save graph to asset, bound graphs will be deprecated!", MessageType.Warning);
-            
-            if (GUILayout.Button("Save to Asset"))
-            {
-                DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
-                if (graph != null)
-                {
-                    Controller.BindGraph(null);
-                    Controller.graphAsset = graph;
-                }
-            }
-
-            if (GUILayout.Button("Remove Graph"))
-            {
-                if (DashEditorCore.EditorConfig.editingGraph == Controller.Graph)
-                {
-                    DashEditorCore.UnloadGraph();
-                }
-
-                Controller.BindGraph(null);
-            }
-        }
-        
-        // void BindGraph(DashGraph p_graph)
-        // {
-        //     bool editing = DashEditorCore.EditorConfig.editingGraph == p_graph;
-        //     Controller.BindGraph(p_graph);
-        //
-        //     // If we are currently editing this controller refresh
-        //     if (editing)
-        //     {
-        //         DashEditorCore.EditController(Controller);
-        //     }
-        // }
     }
 }

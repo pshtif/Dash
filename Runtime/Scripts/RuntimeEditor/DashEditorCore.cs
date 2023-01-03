@@ -90,21 +90,14 @@ namespace Dash
 
         public static void SetDirty()
         {
-            if (EditorConfig.editingGraph == null)
-                return;
-            
-            EditorUtility.SetDirty(EditorConfig.editingGraph);
-            
+            if (EditorConfig.editingGraph != null)
+                EditorUtility.SetDirty(EditorConfig.editingGraph);
+
             if (EditorConfig.editingGraph != EditorConfig.editingRootGraph)
                 EditorUtility.SetDirty(EditorConfig.editingRootGraph);
             
             if (EditorConfig.editingController != null)
-            {
-                if (EditorConfig.editingController.HasBoundGraph)
-                    EditorConfig.editingController.ReserializeBound();
-                
                 EditorUtility.SetDirty(EditorConfig.editingController);
-            }
         }
 
         public static void EditController(DashController p_controller, string p_graphPath = "")
