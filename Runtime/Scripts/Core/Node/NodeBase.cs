@@ -697,19 +697,33 @@ namespace Dash
             return connectorRect;
         }
 
-        internal int HitsConnector(ConnectorType p_connectorType, Vector2 p_position)
+        internal bool HitsConnector(Vector2 p_position, out ConnectorType p_connectorType, out int p_connectorIndex)
         {
-            int count = p_connectorType == ConnectorType.INPUT ? InputCount : OutputCount;
-            for (int i = 0; i < count; i++)
+            p_connectorIndex = -1;
+
+            p_connectorType = ConnectorType.OUTPUT;
+            for (int i = 0; i < OutputCount; i++)
             {
                 var connectorRect = GetConnectorRect(p_connectorType, i);
                 if (connectorRect.Contains(p_position))
                 {
-                    return i;
+                    p_connectorIndex = i;
+                    return true;
+                }
+            }
+            
+            p_connectorType = ConnectorType.INPUT;
+            for (int i = 0; i < InputCount; i++)
+            {
+                var connectorRect = GetConnectorRect(p_connectorType, i);
+                if (connectorRect.Contains(p_position))
+                {
+                    p_connectorIndex = i;
+                    return true;
                 }
             }
 
-            return -1;
+            return false;
         }
 
         protected virtual void DrawConnectors(Rect p_rect)

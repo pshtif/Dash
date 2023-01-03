@@ -517,9 +517,26 @@ namespace Dash
             LinqExtensions.ForEach(_nodes.Where(n => n != null), n => n.DrawComment(p_rect, p_zoomed));
         }
 
-        public NodeBase HitsNode(Vector2 p_position)
+        public bool HitsNode(Vector2 p_position, out NodeBase p_node)
         {
-            return _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
+            p_node = _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
+
+            return p_node != null;
+        }
+        
+        public bool HitsNode(Vector2 p_position, out NodeBase p_node, out ConnectorType p_connectorType, out int p_connectorIndex)
+        {
+            p_node = _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
+
+            p_connectorType = ConnectorType.INPUT;
+            p_connectorIndex = -1;
+            if (p_node != null)
+            {
+                p_node.HitsConnector(p_position, out p_connectorType, out p_connectorIndex);
+                return true;
+            }
+
+            return false;
         }
 
         public GraphBox HitsBoxDrag(Vector2 p_position)

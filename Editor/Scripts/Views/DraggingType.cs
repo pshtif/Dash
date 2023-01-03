@@ -8,6 +8,7 @@ namespace Dash.Editor
     {
         NONE,
         NODE_DRAG,
+        CONNECTION_DRAG,
         SELECTION,
         BOX_DRAG, 
         BOX_RESIZE
