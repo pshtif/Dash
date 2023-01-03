@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
-    public class DashController : MonoBehaviour, IEditorControllerAccess, IVariableBindable, IExposedPropertyTable
+    public class DashController : MonoBehaviour, IVariableBindable, IExposedPropertyTable
     {
 
         public DashCore Core => DashCore.Instance;
@@ -38,7 +38,7 @@ namespace Dash
         [SerializeField] 
         private List<Object> _boundGraphReferences;
 
-        DashGraph IEditorControllerAccess.graphAsset
+        internal DashGraph graphAsset
         {
             get { return _assetGraph; }
             set
