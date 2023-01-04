@@ -4,7 +4,6 @@
 
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Dash.Editor
 {
@@ -90,8 +89,7 @@ namespace Dash.Editor
             }
 
             ((INodeAccess)p_node).GetCustomContextMenu(ref menu);
-
-            //menu.ShowAsEditorMenu();
+            
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }
 

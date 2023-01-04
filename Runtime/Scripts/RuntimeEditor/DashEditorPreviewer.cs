@@ -3,28 +3,25 @@
  */
 
 #if UNITY_EDITOR
-using System.Collections.Generic;
+
 using System.Linq;
 using System.Reflection;
-using OdinSerializer;
-using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Dash
 {
     public class DashEditorPreviewer
     {
+        public DashController Controller => DashEditorCore.EditorConfig.editingController;
+
+        public bool IsPreviewing => _isPreviewing;
+        
         private bool _isPreviewing = false;
         private bool _previewStarted = false;
         private bool _previewStopScheduled = false;
-
-        public bool IsPreviewing => _isPreviewing;
-
-        public DashController Controller => DashEditorCore.EditorConfig.editingController;
 
         private GameObject _selectedBeforePreview;
 
@@ -39,8 +36,6 @@ namespace Dash
 
         public void StartPreview(NodeBase p_node)
         {
-            // Debug.Log("EditorCore.StartPreview");
-
             if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
                 return;
             
@@ -51,35 +46,30 @@ namespace Dash
             _controllerSelected = Selection.activeGameObject == Controller.gameObject;
             
             Controller.previewing = true;
-            // Debug.Log("Set controller dirty");
             DashEditorCore.SetDirty();
 
             if (_stage == null)
             {
-                // Debug.Log("Save Open Scenes");
                 EditorSceneManager.SaveOpenScenes();
             }
             else
             {
-                bool state = (bool)_stage.GetType()
-                    .GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic)
+                _stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic)
                     .Invoke(_stage, new object[] { });
             }
 
             _isPreviewing = true;
             _previewStarted = false;
             
-            ExpressionEvaluator.ClearCache();
+            ExpressionEvaluator.ClearExpressionCache();
             
             // Debug.Log("Fetch Global Variables");
             //VariableUtils.FetchGlobalVariables();
-
-            // Debug.Log("Cloning preview graph");
+            
             _previewGraph = DashEditorCore.EditorConfig.editingGraph.Clone();
             _previewGraph.Initialize(Controller);
             DashEditorCore.EditorConfig.editingGraph = _previewGraph;
-            // Debug.Log("Start preview");
-            
+
             EditorApplication.update += OnUpdate;
         }
 
@@ -144,7 +134,7 @@ namespace Dash
                     Selection.objects = new Object[] {controller.gameObject};
                 }
 
-                bool state = (bool)_stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
+                _stage.GetType().GetMethod("SavePrefab", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_stage, new object[]{});
             }
         }
     }

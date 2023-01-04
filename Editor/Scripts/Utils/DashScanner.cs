@@ -6,20 +6,13 @@
 
 #if UNITY_EDITOR
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using Dash;
 using Dash.Attributes;
 using OdinSerializer;
-using OdinSerializer.Editor;
 using OdinSerializer.Utilities;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Dash.Editor
@@ -415,7 +408,7 @@ namespace Dash.Editor
             }
         }
 
-        private static void ScanObject(UnityEngine.Object p_object, bool p_jsonScan)
+        private static void ScanObject(Object p_object, bool p_jsonScan)
         {
             string path = AssetDatabase.GetAssetPath(p_object);
             

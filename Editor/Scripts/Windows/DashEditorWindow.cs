@@ -43,12 +43,12 @@ namespace Dash.Editor
         }
         
         void OnPrefabStageClosing(PrefabStage p_stage) {
-            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            //when exiting prefab state we are left with a floating graph instance which can create confusion
             DashEditorCore.EditController(null);
         }
         
         void OnPrefabStageOpened(PrefabStage p_stage) {
-            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            //when exiting prefab state we are left with a floating graph instance which can create confusion
             DashEditorCore.EditController(null);
         }
 
@@ -57,6 +57,17 @@ namespace Dash.Editor
         public static DashEditorWindow InitEditorWindow(DashController p_dashController)
         {
             DashEditorCore.EditController(p_dashController);
+
+            Instance = GetWindow<DashEditorWindow>();
+            Instance.titleContent = new GUIContent("Dash Editor");
+            Instance.minSize = new Vector2(800, 400);
+
+            return Instance;
+        }
+        
+        public static DashEditorWindow InitEditorWindow(DashGraph p_graph)
+        {
+            DashEditorCore.EditGraph(p_graph);
 
             Instance = GetWindow<DashEditorWindow>();
             Instance.titleContent = new GUIContent("Dash Editor");
@@ -80,23 +91,18 @@ namespace Dash.Editor
                 return;
             
             // Instance lost issue in 2020?
-            if (Instance == null)
-                Instance = this;
+            if (Instance == null) Instance = this;
 
-            if (_views == null)
-            {
-                CreateViews();
-                return;
-            }
+            if (_views == null) CreateViews();
 
-            var rect = new Rect(0, 0, position.width, position.height);
-            
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
             if ((Event.current.type == EventType.Repaint || Event.current.isMouse) && !_previousLayoutDone) return;
             
             ShortcutsHandler.Handle();
 
+            var rect = new Rect(0, 0, position.width, position.height);
+            
             // Draw view GUIs
             _views.ForEach(v => v.DrawGUI(Event.current, rect));
 

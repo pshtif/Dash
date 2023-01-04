@@ -2,21 +2,18 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Graphs.AnimationBlendTree;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace Dash.Editor
 {
     public class GraphView : ViewBase
     {
+        /*
+         * PROPERTIES SECTION
+         */
+        #region PROPERTIES REGION
         protected bool _initialized = false;
-
         protected float Zoom => DashEditorCore.EditorConfig.zoom;
 
         protected Rect zoomedRect;
@@ -31,7 +28,13 @@ namespace Dash.Editor
         protected Texture _whiteRectTexture;
 
         protected GraphMenuView _graphMenuView;
+        #endregion
 
+        /*
+         *  DRAWING SECTION 
+         */
+
+        #region DRAWING REGION
         public override void DrawGUI(Event p_event, Rect p_rect)
         {
             if (!_initialized)
@@ -82,14 +85,9 @@ namespace Dash.Editor
             if (Graph == null || Graph.Nodes.Count > 0)
                 return;
 
-            string helpString = "RIGHT CLICK to create nodes.\n" + "Hold RIGHT mouse button to DRAG around.";
-            
-            GUIStyle style = new GUIStyle();
-            style.fontSize = 18;
-            style.normal.textColor = Color.gray;
-            style.fontStyle = FontStyle.Bold;
-            style.alignment = TextAnchor.UpperCenter;
-            GUI.Label(new Rect(p_rect.x, p_rect.y + 30, p_rect.width, p_rect.height), helpString, style);
+            GUI.Label(new Rect(p_rect.x, p_rect.y + p_rect.height/2, p_rect.width, p_rect.height),
+                "RIGHT CLICK to create nodes.\n" + "Hold RIGHT mouse button to DRAG around.",
+                DashEditorCore.Skin.GetStyle("HelpText"));
         }
 
         void DrawSelectingRegion(Rect p_rect)
@@ -109,15 +107,9 @@ namespace Dash.Editor
 
             if (Controller != null)
             {
-                GUIStyle style = new GUIStyle();
-                style.normal.textColor = new Color(.5f, .5f, .5f);
-                style.fontSize = 16;
-                style.fontStyle = FontStyle.Bold;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), "Controller", style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 58, 200, 40), "Controller", DashEditorCore.Skin.GetStyle("GraphControllerLabel"));
                 
-                style.normal.textColor =  new Color(1, 0.7f, 0);
-                style.fontSize = 18;
-                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), Controller.name, style);
+                GUI.Label(new Rect(p_rect.x + 16, p_rect.height - 40, 200, 40), Controller.name, DashEditorCore.Skin.GetStyle("GraphControllerName"));
             }
             
             if (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath))
@@ -143,70 +135,59 @@ namespace Dash.Editor
             if (!DashEditorCore.Previewer.IsPreviewing)
                 return;
             
-            GUIStyle style = new GUIStyle();
-            style.fontSize = 24;
-            style.fontStyle = FontStyle.Bold;
-            style.normal.textColor = Color.red;
             if (Graph.Nodes.Exists(n => n.hasErrorsInExecution))
             {
-                GUI.Label(new Rect(p_rect.width - 200, p_rect.height - 64, 200, 40), "ERROR!", style);
+                GUI.color = Color.red;
+                GUI.Label(new Rect(p_rect.width - 200, p_rect.height - 64, 200, 40), "ERROR!", DashEditorCore.Skin.GetStyle("PreviewingLabel"));
             }
-            style.normal.textColor = new Color(0,1,0,.8f);
-            GUI.Label(new Rect(p_rect.width-200, p_rect.height-40, 200,40), "PREVIEWING...", style);
+            GUI.color = new Color(0,1,0,.8f);
+            GUI.Label(new Rect(p_rect.width-200, p_rect.height-40, 200,40), "PREVIEWING...", DashEditorCore.Skin.GetStyle("PreviewingLabel"));
+            GUI.color = Color.white;
         }
         
         void DrawTitle(Rect p_rect)
         {
-            // Draw title background
             Rect titleRect = new Rect(0, 0, p_rect.width, 24);
             GUI.color = new Color(0.1f, 0.1f, .1f, .8f);
             GUI.DrawTexture(titleRect, _whiteRectTexture);
             GUI.color = Color.white;
 
             // Draw graph name
-            GUIStyle style = new GUIStyle();
-            style.alignment = TextAnchor.MiddleCenter;
             if (Graph != null)
             {
-                style.normal.textColor = Color.gray;
-                GUI.Label(new Rect(0, 0, p_rect.width, 24), new GUIContent("Editing graph:"), style);
-                style.normal.textColor = Color.white;
-                style.fontStyle = FontStyle.Bold;
-                style.alignment = TextAnchor.MiddleLeft;
+                GUI.Label(new Rect(0, 0, p_rect.width, 24), new GUIContent("Editing graph:"),
+                    DashEditorCore.Skin.GetStyle("EditingGraphLabel"));
 
                 GUI.Label(new Rect(p_rect.width / 2 + 40, 0, p_rect.width, 24),
                     new GUIContent(DashEditorCore.EditorConfig.editingRootGraph.name + 
                                    (GraphUtils.IsSubGraph(DashEditorCore.EditorConfig.editingGraphPath)
                                        ? "/" + DashEditorCore.EditorConfig.editingGraphPath
-                                       : "")), style);
+                                       : "")), DashEditorCore.Skin.GetStyle("EditingGraphName"));
             }
             else
             {
-                style.normal.textColor = Color.gray;
-                GUI.Label(new Rect(0, 0, p_rect.width, 24), new GUIContent("No graph loaded."), style);
+                GUI.Label(new Rect(0, 0, p_rect.width, 24), new GUIContent("No graph loaded."),
+                    DashEditorCore.Skin.GetStyle("EditingGraphLabel"));
             }
 
             if (Application.isPlaying && Graph != null && Graph.Controller != null)
             {
-                style = new GUIStyle();
-                style.fontSize = 18;
-                style.normal.textColor = Color.yellow;
-                style.alignment = TextAnchor.MiddleCenter;
                 GUI.Label(new Rect(0, 32, p_rect.width, 24),
-                    new GUIContent("Debugging bound: " + Graph.Controller.name), style);
-                GUI.color = Color.white;
+                    new GUIContent("Debugging bound: " + Graph.Controller.name),
+                    DashEditorCore.Skin.GetStyle("GraphViewDebuggingLabel"));
             }
             
-            // Draw version info
-            style = new GUIStyle();
-            style.normal.textColor = Color.gray;
-            style.alignment = TextAnchor.MiddleRight;
             GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashCore.VERSION,
-                style);
+                DashEditorCore.Skin.GetStyle("DashEditorVersionLabel"));
 
             _graphMenuView.Draw(Graph);
         }
+        #endregion
 
+        /*
+         *  MOUSE SECTION
+         */
+        #region MOUSE REGION
         public override void ProcessEvent(Event p_event, Rect p_rect)
         {
             if (Graph == null || !p_rect.Contains(p_event.mousePosition))
@@ -527,5 +508,6 @@ namespace Dash.Editor
             
             SelectionManager.EndConnectionDrag();
         }
+        #endregion
     }
 }

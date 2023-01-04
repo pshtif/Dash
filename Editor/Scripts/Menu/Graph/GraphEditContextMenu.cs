@@ -17,8 +17,7 @@ namespace Dash.Editor
             {
                 menu.AddItem(new GUIContent("Paste Variables"), false, () => PasteVariables(p_graph.variables));
             }
-
-            //menu.ShowAsEditorMenu();
+            
             GenericMenuPopup.Show(menu, "Edit",  Event.current.mousePosition, 240, 300, false, false);
         }
 

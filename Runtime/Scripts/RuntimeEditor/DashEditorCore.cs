@@ -15,7 +15,6 @@ using UnityEngine;
 
 namespace Dash
 {
-  
     [Serializable]
     [InitializeOnLoad]
     public class DashEditorCore
@@ -28,14 +27,11 @@ namespace Dash
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
 
-        static public GraphBox editingBoxComment;
-        static public GraphBox selectedBox;
-
         static public bool DetailsVisible => EditorConfig.zoom < 2.5;
+        
+        static public List<DashGraph> GraphAssets { get; private set; }
 
         static public string propertyReference;
-
-        static public List<DashGraph> GraphAssets { get; private set; }
 
         static DashEditorCore()
         {
@@ -147,8 +143,6 @@ namespace Dash
         
         static void OnAfterAssemblyReload()
         {
-            // Debug.Log("OnAfterAssemblyReload");
-            
             if (EditorConfig.editingController != null)
             {
                 EditController(EditorConfig.editingController, EditorConfig.editingGraphPath);
@@ -157,13 +151,11 @@ namespace Dash
 
         static void OnBeforeAssemblyReload()
         {
-            // Debug.Log("OnBeforeAssemblyReload");
+         
         }
         
         static void OnPlayModeChanged(PlayModeStateChange p_change)
         {
-            //Debug.Log("[PLAYMODECHANGE] "+p_change);
-            
             if (p_change == PlayModeStateChange.ExitingEditMode)
             {
                 EditorConfig.enteringPlayModeController = EditorConfig.editingController != null ? EditorConfig.editingController : null;

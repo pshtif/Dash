@@ -15,8 +15,7 @@ namespace Dash.Editor
             GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
             if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
             {
-                DashEditorWindow.InitEditorWindow(null);
-                DashEditorCore.EditGraph((DashGraph)target);
+                DashEditorWindow.InitEditorWindow((DashGraph)target);
             }
         }
     }

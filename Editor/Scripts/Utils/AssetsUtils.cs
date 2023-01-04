@@ -10,7 +10,8 @@ namespace Dash.Editor
 {
     public class AssetsUtils
     {
-        public static IEnumerable<T> FindAssetsByType<T>() where T : Object {
+        public static IEnumerable<T> FindAssetsByType<T>() where T : Object 
+        {
             var guids = AssetDatabase.FindAssets($"t:{typeof(T)}");
             foreach (var t in guids) {
                 var assetPath = AssetDatabase.GUIDToAssetPath(t);

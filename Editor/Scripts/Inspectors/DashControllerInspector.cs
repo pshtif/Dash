@@ -12,72 +12,46 @@ namespace Dash.Editor
     {
         public DashController Controller => (DashController) target;
 
-        private void OpenEditor()
-        {
-            DashEditorWindow.InitEditorWindow(Controller);
-        }
-
         public override void OnInspectorGUI()
         {
-            //var oldColor = GUI.color;
             if (DashEditorCore.EditorConfig.showInspectorLogo)
             {
                 GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_inspector"), GUILayout.ExpandWidth(true));
                 var rect = GUILayoutUtility.GetLastRect();
-                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("VersionText"));
+                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
             }
-
-            //if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
-
-            // var modifications = PrefabUtility.GetPropertyModifications(target);
-            //
-            // if (modifications != null)
-            // {
-            //     Debug.Log(modifications.Length);
-            //     modifications.ForEach(m =>
-            //     {
-            //         Debug.Log(m.propertyPath+" : "+m.target+" : "+m.objectReference);
-            //     });
-            // }
-
-            // if (PrefabUtility.IsPartOfAnyPrefab(target))
-            // {
-            //     EditorGUILayout.HelpBox("Graph overrides on prefab instances are not supported.", MessageType.Info);
-            // }
-            // else
+            
+            if (Controller.graphAsset == null)
             {
-                if (Controller.graphAsset == null)
+                GUI.color = new Color(1, 0.75f, 0.5f);
+                if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
-                    GUI.color = new Color(1, 0.75f, 0.5f);
-                    if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
-                    {
-                        Controller.graphAsset = GraphUtils.CreateGraphAsAssetFile();
-                    }
+                    Controller.graphAsset = GraphUtils.CreateGraphAsAssetFile();
+                }
 
-                    EditorGUI.BeginChangeCheck();
-                    
-                    GUI.color = Color.white;
-                    Controller.graphAsset =
-                        (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
-                            typeof(DashGraph), true);
-                    
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        EditorUtility.SetDirty(target);
-                        DashEditorCore.EditController(Controller);
-                    }
-                }
-                else
+                EditorGUI.BeginChangeCheck();
+                
+                GUI.color = Color.white;
+                Controller.graphAsset =
+                    (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
+                        typeof(DashGraph), true);
+                
+                if (EditorGUI.EndChangeCheck())
                 {
-                    GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
-                    if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
-                    {
-                        OpenEditor();
-                    }
-                    GUI.color = Color.white;
-                    
-                    DrawAssetGraphInspector();
+                    EditorUtility.SetDirty(target);
+                    DashEditorCore.EditController(Controller);
                 }
+            }
+            else
+            {
+                GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
+                if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
+                {
+                    DashEditorWindow.InitEditorWindow(Controller);
+                }
+                GUI.color = Color.white;
+                
+                DrawAssetGraphInspector();
             }
 
             if (Controller.Graph == null)
@@ -86,33 +60,6 @@ namespace Dash.Editor
             DrawSettingsInspector();
             
             GUILayout.Space(2);
-
-            // if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
-            // {
-            //     // Obsolete will be removed
-            //     if (Controller.HasBoundGraph)
-            //     {
-            //         GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller, ref Controller.variablesSectionMinimzed);
-            //         GUILayout.Space(2);
-            //     }
-            //     else
-            //     {
-            //         if (Controller.showGraphVariables)
-            //         {
-            //             GUIStyle style = new GUIStyle();
-            //             style.fontStyle = FontStyle.Italic;
-            //             style.normal.textColor = Color.yellow;
-            //             style.alignment = TextAnchor.MiddleCenter;
-            //             EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
-            //             if (GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables,
-            //                     Controller, ref Controller.variablesSectionMinimzed))
-            //             {
-            //                 EditorUtility.SetDirty(Controller.Graph);
-            //             }
-            //             GUILayout.Space(2);
-            //         }
-            //     }
-            // }
 
             DrawAdvancedInspector();
         }

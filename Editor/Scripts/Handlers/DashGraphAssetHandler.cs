@@ -10,16 +10,15 @@ namespace Dash.Editor
 {
     public class DashGraphAssetHandler
     {
-        [OnOpenAssetAttribute(1)]
+        [OnOpenAsset(1)]
         public static bool OpenDashGraphEditor(int p_instanceID, int p_line)
         {
             Object asset = EditorUtility.InstanceIDToObject(p_instanceID);
             if (asset.GetType() == typeof(DashGraph))
             {
                 string path = AssetDatabase.GetAssetPath(asset);
-                DashEditorWindow.InitEditorWindow(null);
-                DashEditorCore.EditGraph((DashGraph) AssetDatabase.LoadAssetAtPath<DashGraph>(path));
-                
+                DashEditorWindow.InitEditorWindow(AssetDatabase.LoadAssetAtPath<DashGraph>(path));
+
                 return true;
             }
 

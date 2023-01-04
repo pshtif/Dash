@@ -9,13 +9,13 @@ namespace Dash.Editor
     public class AnimationClipChangesHandler : AssetPostprocessor
     {
         static void OnPostprocessAllAssets (
-            string[] importedAssets,
-            string[] deletedAssets,
-            string[] movedAssets,
-            string[] movedFromAssetPaths)
+            string[] p_importedAssets,
+            string[] p_deletedAssets,
+            string[] p_movedAssets,
+            string[] p_movedFromAssetPaths)
         {
             bool animChanged = false;
-            foreach (string str in importedAssets)
+            foreach (string str in p_importedAssets)
             {
                 string[] splitStr = str.Split('.');
 
