@@ -19,7 +19,6 @@ namespace Dash
         static public List<int> selectedNodes = new List<int>();
         static public List<int> selectingNodes = new List<int>();
         
-        static public GraphBox editingBoxComment;
         static public GraphBox selectedBox;
         
         static public int connectingIndex = -1;

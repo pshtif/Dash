@@ -334,11 +334,11 @@ namespace Dash.Editor
                     SelectionManager.DragSelectedNodes(delta, Graph);
                     break;
                 case DraggingType.BOX_DRAG:
-                    DashEditorCore.selectedBox.moveNodes = !p_event.control;
-                    DashEditorCore.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
+                    SelectionManager.selectedBox.moveNodes = !p_event.control;
+                    SelectionManager.selectedBox.Drag(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
                     break;
                 case DraggingType.BOX_RESIZE:
-                    DashEditorCore.selectedBox.Resize(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
+                    SelectionManager.selectedBox.Resize(new Vector2(p_event.delta.x * Zoom, p_event.delta.y * Zoom));
                     break;
                 case DraggingType.SELECTION:
                     selectedRegion.width += p_event.delta.x;
@@ -409,7 +409,7 @@ namespace Dash.Editor
                 return;
             
             dragging = DraggingType.SELECTION;
-            DashEditorCore.selectedBox = null;
+            SelectionManager.selectedBox = null;
             selectedRegion = new Rect(p_event.mousePosition.x, p_event.mousePosition.y, 0, 0);
 
             p_captured = true;
@@ -469,8 +469,8 @@ namespace Dash.Editor
             GraphBox box = Graph.HitsBoxDrag(mousePosition);
             if (box != null)
             {
-                DashEditorCore.selectedBox = box;
-                DashEditorCore.selectedBox.StartDrag();
+                SelectionManager.selectedBox = box;
+                SelectionManager.selectedBox.StartDrag();
                 dragging = DraggingType.BOX_DRAG;
                 p_captured = true;
             }
@@ -479,8 +479,8 @@ namespace Dash.Editor
             box = Graph.HitsBoxResize(p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y));
             if (box != null)
             {
-                DashEditorCore.selectedBox = box;
-                DashEditorCore.selectedBox.StartResize();
+                SelectionManager.selectedBox = box;
+                SelectionManager.selectedBox.StartResize();
                 dragging = DraggingType.BOX_RESIZE;
                 p_captured = true;
             }

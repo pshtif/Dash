@@ -34,11 +34,11 @@ namespace Dash.Editor
                 DrawGraphNodeGUI(p_rect);
                 if (_previouslyInspected != selectedNode) GUI.FocusControl("");
                 _previouslyInspected = selectedNode;
-            } else if (DashEditorCore.selectedBox != null)
+            } else if (SelectionManager.selectedBox != null)
             {
                 DrawGraphBoxGUI(p_rect);
-                if (_previouslyInspected != DashEditorCore.selectedBox) GUI.FocusControl("");
-                _previouslyInspected = DashEditorCore.selectedBox;
+                if (_previouslyInspected != SelectionManager.selectedBox) GUI.FocusControl("");
+                _previouslyInspected = SelectionManager.selectedBox;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Dash.Editor
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
 
-            DashEditorCore.selectedBox.DrawInspector();
+            SelectionManager.selectedBox.DrawInspector();
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();

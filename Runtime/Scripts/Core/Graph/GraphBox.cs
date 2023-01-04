@@ -15,6 +15,8 @@ namespace Dash
     public class GraphBox
     {
         #if UNITY_EDITOR
+        static public GraphBox editingBox;
+        
         public DashGraph Graph => DashEditorCore.EditorConfig.editingGraph;
         
         public string comment;
@@ -54,7 +56,7 @@ namespace Dash
             {
                 if (EditorApplication.timeSinceStartup - _lastClickTime < 0.3)
                 {
-                    DashEditorCore.editingBoxComment = this;
+                    editingBox = this;
                 }
                 _lastClickTime = EditorApplication.timeSinceStartup;
             }
@@ -66,7 +68,7 @@ namespace Dash
             style.fontSize = 24;
             style.normal.textColor = Color.white;
             style.alignment = TextAnchor.LowerLeft;
-            if (DashEditorCore.editingBoxComment == this)
+            if (editingBox == this)
             {
                 EditorGUI.BeginChangeCheck();
                 comment = GUI.TextField(titleRect, comment, style);

@@ -84,7 +84,7 @@ namespace Dash.Editor
             DashEditorCore.EditorConfig.editorPosition = position;
             
             if (Event.current.type == EventType.MouseDown)
-                DashEditorCore.editingBoxComment = null;
+                GraphBox.editingBox = null;
 
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
