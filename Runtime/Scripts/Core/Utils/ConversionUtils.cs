@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Dash.Extensions
+namespace Dash
 {
     public static class ConversionUtils
     {

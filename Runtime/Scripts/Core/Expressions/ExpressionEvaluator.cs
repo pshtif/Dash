@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Dash.Extensions;
 using Dash.NCalc;
 using Machina.Attributes;
 using UnityEngine;
@@ -16,11 +15,11 @@ namespace Dash
 {
     public class ExpressionEvaluator
     {
-        protected static Dictionary<string,Expression> _cachedExpressions;
-        protected static Dictionary<string, MethodInfo> _cachedMethods = new Dictionary<string, MethodInfo>();
+        public static bool hasErrorInEvaluation { get; protected set; } = false;
+        public static string errorMessage;
         
-        static public bool hasErrorInEvaluation { get; protected set; } = false;
-        static public string errorMessage;
+        private static Dictionary<string, Expression> _cachedExpressions;
+        private static Dictionary<string, MethodInfo> _cachedMethods = new Dictionary<string, MethodInfo>();
 
         public static void ClearExpressionCache()
         {

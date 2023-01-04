@@ -127,17 +127,12 @@ namespace Dash.Editor
             if (Instance != null)
             {
                 _views = new List<ViewBase>();
-                AddView(new GraphView());
-                AddView(new NodeInspectorView());
-                AddView(new GraphPropertiesView());
-                AddView(new GraphVariablesView());
-                AddView(new PreviewControlsView());
+                _views.Add(new GraphView());
+                _views.Add(new NodeInspectorView());
+                _views.Add(new GraphPropertiesView());
+                _views.Add(new GraphVariablesView());
+                _views.Add(new PreviewControlsView());
             }
-        }
-
-        private void AddView(ViewBase p_view)
-        {
-            _views.Add(p_view);
         }
     }
 }
