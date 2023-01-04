@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.9 - 04.01.2022
+
+#### Fixed
+
+- fixed expression switching for targetName in RetargetNodeModelBase migration
+
 ### Release 0.13.8 - 27.12.2022
 
 #### Added

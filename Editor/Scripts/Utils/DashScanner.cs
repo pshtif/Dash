@@ -180,7 +180,7 @@ namespace Dash.Editor
         private static bool ScanAssets(bool p_checksumScan)
         {
             _scannedAssets = new List<string>();
-            var graphs = AssetsUtils.FindAssetsByType<DashGraph>();
+            var graphs = AssetUtils.FindAssetsByType<DashGraph>();
 
             foreach (var graph in graphs)
             {

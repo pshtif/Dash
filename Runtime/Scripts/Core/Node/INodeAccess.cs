@@ -3,6 +3,7 @@
  */
 
 using System;
+using Dash.Editor;
 
 namespace Dash
 {

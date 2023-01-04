@@ -12,6 +12,7 @@ using LinqExtensions = OdinSerializer.Utilities.LinqExtensions;
 using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
+using Dash.Editor;
 using UnityEditor;
 #endif
 
@@ -524,11 +525,11 @@ namespace Dash
             return p_node != null;
         }
         
-        public bool HitsNode(Vector2 p_position, out NodeBase p_node, out ConnectorType p_connectorType, out int p_connectorIndex)
+        public bool HitsNode(Vector2 p_position, out NodeBase p_node, out NodeConnectorType p_connectorType, out int p_connectorIndex)
         {
             p_node = _nodes.AsEnumerable().Reverse().ToList().Find(n => n.rect.Contains(p_position - viewOffset));
 
-            p_connectorType = ConnectorType.INPUT;
+            p_connectorType = NodeConnectorType.INPUT;
             p_connectorIndex = -1;
             if (p_node != null)
             {

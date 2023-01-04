@@ -4,7 +4,7 @@
 
 using Dash.Attributes;
 using UnityEngine;
-using UnityEngine.UI;
+using Dash.Editor;
 
 namespace Dash
 {

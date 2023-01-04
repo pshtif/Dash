@@ -135,7 +135,7 @@ namespace Dash.Editor
         // Move to Scanner when bound scanning will be removed
         private static bool ScanGraphs()
         {
-            var graphs = AssetsUtils.FindAssetsByType<DashGraph>();
+            var graphs = AssetUtils.FindAssetsByType<DashGraph>();
 
             foreach (var graph in graphs)
             {

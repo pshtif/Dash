@@ -3,9 +3,9 @@
  */
 
 using System;
-using System.Runtime.Serialization;
 using UnityEditor;
 using UnityEngine;
+using Dash.Editor;
 
 namespace Dash
 {
@@ -58,10 +58,10 @@ namespace Dash
             if (!IsValid())
                 return;
 
-            Rect outputRect = outputNode.GetConnectorRect(ConnectorType.OUTPUT, outputIndex);
+            Rect outputRect = outputNode.GetConnectorRect(NodeConnectorType.OUTPUT, outputIndex);
             Vector3 startPos = new Vector3(outputRect.x + outputRect.width / 2, outputRect.y + outputRect.height / 2);
 
-            Rect inputRect = inputNode.GetConnectorRect(ConnectorType.INPUT, inputIndex);
+            Rect inputRect = inputNode.GetConnectorRect(NodeConnectorType.INPUT, inputIndex);
             Vector3 endPos = new Vector3(inputRect.x + inputRect.width / 2, inputRect.y + inputRect.height / 2);
 
             Color connectionColor = active
@@ -141,7 +141,7 @@ namespace Dash
             Handles.EndGUI();
         }
         
-        static public void DrawConnectionToMouse(NodeBase p_node, int p_connectorIndex, ConnectorType p_connectorType, Vector2 p_mousePosition)
+        static public void DrawConnectionToMouse(NodeBase p_node, int p_connectorIndex, NodeConnectorType p_connectorType, Vector2 p_mousePosition)
         {
             if (p_node == null)
                 return;
@@ -152,10 +152,10 @@ namespace Dash
 
             switch (p_connectorType)
             {
-                case ConnectorType.INPUT:
+                case NodeConnectorType.INPUT:
                     DrawBezier(p_mousePosition, connectorPos, Color.green, false);
                     break;
-                case ConnectorType.OUTPUT:
+                case NodeConnectorType.OUTPUT:
                     DrawBezier(connectorPos, p_mousePosition, Color.green, false);
                     break;
             }

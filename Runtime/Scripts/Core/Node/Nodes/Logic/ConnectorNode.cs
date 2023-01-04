@@ -3,10 +3,8 @@
  */
 
 using Dash.Attributes;
+using Dash.Editor;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace Dash
 {
@@ -25,7 +23,7 @@ namespace Dash
         }
 
         #if UNITY_EDITOR
-        public override Rect GetConnectorRect(ConnectorType p_type, int p_index)
+        public override Rect GetConnectorRect(NodeConnectorType p_type, int p_index)
         {
             return new Rect(rect.x + Graph.viewOffset.x + Size.x / 2 - 12,
                 rect.y + Graph.viewOffset.y + Size.y / 2 - 12, 24, 24);

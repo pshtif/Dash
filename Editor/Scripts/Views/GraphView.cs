@@ -372,7 +372,7 @@ namespace Dash.Editor
             
             var mousePosition = p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y);
             
-            ConnectorType connectorType;
+            NodeConnectorType connectorType;
             int connectorIndex;
             NodeBase node;
             if (Graph.HitsNode(mousePosition, out node, out connectorType, out connectorIndex))
@@ -490,7 +490,7 @@ namespace Dash.Editor
         void HandleConnectionMouseLeftUp(Event p_event, Rect p_rect)
         {
             var mousePosition = p_event.mousePosition * Zoom - new Vector2(p_rect.x, p_rect.y);
-            ConnectorType connectorType;
+            NodeConnectorType connectorType;
             int connectorIndex;
             NodeBase node;
 

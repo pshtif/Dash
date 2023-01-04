@@ -2,7 +2,7 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
-namespace Dash.Accumulate
+namespace Dash
 {
     public enum AccumulateType
     {

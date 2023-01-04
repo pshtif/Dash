@@ -13,6 +13,7 @@ using Object = System.Object;
 #if UNITY_EDITOR
 using OdinSerializer;
 using UnityEditor;
+using Dash.Editor;
 
 #endif
 
@@ -673,13 +674,13 @@ namespace Dash
             GUI.color = Color.white;
         }
 
-        public virtual Rect GetConnectorRect(ConnectorType p_connectorType, int p_index)
+        public virtual Rect GetConnectorRect(NodeConnectorType p_connectorType, int p_index)
         {
             Rect offsetRect = new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x,
                 Size.y);
 
             Rect connectorRect;
-            if (p_connectorType == ConnectorType.INPUT)
+            if (p_connectorType == NodeConnectorType.INPUT)
             {
                 connectorRect = new Rect(offsetRect.x,
                     offsetRect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight +
@@ -697,11 +698,11 @@ namespace Dash
             return connectorRect;
         }
 
-        internal bool HitsConnector(Vector2 p_position, out ConnectorType p_connectorType, out int p_connectorIndex)
+        internal bool HitsConnector(Vector2 p_position, out NodeConnectorType p_connectorType, out int p_connectorIndex)
         {
             p_connectorIndex = -1;
 
-            p_connectorType = ConnectorType.OUTPUT;
+            p_connectorType = NodeConnectorType.OUTPUT;
             for (int i = 0; i < OutputCount; i++)
             {
                 var connectorRect = GetConnectorRect(p_connectorType, i);
@@ -712,7 +713,7 @@ namespace Dash
                 }
             }
             
-            p_connectorType = ConnectorType.INPUT;
+            p_connectorType = NodeConnectorType.INPUT;
             for (int i = 0; i < InputCount; i++)
             {
                 var connectorRect = GetConnectorRect(p_connectorType, i);
@@ -742,7 +743,7 @@ namespace Dash
                 if (IsExecuting)
                     GUI.color = Color.cyan;
 
-                var connectorRect = GetConnectorRect(ConnectorType.INPUT, i);
+                var connectorRect = GetConnectorRect(NodeConnectorType.INPUT, i);
                 
                 GUI.Label(connectorRect, "", skin.GetStyle(isConnected ? "NodeConnectorOn" : "NodeConnectorOff"));
             }
@@ -755,10 +756,10 @@ namespace Dash
                     ? DashEditorCore.EditorConfig.theme.ConnectorOutputConnectedColor
                     : DashEditorCore.EditorConfig.theme.ConnectorOutputDisconnectedColor;
 
-                if (SelectionManager.connectingNode == this && SelectionManager.connectingType == ConnectorType.OUTPUT && SelectionManager.connectingIndex == i)
+                if (SelectionManager.connectingNode == this && SelectionManager.connectingType == NodeConnectorType.OUTPUT && SelectionManager.connectingIndex == i)
                     GUI.color = Color.green;
 
-                var connectorRect = GetConnectorRect(ConnectorType.OUTPUT, i);
+                var connectorRect = GetConnectorRect(NodeConnectorType.OUTPUT, i);
                 
                 if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
