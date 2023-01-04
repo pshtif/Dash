@@ -19,10 +19,12 @@ namespace Dash
                     if (p_parameterFrom.isExpression)
                     {
                         p_parameterTo.expression = p_parameterFrom.expression;
+                        p_parameterTo.isExpression = true;
                     }
                     else
                     {
                         p_parameterTo.SetValue(p_parameterFrom.GetValue(null));
+                        p_parameterTo.isExpression = false;
                     }
                 }
             }
