@@ -1,18 +1,16 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.Linq;
 using UnityEditor;
-using UnityEngine;
 
 namespace Dash
 {
     public class EditorUtils
     {
-        
-#if UNITY_EDITOR
         public static MonoScript GetScriptFromType(Type p_type) {
             if ( p_type == null )
                 return null;
@@ -28,6 +26,6 @@ namespace Dash
                 .Select(AssetDatabase.LoadAssetAtPath<MonoScript>)
                 .FirstOrDefault(m => m != null && m.GetClass() == p_type);
         }
-#endif
     }
 }
+#endif
