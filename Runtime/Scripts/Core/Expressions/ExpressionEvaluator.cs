@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Dash.Attributes;
 using Dash.NCalc;
-using Machina.Attributes;
 using UnityEngine;
 
 namespace Dash

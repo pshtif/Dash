@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 
@@ -11,3 +12,4 @@ namespace Dash.Attributes
     {
     }
 }
+#endif

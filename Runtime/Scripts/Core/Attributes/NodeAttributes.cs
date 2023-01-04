@@ -1,7 +1,6 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
-
 using System;
 
 namespace Dash.Attributes

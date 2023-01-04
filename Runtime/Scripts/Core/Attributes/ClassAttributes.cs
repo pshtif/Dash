@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Machina.Attributes
+namespace Dash.Attributes
 {
     public class ClassAttributes
     {
