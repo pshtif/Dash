@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using UnityEngine;
@@ -80,3 +81,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

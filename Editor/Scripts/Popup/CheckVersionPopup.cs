@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 namespace Dash.Editor
 {
@@ -18,3 +19,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

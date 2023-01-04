@@ -1,9 +1,9 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using OdinSerializer.Utilities;
-using UnityEditor;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -64,3 +64,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

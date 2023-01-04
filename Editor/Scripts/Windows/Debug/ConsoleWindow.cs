@@ -1,12 +1,12 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System.Collections.Generic;
 using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Dash.Editor
 {
@@ -150,3 +150,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

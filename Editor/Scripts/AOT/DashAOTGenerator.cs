@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.IO;
@@ -26,7 +27,7 @@ namespace Dash.Editor
                     File.WriteAllText(DashEditorCore.EditorConfig.AOTAssemblyPath + "/link.xml",
                         @"<linker>                    
                          <assembly fullname=""" + DashEditorCore.EditorConfig.AOTAssemblyName + @""" preserve=""all""/>
-                         <assembly fullname=""DashRuntime"" preserve=""all""/>
+                         <assembly fullname=""Dash"" preserve=""all""/>
                          <assembly fullname=""OdinSerializer"" preserve=""all""/>
                       </linker>");
                 }
@@ -35,7 +36,7 @@ namespace Dash.Editor
                     File.WriteAllText(DashEditorCore.EditorConfig.AOTAssemblyPath + "/link.xml",
                         @"<linker>                    
                          <assembly fullname=""" + DashEditorCore.EditorConfig.AOTAssemblyName + @""" preserve=""all""/>
-                         <assembly fullname=""DashRuntime"" preserve=""all""/>
+                         <assembly fullname=""Dash"" preserve=""all""/>
                       </linker>");
                 }
             }
@@ -47,3 +48,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

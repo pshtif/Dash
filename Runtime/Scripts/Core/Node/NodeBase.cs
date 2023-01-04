@@ -385,8 +385,6 @@ namespace Dash
         protected virtual void InitializeAttributes()
         {
             Type nodeType = GetType();
-            
-            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
 
             _isObsolete = Attribute.GetCustomAttribute(nodeType, typeof(ObsoleteAttribute)) != null;
             
@@ -394,17 +392,19 @@ namespace Dash
             
             InputCountAttribute inputCountAttribute = (InputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputCountAttribute));
             _inputCount = inputCountAttribute == null ? 0 : inputCountAttribute.count;
+
+            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputCountAttribute));
+            _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
+
+#if UNITY_EDITOR
+            
+            _hasDebugOverride = Attribute.GetCustomAttribute(nodeType, typeof(DebugOverrideAttribute), true) != null;
             
             InputLabelsAttribute inputAttribute = (InputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(InputLabelsAttribute));
             _inputLabels = inputAttribute == null ? new string[0] : inputAttribute.labels;
             
-            OutputCountAttribute outputCountAttribute = (OutputCountAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputCountAttribute));
-            _outputCount = outputCountAttribute == null ? 0 : outputCountAttribute.count;
-            
             OutputLabelsAttribute outputAttribute = (OutputLabelsAttribute) Attribute.GetCustomAttribute(nodeType, typeof(OutputLabelsAttribute));
             _outputLabels = outputAttribute == null ? new string[0] : outputAttribute.labels;
-            
-#if UNITY_EDITOR
             
             SkinAttribute skinAttribute = (SkinAttribute) Attribute.GetCustomAttribute(nodeType, typeof(SkinAttribute));
             _backgroundSkinId = skinAttribute != null ? skinAttribute.backgroundSkinId : "NodeBodyBg";

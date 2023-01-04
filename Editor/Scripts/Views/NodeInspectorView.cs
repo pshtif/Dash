@@ -1,6 +1,7 @@
 ﻿/*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.Reflection;
@@ -143,3 +144,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

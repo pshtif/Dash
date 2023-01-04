@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Reflection;
 using Dash.Attributes;
 using OdinSerializer.Utilities;
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -226,3 +226,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

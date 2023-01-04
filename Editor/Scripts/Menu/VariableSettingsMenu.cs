@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,7 @@ namespace Dash.Editor
 {
     public class VariableSettingsMenu
     {
-
-#if UNITY_EDITOR
+        
         public static RuntimeGenericMenu Get(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
@@ -178,6 +178,6 @@ namespace Dash.Editor
             RefactorVariableWindow.RefactorVariable(p_variables, p_name,
                 p_bindable != null ? p_bindable.Graph : DashEditorCore.EditorConfig.editingGraph);
         }
-#endif
     }
 }
+#endif

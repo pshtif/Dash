@@ -1,6 +1,7 @@
 ﻿/*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System.Linq;
 using UnityEngine;
@@ -511,3 +512,4 @@ namespace Dash.Editor
         #endregion
     }
 }
+#endif

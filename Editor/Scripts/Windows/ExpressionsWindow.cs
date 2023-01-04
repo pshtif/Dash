@@ -1,13 +1,12 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -135,3 +134,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

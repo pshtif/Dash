@@ -1,8 +1,8 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
-using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -79,3 +79,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif
