@@ -260,8 +260,6 @@ namespace Dash
         public string graphPath = "";
 #endif
 
-        // Handle Unity property exposing - may be removed later to avoid external references
-
 #region EXPOSE_TABLE
 
         [HideInInspector] 

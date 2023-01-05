@@ -8,10 +8,11 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using OdinSerializer.Editor;
+using UnityEditor;
 
 namespace Dash.Editor
 {
-    public class DashAOTGenerator
+    public class AOTGenerator
     {
         public static void GenerateDLL(bool p_generateLinkXml = true, bool p_includeOdin = false)
         {
@@ -45,6 +46,20 @@ namespace Dash.Editor
                 .ToList();
             AOTSupportUtilities.GenerateDLL(DashEditorCore.EditorConfig.AOTAssemblyPath,
                 DashEditorCore.EditorConfig.AOTAssemblyName, aotTypes, false);
+        }
+        
+        public static void RemoveScannedAOTType(Type p_type)
+        {
+            DashEditorCore.EditorConfig.scannedAOTTypes.Remove(p_type);
+            
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
+        }
+        
+        public static void RemoveExplicitAOTType(Type p_type)
+        {
+            DashEditorCore.EditorConfig.explicitAOTTypes.Remove(p_type);
+            
+            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
     }
 }

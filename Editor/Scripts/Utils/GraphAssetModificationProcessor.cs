@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace Dash.Editor
 {
-    public class DashCoreModificationProcessor : UnityEditor.AssetModificationProcessor
+    public class GraphAssetModificationProcessor : UnityEditor.AssetModificationProcessor
     {
         static AssetDeleteResult OnWillDeleteAsset(string p_path, RemoveAssetOptions p_options)
         {

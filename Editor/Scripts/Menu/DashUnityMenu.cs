@@ -35,11 +35,11 @@ namespace Dash.Editor
             AOTWindow.Init();
         }
 
-        [MenuItem("Tools/Dash/Scan/Checksum")]
-        public static void ShowChecksumWindow()
-        {
-            ChecksumWindow.Init();
-        }
+        // [MenuItem("Tools/Dash/Scan/Checksum")]
+        // public static void ShowChecksumWindow()
+        // {
+        //     ChecksumWindow.Init();
+        // }
 
         [MenuItem("Tools/Dash/Expressions")]
         public static void ShowExpressionsWindow()
