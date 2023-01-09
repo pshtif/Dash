@@ -148,8 +148,9 @@ namespace Dash
         {
             if (Model.graphAsset == null)
                 return;
-            
-            _subGraphInstance = Model.graphAsset.Clone();
+
+            _subGraphInstance = ScriptableObject.Instantiate(Model.graphAsset);
+            //_subGraphInstance = Model.graphAsset.Clone();
             _subGraphInstance.SetParentGraph(Graph);
             _subGraphInstance.name = Model.id;
         }

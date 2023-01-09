@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.10 - 9.1.2022
+
+#### Changed
+
+- changed sub graph initialization to the same initialization of main graphs for performance
+
+### Release 0.13.9 - 4.1.2022
+
+#### Fixed
+
+- fixed switch correctly expression if old migrated property was expression
+
 ### Release 0.13.8 - 27.12.2022
 
 #### Added
