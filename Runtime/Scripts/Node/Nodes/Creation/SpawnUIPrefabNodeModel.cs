@@ -11,25 +11,14 @@ namespace Dash
 {
     public class SpawnUIPrefabNodeModel : NodeModelBase
     {
-        [HideInInspector]
-        public RectTransform prefab;
-
-        [Label("prefab")]
-        public Parameter<RectTransform> prefabP = new Parameter<RectTransform>(null);
+        public Parameter<RectTransform> prefab = new Parameter<RectTransform>(null);
 
         public Parameter<Vector2> position = new Parameter<Vector2>(Vector2.zero);
 
-        [HideInInspector]
-        public bool setTargetAsParent = true;
+        public Parameter<bool> setTargetAsParent = new Parameter<bool>(true);
 
-        [Label("setTargetAsParent")]
-        public Parameter<bool> setTargetAsParentP = new Parameter<bool>(true);
-
-        [HideInInspector]
-        public bool retargetToSpawned = false;
+        public Parameter<bool> retargetToSpawned = new Parameter<bool>(false);
         
-        [Label("retargetToSpawned")]
-        public Parameter<bool> retargetToSpawnedP = new Parameter<bool>(false);
         
         [Dependency("retargetToSpawned", false)]
         public bool createSpawnedAttribute = false;
@@ -37,14 +26,9 @@ namespace Dash
         [Dependency("createSpawnedAttribute", true)]
         public string spawnedAttributeName = "image";
         
-        [HideInInspector]
         [TitledGroup("Pooling")]
-        public bool usePooling = false;
+        public Parameter<bool> usePooling = new Parameter<bool>(false);
 
-        [TitledGroup("Pooling")] 
-        [Label("usePooling")]
-        public Parameter<bool> usePoolingP = new Parameter<bool>(false);
-        
         [TitledGroup("Pooling")]
         [Dependency("usePoolingP", true)]
         public Parameter<string> poolId = new Parameter<string>("");
@@ -57,31 +41,5 @@ namespace Dash
         [Dependency("usePoolingP", true)]
         [Dependency("createPoolIdAttribute", true)]
         public Parameter<string> poolIdAttributeName = new Parameter<string>("pool");
-        
-        [OnDeserialized]
-        void OnDeserialized()
-        {
-#pragma warning disable 612, 618
-            if (prefabP == null)
-            {
-                prefabP = new Parameter<RectTransform>(prefab);
-            }
-            
-            if (setTargetAsParentP == null)
-            {
-                setTargetAsParentP = new Parameter<bool>(setTargetAsParent);
-            }
-            
-            if (retargetToSpawnedP == null)
-            {
-                retargetToSpawnedP = new Parameter<bool>(retargetToSpawned);
-            }
-            
-            if (usePoolingP == null)
-            {
-                usePoolingP = new Parameter<bool>(usePooling);
-            }
-#pragma warning restore 612, 618 
-        }
     }
 }

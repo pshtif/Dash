@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Dash
 {
-    public class TransformUtils
+    public static class RectTransformExtensions
     {
-        public static Vector2 FromToRectTransform(RectTransform p_from, RectTransform p_to)
+        public static Vector2 FromToRectTransform(this RectTransform p_from, RectTransform p_to)
         {
             Vector2 local;
             Vector2 fromPivotOffset= new Vector2(p_from.rect.width * 0.5f + p_from.rect.xMin, p_from.rect.height * 0.5f + p_from.rect.yMin);

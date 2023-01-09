@@ -4,6 +4,7 @@
 
 using Dash.Attributes;
 using Dash.Editor;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,8 +22,10 @@ namespace Dash
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
+
+            RectTransform prefab = GetParameterValue(Model.prefab, p_flowData);
             
-            if (Model.prefab == null)
+            if (prefab == null)
             {
                 OnExecuteEnd();
                 OnExecuteOutput(0, p_flowData);
@@ -30,9 +33,11 @@ namespace Dash
             }
 
             RectTransform spawned = null;
-            if (Model.usePooling)
+            bool usePooling = GetParameterValue(Model.usePooling, p_flowData);
+            
+            if (usePooling)
             {
-                if (_prefabPool == null) _prefabPool = DashCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), Model.prefab);
+                if (_prefabPool == null) _prefabPool = DashCore.Instance.GetOrCreatePrefabPool(GetParameterValue(Model.poolId, p_flowData), prefab);
                 spawned = _prefabPool.Get() as RectTransform;
                 
                 if (spawned == null)
@@ -42,17 +47,19 @@ namespace Dash
             }
             else
             {
-                spawned = GameObject.Instantiate(Model.prefab);
+                spawned = GameObject.Instantiate(prefab);
             }
 
-            if (Model.setTargetAsParent)
+            bool setTargetAsParent = GetParameterValue(Model.setTargetAsParent, p_flowData);
+            if (setTargetAsParent)
             {
                 spawned.transform.SetParent(target, false);
             }
             
             spawned.anchoredPosition = GetParameterValue(Model.position, p_flowData);
 
-            if (Model.retargetToSpawned)
+            bool retargetToSpawned = GetParameterValue(Model.retargetToSpawned, p_flowData);
+            if (retargetToSpawned)
             {
                 p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
             }
@@ -74,18 +81,23 @@ namespace Dash
 #if UNITY_EDITOR
         protected override void DrawCustomGUI(Rect p_rect)
         {
-            if (Model.prefab == null)
-                return;
-
             var style = new GUIStyle();
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.textColor = new Color(0.1f, .7f, 0.1f);
             
             Rect labelRect = new Rect(p_rect.x + 24, p_rect.y + DashEditorCore.EditorConfig.theme.TitleTabHeight + 12, p_rect.width-48, 20);
-            GUI.Label(labelRect, Model.prefab.name, style);
-            // Texture2D texture = AssetPreview.GetMiniThumbnail(Model.prefab);
-            // GUI.DrawTexture(new Rect(p_rect.x + p_rect.width / 2 - 16, p_rect.y + 35, 32, 32), texture);
+
+            if (Model.prefab == null || Model.prefab.isExpression)
+            {
+                style.normal.textColor = Color.cyan;
+                GUI.Label(labelRect, GUIUtils.ShortenLabel(style, Model.prefab.expression.IsNullOrWhitespace() ? "Empty" : Model.prefab.expression, 85), style);
+            }
+            else
+            {
+                style.normal.textColor = Color.white;
+                GUI.Label(labelRect, Model.prefab.GetValue(null).name, style);
+            }
         }
 #endif
     }

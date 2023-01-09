@@ -31,7 +31,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash AOT Scanner/Generator");
+            GUIUtils.DrawTitle("Dash AOT Scanner/Generator");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;

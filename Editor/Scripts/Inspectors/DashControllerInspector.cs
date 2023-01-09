@@ -82,7 +82,7 @@ namespace Dash.Editor
 
         void DrawSettingsInspector()
         {
-            if (!GUIEditorUtils.DrawMinimizableSectionTitle("Settings",
+            if (!GUIUtils.DrawMinimizableSectionTitle("Settings",
                     ref Controller.settingsSectionMinimized))
                 return;
 
@@ -138,13 +138,13 @@ namespace Dash.Editor
 
         void DrawAdvancedInspector()
         {
-            if (!GUIEditorUtils.DrawMinimizableSectionTitle("Advanced",
+            if (!GUIUtils.DrawMinimizableSectionTitle("Advanced",
                     ref Controller.advancedSectionMinimized))
                 return;
 
             GUILayout.Space(2);
             
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Exposed Properties Table",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Exposed Properties Table",
                     ref Controller.exposedPropertiesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.propertyNames.Count; i++)
@@ -167,7 +167,7 @@ namespace Dash.Editor
             if (Controller.Graph == null)
                 return;
             
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Nodes",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Nodes",
                     ref Controller.nodesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
@@ -178,7 +178,7 @@ namespace Dash.Editor
             
             GUILayout.Space(2);
 
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Connections",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Connections",
                     ref Controller.connectionsSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Connections.Count; i++)

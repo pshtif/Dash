@@ -1,16 +1,44 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
-
 #if UNITY_EDITOR
 
-using Dash.Editor;
+using OdinSerializer.Utilities;
 using UnityEngine;
 
-namespace Dash
+namespace Dash.Editor
 {
-    public class GUIEditorUtils
+    public class GUIUtils
     {
+        static public string ShortenLabel(GUIStyle p_style, string p_expression, int p_width)
+        {
+            var label = GUIUtils.GetMaxTextForStyleAndWidth(p_style, p_width, p_expression);
+
+            return label == p_expression ? label : label + "...";
+        }
+        
+        public static string GetMaxTextForStyleAndWidth(GUIStyle p_style, float p_width, string p_label, string p_suffix = "")
+        {
+            if (p_label.IsNullOrWhitespace())
+                return p_label;
+            
+            var maxLabel = p_label;
+            Vector2 size = p_style.CalcSize(new GUIContent(maxLabel));
+            while (maxLabel.Length > 0 && size.x > p_width)
+            {
+                maxLabel = maxLabel.Substring(0, maxLabel.Length - 1);
+                size = p_style.CalcSize(new GUIContent(maxLabel));
+                
+            }
+
+            if (maxLabel != p_label)
+            {
+                maxLabel += p_suffix;
+            }
+
+            return maxLabel;
+        }
+        
         public static void DrawTitle(string p_title)
         {
             var titleStyle = new GUIStyle();
@@ -74,5 +102,4 @@ namespace Dash
         }
     }
 }
-
 #endif

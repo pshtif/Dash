@@ -129,7 +129,7 @@ namespace Dash
                         style.normal.textColor = Model.targetExpression.IsNullOrWhitespace()
                             ? new Color(1f, .4f, 0)
                             : new Color(1f, 1f, 1f);
-                        GUI.Label(labelRect, ShortenExpression(style, Model.targetExpression.IsNullOrWhitespace() ? "Empty" : Model.targetExpression), style);
+                        GUI.Label(labelRect, GUIUtils.ShortenLabel(style, Model.targetExpression.IsNullOrWhitespace() ? "Empty" : Model.targetExpression, 85), style);
                     }
                     else
                     {
@@ -159,7 +159,7 @@ namespace Dash
                                 ? new Color(1f, .4f, 0)
                                 : Color.cyan;
 
-                            GUI.Label(labelRect, ShortenExpression(style, Model.targetName.expression.IsNullOrWhitespace() ? "Empty" : Model.targetName.expression), style);
+                            GUI.Label(labelRect, GUIUtils.ShortenLabel(style, Model.targetName.expression.IsNullOrWhitespace() ? "Empty" : Model.targetName.expression, 85), style);
                         }
                         else
                         {
@@ -169,13 +169,6 @@ namespace Dash
                     }
                 }
             }
-        }
-
-        string ShortenExpression(GUIStyle p_style, string p_expression)
-        {
-            var label = GUIUtils.GetMaxTextForStyleAndWidth(p_style, 85, p_expression);
-
-            return label == p_expression ? label : label + "...";
         }
 
         string ShortenPath(string p_path)

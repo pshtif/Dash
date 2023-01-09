@@ -32,7 +32,7 @@ namespace Dash
                 p_args.HasResult = true;
                 RectTransform r1 = (RectTransform)evalParams[0];
                 RectTransform r2 = (RectTransform)evalParams[1];
-                p_args.Result = (Vector2)TransformUtils.FromToRectTransform(r1, r2);
+                p_args.Result = (Vector2)RectTransformExtensions.FromToRectTransform(r1, r2);
                 return true;
             }
             

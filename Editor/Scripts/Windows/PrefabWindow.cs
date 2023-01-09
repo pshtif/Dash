@@ -28,7 +28,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Prefab Editor");
+            GUIUtils.DrawTitle("Dash Prefab Editor");
 
             var scrollViewStyle = new GUIStyle();
             scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));

@@ -47,7 +47,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Execution Debug");
+            GUIUtils.DrawTitle("Dash Execution Debug");
 
             GUI.backgroundColor = Color.white;
             

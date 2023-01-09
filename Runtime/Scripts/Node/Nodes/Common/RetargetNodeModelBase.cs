@@ -36,15 +36,7 @@ namespace Dash
         [Dependency("useReference", false)]
         [UnityEngine.Tooltip("Retarget to child of current.")]
         public bool isChild = true;
-        
-        [Order(3)]
-        [TitledGroup("Retargeting", -1)]
-        [Dependency("retarget", true)]
-        [Dependency("useReference", false)]
-        [UnityEngine.Tooltip("Name of a transform to retarget or child if relative, use / for hierachy.")]
-        [HideInInspector]
-        public Parameter<string> target = new Parameter<string>("");
-        
+
         [Order(3)]
         [TitledGroup("Retargeting", -1)]
         [Dependency("retarget", true)]
@@ -68,14 +60,13 @@ namespace Dash
         [HideInInspector]
         public string targetExpression = "";
         
-        [OnDeserialized]
-        protected virtual void OnDeserialized()
-        {
-#pragma warning disable 612, 618
-            
-            ParameterUtils.MigrateParameter(ref target, ref targetName);
-            
-#pragma warning restore 612, 618
-        }
+//         [OnDeserialized]
+//         protected virtual void OnDeserialized()
+//         {
+// #pragma warning disable 612, 618
+//             
+//             
+// #pragma warning restore 612, 618
+//         }
     }
 }
