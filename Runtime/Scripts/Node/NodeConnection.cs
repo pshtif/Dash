@@ -17,8 +17,8 @@ namespace Dash
         public int inputIndex;
         public int outputIndex { get; set; }
 
-        public NodeBase inputNode { get; private set; }
-        public NodeBase outputNode { get; }
+        public NodeBase inputNode { get; set; }
+        public NodeBase outputNode { get; set; }
         
 #if UNITY_EDITOR
         [NonSerialized] 
