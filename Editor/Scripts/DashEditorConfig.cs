@@ -128,6 +128,8 @@ namespace Dash
         
         public bool enableAnimateNodeInterface = false;
 
+        public bool enableDashFormatters = false;
+
         public DashChecksumObject lastChecksumObject;
 
         public Rect editorPosition;
