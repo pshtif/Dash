@@ -33,6 +33,8 @@ namespace Dash
             }
         }
 
+        public bool useGraphCache = false;
+
         [NonSerialized]
         private IVariables _variables;
         
@@ -74,22 +76,16 @@ namespace Dash
             }
 #endif
 
-            if (_graphInstance == null)
+            if (_graphInstance == null && _assetGraph != null)
             {
-                InstanceAssetGraph();
+                _graphInstance = useGraphCache
+                    ? DashGraphCache.GetInstance(_assetGraph)
+                    : ScriptableObject.Instantiate(_assetGraph);
             }
 
             return _graphInstance;
         }
 
-        void InstanceAssetGraph()
-        {
-            if (_assetGraph == null)
-                return;
-            
-            _graphInstance = DashGraphCache.GetInstance(_assetGraph);
-        }
-        
         public bool autoStart = false;
 
         [Dependency("autoStart", true)] 

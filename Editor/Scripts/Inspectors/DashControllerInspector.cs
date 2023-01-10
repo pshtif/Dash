@@ -88,6 +88,10 @@ namespace Dash.Editor
 
             EditorGUI.BeginChangeCheck();
 
+            Controller.useGraphCache = EditorGUILayout.Toggle(
+                new GUIContent("Use Graph Cache", "Cache and reuse serialized graphs."),
+                Controller.useGraphCache); 
+            
             Controller.useCustomTarget = EditorGUILayout.Toggle(
                 new GUIContent("Use Custom Target", "Customize target which is this gameobject transform by default."),
                 Controller.useCustomTarget); 
