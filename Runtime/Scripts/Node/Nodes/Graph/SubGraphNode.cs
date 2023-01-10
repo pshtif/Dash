@@ -3,12 +3,10 @@
  */
 
 using System;
-using System.Collections.Generic;
 using Dash.Attributes;
 using Dash.Editor;
 using OdinSerializer;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Dash
 {
@@ -18,10 +16,6 @@ namespace Dash
     {
         [NonSerialized]
         private DashGraph _subGraphInstance;
-
-        private int _selfReferenceIndex = -1;
-        private byte[] _boundSubGraphData;
-        private List<Object> _boundSubGraphReferences;
 
         public override int ExecutionCount
         {
@@ -150,35 +144,20 @@ namespace Dash
             if (Model.graphAsset == null)
                 return;
 
-            _subGraphInstance = ScriptableObject.Instantiate(Model.graphAsset);
-            //_subGraphInstance = Model.graphAsset.Clone();
+            _subGraphInstance = DashGraphCache.GetInstance(Model.graphAsset);
             _subGraphInstance.SetParentGraph(Graph);
             _subGraphInstance.name = Model.id;
         }
         
         void InstanceBoundGraph()
         {
-            _subGraphInstance = ScriptableObject.CreateInstance<DashGraph>();
-            
-            // Empty graphs don't self reference
-            if (_selfReferenceIndex != -1)
-            {
-                _boundSubGraphReferences[_selfReferenceIndex] = _subGraphInstance;
-                _subGraphInstance.DeserializeFromBytes(_boundSubGraphData, DataFormat.Binary, ref _boundSubGraphReferences);
-            }
-
+            _subGraphInstance = Model.InstanceBoundGraph();
             _subGraphInstance.SetParentGraph(Graph);
-            //_subGraphInstance.isBound = true;
-            _subGraphInstance.name = Model.id;
         }
         
         public void ReserializeBound()
         {
-            if (_subGraphInstance != null)
-            {
-                _boundSubGraphData = _subGraphInstance.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
-                _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == _subGraphInstance);
-            }
+            Model.Reserialize(_subGraphInstance);
         }
 
 #if UNITY_EDITOR
@@ -227,39 +206,25 @@ namespace Dash
                 
                 if (GUILayout.Button("Save to Asset", GUILayout.Height(24)))
                 {
-                    DashGraph graph = GraphUtils.CreateGraphAsAssetFile(SubGraph);
-                    if (graph != null)
-                    {
-                        Model.useAsset = true;
-                        Model.graphAsset = graph;
-
-                        _subGraphInstance = null;
-                        _selfReferenceIndex = -1;
-                        _boundSubGraphData = null;
-                        _boundSubGraphReferences.Clear();
-                    }
+                    Model.SaveToAsset(SubGraph);
+                    _subGraphInstance = null;
                 }
             }
             else
             {
-                if (_boundSubGraphData != null)
-                {
-                    _subGraphInstance = null;
-                    _selfReferenceIndex = -1;
-                    _boundSubGraphData = null;
-                    _boundSubGraphReferences.Clear();
-                }
+                // if (_boundSubGraphData != null)
+                // {
+                //     _subGraphInstance = null;
+                //     _selfReferenceIndex = -1;
+                //     _boundSubGraphData = null;
+                //     _boundSubGraphReferences.Clear();
+                // }
                 
                 if (Model.graphAsset != null)
                 {
                     if (GUILayout.Button("Bind Graph"))
                     {
-                        DashGraph graph = SubGraph.Clone();
-                        _boundSubGraphData = graph.SerializeToBytes(DataFormat.Binary, ref _boundSubGraphReferences);
-                        _selfReferenceIndex = _boundSubGraphReferences.FindIndex(r => r == graph);
-
-                        Model.useAsset = false;
-                        Model.graphAsset = null;
+                        Model.BindToModel();
                         
                         InstanceBoundGraph();
                     }
