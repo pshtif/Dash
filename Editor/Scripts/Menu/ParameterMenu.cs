@@ -63,16 +63,16 @@ namespace Dash.Editor
 
                 menu.AddSeparator("");
                 
-                if (p_parameter.IsDebug())
-                {
-                    menu.AddItem(new GUIContent("Disable Debug"), false,
-                        () => { p_parameter.SetDebug(false); });
-                }
-                else
-                {
-                    NodeModelBase model = p_object as NodeModelBase;
-                    menu.AddItem(new GUIContent("Enable Debug"), false, () => { p_parameter.SetDebug(true, p_name, model?.id); });
-                }
+                // if (p_parameter.IsDebug())
+                // {
+                //     menu.AddItem(new GUIContent("Disable Debug"), false,
+                //         () => { p_parameter.SetDebug(false); });
+                // }
+                // else
+                // {
+                //     NodeModelBase model = p_object as NodeModelBase;
+                //     menu.AddItem(new GUIContent("Enable Debug"), false, () => { p_parameter.SetDebug(true, p_name, model?.id); });
+                // }
             }
 
             menu.ShowAsContext();

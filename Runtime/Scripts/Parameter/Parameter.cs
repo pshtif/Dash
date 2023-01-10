@@ -25,23 +25,23 @@ namespace Dash
         [NonSerialized]
         public string errorMessage;
 
-        [SerializeField]
-        protected bool _debug = false;
-        [SerializeField]
-        protected string _debugName;
-        [SerializeField]
-        protected string _debugId;
+        // [SerializeField]
+        // protected bool _debug = false;
+        // [SerializeField]
+        // protected string _debugName;
+        // [SerializeField]
+        // protected string _debugId;
 
         public bool IsDebug()
         {
-            return _debug;
+            return false;//_debug;
         }
 
         public void SetDebug(bool p_enable, string p_debugName = "", string p_debugId = "")
         {
-            _debug = p_enable;
-            _debugName = p_debugName;
-            _debugId = p_debugId;
+            // _debug = p_enable;
+            // _debugName = p_debugName;
+            // _debugId = p_debugId;
         }
 
         public abstract bool IsDefault();
@@ -115,13 +115,13 @@ namespace Dash
                     hasErrorInEvaluation = false;
                 }
 
-                if (_debug)
-                {
-#if UNITY_EDITOR
-                    DashEditorDebug.Debug(new CustomDebugItem("[Parameter debug] Name: "+_debugName+" Value: "+value));
-#endif
-                    Debug.Log("["+_debugId+"] "+_debugName+" = "+value);
-                }
+//                 if (_debug)
+//                 {
+// #if UNITY_EDITOR
+//                     DashEditorDebug.Debug(new CustomDebugItem("[Parameter debug] Name: "+_debugName+" Value: "+value));
+// #endif
+//                     Debug.Log("["+_debugId+"] "+_debugName+" = "+value);
+//                 }
 
                 return value;
             }
