@@ -48,12 +48,33 @@ namespace Dash.Editor
 
             ScanGraphAssets();
 
+            SetDefineSymbols();
+
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
 
             SceneView.duringSceneGui -= OnSceneGUI;
             SceneView.duringSceneGui += OnSceneGUI;
+        }
+        
+        public static void SetDefineSymbols()
+        {
+            string definesString =
+                PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+            List<string> allDefines = definesString.Split(';').ToList();
+            if (EditorConfig.enableDashFormatters)
+            {
+                if (!allDefines.Contains("DASH_FORMATTERS")) 
+                    allDefines.Add("DASH_FORMATTERS");
+            }
+            else
+            {
+                allDefines.Remove("DASH_FORMATTERS");
+            }
+            
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup,
+                string.Join(";", allDefines.ToArray()));
         }
 
         public static void ScanGraphAssets()
