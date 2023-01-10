@@ -7,7 +7,7 @@ using Dash;
 using OdinSerializer;
 using OdinSerializer.Utilities;
 
-[assembly: RegisterFormatterLocator(typeof(NodeFormatterLocator), -70)]
+//[assembly: RegisterFormatterLocator(typeof(NodeFormatterLocator), -70)]
 
 namespace Dash
 {
