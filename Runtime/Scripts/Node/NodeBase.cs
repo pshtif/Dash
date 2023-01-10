@@ -58,7 +58,7 @@ namespace Dash
         protected virtual void Stop_Internal() { }
 
         [SerializeField]
-        protected NodeModelBase _model;
+        internal NodeModelBase _model;
 
         public bool HasModel()
         {
@@ -76,7 +76,7 @@ namespace Dash
         public string Id => _model.id;
 
         [SerializeField] 
-        protected DashGraph _graph;
+        internal DashGraph _graph;
 
         public DashGraph Graph => _graph;
 
