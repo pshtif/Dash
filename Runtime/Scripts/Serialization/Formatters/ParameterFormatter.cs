@@ -5,7 +5,9 @@
 using Dash;
 using OdinSerializer;
 
-//[assembly: RegisterFormatter(typeof(ParameterFormatter<>))]
+#if DASH_FORMATTERS
+[assembly: RegisterFormatter(typeof(ParameterFormatter<>))]
+#endif
 
 namespace Dash
 {
@@ -35,19 +37,29 @@ namespace Dash
         {
             string name;
 
-            p_value.isExpression = BoolSerializer.ReadValue(p_reader);
-            p_value.expression = StringSerializer.ReadValue(p_reader);
-            
-            p_reader.PeekEntry(out name);
-            if (name == "debug")
+            while (p_reader.PeekEntry(out name) != EntryType.EndOfNode)
             {
-                bool debug = BoolSerializer.ReadValue(p_reader);
-                string debugName = StringSerializer.ReadValue(p_reader);
-                string debugId = StringSerializer.ReadValue(p_reader);
-                //p_value.SetDebug(debug, debugName, debugId);
+                switch (name)
+                {
+                    case "isExpression":
+                        p_value.isExpression = BoolSerializer.ReadValue(p_reader);
+                        break;
+                    case "expression":
+                        p_value.expression = StringSerializer.ReadValue(p_reader);
+                        break;
+                    case "_value":
+                        p_value._value = TSerializer.ReadValue(p_reader);
+                        break;
+                    default:
+                        // To avoid old serialized data
+                        p_reader.SkipEntry();
+                        break;
+                }
             }
-            
-            p_value._value = TSerializer.ReadValue(p_reader);
+            // bool debug = BoolSerializer.ReadValue(p_reader);
+            // string debugName = StringSerializer.ReadValue(p_reader);
+            // string debugId = StringSerializer.ReadValue(p_reader);
+            //p_value.SetDebug(debug, debugName, debugId);
         }
         
         protected override void Write(ref Parameter<T> p_value, IDataWriter p_writer)

@@ -4,9 +4,10 @@
 
 using Dash;
 using OdinSerializer;
-using UnityEngine;
 
+//#if DASH_FORMATTERS
 [assembly: RegisterFormatter(typeof(NodeConnectionFormatter))]
+//#endif
 
 namespace Dash
 {
@@ -48,13 +49,13 @@ namespace Dash
         
         protected override void SerializeImplementation(ref NodeConnection p_value, IDataWriter p_writer)
         {
-            BoolSerializer.WriteValue(p_value.active, p_writer);
+            BoolSerializer.WriteValue("active", p_value.active, p_writer);
 
-            IntSerializer.WriteValue(p_value.inputIndex, p_writer);
-            IntSerializer.WriteValue(p_value.outputIndex, p_writer);
+            IntSerializer.WriteValue("inputIndex", p_value.inputIndex, p_writer);
+            IntSerializer.WriteValue("outputIndex", p_value.outputIndex, p_writer);
             
-            NodeSerializer.WriteValue(p_value.inputNode, p_writer);
-            NodeSerializer.WriteValue(p_value.outputNode, p_writer);
+            NodeSerializer.WriteValue("inputNode", p_value.inputNode, p_writer);
+            NodeSerializer.WriteValue("outputNode", p_value.outputNode, p_writer);
         }
     }
 }

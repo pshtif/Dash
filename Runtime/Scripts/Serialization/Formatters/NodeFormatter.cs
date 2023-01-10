@@ -60,7 +60,7 @@ namespace Dash
         
         protected override void Write(ref T p_value, IDataWriter p_writer)
         {
-            KSerializer.WriteValue((K)p_value._model, p_writer);
+            KSerializer.WriteValue("_model", (K)p_value._model, p_writer);
             
             int index;
             if (p_writer.Context.TryRegisterExternalReference(p_value._graph, out index))
