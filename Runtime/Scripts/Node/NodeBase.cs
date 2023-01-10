@@ -97,6 +97,7 @@ namespace Dash
             }
         }
 
+        [field:NonSerialized]
         public virtual int ExecutionCount { get; protected set; } = 0;
         
 
@@ -429,9 +430,11 @@ namespace Dash
         #region EDITOR_CODE
 #if UNITY_EDITOR
         
+        [field:NonSerialized]
         public NodeCategoryType Category { get; private set; } 
         
-        [NonSerialized] public float executeTime = 0;
+        [NonSerialized] 
+        public float executeTime = 0;
 
         public Rect rect;
 
