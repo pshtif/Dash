@@ -15,10 +15,10 @@ namespace Dash
         public bool active = true;
 
         public int inputIndex;
-        public int outputIndex { get; set; }
+        public int outputIndex;
 
-        public NodeBase inputNode { get; set; }
-        public NodeBase outputNode { get; set; }
+        public NodeBase inputNode;
+        public NodeBase outputNode;
         
 #if UNITY_EDITOR
         [NonSerialized] 
