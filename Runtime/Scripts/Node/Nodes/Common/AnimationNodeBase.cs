@@ -90,7 +90,9 @@ namespace Dash
             }
         }
 
+        [NonSerialized]
         private bool _bindFrom = false;
+        [NonSerialized]
         private bool _bindTo = false;
 
         internal override void Unselect()
