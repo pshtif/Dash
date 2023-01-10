@@ -87,12 +87,7 @@ namespace Dash.Editor
                 return;
 
             EditorGUI.BeginChangeCheck();
-            
-            Controller.createGraphCopy = EditorGUILayout.Toggle(
-                    new GUIContent("Create Graph Copy",
-                        "Initializes copy of graph instead of using original instance."),
-                    Controller.createGraphCopy);
-            
+
             Controller.useCustomTarget = EditorGUILayout.Toggle(
                 new GUIContent("Use Custom Target", "Customize target which is this gameobject transform by default."),
                 Controller.useCustomTarget); 

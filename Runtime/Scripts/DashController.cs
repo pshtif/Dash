@@ -21,8 +21,6 @@ namespace Dash
         [SerializeField]
         protected DashGraph _assetGraph;
 
-        public bool createGraphCopy = true;
-
         internal DashGraph graphAsset
         {
             get
@@ -89,8 +87,7 @@ namespace Dash
             if (_assetGraph == null)
                 return;
             
-            //_graphInstance = createGraphCopy ? _assetGraph.Clone() : _assetGraph;
-            _graphInstance = createGraphCopy ? Instantiate(_assetGraph) : _assetGraph;
+            _graphInstance = DashGraphCache.GetInstance(_assetGraph);
         }
         
         public bool autoStart = false;
@@ -141,6 +138,7 @@ namespace Dash
             if (Graph != null) Graph.Stop();
             
             _assetGraph = p_graph;
+            _graphInstance = null;
 
             if (Graph != null)
             {
