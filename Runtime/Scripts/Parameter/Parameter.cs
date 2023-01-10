@@ -63,7 +63,7 @@ namespace Dash
     [Serializable]
     public class Parameter<T> : Parameter
     {
-        protected T _value;
+        internal T _value;
         
         public Parameter(T p_value)
         {
