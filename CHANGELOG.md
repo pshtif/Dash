@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.14.0 - 16.01.2022
+
+#### Added
+
+- added graph creation caching
+- added custom serialization formatters for nodes, connections and parameters
+- added additional logs and verbose graph scanning
+
+#### Changed
+
+- changed namespace and assembly definitions merge
+- changed refactoring through the whole codebase for redundancy cleanup and overall code
+- changed editor mouse decoupling
+- changed SubGraph bound serialization to node [BREAKING]
+- changed access interfaces to internal access
+- changed SerializedValue for broader usecases
+
 ### Release 0.13.9 - 04.01.2022
 
 #### Fixed
