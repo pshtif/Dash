@@ -54,7 +54,10 @@ namespace Dash
 
         protected override void Stop_Internal()
         {
-            SubGraph.Stop();
+            if (SubGraph != null)
+            {
+                SubGraph.Stop();
+            }
         }
 
         protected override void OnExecuteStart(NodeFlowData p_flowData)
@@ -126,7 +129,7 @@ namespace Dash
 #endif
             if (_subGraphInstance == null)
             {
-                if (Model.useAsset && Model.graphAsset != null)
+                if (Model.useAsset)
                 {
                     InstanceAssetGraph();
                 }
@@ -240,6 +243,9 @@ namespace Dash
         {
             base.DrawCustomGUI(p_rect);
 
+            if (SubGraph == null)
+                return;
+            
             var inputs = SubGraph.GetNodesByType<InputNode>();
             for (int i = 0; i < inputs.Count; i++)
             {
