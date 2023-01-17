@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.13.12 - 17.1.2022
+
+#### Added
+
+- added Tools->Dash->Reserialize menu to find and force reserialize all DashGraph assets
+
+### Release 0.13.11 - 10.1.2022
+
+#### Added
+
+- added --verbose option for more detailed graph scanning
+
 ### Release 0.13.10 - 9.1.2022
 
 #### Changed
