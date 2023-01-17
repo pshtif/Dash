@@ -2,6 +2,8 @@
  *	Created by:  Peter @sHTiF Stefcek
  */
 
+using System.Linq;
+using OdinSerializer.Utilities;
 using UnityEngine;
 using UnityEditor;
 
@@ -50,6 +52,14 @@ namespace Dash.Editor
         public static void ShowPrefabWindow()
         {
             PrefabWindow.Init();
+        }
+        
+        [MenuItem("Tools/Dash/Reserialize")]
+        public static void Reserialize()
+        {
+            string[] graphGuids = AssetDatabase.FindAssets("t:DashGraph");
+            var graphPaths = graphGuids.Select(g => AssetDatabase.GUIDToAssetPath(g));
+            AssetDatabase.ForceReserializeAssets(graphPaths);
         }
         #endregion
         
