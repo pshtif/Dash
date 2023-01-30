@@ -3,6 +3,7 @@
  */
 #if UNITY_EDITOR
 
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
@@ -11,6 +12,15 @@ namespace Dash.Editor
     public class DashUnityMenu
     {
         #region UNITY TOP MENU
+        
+        [MenuItem("Tools/Dash/Reserialize")]
+        public static void Reserialize()
+        {
+            string[] graphGuids = AssetDatabase.FindAssets("t:DashGraph");
+            var graphPaths = graphGuids.Select(g => AssetDatabase.GUIDToAssetPath(g));
+            AssetDatabase.ForceReserializeAssets(graphPaths);
+        }
+        
         [MenuItem("Tools/Dash/Settings")]
         public static void ShowInspectorLogo()
         {
