@@ -4,6 +4,7 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
+using System.Linq;
 using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -115,17 +116,22 @@ namespace Dash.Editor
 
         static void ExecuteCommand()
         {
-            // Lazy implementation for now
-            switch (_command)
+            var commandSplit = _command.Split(' ').ToList();
+            string command = commandSplit[0];
+
+            bool verbose = commandSplit.Contains("--verbose");
+            commandSplit.Remove("--verbose");
+
+            switch (command)
             {
                 case "/version":
                     AddMessage(("Dash Version "+DashCore.VERSION,Color.white));
                     break;
                 case "/scan":
-                    ScanGraphs();
+                    ScanGraphs(commandSplit.Count>1 ? commandSplit[1] : "", verbose);
                     break;
                 default:
-                    AddMessage(("Unknown command "+_command,Color.red));
+                    AddMessage(("Unknown command "+command,Color.red));
                     break;
             }
 
@@ -133,13 +139,16 @@ namespace Dash.Editor
         }
         
         // Move to Scanner when bound scanning will be removed
-        private static bool ScanGraphs()
+        private static bool ScanGraphs(string p_match = "", bool p_verbose = false)
         {
             var graphs = AssetUtils.FindAssetsByType<DashGraph>();
 
             foreach (var graph in graphs)
             {
-                var info = graph.CheckValidity();
+                if (p_match != "" && !graph.name.Contains(p_match))
+                    continue;
+
+                var info = graph.CheckValidity(p_verbose);
                 for (int i = 0; i < info.Length; i++)
                 {
                     AddMessage(info[i]);

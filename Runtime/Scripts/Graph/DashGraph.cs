@@ -599,14 +599,39 @@ namespace Dash
             viewOffset = new Vector2();
         }
 
-        public (string, Color)[] CheckValidity()
+        public (string, Color)[] CheckValidity(bool p_verbose = false)
         {
             List<(string, Color)> messages = new List<(string, Color)>();
 
+            List<string> nodeTypes = new List<string>();
+
             string path = AssetDatabase.GetAssetPath(this);
 
-            messages.Add(("Checking validity of graph " + name + " at "+path, Color.white));
-            List<NodeBase> nodes = Nodes.FindAll(n1 => Nodes.Exists(n2 => n1 != n2 && n1.Id == n2.Id));
+            messages.Add(("Scanning graph " + name + " at "+path, Color.white));
+
+            List<NodeBase> nodes;
+            if (p_verbose)
+            {
+                messages.Add(("Scanning " + Nodes.Count + " nodes.", Color.white));
+
+                Nodes.ForEach(n =>
+                {
+                    var type = NodeBase.GetNodeNameFromType(n.GetType());
+                    if (!nodeTypes.Contains(type))
+                    {
+                        nodeTypes.Add(type);
+                        messages.Add((
+                            type + " found " + Nodes.FindAll(n2 => n2.GetType() == n.GetType()).Count + " times.",
+                            Color.white));
+                    }
+                });
+
+                nodes =
+                    Nodes.FindAll(n => !Connections.Exists(c => n == c.inputNode || n == c.outputNode));
+                nodes?.ForEach(n => { messages.Add(("There are no connections on node: " + n.Id, Color.yellow)); });
+            }
+
+            nodes = Nodes.FindAll(n1 => Nodes.Exists(n2 => n1 != n2 && n1.Id == n2.Id));
             nodes?.ForEach(n =>
             {
                 messages.Add(("Duplicate node id found on node: " + n.Id, Color.red));
