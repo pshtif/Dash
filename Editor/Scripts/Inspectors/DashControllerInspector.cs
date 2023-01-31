@@ -58,6 +58,10 @@ namespace Dash.Editor
             if (Controller.Graph == null)
                 return;
             
+            DrawInputBindingsInspector();
+            
+            GUILayout.Space(2);
+            
             DrawSettingsInspector();
             
             GUILayout.Space(2);
@@ -78,6 +82,42 @@ namespace Dash.Editor
                 EditorUtility.SetDirty(target);
                 DashEditorCore.EditController(Controller);
             }
+        }
+
+        void DrawInputBindingsInspector()
+        {
+            if (!GUIUtils.DrawMinimizableSectionTitle("Input Bindings",
+                    ref Controller.bindingsSectionMinimized))
+                return;
+            
+            EditorGUI.BeginChangeCheck();
+
+            DrawInputBind("Start", ref Controller.bindStart, ref Controller.bindStartInput);
+
+            DrawInputBind("OnEnable", ref Controller.bindOnEnable, ref Controller.bindOnEnableInput);
+            
+            DrawInputBind("OnDisable", ref Controller.bindOnDisable, ref Controller.bindOnDisableInput);
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);
+            }
+        }
+
+        void DrawInputBind(string p_bindName, ref bool p_bindEnable, ref string p_bindInput)
+        {
+            EditorGUILayout.BeginHorizontal();
+
+            p_bindEnable = EditorGUILayout.Toggle(
+                new GUIContent("Bind " + p_bindName,
+                    "Automatically call an input on a graph when controller is started."),
+                p_bindEnable);
+
+            if (p_bindEnable)
+            {
+                p_bindInput = EditorGUILayout.TextField("", p_bindInput);
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         void DrawSettingsInspector()
@@ -106,29 +146,11 @@ namespace Dash.Editor
             {
                 Controller.customTarget = null;
             }
-
-            Controller.autoStart =
-                EditorGUILayout.Toggle(
-                    new GUIContent("Auto Start", "Automatically call an input on a graph when controller is started."),
-                    Controller.autoStart);
-
-            if (Controller.autoStart)
-            {
-                Controller.autoStartInput =
-                    EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
-            }
-
-            Controller.autoOnEnable =
-                EditorGUILayout.Toggle(
-                    new GUIContent("Auto OnEnable",
-                        "Automatically call an input on a graph when controller is enabled."), Controller.autoOnEnable);
-
-            if (Controller.autoOnEnable)
-            {
-                Controller.autoOnEnableInput =
-                    EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
-            }
             
+            Controller.stopOnDisable = EditorGUILayout.Toggle(
+                new GUIContent("Stop OnDisable", "Stop graph on OnDisable event."),
+                Controller.stopOnDisable);
+
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(target);

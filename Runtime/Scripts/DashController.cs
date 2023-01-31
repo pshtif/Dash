@@ -8,13 +8,45 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Dash.Attributes;
 using Dash.Editor;
+using UnityEngine.Serialization;
 
 namespace Dash
 {
     [AddComponentMenu("Dash/Dash Controller")]
     public class DashController : MonoBehaviour, IVariableBindable, IExposedPropertyTable
     {
+        #region EVENT INPUTS
+        [FormerlySerializedAs("autoStart")] 
+        public bool bindStart = false;
 
+        [FormerlySerializedAs("autoStartInput")] [Dependency("bindStart", true)] 
+        public string bindStartInput = "StartInput";
+        
+        [FormerlySerializedAs("autoOnEnable")]
+        public bool bindOnEnable = false;
+
+        [FormerlySerializedAs("autoOnEnableInput")] [Dependency("bindOnEnable", true)]
+        public string bindOnEnableInput = "OnEnableInput";
+        
+        public bool bindOnDisable = false;
+
+        [Dependency("bindOnDisable", true)]
+        public string bindOnDisableInput = "OnDisableInput";
+        #endregion
+        
+        public bool useGraphCache = false;
+
+        public bool useCustomTarget = false;
+
+        public bool stopOnDisable = false;
+        
+        public Transform customTarget;
+
+        [NonSerialized]
+        private bool _initialized = false;
+        
+        private event Action UpdateCallback;
+        
         public DashCore Core => DashCore.Instance;
 
         [HideInInspector]
@@ -32,8 +64,6 @@ namespace Dash
                 _assetGraph = value;
             }
         }
-
-        public bool useGraphCache = false;
 
         [NonSerialized]
         private IVariables _variables;
@@ -86,25 +116,6 @@ namespace Dash
             return _graphInstance;
         }
 
-        public bool autoStart = false;
-
-        [Dependency("autoStart", true)] 
-        public string autoStartInput = "StartInput";
-        
-        public bool autoOnEnable = false;
-
-        [Dependency("autoEnabled", true)]
-        public string autoOnEnableInput = "OnEnableInput";
-        
-        private event Action UpdateCallback;
-
-        public bool useCustomTarget = false;
-        
-        public Transform customTarget;
-
-        [NonSerialized]
-        private bool _initialized = false;
-
         public Transform GetTarget()
         {
             return customTarget != null ? customTarget : transform;
@@ -144,7 +155,7 @@ namespace Dash
 
         void Start()
         {
-            if (autoStart)
+            if (bindStart)
             {
                 if (Graph == null)
                     return;
@@ -153,13 +164,13 @@ namespace Dash
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.START, this));
 #endif
                 NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
-                Graph.ExecuteGraphInput(autoStartInput, data);
+                Graph.ExecuteGraphInput(bindStartInput, data);
             }
         }
 
         private void OnEnable()
         {
-            if (autoOnEnable)
+            if (bindOnEnable)
             {
                 if (Graph == null)
                     return;
@@ -167,7 +178,26 @@ namespace Dash
                 DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONENABLE, this));
 #endif
                 NodeFlowData data = NodeFlowDataFactory.Create(GetTarget());
-                Graph.ExecuteGraphInput(autoOnEnableInput, data);
+                Graph.ExecuteGraphInput(bindOnEnableInput, data);
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (stopOnDisable)
+            {
+                if (Graph != null)
+                {
+                    Graph.Stop();
+                }
+            } else if (bindOnDisable)
+            {
+                if (Graph == null)
+                    return;
+#if UNITY_EDITOR
+                DashEditorDebug.Debug(new ControllerDebugItem(ControllerDebugItem.ControllerDebugItemType.ONDISABLE, this));
+#endif
+                Graph.Stop();
             }
         }
 
@@ -245,6 +275,7 @@ namespace Dash
 #if UNITY_EDITOR
         public bool advancedSectionMinimized = false;
         public bool settingsSectionMinimized = false;
+        public bool bindingsSectionMinimized = false;
         public bool exposedPropertiesSectionMinimized = false;
         public bool nodesSectionMinimized = false;
         public bool connectionsSectionMinimized = false;

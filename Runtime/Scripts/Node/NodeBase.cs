@@ -631,8 +631,8 @@ namespace Dash
             {
                 InputNode node = this as InputNode;
                 if (DashEditorCore.EditorConfig.editingController != null &&
-                    DashEditorCore.EditorConfig.editingController.autoStart &&
-                    DashEditorCore.EditorConfig.editingController.autoStartInput == node.Model.inputName) 
+                    DashEditorCore.EditorConfig.editingController.bindStart &&
+                    DashEditorCore.EditorConfig.editingController.bindStartInput == node.Model.inputName) 
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();
@@ -649,8 +649,8 @@ namespace Dash
             {
                 InputNode node = this as InputNode;
                 if (DashEditorCore.EditorConfig.editingController != null &&
-                    DashEditorCore.EditorConfig.editingController.autoOnEnable &&
-                    DashEditorCore.EditorConfig.editingController.autoOnEnableInput == node.Model.inputName) 
+                    DashEditorCore.EditorConfig.editingController.bindOnEnable &&
+                    DashEditorCore.EditorConfig.editingController.bindOnEnableInput == node.Model.inputName) 
                 {
                     GUI.color = Color.white;
                     GUIStyle style = new GUIStyle();

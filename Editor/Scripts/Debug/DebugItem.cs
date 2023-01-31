@@ -301,7 +301,8 @@ namespace Dash
         public enum ControllerDebugItemType
         {
             START,
-            ONENABLE
+            ONENABLE,
+            ONDISABLE
         }
 
         private ControllerDebugItemType _subType;
