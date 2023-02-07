@@ -22,10 +22,6 @@ namespace Dash.Editor
             {
                 _cache.Add(p_name, texture);
             }
-            else
-            {
-                Debug.Log("Icon not found "+p_name);
-            }
 
             return texture;
         }
