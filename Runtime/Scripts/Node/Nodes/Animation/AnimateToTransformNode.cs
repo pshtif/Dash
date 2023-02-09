@@ -32,6 +32,9 @@ namespace Dash
                     return null;
                 }
 
+                if (CheckException(value, "Target to expression evaluates to null."))
+                    return null;
+
                 targetTransform = value as Transform;
 
                 if (targetTransform == null && value.GetType() == typeof(GameObject))
