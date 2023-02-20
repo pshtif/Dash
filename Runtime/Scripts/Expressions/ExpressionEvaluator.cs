@@ -147,14 +147,22 @@ namespace Dash
 
         static void EvaluateParameter(string p_name, ParameterArgs p_args, IParameterResolver p_resolver, IAttributeDataCollection p_collection, bool p_referenced)
         {
-            //Debug.Log("EvaluateParameter: "+p_name);
-            p_args.Result = p_resolver.Resolve(p_name, p_collection, p_referenced);
-            // Only log first error
-            if (!hasErrorInEvaluation && p_resolver.hasErrorInResolving)
+            if (p_resolver == null)
             {
-                errorMessage = p_resolver.errorMessage;
+                hasErrorInEvaluation = true;
+                errorMessage = "No parameter resolver provided to resolve parameter " + p_name;
             }
-            hasErrorInEvaluation = hasErrorInEvaluation || p_resolver.hasErrorInResolving;
+            else
+            {
+                p_args.Result = p_resolver.Resolve(p_name, p_collection, p_referenced);
+
+                if (!hasErrorInEvaluation && p_resolver.hasErrorInResolving)
+                {
+                    errorMessage = p_resolver.errorMessage;
+                }
+                
+                hasErrorInEvaluation = hasErrorInEvaluation || p_resolver.hasErrorInResolving;
+            }
         }
 
         static void EvaluateFunction<T>(string p_name, FunctionArgs p_args)
