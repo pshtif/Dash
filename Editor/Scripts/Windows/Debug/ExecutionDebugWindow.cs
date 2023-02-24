@@ -1,9 +1,9 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
-using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -47,7 +47,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Execution Debug");
+            GUIUtils.DrawTitle("Dash Execution Debug");
 
             GUI.backgroundColor = Color.white;
             
@@ -128,3 +128,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

@@ -1,6 +1,7 @@
 ﻿/*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using UnityEditor;
 using UnityEngine;
@@ -12,114 +13,58 @@ namespace Dash.Editor
     {
         public DashController Controller => (DashController) target;
 
-        private void OpenEditor()
-        {
-            DashEditorWindow.InitEditorWindow(Controller);
-        }
-
         public override void OnInspectorGUI()
         {
-            //var oldColor = GUI.color;
             if (DashEditorCore.EditorConfig.showInspectorLogo)
             {
                 GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_inspector"), GUILayout.ExpandWidth(true));
                 var rect = GUILayoutUtility.GetLastRect();
-                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("VersionText"));
+                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
             }
-
-            //if (EditorUtility.IsPersistent(target)) GUI.enabled = false;
-
-            // var modifications = PrefabUtility.GetPropertyModifications(target);
-            //
-            // if (modifications != null)
-            // {
-            //     Debug.Log(modifications.Length);
-            //     modifications.ForEach(m =>
-            //     {
-            //         Debug.Log(m.propertyPath+" : "+m.target+" : "+m.objectReference);
-            //     });
-            // }
-
-            // if (PrefabUtility.IsPartOfAnyPrefab(target))
-            // {
-            //     EditorGUILayout.HelpBox("Graph overrides on prefab instances are not supported.", MessageType.Info);
-            // }
-            // else
+            
+            if (Controller.graphAsset == null)
             {
-                if (Controller.graphAsset == null && !Controller.HasBoundGraph)
+                GUI.color = new Color(1, 0.75f, 0.5f);
+                if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
                 {
-                    GUI.color = new Color(1, 0.75f, 0.5f);
-                    if (GUILayout.Button("Create Graph", GUILayout.Height(40)))
-                    {
-                        Controller.graphAsset = GraphUtils.CreateGraphAsAssetFile();
-                    }
-
-                    EditorGUI.BeginChangeCheck();
-                    
-                    GUI.color = Color.white;
-                    Controller.graphAsset =
-                        (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
-                            typeof(DashGraph), true);
-                    
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        EditorUtility.SetDirty(target);
-                        DashEditorCore.EditController(Controller);
-                    }
+                    Controller.graphAsset = GraphUtils.CreateGraphAsAssetFile();
                 }
-                else
+
+                EditorGUI.BeginChangeCheck();
+                
+                GUI.color = Color.white;
+                Controller.graphAsset =
+                    (DashGraph)EditorGUILayout.ObjectField(Controller.graphAsset,
+                        typeof(DashGraph), true);
+                
+                if (EditorGUI.EndChangeCheck())
                 {
-                    GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
-                    if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
-                    {
-                        OpenEditor();
-                    }
-                    GUI.color = Color.white;
-
-                    if (!Controller.HasBoundGraph)
-                    {
-                        DrawAssetGraphInspector();
-                    }
-                    else
-                    {
-                        DrawBoundGraphInspector();
-                    }
+                    EditorUtility.SetDirty(target);
+                    DashEditorCore.EditController(Controller);
                 }
+            }
+            else
+            {
+                GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
+                if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
+                {
+                    DashEditorWindow.InitEditorWindow(Controller);
+                }
+                GUI.color = Color.white;
+                
+                DrawAssetGraphInspector();
             }
 
             if (Controller.Graph == null)
                 return;
             
+            DrawInputBindingsInspector();
+            
+            GUILayout.Space(2);
+            
             DrawSettingsInspector();
             
             GUILayout.Space(2);
-
-            // if (Controller.Graph != null && !PrefabUtility.IsPartOfAnyPrefab(target))
-            // {
-            //     // Obsolete will be removed
-            //     if (Controller.HasBoundGraph)
-            //     {
-            //         GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables, Controller, ref Controller.variablesSectionMinimzed);
-            //         GUILayout.Space(2);
-            //     }
-            //     else
-            //     {
-            //         if (Controller.showGraphVariables)
-            //         {
-            //             GUIStyle style = new GUIStyle();
-            //             style.fontStyle = FontStyle.Italic;
-            //             style.normal.textColor = Color.yellow;
-            //             style.alignment = TextAnchor.MiddleCenter;
-            //             EditorGUILayout.LabelField("Warning these are not bound to instance.", style);
-            //             if (GUIVariableUtils.DrawVariablesInspector("Graph Variables", Controller.Graph.variables,
-            //                     Controller, ref Controller.variablesSectionMinimzed))
-            //             {
-            //                 EditorUtility.SetDirty(Controller.Graph);
-            //             }
-            //             GUILayout.Space(2);
-            //         }
-            //     }
-            // }
 
             DrawAdvancedInspector();
         }
@@ -139,18 +84,53 @@ namespace Dash.Editor
             }
         }
 
+        void DrawInputBindingsInspector()
+        {
+            if (!GUIUtils.DrawMinimizableSectionTitle("Input Bindings",
+                    ref Controller.bindingsSectionMinimized))
+                return;
+            
+            EditorGUI.BeginChangeCheck();
+
+            DrawInputBind("Start", ref Controller.bindStart, ref Controller.bindStartInput);
+
+            DrawInputBind("OnEnable", ref Controller.bindOnEnable, ref Controller.bindOnEnableInput);
+            
+            DrawInputBind("OnDisable", ref Controller.bindOnDisable, ref Controller.bindOnDisableInput);
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(target);
+            }
+        }
+
+        void DrawInputBind(string p_bindName, ref bool p_bindEnable, ref string p_bindInput)
+        {
+            EditorGUILayout.BeginHorizontal();
+
+            p_bindEnable = EditorGUILayout.Toggle(
+                new GUIContent("Bind " + p_bindName,
+                    "Automatically call an input on a graph when controller is started."),
+                p_bindEnable);
+
+            if (p_bindEnable)
+            {
+                p_bindInput = EditorGUILayout.TextField("", p_bindInput);
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
         void DrawSettingsInspector()
         {
-            if (!GUIEditorUtils.DrawMinimizableSectionTitle("Settings",
+            if (!GUIUtils.DrawMinimizableSectionTitle("Settings",
                     ref Controller.settingsSectionMinimized))
                 return;
 
             EditorGUI.BeginChangeCheck();
-            
-            Controller.createGraphCopy = EditorGUILayout.Toggle(
-                    new GUIContent("Create Graph Copy",
-                        "Initializes copy of graph instead of using original instance."),
-                    Controller.createGraphCopy);
+
+            Controller.useGraphCache = EditorGUILayout.Toggle(
+                new GUIContent("Use Graph Cache", "Cache and reuse serialized graphs."),
+                Controller.useGraphCache); 
             
             Controller.useCustomTarget = EditorGUILayout.Toggle(
                 new GUIContent("Use Custom Target", "Customize target which is this gameobject transform by default."),
@@ -166,29 +146,11 @@ namespace Dash.Editor
             {
                 Controller.customTarget = null;
             }
-
-            Controller.autoStart =
-                EditorGUILayout.Toggle(
-                    new GUIContent("Auto Start", "Automatically call an input on a graph when controller is started."),
-                    Controller.autoStart);
-
-            if (Controller.autoStart)
-            {
-                Controller.autoStartInput =
-                    EditorGUILayout.TextField("Auto Start Input", Controller.autoStartInput);
-            }
-
-            Controller.autoOnEnable =
-                EditorGUILayout.Toggle(
-                    new GUIContent("Auto OnEnable",
-                        "Automatically call an input on a graph when controller is enabled."), Controller.autoOnEnable);
-
-            if (Controller.autoOnEnable)
-            {
-                Controller.autoOnEnableInput =
-                    EditorGUILayout.TextField("Auto OnEnable Input", Controller.autoOnEnableInput);
-            }
             
+            Controller.stopOnDisable = EditorGUILayout.Toggle(
+                new GUIContent("Stop OnDisable", "Stop graph on OnDisable event."),
+                Controller.stopOnDisable);
+
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(target);
@@ -197,13 +159,13 @@ namespace Dash.Editor
 
         void DrawAdvancedInspector()
         {
-            if (!GUIEditorUtils.DrawMinimizableSectionTitle("Advanced",
+            if (!GUIUtils.DrawMinimizableSectionTitle("Advanced",
                     ref Controller.advancedSectionMinimized))
                 return;
 
             GUILayout.Space(2);
             
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Exposed Properties Table",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Exposed Properties Table",
                     ref Controller.exposedPropertiesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.propertyNames.Count; i++)
@@ -226,7 +188,7 @@ namespace Dash.Editor
             if (Controller.Graph == null)
                 return;
             
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Nodes",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Nodes",
                     ref Controller.nodesSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Nodes.Count; i++)
@@ -237,7 +199,7 @@ namespace Dash.Editor
             
             GUILayout.Space(2);
 
-            if (GUIEditorUtils.DrawMinimizableSectionTitle("        Connections",
+            if (GUIUtils.DrawMinimizableSectionTitle("        Connections",
                     ref Controller.connectionsSectionMinimized, 12, DashEditorCore.EditorConfig.theme.InspectorSectionSubtitleColor, TextAnchor.MiddleLeft))
             {
                 for (int i = 0; i < Controller.Graph.Connections.Count; i++)
@@ -248,42 +210,6 @@ namespace Dash.Editor
                 }
             }
         }
-
-        void DrawBoundGraphInspector()
-        {
-            EditorGUILayout.HelpBox("Save graph to asset, bound graphs will be deprecated!", MessageType.Warning);
-            
-            if (GUILayout.Button("Save to Asset"))
-            {
-                DashGraph graph = GraphUtils.CreateGraphAsAssetFile(Controller.Graph);
-                if (graph != null)
-                {
-                    Controller.BindGraph(null);
-                    Controller.graphAsset = graph;
-                }
-            }
-
-            if (GUILayout.Button("Remove Graph"))
-            {
-                if (DashEditorCore.EditorConfig.editingGraph == Controller.Graph)
-                {
-                    DashEditorCore.UnloadGraph();
-                }
-
-                Controller.BindGraph(null);
-            }
-        }
-        
-        // void BindGraph(DashGraph p_graph)
-        // {
-        //     bool editing = DashEditorCore.EditorConfig.editingGraph == p_graph;
-        //     Controller.BindGraph(p_graph);
-        //
-        //     // If we are currently editing this controller refresh
-        //     if (editing)
-        //     {
-        //         DashEditorCore.EditController(Controller);
-        //     }
-        // }
     }
 }
+#endif

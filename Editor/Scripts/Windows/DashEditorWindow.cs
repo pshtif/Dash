@@ -1,6 +1,7 @@
 ﻿/*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,12 @@ namespace Dash.Editor
         }
         
         void OnPrefabStageClosing(PrefabStage p_stage) {
-            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            //when exiting prefab state we are left with a floating graph instance which can create confusion
             DashEditorCore.EditController(null);
         }
         
         void OnPrefabStageOpened(PrefabStage p_stage) {
-            //when exiting prefab state we are left with a floating graph instance which can creat confusion
+            //when exiting prefab state we are left with a floating graph instance which can create confusion
             DashEditorCore.EditController(null);
         }
 
@@ -57,6 +58,17 @@ namespace Dash.Editor
         public static DashEditorWindow InitEditorWindow(DashController p_dashController)
         {
             DashEditorCore.EditController(p_dashController);
+
+            Instance = GetWindow<DashEditorWindow>();
+            Instance.titleContent = new GUIContent("Dash Editor");
+            Instance.minSize = new Vector2(800, 400);
+
+            return Instance;
+        }
+        
+        public static DashEditorWindow InitEditorWindow(DashGraph p_graph)
+        {
+            DashEditorCore.EditGraph(p_graph);
 
             Instance = GetWindow<DashEditorWindow>();
             Instance.titleContent = new GUIContent("Dash Editor");
@@ -73,30 +85,25 @@ namespace Dash.Editor
             DashEditorCore.EditorConfig.editorPosition = position;
             
             if (Event.current.type == EventType.MouseDown)
-                DashEditorCore.editingBoxComment = null;
+                GraphBox.editingBox = null;
 
             // Skin/Resources are null during project building and can crash build process if editor is open
             if (DashEditorCore.Skin == null)
                 return;
             
             // Instance lost issue in 2020?
-            if (Instance == null)
-                Instance = this;
+            if (Instance == null) Instance = this;
 
-            if (_views == null)
-            {
-                CreateViews();
-                return;
-            }
+            if (_views == null) CreateViews();
 
-            var rect = new Rect(0, 0, position.width, position.height);
-            
             // Ugly hack to avoid error drawing on Repaint event before firing Layout event which happens after script compilation
             if (Event.current.type == EventType.Layout) _previousLayoutDone = true;
             if ((Event.current.type == EventType.Repaint || Event.current.isMouse) && !_previousLayoutDone) return;
             
             ShortcutsHandler.Handle();
 
+            var rect = new Rect(0, 0, position.width, position.height);
+            
             // Draw view GUIs
             _views.ForEach(v => v.DrawGUI(Event.current, rect));
 
@@ -121,17 +128,13 @@ namespace Dash.Editor
             if (Instance != null)
             {
                 _views = new List<ViewBase>();
-                AddView(new GraphView());
-                AddView(new NodeInspectorView());
-                AddView(new GraphPropertiesView());
-                AddView(new GraphVariablesView());
-                AddView(new PreviewControlsView());
+                _views.Add(new GraphView());
+                _views.Add(new NodeInspectorView());
+                _views.Add(new GraphPropertiesView());
+                _views.Add(new GraphVariablesView());
+                _views.Add(new PreviewControlsView());
             }
-        }
-
-        private void AddView(ViewBase p_view)
-        {
-            _views.Add(p_view);
         }
     }
 }
+#endif

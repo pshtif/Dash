@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+#if UNITY_EDITOR
 
 namespace Dash.Editor
 {
@@ -426,3 +427,4 @@ namespace Dash.Editor
 		#endregion
 	}
 }
+#endif

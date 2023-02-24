@@ -1,7 +1,9 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
@@ -10,6 +12,15 @@ namespace Dash.Editor
     public class DashUnityMenu
     {
         #region UNITY TOP MENU
+        
+        [MenuItem("Tools/Dash/Reserialize")]
+        public static void Reserialize()
+        {
+            string[] graphGuids = AssetDatabase.FindAssets("t:DashGraph");
+            var graphPaths = graphGuids.Select(g => AssetDatabase.GUIDToAssetPath(g));
+            AssetDatabase.ForceReserializeAssets(graphPaths);
+        }
+        
         [MenuItem("Tools/Dash/Settings")]
         public static void ShowInspectorLogo()
         {
@@ -34,11 +45,11 @@ namespace Dash.Editor
             AOTWindow.Init();
         }
 
-        [MenuItem("Tools/Dash/Scan/Checksum")]
-        public static void ShowChecksumWindow()
-        {
-            ChecksumWindow.Init();
-        }
+        // [MenuItem("Tools/Dash/Scan/Checksum")]
+        // public static void ShowChecksumWindow()
+        // {
+        //     ChecksumWindow.Init();
+        // }
 
         [MenuItem("Tools/Dash/Expressions")]
         public static void ShowExpressionsWindow()
@@ -71,3 +82,4 @@ namespace Dash.Editor
         #endregion
     }
 }
+#endif

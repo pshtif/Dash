@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
+#if UNITY_EDITOR
+
 using UnityEditor;
+using UnityEngine;
 
 namespace Dash.Editor
 {
@@ -10,7 +9,7 @@ namespace Dash.Editor
     {
         public static bool DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable, float p_maxWidth, ref bool p_minimized)
         {
-            if (!GUIEditorUtils.DrawMinimizableSectionTitle(p_title,
+            if (!GUIUtils.DrawMinimizableSectionTitle(p_title,
                     ref p_minimized))
                 return false;
 
@@ -19,7 +18,7 @@ namespace Dash.Editor
         
         public static bool DrawVariablesInspector(string p_title, DashVariables p_variables, IVariableBindable p_bindable, float p_maxWidth)
         {
-            if (p_title != "") GUIEditorUtils.DrawSectionTitle(p_title);
+            if (p_title != "") GUIUtils.DrawSectionTitle(p_title);
 
             GUILayout.Space(2);
             int index = 0;
@@ -71,3 +70,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

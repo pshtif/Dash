@@ -1,10 +1,10 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Dash.Editor
 {
@@ -60,7 +60,7 @@ namespace Dash.Editor
                     
                     InputNode node = p_node as InputNode;
                     menu.AddSeparator("");
-                    if (!controller.autoStart || controller.autoStartInput != node.Model.inputName)
+                    if (!controller.bindStart || controller.bindStartInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as Start Input"), false, SetAsStartInput, p_node);
                     }
@@ -69,7 +69,7 @@ namespace Dash.Editor
                         menu.AddItem(new GUIContent("Remove as Start Input"), false, RemoveAsStartInput, p_node);
                     }
 
-                    if (!controller.autoOnEnable || controller.autoOnEnableInput != node.Model.inputName)
+                    if (!controller.bindOnEnable || controller.bindOnEnableInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as OnEnable Input"), false, SetAsOnEnableInput, p_node);    
                     }
@@ -90,8 +90,7 @@ namespace Dash.Editor
             }
 
             ((INodeAccess)p_node).GetCustomContextMenu(ref menu);
-
-            //menu.ShowAsEditorMenu();
+            
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }
 
@@ -121,29 +120,29 @@ namespace Dash.Editor
         {
             InputNode node = p_node as InputNode;
 
-            DashEditorCore.EditorConfig.editingController.autoStart = true;
-            DashEditorCore.EditorConfig.editingController.autoStartInput = node.Model.inputName;
+            DashEditorCore.EditorConfig.editingController.bindStart = true;
+            DashEditorCore.EditorConfig.editingController.bindStartInput = node.Model.inputName;
         }
         
         static void RemoveAsStartInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            DashEditorCore.EditorConfig.editingController.autoStart = false;
-            DashEditorCore.EditorConfig.editingController.autoStartInput = "";
+            DashEditorCore.EditorConfig.editingController.bindStart = false;
+            DashEditorCore.EditorConfig.editingController.bindStartInput = "";
         }
 
         static void SetAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            DashEditorCore.EditorConfig.editingController.autoOnEnable = true;
-            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = node.Model.inputName;
+            DashEditorCore.EditorConfig.editingController.bindOnEnable = true;
+            DashEditorCore.EditorConfig.editingController.bindOnEnableInput = node.Model.inputName;
         }
         
         static void RemoveAsOnEnableInput(object p_node)
         {
             InputNode node = p_node as InputNode;
-            DashEditorCore.EditorConfig.editingController.autoOnEnable = false;
-            DashEditorCore.EditorConfig.editingController.autoOnEnableInput = "";
+            DashEditorCore.EditorConfig.editingController.bindOnEnable = false;
+            DashEditorCore.EditorConfig.editingController.bindOnEnableInput = "";
         }
 
         static void CopyNode(object p_node)
@@ -233,3 +232,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

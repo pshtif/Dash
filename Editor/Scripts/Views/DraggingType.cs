@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 namespace Dash.Editor
 {
@@ -8,8 +9,10 @@ namespace Dash.Editor
     {
         NONE,
         NODE_DRAG,
+        CONNECTION_DRAG,
         SELECTION,
         BOX_DRAG, 
         BOX_RESIZE
     }
 }
+#endif

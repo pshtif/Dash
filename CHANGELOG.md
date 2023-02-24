@@ -4,6 +4,58 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.14.1 - 31.01.2022
+
+#### Added
+
+- added stopOnDisable property to stop graph when gameobject or DashController is disabled
+- added bindOnDisable to bind OnDisable to a graph input
+
+#### Changed
+
+- changed autoStart/autoStartInput and autoOnEnable/autoOnEnableInput renamed to bind*
+
+### Release 0.13.12 - 17.1.2022
+
+#### Added
+
+- added Tools->Dash->Reserialize menu to find and force reserialize all DashGraph assets
+
+### Release 0.14.0 - 16.01.2022
+
+#### Added
+
+- added graph creation caching
+- added custom serialization formatters for nodes, connections and parameters
+- added additional logs and verbose graph scanning
+
+#### Changed
+
+- changed namespace and assembly definitions merge
+- changed refactoring through the whole codebase for redundancy cleanup and overall code
+- changed editor mouse decoupling
+- changed SubGraph bound serialization to node [BREAKING]
+- changed access interfaces to internal access
+- changed SerializedValue for broader usecases
+
+### Release 0.13.11 - 10.1.2022
+
+#### Added
+
+- added --verbose option for more detailed graph scanning
+
+### Release 0.13.10 - 9.1.2022
+
+#### Changed
+
+- changed sub graph initialization to the same initialization of main graphs for performance
+
+### Release 0.13.9 - 04.01.2022
+
+#### Fixed
+
+- fixed expression switching for targetName in RetargetNodeModelBase migration
+
 ### Release 0.13.8 - 27.12.2022
 
 #### Added

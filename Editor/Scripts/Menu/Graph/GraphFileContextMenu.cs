@@ -1,8 +1,8 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
-using UnityEditor;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -16,8 +16,8 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Import JSON"), false, () => GraphUtils.ImportJSON(p_graph));
             menu.AddItem(new GUIContent("Export JSON"), false, () => GraphUtils.ExportJSON(p_graph));
             
-            //menu.ShowAsContext();
             GenericMenuPopup.Show(menu, "File",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }
+#endif

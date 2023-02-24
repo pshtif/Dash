@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using UnityEditor;
 using UnityEngine;
@@ -23,23 +24,36 @@ namespace Dash.Editor
         public void OnGUI()
         {
             GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_settings"), GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(false));
-        
+
             if (EditorApplication.isCompiling || BuildPipeline.isBuildingPlayer)
+            {
+                EditorGUILayout.HelpBox("Settings unavailable while editor is compiling or building player.", MessageType.Warning);
                 return;
-            
+            }
+
             var style = new GUIStyle();
             style.normal.textColor = DashEditorCore.EditorConfig.theme.InspectorSectionTitleColor;
             style.alignment = TextAnchor.MiddleCenter;
             style.fontStyle = FontStyle.Bold;
             style.normal.background = Texture2D.whiteTexture;
             style.fontSize = 16;
+
+            float oldLabelWidth = EditorGUIUtility.labelWidth;
+
+            DrawEditorSettings(style);
+            DrawRuntimeSettings(style);
+
+            EditorGUIUtility.labelWidth = oldLabelWidth;
+        }
+
+        void DrawEditorSettings(GUIStyle p_style)
+        {
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Editor Settings", style, GUILayout.Height(28));
+            GUILayout.Label("Editor Settings", p_style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
             
             EditorGUI.BeginChangeCheck();
-
-            float oldLabelWidth = EditorGUIUtility.labelWidth; 
+            
             EditorGUIUtility.labelWidth = 220;
             DashEditorCore.EditorConfig.showInspectorLogo = EditorGUILayout.Toggle("Show Inspector Logo",
                 DashEditorCore.EditorConfig.showInspectorLogo);
@@ -65,22 +79,39 @@ namespace Dash.Editor
             DashEditorCore.EditorConfig.maxLog =
                 EditorGUILayout.IntField("Max Log", DashEditorCore.EditorConfig.maxLog);
             
+            bool enableDashFormatters = EditorGUILayout.Toggle(
+                "Enable Dash Formatters", DashEditorCore.EditorConfig.enableDashFormatters);
+            if (enableDashFormatters != DashEditorCore.EditorConfig.enableDashFormatters)
+            {
+                DashEditorCore.EditorConfig.enableDashFormatters = enableDashFormatters;
+                DashEditorCore.SetDefineSymbols();
+            }
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(DashEditorCore.EditorConfig);
+            }
+        }
+        
+        void DrawRuntimeSettings(GUIStyle p_style)
+        {
             GUI.backgroundColor = new Color(0, 0, 0, .5f);
-            GUILayout.Label("Runtime Settings", style, GUILayout.Height(28));
+            GUILayout.Label("Runtime Settings", p_style, GUILayout.Height(28));
             GUI.backgroundColor = Color.white;
+        
+            EditorGUI.BeginChangeCheck();
 
             DashEditorCore.RuntimeConfig.allowAttributeTypeChange = EditorGUILayout.Toggle(
                 "Allow Attribute Type Change", DashEditorCore.RuntimeConfig.allowAttributeTypeChange);
             
             DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = EditorGUILayout.Toggle(
                 "Enable Custom Expression Classes", DashEditorCore.RuntimeConfig.enableCustomExpressionClasses);
-
+            
             if (EditorGUI.EndChangeCheck())
             {
-                EditorUtility.SetDirty(DashEditorCore.EditorConfig);
+                EditorUtility.SetDirty(DashEditorCore.RuntimeConfig);
             }
-
-            EditorGUIUtility.labelWidth = oldLabelWidth;
         }
     }
 }
+#endif

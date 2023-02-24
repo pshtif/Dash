@@ -1,10 +1,9 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
-using System;
 using System.Collections.Generic;
-using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Prefab Editor");
+            GUIUtils.DrawTitle("Dash Prefab Editor");
 
             var scrollViewStyle = new GUIStyle();
             scrollViewStyle.normal.background = TextureUtils.GetColorTexture(new Color(.1f, .1f, .1f));
@@ -169,3 +168,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

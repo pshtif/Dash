@@ -1,11 +1,11 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -31,7 +31,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash AOT Scanner/Generator");
+            GUIUtils.DrawTitle("Dash AOT Scanner/Generator");
 
             var titleStyle = new GUIStyle();
             titleStyle.alignment = TextAnchor.MiddleLeft;
@@ -72,7 +72,7 @@ namespace Dash.Editor
                     bool removed = GUILayout.Button("Remove", GUILayout.Width(120));
                     
                     if (removed) {
-                        DashScanner.RemoveScannedAOTType(type);
+                        AOTGenerator.RemoveScannedAOTType(type);
                     }
                     
                     GUILayout.EndHorizontal();
@@ -121,7 +121,7 @@ namespace Dash.Editor
                     
                     if (GUILayout.Button("Remove", GUILayout.Width(120)))
                     {
-                        DashScanner.RemoveExplicitAOTType(type);
+                        AOTGenerator.RemoveExplicitAOTType(type);
                         break;
                     }
                     GUILayout.EndHorizontal();
@@ -173,10 +173,10 @@ namespace Dash.Editor
 
             if (scan)
             {
-                DashScanner.ScanForAOT();
+                AOTScanner.Scan();
             } else if (generate)
             {
-                DashAOTGenerator.GenerateDLL(_generateLinkXml, _includeOdin);
+                AOTGenerator.GenerateDLL(_generateLinkXml, _includeOdin);
             }
         }
 
@@ -203,3 +203,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

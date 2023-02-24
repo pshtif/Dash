@@ -1,13 +1,12 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -30,7 +29,7 @@ namespace Dash.Editor
         {
             var rect = new Rect(0, 0, position.width, position.height);
             
-            GUIEditorUtils.DrawTitle("Dash Expressions Editor");
+            GUIUtils.DrawTitle("Dash Expressions Editor");
             
             DashEditorCore.RuntimeConfig.enableCustomExpressionClasses = GUILayout.Toggle(DashEditorCore.RuntimeConfig.enableCustomExpressionClasses, new GUIContent("Enable Custom Expression Classes (has small runtime impact)"));
 
@@ -135,3 +134,4 @@ namespace Dash.Editor
         }
     }
 }
+#endif

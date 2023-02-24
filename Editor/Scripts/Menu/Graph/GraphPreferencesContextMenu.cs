@@ -1,8 +1,8 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
-using UnityEditor;
 using UnityEngine;
 
 namespace Dash.Editor
@@ -22,10 +22,8 @@ namespace Dash.Editor
             menu.AddItem(new GUIContent("Settings/Enable AnimateNode Interface"), DashEditorCore.EditorConfig.enableAnimateNodeInterface, () => DashEditorCore.EditorConfig.enableAnimateNodeInterface = !DashEditorCore.EditorConfig.enableAnimateNodeInterface);
             
             menu.AddSeparator("");
-            //menu.AddItem(new GUIContent("Advanced/Validate Serialization"), false, p_graph.ValidateSerialization);
             menu.AddItem(new GUIContent("Advanced/Cleanup Null"), false, p_graph.RemoveNullReferences);
-            //menu.AddItem(new GUIContent("Advanced/Cleanup Exposed"), false, p_graph.CleanupExposedReferenceTable);
-            
+
             menu.AddItem(new GUIContent("Reset Graph Position"), false, p_graph.ResetPosition);
             
             menu.AddItem(new GUIContent("Help"), false, () =>
@@ -33,8 +31,8 @@ namespace Dash.Editor
                 Application.OpenURL("https://github.com/pshtif/Dash/tree/main/Documentation");
             });
             
-            //menu.ShowAsEditorMenu();
             GenericMenuPopup.Show(menu, "Preferences",  Event.current.mousePosition, 240, 300, false, false);
         }
     }
 }
+#endif
