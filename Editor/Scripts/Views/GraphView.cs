@@ -178,7 +178,7 @@ namespace Dash.Editor
                     DashEditorCore.Skin.GetStyle("GraphViewDebuggingLabel"));
             }
             
-            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + DashCore.VERSION,
+            GUI.Label(new Rect(0 + p_rect.width - 75, 0, 70, 24), "Dash Animation System v" + VersionUtils.GetVersionString(DashCore.GetVersionNumber()),
                 DashEditorCore.Skin.GetStyle("DashEditorVersionLabel"));
 
             _graphMenuView.Draw(Graph);

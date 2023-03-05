@@ -19,7 +19,7 @@ namespace Dash.Editor
             {
                 GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_inspector"), GUILayout.ExpandWidth(true));
                 var rect = GUILayoutUtility.GetLastRect();
-                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
+                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+VersionUtils.GetVersionString(DashCore.GetVersionNumber()), DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
             }
             
             if (Controller.graphAsset == null)
