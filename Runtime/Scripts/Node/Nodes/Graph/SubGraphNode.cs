@@ -43,7 +43,7 @@ namespace Dash
         
         public DashGraph SubGraph => GetSubGraphInstance();
 
-        protected override void Initialize()
+        internal override void Initialize()
         {
             if (SubGraph != null)
             {

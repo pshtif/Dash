@@ -17,13 +17,20 @@ namespace Dash
     [OutputCount(1)]
     public class OnCustomEventNode : NodeBase<OnCustomEventNodeModel>
     {
-        protected override void Initialize()
+        internal override void Initialize()
         {
             _graph.AddListener(Model.eventName, Execute, Model.priority);
         }
 
         override protected void OnExecuteStart(NodeFlowData p_flowData)
         {
+            var stopMode = GetParameterValue(Model.stopMode, p_flowData);
+
+            if (stopMode == StopMode.GRAPH)
+            {
+                _graph.Stop();
+            }
+            
             if (Model.useSequencer)
             {
                 string sequencerId = GetParameterValue(Model.sequencerId, p_flowData);

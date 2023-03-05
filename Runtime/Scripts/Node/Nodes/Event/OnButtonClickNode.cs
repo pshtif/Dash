@@ -14,7 +14,7 @@ namespace Dash
     [OutputCount(1)]
     public class OnButtonClickNode : NodeBase<OnButtonClickNodeModel>
     {
-        protected override void Initialize()
+        internal override void Initialize()
         {
             List<Button> buttons = new List<Button>();
             Button button;

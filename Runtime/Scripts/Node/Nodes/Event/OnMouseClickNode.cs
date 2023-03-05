@@ -12,7 +12,7 @@ namespace Dash
     [OutputCount(1)]
     public class OnMouseClickNode : NodeBase<OnMouseClickNodeModel>
     {
-        protected override void Initialize()
+        internal override void Initialize()
         {
             Controller.RegisterUpdateCallback(() => HandleMouseCheck());
         }

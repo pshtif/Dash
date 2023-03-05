@@ -117,7 +117,7 @@ namespace Dash
 
             Controller = p_controller;
 
-            _nodes.ForEach(n => ((INodeAccess) n).Initialize());
+            _nodes.ForEach(n => n.Initialize());
             variables.Initialize(p_controller);
             
             _initialized = true;
@@ -277,7 +277,7 @@ namespace Dash
         public void Disconnect(NodeConnection p_connection)
         {
             _connections.Remove(p_connection);
-            ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
+            p_connection.inputNode.OnConnectionRemoved?.Invoke(p_connection);
         }
 
         public void DisconnectNode(NodeBase p_node)
@@ -368,7 +368,29 @@ namespace Dash
 
         public void Stop()
         {
-            Nodes.ForEach(n => ((INodeAccess)n).Stop());
+            Nodes.ForEach(n => n.Stop());
+        }
+        
+        private HashSet<NodeBase> _downstreamNodes = new HashSet<NodeBase>();
+        
+        public void StopDownstream(NodeBase p_node)
+        {
+            if (_downstreamNodes.Contains(p_node))
+                return;
+            
+            _downstreamNodes.Add(p_node);
+            
+            p_node.Stop();
+            var connections = Connections.FindAll(c => c.outputNode == p_node);
+            connections.Sort((c1, c2) =>
+            {
+                return c1.outputIndex.CompareTo(c2.outputIndex);
+            });
+            
+            foreach (var connection in connections)
+            {
+                StopDownstream(p_node);   
+            }
         }
 
 #region SERIALIZATION
@@ -383,13 +405,13 @@ namespace Dash
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
-            
-            SetVersion(DashCore.GetVersionNumber());
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
 #if UNITY_EDITOR
+            SetVersion(DashCore.GetVersionNumber());
+            
             if (!Application.isPlaying)
             {
                 GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
@@ -483,7 +505,7 @@ namespace Dash
         public void DeleteNode(NodeBase p_node)
         {
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
-            ((INodeAccess)p_node).Remove();
+            p_node.Remove();
             Nodes.Remove(p_node);
             
             if (previewNode == p_node) previewNode = null;
