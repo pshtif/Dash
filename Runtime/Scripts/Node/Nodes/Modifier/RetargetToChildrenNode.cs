@@ -92,6 +92,10 @@ namespace Dash
             
         public override bool IsSynchronous()
         {
+            // Should never be null but due to serialization change we need to check for now
+            if (Model.onChildDelay == null || Model.onFinishDelay == null)
+                return false;
+            
             return !Model.onChildDelay.isExpression && Model.onChildDelay.GetValue(null) == 0 &&
                    !Model.onFinishDelay.isExpression && Model.onFinishDelay.GetValue(null) == 0;
         }
