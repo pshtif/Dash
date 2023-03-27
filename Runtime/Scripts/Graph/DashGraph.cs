@@ -186,6 +186,16 @@ namespace Dash
 
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
+                    var handler = new EventHandler(p_callback, p_priority, p_once);
+                    var current = _callbackListeners[p_name];
+                    for (int i = current.Count - 1; i >= 0; i--)
+                    {
+                        if (current[i].Priority <= p_priority)
+                        {
+                            current.Insert(i+1, handler);
+                        }                        
+                    }
+
                     _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority, p_once));
                     _callbackListeners[p_name] = _callbackListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
