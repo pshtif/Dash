@@ -98,6 +98,8 @@ namespace Dash.Editor
                 EditorApplication.delayCall += () =>
                 {
                     ConsoleWindow.RunInitialGraphScan();
+                    EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
+                    EditorUtility.SetDirty(DashEditorCore.EditorConfig);
                 };
             }
         }
