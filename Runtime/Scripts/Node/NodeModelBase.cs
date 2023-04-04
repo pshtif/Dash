@@ -180,6 +180,15 @@ namespace Dash
                 .ToList();
         }
         
+        public List<string> GetExposedNodeIDs(List<PropertyName> p_properties)
+        {
+            return GetType().GetFields().ToList().FindAll(f =>
+                    f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>) && p_properties.Contains((PropertyName)f.GetValue(this).GetType().GetField("exposedName").GetValue(f.GetValue(this))))
+                .Select(
+                    (f, i) => id.ToString())
+                .ToList();
+        }
+        
         // public void ValidateSerialization()
         // {
         //     var fields = this.GetType().GetFields();

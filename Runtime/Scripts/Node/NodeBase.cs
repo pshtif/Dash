@@ -797,6 +797,11 @@ namespace Dash
         {
             return _model.GetExposedGUIDs();
         }
+        
+        public List<string> GetModelExposedNodeIDs(List<PropertyName> p_properties)
+        {
+            return _model.GetExposedNodeIDs(p_properties);
+        }
 
         public virtual void SelectEditorTarget() { }
 

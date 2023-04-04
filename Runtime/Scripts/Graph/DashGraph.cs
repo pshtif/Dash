@@ -625,6 +625,14 @@ namespace Dash
 
             return exposedGUIDs;
         }
+        
+        public List<string> GetExposedNodeIDs(List<PropertyName> p_properties)
+        {
+            List<string> exposedNodeIDs = new List<string>();
+            Nodes.ForEach(n => exposedNodeIDs.AddRange(n.GetModelExposedNodeIDs(p_properties)));
+
+            return exposedNodeIDs;
+        }
 
         public void ResetPosition()
         {
