@@ -43,13 +43,12 @@ namespace Dash.Editor
                 Instance.Initialize();
             }
             Instance.Show();
-            
-            AddMessage(("Version upgraded from "+DashCore.GetVersionString(DashEditorCore.EditorConfig.lastUsedVersion)+" to "+DashCore.GetVersionString(DashCore.GetVersionNumber()), Color.white));
+
+            AddMessage((
+                "Version upgraded from " + VersionUtils.GetVersionString(DashEditorCore.EditorConfig.lastUsedVersion) +
+                " to " + VersionUtils.GetVersionString(DashCore.GetVersionNumber()), Color.white));
             AddMessage(("Performing graph scanning...", Color.white));
             ScanGraphs();
-            
-            DashEditorCore.EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
-            EditorUtility.SetDirty(DashEditorCore.EditorConfig);
         }
 
         private void Initialize()
@@ -125,7 +124,7 @@ namespace Dash.Editor
             switch (command)
             {
                 case "/version":
-                    AddMessage(("Dash Version "+DashCore.VERSION,Color.white));
+                    AddMessage(("Dash Version "+DashCore.GetVersionNumber(),Color.white));
                     break;
                 case "/scan":
                     ScanGraphs(commandSplit.Count>1 ? commandSplit[1] : "", verbose);

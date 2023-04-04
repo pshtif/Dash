@@ -89,7 +89,7 @@ namespace Dash.Editor
                 menu.AddItem(new GUIContent("Connect Selection as Input"), false, ConnectSelectionAsInput, p_node);
             }
 
-            ((INodeAccess)p_node).GetCustomContextMenu(ref menu);
+            p_node.GetCustomContextMenu(ref menu);
             
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);
         }

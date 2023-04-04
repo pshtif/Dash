@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OdinSerializer.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -84,11 +85,21 @@ namespace Dash.Editor
 
         static void CheckDashVersion()
         {
+            var assembly = typeof(DashEditorCore).Assembly;
+            var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(assembly);
+            if (packageInfo != null)
+            {
+                var version = packageInfo.version;
+                RuntimeConfig.packageVersion = version;
+            }
+
             if (EditorConfig.lastUsedVersion != 0 && DashCore.GetVersionNumber() > EditorConfig.lastUsedVersion)
             {
                 EditorApplication.delayCall += () =>
                 {
                     ConsoleWindow.RunInitialGraphScan();
+                    EditorConfig.lastUsedVersion = DashCore.GetVersionNumber();
+                    EditorUtility.SetDirty(DashEditorCore.EditorConfig);
                 };
             }
         }

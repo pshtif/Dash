@@ -22,7 +22,7 @@ namespace Dash
     [Serializable]
     [Size(150,85)]
     [Category(NodeCategoryType.OTHER)]
-    public abstract class NodeBase : INodeAccess
+    public abstract class NodeBase 
     {
         static public NodeBase Create(Type p_nodeType, DashGraph p_graph)
         {
@@ -34,21 +34,9 @@ namespace Dash
         }
 
         [NonSerialized]
-        private Action<NodeConnection> _onConnectionRemoved;
+        internal Action<NodeConnection> OnConnectionRemoved;
 
-        Action<NodeConnection> INodeAccess.OnConnectionRemoved
-        {
-            get
-            {
-                return _onConnectionRemoved;
-            }
-            set
-            {
-                _onConnectionRemoved = value;
-            }
-        } 
-        
-        void INodeAccess.Stop()
+        internal void Stop()
         {
             Stop_Internal();
             
@@ -103,13 +91,9 @@ namespace Dash
 
         public virtual bool IsExecuting => ExecutionCount > 0;
 
-        protected virtual void Initialize() { }
-        
-        void INodeAccess.Initialize() => Initialize();
+        internal virtual void Initialize() { }
 
-        protected virtual void Remove() { }
-        
-        void INodeAccess.Remove() => Remove();
+        internal virtual void Remove() { }
 
         public void Execute(NodeFlowData p_flowData)
         {
@@ -783,7 +767,7 @@ namespace Dash
         
         protected virtual void DrawCustomGUI(Rect p_rect) { }
 
-        void INodeAccess.GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
+        internal void GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
         {
             if (this is INodeMigratable)
             {
@@ -793,7 +777,7 @@ namespace Dash
             GetCustomContextMenu(ref p_menu);
         }
         
-        protected virtual void GetCustomContextMenu(ref RuntimeGenericMenu p_menu) { }
+        protected virtual void AddCustomContextMenu(ref RuntimeGenericMenu p_menu) { }
 
         public virtual void DrawInspector()
         {
@@ -812,6 +796,11 @@ namespace Dash
         public List<string> GetModelExposedGUIDs()
         {
             return _model.GetExposedGUIDs();
+        }
+        
+        public List<string> GetModelExposedNodeIDs(List<PropertyName> p_properties)
+        {
+            return _model.GetExposedNodeIDs(p_properties);
         }
 
         public virtual void SelectEditorTarget() { }

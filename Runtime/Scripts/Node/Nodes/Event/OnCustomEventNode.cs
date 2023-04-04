@@ -17,7 +17,7 @@ namespace Dash
     [OutputCount(1)]
     public class OnCustomEventNode : NodeBase<OnCustomEventNodeModel>
     {
-        protected override void Initialize()
+        internal override void Initialize()
         {
             _graph.AddListener(Model.eventName, Execute, Model.priority);
         }

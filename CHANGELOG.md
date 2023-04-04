@@ -4,7 +4,34 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.14.1 - 31.01.2022
+### Release 0.14.3 - X.3.2023
+
+#### Added
+
+- added show/invalidate node ids for exposed properties in controller advanced options
+
+#### Changed
+
+- changed AddListener collections handling for better performance and less GC overhead
+- changed dependency upped for DashTween 0.1.9
+
+### Release 0.14.2 - 5.3.2023
+
+#### Added
+
+- added StopNode which can be used to stop the graph itself or just the connected part
+
+#### Changed
+
+- changed version number handling directly from package info (static for embedded)
+- changed INodeAccess interace was refactored to internal
+
+#### Fixed
+
+- fixed various null checks on potentionally unserialized Parameters
+- fixed AnimateToTransform node check if expression evaluated to null to avoid exception
+
+### Release 0.14.1 - 31.01.2023
 
 #### Added
 
@@ -15,13 +42,13 @@ All notable changes to this project will be documented in this file.
 
 - changed autoStart/autoStartInput and autoOnEnable/autoOnEnableInput renamed to bind*
 
-### Release 0.13.12 - 17.1.2022
+### Release 0.13.12 - 17.1.2023
 
 #### Added
 
 - added Tools->Dash->Reserialize menu to find and force reserialize all DashGraph assets
 
-### Release 0.14.0 - 16.01.2022
+### Release 0.14.0 - 16.01.2023
 
 #### Added
 
@@ -38,19 +65,19 @@ All notable changes to this project will be documented in this file.
 - changed access interfaces to internal access
 - changed SerializedValue for broader usecases
 
-### Release 0.13.11 - 10.1.2022
+### Release 0.13.11 - 10.1.2023
 
 #### Added
 
 - added --verbose option for more detailed graph scanning
 
-### Release 0.13.10 - 9.1.2022
+### Release 0.13.10 - 9.1.2023
 
 #### Changed
 
 - changed sub graph initialization to the same initialization of main graphs for performance
 
-### Release 0.13.9 - 04.01.2022
+### Release 0.13.9 - 04.01.2023
 
 #### Fixed
 

@@ -16,6 +16,7 @@ namespace Dash
 {
     public static class GraphUtils
     {
+#if UNITY_EDITOR
         public static DashGraph CreateEmptyGraph()
         {
             DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
@@ -23,7 +24,6 @@ namespace Dash
             return graph;
         }
         
-#if UNITY_EDITOR
         public static string AddChildPath(string p_path, string p_subPath)
         {
             return p_path + (p_path.Length>0 ?  "/" : "") + p_subPath;

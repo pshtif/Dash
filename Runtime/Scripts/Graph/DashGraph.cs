@@ -117,7 +117,7 @@ namespace Dash
 
             Controller = p_controller;
 
-            _nodes.ForEach(n => ((INodeAccess) n).Initialize());
+            _nodes.ForEach(n => n.Initialize());
             variables.Initialize(p_controller);
             
             _initialized = true;
@@ -186,6 +186,16 @@ namespace Dash
 
                 if (!_callbackListeners[p_name].Exists(e => e.Callback == p_callback))
                 {
+                    var handler = new EventHandler(p_callback, p_priority, p_once);
+                    var current = _callbackListeners[p_name];
+                    for (int i = current.Count - 1; i >= 0; i--)
+                    {
+                        if (current[i].Priority <= p_priority)
+                        {
+                            current.Insert(i+1, handler);
+                        }                        
+                    }
+
                     _callbackListeners[p_name].Add(new EventHandler(p_callback, p_priority, p_once));
                     _callbackListeners[p_name] = _callbackListeners[p_name].OrderBy(e => e.Priority).ToList();
                 }
@@ -277,7 +287,7 @@ namespace Dash
         public void Disconnect(NodeConnection p_connection)
         {
             _connections.Remove(p_connection);
-            ((INodeAccess)p_connection.inputNode).OnConnectionRemoved?.Invoke(p_connection);
+            p_connection.inputNode.OnConnectionRemoved?.Invoke(p_connection);
         }
 
         public void DisconnectNode(NodeBase p_node)
@@ -368,7 +378,29 @@ namespace Dash
 
         public void Stop()
         {
-            Nodes.ForEach(n => ((INodeAccess)n).Stop());
+            Nodes.ForEach(n => n.Stop());
+        }
+        
+        private HashSet<NodeBase> _downstreamNodes = new HashSet<NodeBase>();
+        
+        public void StopDownstream(NodeBase p_node)
+        {
+            if (_downstreamNodes.Contains(p_node))
+                return;
+            
+            _downstreamNodes.Add(p_node);
+            
+            p_node.Stop();
+            var connections = Connections.FindAll(c => c.outputNode == p_node);
+            connections.Sort((c1, c2) =>
+            {
+                return c1.outputIndex.CompareTo(c2.outputIndex);
+            });
+            
+            foreach (var connection in connections)
+            {
+                StopDownstream(p_node);   
+            }
         }
 
 #region SERIALIZATION
@@ -383,13 +415,13 @@ namespace Dash
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
                 UnitySerializationUtility.DeserializeUnityObject(this, ref _serializationData, cachedContext.Value);
             }
-            
-            SetVersion(DashCore.GetVersionNumber());
         }
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
 #if UNITY_EDITOR
+            SetVersion(DashCore.GetVersionNumber());
+            
             if (!Application.isPlaying)
             {
                 GetNodesByType<SubGraphNode>().ForEach(n => n.ReserializeBound());
@@ -483,7 +515,7 @@ namespace Dash
         public void DeleteNode(NodeBase p_node)
         {
             _connections.RemoveAll(c => c.inputNode == p_node || c.outputNode == p_node);
-            ((INodeAccess)p_node).Remove();
+            p_node.Remove();
             Nodes.Remove(p_node);
             
             if (previewNode == p_node) previewNode = null;
@@ -592,6 +624,14 @@ namespace Dash
             //exposedGUIDs.AddRange(variables.GetExposedGUIDs());
 
             return exposedGUIDs;
+        }
+        
+        public List<string> GetExposedNodeIDs(List<PropertyName> p_properties)
+        {
+            List<string> exposedNodeIDs = new List<string>();
+            Nodes.ForEach(n => exposedNodeIDs.AddRange(n.GetModelExposedNodeIDs(p_properties)));
+
+            return exposedNodeIDs;
         }
 
         public void ResetPosition()

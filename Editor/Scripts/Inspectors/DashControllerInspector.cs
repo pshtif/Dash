@@ -3,6 +3,7 @@
  */
 #if UNITY_EDITOR
 
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,13 +14,15 @@ namespace Dash.Editor
     {
         public DashController Controller => (DashController) target;
 
+        private List<string> _exposedNodeIds; 
+        
         public override void OnInspectorGUI()
         {
             if (DashEditorCore.EditorConfig.showInspectorLogo)
             {
                 GUILayout.Box(Resources.Load<Texture>("Textures/dash_logo_inspector"), GUILayout.ExpandWidth(true));
                 var rect = GUILayoutUtility.GetLastRect();
-                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+DashCore.VERSION, DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
+                GUI.Label(new Rect(rect.x, rect.y+rect.height-24, rect.width,20), "v"+VersionUtils.GetVersionString(DashCore.GetVersionNumber()), DashEditorCore.Skin.GetStyle("DashControllerVersionLabel"));
             }
             
             if (Controller.graphAsset == null)
@@ -171,10 +174,27 @@ namespace Dash.Editor
                 for (int i = 0; i < Controller.propertyNames.Count; i++)
                 {
                     string name = Controller.propertyNames[i].ToString();
+                    
+                    GUILayout.BeginHorizontal();
                     EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object), true);
+                    
+                    if (_exposedNodeIds != null && _exposedNodeIds.Count == Controller.propertyNames.Count)
+                    {
+                        GUILayout.Label(_exposedNodeIds[i]);
+                    }
+                    
+                    GUILayout.EndHorizontal();
                 }
 
-                if (GUILayout.Button("Clean Unused Items", GUILayout.Height(40)))
+                if (GUILayout.Button("Show/Invalidate Node Ids", GUILayout.Height(32)))
+                {
+                    if (Controller.Graph != null)
+                    {
+                        _exposedNodeIds = Controller.Graph.GetExposedNodeIDs(Controller.propertyNames);
+                    }
+                }
+                
+                if (GUILayout.Button("Clean Unused Items", GUILayout.Height(32)))
                 {
                     if (Controller.Graph != null)
                     {

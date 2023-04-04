@@ -48,8 +48,8 @@ namespace Dash
         
         protected override void InitializeAttributes()
         {
-            ((INodeAccess) this).OnConnectionRemoved -= OnConnectionRemovedHandler;
-            ((INodeAccess) this).OnConnectionRemoved += OnConnectionRemovedHandler;
+            OnConnectionRemoved -= OnConnectionRemovedHandler;
+            OnConnectionRemoved += OnConnectionRemovedHandler;
             
             base.InitializeAttributes();
         }

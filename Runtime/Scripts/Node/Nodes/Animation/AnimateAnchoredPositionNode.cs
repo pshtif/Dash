@@ -81,7 +81,7 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        // protected override void GetCustomContextMenu(ref RuntimeGenericMenu p_menu)
+        // protected override void AddCustomContextMenu(ref RuntimeGenericMenu p_menu)
         // {
         //     p_menu.AddSeparator("");
         //
