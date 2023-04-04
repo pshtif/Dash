@@ -6,9 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Release 0.14.3 - X.3.2023
 
+#### Added
+
+- added show/invalidate node ids for exposed properties in controller advanced options
+
 #### Changed
 
 - changed AddListener collections handling for better performance and less GC overhead
+- changed dependency upped for DashTween 0.1.9
 
 ### Release 0.14.2 - 5.3.2023
 
