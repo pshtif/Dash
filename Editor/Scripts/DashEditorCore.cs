@@ -29,7 +29,7 @@ namespace Dash.Editor
 
         static public GUISkin Skin => (GUISkin)Resources.Load("Skins/EditorSkins/NodeEditorSkin");
 
-        static public bool DetailsVisible => EditorConfig.zoom < 2.5;
+        //static public bool DetailsVisible => EditorConfig.zoom < 2.5;
         
         static public List<DashGraph> GraphAssets { get; private set; }
 

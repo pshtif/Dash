@@ -494,6 +494,7 @@ namespace Dash
 
         public bool previewControlsViewMinimized = true;
         public Vector2 viewOffset = Vector2.zero;
+        public float zoom = 1;
         public bool graphVariablesMinimized = true;
         public bool globalVariablesMinimized = true;
 

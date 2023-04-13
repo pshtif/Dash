@@ -15,7 +15,7 @@ namespace Dash.Editor
         public static void Show(NodeBase p_node)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
-            
+
             if (SelectionManager.SelectedCount > 1)
             {
                 menu.AddItem(new GUIContent("Copy Nodes"), false, CopyNode, null);
@@ -49,11 +49,11 @@ namespace Dash.Editor
                     menu.AddSeparator("");
                     menu.AddItem(new GUIContent("Unpack SubGraph"), false, UnpackSubGraph, p_node);
                 }
-
+            
                 menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Set as Preview"), false, SetAsPreview, p_node);
                 menu.AddItem(new GUIContent("Instant Preview"), false, InstantPreview, p_node);
-
+            
                 var controller = DashEditorCore.EditorConfig.editingController;
                 if (p_node is InputNode && controller != null)
                 {
@@ -68,7 +68,7 @@ namespace Dash.Editor
                     {
                         menu.AddItem(new GUIContent("Remove as Start Input"), false, RemoveAsStartInput, p_node);
                     }
-
+            
                     if (!controller.bindOnEnable || controller.bindOnEnableInput != node.Model.inputName)
                     {
                         menu.AddItem(new GUIContent("Set as OnEnable Input"), false, SetAsOnEnableInput, p_node);    
@@ -82,13 +82,13 @@ namespace Dash.Editor
             }
             
             menu.AddSeparator("");
-
+            
             if (!SelectionManager.selectedNodes.Contains(Graph.Nodes.IndexOf(p_node)))
             {
                 menu.AddItem(new GUIContent("Connect Selection as Output"), false, ConnectSelectionAsOutput, p_node);
                 menu.AddItem(new GUIContent("Connect Selection as Input"), false, ConnectSelectionAsInput, p_node);
             }
-
+            
             p_node.GetCustomContextMenu(ref menu);
             
             GenericMenuPopup.Show(menu, "",  Event.current.mousePosition, 240, 300, false, false);

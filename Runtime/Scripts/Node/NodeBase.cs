@@ -462,7 +462,7 @@ namespace Dash
             {
                 GUI.color = DashEditorCore.EditorConfig.theme.GetNodeBackgroundColorByCategory(Category);
 
-                if (!IsSynchronous() && DashEditorCore.DetailsVisible && DashEditorCore.EditorConfig.showNodeAsynchronity)
+                if (!IsSynchronous() && Graph.zoom < 2.5 && DashEditorCore.EditorConfig.showNodeAsynchronity)
                 {
                     GUI.DrawTexture(
                         new Rect(offsetRect.x + offsetRect.width - 24, offsetRect.y - 20, 20, 20),
@@ -474,7 +474,7 @@ namespace Dash
                 DrawTitle(offsetRect);
             }
 
-            if (DashEditorCore.DetailsVisible)
+            if (Graph.zoom < 2.5)
             {
                 DrawCustomGUI(offsetRect);
                 
@@ -508,7 +508,7 @@ namespace Dash
 
             Rect offsetRect = p_zoomed
                 ? new Rect(rect.x + Graph.viewOffset.x, rect.y + Graph.viewOffset.y, Size.x, Size.y)
-                : new Rect((rect.x + Graph.viewOffset.x) / DashEditorCore.EditorConfig.zoom, (rect.y + Graph.viewOffset.y) / DashEditorCore.EditorConfig.zoom, Size.x, Size.y);
+                : new Rect((rect.x + Graph.viewOffset.x) / Graph.zoom, (rect.y + Graph.viewOffset.y) / Graph.zoom, Size.x, Size.y);
             
             GUIStyle commentStyle = new GUIStyle();
             commentStyle.font = DashEditorCore.Skin.GetStyle("NodeComment").font;
@@ -751,7 +751,7 @@ namespace Dash
                 if (connectorRect.Contains(Event.current.mousePosition - new Vector2(p_rect.x, p_rect.y)))
                     GUI.color = Color.green;
 
-                if (OutputLabels != null && OutputLabels.Length > i && DashEditorCore.DetailsVisible)
+                if (OutputLabels != null && OutputLabels.Length > i && Graph.zoom < 2.5)
                 {
                     GUIStyle style = new GUIStyle();
                     style.normal.textColor = Color.white;
@@ -773,8 +773,6 @@ namespace Dash
             {
                 p_menu.AddItem(new GUIContent("Migrate to "+((INodeMigratable)this).GetMigrateType().Name), false, () => ((INodeMigratable)this).Migrate());
             }
-            
-            GetCustomContextMenu(ref p_menu);
         }
         
         protected virtual void AddCustomContextMenu(ref RuntimeGenericMenu p_menu) { }

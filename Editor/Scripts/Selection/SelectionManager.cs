@@ -12,8 +12,6 @@ namespace Dash.Editor
 {
     public class SelectionManager
     {
-        static public float zoom => DashEditorCore.EditorConfig.zoom;
-        
         static public List<NodeBase> copiedNodes = new List<NodeBase>();
         
         static public List<int> selectedNodes = new List<int>();
@@ -110,7 +108,7 @@ namespace Dash.Editor
 
         public static void DragSelectedNodes(Vector2 p_delta, DashGraph p_graph)
         {
-            selectedNodes.ForEach(n => p_graph.Nodes[n].rect.position += p_delta*zoom);
+            selectedNodes.ForEach(n => p_graph.Nodes[n].rect.position += p_delta * p_graph.zoom);
         }
         
         public static void CopyNode(NodeBase p_node, DashGraph p_graph)
@@ -134,8 +132,8 @@ namespace Dash.Editor
             
             List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, copiedNodes);
             
-            newNodes[0].rect = new Rect(p_mousePosition.x * zoom - p_graph.viewOffset.x,
-                p_mousePosition.y * zoom - p_graph.viewOffset.y, 0, 0);
+            newNodes[0].rect = new Rect(p_mousePosition.x * p_graph.zoom - p_graph.viewOffset.x,
+                p_mousePosition.y * p_graph.zoom - p_graph.viewOffset.y, 0, 0);
 
             for (int i = 1; i < newNodes.Count; i++)
             {
@@ -281,7 +279,7 @@ namespace Dash.Editor
 
             if (p_forceView)
             {
-                p_graph.viewOffset = -p_node.rect.center + zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
+                p_graph.viewOffset = -p_node.rect.center + p_graph.zoom * DashEditorCore.EditorConfig.editorPosition.size / 2;
             }
         }
 
