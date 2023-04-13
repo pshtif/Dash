@@ -106,12 +106,12 @@ namespace Dash.Editor
             }
         }
 
-        public static void DragSelectedNodes(Vector2 p_delta, DashGraph p_graph)
+        public static void DragSelectedNodes(DashGraph p_graph, Vector2 p_delta)
         {
             selectedNodes.ForEach(n => p_graph.Nodes[n].rect.position += p_delta * p_graph.zoom);
         }
         
-        public static void CopyNode(NodeBase p_node, DashGraph p_graph)
+        public static void CopyNode(DashGraph p_graph, NodeBase p_node)
         {
             if (p_graph == null)
                 return;
@@ -125,7 +125,7 @@ namespace Dash.Editor
             return copiedNodes.Count != 0;
         }
         
-        public static void PasteNodes(Vector3 p_mousePosition, DashGraph p_graph)
+        public static void PasteNodes(DashGraph p_graph, Vector3 p_mousePosition)
         {
             if (p_graph == null || copiedNodes.Count == 0)
                 return;
@@ -243,7 +243,7 @@ namespace Dash.Editor
             DashEditorCore.SetDirty();
         }
         
-        public static void DeleteNode(NodeBase p_node, DashGraph p_graph)
+        public static void DeleteNode(DashGraph p_graph, NodeBase p_node)
         {
             if (p_graph == null)
                 return;

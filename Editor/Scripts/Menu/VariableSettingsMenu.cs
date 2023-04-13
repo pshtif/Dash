@@ -175,8 +175,7 @@ namespace Dash.Editor
         
         static void OnRefactorVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
         {
-            RefactorVariableWindow.RefactorVariable(p_variables, p_name,
-                p_bindable != null ? p_bindable.Graph : DashEditorCore.EditorConfig.editingGraph);
+            RefactorVariableWindow.RefactorVariable(p_variables, p_name);
         }
     }
 }

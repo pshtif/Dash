@@ -26,14 +26,14 @@ namespace Dash.Editor
 
         private static Dictionary<NodeBase, List<FieldInfo>> _refactoringLookup;
 
-        public static void RefactorVariable(DashVariables p_variables, string p_variableName, DashGraph p_graph)
+        public static void RefactorVariable(DashVariables p_variables, string p_variableName)
         {
             Instance = GetWindow<RefactorVariableWindow>();
             Instance.Initialize();
             
             _variables = p_variables;
             _variableName = p_variableName;
-            _graph = p_graph;
+            _graph = DashEditorCore.EditorConfig.editingGraph;
             _refactoredName = p_variableName;
             
             Instance.ShowModal();

@@ -303,7 +303,7 @@ namespace Dash.Editor
             if (p_captured)
                 return;
             
-            CreateNodeContextMenu.ShowAsPopup();
+            CreateNodeContextMenu.ShowAsPopup(Graph);
         }
 
         void HandleDragRightMouseUp(Event p_event, Rect p_rect, ref bool p_captured)
@@ -331,7 +331,7 @@ namespace Dash.Editor
                     break;
                 case DraggingType.NODE_DRAG:
                     Vector2 delta = p_event.alt ? Snapping.Snap(p_event.delta, new Vector2(10,10)): p_event.delta;
-                    SelectionManager.DragSelectedNodes(delta, Graph);
+                    SelectionManager.DragSelectedNodes(Graph, delta);
                     break;
                 case DraggingType.BOX_DRAG:
                     SelectionManager.selectedBox.moveNodes = !p_event.control;
@@ -424,7 +424,7 @@ namespace Dash.Editor
             Graph.HitsNode(p_event.mousePosition * Graph.zoom - new Vector2(p_rect.x, p_rect.y), out node);
             if (node != null)
             {
-                NodeContextMenu.Show(node);
+                NodeContextMenu.Show(Graph, node);
                 p_captured = true;
             }
         }
@@ -440,7 +440,7 @@ namespace Dash.Editor
 
             if (hitConnection != null)
             {
-                ConnectionContextMenu.Show(hitConnection);
+                ConnectionContextMenu.Show(Graph, hitConnection);
                 p_captured = true;
             }
         }
@@ -454,7 +454,7 @@ namespace Dash.Editor
 
             if (hitRegion != null)
             {
-                BoxContextMenu.Show(hitRegion);
+                BoxContextMenu.Show(Graph, hitRegion);
                 p_captured = true;
             }
         }
@@ -503,7 +503,7 @@ namespace Dash.Editor
             else
             {
                 //SelectionManager.EndConnection();
-                CreateNodeContextMenu.ShowAsPopup();
+                CreateNodeContextMenu.ShowAsPopup(Graph);
             }
             
             SelectionManager.EndConnectionDrag();

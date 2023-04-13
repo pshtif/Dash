@@ -35,24 +35,24 @@ namespace Dash.Editor
                 });
             }
 
-            Type type = p_parameter.GetValueType();
-            Variable[] variables = DashEditorCore.EditorConfig.editingGraph.variables.GetAllVariablesOfType(type);
-
-            foreach (var variable in variables)
-            {
-                menu.AddItem(new GUIContent("Variable/"+variable.Name), false, () =>
-                {
-                    p_parameter.isExpression = true;
-                    p_parameter.expression = variable.Name;
-                });
-            }
-            
-            menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
-            {
-                p_parameter.isExpression = true;
-                var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(type);
-                p_parameter.expression = variable.Name;
-            });
+            // Type type = p_parameter.GetValueType();
+            // Variable[] variables = p_variables.GetAllVariablesOfType(type);
+            //
+            // foreach (var variable in variables)
+            // {
+            //     menu.AddItem(new GUIContent("Variable/"+variable.Name), false, () =>
+            //     {
+            //         p_parameter.isExpression = true;
+            //         p_parameter.expression = variable.Name;
+            //     });
+            // }
+            //
+            // menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
+            // {
+            //     p_parameter.isExpression = true;
+            //     var variable = p_variables.AddNewVariable(type);
+            //     p_parameter.expression = variable.Name;
+            // });
 
             if (p_parameter.isExpression)
             {
@@ -61,7 +61,7 @@ namespace Dash.Editor
                     ExpressionEditorWindow.InitExpressionEditorWindow(p_parameter);
                 });
 
-                menu.AddSeparator("");
+                // menu.AddSeparator("");
                 
                 // if (p_parameter.IsDebug())
                 // {
@@ -99,23 +99,23 @@ namespace Dash.Editor
                 });
             }
             
-            Variable[] variables = DashEditorCore.EditorConfig.editingGraph.variables.GetAllVariablesOfType(p_type);
-
-            foreach (var variable in variables)
-            {
-                menu.AddItem(new GUIContent("Variable/"+variable.Name), false, () =>
-                {
-                    p_useExpressionField.SetValue(p_object, true);
-                    p_expressionField.SetValue(p_object, variable.Name);
-                });
-            }
-            
-            menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
-            {
-                p_useExpressionField.SetValue(p_object, true);
-                var variable = DashEditorCore.EditorConfig.editingGraph.variables.AddNewVariable(p_type);
-                p_expressionField.SetValue(p_object, variable.Name);
-            });
+            // Variable[] variables = p_variables.GetAllVariablesOfType(p_type);
+            //
+            // foreach (var variable in variables)
+            // {
+            //     menu.AddItem(new GUIContent("Variable/"+variable.Name), false, () =>
+            //     {
+            //         p_useExpressionField.SetValue(p_object, true);
+            //         p_expressionField.SetValue(p_object, variable.Name);
+            //     });
+            // }
+            //
+            // menu.AddItem(new GUIContent("Promote to Variable"), false, () =>
+            // {
+            //     p_useExpressionField.SetValue(p_object, true);
+            //     var variable = p_variables.AddNewVariable(p_type);
+            //     p_expressionField.SetValue(p_object, variable.Name);
+            // });
 
             menu.ShowAsContext();
         }
