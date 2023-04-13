@@ -110,8 +110,6 @@ namespace Dash
         
         public bool deleteNull;
 
-        public float zoom = 1;
-
         public int maxLog = 100;
 
         public bool showNodeIds = false;

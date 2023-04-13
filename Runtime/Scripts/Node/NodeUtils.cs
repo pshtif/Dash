@@ -63,7 +63,6 @@ namespace Dash
 
             if (node != null)
             {
-                float zoom = DashEditorCore.EditorConfig.zoom;
                 node.rect = new Rect(p_position.x, p_position.y, 0, 0);
                 p_graph.Nodes.Add(node);
             }
