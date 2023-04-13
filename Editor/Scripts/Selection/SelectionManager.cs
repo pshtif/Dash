@@ -39,22 +39,21 @@ namespace Dash.Editor
             connectingPosition = p_mousePosition;
         }
 
-        public static void EndConnectionDrag(NodeBase p_node = null, int p_index = -1)
+        public static void EndConnectionDrag(DashGraph p_graph, NodeBase p_node = null, int p_index = -1)
         {
             if (p_node != null && p_index >= 0)
             {
                 if (p_node != connectingNode)
                 {
-                    DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
-                    Undo.RegisterCompleteObjectUndo(graph, "Connect node");
+                    Undo.RegisterCompleteObjectUndo(p_graph, "Connect node");
 
                     switch (connectingType)
                     {
                         case NodeConnectorType.INPUT:
-                            graph.Connect(connectingNode, SelectionManager.connectingIndex, p_node, p_index);
+                            p_graph.Connect(connectingNode, SelectionManager.connectingIndex, p_node, p_index);
                             break;
                         case NodeConnectorType.OUTPUT:
-                            graph.Connect(p_node, p_index, connectingNode, connectingIndex);
+                            p_graph.Connect(p_node, p_index, connectingNode, connectingIndex);
                             break;
                     }
 
@@ -78,21 +77,18 @@ namespace Dash.Editor
 
         public static bool IsSelected(int p_nodeIndex) => selectedNodes.Contains(p_nodeIndex);
 
-        public static bool IsSelected(NodeBase p_node)
+        public static bool IsSelected(DashGraph p_graph, NodeBase p_node)
         {
-            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
-            
-            return graph == null ? false : IsSelected(graph.Nodes.IndexOf(p_node)); 
+            return p_graph == null ? false : IsSelected(p_graph.Nodes.IndexOf(p_node)); 
         }
         
         public static bool IsSelecting(int p_nodeIndex) => selectingNodes.Contains(p_nodeIndex);
 
-        public static void ClearSelection()
+        public static void ClearSelection(DashGraph p_graph)
         {
-            DashGraph graph = DashEditorCore.EditorConfig.editingGraph;
-            if (graph != null)
+            if (p_graph != null)
             {
-                selectedNodes.FindAll(i => i<graph.Nodes.Count).ForEach(n => graph.Nodes[n].Unselect());
+                selectedNodes.FindAll(i => i < p_graph.Nodes.Count).ForEach(n => p_graph.Nodes[n].Unselect());
             }
             selectedNodes.Clear();
         }
@@ -272,7 +268,7 @@ namespace Dash.Editor
 
             selectedNodes.Add(p_node.Index);
 
-            if (DashEditorCore.EditorConfig.editingController != null)
+            if (p_graph.Controller != null)
             {
                 p_node.SelectEditorTarget();
             }
@@ -338,7 +334,7 @@ namespace Dash.Editor
             var connections = p_graph.Connections.FindAll(c => c.outputNode == p_node);
             connections.ForEach(c =>
             {
-                if (!IsSelected(c.inputNode))
+                if (!IsSelected(p_graph, c.inputNode))
                 {
                     AddNodeToSelection(c.inputNode.Index);
                     SelectOutputs(p_graph, c.inputNode);

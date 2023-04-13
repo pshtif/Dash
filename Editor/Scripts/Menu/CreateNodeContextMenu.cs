@@ -223,7 +223,7 @@ namespace Dash.Editor
 
             if (SelectionManager.connectingNode != null)
             {
-                SelectionManager.EndConnectionDrag(node, 0);
+                SelectionManager.EndConnectionDrag(p_graph, node, 0);
             }
         }
         
@@ -246,7 +246,7 @@ namespace Dash.Editor
             
             if (SelectionManager.connectingNode != null)
             {
-                SelectionManager.EndConnectionDrag(node, 0);
+                SelectionManager.EndConnectionDrag(p_graph, node, 0);
             }
         }
         

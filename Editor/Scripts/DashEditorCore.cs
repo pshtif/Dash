@@ -131,7 +131,7 @@ namespace Dash.Editor
 
         public static void EditController(DashController p_controller, string p_graphPath = "")
         {
-            SelectionManager.ClearSelection();
+            SelectionManager.ClearSelection(EditorConfig.editingGraph);
 
             if (p_controller != null)
             {
@@ -148,7 +148,7 @@ namespace Dash.Editor
 
         public static void EditGraph(DashGraph p_graph, string p_graphPath = "")
         {
-            SelectionManager.ClearSelection();
+            SelectionManager.ClearSelection(EditorConfig.editingGraph);
 
             EditorConfig.editingRootGraph = p_graph;
             EditorConfig.editingGraphPath = p_graphPath;
@@ -158,7 +158,7 @@ namespace Dash.Editor
         
         public static void UnloadGraph()
         {
-            SelectionManager.ClearSelection();
+            SelectionManager.ClearSelection(EditorConfig.editingGraph);
             
             EditorConfig.editingGraph = null;
         }

@@ -233,7 +233,7 @@ namespace Dash.Editor
             if (p_event.button != 0 || p_event.type != EventType.MouseDown)
                 return;
             
-            SelectionManager.EndConnectionDrag();
+            SelectionManager.EndConnectionDrag(Graph);
             GUI.FocusControl("");
             
             if (p_event.alt)
@@ -277,7 +277,7 @@ namespace Dash.Editor
             if (p_event.button != 1 || p_event.type != EventType.MouseDown)
                 return;
             
-            SelectionManager.EndConnectionDrag();
+            SelectionManager.EndConnectionDrag(Graph);
             
             _rightDragStart = p_event.mousePosition;
         }
@@ -387,7 +387,7 @@ namespace Dash.Editor
 
                     if (!SelectionManager.IsSelected(p_nodeIndex) && (!p_event.shift || p_nodeIndex == 0))
                     {
-                        SelectionManager.ClearSelection();
+                        SelectionManager.ClearSelection(Graph);
                     }
                     
                     if (!SelectionManager.IsSelected(p_nodeIndex))
@@ -497,7 +497,7 @@ namespace Dash.Editor
             {
                 if (SelectionManager.connectingType != connectorType || node.GetType() == typeof(ConnectorNode))
                 {
-                    SelectionManager.EndConnectionDrag(node, connectorIndex);
+                    SelectionManager.EndConnectionDrag(Graph, node, connectorIndex);
                 }
             }
             else
@@ -506,7 +506,7 @@ namespace Dash.Editor
                 CreateNodeContextMenu.ShowAsPopup(Graph);
             }
             
-            SelectionManager.EndConnectionDrag();
+            SelectionManager.EndConnectionDrag(Graph);
         }
         #endregion
     }

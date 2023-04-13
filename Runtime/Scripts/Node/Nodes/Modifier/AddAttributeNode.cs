@@ -51,7 +51,7 @@ namespace Dash
 #if UNITY_EDITOR
         public void Migrate()
         {
-            bool selected = SelectionManager.IsSelected(this);
+            bool selected = SelectionManager.IsSelected(Graph, this);
             
             SetAttributeNode newNode = NodeUtils.CreateNode(DashEditorCore.EditorConfig.editingGraph, typeof(SetAttributeNode), rect.position) as SetAttributeNode;
             
