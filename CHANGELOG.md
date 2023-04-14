@@ -4,7 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.14.3 - X.3.2023
+### Release 0.14.4 - 14.4.2023
+
+#### Changed
+
+- changed temporarily removed some parameter functions like Promote to Variable
+- changed internal handling of parameter in context menus
+- changed zoom value is now stored per graph 
+
+#### Fixed
+
+- fixed node context menu going for infinite recursion and crashing Unity editor
+
+### Release 0.14.3 - 4.4.2023
 
 #### Added
 
