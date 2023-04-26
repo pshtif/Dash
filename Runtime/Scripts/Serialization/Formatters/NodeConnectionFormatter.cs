@@ -30,8 +30,6 @@ namespace Dash
 
         protected override void DeserializeImplementation(ref NodeConnection p_value, IDataReader p_reader)
         {
-            string name;
-
             p_value.active = BoolSerializer.ReadValue(p_reader);
             p_value.inputIndex = IntSerializer.ReadValue(p_reader);
             // <outputIndex>k__BackingField
