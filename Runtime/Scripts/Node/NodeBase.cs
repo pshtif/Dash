@@ -194,6 +194,20 @@ namespace Dash
         
         protected virtual void Invalidate() { }
         
+        protected object GetUntypedParameterValue(Parameter p_parameter, NodeFlowData p_flowData = null, int p_index = 0)
+        {
+            if (p_parameter == null)
+                return null;
+            
+            object value = p_parameter.GetUntypedValue(ParameterResolver, p_flowData, p_index);
+            if (!hasErrorsInExecution && p_parameter.hasErrorInEvaluation)
+            {
+                SetError(p_parameter.errorMessage);
+            }
+            hasErrorsInExecution = hasErrorsInExecution || p_parameter.hasErrorInEvaluation;
+            return value;
+        }
+        
         public T GetParameterValue<T>(Parameter<T> p_parameter, NodeFlowData p_flowData)
         {
             if (p_parameter == null)

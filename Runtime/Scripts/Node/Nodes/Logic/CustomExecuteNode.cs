@@ -13,7 +13,7 @@ namespace Dash
     [InputCount(1)]
     public class CustomExecuteNode : NodeBase<CustomExecuteNodeModel>
     {
-        protected async override void OnExecuteStart(NodeFlowData p_flowData)
+        protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
             Model.executeClass.Execute(p_flowData, () => OnCustomExecuteEnd(p_flowData));
         }

@@ -13,6 +13,14 @@ namespace Dash
     [Serializable]
     public abstract class Parameter
     {
+        abstract protected object objectValue { get; set; }
+        
+        public object value
+        {
+            get { return objectValue; }
+            set { objectValue = value; }
+        }
+        
         [HideInInspector]
         public bool isExpression = false;
         
@@ -58,12 +66,79 @@ namespace Dash
         {
             return _referenceChain.Contains(p_parameter);
         }
+        
+        public static Parameter Create(Type p_type)
+        {
+            return (Parameter)Activator.CreateInstance(typeof(Parameter<>).MakeGenericType(p_type),
+                new object[] { p_type.GetDefaultValue() });
+        }
+
+        public static Parameter<T> Create<T>()
+        {
+            return new Parameter<T>(default(T));
+        }
+        
+        public object GetUntypedValue(IParameterResolver p_resolver, IAttributeDataCollection p_collection = null, int p_index = 0, bool p_referenced = false)
+        {
+            if (!p_referenced)
+            {
+                _referenceChain.Clear();
+            }
+            else
+            {
+                _referenceChain.Add(this);
+            }
+            
+            if (isExpression)
+            {
+                expression = expression.RemoveWhitespace();
+                if (string.IsNullOrEmpty(expression))
+                {
+                    errorMessage = "Expression cannot be empty returning default value.";
+                    return null;
+                }
+                
+                object expressionValue = ExpressionEvaluator.EvaluateUntypedExpression(expression, p_resolver, p_collection, p_referenced);
+                if (ExpressionEvaluator.hasErrorInEvaluation)
+                {
+                    errorMessage = ExpressionEvaluator.errorMessage;
+                    hasErrorInEvaluation = true;
+                }
+                else
+                {
+                    hasErrorInEvaluation = false;
+                }
+        
+                return expressionValue;
+            }
+        
+            hasErrorInEvaluation = false;
+            return value;
+        }
     }
 
     [Serializable]
     public class Parameter<T> : Parameter
     {
         internal T _value;
+        
+        public new T value
+        {
+            get
+            {
+                return _value; 
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+        
+        protected override object objectValue
+        {
+            get { return value; }
+            set { this.value = (T)value; }
+        }
         
         public Parameter(T p_value)
         {

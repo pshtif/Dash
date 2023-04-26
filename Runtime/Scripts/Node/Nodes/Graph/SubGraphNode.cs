@@ -82,14 +82,14 @@ namespace Dash
                     string attributeName = GetParameterValue(attribute.name, p_flowData);
                     if (!p_flowData.HasAttribute(attributeName) ||
                         !attribute.specifyType ||
-                        p_flowData.GetAttributeType(attributeName) == attribute.type ||
+                        p_flowData.GetAttributeType(attributeName) == attribute.attributeType ||
                         DashCore.Instance.Config.allowAttributeTypeChange) 
                     {
                         var expression = GetParameterValue(attribute.expression, p_flowData);
                         object value;
                         if (attribute.specifyType)
                         {
-                            value = ExpressionEvaluator.EvaluateTypedExpression(expression, attribute.type,
+                            value = ExpressionEvaluator.EvaluateTypedExpression(expression, attribute.attributeType,
                                 ParameterResolver, p_flowData);
                         }
                         else
@@ -97,7 +97,6 @@ namespace Dash
                             value = ExpressionEvaluator.EvaluateUntypedExpression(expression, ParameterResolver,
                                 p_flowData, false);
                         }
-                        Debug.Log(attributeName+" : "+value);
                         if (ExpressionEvaluator.hasErrorInEvaluation)
                         {
                             Debug.LogError(ExpressionEvaluator.errorMessage);
