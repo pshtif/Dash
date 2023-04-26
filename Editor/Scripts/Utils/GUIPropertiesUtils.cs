@@ -580,7 +580,7 @@ namespace Dash.Editor
                     return false;
                 case "UnityEngine.Vector4":
                     EditorGUI.BeginChangeCheck();
-                    var vector4Value = EditorGUILayout.Vector4Field(p_name, (Vector3) p_fieldInfo.GetValue(p_object));
+                    var vector4Value = EditorGUILayout.Vector4Field(p_name, (Vector4) p_fieldInfo.GetValue(p_object));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     if (EditorGUI.EndChangeCheck())
                     {
@@ -589,6 +589,18 @@ namespace Dash.Editor
                     }
 
                     return false;
+                // case "UnityEngine.Quaternion":
+                //     EditorGUI.BeginChangeCheck();
+                //     // TODO radian fix
+                //     Quaternion quaternionValue = Quaternion.Euler(EditorGUILayout.Vector3Field(p_name, ((Quaternion) p_fieldInfo.GetValue(p_object)).ToEuler()));
+                //     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
+                //     if (EditorGUI.EndChangeCheck())
+                //     {
+                //         p_fieldInfo.SetValue(p_object, quaternionValue);
+                //         return true;
+                //     }
+                //
+                //     return false;
                 case "UnityEngine.Color":
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(p_name, GUILayout.Width(160));
