@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.14.5
+
+#### Changed
+
+- changed CreateAttributeNode refactor to be more robust
+
+#### Fixed
+
+- fixed Vector4 casting for GUI Vector4Field
+
 ### Release 0.14.4 - 14.4.2023
 
 #### Changed
