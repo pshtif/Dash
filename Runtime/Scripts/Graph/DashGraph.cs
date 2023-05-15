@@ -677,8 +677,8 @@ namespace Dash
             {
                 messages.Add(("Duplicate node id found on node: " + n.Id, Color.red));
             });
-            
-            nodes = Nodes.FindAll(n => n.GetType().GetAttribute<ObsoleteAttribute>() != null);
+
+            nodes = Nodes.FindAll(n => n != null && n.GetType().GetAttribute<ObsoleteAttribute>() != null);
             nodes?.ForEach(n =>
             {
                 messages.Add((
