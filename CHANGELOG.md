@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
+### Release 0.14.6
+
+#### Fixed
+
+- fixed deserialization of cached empty empty graphs crashed on null exception
+
 ### Release 0.14.5
 
 #### Changed
