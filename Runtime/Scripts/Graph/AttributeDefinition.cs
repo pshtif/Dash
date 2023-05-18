@@ -23,14 +23,14 @@ namespace Dash
         
 #if UNITY_EDITOR
 
-        public static bool DrawAttributes(List<AttributeDefinition> p_attributes)
+        public static bool DrawAttributes(IViewOwner p_owner, List<AttributeDefinition> p_attributes)
         {
             bool changed = false;
             if (p_attributes != null)
             {
                 foreach (var attribute in p_attributes)
                 {
-                    if (DrawAttribute(p_attributes, attribute))
+                    if (DrawAttribute(p_owner, p_attributes, attribute))
                     {
                         changed = true;
                         break;
@@ -51,7 +51,7 @@ namespace Dash
 
             return changed;
         }
-        public static bool DrawAttribute(List<AttributeDefinition> p_attributes, AttributeDefinition p_attribute)
+        public static bool DrawAttribute(IViewOwner p_owner, List<AttributeDefinition> p_attributes, AttributeDefinition p_attribute)
         {
             bool changed = false;
             var style = new GUIStyle();
@@ -78,14 +78,14 @@ namespace Dash
                 return true;
             }
             
-            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("name"), p_attribute, null);
+            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("name"), p_attribute, null, null, null);
             //changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("expression"), p_attribute, null);
             //changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("specifyType"), p_attribute, null);
             // if (p_attribute.specifyType)
             // {
             //     changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("type"), p_attribute, null);
             // }
-            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("attributeType"), p_attribute, null);
+            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("attributeType"), p_attribute, null,  null, null);
 
             if (p_attribute.attributeType == null)
             {
@@ -98,7 +98,7 @@ namespace Dash
                 p_attribute.attributeValue = Parameter.Create(p_attribute.attributeType);
             }
 
-            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("attributeValue"), p_attribute, null);
+            changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("attributeValue"), p_attribute, null,  p_owner.GetConfig().editingController, null);
 
             return changed;
         }

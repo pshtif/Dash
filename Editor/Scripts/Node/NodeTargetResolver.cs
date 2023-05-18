@@ -31,9 +31,9 @@ namespace Dash.Editor
             return true;
         }
 
-        internal static Transform ResolveEditorTarget(NodeBase p_node)
+        internal static Transform ResolveEditorTarget(DashController p_controller, NodeBase p_node)
         {
-            if (DashEditorCore.EditorConfig.editingController == null)
+            if (p_controller == null)
                 return null;
         
             if (_lastResolvedNode == p_node)
@@ -42,7 +42,7 @@ namespace Dash.Editor
             _lastResolvedTarget = null;
             _lastResolvedNode = p_node;
             List<NodeConnection> chain = new List<NodeConnection>();
-            Transform retarget = DashEditorCore.EditorConfig.editingController.transform;
+            Transform retarget = p_controller.transform;
             if (retarget == null)
                 return null;
 

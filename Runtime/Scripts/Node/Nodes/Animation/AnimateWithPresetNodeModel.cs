@@ -18,7 +18,7 @@ namespace Dash
 #if UNITY_EDITOR
 
         private bool _presetGroupMinimzed = false;
-        public override bool DrawInspector()
+        public override bool DrawInspector(IViewOwner p_owner)
         {
             bool invalidate = false;
             
@@ -47,12 +47,12 @@ namespace Dash
                     foreach (var field in fields)
                     {
                         if (field.IsConstant()) continue;
-                        invalidate = GUIPropertiesUtils.PropertyField(field, preset, this);
+                        invalidate = GUIPropertiesUtils.PropertyField(field, preset, this, null, null);
                     }
                 }
             }
 
-            bool invalidateBase = base.DrawInspector();
+            bool invalidateBase = base.DrawInspector(p_owner);
 
             return invalidate || invalidateBase;
         }

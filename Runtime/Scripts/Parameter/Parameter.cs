@@ -58,7 +58,7 @@ namespace Dash
 
         public abstract Type GetValueType();
 
-        public abstract void ClearValue();
+        public abstract void SetValueToDefault();
 
         static protected List<Parameter> _referenceChain = new List<Parameter>();
         
@@ -210,7 +210,7 @@ namespace Dash
             _value = p_value;
         }
 
-        public override void ClearValue()
+        public override void SetValueToDefault()
         {
             _value = default(T);
         }

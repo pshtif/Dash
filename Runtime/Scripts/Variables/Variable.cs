@@ -61,7 +61,7 @@ namespace Dash
         public abstract Variable Clone();
 
 #if UNITY_EDITOR
-        public abstract bool ValueField(float p_maxWidth, IVariableBindable p_bindable);
+        public abstract bool ValueField(float p_maxWidth, IVariableOwner p_owner);
 
         static public string ConvertToTypeName(Type p_type)
         {
@@ -277,7 +277,7 @@ namespace Dash
         }
         
 #if UNITY_EDITOR
-        public override bool ValueField(float p_maxWidth, IVariableBindable p_bindable)
+        public override bool ValueField(float p_maxWidth, IVariableOwner p_owner)
         {
             bool invalidate = false;
             FieldInfo valueField = GetType().GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -310,7 +310,7 @@ namespace Dash
                 {
                     EditorGUI.BeginChangeCheck();
                     // Hack to work with EditorGUILayout instead of EditorGUI where ObjectField always show large preview that we don't want
-                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_bindable != null, GUILayout.Width(p_maxWidth));
+                    objectValue = EditorGUILayout.ObjectField(value as UnityEngine.Object, typeof(T), p_owner.Bindable != null, GUILayout.Width(p_maxWidth));
                     if (EditorGUI.EndChangeCheck())
                     {
                         invalidate = true;

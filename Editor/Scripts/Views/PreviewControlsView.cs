@@ -9,10 +9,9 @@ namespace Dash.Editor
 {
     public class PreviewControlsView : ViewBase
     {
-
         public override void DrawGUI(Event p_event, Rect p_rect)
         {
-            if (Application.isPlaying || Graph == null || Controller == null || !Controller.gameObject.activeInHierarchy)
+            if (Application.isPlaying || Graph == null || Controller == null)
                 return;
 
             if (Graph.previewControlsViewMinimized)
@@ -50,12 +49,12 @@ namespace Dash.Editor
                 var previewNode = Graph.previewNode;
                 if (previewNode != null)
                 {
-                    GUI.Label(new Rect(rect.x + 214, rect.y + 32, 180, 30), "Preview: ");
+                    GUI.Label(new Rect(rect.x + 214, rect.y + 40, 180, 30), "Preview: ");
                     GUIStyle style = new GUIStyle();
                     style.normal.textColor = Color.magenta;
                     style.fontStyle = FontStyle.Bold;
-                    style.alignment = TextAnchor.MiddleLeft;
-                    GUI.Label(new Rect(rect.x + 270, rect.y + 32, 180, 30),previewNode.Name, style);
+                    style.alignment = TextAnchor.UpperLeft;
+                    GUI.Label(new Rect(rect.x + 270, rect.y + 41, 180, 30),previewNode.Name, style);
                 }
                 else
                 {
@@ -65,7 +64,7 @@ namespace Dash.Editor
                 GUI.enabled = !_previewRunning && Graph.previewNode != null;
                 if (GUI.Button(new Rect(rect.x + 4, rect.y + 32, 100, 30), "RUN"))
                 {
-                    DashEditorCore.Previewer.StartPreview(Graph.previewNode);
+                    DashEditorCore.Previewer.StartPreview(Graph.previewNode, Owner.GetConfig().editingController);
                 }
                 
                 GUI.enabled = _previewRunning;

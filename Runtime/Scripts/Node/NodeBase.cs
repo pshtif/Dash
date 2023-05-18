@@ -451,10 +451,10 @@ namespace Dash
 
         internal virtual void Unselect() { }
 
-        public virtual NodeBase Clone(DashGraph p_graph)
+        public virtual NodeBase Clone(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             NodeBase node = Create(GetType(), p_graph);
-            node._model = _model.Clone();
+            node._model = _model.Clone(p_propertyTable);
             node.ValidateUniqueId();
             return node;
         }
@@ -791,19 +791,20 @@ namespace Dash
         
         protected virtual void AddCustomContextMenu(ref RuntimeGenericMenu p_menu) { }
 
-        public virtual void DrawInspector()
+        public virtual void DrawInspector(IViewOwner p_owner)
         {
-            bool invalidate = _model.DrawInspector();
+            bool invalidate = _model.DrawInspector(p_owner);
             
             if (invalidate)
             {
                 ValidateUniqueId();
                 Invalidate();
-                DashEditorCore.SetDirty();
+                Graph.MarkDirty();
+                //DashEditorCore.SetDirty();
             }
         }
 
-        public virtual void DrawInspectorControls(Rect p_rect) { }
+        public virtual void DrawInspectorControls(IViewOwner p_owner, Rect p_rect) { }
 
         public List<string> GetModelExposedGUIDs()
         {
@@ -815,7 +816,7 @@ namespace Dash
             return _model.GetExposedNodeIDs(p_properties);
         }
 
-        public virtual void SelectEditorTarget() { }
+        public virtual void SelectEditorTarget(DashController p_controller) { }
 
         internal virtual Transform ResolveNodeRetarget(Transform p_transform, NodeConnection p_connection)
         {

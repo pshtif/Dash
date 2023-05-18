@@ -30,7 +30,7 @@ namespace Dash.Editor
             {
                 menu.AddItem(new GUIContent("Expression"), false, () =>
                 {
-                    p_parameter.ClearValue();
+                    p_parameter.SetValueToDefault();
                     p_parameter.isExpression = true;
                 });
             }

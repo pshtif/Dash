@@ -33,7 +33,7 @@ namespace Dash
         
 #if UNITY_EDITOR
 
-        protected override bool DrawCustomInspector()
+        protected override bool DrawCustomInspector(IViewOwner p_owner)
         {
             var style = new GUIStyle();
             style.alignment = TextAnchor.UpperCenter;
@@ -45,7 +45,7 @@ namespace Dash
                 
                 if (GUILayout.Button("Bind Method"))
                 {
-                    GetMethodMenu(DashEditorCore.EditorConfig.editingController.gameObject).ShowAsContext();
+                    GetMethodMenu(p_owner.GetConfig().editingController.gameObject).ShowAsContext();
                     return true;
                 }
             }

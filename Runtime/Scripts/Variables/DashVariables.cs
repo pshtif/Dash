@@ -149,6 +149,18 @@ namespace Dash
                 InvalidateLookup();
             }
         }
+        
+        public void SetVariable(string p_name, [CanBeNull] object p_value)
+        {
+            if (HasVariable(p_name))
+            {
+                _lookupCache[p_name].value = p_value;
+            }
+            else
+            {
+                AddVariableByType(p_value == null ? typeof(object) : p_value.GetType(), p_name, p_value);
+            }
+        }
 
         public void PasteVariable(Variable p_variable, IVariableBindable p_bindable)
         {

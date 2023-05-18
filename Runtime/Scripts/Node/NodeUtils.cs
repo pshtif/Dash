@@ -66,22 +66,22 @@ namespace Dash
                 node.rect = new Rect(p_position.x, p_position.y, 0, 0);
                 p_graph.Nodes.Add(node);
             }
-
-            //Debug.Log(EditorUtility.IsDirty(p_graph));
-            DashEditorCore.SetDirty();
+            
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
 
             return node;
         }
         
-        public static NodeBase DuplicateNode(DashGraph p_graph, NodeBase p_node)
+        public static NodeBase DuplicateNode(DashGraph p_graph, NodeBase p_node, IExposedPropertyTable p_propertyTable)
         {
-            NodeBase clone = p_node.Clone(p_graph);
+            NodeBase clone = p_node.Clone(p_graph, p_propertyTable);
             clone.rect = new Rect(p_node.rect.x + 20, p_node.rect.y + 20, 0, 0);
             p_graph.Nodes.Add(clone);
             return clone;
         }
         
-        public static List<NodeBase> DuplicateNodes(DashGraph p_graph, List<NodeBase> p_nodes)
+        public static List<NodeBase> DuplicateNodes(DashGraph p_graph, List<NodeBase> p_nodes, IExposedPropertyTable p_propertyTable)
         {
             if (p_nodes == null || p_nodes.Count == 0)
                 return null;
@@ -89,7 +89,7 @@ namespace Dash
             List<NodeBase> newNodes = new List<NodeBase>();
             foreach (NodeBase node in p_nodes)
             {
-                NodeBase clone = node.Clone(p_graph);
+                NodeBase clone = node.Clone(p_graph, p_propertyTable);
                 clone.rect = new Rect(node.rect.x + 20, node.rect.y + 20, 0, 0);
                 p_graph.Nodes.Add(clone);
                 newNodes.Add(clone);
@@ -111,14 +111,14 @@ namespace Dash
             return newNodes;
         }
 
-        public static SubGraphNode PackNodesToSubGraph(DashGraph p_graph, List<NodeBase> p_nodes)
+        public static SubGraphNode PackNodesToSubGraph(DashGraph p_graph, List<NodeBase> p_nodes, IExposedPropertyTable p_propertyTable)
         {
             Vector2 center = Vector2.zero;
             p_nodes.ForEach(n => center += n.rect.center);
             center /= p_nodes.Count;
 
             SubGraphNode subGraphNode = (SubGraphNode)CreateNode(p_graph, typeof(SubGraphNode), center);
-            List<NodeBase> newNodes = DuplicateNodes(subGraphNode.SubGraph, p_nodes);
+            List<NodeBase> newNodes = DuplicateNodes(subGraphNode.SubGraph, p_nodes, p_propertyTable);
 
             List<NodeConnection> inputs = new List<NodeConnection>();
             List<NodeConnection> outputs = new List<NodeConnection>();
@@ -185,14 +185,14 @@ namespace Dash
             return subGraphNode;
         }
 
-        public static void UnpackNodesFromSubGraph(DashGraph p_graph, SubGraphNode p_subGraphNode)
+        public static void UnpackNodesFromSubGraph(DashGraph p_graph, SubGraphNode p_subGraphNode, IExposedPropertyTable p_propertyTable)
         {
             List<NodeConnection> oldInputConnections =
                 p_graph.Connections.FindAll(c => c.inputNode == p_subGraphNode);
             List<NodeConnection> oldOutputConnections =
                 p_graph.Connections.FindAll(c => c.outputNode == p_subGraphNode);
 
-            List<NodeBase> newNodes = DuplicateNodes(p_graph, p_subGraphNode.SubGraph.Nodes);
+            List<NodeBase> newNodes = DuplicateNodes(p_graph, p_subGraphNode.SubGraph.Nodes, p_propertyTable);
             List<NodeBase> inputNodes = newNodes.FindAll(n => n is InputNode);
             List<NodeBase> outputNodes = newNodes.FindAll(n => n is OutputNode);
 

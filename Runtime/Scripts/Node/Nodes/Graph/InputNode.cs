@@ -65,9 +65,9 @@ namespace Dash
         }
        
         
-        public override NodeBase Clone(DashGraph p_graph)
+        public override NodeBase Clone(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
-            InputNode node = base.Clone(p_graph) as InputNode;
+            InputNode node = base.Clone(p_graph, p_propertyTable) as InputNode;
             node.ValidateUniqueInputName();
             return node;
         }

@@ -9,11 +9,18 @@ namespace Dash.Editor
 {
     public abstract class ViewBase
     {
-        public DashController Controller => DashEditorCore.EditorConfig.editingController;
+        public IViewOwner Owner { get; private set; }
         
-        public DashGraph Graph =>  DashEditorCore.EditorConfig.editingGraph;
+        public DashGraph Graph => Owner.GetConfig().editingGraph;
+        
+        public DashController Controller => Owner.GetConfig().editingController;
 
         public abstract void DrawGUI(Event p_event, Rect p_rect);
+        
+        public void SetOwner(IViewOwner p_owner)
+        {
+            Owner = p_owner;
+        }
         
         public void DrawBoxGUI(Rect p_rect, string p_title, TextAnchor p_titleAlignment, Color p_boxColor, Color p_titleColor, Color p_titleTextColor)
         {

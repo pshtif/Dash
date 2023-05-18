@@ -17,7 +17,7 @@ namespace Dash.Editor
             switch (Event.current.keyCode)
             {
                 case KeyCode.D:
-                    SelectionManager.DuplicateSelectedNodes(DashEditorCore.EditorConfig.editingGraph);
+                    SelectionManager.DuplicateSelectedNodes(DashEditorCore.EditorConfig.editingGraph, DashEditorCore.EditorConfig.editingController);
                     break;
                 case KeyCode.X:
                     SelectionManager.DeleteSelectedNodes(DashEditorCore.EditorConfig.editingGraph);

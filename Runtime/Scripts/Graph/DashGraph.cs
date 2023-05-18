@@ -19,9 +19,11 @@ using UnityEditor;
 namespace Dash
 {
     [Serializable]
-    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver
+    public class DashGraph : ScriptableObject, ISerializationCallbackReceiver, IVariableOwner
     {
         public int version { get; private set; } = 0;
+
+        public IVariableBindable Bindable => null;
 
         [field: NonSerialized]
         public event Action<OutputNode, NodeFlowData> OnOutput;
@@ -400,6 +402,18 @@ namespace Dash
             foreach (var connection in connections)
             {
                 StopDownstream(p_node);   
+            }
+        }
+
+        public virtual void MarkDirty()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+
+            if (_parentGraph != null)
+            {
+                _parentGraph.MarkDirty();
             }
         }
 

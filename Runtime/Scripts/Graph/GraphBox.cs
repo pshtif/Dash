@@ -75,7 +75,8 @@ namespace Dash
                 comment = GUI.TextField(titleRect, comment, style);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    DashEditorCore.SetDirty();
+                    Graph.MarkDirty();
+                    //DashEditorCore.SetDirty();
                 }
             }
             else
@@ -126,7 +127,8 @@ namespace Dash
 
             if (EditorGUI.EndChangeCheck())
             {
-                DashEditorCore.SetDirty();
+                Graph.MarkDirty();
+                //DashEditorCore.SetDirty();
             }
             
             // var fields = this.GetType().GetFields();
@@ -174,7 +176,7 @@ namespace Dash
             //     invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, null);
             // }
             
-            DashEditorCore.SetDirty();
+            //DashEditorCore.SetDirty();
         }
         #endif
     }

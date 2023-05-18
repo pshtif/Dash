@@ -4,6 +4,7 @@
 
 using System;
 using Dash.Attributes;
+using Dash.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ namespace Dash
             return (useAudioManager && !audioName.isExpression);
         }
         
-        protected override bool DrawCustomInspector()
+        protected override bool DrawCustomInspector(IViewOwner p_owner)
         {
             if (useAudioManager && !audioName.isExpression)
             {

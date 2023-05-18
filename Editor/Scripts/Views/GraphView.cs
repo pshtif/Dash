@@ -263,7 +263,8 @@ namespace Dash.Editor
                 case DraggingType.NODE_DRAG:
                 case DraggingType.BOX_DRAG:
                 case DraggingType.BOX_RESIZE:
-                    DashEditorCore.SetDirty();
+                    Graph.MarkDirty();
+                    //DashEditorCore.SetDirty();
                     break;
             }
 
@@ -303,7 +304,7 @@ namespace Dash.Editor
             if (p_captured)
                 return;
             
-            CreateNodeContextMenu.ShowAsPopup(Graph);
+            CreateNodeContextMenu.ShowAsPopup(Graph, Controller);
         }
 
         void HandleDragRightMouseUp(Event p_event, Rect p_rect, ref bool p_captured)
@@ -393,7 +394,7 @@ namespace Dash.Editor
                     if (!SelectionManager.IsSelected(p_nodeIndex))
                     {
                         SelectionManager.AddNodeToSelection(p_nodeIndex);
-                        Graph.Nodes[p_nodeIndex].SelectEditorTarget();
+                        Graph.Nodes[p_nodeIndex].SelectEditorTarget(Owner.GetConfig().editingController);
                     }
 
                     dragging = DraggingType.NODE_DRAG; 
@@ -424,7 +425,7 @@ namespace Dash.Editor
             Graph.HitsNode(p_event.mousePosition * Graph.zoom - new Vector2(p_rect.x, p_rect.y), out node);
             if (node != null)
             {
-                NodeContextMenu.Show(Graph, node);
+                NodeContextMenu.Show(Graph, node, Controller);
                 p_captured = true;
             }
         }
@@ -503,7 +504,7 @@ namespace Dash.Editor
             else
             {
                 //SelectionManager.EndConnection();
-                CreateNodeContextMenu.ShowAsPopup(Graph);
+                CreateNodeContextMenu.ShowAsPopup(Graph, Controller);
             }
             
             SelectionManager.EndConnectionDrag(Graph);

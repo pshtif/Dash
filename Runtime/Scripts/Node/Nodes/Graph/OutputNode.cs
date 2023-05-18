@@ -55,9 +55,9 @@ namespace Dash
             GUI.Label(new Rect(new Vector2(offsetRect.x + offsetRect.width*.5f-50, offsetRect.y+offsetRect.height/2), new Vector2(100, 20)), Model.outputName , DashEditorCore.Skin.GetStyle("NodeText"));
         }
 
-        public override NodeBase Clone(DashGraph p_graph)
+        public override NodeBase Clone(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
-            OutputNode node = base.Clone(p_graph) as OutputNode;
+            OutputNode node = base.Clone(p_graph, p_propertyTable) as OutputNode;
             node.ValidateUniqueOutputName();
             return node;
         }

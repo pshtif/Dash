@@ -16,19 +16,19 @@ namespace Dash.Editor
     {
         
         static private Vector2 _lastMousePosition;
-        static public void Show(DashGraph p_graph)
+        static public void Show(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
-            Get(p_graph).ShowAsEditorMenu();
+            Get(p_graph, p_propertyTable).ShowAsEditorMenu();
         }
 
-        static public void ShowAsPopup(DashGraph p_graph)
+        static public void ShowAsPopup(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             _lastMousePosition = Event.current.mousePosition;
 
-            GenericMenuPopup.Show(Get(p_graph), "Create Node", _lastMousePosition, 240, 300);
+            GenericMenuPopup.Show(Get(p_graph, p_propertyTable), "Create Node", _lastMousePosition, 240, 300);
         }
         
-        static public RuntimeGenericMenu Get(DashGraph p_graph)
+        static public RuntimeGenericMenu Get(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
@@ -81,7 +81,7 @@ namespace Dash.Editor
 
                 if (SelectionManager.HasCopiedNodes())
                 {
-                    menu.AddItem(new GUIContent("Paste Nodes"), false, () => PasteNodes(p_graph));
+                    menu.AddItem(new GUIContent("Paste Nodes"), false, () => PasteNodes(p_graph, p_propertyTable));
                 }
                 
                 menu.AddSeparator("");
@@ -208,9 +208,9 @@ namespace Dash.Editor
             return false;
         }
 
-        static void PasteNodes(DashGraph p_graph)
+        static void PasteNodes(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
-            SelectionManager.PasteNodes(p_graph, _lastMousePosition);
+            SelectionManager.PasteNodes(p_graph, _lastMousePosition, p_propertyTable);
         }
 
         static void CreateNode(DashGraph p_graph, Type p_nodeType)
@@ -242,7 +242,8 @@ namespace Dash.Editor
             node.Model.useAsset = true;
             node.Model.graphAsset = (DashGraph)p_subGraph;
 
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
             
             if (SelectionManager.connectingNode != null)
             {

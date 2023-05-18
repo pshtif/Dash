@@ -75,11 +75,11 @@ namespace Dash
             graphAsset = null;
         }
         
-        protected override bool DrawCustomInspector()
+        protected override bool DrawCustomInspector(IViewOwner p_owner)
         {
             GUILayout.Space(4);
 
-            bool changed = AttributeDefinition.DrawAttributes(attributes);
+            bool changed = AttributeDefinition.DrawAttributes(p_owner, attributes);
 
             return changed;
         }

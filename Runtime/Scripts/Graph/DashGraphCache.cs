@@ -3,6 +3,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using OdinSerializer;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Dash
             {
                 _serializedGraphs.Add(p_graphAsset, SerializeGraph(p_graphAsset));
             }
-
+            
             return DeserializeGraph(_serializedGraphs[p_graphAsset]);
         }
         
@@ -27,14 +28,15 @@ namespace Dash
         {
             SerializedValue serialized = new SerializedValue();
             serialized.bytes = p_graph.SerializeToBytes(p_format, ref serialized.references);
-            
+
             return serialized;
         }
 
         public static DashGraph DeserializeGraph(SerializedValue p_value)
         {
             DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
-            p_value.references[0] = graph;
+            //Debug.Log("DeserializeInfo: "+p_value.references.Count+" : "+graph.name);
+            if (p_value.references.Count > 0) p_value.references[0] = graph;
             
             graph.DeserializeFromBytes(p_value.bytes, DataFormat.Binary, ref p_value.references);
             return graph;

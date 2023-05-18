@@ -18,11 +18,11 @@ namespace Dash
         public List<AttributeDefinition> attributes;
         
 #if UNITY_EDITOR
-        protected override bool DrawCustomInspector()
+        protected override bool DrawCustomInspector(IViewOwner p_owner)
         {
             GUILayout.Space(2);
 
-            bool changed = AttributeDefinition.DrawAttributes(attributes);
+            bool changed = AttributeDefinition.DrawAttributes(p_owner, attributes);
 
             return changed;
         }

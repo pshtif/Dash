@@ -17,7 +17,7 @@ namespace Dash.Editor
             
         }
         
-        protected void DrawVariablesGUI(Vector2 p_position, Color p_color, DashVariables p_variables, ref bool p_minimized, IVariableBindable p_bindable)
+        protected void DrawVariablesGUI(Vector2 p_position, Color p_color, DashVariables p_variables, ref bool p_minimized, IVariableOwner p_owner)
         {
             int height = p_variables.Count <= 10 ? 64 + p_variables.Count * 22 : 64 + 220; 
             Rect rect = new Rect(p_position.x, p_position.y, 380, p_minimized ? 32 : height);
@@ -43,7 +43,7 @@ namespace Dash.Editor
             GUILayout.BeginArea(new Rect(rect.x+5, rect.y+30, rect.width-10, rect.height-62));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
             
-            GUIVariableUtils.DrawVariablesInspector("", p_variables, p_bindable, rect.width-20);
+            GUIVariableUtils.DrawVariablesInspector("", p_variables, p_owner, rect.width-20);
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
@@ -77,7 +77,8 @@ namespace Dash.Editor
         {
             p_variables.AddNewVariable(p_type);
             
-            DashEditorCore.SetDirty();
+            Graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
     }
 }

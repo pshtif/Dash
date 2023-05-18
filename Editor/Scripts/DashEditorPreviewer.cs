@@ -15,8 +15,6 @@ namespace Dash.Editor
 {
     public class DashEditorPreviewer
     {
-        public DashController Controller => DashEditorCore.EditorConfig.editingController;
-
         public bool IsPreviewing => _isPreviewing;
         
         private bool _isPreviewing = false;
@@ -32,21 +30,23 @@ namespace Dash.Editor
 
         private PrefabStage _stage;
 
+        private DashController _previewController;
         private bool _controllerSelected = false;
 
-        public void StartPreview(NodeBase p_node)
+        public void StartPreview(NodeBase p_node, DashController p_controller)
         {
-            if (Controller == null || _isPreviewing || !Controller.gameObject.activeSelf)
+            if (p_controller == null || _isPreviewing || !p_controller.gameObject.activeSelf)
                 return;
             
+            _previewController = p_controller;
             _previewNodeIndex = DashEditorCore.EditorConfig.editingGraph.Nodes.IndexOf(p_node);
 
             _stage = PrefabStageUtility.GetCurrentPrefabStage();
 
-            _controllerSelected = Selection.activeGameObject == Controller.gameObject;
-            
-            Controller.previewing = true;
-            DashEditorCore.SetDirty();
+            _controllerSelected = Selection.activeGameObject == p_controller.gameObject;
+            p_controller.previewing = true;
+            EditorUtility.SetDirty(p_controller);
+            //DashEditorCore.SetDirty();
 
             if (_stage == null)
             {
@@ -67,7 +67,7 @@ namespace Dash.Editor
             //VariableUtils.FetchGlobalVariables();
             
             _previewGraph = DashEditorCore.EditorConfig.editingGraph.Clone();
-            _previewGraph.Initialize(Controller);
+            _previewGraph.Initialize(p_controller);
             DashEditorCore.EditorConfig.editingGraph = _previewGraph;
 
             EditorApplication.update += OnUpdate;
@@ -78,7 +78,7 @@ namespace Dash.Editor
             if (!_previewStarted)
             {
                 _previewStarted = true;
-                _previewGraph.Nodes[_previewNodeIndex].Execute(NodeFlowDataFactory.Create(Controller.transform));
+                _previewGraph.Nodes[_previewNodeIndex].Execute(NodeFlowDataFactory.Create(_previewController.transform));
             }
             
             if (_isPreviewing && !_previewStopScheduled)
@@ -105,6 +105,7 @@ namespace Dash.Editor
             
             _isPreviewing = false;
             _previewStopScheduled = false;
+            _previewController = null;
 
             if (_stage == null)
             {

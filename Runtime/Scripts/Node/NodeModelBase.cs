@@ -48,7 +48,7 @@ namespace Dash
 
         private int groupsMinized = -1;
         
-        public NodeModelBase Clone()
+        public NodeModelBase Clone(IExposedPropertyTable p_propertyTable)
         {
             // Doing a shallow copy
             var clone = (NodeModelBase)OdinSerializer.SerializationUtility.CreateCopy(this);
@@ -59,16 +59,15 @@ namespace Dash
             {
                 Type exposedRefType = typeof(ExposedReference<>).MakeGenericType(f.FieldType.GenericTypeArguments[0]);
 
-                if (DashEditorCore.EditorConfig.editingController != null)
+                if (p_propertyTable != null)
                 {
-                    IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
                     var curExposedRef = f.GetValue(clone);
                     UnityEngine.Object exposedValue = (UnityEngine.Object) curExposedRef.GetType().GetMethod("Resolve")
-                        .Invoke(curExposedRef, new object[] {propertyTable});
+                        .Invoke(curExposedRef, new object[] {p_propertyTable});
 
                     var clonedExposedRef = Activator.CreateInstance(exposedRefType);
                     PropertyName newExposedName = new PropertyName(UnityEditor.GUID.Generate().ToString());
-                    propertyTable.SetReferenceValue(newExposedName, exposedValue);
+                    p_propertyTable.SetReferenceValue(newExposedName, exposedValue);
                     clonedExposedRef.GetType().GetField("exposedName")
                         .SetValue(clonedExposedRef, newExposedName);
                     f.SetValue(clone, clonedExposedRef);
@@ -78,7 +77,7 @@ namespace Dash
             return clone;
         }
         
-        public virtual bool DrawInspector()
+        public virtual bool DrawInspector(IViewOwner p_owner)
         {
             bool initializeMinimization = false;
             if (groupsMinized == -1)
@@ -107,7 +106,7 @@ namespace Dash
                 lastGroupMinimized = DrawGroupTitle(customInspector.name, false, ref groupIndex, ref lastGroup, initializeMinimization, minStyle);
                 if (!lastGroupMinimized)
                 {
-                    invalidate = invalidate || DrawCustomInspector();
+                    invalidate = invalidate || DrawCustomInspector(p_owner);
                 }
             }
             
@@ -123,7 +122,7 @@ namespace Dash
                     continue;
 
                 GUILayout.Space(3);
-                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, this);
+                invalidate = invalidate || GUIPropertiesUtils.PropertyField(field, this, this, p_owner.GetConfig().editingController, null);
             }
 
             return invalidate;
@@ -161,7 +160,7 @@ namespace Dash
             return (groupsMinized & (1 << (p_groupIndex - 1))) != 0;
         }
 
-        protected virtual bool DrawCustomInspector()
+        protected virtual bool DrawCustomInspector(IViewOwner p_owner)
         {
             return false;
         }

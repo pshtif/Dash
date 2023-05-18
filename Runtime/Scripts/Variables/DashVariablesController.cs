@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Dash
 {
     public class DashVariablesController : MonoBehaviour
-        , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables, IVariableBindable
+        , ISerializationCallbackReceiver, ISupportsPrefabSerialization, IVariables, IVariableOwner, IVariableBindable
     {
-        public DashGraph Graph => null;
+        public IVariableBindable Bindable => this;
         
         public bool makeGlobal = false;
         
@@ -137,6 +137,13 @@ namespace Dash
                 // Debug.Log(System.Text.Encoding.UTF8.GetString(serializedValue.bytes));
                 _serializedVariables[index++] = serializedValue;
             }
+        }
+
+        public void MarkDirty()
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+            #endif
         }
     }
 }

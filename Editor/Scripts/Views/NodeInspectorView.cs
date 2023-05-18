@@ -85,7 +85,7 @@ namespace Dash.Editor
             
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false);
             
-            selectedNode.DrawInspector();
+            selectedNode.DrawInspector(Owner);
 
             if (Event.current.type == EventType.Repaint)
             {
@@ -108,7 +108,7 @@ namespace Dash.Editor
                 GUILayout.EndArea();
             }
 
-            selectedNode.DrawInspectorControls(rect);
+            selectedNode.DrawInspectorControls(Owner, rect);
             
             UseEvent(rect);
         }

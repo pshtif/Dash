@@ -57,7 +57,8 @@ namespace Dash.Editor
                             break;
                     }
 
-                    DashEditorCore.SetDirty();
+                    p_graph.MarkDirty();
+                    //DashEditorCore.SetDirty();
                 }
             }
 
@@ -121,12 +122,12 @@ namespace Dash.Editor
             return copiedNodes.Count != 0;
         }
         
-        public static void PasteNodes(DashGraph p_graph, Vector3 p_mousePosition)
+        public static void PasteNodes(DashGraph p_graph, Vector3 p_mousePosition, IExposedPropertyTable p_propertyTable)
         {
             if (p_graph == null || copiedNodes.Count == 0)
                 return;
             
-            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, copiedNodes);
+            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, copiedNodes, p_propertyTable);
             
             newNodes[0].rect = new Rect(p_mousePosition.x * p_graph.zoom - p_graph.viewOffset.x,
                 p_mousePosition.y * p_graph.zoom - p_graph.viewOffset.y, 0, 0);
@@ -140,10 +141,11 @@ namespace Dash.Editor
             
             selectedNodes = newNodes.Select(n => n.Index).ToList();
 
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
 
-        public static void CreateSubGraphFromSelectedNodes(DashGraph p_graph)
+        public static void CreateSubGraphFromSelectedNodes(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             if (p_graph == null || selectedNodes.Count == 0)
                 return;
@@ -151,14 +153,15 @@ namespace Dash.Editor
             UndoUtils.RegisterCompleteObject(p_graph, "Create SubGraph");
 
             List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
-            SubGraphNode subGraphNode = NodeUtils.PackNodesToSubGraph(p_graph, nodes);
+            SubGraphNode subGraphNode = NodeUtils.PackNodesToSubGraph(p_graph, nodes, p_propertyTable);
             selectedNodes.Clear();
             selectedNodes.Add(subGraphNode.Index);
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
 
-        public static void UnpackSelectedSubGraphNode(DashGraph p_graph, SubGraphNode p_subGraphNode)
+        public static void UnpackSelectedSubGraphNode(DashGraph p_graph, SubGraphNode p_subGraphNode, IExposedPropertyTable p_propertyTable)
         {
             if (p_graph == null || p_subGraphNode == null)
                 return;
@@ -166,12 +169,13 @@ namespace Dash.Editor
             UndoUtils.RegisterCompleteObject(p_graph, "Unpack SubGraph");
             selectedNodes.Clear();
             
-            NodeUtils.UnpackNodesFromSubGraph(p_graph, p_subGraphNode);
+            NodeUtils.UnpackNodesFromSubGraph(p_graph, p_subGraphNode, p_propertyTable);
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
-        public static void DuplicateSelectedNodes(DashGraph p_graph)
+        public static void DuplicateSelectedNodes(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             if (p_graph == null || selectedNodes.Count == 0)
                 return;
@@ -179,23 +183,25 @@ namespace Dash.Editor
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Nodes");
 
             List<NodeBase> nodes = selectedNodes.Select(i => p_graph.Nodes[i]).ToList();
-            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, nodes);
+            List<NodeBase> newNodes = NodeUtils.DuplicateNodes(p_graph, nodes, p_propertyTable);
             selectedNodes = newNodes.Select(n => n.Index).ToList();
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
-        public static void DuplicateNode(NodeBase p_node, DashGraph p_graph)
+        public static void DuplicateNode(NodeBase p_node, DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             if (p_graph == null)
                 return;
             
             UndoUtils.RegisterCompleteObject(p_graph, "Duplicate Node");
 
-            NodeBase node = NodeUtils.DuplicateNode(p_graph,(NodeBase) p_node);
+            NodeBase node = NodeUtils.DuplicateNode(p_graph,(NodeBase) p_node, p_propertyTable);
             selectedNodes = new List<int> { node.Index };
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
         public static void CopySelectedNodes(DashGraph p_graph)
@@ -221,7 +227,8 @@ namespace Dash.Editor
 
             p_graph.CreateBox(region);
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
         public static void DeleteSelectedNodes(DashGraph p_graph)
@@ -236,7 +243,8 @@ namespace Dash.Editor
 
             selectedNodes = new List<int>();
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
         public static void DeleteNode(DashGraph p_graph, NodeBase p_node)
@@ -251,7 +259,8 @@ namespace Dash.Editor
             selectedNodes.Remove(index);
             ReindexSelected(index);
             
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
 
         public static void AddNodeToSelection(int p_nodeIndex)
@@ -270,7 +279,7 @@ namespace Dash.Editor
 
             if (p_graph.Controller != null)
             {
-                p_node.SelectEditorTarget();
+                p_node.SelectEditorTarget(p_graph.Controller);
             }
 
             if (p_forceView)
@@ -316,7 +325,8 @@ namespace Dash.Editor
 
             NodeUtils.ArrangeNodes(p_graph, p_node);
         
-            DashEditorCore.SetDirty();
+            p_graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
         public static void SelectConnectedNodes(DashGraph p_graph, NodeBase p_node)

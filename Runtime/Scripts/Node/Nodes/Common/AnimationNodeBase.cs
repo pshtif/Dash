@@ -79,9 +79,9 @@ namespace Dash
                 text, DashEditorCore.Skin.GetStyle("NodeText"));
         }
 
-        public override void SelectEditorTarget()
+        public override void SelectEditorTarget(DashController p_controller)
         {
-            Transform target = NodeTargetResolver.ResolveEditorTarget(this);
+            Transform target = NodeTargetResolver.ResolveEditorTarget(p_controller, this);
             
             if (target != null)
             {
@@ -100,12 +100,12 @@ namespace Dash
             _bindFrom = _bindTo = false;
         }
         
-        public override void DrawInspectorControls(Rect p_rect)
+        public override void DrawInspectorControls(IViewOwner p_owner, Rect p_rect)
         {
             if (!(this is IAnimationNodeBindable) || !DashEditorCore.EditorConfig.enableAnimateNodeInterface)
                 return;
             
-            Transform target = NodeTargetResolver.ResolveEditorTarget(this);
+            Transform target = NodeTargetResolver.ResolveEditorTarget(p_owner.GetConfig().editingController, this);
             
             if (target == null)
                 return;

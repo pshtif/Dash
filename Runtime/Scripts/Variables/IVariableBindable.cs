@@ -8,8 +8,6 @@ namespace Dash
 {
     public interface IVariableBindable 
     {
-        DashGraph Graph { get; }
-        
         GameObject gameObject { get; }
     }
 }

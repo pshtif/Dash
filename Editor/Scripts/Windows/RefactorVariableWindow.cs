@@ -222,7 +222,8 @@ namespace Dash.Editor
 
             _variableName = _refactoredName;
             
-            DashEditorCore.SetDirty();
+            _graph.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
     }
 }

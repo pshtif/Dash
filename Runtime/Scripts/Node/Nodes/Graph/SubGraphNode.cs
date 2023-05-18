@@ -176,23 +176,24 @@ namespace Dash
                 ? (InputCount > 2 ? (InputCount - 2) * 28 : 0)
                 : (OutputCount > 2 ? (OutputCount - 2) * 28 : 0)));
         
-        public override void DrawInspector()
+        public override void DrawInspector(IViewOwner p_owner)
         {
             GUILayout.Space(6);
-            GUI.color = DashEditorCore.EditorConfig.theme.InspectorButtonColor;
+            GUI.color = p_owner.GetConfig().theme.InspectorButtonColor;
             if (!Model.useAsset || Model.graphAsset != null)
             {
                 if (GUILayout.Button("Open Editor", GUILayout.Height(40)))
                 {
                     if (DashEditorCore.EditorConfig.editingController != null)
                     {
-                        DashEditorCore.EditController(DashEditorCore.EditorConfig.editingController,
-                            GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                        
+                        p_owner.EditController(p_owner.GetConfig().editingController,
+                            GraphUtils.AddChildPath(p_owner.GetConfig().editingGraphPath, Model.id));
                     }
                     else
                     {
-                        DashEditorCore.EditGraph(DashEditorCore.EditorConfig.editingRootGraph,
-                            GraphUtils.AddChildPath(DashEditorCore.EditorConfig.editingGraphPath, Model.id));
+                        p_owner.EditGraph(p_owner.GetConfig().editingRootGraph,
+                            GraphUtils.AddChildPath(p_owner.GetConfig().editingGraphPath, Model.id));
                     }
                 }
             }
@@ -235,7 +236,7 @@ namespace Dash
 
             GUI.color = Color.white;
 
-            base.DrawInspector();
+            base.DrawInspector(p_owner);
         }
         
         protected override void DrawCustomGUI(Rect p_rect)

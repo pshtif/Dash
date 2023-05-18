@@ -13,7 +13,7 @@ namespace Dash.Editor
     public class VariableSettingsMenu
     {
         
-        public static RuntimeGenericMenu Get(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        public static RuntimeGenericMenu Get(DashVariables p_variables, string p_name, IVariableOwner p_owner)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
 
@@ -24,29 +24,29 @@ namespace Dash.Editor
             } 
             else
             {
-                if (p_bindable != null && !variable.IsLookup)
+                if (p_owner.Bindable != null && !variable.IsLookup)
                 {
                     Dictionary<Component, List<PropertyInfo>> bindableProperties =
-                        GetBindableProperties(p_variables, p_name, p_bindable);
+                        GetBindableProperties(p_variables, p_name, p_owner);
                     foreach (var infoKeys in bindableProperties)
                     {
                         foreach (PropertyInfo property in infoKeys.Value)
                         {
                             menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key.name + "/" + property.Name),
                                 false,
-                                () => OnBindVariable(variable, property, infoKeys.Key, p_bindable));
+                                () => OnBindVariable(variable, property, infoKeys.Key, p_owner));
                         }
                     }
                     
                     Dictionary<Component, List<FieldInfo>> bindableFields =
-                        GetBindableFields(p_variables, p_name, p_bindable);
+                        GetBindableFields(p_variables, p_name, p_owner);
                     foreach (var infoKeys in bindableFields)
                     {
                         foreach (FieldInfo field in infoKeys.Value)
                         {
                             menu.AddItem(new GUIContent("Bind (Controller)/" + infoKeys.Key.name + "/" + field.Name),
                                 false, 
-                                () => OnBindVariable(variable, field, infoKeys.Key, p_bindable));
+                                () => OnBindVariable(variable, field, infoKeys.Key, p_owner));
                         }
                     }
                 }
@@ -61,21 +61,21 @@ namespace Dash.Editor
                 }
             }
             
-            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_bindable));
+            menu.AddItem(new GUIContent("Delete Variable"), false, () => OnDeleteVariable(p_variables, p_name, p_owner));
             menu.AddItem(new GUIContent("Copy Variable"), false, () => OnCopyVariable(p_variables, p_name));
             
-            menu.AddItem(new GUIContent("Refactor Variable"), false, () => OnRefactorVariable(p_variables, p_name, p_bindable));
+            menu.AddItem(new GUIContent("Refactor Variable"), false, () => OnRefactorVariable(p_variables, p_name, p_owner));
 
             return menu;
         }
         
-        static Dictionary<Component, List<PropertyInfo>> GetBindableProperties(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        static Dictionary<Component, List<PropertyInfo>> GetBindableProperties(DashVariables p_variables, string p_name, IVariableOwner p_owner)
         {
             Dictionary<Component, List<PropertyInfo>> bindableProperties = new Dictionary<Component, List<PropertyInfo>>();
             var variable = p_variables.GetVariable(p_name);
-            if (p_bindable != null)
+            if (p_owner.Bindable != null)
             {
-                Component[] components = p_bindable.gameObject.GetComponents<Component>();
+                Component[] components = p_owner.Bindable.gameObject.GetComponents<Component>();
                 foreach (Component component in components)
                 {
                     // Can happen if script on gameobject component is missing
@@ -109,13 +109,13 @@ namespace Dash.Editor
             return false;
         }
         
-        static Dictionary<Component, List<FieldInfo>> GetBindableFields(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        static Dictionary<Component, List<FieldInfo>> GetBindableFields(DashVariables p_variables, string p_name, IVariableOwner p_owner)
         {
             Dictionary<Component, List<FieldInfo>> bindableFields = new Dictionary<Component, List<FieldInfo>>();
             var variable = p_variables.GetVariable(p_name);
-            if (p_bindable != null)
+            if (p_owner.Bindable != null)
             {
-                Component[] components = p_bindable.gameObject.GetComponents<Component>();
+                Component[] components = p_owner.Bindable.gameObject.GetComponents<Component>();
                 foreach (Component component in components)
                 {
                     Type componentType = component.GetType();
@@ -145,21 +145,22 @@ namespace Dash.Editor
             return false;
         }
         
-        static void OnBindVariable(Variable p_variable, PropertyInfo p_property, Component p_boundComponent, IVariableBindable p_bindable)
+        static void OnBindVariable(Variable p_variable, PropertyInfo p_property, Component p_boundComponent, IVariableOwner p_owner)
         {
-            p_variable.BindProperty(p_property, p_boundComponent, p_bindable);
+            p_variable.BindProperty(p_property, p_boundComponent, p_owner.Bindable);
         }
         
-        static void OnBindVariable(Variable p_variable, FieldInfo p_field, Component p_boundComponent, IVariableBindable p_bindable)
+        static void OnBindVariable(Variable p_variable, FieldInfo p_field, Component p_boundComponent, IVariableOwner p_owner)
         {
-            p_variable.BindField(p_field, p_boundComponent, p_bindable);
+            p_variable.BindField(p_field, p_boundComponent, p_owner.Bindable);
         }
         
-        static void OnDeleteVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        static void OnDeleteVariable(DashVariables p_variables, string p_name, IVariableOwner p_owner)
         {
             p_variables.RemoveVariable(p_name);
-
-            DashEditorCore.SetDirty();
+            
+            p_owner.MarkDirty();
+            //DashEditorCore.SetDirty();
         }
         
         static void OnLookupVariable(DashVariables p_variables, string p_name)
@@ -173,7 +174,7 @@ namespace Dash.Editor
             VariableUtils.CopyVariable(p_variables.GetVariable(p_name));
         }
         
-        static void OnRefactorVariable(DashVariables p_variables, string p_name, IVariableBindable p_bindable)
+        static void OnRefactorVariable(DashVariables p_variables, string p_name, IVariableOwner p_owner)
         {
             RefactorVariableWindow.RefactorVariable(p_variables, p_name);
         }

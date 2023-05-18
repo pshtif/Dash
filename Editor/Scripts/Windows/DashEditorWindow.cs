@@ -17,17 +17,22 @@ using UnityEditor.Experimental.SceneManagement;
 
 namespace Dash.Editor
 {
-    public class DashEditorWindow : EditorWindow
+    public class DashEditorWindow : EditorWindow, IViewOwner
     {
         public static DashEditorWindow Instance { get; private set; }
 
         protected static bool _isDirty = false;
         
         public static bool IsDirty => _isDirty;
-
+        
         public static void SetDirty(bool p_dirty)
         {
             _isDirty = p_dirty;
+        }
+        
+        public DashEditorConfig GetConfig()
+        {
+            return DashEditorCore.EditorConfig;
         }
 
         private void OnEnable()
@@ -75,6 +80,16 @@ namespace Dash.Editor
             Instance.minSize = new Vector2(800, 400);
 
             return Instance;
+        }
+        
+        public void EditController(DashController p_controller, string p_path = "")
+        {
+            DashEditorCore.EditController(p_controller, p_path);
+        }
+        
+        public void EditGraph(DashGraph p_graph, string p_path = "")
+        {
+            DashEditorCore.EditGraph(p_graph, p_path);
         }
 
         [NonSerialized]
@@ -128,12 +143,21 @@ namespace Dash.Editor
             if (Instance != null)
             {
                 _views = new List<ViewBase>();
-                _views.Add(new GraphView());
-                _views.Add(new NodeInspectorView());
-                _views.Add(new GraphPropertiesView());
-                _views.Add(new GraphVariablesView());
-                _views.Add(new PreviewControlsView());
+                CreateView<GraphView>();
+                CreateView<NodeInspectorView>();
+                CreateView<GraphPropertiesView>();
+                CreateView<GraphVariablesView>();
+                CreateView<PreviewControlsView>();
             }
+        }
+        
+        private T CreateView<T>() where T : ViewBase, new()
+        {
+            ViewBase viewBase = new T();
+            viewBase.SetOwner(this);
+            _views.Add(viewBase);
+            
+            return (T)viewBase;
         }
     }
 }

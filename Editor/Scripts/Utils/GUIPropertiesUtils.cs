@@ -39,7 +39,7 @@ namespace Dash.Editor
             GUI.color = Color.white;
         }
 
-        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, IReferencable p_reference, FieldInfo p_parentInfo = null)
+        static public bool PropertyField(FieldInfo p_fieldInfo, Object p_object, IReferencable p_reference, IExposedPropertyTable p_propertyTable, FieldInfo p_parentInfo)
         {
             if (IsHidden(p_fieldInfo))
                 return false;
@@ -59,10 +59,10 @@ namespace Dash.Editor
             var name = tooltipAttribute == null ? new GUIContent(nameString) : new GUIContent(nameString, tooltipAttribute.tooltip);
 
             if (IsParameterProperty(p_fieldInfo))
-                return ParameterProperty(p_fieldInfo, p_object, name, p_reference);
+                return ParameterProperty(p_fieldInfo, p_object, name, p_reference, p_propertyTable);
 
             if (p_parentInfo == null && IsExpressionProperty(p_fieldInfo))
-                return ExpressionProperty(p_fieldInfo, p_object, name, p_reference);
+                return ExpressionProperty(p_fieldInfo, p_object, name, p_reference, p_propertyTable);
 
             if (IsPopupProperty(p_fieldInfo))
                 return PopupProperty(p_fieldInfo, p_object, name);
@@ -79,7 +79,7 @@ namespace Dash.Editor
                 return UnityObjectProperty(p_fieldInfo, p_object, name);
 
             if (IsExposedReferenceProperty(p_fieldInfo))
-                return ExposedReferenceProperty(p_fieldInfo, p_object, name, p_reference);
+                return ExposedReferenceProperty(p_fieldInfo, p_object, name, p_reference, p_propertyTable);
 
             return ValueProperty(p_fieldInfo, p_object, name, p_reference, p_parentInfo);
         }
@@ -224,14 +224,12 @@ namespace Dash.Editor
                    p_fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(ExposedReference<>);
         }
 
-        static bool ExposedReferenceProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference)
+        static bool ExposedReferenceProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference, IExposedPropertyTable p_propertyTable)
         {
             if (!IsExposedReferenceProperty(p_fieldInfo))
                 return false;
 
-            IExposedPropertyTable propertyTable = DashEditorCore.EditorConfig.editingController;
-
-            if (propertyTable == null)
+            if (p_propertyTable == null)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(p_name, GUILayout.Width(160));
@@ -255,29 +253,31 @@ namespace Dash.Editor
             EditorGUI.BeginChangeCheck();
 
             UnityEngine.Object exposedValue = (UnityEngine.Object)exposedReference.GetType().GetMethod("Resolve")
-                .Invoke(exposedReference, new object[] {propertyTable});
+                .Invoke(exposedReference, new object[] {p_propertyTable});
             var newValue = EditorGUILayout.ObjectField(exposedValue, p_fieldInfo.FieldType.GetGenericArguments()[0], true);
 
             GUILayout.EndHorizontal();
 
             if (EditorGUI.EndChangeCheck())
             {
-                if (propertyTable != null)
+                if (p_propertyTable != null)
                 {
-                    Undo.RegisterCompleteObjectUndo(propertyTable as UnityEngine.Object, "Set Exposed Property");
+                    Undo.RegisterCompleteObjectUndo(p_propertyTable as UnityEngine.Object, "Set Exposed Property");
                 }
                 
                 if (newValue == null)
                 {
-                    propertyTable.ClearReferenceValue(exposedName);   
+                    p_propertyTable.ClearReferenceValue(exposedName);   
                     //exposedReference.GetType().GetField("exposedName").SetValue(exposedReference, null);
                     p_fieldInfo.SetValue(p_object, exposedReference);
                 }
                 else
                 {
-                    propertyTable.SetReferenceValue(exposedName, newValue);
+                    p_propertyTable.SetReferenceValue(exposedName, newValue);
                     p_fieldInfo.SetValue(p_object, exposedReference);
                 }
+                
+                UnityEditor.EditorUtility.SetDirty((UnityEngine.Object)p_propertyTable);
 
                 return true;
             }
@@ -290,16 +290,16 @@ namespace Dash.Editor
             return typeof(Parameter).IsAssignableFrom(p_fieldInfo.FieldType);
         }
 
-        static bool ParameterProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference)
+        static bool ParameterProperty(FieldInfo p_fieldInfo, Object p_fieldObject, GUIContent p_name, IReferencable p_reference, IExposedPropertyTable p_propertyTable)
         {
             if (!IsParameterProperty(p_fieldInfo))
                 return false;
 
-            Parameter param = (Parameter)p_fieldInfo.GetValue(p_object);
+            Parameter param = (Parameter)p_fieldInfo.GetValue(p_fieldObject);
 
             if (param == null)
             {
-                RecreateParameter(p_fieldInfo, p_object);
+                RecreateParameter(p_fieldInfo, p_fieldObject);
                 return true;
             }
             
@@ -340,8 +340,8 @@ namespace Dash.Editor
                         GUI.color = Color.yellow;
                         if (GUILayout.Button(button.NullLabel))
                         {
-                            MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
-                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                            MethodInfo method = p_fieldObject.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_fieldObject, null));
                         }
                         GUI.color = Color.white;
                     }
@@ -349,12 +349,12 @@ namespace Dash.Editor
                     {
                         if (GUILayout.Button(button.NonNullLabel))
                         {
-                            MethodInfo method = p_object.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
-                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_object, null));
+                            MethodInfo method = p_fieldObject.GetType().GetMethod(button.MethodName, BindingFlags.Instance | BindingFlags.NonPublic);
+                            param.GetValueFieldInfo().SetValue(param, method.Invoke(p_fieldObject, null));
                         }
                     }
                 } else {
-                    PropertyField(param.GetValueFieldInfo(), param, p_reference, p_fieldInfo);
+                    PropertyField(param.GetValueFieldInfo(), param, p_reference, p_propertyTable, p_fieldInfo);
                 }
             }
 
@@ -372,7 +372,7 @@ namespace Dash.Editor
             GUI.color = param.isExpression ? DashEditorCore.EditorConfig.theme.ParameterColor : Color.gray;
             if (GUILayout.Button(IconManager.GetIcon("Settings_Icon"), GUIStyle.none, GUILayout.Height(16), GUILayout.MaxWidth(16)))
             {
-                ParameterMenu.Show(param, p_fieldInfo.Name, p_object);
+                ParameterMenu.Show(param, p_fieldInfo.Name, p_fieldObject);
             }
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
@@ -404,7 +404,7 @@ namespace Dash.Editor
             return p_fieldInfo.GetAttribute<ExpressionAttribute>() != null;
         }
         
-        static bool ExpressionProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference)
+        static bool ExpressionProperty(FieldInfo p_fieldInfo, Object p_object, GUIContent p_name, IReferencable p_reference, IExposedPropertyTable p_propertyTable)
         {
             ExpressionAttribute expressionAttribute = p_fieldInfo.GetAttribute<ExpressionAttribute>();
             
@@ -430,7 +430,7 @@ namespace Dash.Editor
             }
             else
             {
-                PropertyField(p_fieldInfo, p_object, p_reference, p_fieldInfo);
+                PropertyField(p_fieldInfo, p_object, p_reference, p_propertyTable, p_fieldInfo);
             }
 
             GUILayout.BeginVertical(GUILayout.Width(16));
