@@ -8,9 +8,10 @@ All notable changes to this project will be documented in this file.
 
 #### Changed
 
-- SubGraphs and SubGraph node are no longer experimental, big hurray! 
-- Input/OutputNode now cannot have whitespace in name [WARNING]
-- new attribute DisallowWhitespace that are used for any property that shouldn't contain whitespace
+- changed CreateAttributeNode now highlights attributes with non expression names that collide with reserved names
+- changed SubGraphs and SubGraph node are no longer experimental, big hurray! 
+- changed Input/OutputNode now cannot have whitespace in name [WARNING]
+- changed new attribute DisallowWhitespace that are used for any property that shouldn't contain whitespace
 - changed usage of different input textfields for various GUI elements
 - changed a lot of refactoring and architecture change to avoid locked dependencies and move closer to Nodemon architecture
 - changed variable names now cannot contain whitespace are now autostripped of whitespace in renaming [WARNING]
@@ -18,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 #### Fixed
 
+- fixed CreateAttributeNode now correctly creates a new list of attributes if there were none
 - fixed deserialization of cached empty empty graphs crashed on null exception
 
 ### Release 0.14.5
