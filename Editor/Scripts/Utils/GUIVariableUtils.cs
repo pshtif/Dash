@@ -38,10 +38,10 @@ namespace Dash.Editor
             bool invalidate = false;
             var variable = p_variables.GetVariable(p_name);
             GUILayout.BeginHorizontal();
+            var oldColor = GUI.color;
             GUI.color = ReservedParameters.IsReservedParameter(p_name) ? Color.red : Color.white;
             string newName = GUILayout.TextField(p_name, GUILayout.Width(120));
             newName = newName.RemoveWhitespace();
-            GUI.color = Color.white;
             GUILayout.Space(2);
             if (newName != p_name)
             {
@@ -50,8 +50,7 @@ namespace Dash.Editor
             }
             
             invalidate = invalidate || variable.ValueField(p_maxWidth-150, p_owner);
-
-            var oldColor = GUI.color;
+            
             GUI.color = variable.IsBound || variable.IsLookup ? Color.yellow : Color.gray;
             
             GUILayout.FlexibleSpace();
