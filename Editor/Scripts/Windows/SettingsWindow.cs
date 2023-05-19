@@ -42,6 +42,7 @@ namespace Dash.Editor
 
             DrawEditorSettings(style);
             DrawRuntimeSettings(style);
+            DrawExperimentalSettings(style);
 
             EditorGUIUtility.labelWidth = oldLabelWidth;
         }
@@ -79,13 +80,6 @@ namespace Dash.Editor
             DashEditorCore.EditorConfig.maxLog =
                 EditorGUILayout.IntField("Max Log", DashEditorCore.EditorConfig.maxLog);
             
-            bool enableDashFormatters = EditorGUILayout.Toggle(
-                "Enable Dash Formatters", DashEditorCore.EditorConfig.enableDashFormatters);
-            if (enableDashFormatters != DashEditorCore.EditorConfig.enableDashFormatters)
-            {
-                DashEditorCore.EditorConfig.enableDashFormatters = enableDashFormatters;
-                DashEditorCore.SetDefineSymbols();
-            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -110,6 +104,30 @@ namespace Dash.Editor
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(DashEditorCore.RuntimeConfig);
+            }
+        }
+
+        void DrawExperimentalSettings(GUIStyle p_style)
+        {
+            GUI.backgroundColor = new Color(0, 0, 0, .5f);
+            GUILayout.Label("Experimental Settings", p_style, GUILayout.Height(28));
+            GUI.backgroundColor = Color.white;
+            
+            EditorGUILayout.HelpBox("This change is not revertible so backup your project and be sure what you are doing.", MessageType.Warning);
+            
+            EditorGUI.BeginChangeCheck();
+            
+            bool enableDashFormatters = EditorGUILayout.Toggle(
+                "Enable Dash Formatters", DashEditorCore.EditorConfig.enableDashFormatters);
+            if (enableDashFormatters != DashEditorCore.EditorConfig.enableDashFormatters)
+            {
+                DashEditorCore.EditorConfig.enableDashFormatters = enableDashFormatters;
+                DashEditorCore.SetDefineSymbols();
+            }
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorUtility.SetDirty(DashEditorCore.EditorConfig);
             }
         }
     }
