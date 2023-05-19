@@ -10,7 +10,6 @@ using UnityEngine;
 
 namespace Dash
 {
-    [Experimental]
     [Category(NodeCategoryType.GRAPH)]
     public class SubGraphNode : NodeBase<SubGraphNodeModel>
     {
