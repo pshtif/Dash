@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## RELEASE CANDIDATES
+## RELEASES
 
 ### Release 1.0.0
+
+#### Added
+
+- added SetVariable overload for non generic version of setting of existing variables.
 
 #### Changed
 
