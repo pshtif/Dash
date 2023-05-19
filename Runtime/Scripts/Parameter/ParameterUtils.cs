@@ -28,6 +28,11 @@ namespace Dash
                     }
                 }
             }
-        } 
+        }
+        
+        public static bool IsReservedParameter(string p_name)
+        {
+            return ReservedParameters.IsReservedParameter(p_name);
+        }
     }
 }
