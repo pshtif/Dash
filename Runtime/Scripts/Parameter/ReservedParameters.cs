@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using OdinSerializer.Utilities;
 using UnityEngine;
 
 namespace Dash
@@ -16,7 +17,7 @@ namespace Dash
         
         private static DashGraph _graph;
         
-        private static Vector2 mousePosition
+        private static Vector2 mouse_position
         {
             get { return new Vector2(Input.mousePosition.x, Input.mousePosition.y); }
         }
@@ -25,12 +26,22 @@ namespace Dash
         {
             get { return _graph.Controller.transform; }
         }
-        
-        private static string[] names = { "controller", "mousePosition" };
+
+        private static string[] _reservedNames = null;
 
         public static bool IsReservedParameter(string p_name)
         {
-            return names.Contains(p_name);
+            //if (_reservedNames == null)
+            {
+                var fields = typeof(DashReservedParameterNames).GetFields(BindingFlags.Static | BindingFlags.Public);
+                _reservedNames = new string[fields.Length];
+                for (int i = 0; i < _reservedNames.Length; i++)
+                {
+                    _reservedNames[i] = (string)fields[i].GetValue(null);
+                }
+            }
+            
+            return _reservedNames.Contains(p_name);
         }
         
         public static bool Resolve(DashGraph p_graph, string p_name, out object p_result)
