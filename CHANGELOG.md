@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASE CANDIDATES
 
-### Release 0.14.6
+### Release 1.0.0
+
+#### Changed
+
+- SubGraphs and SubGraph node are no longer experimental, big hurray! 
+- Input/OutputNode now cannot have whitespace in name [WARNING]
+- new attribute DisallowWhitespace that are used for any property that shouldn't contain whitespace
+- changed usage of different input textfields for various GUI elements
+- changed a lot of refactoring and architecture change to avoid locked dependencies and move closer to Nodemon architecture
+- changed variable names now cannot contain whitespace are now autostripped of whitespace in renaming [WARNING]
+- changed variable inspector now shows variables that use reserved names as red to avoid them or atleast be aware that collision may occur
 
 #### Fixed
 
