@@ -232,12 +232,12 @@ namespace Dash
 
             p_flowData = p_flowData == null ? NodeFlowDataFactory.Create(GetTarget()) : p_flowData.Clone();
 
-            if (!p_flowData.HasAttribute(NodeFlowDataReservedAttributes.TARGET))
+            if (!p_flowData.HasAttribute(DashReservedParameterNames.TARGET))
             {
-                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, GetTarget());
+                p_flowData.SetAttribute(DashReservedParameterNames.TARGET, GetTarget());
             }
             
-            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
+            p_flowData.SetAttribute(DashReservedParameterNames.EVENT, p_name);
 
             Graph.SendEvent(p_name, p_flowData);
         }

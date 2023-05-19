@@ -17,7 +17,7 @@ namespace Dash
         static public NodeFlowData Create(Transform p_target)
         {
             NodeFlowData nfd = new NodeFlowData();
-            nfd.SetAttribute(NodeFlowDataReservedAttributes.TARGET, p_target);
+            nfd.SetAttribute(DashReservedParameterNames.TARGET, p_target);
             
             return nfd;
         }

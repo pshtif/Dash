@@ -35,7 +35,7 @@ namespace Dash
         
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
+            Transform target = p_flowData.GetAttribute<Transform>(DashReservedParameterNames.TARGET);
 
             RectTransform spawned = null;
             bool usePooling = GetParameterValue(Model.usePooling, p_flowData);
@@ -74,7 +74,7 @@ namespace Dash
 
             if (Model.retargetToSpawned)
             {
-                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
+                p_flowData.SetAttribute(DashReservedParameterNames.TARGET, spawned.transform);
             }
             
             if (Model.createSpawnedAttribute)

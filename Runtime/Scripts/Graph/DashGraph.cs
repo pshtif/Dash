@@ -128,13 +128,13 @@ namespace Dash
         public void SendEvent(string p_name, Transform p_target)
         {
             NodeFlowData flowData = new NodeFlowData();
-            flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, p_target);
+            flowData.SetAttribute(DashReservedParameterNames.TARGET, p_target);
 
             SendEvent(p_name, flowData);
         }
         public void SendEvent(string p_name, NodeFlowData p_flowData)
         {
-            p_flowData.SetAttribute(NodeFlowDataReservedAttributes.EVENT, p_name);
+            p_flowData.SetAttribute(DashReservedParameterNames.EVENT, p_name);
             
             if (_nodeListeners.ContainsKey(p_name))
             {

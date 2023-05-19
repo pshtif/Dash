@@ -4,7 +4,7 @@
 
 namespace Dash
 {
-    public class NodeFlowDataReservedAttributes
+    public class DashReservedParameterNames
     {
         public static string TARGET = "target";
         public static string CONTROLLER = "controller";

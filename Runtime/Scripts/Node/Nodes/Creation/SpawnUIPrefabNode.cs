@@ -21,7 +21,7 @@ namespace Dash
         
         protected override void OnExecuteStart(NodeFlowData p_flowData)
         {
-            Transform target = p_flowData.GetAttribute<Transform>(NodeFlowDataReservedAttributes.TARGET);
+            Transform target = p_flowData.GetAttribute<Transform>(DashReservedParameterNames.TARGET);
 
             RectTransform prefab = GetParameterValue(Model.prefab, p_flowData);
             
@@ -61,7 +61,7 @@ namespace Dash
             bool retargetToSpawned = GetParameterValue(Model.retargetToSpawned, p_flowData);
             if (retargetToSpawned)
             {
-                p_flowData.SetAttribute(NodeFlowDataReservedAttributes.TARGET, spawned.transform);
+                p_flowData.SetAttribute(DashReservedParameterNames.TARGET, spawned.transform);
             }
             
             if (Model.createSpawnedAttribute)
