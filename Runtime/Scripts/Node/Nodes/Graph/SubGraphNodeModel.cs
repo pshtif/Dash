@@ -79,7 +79,7 @@ namespace Dash
         {
             GUILayout.Space(4);
 
-            bool changed = AttributeDefinition.DrawAttributes(p_owner, attributes);
+            bool changed = AttributeDefinition.DrawAttributes(p_owner, ref attributes);
 
             return changed;
         }
