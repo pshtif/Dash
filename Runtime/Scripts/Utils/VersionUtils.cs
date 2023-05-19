@@ -16,7 +16,7 @@ namespace Dash
                 number /= 1000;
             }
             
-            result = p_number <= 1000000 ? "0" + result : result.Substring(1);
+            result = p_number < 1000000 ? "0" + result : result.Substring(1);
         
             return result;
         }
