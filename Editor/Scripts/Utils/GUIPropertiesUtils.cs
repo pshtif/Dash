@@ -469,6 +469,10 @@ namespace Dash.Editor
                     GUILayout.Label(p_name, GUILayout.Width(160));
                     HandleReferencing(p_reference, referenceInfo, false, p_parameterInfo == null ? null : (Parameter)p_object);
                     var stringValue = GUILayout.TextField((String) p_fieldInfo.GetValue(p_object));
+                    if (p_fieldInfo.GetAttribute<DisallowWhitespaceAttribute>() != null)
+                    {
+                        stringValue = stringValue.RemoveWhitespace();
+                    }
                     GUILayout.EndHorizontal();
 
                     if (EditorGUI.EndChangeCheck())

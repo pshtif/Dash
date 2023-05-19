@@ -7,6 +7,11 @@ using TMPro;
 
 namespace Dash.Attributes
 {
+    [AttributeUsage(AttributeTargets.Field)]
+    public class DisallowWhitespaceAttribute : Attribute
+    {
+    }
+    
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class DependencyAttribute : Attribute
     {
