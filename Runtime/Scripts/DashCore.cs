@@ -15,6 +15,8 @@ namespace Dash
 {
     public class DashCore
     {
+        public static string VERSION = "1.0.0";
+        
         public DashRuntimeConfig Config { get; private set; }
         
         private static DashCore _instance = null;
@@ -203,7 +205,7 @@ namespace Dash
         public static int GetVersionNumber()
         {
             var versionString = Instance.Config.packageVersion.IsNullOrWhitespace()
-                ? "0"
+                ? VERSION
                 : Instance.Config.packageVersion;
             
             var split = versionString.Split('.');
