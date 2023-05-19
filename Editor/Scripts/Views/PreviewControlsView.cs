@@ -49,12 +49,12 @@ namespace Dash.Editor
                 var previewNode = Graph.previewNode;
                 if (previewNode != null)
                 {
-                    GUI.Label(new Rect(rect.x + 214, rect.y + 40, 180, 30), "Preview: ");
                     GUIStyle style = new GUIStyle();
+                    style.normal.textColor = Color.white;
+                    GUI.Label(new Rect(rect.x + 214, rect.y + 40, 180, 30), "Preview: ", style);
                     style.normal.textColor = Color.magenta;
                     style.fontStyle = FontStyle.Bold;
-                    style.alignment = TextAnchor.UpperLeft;
-                    GUI.Label(new Rect(rect.x + 270, rect.y + 41, 180, 30),previewNode.Name, style);
+                    GUI.Label(new Rect(rect.x + 270, rect.y + 40, 180, 30),previewNode.Name, style);
                 }
                 else
                 {
