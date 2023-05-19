@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Dash.Attributes;
 using Dash.Editor;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Dash
     [Serializable]
     public class AttributeDefinition
     {
+        [DisallowWhitespace]
         public Parameter<string> name = new Parameter<string>("attribute");
         public Type attributeType = typeof(int);
         public Parameter attributeValue;
@@ -23,7 +25,7 @@ namespace Dash
         
 #if UNITY_EDITOR
 
-        public static bool DrawAttributes(IViewOwner p_owner, List<AttributeDefinition> p_attributes)
+        public static bool DrawAttributes(IViewOwner p_owner, ref List<AttributeDefinition> p_attributes)
         {
             bool changed = false;
             if (p_attributes != null)
@@ -77,8 +79,11 @@ namespace Dash
                 DeleteAttribute(p_attributes, p_attribute);
                 return true;
             }
-            
+
+            Parameter<string> currentName = (Parameter<string>)p_attribute.GetType().GetField("name").GetValue(p_attribute);
+            GUI.color = !currentName.isExpression && ReservedParameters.IsReservedParameter(currentName.GetValue(null)) ? Color.red : Color.white;
             changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("name"), p_attribute, null, null, null);
+            GUI.color = Color.white;
             //changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("expression"), p_attribute, null);
             //changed = changed || GUIPropertiesUtils.PropertyField(p_attribute.GetType().GetField("specifyType"), p_attribute, null);
             // if (p_attribute.specifyType)
