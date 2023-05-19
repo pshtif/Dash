@@ -52,7 +52,7 @@ namespace Dash.Editor
                     GUIStyle style = new GUIStyle();
                     style.normal.textColor = Color.white;
                     GUI.Label(new Rect(rect.x + 214, rect.y + 40, 180, 30), "Preview: ", style);
-                    style.normal.textColor = Color.magenta;
+                    style.normal.textColor = new Color(1, .5f, 0);
                     style.fontStyle = FontStyle.Bold;
                     GUI.Label(new Rect(rect.x + 270, rect.y + 40, 180, 30),previewNode.Name, style);
                 }

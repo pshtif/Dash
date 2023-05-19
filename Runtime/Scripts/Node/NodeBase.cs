@@ -665,7 +665,7 @@ namespace Dash
             {
                 GUI.color = Color.white;
                 GUIStyle style = new GUIStyle();
-                style.normal.textColor = Color.magenta;
+                style.normal.textColor = new Color(1, .5f, 0);
                 style.fontStyle = FontStyle.Bold;
                 style.fontSize = 20;
                 style.alignment = TextAnchor.UpperCenter;
