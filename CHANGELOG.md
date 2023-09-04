@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASES
 
-### Release 0.14.6
+### Release 0.14.6 - 5.9.2023
 
 #### Added
 
@@ -31,7 +31,7 @@ All notable changes to this project will be documented in this file.
 - fixed deserialization of cached empty empty graphs crashed on null exception
 - fixed ForLoopNode now correctly calculates time for reverse loops
 
-### Release 0.14.5
+### Release 0.14.5 - 11.6.2023
 
 #### Changed
 
