@@ -19,38 +19,55 @@ namespace Dash
     {
         public static DashEditorConfig Create()
         {
-            DashEditorConfig config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
+            DashEditorConfig oldConfig = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashEditorConfig.asset",
+                typeof(DashEditorConfig));
+
+            
+            DashEditorConfig config = (DashEditorConfig) AssetDatabase.LoadAssetAtPath("Assets/Editor/Resources/DashEditorConfig.asset",
                 typeof(DashEditorConfig));
             
             if (config == null)
             {
-                config = ScriptableObject.CreateInstance<DashEditorConfig>();
+                config = oldConfig == null ? CreateInstance<DashEditorConfig>() : Instantiate(oldConfig);
                 if (config != null)
                 {
-                    if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                    if (!AssetDatabase.IsValidFolder("Assets/Editor"))
                     {
-                        AssetDatabase.CreateFolder("Assets", "Resources");
-                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
+                        AssetDatabase.CreateFolder("Assets", "Editor");
+                        AssetDatabase.CreateFolder("Assets/Editor", "Resources");
                     } 
-                    else if (!AssetDatabase.IsValidFolder("Assets/Resources/Editor"))
+                    else if (!AssetDatabase.IsValidFolder("Assets/Editor/Resources"))
                     {
-                        AssetDatabase.CreateFolder("Assets/Resources", "Editor");
+                        AssetDatabase.CreateFolder("Assets/Editor", "Resources");
                     }
-                    AssetDatabase.CreateAsset(config, "Assets/Resources/Editor/DashEditorConfig.asset");
+                    AssetDatabase.CreateAsset(config, "Assets/Editor/Resources/DashEditorConfig.asset");
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
                 }
             }
+            
+            Theme oldTheme = (Theme) AssetDatabase.LoadAssetAtPath("Assets/Resources/Editor/DashTheme.asset",
+                typeof(Theme));
 
-            if (config.theme == null)
+            if (config.theme == null || config.theme == oldTheme)
             {
-                Theme theme = ScriptableObject.CreateInstance<Theme>();
+                Theme theme = oldTheme == null ? ScriptableObject.CreateInstance<Theme>() : Instantiate(oldTheme);
                 config.theme = theme;
                 EditorUtility.SetDirty(config);
                     
-                AssetDatabase.CreateAsset(theme, "Assets/Resources/Editor/DashTheme.asset");
+                AssetDatabase.CreateAsset(theme, "Assets/Editor/Resources/DashTheme.asset");
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
+            }
+
+            if (oldConfig != null)
+            {
+                AssetDatabase.DeleteAsset("Assets/Resources/Editor/DashEditorConfig.asset");
+            }
+            
+            if (oldTheme != null)
+            {
+                AssetDatabase.DeleteAsset("Assets/Resources/Editor/DashTheme.asset");
             }
 
             return config;
@@ -126,7 +143,7 @@ namespace Dash
         
         public bool enableAnimateNodeInterface = false;
 
-        public bool enableDashFormatters = false;
+        //public bool enableDashFormatters = false;
 
         public DashChecksumObject lastChecksumObject;
 
