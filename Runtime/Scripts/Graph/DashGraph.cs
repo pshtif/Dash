@@ -263,6 +263,21 @@ namespace Dash
             return Nodes.FindAll(n => n is T).ConvertAll(n => (T)n);
         }
 
+        public bool HasInputOfName(string p_name)
+        {
+            return Nodes.Exists(n => n is InputNode && ((InputNode)n).Model.inputName == p_name);
+        }
+        
+        public bool HasOutputOfName(string p_name)
+        {
+            return Nodes.Exists(n => n is OutputNode && ((OutputNode)n).Model.outputName == p_name);
+        }
+        
+        public bool HasOnCustomEventOfName(string p_name)
+        {
+            return Nodes.Exists(n => n is OnCustomEventNode && ((OnCustomEventNode)n).Model.eventName == p_name);
+        }
+
         public int GetOutputIndex(OutputNode p_node)
         {
             return Nodes.FindAll(n => n is OutputNode).IndexOf(p_node);
