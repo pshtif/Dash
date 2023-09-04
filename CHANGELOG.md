@@ -4,14 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASES
 
-### Release 1.0.0
+### Release 0.14.6
 
 #### Added
 
 - added SetVariable overload for non generic version of setting of existing variables.
+- added graph utility functions HasInputOfName, HasOutputOfName, HasOnCustomEventOfName
+- added migration utility for Parameters from value
 
 #### Changed
 
+- changed DashEditorConfig now moved to Assets/Editor/Resources instead of Assets/Resources/Editor
 - changed CreateAttributeNode now highlights attributes with non expression names that collide with reserved names
 - changed SubGraphs and SubGraph node are no longer experimental, big hurray! 
 - changed Input/OutputNode now cannot have whitespace in name [WARNING]
@@ -20,11 +23,13 @@ All notable changes to this project will be documented in this file.
 - changed a lot of refactoring and architecture change to avoid locked dependencies and move closer to Nodemon architecture
 - changed variable names now cannot contain whitespace are now autostripped of whitespace in renaming [WARNING]
 - changed variable inspector now shows variables that use reserved names as red to avoid them or atleast be aware that collision may occur
+- changed OnFinishedDelay is now parameter in ForLoopNode
 
 #### Fixed
 
 - fixed CreateAttributeNode now correctly creates a new list of attributes if there were none
 - fixed deserialization of cached empty empty graphs crashed on null exception
+- fixed ForLoopNode now correctly calculates time for reverse loops
 
 ### Release 0.14.5
 
