@@ -58,6 +58,10 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
+            // Bug in some versions of Unity
+            if (this == null)
+                return;
+            
             using (var cachedContext = Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
@@ -67,6 +71,10 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
+            // Bug in some versions of Unity
+            if (this == null)
+                return;
+            
             using (var cachedContext = Cache<SerializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
