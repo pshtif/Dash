@@ -117,13 +117,13 @@ namespace Dash.Editor
             
             EditorGUI.BeginChangeCheck();
             
-            bool enableDashFormatters = EditorGUILayout.Toggle(
-                "Enable Dash Formatters", DashEditorCore.EditorConfig.enableDashFormatters);
-            if (enableDashFormatters != DashEditorCore.EditorConfig.enableDashFormatters)
-            {
-                DashEditorCore.EditorConfig.enableDashFormatters = enableDashFormatters;
-                DashEditorCore.SetDefineSymbols();
-            }
+            // bool enableDashFormatters = EditorGUILayout.Toggle(
+            //     "Enable Dash Formatters", DashEditorCore.EditorConfig.enableDashFormatters);
+            // if (enableDashFormatters != DashEditorCore.EditorConfig.enableDashFormatters)
+            // {
+            //     DashEditorCore.EditorConfig.enableDashFormatters = enableDashFormatters;
+            //     DashEditorCore.SetDefineSymbols();
+            // }
             
             if (EditorGUI.EndChangeCheck())
             {
