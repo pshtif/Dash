@@ -24,6 +24,8 @@ namespace Dash
 
             int firstIndex = GetParameterValue(Model.firstIndex, p_flowData);
             int lastIndex = GetParameterValue(Model.lastIndex, p_flowData);
+            float onIterationDelay = GetParameterValue(Model.OnIterationDelay, p_flowData);
+            float onFinishedDelay = GetParameterValue(Model.OnFinishedDelayP, p_flowData);
 
             int length = lastIndex - firstIndex;
             
@@ -39,13 +41,13 @@ namespace Dash
                     data.SetAttribute(Model.indexAttribute, i);
                 }
 
-                if (GetParameterValue(Model.OnIterationDelay, p_flowData) == 0)
+                if (onIterationDelay == 0)
                 {
                     OnExecuteOutput(0, data);
                 }
                 else
                 {
-                    float time = GetParameterValue(Model.OnIterationDelay, p_flowData) * i;
+                    float time = onIterationDelay * i;
                     DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                     
                     _activeTweens.Add(tween);
@@ -59,13 +61,13 @@ namespace Dash
                 }
             }
             
-            if (Model.OnFinishedDelay == 0 && GetParameterValue(Model.OnIterationDelay, p_flowData) == 0)
+            if (onFinishedDelay == 0 && onIterationDelay == 0)
             {
                 EndLoop(p_flowData);
             }
             else
             {
-                float time = Model.OnFinishedDelay + GetParameterValue(Model.OnIterationDelay, p_flowData) * length;
+                float time = onFinishedDelay + onIterationDelay * Math.Abs(length);
                 DashTween tween = DashTween.To(Graph.Controller, 0, 1, time);
                 
                 _activeTweens.Add(tween);
