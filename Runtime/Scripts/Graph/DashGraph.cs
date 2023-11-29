@@ -439,6 +439,9 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
+            if (this == null)
+                return;
+            
             using (var cachedContext = OdinSerializer.Utilities.Cache<DeserializationContext>.Claim())
             {
                 cachedContext.Value.Config.SerializationPolicy = SerializationPolicies.Everything;
@@ -448,6 +451,9 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
+            if (this == null)
+                return;
+            
 #if UNITY_EDITOR
             SetVersion(DashCore.GetVersionNumber());
             
