@@ -13,7 +13,7 @@ namespace Dash
     {
         private static Dictionary<DashGraph, SerializedValue> _serializedGraphs =
             new Dictionary<DashGraph, SerializedValue>();
-        
+
         public static DashGraph GetInstance(DashGraph p_graphAsset)
         {
             if (!_serializedGraphs.ContainsKey(p_graphAsset))
@@ -35,13 +35,16 @@ namespace Dash
         public static DashGraph DeserializeGraph(SerializedValue p_value)
         {
             DashGraph graph = ScriptableObject.CreateInstance<DashGraph>();
-            //Debug.Log("DeserializeInfo: "+p_value.references.Count+" : "+graph.name);
+
             if (p_value.references.Count > 0) p_value.references[0] = graph;
             
             graph.DeserializeFromBytes(p_value.bytes, DataFormat.Binary, ref p_value.references);
             return graph;
         }
 
+#if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
         public static void ReleaseCache()
         {
             _serializedGraphs = new Dictionary<DashGraph, SerializedValue>();
