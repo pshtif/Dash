@@ -55,12 +55,6 @@ namespace Dash
             }
             else
             {
-                // Virtual tween to update from directly
-                // Tween tween = DOTween
-                //     .To((f) => UpdateTween(targetTransform, f, p_flowData, startRotation, toRotation, easing), 0,
-                //         1, time)
-                //     .SetDelay(delay)
-                //     .SetEase(Ease.Linear);
                 return DashTween.To(targetTransform, 0, 1, time)
                     .SetDelay(delay)
                     .OnUpdate(f => UpdateTween(targetTransform, f, p_flowData, startRotation, toRotation, easing));
@@ -77,12 +71,13 @@ namespace Dash
                 return;
             }
 
-            Quaternion rotation = Quaternion.Euler(p_toRotation);
+            Vector3 eulers = Vector3.Lerp(Vector3.zero, p_toRotation, DashTween.EaseValue(0, 1, p_delta, p_easeType));
+            
+            Quaternion rotation = Quaternion.Euler(eulers);
             if (Model.isToRelative) rotation = rotation * p_startRotation;
             //p_target.localRotation = Quaternion.Lerp(p_startRotation, rotation, DOVirtual.EasedValue(0,1, p_delta, p_easing));
-            p_target.localRotation =
-                Quaternion.Lerp(p_startRotation, rotation, DashTween.EaseValue(0, 1, p_delta, p_easeType));
-
+            p_target.localRotation = rotation;
+            //Quaternion.Lerp(p_startRotation, rotation, DashTween.EaseValue(0, 1, p_delta, p_easeType));
             /*
             Debug.Log(rotation.eulerAngles + " : " + p_toRotation + " : " + p_startRotation.eulerAngles);
             Vector3 finalRotation = rotation.eulerAngles;
