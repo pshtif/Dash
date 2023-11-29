@@ -20,6 +20,14 @@ namespace Dash
         public DashRuntimeConfig Config { get; private set; }
         
         private static DashCore _instance = null;
+        
+#if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
+        private static void ResetInstance()
+        {
+            _instance = null;
+        }
 
         public static DashCore Instance
         {
