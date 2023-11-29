@@ -90,7 +90,7 @@ namespace Dash
         public override bool IsSynchronous()
         {
             return !Model.OnIterationDelay.isExpression && Model.OnIterationDelay.GetValue(null) == 0 &&
-                   Model.OnFinishedDelay == 0;
+                   !Model.OnFinishedDelayP.isExpression && Model.OnFinishedDelayP.GetValue(null) == 0;
         }
         
         void EndLoop(NodeFlowData p_flowData)
