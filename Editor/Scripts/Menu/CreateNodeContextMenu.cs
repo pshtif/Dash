@@ -100,7 +100,7 @@ namespace Dash.Editor
                         string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
                         node = node.Substring(0, node.Length-4);
                     
-                        menu.AddItem(new GUIContent("Create For Selected/"+node, tooltip), false, () => CreateAnimationNodesFromSelection(p_graph, type));
+                        menu.AddItem(new GUIContent("Create For Selected/"+node, tooltip), false, () => CreateAnimationNodesFromSelection(p_graph, p_propertyTable, type));
                     }
                 }
                 
@@ -109,7 +109,7 @@ namespace Dash.Editor
             return menu;
         }
 
-        static void CreateAnimationNodesFromSelection(DashGraph p_graph, object p_nodeType)
+        static void CreateAnimationNodesFromSelection(DashGraph p_graph, IExposedPropertyTable p_propertyTable, object p_nodeType)
         {
             Transform[] selectedTransforms = SelectionUtils.GetTransformsFromSelection();
             Vector2 position = new Vector2(_lastMousePosition.x * p_graph.zoom - p_graph.viewOffset.x, _lastMousePosition.y * p_graph.zoom - p_graph.viewOffset.y);
@@ -126,7 +126,7 @@ namespace Dash.Editor
                     //model.target.SetValue(transform.name);
                     
                     model.useReference = true;
-                    IExposedPropertyTable propertyTable = p_graph.Controller;
+                    
                     bool isDefault = PropertyName.IsNullOrEmpty(model.targetReference.exposedName);
 
                     if (isDefault)
@@ -134,12 +134,12 @@ namespace Dash.Editor
                         PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
                         model.targetReference.exposedName = newExposedName;
                         
-                        propertyTable.SetReferenceValue(newExposedName, transform);
+                        p_propertyTable.SetReferenceValue(newExposedName, transform);
                         //p_fieldInfo.SetValue(p_object, exposedReference);
                     }
                     else
                     {
-                        propertyTable.SetReferenceValue(model.targetReference.exposedName, transform);
+                        p_propertyTable.SetReferenceValue(model.targetReference.exposedName, transform);
                     }
                     
                     // If its bindable bind all values to current transform
@@ -154,7 +154,7 @@ namespace Dash.Editor
             }
         }
 
-        static void ShowAnimationNodeTypesMenu(DashGraph p_graph)
+        static void ShowAnimationNodeTypesMenu(DashGraph p_graph, IExposedPropertyTable p_propertyTable)
         {
             RuntimeGenericMenu menu = new RuntimeGenericMenu();
             
@@ -173,7 +173,7 @@ namespace Dash.Editor
                     string node = type.ToString().Substring(type.ToString().IndexOf(".") + 1);
                     node = node.Substring(0, node.Length-4);
                     
-                    menu.AddItem(new GUIContent(node, tooltip), false, () => CreateAnimationNodesFromSelection(p_graph, type));
+                    menu.AddItem(new GUIContent(node, tooltip), false, () => CreateAnimationNodesFromSelection(p_graph, p_propertyTable, type));
                 }
             }
             
