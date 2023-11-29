@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - added SetVariable overload for non generic version of setting of existing variables.
 - added graph utility functions HasInputOfName, HasOutputOfName, HasOnCustomEventOfName
 - added migration utility for Parameters from value
+- added RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration) handling for EDITOR only of statics to clear state preservance without domain reload
 
 #### Changed
 
@@ -24,12 +25,15 @@ All notable changes to this project will be documented in this file.
 - changed variable names now cannot contain whitespace are now autostripped of whitespace in renaming [WARNING]
 - changed variable inspector now shows variables that use reserved names as red to avoid them or atleast be aware that collision may occur
 - changed OnFinishedDelay is now parameter in ForLoopNode
+- changed lerping of rotation in AnimateRotation is now happening on eulers and not quaterions to handle arbitrary degrees rotations [WARNING]
 
 #### Fixed
 
 - fixed CreateAttributeNode now correctly creates a new list of attributes if there were none
 - fixed deserialization of cached empty empty graphs crashed on null exception
 - fixed ForLoopNode now correctly calculates time for reverse loops
+- fixed create for selected no longer ends in null exception
+- fixed skip serialization of Unity objects in Unity 2022 when this is null for some reason
 
 ### Release 0.14.5 - 11.6.2023
 
