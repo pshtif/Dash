@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASES
 
-### Release 0.14.6 - 5.9.2023
+### Release 0.14.6 - 3.1.2024
 
 #### Added
 
