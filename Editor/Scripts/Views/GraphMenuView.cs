@@ -41,8 +41,9 @@ namespace Dash.Editor
 
                 if (DashEditorCore.EditorConfig.showNodeSearch)
                 {
-                    _search = GUI.TextField(new Rect(230, 2, 100, 19), _search);
-                    if (GUI.Button(new Rect(332, 3, 60, 18), "Search"))
+                    _search = GUI.TextField(new Rect(330, 2, 100, 19), _search);
+                    _search = _search.ToLower();
+                    if (GUI.Button(new Rect(432, 3, 60, 18), "Search"))
                     {
                         if (!_search.IsNullOrWhitespace())
                         {

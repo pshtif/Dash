@@ -306,6 +306,7 @@ namespace Dash.Editor
                 return null;
 
             var searchNodes = p_graph.Nodes.FindAll(n => n.Id.ToLower().Contains(p_search)).ToList();
+
             if (searchNodes.Count == 0)
                 return null;
             
