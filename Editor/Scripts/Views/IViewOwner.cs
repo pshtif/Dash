@@ -1,6 +1,7 @@
 /*
  *	Created by:  Peter @sHTiF Stefcek
  */
+#if UNITY_EDITOR
 
 namespace Dash.Editor
 {
@@ -13,3 +14,4 @@ namespace Dash.Editor
         void EditGraph(DashGraph p_graph, string p_path);
     }
 }
+#endif
