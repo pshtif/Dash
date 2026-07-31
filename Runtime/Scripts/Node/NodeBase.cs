@@ -195,21 +195,39 @@ namespace Dash
                 DashEditorDebug.Debug(new NodeDebugItem(NodeDebugItem.NodeDebugItemType.EXECUTE, Graph.Controller, Graph.GraphPath, _model.id,
                     p_flowData.GetAttribute<Transform>("target")));
             }
-            
+
             executeTime = 1;
 #endif
 
-            OnExecuteStart(p_flowData == null ? new NodeFlowData() : p_flowData.Clone());
+            // Errors are per-run, not forever: reset the (now purely visual) node error flag so a
+            // past error cannot poison this fresh run — the historic never-resets latch is gone.
+            hasErrorsInExecution = false;
+
+            NodeFlowData flowData = p_flowData == null ? new NodeFlowData() : p_flowData.Clone();
+
+            // Capture the flow for the duration of the synchronous node body so SetError can fail
+            // its execution without every call site threading flow data through. Save/restore
+            // handles re-entrancy (a body triggering this same node again via outputs). Async
+            // continuations (code after an await, tween callbacks) run after the restore and fall
+            // back to flag-only error marking — acceptable, teardown gates still apply.
+            NodeFlowData previousFlow = _currentFlowData;
+            _currentFlowData = flowData;
+
+            OnExecuteStart(flowData);
+
+            _currentFlowData = previousFlow;
         }
+
+        [NonSerialized]
+        private NodeFlowData _currentFlowData;
 
         protected abstract void OnExecuteStart(NodeFlowData p_flowData);
 
         protected void OnExecuteOutput(int p_index, NodeFlowData p_flowData)
         {
-            if (hasErrorsInExecution)
-                return;
-
-            // A stopped flow does not propagate: its async work was killed and its frames released.
+            // A stopped or failed flow does not propagate: its async work was killed and its
+            // frames released. (SetError fails the execution directly, so no node-flag check —
+            // the old node-level check was the never-resets latch that blocked healthy flows.)
             GraphExecution execution = p_flowData?.execution;
             if (execution != null && execution.IsStopped)
                 return;
@@ -219,11 +237,9 @@ namespace Dash
 
         protected void OnExecuteEnd(NodeFlowData p_flowData)
         {
-            if (hasErrorsInExecution)
-                return;
-
-            // A stopped execution already released every open frame in GraphExecution.Stop(), so
-            // skip accounting here to avoid double-closing this node's frame and count.
+            // A stopped/failed execution already released every open frame in
+            // GraphExecution.Stop(), so skip accounting here to avoid double-closing this node's
+            // frame and count.
             GraphExecution execution = p_flowData?.execution;
             if (execution != null && execution.IsStopped)
                 return;
@@ -303,6 +319,13 @@ namespace Dash
                 Debug.LogWarning(p_message+" on node: " + _model.id+ " in graph: "+Graph+" running controller: "+Controller);
             }
             hasErrorsInExecution = true;
+
+            // Errors are execution-scoped: fail the flow that hit them. Full teardown (frames
+            // released — including sites that SetError-and-return without OnExecuteEnd, which used
+            // to leak their frame forever), remaining branches halt, disposables run, and
+            // OnComplete fires with HasErrors set. Concurrent flows through this node and future
+            // runs are untouched.
+            _currentFlowData?.execution?.Fail();
         }
         
         protected void ValidateUniqueId()

@@ -57,6 +57,25 @@ namespace Dash
         // fresh GraphExecution, so there is nothing to reset.
         public bool IsStopped { get; private set; }
 
+        // Set once by Fail(). Errors are execution-scoped: a failed flow is torn down like a
+        // stopped one, and OnComplete callbacks can distinguish via IsStopped && HasErrors.
+        public bool HasErrors { get; private set; }
+
+        /// <summary>
+        /// Marks this flow as errored and tears it down (see <see cref="Stop"/>): remaining
+        /// branches halt, tweens die, frames release, disposables run (an errored sequenced flow
+        /// frees its slot instead of deadlocking the queue), and OnComplete fires on the next tick
+        /// with IsStopped and HasErrors both set. Called by NodeBase.SetError; idempotent.
+        /// </summary>
+        public void Fail()
+        {
+            if (HasErrors)
+                return;
+
+            HasErrors = true;
+            Stop();
+        }
+
         // Tweens this execution has in flight, with the node that scheduled each one. Owner is
         // needed so a per-flow kill can also prune the owning node's _activeTweens list — killed
         // tweens return to DashTween's pool and get reused, so a stale node-list entry would let a

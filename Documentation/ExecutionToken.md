@@ -117,6 +117,18 @@ controller fires pending callbacks synchronously after its final stop rather tha
 them. Registering after the flow ended but before firing is safe (the execution re-registers
 with its graph so a tick still observes it).
 
+**Errors fail the flow.** `SetError` (and everything built on it — `CheckException`, parameter
+evaluation failures) now fails the erroring node's EXECUTION: `GraphExecution.Fail()` marks
+`HasErrors` and runs the standard teardown — remaining branches halt, tweens die, frames
+release, disposables run (an errored sequenced flow frees its slot instead of deadlocking the
+queue), and `OnComplete` fires with `IsStopped` and `HasErrors` both set. Concurrent flows
+through the same node and future runs are untouched: the old node-level error flag is now
+purely an editor visual (red outline until the node's next run) and no longer gates anything —
+its historic never-resets latch, which blocked every future flow through an errored node and
+leaked `ExecutionCount` forever, is gone. `NodeBase` captures the current flow around the
+synchronous node body so `SetError` needs no signature change; error sites that return without
+calling `OnExecuteEnd` no longer leak their frame (teardown released it).
+
 **Register-on-entry and graph locality.** A graph registers not only the executions it mints
 but every execution that ENTERS it (a cross-controller event cascade, a flow entering a
 subgraph), so receiving graphs can address shared flows too. Graph-scoped stops — `Stop()` and
@@ -163,6 +175,10 @@ every register-on-entry, so receive-only graphs stay bounded.
 9. **Completion callbacks** — `execution.OnComplete` fired once per flow from
    `DashGraph.TickExecutions` (controller Update / previewer tick); registry pruning protects
    entries with unfired callbacks; late registration re-registers with the graph.
+10. **Execution-scoped errors** — `SetError` fails the current flow via
+    `GraphExecution.Fail()` (HasErrors + full teardown + OnComplete); node-level
+    `hasErrorsInExecution` demoted to editor visual, reset per run, no longer gating —
+    killing the never-resets latch and the errored-frame leak.
 
 ## Custom node migration
 
@@ -184,8 +200,9 @@ every register-on-entry, so receive-only graphs stay bounded.
   spans (one identity). Per-graph partial teardown would need child executions (not planned).
 - **Completion timing is frame-quantized** — `OnComplete` fires on the next controller Update
   after the flow ends (see Completion callbacks), so up to one frame of latency by design.
-- **`hasErrorsInExecution` is still node-level** and never resets — moving it to execution
-  scope is a semantic change (an error would halt the whole flow) awaiting a decision.
+- **Async error marking is flag-only** — `SetError` from code running after an await or inside
+  a tween callback (rare; virtually all error sites are synchronous) marks the node visual but
+  cannot fail the flow, because the current-flow capture only spans the synchronous node body.
 - **`StoreStateNode` does not restore on stop** — auto-reverting transforms during teardown is
   a strong semantic, parked deliberately.
 - **Cross-controller events share one execution** — a global event sent from inside a graph
