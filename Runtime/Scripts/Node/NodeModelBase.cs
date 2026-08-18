@@ -66,7 +66,11 @@ namespace Dash
                         .Invoke(curExposedRef, new object[] {p_propertyTable});
 
                     var clonedExposedRef = Activator.CreateInstance(exposedRefType);
+#if UNITY_6000_4_OR_NEWER
+                    PropertyName newExposedName = new PropertyName(GUID.Generate().ToString());
+#else
                     PropertyName newExposedName = new PropertyName(UnityEditor.GUID.Generate().ToString());
+#endif
                     p_propertyTable.SetReferenceValue(newExposedName, exposedValue);
                     clonedExposedRef.GetType().GetField("exposedName")
                         .SetValue(clonedExposedRef, newExposedName);

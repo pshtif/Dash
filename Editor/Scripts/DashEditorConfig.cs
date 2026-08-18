@@ -78,19 +78,31 @@ namespace Dash
         public int lastUsedVersion = 0;
         
         public DashGraph enteringPlayModeGraph { get; private set; }
+#if UNITY_6000_4_OR_NEWER
+        private EntityId _enteringPlayModeController;
+#else
         private int _enteringPlayModeController;
+#endif
 
         public DashController enteringPlayModeController
         {
             get
             {
+#if UNITY_6000_4_OR_NEWER
+                var controller = EditorUtility.EntityIdToObject(_enteringPlayModeController);
+#else
                 var controller = EditorUtility.InstanceIDToObject(_enteringPlayModeController);
+#endif
                 return controller is DashController ? (DashController) controller : null;
             }
             set
             {
                 enteringPlayModeGraph = editingGraph;
+#if UNITY_6000_4_OR_NEWER
+                _enteringPlayModeController = value == null ? EntityId.None : value.GetEntityId();
+#else
                 _enteringPlayModeController = value == null ? -1 : value.GetInstanceID();
+#endif
             }
         }
         
