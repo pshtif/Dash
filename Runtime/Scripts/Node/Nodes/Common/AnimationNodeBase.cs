@@ -19,15 +19,38 @@ namespace Dash
     [InspectorHeight(380)]
     public abstract class AnimationNodeBase<T> : RetargetNodeBase<T> where T:AnimationNodeModelBase, new()
     {
+        // Index of the optional invalid-target output on animation nodes that declare a second
+        // output (e.g. AnimateToTransformNode).
+        protected const int INVALID_OUTPUT_INDEX = 1;
+
+        [NonSerialized]
+        private bool _invalidTargetEncountered = false;
+
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
+            _invalidTargetEncountered = false;
+
             if (p_target == null)
             {
-                ExecuteEnd(p_flowData);
+                if (HasInvalidOutputConnected())
+                {
+                    ExecuteInvalidEnd(p_flowData);
+                }
+                else
+                {
+                    ExecuteEnd(p_flowData);
+                }
                 return;
             }
 
             DashTween tween = AnimateOnTarget(p_target, p_flowData);
+
+            if (_invalidTargetEncountered)
+            {
+                _invalidTargetEncountered = false;
+                ExecuteInvalidEnd(p_flowData);
+                return;
+            }
 
             if (tween == null)
             {
@@ -48,6 +71,38 @@ namespace Dash
         {
             OnExecuteEnd(p_flowData);
             OnExecuteOutput(0,p_flowData);
+        }
+
+        protected void ExecuteInvalidEnd(NodeFlowData p_flowData)
+        {
+            OnExecuteEnd(p_flowData);
+            OnExecuteOutput(INVALID_OUTPUT_INDEX, p_flowData);
+        }
+
+        protected bool HasInvalidOutputConnected()
+        {
+            return OutputCount > INVALID_OUTPUT_INDEX && Graph.HasOutputConnected(this, INVALID_OUTPUT_INDEX);
+        }
+
+        // Invalid-target check mirroring CheckException. Returns true when p_object is null or a
+        // destroyed Unity object. With the invalid output connected the scenario counts as handled:
+        // no error is raised and ExecuteOnTarget routes the flow out the invalid output. Without a
+        // connection legacy behavior is kept: SetError warning and continue out the default output.
+        protected bool CheckInvalidTarget(object p_object, string p_warning = null)
+        {
+            if (p_object != null && !(p_object is UnityEngine.Object && (UnityEngine.Object)p_object == null))
+                return false;
+
+            if (HasInvalidOutputConnected())
+            {
+                _invalidTargetEncountered = true;
+            }
+            else
+            {
+                SetError(p_warning);
+            }
+
+            return true;
         }
         
         public override bool IsSynchronous()
