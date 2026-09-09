@@ -10,9 +10,10 @@ namespace Dash
 {
     [Attributes.Tooltip("Animate transform towards another transform.")]
     [Category(NodeCategoryType.ANIMATION)]
-    [OutputCount(1)]
+    [OutputCount(2)]
     [InputCount(1)]
-    [Size(200,85)]
+    [OutputLabels("OnFinished", "OnInvalid")]
+    [Size(200,110)]
     [Serializable]
     public class AnimateToTransformNode : AnimationNodeBase<AnimateToTransformNodeModel>
     {
@@ -32,7 +33,7 @@ namespace Dash
                     return null;
                 }
 
-                if (CheckException(value, "Target to expression evaluates to null."))
+                if (CheckInvalidTarget(value, "Target to expression evaluates to null."))
                     return null;
 
                 targetTransform = value as Transform;
@@ -51,7 +52,7 @@ namespace Dash
                 targetTransform = Model.targetTransform.Resolve(Controller);
             }
             
-            if (CheckException(targetTransform, "Target transform null."))
+            if (CheckInvalidTarget(targetTransform, "Target transform null."))
                 return null;
 
             Vector2 startPosition = p_target.position; 
