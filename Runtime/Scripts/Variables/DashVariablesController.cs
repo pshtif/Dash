@@ -87,6 +87,11 @@ namespace Dash
         
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
+            if (this.SafeIsUnityNull())
+            {
+                return;
+            }
+            
             // Debug.Log("OnAfterDeserialize: "+_serializedVariables);
             using (var cachedContext = Cache<DeserializationContext>.Claim())
             {
@@ -115,6 +120,10 @@ namespace Dash
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             // Debug.Log("OnBeforeSerialize");
+            if (this.SafeIsUnityNull())
+            {
+                return;
+            }
             
             using (var cachedContext = Cache<SerializationContext>.Claim())
             {
