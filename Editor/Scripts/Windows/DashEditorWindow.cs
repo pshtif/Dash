@@ -45,6 +45,7 @@ namespace Dash.Editor
 
         private void OnDisable()
         {
+            PrefabStage.prefabStageOpened -= OnPrefabStageOpened;
             PrefabStage.prefabStageClosing -= OnPrefabStageClosing;
         }
         

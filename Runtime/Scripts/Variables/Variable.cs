@@ -256,7 +256,7 @@ namespace Dash
                 else
                 {
                     var component = transform.GetComponent<T>();
-                    if (component == null)
+                    if (component != null)
                     {
                         objectValue = component;
                         found = true;

@@ -32,12 +32,26 @@ namespace Dash
                 return;
             
             Type componentType = ReflectionUtils.GetTypeByName(Model.componentName);
-            Component component = Controller.GetComponent(componentType);
-
-            if (component == null)
+            if (componentType == null)
+            {
+                SetError("Component type '" + Model.componentName + "' not found.");
                 return;
+            }
+
+            Component component = Controller.GetComponent(componentType);
+            if (component == null)
+            {
+                SetError("Component '" + Model.componentName + "' not found on controller.");
+                return;
+            }
 
             var method = component.GetType().GetMethod(Model.methodName, BindingFlags.Instance | BindingFlags.Public);
+            if (method == null)
+            {
+                SetError("Method '" + Model.methodName + "' not found on component '" + Model.componentName + "'.");
+                return;
+            }
+
             method.Invoke(component, new object[]{});
         }
         

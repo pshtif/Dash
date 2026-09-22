@@ -43,6 +43,8 @@ namespace Dash
                 if (spawned == null)
                 {
                     SetError("Prefab instance is not a RectTransform");
+                    OnExecuteEnd();
+                    return;
                 }
             }
             else
@@ -69,6 +71,8 @@ namespace Dash
                 if (string.IsNullOrEmpty(Model.spawnedAttributeName))
                 {
                     SetError("Attribute name cannot be empty");
+                    OnExecuteEnd();
+                    return;
                 }
                 
                 p_flowData.SetAttribute<Transform>(Model.spawnedAttributeName, spawned);

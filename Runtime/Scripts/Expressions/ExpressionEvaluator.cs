@@ -48,7 +48,8 @@ namespace Dash
             Expression cachedExpression;
             if (!_cachedExpressions.ContainsKey(p_expression))
             {
-                cachedExpression = new Expression(p_expression);
+                // We cache after macro replacement so runtime macro changes are not possible for performance reasons
+                cachedExpression = new Expression(ReplaceMacros(p_expression));
                 _cachedExpressions.Add(p_expression, cachedExpression);
             }
             else

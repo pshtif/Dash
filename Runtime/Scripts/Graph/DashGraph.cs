@@ -402,21 +402,27 @@ namespace Dash
         
         public void StopDownstream(NodeBase p_node)
         {
+            _downstreamNodes.Clear();
+            StopDownstreamInternal(p_node);
+        }
+
+        private void StopDownstreamInternal(NodeBase p_node)
+        {
             if (_downstreamNodes.Contains(p_node))
                 return;
-            
+
             _downstreamNodes.Add(p_node);
-            
+
             p_node.Stop();
             var connections = Connections.FindAll(c => c.outputNode == p_node);
             connections.Sort((c1, c2) =>
             {
                 return c1.outputIndex.CompareTo(c2.outputIndex);
             });
-            
+
             foreach (var connection in connections)
             {
-                StopDownstream(p_node);   
+                StopDownstreamInternal(connection.inputNode);
             }
         }
 

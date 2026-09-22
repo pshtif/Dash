@@ -62,12 +62,12 @@ namespace Dash
             }
         }
         
-        public Vector3 LerpEulerAngles(Vector3 from, Vector3 to, float t)
+        public Vector3 LerpEulerAngles(Vector3 p_from, Vector3 p_to, float p_t)
         {
             Vector3 result = new Vector3(
-                Mathf.LerpAngle(from.x, to.x, t),
-                Mathf.LerpAngle(from.y, to.y, t),
-                Mathf.LerpAngle(from.z, to.z, t)
+                Mathf.LerpAngle(p_from.x, p_to.x, p_t),
+                Mathf.LerpAngle(p_from.y, p_to.y, p_t),
+                Mathf.LerpAngle(p_from.z, p_to.z, p_t)
             );
             return result;
         }
@@ -116,7 +116,6 @@ namespace Dash
                                           Mathf.Abs(delta.y) > 180 || 
                                           Mathf.Abs(delta.z) > 180;
                 
-                Debug.Log(needsMultiRotation);
                 Vector3 eulers;
                 if (needsMultiRotation)
                 {

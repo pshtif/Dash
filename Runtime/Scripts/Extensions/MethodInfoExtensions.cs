@@ -21,7 +21,7 @@ namespace Dash
                 }
 
                 type = type.BaseType;
-            } while (type != null || !p_includeInheritance);
+            } while (type != null && p_includeInheritance);
 
             return false;
         }
@@ -39,7 +39,7 @@ namespace Dash
                 }
 
                 type = type.BaseType;
-            } while (type != null || !p_includeInheritance);
+            } while (type != null && p_includeInheritance);
 
             return false;
         }

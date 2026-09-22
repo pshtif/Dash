@@ -29,6 +29,7 @@ namespace Dash
                     _graph.Stop();
                     break;
                 case StopMode.CONNECTED:
+                    _stoppedNodes = new List<NodeBase>();
                     StopConnectedNodes(this);
                     break;
                 default:

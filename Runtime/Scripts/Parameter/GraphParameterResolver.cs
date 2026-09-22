@@ -167,7 +167,8 @@ namespace Dash
 
             string name = p_name.Substring(1);
 
-            object value = _graph.GetNodeById(name).GetModel();
+            var node = _graph.GetNodeById(name);
+            object value = node != null ? node.GetModel() : null;
 
             if (value != null)
             {

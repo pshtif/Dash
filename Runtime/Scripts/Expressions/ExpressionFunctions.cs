@@ -636,7 +636,7 @@ namespace Dash
             if (paramType == typeof(double))
             {
                 p_args.HasResult = true;
-                p_args.Result = -(float)evalParams[0];
+                p_args.Result = -(double)evalParams[0];
                 return true;
             }
             

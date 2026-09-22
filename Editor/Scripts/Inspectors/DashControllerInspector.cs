@@ -176,7 +176,8 @@ namespace Dash.Editor
                     string name = Controller.propertyNames[i].ToString();
                     
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.ObjectField(name, Controller.references[i], typeof(Object), true);
+                    Object reference = i < Controller.references.Count ? Controller.references[i] : null;
+                    EditorGUILayout.ObjectField(name, reference, typeof(Object), true);
                     
                     if (_exposedNodeIds != null && _exposedNodeIds.Count == Controller.propertyNames.Count)
                     {

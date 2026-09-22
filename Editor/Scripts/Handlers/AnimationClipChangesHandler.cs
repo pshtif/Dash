@@ -21,7 +21,7 @@ namespace Dash.Editor
                 string[] splitStr = str.Split('.');
 
                 if (splitStr.Length < 2)
-                    return;
+                    continue;
                 
                 string extension = splitStr[splitStr.Length-1];
                 if (extension == "anim")

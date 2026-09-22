@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASES
 
-### Release 0.14.16 - 14.08.2025
+### Release 0.14.18 - 10.09.2025
+
+#### Fixed
+
+- fixed startRotation while maintaining degrees/multirotation in AnimateRotationNode
+
+### Release 0.14.17 - 28.08.2025
+
+#### Added
+
+- added support for LocalPosition for AnimatePositionNode
 
 #### Changed
 

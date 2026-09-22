@@ -40,7 +40,11 @@ namespace Dash
                     }
                     break;
                 case StorageType.ATTRIBUTE:
-                    storage = p_flowData.GetAttribute(Model.storageName) as Dictionary<Transform, TransformStorageData>;
+                    if (p_flowData.HasAttribute(Model.storageName))
+                    {
+                        storage = p_flowData.GetAttribute(Model.storageName) as Dictionary<Transform, TransformStorageData>;
+                    }
+
                     if (storage == null)
                     {
                         SetError("Storage attribute "+Model.storageName+" not found.");

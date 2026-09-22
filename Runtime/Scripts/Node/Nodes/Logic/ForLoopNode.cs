@@ -28,9 +28,6 @@ namespace Dash
             float onFinishedDelay = GetParameterValue(Model.OnFinishedDelayP, p_flowData);
 
             int length = lastIndex - firstIndex;
-            
-            if (length == 0)
-                EndLoop(p_flowData);
 
             for (int i = firstIndex; i != lastIndex; i += Math.Abs(length) / length)
             {
