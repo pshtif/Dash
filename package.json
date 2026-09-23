@@ -20,5 +20,8 @@
   "dependencies": {
 	"com.teamsirenix.odinserializer": "2024.2.15",
 	"com.shtif.dashtween": "0.1.9"
+  },
+  "publishConfig": {
+	"registry": "https://verdaccio.pxfd.tech/"
   }
 }
