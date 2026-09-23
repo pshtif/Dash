@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## RELEASES
 
+### Release 0.14.19 - 23.09.2026
+
+#### Added
+
+- added compatibility shims for Unity 6000.4/6000.5
+- added OnInvalid output to AnimateToTransformNode for destroyed/null targets
+
+#### Changed
+
+- changed AnimateToTransformNode output count from 1 to 2 (OnFinished, OnInvalid), existing connections on the first output are preserved
+
 ### Release 0.14.18 - 10.09.2025
 
 #### Fixed
