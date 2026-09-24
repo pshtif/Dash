@@ -84,8 +84,11 @@ namespace Dash
                             UntrackTween(tween, p_flowData);
                             OnExecuteOutput(0, data);
                         });
-                        tween.Start();
+                        // Track BEFORE Start: a zero-length tween (i == 0 here) completes
+                        // synchronously inside Start(), and its OnComplete must find the booking
+                        // to remove — otherwise a pooled, already-finished tween gets tracked.
                         TrackTween(tween, p_flowData);
+                        tween.Start();
                     }
                 }
 
@@ -102,8 +105,8 @@ namespace Dash
                         UntrackTween(tween, p_flowData);
                         OnExecuteEnd(p_flowData);
                     });
-                    tween.Start();
                     TrackTween(tween, p_flowData);
+                    tween.Start();
                 }
             }
             else
