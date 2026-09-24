@@ -205,6 +205,10 @@ every register-on-entry, so receive-only graphs stay bounded.
   cannot fail the flow, because the current-flow capture only spans the synchronous node body.
 - **`StoreStateNode` does not restore on stop** — auto-reverting transforms during teardown is
   a strong semantic, parked deliberately.
+- **`AnimateToTransformNode` with a null/destroyed target and no `OnInvalid` connected fails the
+  flow** — on main the same case logs a warning and continues out the default output. Here
+  `CheckInvalidTarget` goes through `SetError`, which is execution-scoped, so the run is torn
+  down. Connect `OnInvalid` to handle the case without an error.
 - **Cross-controller events share one execution** — a global event sent from inside a graph
   carries its origin execution to every controller (one identity). Since register-on-entry
   each receiving graph can address it, and graph-scoped stops touch it only while it runs

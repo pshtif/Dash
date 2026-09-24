@@ -28,8 +28,6 @@ namespace Dash
 
         protected override void ExecuteOnTarget(Transform p_target, NodeFlowData p_flowData)
         {
-            _invalidTargetEncountered = false;
-
             if (p_target == null)
             {
                 if (HasInvalidOutputConnected())
@@ -43,11 +41,19 @@ namespace Dash
                 return;
             }
 
+            // The flag is node-level state, so save/restore around the synchronous animate call —
+            // the same discipline as NodeBase._currentFlowData: a re-entrant run of this node
+            // inside AnimateOnTarget must not clobber this run's result.
+            bool previousInvalid = _invalidTargetEncountered;
+            _invalidTargetEncountered = false;
+
             DashTween tween = AnimateOnTarget(p_target, p_flowData);
 
-            if (_invalidTargetEncountered)
+            bool invalidEncountered = _invalidTargetEncountered;
+            _invalidTargetEncountered = previousInvalid;
+
+            if (invalidEncountered)
             {
-                _invalidTargetEncountered = false;
                 ExecuteInvalidEnd(p_flowData);
                 return;
             }
@@ -87,7 +93,9 @@ namespace Dash
         // Invalid-target check mirroring CheckException. Returns true when p_object is null or a
         // destroyed Unity object. With the invalid output connected the scenario counts as handled:
         // no error is raised and ExecuteOnTarget routes the flow out the invalid output. Without a
-        // connection legacy behavior is kept: SetError warning and continue out the default output.
+        // connection it is an error: SetError fails the current execution (errors are
+        // execution-scoped on this branch), so the flow is torn down rather than continuing out
+        // the default output as it does on main.
         protected bool CheckInvalidTarget(object p_object, string p_warning = null)
         {
             if (p_object != null && !(p_object is UnityEngine.Object && (UnityEngine.Object)p_object == null))
