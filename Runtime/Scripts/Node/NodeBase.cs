@@ -255,7 +255,14 @@ namespace Dash
         {
             ExecutionCount -= p_count;
             if (ExecutionCount < 0)
+            {
+#if UNITY_EDITOR
+                // A negative count means the execution frame map and ExecutionCount desynced —
+                // the exact bug this accounting exists to prevent. Surface it, don't hide it.
+                Debug.LogError("ExecutionCount went negative on node " + this + " (released " + p_count + " frames)");
+#endif
                 ExecutionCount = 0;
+            }
         }
 
         // Legacy overload for third-party nodes compiled against the old signature. It can only

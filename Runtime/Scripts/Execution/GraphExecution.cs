@@ -221,7 +221,18 @@ namespace Dash
             _completionCallbacks = null;
 
             for (int i = 0; i < callbacks.Count; i++)
-                callbacks[i]?.Invoke(this);
+            {
+                // Isolate each callback: one that throws must not swallow the rest. The latch is
+                // already set and the list dropped, so a skipped callback could never fire later.
+                try
+                {
+                    callbacks[i]?.Invoke(this);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
 
         /// <summary>
